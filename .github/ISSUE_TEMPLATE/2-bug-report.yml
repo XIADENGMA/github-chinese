@@ -1,0 +1,53 @@
+name: 缺陷报告
+description: 扩展功能异常
+title: '[缺陷] '
+labels: ['bug']
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1.
+        2.
+        3.
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期结果
+  - type: input
+    id: url
+    attributes:
+      label: 页面地址
+      placeholder: https://github.com/vuejs/core
+  - type: dropdown
+    id: browser
+    attributes:
+      label: 浏览器
+      options:
+        - Chrome
+        - Edge
+        - Firefox
+        - 其他
+    validations:
+      required: true
+  - type: input
+    id: browser-version
+    attributes:
+      label: 浏览器版本
+  - type: input
+    id: version
+    attributes:
+      label: 扩展版本
+    validations:
+      required: true
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: 截图或日志

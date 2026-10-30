@@ -1,0 +1,51 @@
+name: 翻译问题
+description: 未翻译、译文有误、用户内容被翻译
+title: '[翻译] '
+labels: ['translation']
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: 类型
+      options:
+        - 未翻译
+        - 译文有误
+        - 用户内容被翻译
+        - 其他
+    validations:
+      required: true
+  - type: dropdown
+    id: language
+    attributes:
+      label: 翻译语言
+      options:
+        - 简体中文
+        - 繁體中文
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: 页面地址
+      placeholder: https://github.com/vuejs/core/issues
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: 原文
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: current
+    attributes:
+      label: 当前译文
+  - type: input
+    id: suggestion
+    attributes:
+      label: 建议译文
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: 截图
