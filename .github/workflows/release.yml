@@ -1,0 +1,146 @@
+# 推送 v* 标签：检查、打包，创建 GitHub Release；手动运行：检查、打包（xpi 不签名），产物在运行记录的 Artifacts 里
+name: 发布
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    env:
+      OUT: .output/release
+      # 推送标签时发布；在标签上手动运行也只打包
+      RELEASE: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+
+      # vitest、tsx、web-ext 在 Node 上运行
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: 安装依赖
+        run: bun install --frozen-lockfile
+
+      - name: 核对版本号
+        id: version
+        run: |
+          version="$(jq -r .version package.json)"
+          if [ "$GITHUB_REF_TYPE" = tag ] && [ "$GITHUB_REF_NAME" != "v$version" ]; then
+            echo "::error::标签 $GITHUB_REF_NAME 与 package.json 的版本 $version 不符"
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: 检查
+        run: |
+          bun run lint
+          bun run compile
+          bun run check:parity
+          bun run check:locale
+          bun run check:locale --locale=zh-TW
+          bun run test
+
+      - name: 打包 zip
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          bun run zip:all
+          bun run lint:firefox
+          mkdir -p "$OUT"
+          for target in chrome edge firefox sources; do
+            cp ".output/github-chinese-$VERSION-$target.zip" "$OUT/"
+          done
+
+      - name: 打包 crx
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          CRX_PRIVATE_KEY: ${{ secrets.CRX_PRIVATE_KEY }}
+        run: |
+          if [ -z "$CRX_PRIVATE_KEY" ]; then
+            echo "::warning title=crx::未配置 CRX_PRIVATE_KEY，已用临时私钥，扩展 ID 每次不同"
+            CRX_PRIVATE_KEY="$(openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048)"
+            export CRX_PRIVATE_KEY
+          fi
+          bun run pack:crx "$OUT/github-chinese-$VERSION-chrome.zip" "$OUT/github-chinese-$VERSION-edge.zip"
+
+      # 先建 Release 草稿：签名后的 xpi 立即存进去，重跑时沿用（AMO 同一版本号只能提交一次）
+      - name: 创建 Release 草稿
+        if: env.RELEASE == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          if ! gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then
+            flags=(--draft --title "$GITHUB_REF_NAME" --generate-notes --verify-tag)
+            # 带 - 的版本（如 v1.0.0-beta.1）作预发布
+            case "$GITHUB_REF_NAME" in *-*) flags+=(--prerelease) ;; esac
+            gh release create "$GITHUB_REF_NAME" "${flags[@]}"
+          fi
+
+      - name: 打包 xpi
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          WEB_EXT_API_KEY: ${{ secrets.AMO_JWT_ISSUER }}
+          WEB_EXT_API_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+        run: |
+          name="github-chinese-$VERSION-firefox.xpi"
+          xpi="$OUT/$name"
+          unsigned() {
+            echo "::$1 title=xpi::$2，xpi 未签名"
+            cp "$OUT/github-chinese-$VERSION-firefox.zip" "$xpi"
+          }
+          if [ "$RELEASE" = true ] && gh release download "$GITHUB_REF_NAME" --pattern "$name" --dir "$OUT" 2> /dev/null &&
+            unzip -l "$xpi" | grep -q -E 'META-INF/(cose\.sig|mozilla\.rsa)'; then
+            echo "沿用 Release 中已签名的 $name"
+          elif [ "$RELEASE" != true ]; then
+            unsigned notice 手动运行
+          elif [[ "$VERSION" == *-* ]]; then
+            # Firefox 的版本号去掉 - 之后的部分（1.0.0-beta.1 → 1.0.0），签名会占用正式版的版本号
+            unsigned warning 预发布版本
+          elif [ -z "$WEB_EXT_API_KEY" ] || [ -z "$WEB_EXT_API_SECRET" ]; then
+            unsigned warning '未配置 AMO_JWT_ISSUER、AMO_JWT_SECRET'
+          else
+            # 自行分发（unlisted）：提交 AMO 签名，下载签名包后立即存进 Release 草稿
+            bunx web-ext sign --channel unlisted --source-dir .output/firefox-mv3 --artifacts-dir .output/signed \
+              --upload-source-code "$OUT/github-chinese-$VERSION-sources.zip"
+            mv .output/signed/*.xpi "$xpi"
+            gh release upload "$GITHUB_REF_NAME" "$xpi" --clobber
+          fi
+
+      - name: 校验和
+        working-directory: ${{ env.OUT }}
+        run: |
+          sha256sum -- *.zip *.crx *.xpi > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: 上传产物
+        uses: actions/upload-artifact@v7
+        with:
+          name: github-chinese-${{ steps.version.outputs.version }}
+          path: ${{ env.OUT }}/
+          if-no-files-found: error
+
+      - name: 发布 Release
+        if: env.RELEASE == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release upload "$GITHUB_REF_NAME" "$OUT"/* --clobber
+          gh release edit "$GITHUB_REF_NAME" --draft=false
