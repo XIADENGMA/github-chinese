@@ -1,0 +1,214 @@
+{
+  "repository": [
+    "https://github.com/vuejs/core",
+    "https://github.com/cli/cli",
+    "https://github.com/torvalds/linux",
+    "https://github.com/atom/atom",
+    "https://github.com/actions/typescript-action",
+    "https://github.com/github/gitignore"
+  ],
+  "code": [
+    "https://github.com/vuejs/core/tree/main/packages",
+    "https://github.com/vuejs/core/blob/main/package.json",
+    "https://github.com/vuejs/core/blob/main/README.md",
+    "https://github.com/vuejs/core/blame/main/package.json",
+    "https://github.com/vuejs/core/find/main",
+    "https://github.com/cli/cli/tree/trunk/pkg"
+  ],
+  "commits": [
+    "https://github.com/vuejs/core/commits/main",
+    "https://github.com/vuejs/core/commits/main/package.json",
+    "https://github.com/vuejs/core/branches",
+    "https://github.com/vuejs/core/branches/all",
+    "https://github.com/vuejs/core/activity",
+    "https://github.com/vuejs/core/compare/v3.4.0...v3.5.0",
+    "https://github.com/vuejs/core/compare",
+    {
+      "url": "https://github.com/vuejs/core/commits/main",
+      "follow": { "pattern": "^https://github\\.com/vuejs/core/commit/[0-9a-f]{40}$", "count": 2 }
+    }
+  ],
+  "issues": [
+    "https://github.com/vuejs/core/issues",
+    "https://github.com/vuejs/core/issues?q=is%3Aissue%20state%3Aclosed",
+    "https://github.com/vuejs/core/labels",
+    "https://github.com/vuejs/core/milestones",
+    "https://github.com/vuejs/core/issues/new/choose",
+    {
+      "url": "https://github.com/vuejs/core/issues?q=is%3Aissue%20state%3Aclosed",
+      "follow": { "pattern": "^https://github\\.com/vuejs/core/issues/\\d+$", "count": 3 }
+    },
+    {
+      "url": "https://github.com/microsoft/vscode/issues",
+      "follow": { "pattern": "^https://github\\.com/microsoft/vscode/issues/\\d+$", "count": 2 }
+    }
+  ],
+  "pulls": [
+    "https://github.com/vuejs/core/pulls",
+    "https://github.com/vuejs/core/pulls?q=is%3Apr%20is%3Amerged",
+    {
+      "url": "https://github.com/vuejs/core/pulls?q=is%3Apr%20is%3Amerged",
+      "follow": {
+        "pattern": "^https://github\\.com/vuejs/core/pull/\\d+$",
+        "count": 2,
+        "suffixes": ["", "/commits", "/checks", "/files"]
+      }
+    },
+    {
+      "url": "https://github.com/cli/cli/pulls",
+      "follow": { "pattern": "^https://github\\.com/cli/cli/pull/\\d+$", "count": 2, "suffixes": ["", "/files"] }
+    }
+  ],
+  "actions": [
+    "https://github.com/vuejs/core/actions",
+    "https://github.com/vuejs/core/actions/workflows/ci.yml",
+    "https://github.com/vuejs/core/deployments",
+    "https://github.com/cli/cli/actions",
+    {
+      "url": "https://github.com/vuejs/core/actions",
+      "follow": {
+        "pattern": "^https://github\\.com/vuejs/core/actions/runs/\\d+$",
+        "count": 2,
+        "then": { "pattern": "^https://github\\.com/vuejs/core/actions/runs/\\d+/job/\\d+$", "count": 1 }
+      }
+    }
+  ],
+  "projects": [
+    "https://github.com/orgs/github/projects/4247",
+    "https://github.com/orgs/github/projects/4247/views/1",
+    "https://github.com/orgs/github/projects",
+    "https://github.com/vuejs/core/projects"
+  ],
+  "releases": [
+    "https://github.com/vuejs/core/releases",
+    "https://github.com/vuejs/core/tags",
+    "https://github.com/cli/cli/releases/latest",
+    {
+      "url": "https://github.com/vuejs/core/releases",
+      "follow": { "pattern": "^https://github\\.com/vuejs/core/releases/tag/[^/]+$", "count": 1 }
+    }
+  ],
+  "packages": [
+    "https://github.com/orgs/home-assistant/packages",
+    "https://github.com/home-assistant/core/pkgs/container/home-assistant",
+    "https://github.com/home-assistant/core/pkgs/container/home-assistant/versions"
+  ],
+  "wiki": [
+    "https://github.com/git-for-windows/git/wiki",
+    "https://github.com/git-for-windows/git/wiki/_pages",
+    "https://github.com/git-for-windows/git/wiki/_history",
+    "https://github.com/microsoft/vscode/wiki"
+  ],
+  "discussions": [
+    "https://github.com/vercel/next.js/discussions",
+    "https://github.com/vercel/next.js/discussions/categories/help",
+    "https://github.com/orgs/community/discussions",
+    {
+      "url": "https://github.com/vercel/next.js/discussions",
+      "follow": { "pattern": "^https://github\\.com/vercel/next\\.js/discussions/\\d+$", "count": 2 }
+    }
+  ],
+  "security": [
+    "https://github.com/vuejs/core/security",
+    "https://github.com/vuejs/core/security/policy",
+    "https://github.com/vuejs/core/security/advisories",
+    "https://github.com/nodejs/node/security/advisories",
+    "https://github.com/advisories",
+    {
+      "url": "https://github.com/advisories",
+      "follow": { "pattern": "^https://github\\.com/advisories/GHSA-[\\w-]+$", "count": 1 }
+    }
+  ],
+  "insights": [
+    "https://github.com/vuejs/core/pulse",
+    "https://github.com/vuejs/core/graphs/contributors",
+    "https://github.com/vuejs/core/graphs/commit-activity",
+    "https://github.com/vuejs/core/graphs/code-frequency",
+    "https://github.com/vuejs/core/network/dependencies",
+    "https://github.com/vuejs/core/network/dependents",
+    "https://github.com/vuejs/core/network",
+    "https://github.com/vuejs/core/forks",
+    "https://github.com/vuejs/core/community",
+    "https://github.com/vuejs/core/stargazers",
+    "https://github.com/vuejs/core/watchers"
+  ],
+  "profile": [
+    "https://github.com/torvalds",
+    "https://github.com/torvalds?tab=repositories",
+    "https://github.com/sindresorhus",
+    "https://github.com/sindresorhus?tab=stars",
+    "https://github.com/sindresorhus?tab=followers",
+    "https://github.com/sindresorhus?tab=following",
+    "https://github.com/sindresorhus?tab=projects",
+    "https://github.com/sindresorhus?tab=packages",
+    "https://github.com/yyx990803"
+  ],
+  "organization": [
+    "https://github.com/vuejs",
+    "https://github.com/orgs/vuejs/repositories",
+    "https://github.com/orgs/vuejs/people",
+    "https://github.com/orgs/vuejs/projects",
+    "https://github.com/microsoft",
+    "https://github.com/github"
+  ],
+  "explore": [
+    "https://github.com/explore",
+    "https://github.com/trending",
+    "https://github.com/trending/developers",
+    "https://github.com/trending/typescript?since=weekly",
+    "https://github.com/topics",
+    "https://github.com/topics/vue",
+    "https://github.com/collections",
+    "https://github.com/collections/machine-learning",
+    "https://github.com/events"
+  ],
+  "search": [
+    "https://github.com/search",
+    "https://github.com/search/advanced",
+    "https://github.com/search?q=vue&type=repositories",
+    "https://github.com/search?q=vue&type=issues",
+    "https://github.com/search?q=vue&type=pullrequests",
+    "https://github.com/search?q=vue&type=discussions",
+    "https://github.com/search?q=vue&type=users",
+    "https://github.com/search?q=vue&type=commits",
+    "https://github.com/search?q=vue&type=topics",
+    "https://github.com/search?q=vue&type=wikis",
+    "https://github.com/search?q=vue&type=registrypackages",
+    "https://github.com/search?q=vue&type=code"
+  ],
+  "gist": [
+    "https://gist.github.com/",
+    "https://gist.github.com/discover",
+    {
+      "url": "https://gist.github.com/discover",
+      "follow": {
+        "pattern": "^https://gist\\.github\\.com/[\\w-]+/[0-9a-f]{20,}$",
+        "count": 2,
+        "suffixes": ["", "/revisions", "/forks", "/stargazers"]
+      }
+    }
+  ],
+  "auth": [
+    "https://github.com/login",
+    "https://github.com/signup",
+    "https://github.com/password_reset",
+    "https://github.com/login/device"
+  ],
+  "common": [
+    "https://github.com/this-page-should-not-exist-gcn-404",
+    "https://github.com/vuejs/core/this-path-does-not-exist"
+  ],
+  "marketplace": [
+    "https://github.com/marketplace",
+    "https://github.com/marketplace?type=actions",
+    "https://github.com/marketplace?type=apps",
+    "https://github.com/marketplace/actions/checkout",
+    "https://github.com/apps/codecov",
+    "https://github.com/marketplace/codecov"
+  ],
+  "sponsors": [
+    "https://github.com/sponsors",
+    "https://github.com/sponsors/explore",
+    "https://github.com/sponsors/sindresorhus"
+  ]
+}
