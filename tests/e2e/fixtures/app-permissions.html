@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en" data-color-mode="auto" data-light-theme="light" data-dark-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <title>Permissions · GitHub</title>
+    <!-- 仿 GitHub 应用权限页：权限选择器中的列表标题是权限名，其他 React 列表的标题是用户内容 -->
+    <link rel="stylesheet" href="/__fixtures__/github-sim.css" />
+  </head>
+  <body class="logged-in env-production page-responsive">
+    <react-partial partial-name="integration-permission-selector" data-ssr="true">
+      <div data-target="react-partial.reactRoot">
+        <ul role="list" data-listview-component="items-list" data-fx="permission-list">
+          <li>
+            <div data-listview-item-title-container="true">
+              <h3 data-fx="permission-title"><span>Administration</span></h3>
+            </div>
+          </li>
+          <li>
+            <div data-listview-item-title-container="true">
+              <h3 data-fx="permission-rewritten"><span>Contents</span></h3>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </react-partial>
+    <react-app app-name="repos-overview">
+      <div data-target="react-app.reactRoot">
+        <ul role="list" data-listview-component="items-list" data-fx="list">
+          <li>
+            <div data-listview-item-title-container="true">
+              <h3 data-fx="list-title"><span>Administration</span></h3>
+            </div>
+          </li>
+          <li>
+            <div data-listview-item-title-container="true">
+              <h3 data-fx="list-rewritten"><span>Contents</span></h3>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </react-app>
+    <script>
+      // 模拟 React：权限标题译完后把 *-rewritten 的文字改成 Administration（characterData），
+      // 再向两个列表各插入一行（*-inserted）。完成标记：body[data-fx-dynamic="true"]，超时为 "timeout"
+      ;(() => {
+        const POLL_MS = 50
+        const TIMEOUT_MS = 10_000
+        const SOURCE = 'Contents'
+        const PERMISSION = 'Administration'
+        const deadline = Date.now() + TIMEOUT_MS
+
+        /** characterData：改写标题中已有文本节点的 nodeValue */
+        function rewrite(name) {
+          const span = document.querySelector(`[data-fx="${name}"] > span`)
+          const text = [...span.childNodes].find((node) => node.nodeType === Node.TEXT_NODE)
+          if (text) text.nodeValue = PERMISSION
+          else span.textContent = PERMISSION
+        }
+
+        /** 列表条目：div[data-listview-item-title-container] > h3 > span */
+        function insertRow(list, name) {
+          const span = document.createElement('span')
+          span.textContent = PERMISSION
+          const title = document.createElement('h3')
+          title.dataset.fx = name
+          title.append(span)
+          const container = document.createElement('div')
+          container.dataset.listviewItemTitleContainer = 'true'
+          container.append(title)
+          const item = document.createElement('li')
+          item.append(container)
+          document.querySelector(`[data-fx="${list}"]`).append(item)
+        }
+
+        const timer = setInterval(() => {
+          const label = document.querySelector('[data-fx="permission-rewritten"]').textContent.trim()
+          if (label === SOURCE && Date.now() < deadline) return
+          clearInterval(timer)
+          if (label === SOURCE) {
+            document.body.dataset.fxDynamic = 'timeout'
+            return
+          }
+          // 先改 react-app 列表：同一批变动里权限选择器内的译完时，react-app 内的也已处理
+          rewrite('list-rewritten')
+          insertRow('list', 'list-inserted')
+          rewrite('permission-rewritten')
+          insertRow('permission-list', 'permission-inserted')
+          document.body.dataset.fxDynamic = 'true'
+        }, POLL_MS)
+      })()
+    </script>
+  </body>
+</html>

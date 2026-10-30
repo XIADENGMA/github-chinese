@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en" data-color-mode="auto" data-light-theme="light" data-dark-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <title>GitHub - octo-org/hello-world: Hello world, but with extra steps · GitHub</title>
+    <meta name="description" content="Hello world, but with extra steps" />
+    <!-- 仿 GitHub 存储库首页（已登录）结构的离线夹具 -->
+    <link rel="stylesheet" href="/__fixtures__/github-sim.css" />
+    <script src="/__fixtures__/github-sim.js" defer></script>
+  </head>
+  <body class="logged-in env-production page-responsive">
+    <a href="#start-of-content" class="show-on-focus">Skip to content</a>
+
+    <react-partial partial-name="global-nav-bar" data-ssr="true" data-attempted-ssr="true">
+      <script type="application/json" data-target="react-partial.embeddedData">
+        {
+          "props": {
+            "owner": "octo-org",
+            "repo": "hello-world",
+            "tabs": ["Code", "Issues", "Pull requests", "Actions", "Projects", "Security", "Insights", "Settings"],
+            "search": { "placeholder": "Search", "label": "Search" },
+            "notifications": "Notifications"
+          }
+        }
+      </script>
+      <div data-target="react-partial.reactRoot">
+        <header class="AppHeader" role="banner">
+          <h2 class="sr-only">Navigation Menu</h2>
+          <div class="AppHeader-globalBar">
+            <button type="button" class="btn" aria-label="Open global navigation menu">☰</button>
+            <a class="AppHeader-logo" href="/" aria-label="Homepage">◆</a>
+            <nav class="AppHeader-context" aria-label="Breadcrumbs">
+              <a href="/octo-org" data-hovercard-type="organization">octo-org</a>
+              <span>/</span>
+              <a href="/octo-org/hello-world" data-hovercard-type="repository">hello-world</a>
+            </nav>
+            <div class="AppHeader-search">
+              <input
+                type="text"
+                name="q"
+                autocomplete="off"
+                placeholder="Search"
+                aria-label="Search"
+                data-fx="search"
+              />
+            </div>
+            <a class="btn" href="/notifications" aria-label="Notifications" data-fx="notifications">◎</a>
+          </div>
+
+          <nav class="UnderlineNav" aria-label="Repository" data-fx="repo-nav">
+            <ul role="list">
+              <li>
+                <a aria-current="page" data-tab-item="code" href="/octo-org/hello-world"
+                  ><span data-component="text" data-content="Code">Code</span></a
+                >
+              </li>
+              <li>
+                <a data-tab-item="issues" href="/octo-org/hello-world/issues"
+                  ><span data-component="text" data-content="Issues">Issues</span
+                  ><span data-component="counter"
+                    ><span aria-hidden="true" data-component="CounterLabel" class="Counter">546</span
+                    ><span class="sr-only">&nbsp;(<!-- -->546<!-- -->)</span></span
+                  ></a
+                >
+              </li>
+              <li>
+                <a data-tab-item="pull-requests" href="/octo-org/hello-world/pulls"
+                  ><span data-component="text" data-content="Pull requests">Pull requests</span
+                  ><span data-component="counter"
+                    ><span aria-hidden="true" data-component="CounterLabel" class="Counter">395</span
+                    ><span class="sr-only">&nbsp;(<!-- -->395<!-- -->)</span></span
+                  ></a
+                >
+              </li>
+              <li>
+                <a data-tab-item="actions" href="/octo-org/hello-world/actions"
+                  ><span data-component="text" data-content="Actions">Actions</span></a
+                >
+              </li>
+              <li>
+                <a data-tab-item="projects" href="/octo-org/hello-world/projects"
+                  ><span data-component="text" data-content="Projects">Projects</span></a
+                >
+              </li>
+              <li>
+                <a data-tab-item="security" href="/octo-org/hello-world/security"
+                  ><span data-component="text" data-content="Security">Security</span
+                  ><span data-component="counter"
+                    ><span aria-hidden="true" data-component="CounterLabel" class="Counter">1</span
+                    ><span class="sr-only">&nbsp;(<!-- -->1<!-- -->)</span></span
+                  ></a
+                >
+              </li>
+              <li>
+                <a data-tab-item="insights" href="/octo-org/hello-world/pulse"
+                  ><span data-component="text" data-content="Insights">Insights</span></a
+                >
+              </li>
+              <li>
+                <a data-tab-item="settings" href="/octo-org/hello-world/settings"
+                  ><span data-component="text" data-content="Settings">Settings</span></a
+                >
+              </li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+    </react-partial>
+
+    <div id="start-of-content"></div>
+    <turbo-frame id="repo-content-turbo-frame">
+      <react-app app-name="code-view" initial-path="/octo-org/hello-world" data-ssr="true" data-attempted-ssr="true">
+        <script type="application/json" data-target="react-app.embeddedData">
+          {
+            "payload": {
+              "repo": { "ownerLogin": "octo-org", "name": "hello-world", "visibility": "Public" },
+              "buttons": { "watch": "Watch", "fork": "Fork", "star": "Star" },
+              "overview": { "readme": "Issues and Pull requests are welcome." }
+            },
+            "title": "Settings"
+          }
+        </script>
+        <div data-target="react-app.reactRoot">
+          <div class="repo-header" id="repository-container-header">
+            <div>
+              <strong itemprop="name"
+                ><a href="/octo-org/hello-world" data-hovercard-type="repository">hello-world</a></strong
+              >
+              <span class="Label">Public</span>
+            </div>
+            <ul class="pagehead-actions">
+              <li>
+                <button type="button" class="btn" data-fx="watch">
+                  <span data-component="text" data-fx="watch-label">Watch</span><span class="Counter">12</span>
+                </button>
+              </li>
+              <li>
+                <a class="btn" href="/octo-org/hello-world/fork" data-fx="fork"
+                  ><span data-component="text" class="Button-label"
+                    >Fork<span aria-hidden="true" data-component="CounterLabel" class="Counter">3</span
+                    ><span class="sr-only">&nbsp;(3)</span></span
+                  ></a
+                >
+              </li>
+              <li>
+                <button type="button" class="btn" data-fx="star">
+                  <span data-component="text" class="Button-label"
+                    >Star<span aria-hidden="true" data-component="CounterLabel" class="Counter">42</span
+                    ><span class="sr-only">&nbsp;(42)</span></span
+                  >
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <div class="container">
+            <main class="main">
+              <div class="Box">
+                <div class="Box-header" data-fx="latest-commit">
+                  <a class="author" href="/monalisa" data-hovercard-type="user">monalisa</a>
+                  <span class="commit-message"
+                    ><a href="/octo-org/hello-world/commit/1a2b3c4">Update README.md</a></span
+                  >
+                  <relative-time datetime="2026-10-20T08:00:00Z" tense="past" title="Oct 20, 2026, 4:00 PM GMT+8"
+                    >Oct 20, 2026</relative-time
+                  >
+                </div>
+                <table aria-labelledby="folders-and-files">
+                  <caption class="sr-only" id="folders-and-files">
+                    Folders and files
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Last commit message</th>
+                      <th>Last commit date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><a href="/octo-org/hello-world/tree/main/src" aria-label="src, (Directory)">src</a></td>
+                      <td><a class="commit-message" href="/octo-org/hello-world/commit/9f8e7d6">Add greeting</a></td>
+                      <td>
+                        <relative-time datetime="2026-10-18T03:00:00Z" tense="past" title="Oct 18, 2026, 11:00 AM GMT+8"
+                          >Oct 18, 2026</relative-time
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a href="/octo-org/hello-world/blob/main/README.md" aria-label="README.md, (File)">README.md</a>
+                      </td>
+                      <td>
+                        <a class="commit-message" href="/octo-org/hello-world/commit/1a2b3c4">Update README.md</a>
+                      </td>
+                      <td>
+                        <relative-time datetime="2026-10-20T08:00:00Z" tense="past" title="Oct 20, 2026, 4:00 PM GMT+8"
+                          >Oct 20, 2026</relative-time
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div id="readme" class="Box">
+                <div class="Box-header"><h2 class="Box-title">README</h2></div>
+                <article class="markdown-body entry-content container-lg Box-body" itemprop="text" data-fx="readme">
+                  <div class="markdown-heading"><h1 class="heading-element">Hello World</h1></div>
+                  <p>Issues and Pull requests are welcome. Read the Settings section before you open an issue.</p>
+                  <h2>Settings</h2>
+                  <ul>
+                    <li>Code</li>
+                    <li>Issues</li>
+                    <li>Pull requests</li>
+                    <li>Actions</li>
+                    <li>Projects</li>
+                    <li>Security</li>
+                    <li>Insights</li>
+                    <li>Settings</li>
+                    <li>Watch</li>
+                    <li>Fork</li>
+                    <li>Star</li>
+                  </ul>
+                  <p>
+                    <a
+                      href="/octo-org/hello-world/issues"
+                      title="Issues"
+                      aria-label="Pull requests"
+                      data-fx="readme-link"
+                      >Issues</a
+                    >
+                  </p>
+                  <pre><code>git clone https://github.com/octo-org/hello-world</code></pre>
+                </article>
+              </div>
+
+              <div data-fx="dynamic-slot"></div>
+            </main>
+
+            <aside class="sidebar">
+              <h2>About</h2>
+              <p data-fx="description">Hello world, but with extra steps</p>
+              <h3 class="sr-only">Resources</h3>
+              <p><a href="#readme">Readme</a></p>
+              <p><a href="/octo-org/hello-world/activity">Activity</a></p>
+              <p>
+                <a href="/octo-org/hello-world/stargazers"><strong>42</strong> stars</a>
+              </p>
+              <p>
+                <a href="/octo-org/hello-world/watchers"><strong>12</strong> watching</a>
+              </p>
+              <p>
+                <a href="/octo-org/hello-world/forks"><strong>3</strong> forks</a>
+              </p>
+            </aside>
+          </div>
+        </div>
+      </react-app>
+    </turbo-frame>
+  </body>
+</html>

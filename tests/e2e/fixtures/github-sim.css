@@ -1,0 +1,164 @@
+/* 离线夹具的公共样式：仅为截图可读，结构类名仿 GitHub */
+body {
+  margin: 0;
+  font:
+    14px/1.5 -apple-system,
+    'Segoe UI',
+    sans-serif;
+  color: #1f2328;
+}
+
+a {
+  color: #0969da;
+  text-decoration: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.show-on-focus {
+  position: absolute;
+  left: -9999px;
+}
+
+.AppHeader {
+  padding: 12px 24px 0;
+  background: #f6f8fa;
+  border-bottom: 1px solid #d1d9e0;
+}
+
+.AppHeader-globalBar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.AppHeader-search {
+  flex: 1;
+}
+
+.UnderlineNav ul {
+  display: flex;
+  gap: 16px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.UnderlineNav a {
+  display: inline-block;
+  padding: 8px 4px;
+  color: #1f2328;
+}
+
+.UnderlineNav a[aria-current='page'] {
+  border-bottom: 2px solid #fd8c73;
+  font-weight: 600;
+}
+
+.Counter {
+  margin-left: 4px;
+  padding: 0 6px;
+  border-radius: 2em;
+  background: #818b981f;
+  font-size: 12px;
+}
+
+.repo-header,
+.toolbar {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+}
+
+.pagehead-actions {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.container {
+  display: flex;
+  gap: 24px;
+  padding: 0 24px 16px;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+}
+
+.sidebar {
+  width: 280px;
+}
+
+.btn {
+  padding: 3px 12px;
+  border: 1px solid #d1d9e0;
+  border-radius: 6px;
+  background: #f6f8fa;
+  color: #1f2328;
+  font: inherit;
+}
+
+.btn-primary {
+  background: #1f883d;
+  color: #fff;
+}
+
+.Label,
+.IssueLabel {
+  padding: 0 7px;
+  border: 1px solid #d1d9e0;
+  border-radius: 2em;
+  font-size: 12px;
+}
+
+.Box,
+.list {
+  margin: 0 0 16px;
+  padding: 0;
+  border: 1px solid #d1d9e0;
+  border-radius: 6px;
+  list-style: none;
+}
+
+.Box-header {
+  padding: 8px 16px;
+  background: #f6f8fa;
+  border-bottom: 1px solid #d1d9e0;
+}
+
+.Box-body,
+.list li {
+  padding: 8px 16px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 6px 16px;
+  border-top: 1px solid #d1d9e0;
+  text-align: left;
+}
+
+.Overlay {
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px solid #d1d9e0;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px #8c959f33;
+}

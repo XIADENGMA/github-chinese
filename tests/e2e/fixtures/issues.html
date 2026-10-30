@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en" data-color-mode="auto" data-light-theme="light" data-dark-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <title>Issues · octo-org/hello-world · GitHub</title>
+    <!-- 仿 GitHub 问题列表页（React 渲染）结构的离线夹具 -->
+    <link rel="stylesheet" href="/__fixtures__/github-sim.css" />
+    <script src="/__fixtures__/github-sim.js" defer></script>
+  </head>
+  <body class="logged-in env-production page-responsive">
+    <react-partial partial-name="global-nav-bar" data-ssr="true" data-attempted-ssr="true">
+      <script type="application/json" data-target="react-partial.embeddedData">
+        {
+          "props": {
+            "owner": "octo-org",
+            "repo": "hello-world",
+            "tabs": ["Code", "Issues", "Pull requests", "Actions", "Projects", "Security", "Insights", "Settings"]
+          }
+        }
+      </script>
+      <div data-target="react-partial.reactRoot">
+        <header class="AppHeader" role="banner">
+          <h2 class="sr-only">Navigation Menu</h2>
+          <div class="AppHeader-globalBar">
+            <a class="AppHeader-logo" href="/" aria-label="Homepage">◆</a>
+            <nav class="AppHeader-context" aria-label="Breadcrumbs">
+              <a href="/octo-org" data-hovercard-type="organization">octo-org</a>
+              <span>/</span>
+              <a href="/octo-org/hello-world" data-hovercard-type="repository">hello-world</a>
+            </nav>
+          </div>
+          <nav class="UnderlineNav" aria-label="Repository" data-fx="repo-nav">
+            <ul role="list">
+              <li>
+                <a data-tab-item="code" href="/octo-org/hello-world"
+                  ><span data-component="text" data-content="Code">Code</span></a
+                >
+              </li>
+              <li>
+                <a aria-current="page" data-tab-item="issues" href="/octo-org/hello-world/issues"
+                  ><span data-component="text" data-content="Issues">Issues</span
+                  ><span data-component="counter"
+                    ><span aria-hidden="true" data-component="CounterLabel" class="Counter">546</span
+                    ><span class="sr-only">&nbsp;(<!-- -->546<!-- -->)</span></span
+                  ></a
+                >
+              </li>
+              <li>
+                <a data-tab-item="pull-requests" href="/octo-org/hello-world/pulls"
+                  ><span data-component="text" data-content="Pull requests">Pull requests</span
+                  ><span data-component="counter"
+                    ><span aria-hidden="true" data-component="CounterLabel" class="Counter">395</span
+                    ><span class="sr-only">&nbsp;(<!-- -->395<!-- -->)</span></span
+                  ></a
+                >
+              </li>
+              <li>
+                <a data-tab-item="actions" href="/octo-org/hello-world/actions"
+                  ><span data-component="text" data-content="Actions">Actions</span></a
+                >
+              </li>
+              <li>
+                <a data-tab-item="settings" href="/octo-org/hello-world/settings"
+                  ><span data-component="text" data-content="Settings">Settings</span></a
+                >
+              </li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+    </react-partial>
+
+    <react-app
+      app-name="issues-react"
+      initial-path="/octo-org/hello-world/issues"
+      data-ssr="true"
+      data-attempted-ssr="true"
+    >
+      <script type="application/json" data-target="react-app.embeddedData">
+        {
+          "payload": {
+            "preloadedQueries": [
+              {
+                "issues": [
+                  { "number": 12, "title": "Crash when the page loads twice", "state": "OPEN" },
+                  { "number": 11, "title": "Typo in the greeting", "state": "OPEN" }
+                ]
+              }
+            ],
+            "labels": { "newIssue": "New issue" }
+          },
+          "title": "Issues"
+        }
+      </script>
+      <div data-target="react-app.reactRoot">
+        <div class="toolbar">
+          <input type="text" aria-label="Search Issues" placeholder="Search Issues" value="is:issue state:open" />
+          <a class="btn" href="/octo-org/hello-world/labels"><span>Labels</span></a>
+          <a class="btn" href="/octo-org/hello-world/milestones"><span>Milestones</span></a>
+          <a class="btn btn-primary" href="/octo-org/hello-world/issues/new/choose" data-fx="new-issue"
+            ><span>New issue</span></a
+          >
+        </div>
+        <ul class="list" aria-label="Issues">
+          <li>
+            <a href="/octo-org/hello-world/issues/12" data-testid="issue-pr-title-link"
+              ><span class="markdown-title">Crash when the page loads twice</span></a
+            >
+            <span class="IssueLabel">bug</span>
+            <div>
+              #12 · <a class="author" href="/hubot" data-hovercard-type="user">hubot</a> opened
+              <relative-time datetime="2026-10-22T09:30:00Z" tense="past" title="Oct 22, 2026, 5:30 PM GMT+8"
+                >Oct 22, 2026</relative-time
+              >
+            </div>
+          </li>
+          <li>
+            <a href="/octo-org/hello-world/issues/11" data-testid="issue-pr-title-link"
+              ><span class="markdown-title">Typo in the greeting</span></a
+            >
+            <div>
+              #11 · <a class="author" href="/monalisa" data-hovercard-type="user">monalisa</a> opened
+              <relative-time datetime="2026-10-19T02:00:00Z" tense="past" title="Oct 19, 2026, 10:00 AM GMT+8"
+                >Oct 19, 2026</relative-time
+              >
+            </div>
+          </li>
+        </ul>
+      </div>
+    </react-app>
+  </body>
+</html>
