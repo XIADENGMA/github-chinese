@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto'
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { defineConfig } from 'wxt'
 import { packTablesPlugin } from './scripts/pack-tables'
+import { stripVueStaticContentPlugin, VUE_COMPILER_OPTIONS } from './scripts/strip-vue-static-content'
 
 /** Firefox 扩展 ID：上架 AMO 后不可更改 */
 const GECKO_ID = '{3e156188-2ae6-4a69-8821-16410eba6e18}'
@@ -73,12 +74,17 @@ let buildId: string | undefined
 export default defineConfig({
   srcDir: 'src',
   modules: ['@wxt-dev/module-vue'],
+  // 模板不生成字符串化的静态片段，Vue 运行时插入它们的 innerHTML 代码随之去掉（见 scripts/strip-vue-static-content.ts）
+  vue: { vite: { template: { compilerOptions: VUE_COMPILER_OPTIONS } } },
   vite: () => {
     buildId ??= process.env.GCN_BUILD_ID || computeBuildId()
     return {
       define: { __GCN_BUILD_ID__: JSON.stringify(buildId) },
-      // 词典的 static / scoped 表改写成字符串，缩短词典脚本在 document_start 的编译与执行（见 scripts/pack-tables.ts）
-      plugins: [packTablesPlugin(`${ROOT}/src/locales`)],
+      plugins: [
+        // 词典的 static / scoped 表改写成字符串，缩短词典脚本在 document_start 的编译与执行（见 scripts/pack-tables.ts）
+        packTablesPlugin(`${ROOT}/src/locales`),
+        stripVueStaticContentPlugin(),
+      ],
     }
   },
   // 三个浏览器统一使用 MV3
@@ -88,22 +94,20 @@ export default defineConfig({
     name: '__MSG_extName__',
     description: '__MSG_extDescription__',
     default_locale: 'en',
-    // scripting：按当前语言注册词典内容脚本（页面开始解析前就绪），动态导入失败时注入词典脚本；
+    // scripting：按当前语言注册词典内容脚本（页面开始解析前就绪），动态导入失败（Firefox 不动态导入）时注入词典脚本；
     // Chromium 安装、更新后向已打开的 GitHub 标签页注入脚本（Firefox 自动注入）。Firefox 的 scripting 无安装、更新提示
     permissions: ['storage', 'scripting'],
     host_permissions: GITHUB_ORIGINS,
     action: {
       default_title: '__MSG_extName__',
     },
-    // 词典脚本由内容脚本动态导入（见 src/shared/locale-loader.ts），只对 GitHub 页面开放。
-    // Chromium 用会话随机地址，页面无法据固定地址探测扩展；Firefox 的扩展地址本就按安装随机
-    web_accessible_resources: [
-      {
-        resources: ['locale-*.js'],
-        matches: GITHUB_ORIGINS,
-        ...(browser === 'firefox' ? {} : { use_dynamic_url: true }),
-      },
-    ],
+    // 词典脚本由内容脚本动态导入（见 src/shared/locale-loader.ts），只对 GitHub 页面开放，用会话随机地址，
+    // 页面无法据固定地址探测扩展。Firefox 不动态导入（改请后台注入），不开放
+    ...(browser === 'firefox'
+      ? {}
+      : {
+          web_accessible_resources: [{ resources: ['locale-*.js'], matches: GITHUB_ORIGINS, use_dynamic_url: true }],
+        }),
     ...(browser === 'firefox'
       ? {
           browser_specific_settings: {

@@ -646,14 +646,16 @@ describe('页面翻译语言', () => {
     expect(locales.load).not.toHaveBeenCalledWith('zh-TW')
   })
 
-  it('Firefox 构建：取不到登记时先等注册的词典脚本登记；Chromium 不等', async () => {
+  it('Firefox 构建：取不到登记时先等注册的词典脚本登记，不动态导入；Chromium 不等，动态导入', async () => {
     await load()
     expect(locales.deps?.waitForRegistration).toBeUndefined()
+    expect(locales.deps?.importScript).toBeTypeOf('function')
     vi.resetModules()
     vi.stubEnv('FIREFOX', 'true')
     await load()
     const wait = locales.deps?.waitForRegistration
     expect(wait).toBeTypeOf('function')
+    expect(locales.deps?.importScript).toBeUndefined()
     // 页面已解析完：不等
     await expect(wait!()).resolves.toBeUndefined()
   })

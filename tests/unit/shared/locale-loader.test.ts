@@ -49,7 +49,7 @@ describe('createLocaleLoader', () => {
     const options = deps()
     const loader = createLocaleLoader(options)
     expect(await loader.load('zh-TW')).toBe(TW)
-    const [url] = vi.mocked(options.importScript).mock.calls[0]!
+    const [url] = vi.mocked(options.importScript!).mock.calls[0]!
     expect(url).toBe(`chrome-extension://sample/locale-zh-tw.js?build=${BUILD_ID}`)
     // 已取走：全局对象上不留登记
     expect(takeLocale('zh-TW')).toBeUndefined()
@@ -154,9 +154,16 @@ describe('等待注册的词典脚本登记（Firefox）', () => {
     vi.spyOn(document, 'readyState', 'get').mockReturnValue(state)
   }
 
-  /** Firefox 的加载器：取不到登记时先等 */
-  function firefoxDeps(overrides: Partial<LocaleLoaderDeps> = {}): LocaleLoaderDeps {
-    return deps({ waitForRegistration: () => waitForRegistration(document), ...overrides })
+  /** Firefox 的加载器：取不到登记时先等；不动态导入，请后台注入（注入的词典脚本执行时登记） */
+  function firefoxDeps(): LocaleLoaderDeps {
+    return {
+      resolveUrl: (path) => `moz-extension://sample${path}`,
+      requestInjection: vi.fn(async (locale) => {
+        registerLocale(locale, locale === 'zh-TW' ? TW : CN)
+        return true
+      }),
+      waitForRegistration: () => waitForRegistration(document),
+    }
   }
 
   /** 让已就绪的微任务跑完 */
@@ -164,46 +171,46 @@ describe('等待注册的词典脚本登记（Firefox）', () => {
     await new Promise((resolve) => setTimeout(resolve, 0))
   }
 
-  it('页面仍在解析：等词典脚本登记后取用，不动态导入', async () => {
+  it('页面仍在解析：等词典脚本登记后取用，不请后台注入', async () => {
     stubReadyState('loading')
     const options = firefoxDeps()
     const task = createLocaleLoader(options).load('zh-CN')
     await flush()
-    expect(options.importScript).not.toHaveBeenCalled()
+    expect(options.requestInjection).not.toHaveBeenCalled()
     registerLocale('zh-CN', CN)
     expect(await task).toBe(CN)
-    expect(options.importScript).not.toHaveBeenCalled()
+    expect(options.requestInjection).not.toHaveBeenCalled()
   })
 
-  it('到 DOMContentLoaded 仍没有登记：动态导入', async () => {
+  it('到 DOMContentLoaded 仍没有登记：请后台注入', async () => {
     stubReadyState('loading')
     const options = firefoxDeps()
     const task = createLocaleLoader(options).load('zh-TW')
     await flush()
-    expect(options.importScript).not.toHaveBeenCalled()
+    expect(options.requestInjection).not.toHaveBeenCalled()
     document.dispatchEvent(new Event('DOMContentLoaded'))
     expect(await task).toBe(TW)
-    expect(options.importScript).toHaveBeenCalledTimes(1)
+    expect(options.requestInjection).toHaveBeenCalledExactlyOnceWith('zh-TW')
   })
 
-  it('登记的是另一语言（注册与当前语言不一致）：醒来后动态导入当前语言', async () => {
+  it('登记的是另一语言（注册与当前语言不一致）：醒来后请后台注入当前语言', async () => {
     stubReadyState('loading')
     const options = firefoxDeps()
     const task = createLocaleLoader(options).load('zh-CN')
     registerLocale('zh-TW', TW)
     expect(await task).toBe(CN)
-    expect(options.importScript).toHaveBeenCalledTimes(1)
+    expect(options.requestInjection).toHaveBeenCalledExactlyOnceWith('zh-CN')
   })
 
-  it('已有另一语言的登记（注册的词典脚本已执行）：不等，直接动态导入', async () => {
+  it('已有另一语言的登记（注册的词典脚本已执行）：不等，直接请后台注入', async () => {
     stubReadyState('loading')
     registerLocale('zh-TW', TW)
     const options = firefoxDeps()
     expect(await createLocaleLoader(options).load('zh-CN')).toBe(CN)
-    expect(options.importScript).toHaveBeenCalledTimes(1)
+    expect(options.requestInjection).toHaveBeenCalledTimes(1)
   })
 
-  it('已取走登记（登记随之删除）后页面仍在解析时换另一语言：不等，直接动态导入', async () => {
+  it('已取走登记（登记随之删除）后页面仍在解析时换另一语言：不等，直接请后台注入', async () => {
     stubReadyState('loading')
     registerLocale('zh-CN', CN)
     const options = firefoxDeps()
@@ -211,11 +218,11 @@ describe('等待注册的词典脚本登记（Firefox）', () => {
     expect(await loader.load('zh-CN')).toBe(CN)
     const task = loader.load('zh-TW')
     await flush()
-    expect(options.importScript).toHaveBeenCalledTimes(1)
+    expect(options.requestInjection).toHaveBeenCalledTimes(1)
     expect(await task).toBe(TW)
   })
 
-  it('等到另一语言的登记、动态导入当前语言后，页面仍在解析时换回：不等，直接动态导入', async () => {
+  it('等到另一语言的登记、请后台注入当前语言后，页面仍在解析时换回：不等，直接请后台注入', async () => {
     stubReadyState('loading')
     const options = firefoxDeps()
     const loader = createLocaleLoader(options)
@@ -224,15 +231,32 @@ describe('等待注册的词典脚本登记（Firefox）', () => {
     expect(await first).toBe(CN)
     const task = loader.load('zh-TW')
     await flush()
-    expect(options.importScript).toHaveBeenCalledTimes(2)
+    expect(options.requestInjection).toHaveBeenCalledTimes(2)
     expect(await task).toBe(TW)
   })
 
-  it('页面已解析完：不等，直接动态导入', async () => {
+  it('页面已解析完：不等，直接请后台注入', async () => {
     stubReadyState('interactive')
     const options = firefoxDeps()
     expect(await createLocaleLoader(options).load('zh-CN')).toBe(CN)
-    expect(options.importScript).toHaveBeenCalledTimes(1)
+    expect(options.requestInjection).toHaveBeenCalledTimes(1)
+  })
+
+  it('后台注入失败：报错，之后可重试', async () => {
+    stubReadyState('interactive')
+    let fail = true
+    const options: LocaleLoaderDeps = {
+      ...firefoxDeps(),
+      requestInjection: vi.fn(async (locale) => {
+        if (fail) return false
+        registerLocale(locale, CN)
+        return true
+      }),
+    }
+    const loader = createLocaleLoader(options)
+    await expect(loader.load('zh-CN')).rejects.toThrow('语言包加载失败：zh-CN')
+    fail = false
+    expect(await loader.load('zh-CN')).toBe(CN)
   })
 
   it('不传等待（Chromium）：页面仍在解析也不等', async () => {

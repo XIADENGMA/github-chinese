@@ -1,9 +1,11 @@
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vitest/config'
 import { WxtVitest } from 'wxt/testing/vitest-plugin'
+import { VUE_COMPILER_OPTIONS } from './scripts/strip-vue-static-content'
 
 export default defineConfig({
-  plugins: [vue(), WxtVitest()],
+  // 模板编译选项与构建相同（见 wxt.config.ts）
+  plugins: [vue({ template: { compilerOptions: VUE_COMPILER_OPTIONS } }), WxtVitest()],
   test: {
     environment: 'happy-dom',
     // 时区固定为 GMT+8：完整时间是否写时区取决于浏览器本地时区（见 time-text.ts、common-ui/time.ts）

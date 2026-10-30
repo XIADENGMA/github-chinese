@@ -6,7 +6,7 @@
  * 取不到登记、页面仍在解析且注册的词典脚本还没执行（没有当前构建的登记，也没取到过语言包）时，
  * 先等它登记或 DOMContentLoaded（见 waitForRegistration）。
  * 没有注册（刚安装、扩展更新后尚未补回、总开关关闭时打开的页面之后开启、语言与注册的不一致）时动态导入
- * （词典脚本列在 web_accessible_resources），失败时请后台注入。
+ * （词典脚本列在 web_accessible_resources），失败时请后台注入；Firefox 不动态导入，直接请后台注入。
  * 词典脚本执行后把语言包连同构建标识登记在扩展隔离环境的全局对象上（页面脚本读不到），内容脚本取走。
  */
 import type { LocaleBundle } from '../core/types'
@@ -95,8 +95,8 @@ export function waitForRegistration(doc: Document): Promise<void> {
 export interface LocaleLoaderDeps {
   /** 扩展内路径 → 完整地址（runtime.getURL） */
   resolveUrl(path: string): string
-  /** 动态导入脚本 */
-  importScript(url: string): Promise<unknown>
+  /** 动态导入脚本；不传时不导入，直接请后台注入（Firefox：AMO 的代码检查把参数不是字面量的 import() 报为不安全调用） */
+  importScript?(url: string): Promise<unknown>
   /** 请后台注入词典脚本；成功返回 true */
   requestInjection(locale: PageLocale): Promise<boolean>
   /** 注册的词典脚本还没执行时，先等它登记再动态导入（Firefox，见 waitForRegistration）；不传时不等 */
@@ -129,14 +129,16 @@ export function createLocaleLoader(deps: LocaleLoaderDeps): LocaleLoader {
       bundle = take(locale)
       if (bundle) return bundle
     }
-    try {
-      // 地址按构建区分：扩展更新前后的实例不共用已执行过的模块；同一构建的各页面地址相同，浏览器可复用编译结果。
-      // 同一页面里同一构建的模块已执行过（不再登记）时，下面改请后台注入
-      await deps.importScript(`${deps.resolveUrl(LOCALE_SCRIPT_FILES[locale])}?build=${BUILD_ID}`)
-    } catch {
-      // 下面改请后台注入
+    if (deps.importScript) {
+      try {
+        // 地址按构建区分：扩展更新前后的实例不共用已执行过的模块；同一构建的各页面地址相同，浏览器可复用编译结果。
+        // 同一页面里同一构建的模块已执行过（不再登记）时，下面改请后台注入
+        await deps.importScript(`${deps.resolveUrl(LOCALE_SCRIPT_FILES[locale])}?build=${BUILD_ID}`)
+      } catch {
+        // 下面改请后台注入
+      }
+      bundle = take(locale)
     }
-    bundle = take(locale)
     if (!bundle && (await deps.requestInjection(locale).catch(() => false))) bundle = take(locale)
     if (!bundle) throw new Error(`语言包加载失败：${locale}`)
     return bundle

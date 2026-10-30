@@ -4,7 +4,6 @@ import { createController } from '../core/controller'
 import { createInstanceMark } from '../core/instance-mark'
 import { TURBO_RESET_EVENT, TURBO_REVISIT_EVENT, TURBO_TRANSLATING_EVENT } from '../core/turbo-bridge'
 import type { LocaleBundle } from '../core/types'
-import { isFirefoxBuild } from '../shared/extension'
 import { pageLanguageEnvironment } from '../shared/language-env'
 import { resolvePageLocale, type PageLocale } from '../shared/locale'
 import { createLocaleLoader, TIME_LANGS, waitForRegistration } from '../shared/locale-loader'
@@ -35,16 +34,19 @@ function expectsResponse(message: ContentMessage): boolean {
   return message.type === 'gcn:get-status'
 }
 
-/** 当前语言的语言包：词典脚本按需加载，动态导入失败时请后台注入 */
+/** 当前语言的语言包：词典脚本按需加载，动态导入失败（Firefox 不动态导入）时请后台注入 */
 const locales = createLocaleLoader({
   resolveUrl: (path) => browser.runtime.getURL(path as Parameters<typeof browser.runtime.getURL>[0]),
-  importScript: (url) => import(/* @vite-ignore */ url),
   requestInjection: async (locale) => {
     const message: BackgroundMessage = { type: 'gcn:inject-locale', locale }
     return isAcknowledged(await browser.runtime.sendMessage(message))
   },
-  // Firefox 的注册脚本可能还在编译，本脚本先读完存储：先等它登记。Chromium 的注册脚本在解析前同步执行，不等
-  ...(isFirefoxBuild() ? { waitForRegistration: () => waitForRegistration(document) } : {}),
+  // Firefox 的注册脚本可能还在编译，本脚本先读完存储：先等它登记。Chromium 的注册脚本在解析前同步执行，不等。
+  // Firefox 不动态导入：AMO 的代码检查把参数不是字面量的 import() 报为不安全调用。
+  // 条件直接写构建期常量（同 isFirefoxBuild）：函数调用不内联，经它判断时 Firefox 构建里仍留着 import()
+  ...(String(import.meta.env.FIREFOX) === 'true'
+    ? { waitForRegistration: () => waitForRegistration(document) }
+    : { importScript: (url: string) => import(/* @vite-ignore */ url) }),
 })
 
 /** 总开关关闭时启动用的空语言包：开启后加载完成才换上真实语言包 */
