@@ -10,7 +10,8 @@ export function joinNames(list: string): string {
 }
 
 /**
- * 帐号（/settings/admin）：变更使用者名称及确认对话方块、Patreon、汇出帐号资料、继任者、删除帐号及确认对话方块。
+ * 帐号（/settings/admin）：变更使用者名称及确认对话方块、变更使用者名称的完成页（/users/<使用者>/rename）、Patreon、
+ * 汇出帐号资料、继任者、删除帐号及确认对话方块。
  * 组织设定已收录的重新命名警告片段（unintended side effects、set up redirects for …、Renaming may take …）
  * 与 Patreon 说明、赞助词典已收录的 Patreon 按钮（Link / Unlink Patreon account、Connect with Patreon）、
  * 「Start export」不再重复；删除确认短语（delete my account）须原样输入，不收录。
@@ -31,6 +32,11 @@ export default {
     'Trademark Policy': '商標政策',
     // 「…You can find them in the <Password and authentication> page.」（page. 见 scoped）
     'Looking to manage account security settings? You can find them in the': '想管理帳號安全性設定嗎？這些設定位於',
+    // 完成页：标题现无句号，旧版带句号；提示句被链接拆开时见 inline（与组织设定的同句一致：以指向新位置）
+    'Your account has been renamed': '你的帳號已重新命名',
+    'Your account has been renamed.': '你的帳號已重新命名。',
+    'Remember to update your local repositories to point to the new location.': '記得更新本機儲存庫以指向新位置。',
+    'update your local repositories': '更新本機儲存庫',
 
     // Patreon（组织设定收录了「Connect a Patreon account for …」两个片段）：connect → 連接，link → 連結
     'Successfully connected your GitHub account with Patreon.': '已將你的 GitHub 帳號與 Patreon 連接。',
@@ -169,6 +175,8 @@ export default {
       /^Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen(\.?)$/,
       (_, dot: string) => `使用者名稱只能包含英數字元或單一連字號，且不能以連字號開頭或結尾${dot ? '。' : ''}`,
     ],
+    // 变更使用者名称的完成页：按钮文字含新使用者名称（未被元素拆开时）
+    [new RegExp(`^View ${LOGIN} settings$`), '查看 $1 的設定'],
     // Patreon：帐号名未被拆开时（GitHub Sponsors profile → GitHub 贊助個人檔案，与组织设定的片段同译）
     [
       new RegExp(
@@ -203,5 +211,11 @@ export default {
       /^We will immediately delete all of your repositor(?:y|ies) \((\d[\d,]*)\), along with all of your forks, wikis, issues, pull requests, and GitHub Pages sites\.$/,
       '我們將立即刪除你的所有儲存庫（$1 個），以及你的所有分叉、Wiki、議題、拉取請求和 GitHub 頁面網站。',
     ],
+  ],
+  // 变更使用者名称的完成页：「Remember to <a>update your local repositories</a> to point to the new location.」，
+  // 链接文字由 static 译出，拼读为「記得更新本機儲存庫以指向新位置。」；按钮里的使用者名称包在元素中时见第二条
+  inline: [
+    ['Remember to {} to point to the new location.', '記得{}以指向新位置。'],
+    ['View {} settings', '查看 {} 的設定'],
   ],
 } satisfies PageDictionary

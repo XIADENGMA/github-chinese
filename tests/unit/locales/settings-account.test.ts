@@ -1,8 +1,10 @@
 import { afterEach, describe, expect, it } from 'vitest'
 import { createMatcher, normalizeText } from '../../../src/core/matcher'
+import { detectPages } from '../../../src/core/page'
 import { createTranslator, type Translator } from '../../../src/core/translator'
 import type { PageDictionary } from '../../../src/core/types'
 import common from '../../../src/locales/zh-CN/common'
+import { zhCN } from '../../../src/locales/zh-CN/index'
 import settingsAccount from '../../../src/locales/zh-CN/settings-account'
 import { joinNames } from '../../../src/locales/zh-CN/settings-account/account'
 import { passwordProblems } from '../../../src/locales/zh-CN/settings-account/security'
@@ -97,6 +99,14 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ],
     ],
     misses: ['Username may only contain letters'],
+  },
+  // 帐户：更改用户名的完成页（/users/<用户>/rename）的按钮
+  {
+    hits: [
+      ['View octocat settings', '查看 octocat 的设置'],
+      ['View mona-lisa settings', '查看 mona-lisa 的设置'],
+    ],
+    misses: ['View octocat profile', 'View your account settings'],
   },
   // 帐户：Patreon、导出、继任者（GitHub Sponsors profile → GitHub 赞助个人资料）
   {
@@ -1188,6 +1198,12 @@ describe('settings-account 静态词条', () => {
     ['We only support PNG, GIF, or JPG pictures.', '仅支持 PNG、GIF 或 JPG 图片。'],
     // 帐户
     ['Change username', '更改用户名'],
+    ['Your account has been renamed', '你的帐户已重命名'],
+    ['Your account has been renamed.', '你的帐户已重命名。'],
+    [
+      'Remember to update your local repositories to point to the new location.',
+      '记得更新本地存储库，使其指向新位置。',
+    ],
     ['Export account data', '导出帐户数据'],
     ['Successor settings', '继任者设置'],
     ['Delete account', '删除帐户'],
@@ -1534,6 +1550,51 @@ describe('settings-account 页面渲染', () => {
     )
     expect(translator?.drainUntranslated()).toEqual([])
   })
+
+  it('更改用户名的完成页：被链接拆开的提示句整句翻译，按钮里的用户名保持原文', () => {
+    // 结构同 /users/<用户>/rename：标题、提示句（链接在句中）、按钮（用户名未拆开、包在元素中两种）
+    run(`<div class="blankslate">
+      <h2 id="title">Your account has been renamed</h2>
+      <p id="hint">Remember to <a href="https://docs.github.com/">update your local repositories</a> to point to the new location.</p>
+      <a id="plain" class="btn btn-primary" href="/settings/admin">View octocat settings</a>
+      <a id="wrapped" class="btn btn-primary" href="/settings/admin">View <span>octocat</span> settings</a>
+    </div>`)
+    const shown = (id: string): string | undefined => document.getElementById(id)?.textContent ?? undefined
+    expect(shown('title')).toBe('你的帐户已重命名')
+    expect(shown('hint')).toBe('记得更新本地存储库，使其指向新位置。')
+    expect(document.querySelector('#hint a')?.textContent).toBe('更新本地存储库')
+    expect(shown('plain')).toBe('查看 octocat 的设置')
+    expect(shown('wrapped')).toBe('查看 octocat 的设置')
+    expect(document.querySelector('#wrapped span')?.textContent).toBe('octocat')
+  })
+
+  it('更改用户名的完成页：地址按 settings 作用域识别，页脚由 common 译出', () => {
+    document.body.innerHTML = `<main>
+      <h2 id="title">Your account has been renamed</h2>
+      <a id="plain" class="btn btn-primary" href="/settings/admin">View octocat settings</a>
+      <a id="enterprise" href="/enterprises/octo-inc/settings">View enterprise settings</a>
+    </main>
+    <footer><ul>
+      <li><a id="terms" href="https://docs.github.com/site-policy">Terms</a></li>
+      <li><a id="docs" href="https://docs.github.com/">Docs</a></li>
+      <li><button id="cookies" type="button">Manage cookies</button></li>
+      <li><button id="dnsmpi" type="button">Do not share my personal information</button></li>
+    </ul></footer>`
+    const pages = detectPages(new URL('https://github.com/users/octocat/rename'))
+    translator = createTranslator({ matcher: createMatcher(zhCN), host: window, resolvePages: () => pages })
+    translator.start()
+    const shown = (id: string): string | undefined => document.getElementById(id)?.textContent ?? undefined
+    expect(shown('title')).toBe('你的帐户已重命名')
+    expect(shown('plain')).toBe('查看 octocat 的设置')
+    // 已收录的同形原文以 static 为准，不走按钮的正则
+    expect(shown('enterprise')).toBe('查看企业设置')
+    expect(['terms', 'docs', 'cookies', 'dnsmpi'].map(shown)).toEqual([
+      '条款',
+      '文档',
+      '管理 Cookie',
+      '不要共享我的个人信息',
+    ])
+  })
 })
 
 describe('settings-account 繁体（zh-TW 语言包）', () => {
@@ -1577,5 +1638,25 @@ describe('settings-account 繁体（zh-TW 语言包）', () => {
     expect(twMatcher.translate('Actions Windows', ['common', 'org-settings'])).toBe('動作 Windows')
     expect(twMatcher.translate('Actions Linux 4-core', ['common', 'org-settings'])).toBe('動作 Linux 4 核心')
     expect(twMatcher.translate('Codespaces compute 8-core', ['common', 'org-settings'])).toBe('程式碼空間的運算 8 核心')
+  })
+
+  it('变更使用者名称的完成页（/users/<使用者>/rename）', () => {
+    const pages = detectPages(new URL('https://github.com/users/octocat/rename'))
+    expect(twMatcher.translate('Your account has been renamed', pages)).toBe('你的帳號已重新命名')
+    expect(twMatcher.translate('Remember to update your local repositories to point to the new location.', pages)).toBe(
+      '記得更新本機儲存庫以指向新位置。',
+    )
+    expect(twMatcher.translate('View octocat settings', pages)).toBe('查看 octocat 的設定')
+    document.body.innerHTML = `<p id="hint">Remember to <a href="https://docs.github.com/">update your local repositories</a> to point to the new location.</p>
+      <a id="wrapped" href="/settings/admin">View <span>octocat</span> settings</a>`
+    const translator = createTranslator({ matcher: twMatcher, host: window, resolvePages: () => pages })
+    translator.start()
+    try {
+      expect(document.getElementById('hint')?.textContent).toBe('記得更新本機儲存庫以指向新位置。')
+      expect(document.getElementById('wrapped')?.textContent).toBe('查看 octocat 的設定')
+    } finally {
+      translator.stop()
+      document.body.innerHTML = ''
+    }
   })
 })

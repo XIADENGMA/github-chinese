@@ -10,7 +10,8 @@ export function joinNames(list: string): string {
 }
 
 /**
- * 帐户（/settings/admin）：更改用户名及确认对话框、Patreon、导出帐户数据、继任者、删除帐户及确认对话框。
+ * 帐户（/settings/admin）：更改用户名及确认对话框、更改用户名的完成页（/users/<用户>/rename）、Patreon、导出帐户数据、
+ * 继任者、删除帐户及确认对话框。
  * 组织设置已收录的重命名警告片段（unintended side effects、set up redirects for …、Renaming may take …）
  * 与 Patreon 说明、赞助词典已收录的 Patreon 按钮（Link / Unlink Patreon account、Connect with Patreon）、
  * 「Start export」不再重复；删除确认短语（delete my account）须原样输入，不收录。
@@ -29,6 +30,11 @@ export default {
     'Change my username': '更改我的用户名',
     'Trademark Policy': '商标政策',
     'Looking to manage account security settings? You can find them in the': '想管理帐户安全设置？请前往',
+    // 完成页：标题现无句号，旧版带句号；提示句被链接拆开时见 inline
+    'Your account has been renamed': '你的帐户已重命名',
+    'Your account has been renamed.': '你的帐户已重命名。',
+    'Remember to update your local repositories to point to the new location.': '记得更新本地存储库，使其指向新位置。',
+    'update your local repositories': '更新本地存储库',
 
     // Patreon（组织设置收录了 “Connect a Patreon account for …” 两个片段）：connect → 连接，link → 链接
     'Successfully connected your GitHub account with Patreon.': '已将你的 GitHub 帐户与 Patreon 连接。',
@@ -166,6 +172,8 @@ export default {
       /^Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen(\.?)$/,
       (_, dot: string) => `用户名只能包含字母数字字符或单个连字符，且不能以连字符开头或结尾${dot ? '。' : ''}`,
     ],
+    // 更改用户名的完成页：按钮文字含新用户名（未被元素拆开时）
+    [new RegExp(`^View ${LOGIN} settings$`), '查看 $1 的设置'],
     // Patreon：帐户名未被拆开时（GitHub Sponsors profile → GitHub 赞助个人资料）
     [
       new RegExp(
@@ -200,5 +208,11 @@ export default {
       /^We will immediately delete all of your repositor(?:y|ies) \((\d[\d,]*)\), along with all of your forks, wikis, issues, pull requests, and GitHub Pages sites\.$/,
       '我们将立即删除你的所有存储库（$1 个），以及你的所有复刻、Wiki、议题、拉取请求和 GitHub 页面站点。',
     ],
+  ],
+  // 更改用户名的完成页：「Remember to <a>update your local repositories</a> to point to the new location.」，
+  // 链接文字由 static 译出，拼读为“记得更新本地存储库，使其指向新位置。”；按钮里的用户名包在元素中时见第二条
+  inline: [
+    ['Remember to {} to point to the new location.', '记得{}，使其指向新位置。'],
+    ['View {} settings', '查看 {} 的设置'],
   ],
 } satisfies PageDictionary

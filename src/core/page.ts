@@ -207,6 +207,8 @@ const OWNER_SECTION: Readonly<Record<string, readonly PageKey[]>> = {
   dashboard: ['dashboard'],
   invitation: ['new'],
   succession: ['new'],
+  // 更改用户名的完成页：/users/<用户>/rename，与帐户设置（/settings/admin）同词典
+  rename: ['settings'],
   // 组织安全概览：/orgs/<org>/security/overview、coverage、alerts/…、campaigns/…
   security: ['security'],
 }

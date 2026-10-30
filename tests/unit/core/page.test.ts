@@ -41,6 +41,7 @@ describe('detectPages', () => {
     ['https://github.com/vuejs/core/transfer', ['common', 'repository', 'new']],
     ['https://github.com/orgs/vuejs/invitation', ['common', 'organization', 'new']],
     ['https://github.com/users/octocat/succession/invitation', ['common', 'profile', 'new']],
+    ['https://github.com/users/octocat/rename', ['common', 'profile', 'settings']],
     ['https://github.com/organizations/vuejs/repositories/new', ['common', 'new']],
     ['https://github.com/organizations/vuejs/repositories', ['common', 'organization']],
     ['https://github.com/account/organizations/new', ['common', 'new']],
