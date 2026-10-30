@@ -1,0 +1,68 @@
+import type { Messages } from './zh-CN'
+
+/** 扩展界面文案：英文（浏览器界面语言不是中文时使用） */
+export default {
+  appName: 'GitHub Chinese',
+
+  enable: 'Enable',
+  status: 'Status',
+  stateLoading: 'Loading',
+  stateUnauthorized: 'Not authorized',
+  stateUnavailable: 'Unavailable',
+  stateNotReady: 'Not ready',
+  stateTranslated: 'Translated',
+  stateExcluded: 'Excluded',
+  stateDisabled: 'Disabled',
+  reload: 'Reload',
+  authorize: 'Authorize',
+  excludePage: 'Exclude page',
+  includePage: 'Include page',
+  rules: 'Rules',
+  saveFailed: 'Save failed',
+  authorizeFailed: 'Authorization failed',
+  reloadFailed: 'Reload failed',
+  openFailed: 'Open failed',
+
+  appearanceCurrent: 'Appearance: {mode}',
+  themeAuto: 'Auto',
+  themeLight: 'Light',
+  themeDark: 'Dark',
+
+  general: 'General',
+  translateTime: 'Localize times',
+  translateTitle: 'Translate titles',
+  languageSection: 'Language',
+  uiLanguage: 'Interface language',
+  pageLanguage: 'Translation language',
+  autoOption: 'Auto ({name})',
+  languageZhCN: 'Simplified Chinese',
+  languageZhTW: 'Traditional Chinese',
+  languageEn: 'English',
+
+  excludedPaths: 'Excluded paths',
+  save: 'Save',
+  saved: 'Saved',
+  invalidFormat: 'Invalid format',
+
+  customEntries: 'Custom entries',
+  import: 'Import',
+  export: 'Export',
+  source: 'Source',
+  target: 'Translation',
+  add: 'Add',
+  search: 'Search',
+  actions: 'Actions',
+  delete: 'Delete',
+  deleteEntry: 'Delete {source}',
+  noEntries: 'No entries',
+  notFound: 'Not found',
+  exists: 'Already exists',
+  readFailed: 'Read failed',
+  loadFailed: 'Load failed',
+  imported: 'Imported {count}',
+
+  about: 'About',
+  githubRepository: 'GitHub repository',
+
+  badgeOff: 'OFF',
+} satisfies Messages

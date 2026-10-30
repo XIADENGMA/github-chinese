@@ -1,0 +1,247 @@
+/* 全局主题：Primer 风格的颜色变量与基础样式。外观默认跟随浏览器明暗，<html data-theme> 可固定为浅色或深色 */
+
+:root {
+  color-scheme: light dark;
+  --gcn-font-latin: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial;
+  /* 中文字体按简繁分开：雅黑、苹方 SC 没有繁体字形变体，繁体界面用它们会显示大陆字形 */
+  --gcn-font-sc: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei';
+  --gcn-font-tc: 'PingFang TC', 'Microsoft JhengHei';
+  --gcn-font: var(--gcn-font-latin), var(--gcn-font-sc), sans-serif;
+  --gcn-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+
+  /* 尺寸。触屏（Firefox Android 等）上控件加高，见文件末尾 */
+  --gcn-radius: 6px;
+  --gcn-radius-lg: 8px;
+  --gcn-radius-overlay: 12px;
+  --gcn-control-sm: 28px;
+  --gcn-control-md: 32px;
+
+  /* 动效：悬停、按下等状态切换用 fast；开关滑块等位移用 base，缓出 */
+  --gcn-ease: cubic-bezier(0.3, 0, 0.5, 1);
+  --gcn-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --gcn-duration-fast: 80ms;
+  --gcn-duration-base: 200ms;
+
+  /* 文字与背景 */
+  --gcn-fg: light-dark(#1f2328, #f0f6fc);
+  --gcn-fg-muted: light-dark(#59636e, #9198a1);
+  --gcn-fg-disabled: light-dark(#818b98, #656c76);
+  --gcn-bg: light-dark(#ffffff, #0d1117);
+  --gcn-bg-muted: light-dark(#f6f8fa, #151b23);
+  --gcn-bg-disabled: light-dark(#eff2f5, #212830);
+  --gcn-border: light-dark(#d1d9e0, #3d444d);
+  --gcn-border-muted: light-dark(#d1d9e0b3, #3d444db3);
+  --gcn-border-emphasis: light-dark(#818b98, #656c76);
+  --gcn-accent: light-dark(#0969da, #4493f8);
+  --gcn-focus: light-dark(#0969da, #1f6feb);
+  --gcn-selection: light-dark(#0969da33, #1f6febb3);
+  --gcn-scrollbar: light-dark(#818b9899, #656c7699);
+  --gcn-scrollbar-hover: light-dark(#59636ecc, #9198a1cc);
+  /* 阴影：按钮外投影（静止）与顶部高光；输入类控件用内阴影 */
+  --gcn-shadow-sm: 0 1px 0 0 light-dark(#1f23280a, #0000);
+  --gcn-shadow-inset: inset 0 1px 0 0 light-dark(#1f23280a, #0104093d);
+  --gcn-highlight: inset 0 1px 0 0 light-dark(#ffffff40, #ffffff08);
+
+  /* 浮层（下拉列表） */
+  --gcn-overlay-bg: light-dark(#ffffff, #151b23);
+  --gcn-overlay-border: light-dark(#d1d9e0b3, #3d444d);
+  --gcn-shadow-overlay: 0 6px 12px -3px light-dark(#25292e0a, #01040966), 0 6px 18px 0 light-dark(#25292e1f, #01040966);
+
+  /* 状态色 */
+  --gcn-success-fg: light-dark(#1a7f37, #3fb950);
+  --gcn-success-bg: light-dark(#dafbe1, #2ea04326);
+  --gcn-attention-fg: light-dark(#9a6700, #d29922);
+  --gcn-attention-bg: light-dark(#fff8c5, #bb800926);
+  --gcn-danger-fg: light-dark(#d1242f, #fa5e55);
+  --gcn-danger-bg: light-dark(#ffebe9, #f8514926);
+  --gcn-neutral-bg: light-dark(#818b981f, #656c7633);
+
+  /* 按钮 */
+  --gcn-btn-fg: light-dark(#25292e, #f0f6fc);
+  --gcn-btn-bg: light-dark(#f6f8fa, #212830);
+  --gcn-btn-hover-bg: light-dark(#eff2f5, #262c36);
+  --gcn-btn-active-bg: light-dark(#e6eaef, #2a313c);
+  --gcn-btn-border: light-dark(#d1d9e0, #3d444d);
+  --gcn-primary-fg: #ffffff;
+  --gcn-primary-bg: light-dark(#1f883d, #238636);
+  --gcn-primary-hover-bg: light-dark(#1c8139, #29903b);
+  --gcn-primary-active-bg: light-dark(#197935, #2e9a40);
+  --gcn-primary-disabled-bg: light-dark(#95d8a6, #105823);
+  --gcn-primary-disabled-fg: light-dark(#ffffffcc, #ffffff66);
+  --gcn-primary-border: light-dark(#1f232826, #ffffff1a);
+  --gcn-primary-shadow: 0 1px 0 0 light-dark(#1f23281a, #0000);
+  --gcn-danger-hover-bg: light-dark(#d1242f, #b62324);
+  --gcn-danger-active-bg: light-dark(#a40e26, #8e1519);
+  --gcn-invisible-hover-bg: light-dark(#818b981a, #656c7633);
+  --gcn-invisible-active-bg: light-dark(#818b9826, #656c7640);
+
+  /* 开关 */
+  --gcn-switch-off: light-dark(#818b98, #656c76);
+  --gcn-switch-off-hover: light-dark(#59636e, #9198a1);
+  --gcn-switch-on: light-dark(#0969da, #1f6feb);
+  --gcn-switch-on-hover: light-dark(#0860ca, #388bfd);
+  --gcn-knob: light-dark(#ffffff, #f0f6fc);
+}
+
+:root:lang(zh-TW) {
+  --gcn-font: var(--gcn-font-latin), var(--gcn-font-tc), sans-serif;
+}
+
+/* 手动选择的外观：颜色变量用 light-dark()，随 color-scheme 取浅色或深色值 */
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+/* 浏览器自带的表面（选中文字、原生控件）也取主题色；滚动条见下方 */
+:root {
+  accent-color: var(--gcn-accent);
+}
+
+/*
+ * 滚动条：取主题色，两端不显示箭头按钮。
+ * Chromium（Chrome、Edge）用 ::-webkit-scrollbar 自绘；不设 scrollbar-color：设了之后自绘失效，Windows 上仍有箭头
+ */
+@supports selector(::-webkit-scrollbar) {
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  /* 透明边框留出两侧空隙：可拖动的范围仍是整条宽度 */
+  ::-webkit-scrollbar-thumb {
+    background: var(--gcn-scrollbar) padding-box;
+    border: 3px solid transparent;
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover,
+  ::-webkit-scrollbar-thumb:active {
+    background-color: var(--gcn-scrollbar-hover);
+  }
+}
+
+/* Firefox：细滚动条不带箭头按钮。scrollbar-width 不继承，逐个元素设置 */
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--gcn-scrollbar) transparent;
+  }
+}
+
+::selection {
+  background: var(--gcn-selection);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--gcn-font);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--gcn-fg);
+  background: var(--gcn-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gcn-focus);
+  outline-offset: 2px;
+}
+
+/* 输入框、多行输入框、下拉框共用的外观（ui/ 下的组件自带此类名） */
+.ui-field {
+  width: 100%;
+  min-height: var(--gcn-control-md);
+  padding: 5px 12px;
+  font: inherit;
+  line-height: 20px;
+  color: var(--gcn-fg);
+  background: var(--gcn-bg);
+  border: 1px solid var(--gcn-border);
+  border-radius: var(--gcn-radius);
+  box-shadow: var(--gcn-shadow-inset);
+  caret-color: var(--gcn-accent);
+  transition:
+    border-color var(--gcn-duration-fast) var(--gcn-ease),
+    background-color var(--gcn-duration-fast) var(--gcn-ease);
+}
+
+.ui-field::placeholder {
+  color: var(--gcn-fg-muted);
+  opacity: 1;
+}
+
+.ui-field:hover:not(:disabled, :focus-visible) {
+  border-color: var(--gcn-border-emphasis);
+}
+
+.ui-field:focus-visible {
+  outline-offset: -1px;
+  border-color: var(--gcn-focus);
+}
+
+.ui-field[aria-invalid='true'] {
+  border-color: var(--gcn-danger-fg);
+}
+
+.ui-field[aria-invalid='true']:focus-visible {
+  outline-color: var(--gcn-danger-fg);
+}
+
+.ui-field:disabled {
+  color: var(--gcn-fg-disabled);
+  background: var(--gcn-bg-disabled);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 触屏：控件加高到便于点按的尺寸（按钮、输入框、下拉框都按这两个变量取高度） */
+@media (pointer: coarse) {
+  :root {
+    --gcn-control-sm: 36px;
+    --gcn-control-md: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-field {
+    transition: none;
+  }
+}
