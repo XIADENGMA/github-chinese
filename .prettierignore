@@ -1,0 +1,6 @@
+.output
+.wxt
+.harvest
+coverage
+bun.lock
+.vitest
