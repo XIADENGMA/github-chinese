@@ -1,0 +1,285 @@
+import type { PageDictionary } from '../../../core/types'
+
+const ORG = '([\\w.-]+)'
+const BRANCH = '([\\w./-]+)'
+
+/**
+ * 代码、规划和自动化（Copilot、Actions、Web 钩子除外）：存储库常规设置（默认分支、提交签署、默认标签）、
+ * 自定义属性、规划（议题类型、议题字段）、Codespaces、沙盒、讨论、软件包、Pages、项目、
+ * 托管计算网络。
+ * 个人设置、存储库设置、项目、议题标签已收录为 static 的词条（默认分支说明、软件包与 Pages 域验证、
+ * 项目字段、标签表单等）不再重复，译法以那里为准。
+ */
+export default {
+  static: {
+    // 存储库：默认分支
+    'Choose the default branch for new repositories in this organization. You might want to change the default name due to different workflows, or because your integrations still require “master” as the default branch name. You can always change the default branch name on individual repositories.':
+      '為此組織中的新儲存庫選擇預設分支。你可能因為工作流程不同，或整合仍要求以「master」作為預設分支名稱，而想變更預設名稱。你隨時可以變更個別儲存庫的預設分支名稱。',
+    'Change default branch name now': '立即變更預設分支名稱',
+
+    // 存储库：提交签署
+    'Commit signoff': '提交簽署',
+    "Choose whether repositories will require contributors to sign off on commits they make through GitHub's web interface. Signing off is a way for contributors to affirm that their commit complies with the repository's terms, commonly the":
+      '選擇儲存庫是否要求貢獻者簽署透過 GitHub 網頁介面所做的提交。簽署是貢獻者確認其提交符合儲存庫條款的一種方式，通常是',
+    'Choose whether repositories will require contributors to sign off on commits they make through GitHub’s web interface. Signing off is a way for contributors to affirm that their commit complies with the repository’s terms, commonly the':
+      '選擇儲存庫是否要求貢獻者簽署透過 GitHub 網頁介面所做的提交。簽署是貢獻者確認其提交符合儲存庫條款的一種方式，通常是',
+    'Developer Certificate of Origin (DCO)': '開發人員來源證明 (DCO)',
+    'Learn more about signing off on commits': '瞭解提交簽署',
+    'Require signoff on web-based commits for all repositories in this organization':
+      '此組織中的所有儲存庫都要求簽署網頁提交',
+    'Each repository chooses whether to require signoff on web-based commits': '由各儲存庫自行選擇是否要求簽署網頁提交',
+    'Commit signoff settings were updated.': '已更新提交簽署設定。',
+    'Require contributors to sign off on web-based commits': '要求貢獻者簽署網頁提交',
+
+    // 存储库：默认标签
+    'Repository labels': '儲存庫標籤',
+    'Set the labels that will be included when a new repository is created in this organization.':
+      '設定在此組織中建立新儲存庫時要包含的標籤。',
+    'Learn more about managing default labels for your organization.': '瞭解如何管理組織的預設標籤。',
+    'Are you sure? Deleting a label will remove as a default, and no future repositories will receive this label when created.':
+      '確定嗎？刪除後，此標籤將不再是預設標籤，日後建立的儲存庫都不會包含此標籤。',
+
+    // 自定义属性
+    'Custom properties allow you to decorate your repositories with information such as compliance frameworks, data sensitivity, or project details.':
+      '自訂屬性可讓你為儲存庫加上合規架構、資料敏感度或專案詳細資料等資訊。',
+    'New property': '新增屬性',
+    'Set values': '設定值',
+    'Save property': '儲存屬性',
+    'Delete property': '刪除屬性',
+    'Edit property': '編輯屬性',
+    'Edit properties': '編輯屬性',
+    'Allowed values': '允許的值',
+    'Default value': '預設值',
+    'Allow repository actors to set this property': '允許儲存庫執行者設定此屬性',
+    'When enabled, repository users and apps with the repository-level "custom properties" fine-grained permission will be able to set and update the property value for their repository.':
+      '啟用後，具有儲存庫層級「自訂屬性」精細權限的儲存庫使用者和應用程式可以為其儲存庫設定並更新屬性值。',
+    'Require this property for all repositories': '要求所有儲存庫設定此屬性',
+    'Repositories that don’t have an explicit value for this property will inherit the default value.':
+      '未明確設定此屬性值的儲存庫將繼承預設值。',
+    "Repositories that don't have an explicit value for this property will inherit the default value.":
+      '未明確設定此屬性值的儲存庫將繼承預設值。',
+    'Require explicit user-specified values': '要求使用者明確指定值',
+    'Accept suggestion': '接受建議',
+    'True/false': '真/假',
+    'No custom properties': '沒有自訂屬性',
+    'Repository custom property suggestions': '儲存庫自訂屬性建議',
+
+    // 规划：议题类型、议题字段
+    'Create new type': '建立新類型',
+    'Type name': '類型名稱',
+    'Pinned issue fields': '已釘選的議題欄位',
+    'Field Visibility': '欄位可見度',
+    'Field visibility': '欄位可見度',
+    'Organization only': '僅限組織',
+    'Pin to types': '釘選到類型',
+    'Issues without a type': '沒有類型的議題',
+    'Save field': '儲存欄位',
+    'Single-select': '單選',
+
+    // Codespaces
+    'To manage Codespace ownership settings, please': '若要管理程式碼空間擁有權設定，請',
+    'to enable your organization.': '來為你的組織啟用。',
+    'Codespaces access': '程式碼空間存取權',
+    "Manage access to GitHub Codespaces for your organization's members on private and internal repositories. Codespaces are always available on public repositories.":
+      '管理組織成員在私人和內部儲存庫中使用 GitHub 程式碼空間的存取權。公開儲存庫一律可以使用程式碼空間。',
+    'Manage access to GitHub Codespaces for your organization’s members on private and internal repositories. Codespaces are always available on public repositories.':
+      '管理組織成員在私人和內部儲存庫中使用 GitHub 程式碼空間的存取權。公開儲存庫一律可以使用程式碼空間。',
+    // 「By enabling Codespaces, you agree to GitHub’s」<a>条款</a>「and approve of these terms …」：原文无逗号，译文不加
+    'By enabling Codespaces, you agree to GitHub’s': '啟用程式碼空間即表示你同意 GitHub 的',
+    "By enabling Codespaces, you agree to GitHub's": '啟用程式碼空間即表示你同意 GitHub 的',
+    'additional products and features terms': '附加產品和功能條款',
+    'and approve of these terms on behalf of your organization.': '並代表你的組織認可這些條款。',
+    'Disable GitHub Codespaces for all organization owned private and internal repositories':
+      '為組織擁有的所有私人和內部儲存庫停用 GitHub 程式碼空間',
+    'Enable for specific members or teams': '為特定成員或團隊啟用',
+    'Enable GitHub Codespaces for specific organization members or teams on all organization owned private and internal repositories':
+      '為特定組織成員或團隊在組織擁有的所有私人和內部儲存庫中啟用 GitHub 程式碼空間',
+    'Enable for all members': '為所有成員啟用',
+    'Enable GitHub Codespaces for all organization members on all organization owned private and internal repositories':
+      '為所有組織成員在組織擁有的所有私人和內部儲存庫中啟用 GitHub 程式碼空間',
+    'Enable for all members and outside collaborators': '為所有成員和外部協作者啟用',
+    'Enable GitHub Codespaces for all organization members and outside collaborators on all organization owned private and internal repositories':
+      '為所有組織成員和外部協作者在組織擁有的所有私人和內部儲存庫中啟用 GitHub 程式碼空間',
+    'Codespace ownership': '程式碼空間擁有權',
+    'Control who owns codespaces created by your organization’s members on organization owned repositories. Codespace ownership dictates who is billed for usage, whose policies apply, and where audit logs are sent.':
+      '控制組織成員在組織擁有的儲存庫中建立的程式碼空間歸誰所有。程式碼空間擁有權決定使用量向誰計費、適用誰的政策，以及稽核記錄傳送至何處。',
+    "Control who owns codespaces created by your organization's members on organization owned repositories. Codespace ownership dictates who is billed for usage, whose policies apply, and where audit logs are sent.":
+      '控制組織成員在組織擁有的儲存庫中建立的程式碼空間歸誰所有。程式碼空間擁有權決定使用量向誰計費、適用誰的政策，以及稽核記錄傳送至何處。',
+    'Organization ownership': '組織擁有權',
+    'All codespaces created by your organization’s members on your organization’s repositories are owned by the organization':
+      '組織成員在組織儲存庫中建立的所有程式碼空間都歸組織所有',
+    "All codespaces created by your organization's members on your organization's repositories are owned by the organization":
+      '組織成員在組織儲存庫中建立的所有程式碼空間都歸組織所有',
+    'User ownership': '使用者擁有權',
+    'All codespaces created by your organization’s members on your organization’s repositories are owned by the creating member':
+      '組織成員在組織儲存庫中建立的所有程式碼空間都歸建立者所有',
+    "All codespaces created by your organization's members on your organization's repositories are owned by the creating member":
+      '組織成員在組織儲存庫中建立的所有程式碼空間都歸建立者所有',
+    'Any codespaces created on organization owned repositories and owned by organization members or collaborators with codespaces access will transfer ownership to your organization.':
+      '在組織擁有的儲存庫中建立、且歸具有程式碼空間存取權的組織成員或協作者所有的程式碼空間，擁有權將轉移給你的組織。',
+    'All codespaces currently owned by your organization will transfer ownership to the creating user.':
+      '你的組織目前擁有的所有程式碼空間，擁有權都將轉移給建立者。',
+    'Update GitHub Codespaces ownership settings?': '要更新 GitHub 程式碼空間擁有權設定嗎？',
+    'Codespace policies': '程式碼空間政策',
+    'Create Policy': '建立政策',
+    'Create policy': '建立政策',
+    'Policy name': '政策名稱',
+    'Policy name is too long (maximum is 64 characters)': '政策名稱過長（上限為 64 個字元）',
+    "Policy name can't be blank": '政策名稱不得空白',
+    'Policy name can’t be blank': '政策名稱不得空白',
+    'Add constraint': '新增限制條件',
+    'Machine types': '機器類型',
+    'Maximum codespaces per user': '每位使用者的程式碼空間數量上限',
+    'Maximum idle timeout': '閒置逾時上限',
+    'Retention period': '保留期限',
+    'Base images': '基底映像檔',
+    'Port visibility': '連接埠可見度',
+    'Change policy target': '變更政策目標',
+    'Delete policy': '刪除政策',
+
+    // 沙盒
+    'Cloud sandbox access': '雲端沙箱存取權',
+    "Manage cloud sandbox access for your organization's members.": '管理組織成員的雲端沙箱存取權。',
+    'Manage cloud sandbox access for your organization’s members.': '管理組織成員的雲端沙箱存取權。',
+    'If preview features are enabled, you agree to the': '啟用預覽功能即表示你同意',
+    'Pre-Release Terms': '發行前版本條款',
+    'Cloud sandbox access is not available for organization members.': '組織成員無法使用雲端沙箱。',
+    'Members of this organization can use cloud sandboxes.': '此組織的成員可以使用雲端沙箱。',
+
+    // 讨论
+    'Discussions for your organization': '組織討論',
+    'Setting up Discussions for your organization will allow you to broadcast updates, answer questions, and hold conversations for the entire organization.':
+      '為組織設定討論後，你可以向整個組織發布最新動態、回答問題和展開對話。',
+    'Enable discussions for this organization': '為此組織啟用討論',
+    'Choose a source repository that will host the discussions.': '選擇存放討論的來源儲存庫。',
+    // 原文界面名无引号，译文不加
+    'All discussions on the source repository will be surfaced to the organization Discussions tab.':
+      '來源儲存庫中的所有討論都將顯示在組織的討論分頁中。',
+    'Permissions from the repository will be applied to the organization Discussions. By default, all members of the organization will be able to create and comment on discussions.':
+      '儲存庫的權限將套用至組織討論。預設情況下，組織的所有成員都可以建立討論並留言。',
+    'Members can now share updates or ask questions to the entire organization.':
+      '成員現在可以向整個組織分享最新動態或提問。',
+    'For more information, see our documentation.': '詳情請參閱我們的說明文件。',
+    'Choose a repository': '選擇儲存庫',
+    'Search for a repository': '搜尋儲存庫',
+    'Organization discussions has been set up!': '組織討論已設定完成！',
+
+    // 项目
+    'Projects on GitHub help you organize and prioritize your work. You can create projects for specific feature work, comprehensive roadmaps, or even release checklists.':
+      'GitHub 上的專案可協助你整理工作並排定優先順序。你可以為特定功能的開發工作、完整的藍圖，甚至發行版本檢查清單建立專案。',
+    'Enable Projects for the organization': '為組織啟用專案',
+    'This allows members to create projects for the': '這可讓成員為',
+    'organization. Members can create projects to organize and track issues from any':
+      '組織建立專案。成員可以建立專案來整理並追蹤任何',
+    '-owned repository.': '所擁有儲存庫中的議題。',
+    'Allow members to change project visibilities for this organization': '允許成員變更此組織的專案可見度',
+    'If enabled, members with admin permissions on a project can make the project public or private. If disabled, only organization owners can make the project public or private. All projects are private by default.':
+      '啟用後，擁有專案管理員權限的成員可以將專案設為公開或私人。停用後，只有組織擁有者可以將專案設為公開或私人。所有專案預設為私人。',
+    'Recommended templates': '建議的範本',
+    'Customize a selection of recommended project templates for this organization. These templates will be surfaced first when a member of the organization creates a new project.':
+      '為此組織自訂一組建議的專案範本。組織成員建立新專案時，會優先顯示這些範本。',
+    'Create your first GitHub project template': '建立你的第一個 GitHub 專案範本',
+    'Customize recommended templates': '自訂建議的範本',
+
+    // 托管计算网络
+    'Network configurations': '網路設定',
+    'New network configuration': '新增網路設定',
+    'Azure private network': 'Azure 私人網路',
+    'Add Azure Virtual Network': '新增 Azure 虛擬網路',
+    'Enable failover VNET': '啟用容錯移轉 VNET',
+    'Disable failover VNET': '停用容錯移轉 VNET',
+    'Add failover network': '新增容錯移轉網路',
+    'Edit configuration': '編輯設定',
+    'Network settings resource ID': '網路設定資源 ID',
+    'Failover network': '容錯移轉網路',
+  },
+  scoped: {
+    // 与个人设置、存储库设置共用
+    'Description (optional)': '描述（選填）',
+    Color: '顏色',
+    'Get a new color': '換一個顏色',
+    'Choose from default colors:': '從預設顏色中選擇：',
+    label: '個標籤',
+    labels: '個標籤',
+    Properties: '屬性',
+    // 不收录 Type：与全局搜索提示「Type / to search」同形
+    Text: '文字',
+    Number: '數字',
+    'Learn more about custom properties.': '瞭解自訂屬性。',
+
+    // 存储库默认设置：默认分支、主题
+    'Choose the default branch for new repositories in this organization.': '為此組織中的新儲存庫選擇預設分支。',
+    'Repository topics': '儲存庫主題',
+
+    // 自定义属性：定义、设置值、删除
+    'Property name': '屬性名稱',
+    'Add value': '新增值',
+    'No value': '無值',
+    'No default value': '無預設值',
+    'Edit custom properties': '編輯自訂屬性',
+    'Repository custom properties': '儲存庫自訂屬性',
+    'Property values': '屬性值',
+    'Set property values': '設定屬性值',
+    'Update values': '更新值',
+    'Values updated': '值已更新',
+    'Property saved': '屬性已儲存',
+    'Property deleted': '屬性已刪除',
+    'Delete custom property': '刪除自訂屬性',
+    'Are you sure you want to delete this property?': '確定要刪除此屬性嗎？',
+    'This will remove the property and all its values from repositories.': '這會從儲存庫中移除此屬性及其所有值。',
+    'Deleting this property will remove its values from all repositories.': '刪除此屬性會從所有儲存庫中移除其值。',
+
+    // 规划：议题类型、议题字段
+    'Create type': '建立類型',
+    'Edit type': '編輯類型',
+    'Save type': '儲存類型',
+    'Enable type': '啟用類型',
+    'Disable type': '停用類型',
+    'Delete type': '刪除類型',
+    'Disabled types': '已停用的類型',
+    'Create field': '建立欄位',
+
+    // Pages：已验证的域
+    'Verify domain': '驗證網域',
+    'Delete domain': '刪除網域',
+
+    // 项目（经典）
+    'Enable projects (classic) for the organization': '為組織啟用專案（傳統）',
+
+    // 软件包（与个人设置共用）
+    'Package creation': '套件建立',
+    'Members will be able to publish only the selected visibility types for packages and containers. Outside collaborators can never publish packages or containers.':
+      '成員只能發布所選可見度類型的套件和容器。外部協作者一律無法發布套件或容器。',
+    'Members will be able to create public packages, visible to anyone.': '成員可以建立公開套件，任何人都能看見。',
+    'Members will be able to create private packages, visible to organization members with permission.':
+      '成員可以建立私人套件，只有具備權限的組織成員能看見。',
+    'Members will be able to create internal packages, visible to all organization/enterprise members.':
+      '成員可以建立內部套件，所有組織/企業成員都能看見。',
+    'Default package settings': '預設套件設定',
+    'Default Package Settings': '預設套件設定',
+    'Deleted packages': '已刪除的套件',
+    'These are packages that have been previously deleted belonging to this organization. You can restore a package deleted within the last 30 days.':
+      '以下是此組織先前刪除的套件。你可以還原過去 30 天內刪除的套件。',
+
+    // Pages（与个人设置共用）
+    'There are no verified domains for this organization.': '此組織沒有已驗證的網域。',
+  },
+  regexp: [
+    [
+      new RegExp(`^New repositories created in ${ORG} will use ${BRANCH} as their default branch\\.$`),
+      '在 $1 中建立的新儲存庫將使用 $2 作為預設分支。',
+    ],
+    [new RegExp(`^Your default branch name will be ${BRANCH}$`), '預設分支名稱將為 $1'],
+    [/^(\d+) labels?$/, '$1 個標籤'],
+    [/^(\d+) properties$/, '$1 個屬性'],
+    [/^(\d+) property$/, '$1 個屬性'],
+    [/^(\d+) issue types?$/, '$1 個議題類型'],
+    [/^(\d+) issue fields?$/, '$1 個議題欄位'],
+    [/^(\d+) network configurations?$/, '$1 個網路設定'],
+    [new RegExp(`^No recoverable packages were found for ${ORG}\\.$`), '找不到 $1 可還原的套件。'],
+    [
+      /^Successfully verified ([\w-]+(?:\.[\w-]+)+?)(\.?)$/,
+      (_, domain: string, dot: string) => `已成功驗證 ${domain}${dot ? '。' : ''}`,
+    ],
+  ],
+} satisfies PageDictionary
