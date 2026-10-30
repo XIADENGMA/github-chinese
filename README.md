@@ -292,3 +292,7 @@ wxt.config.ts            WXT 配置与 manifest
 ## 许可证
 
 [MIT](LICENSE) © 2026 github-chinese contributors
+
+## LINUX DO社区
+
+感谢[Linux.do](https://linux.do/)社区的支持。
