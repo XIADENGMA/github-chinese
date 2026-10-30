@@ -1,0 +1,31 @@
+/* 设置页公共布局：各分区共用的标题与操作行 */
+
+.section {
+  display: grid;
+  gap: 12px;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--gcn-border);
+}
+
+.section > .section-title {
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--gcn-border);
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.section-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
