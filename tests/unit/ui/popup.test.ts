@@ -287,7 +287,7 @@ describe.skipIf(!App)('弹出页组件', () => {
   })
 
   describe('布局', () => {
-    it('依次为标题栏、当前页（总开关、状态）、常规、语言、页脚（规则、排除此页、GitHub 存储库），最后是顶部提示的区域', async () => {
+    it('依次为标题栏、当前页（总开关、状态）、常规、语言、页脚（规则、排除此页、GitHub），最后是顶部提示的区域', async () => {
       await openTab(`${REPO_URL}/issues`)
       mockContent(contentWith())
       const wrapper = await render()
@@ -310,7 +310,7 @@ describe.skipIf(!App)('弹出页组件', () => {
       expect(footer.findAll('button, a').map((item) => item.attributes('aria-label') ?? item.text())).toEqual([
         '规则',
         '排除此页',
-        'GitHub 存储库',
+        'GitHub',
       ])
     })
 
@@ -321,8 +321,8 @@ describe.skipIf(!App)('弹出页组件', () => {
       expect(link.attributes('href')).toBe(REPOSITORY_URL)
       expect(link.attributes('target')).toBe('_blank')
       expect(link.attributes('rel')).toBe('noreferrer')
-      expect(link.attributes('aria-label')).toBe('GitHub 存储库')
-      expect(link.attributes('title')).toBe('GitHub 存储库')
+      expect(link.attributes('aria-label')).toBe('GitHub')
+      expect(link.attributes('title')).toBe('GitHub')
       expect(link.get('svg').attributes('aria-hidden')).toBe('true')
     })
 
@@ -604,7 +604,7 @@ describe.skipIf(!App)('弹出页组件', () => {
   describe('界面语言', () => {
     it.each([
       ['en', 'GitHub Chinese', 'Enable', 'Status', 'Translated', ['General', 'Language'], 'Rules', 'GitHub repository'],
-      ['zh-TW', 'GitHub 中文化', '啟用', '狀態', '已翻譯', ['一般', '語言'], '規則', 'GitHub 儲存庫'],
+      ['zh-TW', 'GitHub 中文化', '啟用', '狀態', '已翻譯', ['一般', '語言'], '規則', 'GitHub'],
     ] as const)('%s', async (uiLanguage, title, enable, status, state, sections, rules, repository) => {
       await settingsItem.setValue({ ...ZH_SETTINGS, uiLanguage })
       await openTab(REPO_URL)

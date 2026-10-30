@@ -105,7 +105,7 @@ describe.skipIf(!App)('设置页组件', () => {
     it('关于：GitHub 存储库地址，在新标签页打开', async () => {
       const wrapper = await render()
       const about = section(wrapper, '关于')
-      expect(about.findAll('dt').map((item) => item.text())).toEqual(['GitHub 存储库'])
+      expect(about.findAll('dt').map((item) => item.text())).toEqual(['GitHub'])
       const link = about.get('dd a')
       expect(link.attributes('href')).toBe(REPOSITORY_URL)
       expect(link.attributes('target')).toBe('_blank')
@@ -115,7 +115,7 @@ describe.skipIf(!App)('设置页组件', () => {
 
     it.each([
       ['en', 'GitHub Chinese', ['Excluded paths', 'Custom entries', 'About'], 'GitHub repository'],
-      ['zh-TW', 'GitHub 中文化', ['排除路徑', '自訂詞條', '關於'], 'GitHub 儲存庫'],
+      ['zh-TW', 'GitHub 中文化', ['排除路徑', '自訂詞條', '關於'], 'GitHub'],
     ] as const)('界面语言随设置（如在弹出页修改）切换：%s', async (uiLanguage, title, sections, repository) => {
       const wrapper = await render()
       await updateSettings({ uiLanguage })
