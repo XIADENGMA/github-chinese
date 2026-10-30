@@ -1,0 +1,7 @@
+/* 弹出页设置分区（常规、语言）的标题；分区的边距、分隔线随弹出页其他分区（App.vue 的 .popup-section） */
+
+.section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gcn-fg-muted);
+}
