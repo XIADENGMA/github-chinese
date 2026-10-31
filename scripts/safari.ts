@@ -14,6 +14,9 @@ export const APP_NAME = 'GitHub Chinese'
  */
 export const BUNDLE_ID = 'io.github.setube.GitHub-Chinese'
 
+/** 部署目标：Safari 18 支持的最低 macOS。Xcode 模板默认取 SDK 的版本，旧系统上打不开应用 */
+export const MIN_MACOS = '13.0'
+
 /** 应用的版本号（CFBundleShortVersionString）至多三段整数 */
 const APP_VERSION_RE = /^\d+(\.\d+){0,2}$/
 /** 发行版的版本号（可带预发布后缀），用在文件名里 */
@@ -61,7 +64,7 @@ export interface BuildOptions {
   readonly version: string
 }
 
-/** xcodebuild 的参数：Release，通用二进制（Apple 芯片与 Intel），临时签名，不用开发团队与描述文件；只输出警告与错误 */
+/** xcodebuild 的参数：Release，通用二进制（Apple 芯片与 Intel），macOS 13 起可用，临时签名，不用开发团队与描述文件；只输出警告与错误 */
 export function buildArgs({ project, scheme, derivedDataPath, version }: BuildOptions): string[] {
   return [
     '-quiet',
@@ -80,6 +83,7 @@ export function buildArgs({ project, scheme, derivedDataPath, version }: BuildOp
     'DEVELOPMENT_TEAM=',
     'PROVISIONING_PROFILE_SPECIFIER=',
     'ONLY_ACTIVE_ARCH=NO',
+    `MACOSX_DEPLOYMENT_TARGET=${MIN_MACOS}`,
     `MARKETING_VERSION=${version}`,
     `CURRENT_PROJECT_VERSION=${version}`,
     'build',

@@ -86,7 +86,7 @@
 
 ### Safari（macOS）
 
-未上架 App Store；宿主应用未签名、未经公证。需要 Safari 18+。
+未上架 App Store；宿主应用未签名、未经公证。需要 macOS 13+、Safari 18+。
 
 1. 下载 `github-chinese-<版本>-safari-macos.zip`，解压，把「GitHub Chinese.app」移到「应用程序」。
 2. 解除隔离（未公证的应用默认打不开）：

@@ -11,7 +11,16 @@ import { tmpdir } from 'node:os'
 import { dirname, join, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
-import { APP_NAME, appVersion, buildArgs, converterArgs, findHostPage, packageName, pickScheme } from './safari'
+import {
+  APP_NAME,
+  appVersion,
+  buildArgs,
+  converterArgs,
+  findHostPage,
+  MIN_MACOS,
+  packageName,
+  pickScheme,
+} from './safari'
 
 const USAGE = '用法：bun run pack:safari [--input <扩展目录>] [--out <输出目录>]'
 /** 宿主应用页面（替换 Xcode 模板的英文页面） */
@@ -89,11 +98,13 @@ function plistValue(plist: string, key: string): string {
   return run('plutil', ['-extract', key, 'raw', '-o', '-', plist], true).trim()
 }
 
-/** 核对构建结果：版本号、唯一的扩展及其清单版本、架构、签名 */
+/** 核对构建结果：版本号、最低 macOS、唯一的扩展及其清单版本、架构、签名 */
 async function verifyApp(app: string, manifest: Manifest, version: string): Promise<void> {
   const plist = join(app, 'Contents/Info.plist')
   const shortVersion = plistValue(plist, 'CFBundleShortVersionString')
   if (shortVersion !== version) throw new Error(`应用版本号 ${shortVersion} 与扩展 ${version} 不符`)
+  const minimum = plistValue(plist, 'LSMinimumSystemVersion')
+  if (minimum !== MIN_MACOS) throw new Error(`应用要求的最低 macOS 为 ${minimum}，应为 ${MIN_MACOS}`)
   const plugins = join(app, 'Contents/PlugIns')
   const appexes = (await readdir(plugins)).filter((name) => name.endsWith('.appex'))
   if (appexes.length !== 1) throw new Error(`应用中的扩展数量不为 1：${appexes.join('、') || '无'}`)

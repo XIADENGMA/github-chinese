@@ -62,7 +62,7 @@ describe('命令参数', () => {
     ])
   })
 
-  it('构建：Release、通用二进制、临时签名，版本号写入应用与扩展', () => {
+  it('构建：Release、通用二进制、macOS 13 起可用、临时签名，版本号写入应用与扩展', () => {
     const args = buildArgs({
       project: '/tmp/a.xcodeproj',
       scheme: APP_NAME,
@@ -88,6 +88,7 @@ describe('命令参数', () => {
         'CODE_SIGN_STYLE=Manual',
         'DEVELOPMENT_TEAM=',
         'ONLY_ACTIVE_ARCH=NO',
+        'MACOSX_DEPLOYMENT_TARGET=13.0',
         'MARKETING_VERSION=1.1.0',
         'CURRENT_PROJECT_VERSION=1.1.0',
       ]),
