@@ -615,7 +615,7 @@ describe('new 页面专用词条', () => {
     ['Everything included in Team, plus…', '包含团队版的全部功能，另加…'],
     [
       'Enforce branch and tag protections, as well as push rules across your enterprise. Rule insights allow you to assess impact of rules before and during enforcement.',
-      '在整个企业中强制实施分支和标记保护以及推送规则。规则见解可帮助你在强制实施前和强制实施期间评估规则的影响。',
+      '在整个企业中强制实施分支和标签保护以及推送规则。规则见解可帮助你在强制实施前和强制实施期间评估规则的影响。',
     ],
   ])('%s → %s', (input, expected) => {
     expect(translate(input)).toBe(expected)

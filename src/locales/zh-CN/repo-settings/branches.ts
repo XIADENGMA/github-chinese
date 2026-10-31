@@ -1,7 +1,7 @@
 import type { PageDictionary } from '../../../core/types'
 
 /**
- * 存储库设置 · 分支 / 标记：经典分支保护规则（列表、编辑器、删除对话框）、受保护标记（已弃用）与导入到规则集。
+ * 存储库设置 · 分支 / 标签：经典分支保护规则（列表、编辑器、删除对话框）、受保护标签（已弃用）与导入到规则集。
  * 规则集见 rulesets.ts。
  */
 export default {
@@ -195,42 +195,42 @@ export default {
     'Allow deletions': '允许删除',
     'Allow users with push access to delete matching branches.': '允许拥有推送权限的用户删除匹配的分支。',
 
-    // 受保护标记（已弃用）
-    'Tag protection rule created.': '标记保护规则已创建。',
-    'Tag protection rule deleted.': '标记保护规则已删除。',
-    'Level up your tag protections with Repository Rules': '使用存储库规则升级标记保护',
+    // 受保护标签（已弃用）
+    'Tag protection rule created.': '标签保护规则已创建。',
+    'Tag protection rule deleted.': '标签保护规则已删除。',
+    'Level up your tag protections with Repository Rules': '使用存储库规则升级标签保护',
     // 「…You can learn more about the sunset in our」+ 链接「changelog」+「and can get started now by migrating to rulesets.」
     // （原文链接后无逗号，译文不加）
     'Protected tags are being deprecated. To continue protecting tags, please migrate to a tag ruleset by August 30th. You can learn more about the sunset in our':
-      '受保护标记即将弃用。如需继续保护标记，请在 8 月 30 日前迁移到标记规则集。你可以在',
+      '受保护标签即将弃用。如需继续保护标签，请在 8 月 30 日前迁移到标签规则集。你可以在',
     'and can get started now by migrating to rulesets.': '中了解停用详情并立即开始迁移到规则集。',
-    'Protected tags': '受保护标记',
-    'Protected tags are available to Pro, Team, and Enterprise users': '专业版、团队版和企业版用户可以使用受保护标记',
+    'Protected tags': '受保护标签',
+    'Protected tags are available to Pro, Team, and Enterprise users': '专业版、团队版和企业版用户可以使用受保护标签',
     'Protected tags can only be created or deleted by users with enhanced permissions defined by your organization owners.':
-      '只有拥有组织所有者定义的增强权限的用户才能创建或删除受保护标记。',
-    'Learn more about protected tags': '了解受保护标记',
-    'No protected tag rules exist yet': '尚无受保护标记规则',
-    'Protected tags have been deprecated': '受保护标记已弃用',
-    'Go to rulesets to create new tag rules': '转到规则集创建新的标记规则',
+      '只有拥有组织所有者定义的增强权限的用户才能创建或删除受保护标签。',
+    'Learn more about protected tags': '了解受保护标签',
+    'No protected tag rules exist yet': '尚无受保护标签规则',
+    'Protected tags have been deprecated': '受保护标签已弃用',
+    'Go to rulesets to create new tag rules': '转到规则集创建新的标签规则',
     'Import to rulesets': '导入到规则集',
-    'Import your tag protection rules into repository rules': '将标记保护规则导入存储库规则',
+    'Import your tag protection rules into repository rules': '将标签保护规则导入存储库规则',
     'Migrate your protected tags to one or more repository rulesets. This will implement the same tag protections you currently have today. Once created, the tag rulesets can take advantage of new ruleset features:':
-      '将受保护标记迁移到一个或多个存储库规则集，以实施与当前相同的标记保护。创建后，标记规则集可以使用新的规则集功能：',
+      '将受保护标签迁移到一个或多个存储库规则集，以实施与当前相同的标签保护。创建后，标签规则集可以使用新的规则集功能：',
     'Requiring status checks to pass': '要求通过状态检查',
     'Requiring linear history': '要求线性历史记录',
-    'Create separate rulesets for creating and deleting protected tags': '为创建和删除受保护标记分别创建规则集',
+    'Create separate rulesets for creating and deleting protected tags': '为创建和删除受保护标签分别创建规则集',
     'Users and Teams with at least Maintainer role will be able to create new protected tags. Administrators will be able to delete protected tags. This is the same behavior as existing tag protections.':
-      '至少拥有维护者角色的用户和团队可以创建新的受保护标记，管理员可以删除受保护标记。这与现有的标记保护行为相同。',
-    'Create one ruleset for all protected tag operations': '为所有受保护标记操作创建一个规则集',
-    'Administrators will be able to create and delete protected tags.': '管理员可以创建和删除受保护标记。',
-    'Learn more about tag rulesets': '了解标记规则集',
-    'Delete tag protection rule': '删除标记保护规则',
-    'Delete tag protection rule?': '删除标记保护规则？',
+      '至少拥有维护者角色的用户和团队可以创建新的受保护标签，管理员可以删除受保护标签。这与现有的标签保护行为相同。',
+    'Create one ruleset for all protected tag operations': '为所有受保护标签操作创建一个规则集',
+    'Administrators will be able to create and delete protected tags.': '管理员可以创建和删除受保护标签。',
+    'Learn more about tag rulesets': '了解标签规则集',
+    'Delete tag protection rule': '删除标签保护规则',
+    'Delete tag protection rule?': '删除标签保护规则？',
     'Are you sure you want to delete this tag protection rule? Anyone who can write to this repository will be able to create tags with this pattern.':
-      '确定要删除此标记保护规则吗？删除后，任何能写入此存储库的人都可以创建符合此模式的标记。',
+      '确定要删除此标签保护规则吗？删除后，任何能写入此存储库的人都可以创建符合此模式的标签。',
     // 删除对话框的确认按钮：与标题「Delete tag protection rule?」、正文「…delete this tag protection rule?」是同一操作
-    'Yes, remove this tag protection rule': '是，删除此标记保护规则',
-    'Tag name pattern': '标记名称模式',
+    'Yes, remove this tag protection rule': '是，删除此标签保护规则',
+    'Tag name pattern': '标签名称模式',
     'to target tags named': '来匹配名为',
   },
   scoped: {
@@ -253,7 +253,7 @@ export default {
     Import: '导入',
     'Add rule': '添加规则',
     'Example: You can use': '示例：可以使用',
-    ', and so on.': '等的标记。',
+    ', and so on.': '等的标签。',
   },
   regexp: [
     // 规则列表与编辑器：匹配的分支数
@@ -263,6 +263,6 @@ export default {
         `${verb === 'Applies' ? '' : '当前'}适用于 ${count} 个分支${dot ? '。' : ''}`,
     ],
     [/^Applies to (\d+) branch(?:es)?:$/, '适用于 $1 个分支：'],
-    [/^Applies to (\d+) tags?(\.?)$/, (_, count: string, dot: string) => `适用于 ${count} 个标记${dot ? '。' : ''}`],
+    [/^Applies to (\d+) tags?(\.?)$/, (_, count: string, dot: string) => `适用于 ${count} 个标签${dot ? '。' : ''}`],
   ],
 } satisfies PageDictionary

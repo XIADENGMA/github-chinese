@@ -317,7 +317,7 @@ const base = {
       '脉搏、贡献者、社区、流量、提交、代码频率、网络',
     'Multiple assignees': '多个受理人',
     'Multiple reviewers': '多个审查者',
-    'Branch and tag protection rules': '分支和标记保护规则',
+    'Branch and tag protection rules': '分支和标签保护规则',
     'their plan before accepting the transfer to avoid losing access.': '其计划再接受转让，以免失去访问权限。',
     'Individual users, teams, and apps will be removed from the following options:':
       '个人用户、团队和应用将从以下选项中删除：',
@@ -474,7 +474,7 @@ const base = {
     'Access to GitHub Codespaces': '可使用 GitHub 代码空间',
     'Repository rules': '存储库规则',
     'Enforce restrictions on how code branches and tags are merged across your organization, including requiring reviews by selected collaborators, or allowing only specific contributors to work on a particular branch.':
-      '在整个组织中限制代码分支和标记的合并方式，包括要求指定协作者审查，或只允许特定贡献者在某个分支上工作。',
+      '在整个组织中限制代码分支和标签的合并方式，包括要求指定协作者审查，或只允许特定贡献者在某个分支上工作。',
     'Assign multiple users or a team to review a pull request.': '分配多个用户或一个团队审查拉取请求。',
     'Draft pull requests': '草稿拉取请求',
     'Automatically request reviews—or require approval—by selected contributors when changes are made to sections of code that they own.':
@@ -504,7 +504,7 @@ const base = {
       'GitHub 企业云支持创建企业帐户，便于多个组织协作，为管理员提供统一的查看和管理入口，并为同时属于多个组织的用户节省许可证费用。',
     'Environment protection rules': '环境保护规则',
     'Enforce branch and tag protections, as well as push rules across your enterprise. Rule insights allow you to assess impact of rules before and during enforcement.':
-      '在整个企业中强制实施分支和标记保护以及推送规则。规则见解可帮助你在强制实施前和强制实施期间评估规则的影响。',
+      '在整个企业中强制实施分支和标签保护以及推送规则。规则见解可帮助你在强制实施前和强制实施期间评估规则的影响。',
     'Audit Log API': '审核日志 API',
     'As a GitHub Enterprise Cloud organization administrator, you can now access log events using our GraphQL API and monitor the activity in your organization.':
       '作为 GitHub 企业云组织管理员，你可以使用 GraphQL API 访问日志事件并监控组织中的活动。',

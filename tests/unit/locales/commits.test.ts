@@ -229,7 +229,7 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     ],
     misses: ['parents'],
   },
-  { hits: [['3 tags', '3 个标记']], misses: ['1 tag'] },
+  { hits: [['3 tags', '3 个标签']], misses: ['1 tag'] },
   {
     hits: [
       ['2 files changed', '已更改 2 个文件'],
@@ -638,7 +638,7 @@ describe('commits 静态词条', () => {
     // GLOSSARY：suggested change → 建议更改
     ['Suggested change cannot be the same as the original line', '建议更改不能与原始行相同'],
     ['You’re now subscribed to this thread.', '你已订阅此线程。'],
-    ['Show all tags', '显示所有标记'],
+    ['Show all tags', '显示所有标签'],
     ['Loading branch information', '正在加载分支信息'],
     ['Comment on this commit', '评论此提交'],
     ['Search branches…', '搜索分支…'],
@@ -658,7 +658,7 @@ describe('commits 静态词条', () => {
     ['Show details on unpublishing GitHub Pages site', '显示取消发布 GitHub 页面站点的详细信息'],
     ['Checking if branch name is valid', '正在检查分支名称是否有效'],
     ['Direct pushes', '直接推送'],
-    ['Deleted tag', '已删除标记'],
+    ['Deleted tag', '已删除标签'],
     ['Share feedback about this page', '提供有关此页面的反馈'],
     ['Comparing changes', '比较更改'],
     ['Open a pull request', '创建拉取请求'],
@@ -668,8 +668,8 @@ describe('commits 静态词条', () => {
     ],
     ['Collapse comments, modified line', '折叠评论，修改后的行'],
     ['Expand comments, original line', '展开评论，原始行'],
-    ['Find a tag', '查找标记'],
-    ['Could not load tags', '无法加载标记'],
+    ['Find a tag', '查找标签'],
+    ['Could not load tags', '无法加载标签'],
     ['Able to merge.', '可以合并。'],
     ['Can’t automatically merge.', '无法自动合并。'],
     ['Checking mergeability...', '正在检查能否合并...'],

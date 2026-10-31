@@ -44,8 +44,8 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     misses: ['Published recently', 'Published by octocat'],
   },
   // 版本列表标签页与筛选
-  { hits: [['4,558 tagged', '4,558 个带标记版本']], misses: ['all tagged'] },
-  { hits: [['17,259 untagged', '17,259 个无标记版本']], misses: ['all untagged'] },
+  { hits: [['4,558 tagged', '4,558 个带标签版本']], misses: ['all tagged'] },
+  { hits: [['17,259 untagged', '17,259 个无标签版本']], misses: ['all untagged'] },
   { hits: [['12 active', '12 个活跃版本']], misses: ['all active'] },
   { hits: [['3 deleted', '3 个已删除版本']], misses: ['none deleted'] },
   {
@@ -258,7 +258,7 @@ describe('packages 静态词条', () => {
     ['Install via package.json:', '通过 package.json 安装：'],
     ['Install 1/2: Add this to pom.xml:', '安装 1/2：将以下内容添加到 pom.xml：'],
     ['About this package', '关于此软件包'],
-    ['Recent tagged image versions', '最近带标记的映像版本'],
+    ['Recent tagged image versions', '最近带标签的映像版本'],
     ['View and manage all versions', '查看并管理所有版本'],
     ['View all versions', '查看所有版本'],
     ['Last published', '最近发布'],
@@ -274,7 +274,7 @@ describe('packages 静态词条', () => {
     ['Add a Readme to the linked repository', '为链接的存储库添加自述文件'],
     ["The linked repository's Readme will be shown here.", '此处将显示所链接存储库的自述文件。'],
     ['OS / Arch', '操作系统/架构'],
-    ['Other tags on this version', '此版本的其他标记'],
+    ['Other tags on this version', '此版本的其他标签'],
     ['Use as base image in Dockerfile:', '在 Dockerfile 中用作基础映像：'],
     ['Learn more about labelling container images', '了解如何标注容器映像'],
     ['Manage Actions access', '管理操作访问权限'],
@@ -331,8 +331,8 @@ describe('packages 页面词条', () => {
     ['Start a discussion', '开始讨论'],
     ['Versions', '版本'],
     ['Select versions view', '选择版本视图'],
-    ['Tagged', '带标记'],
-    ['Untagged', '无标记'],
+    ['Tagged', '带标签'],
+    ['Untagged', '无标签'],
     ['Digest', '摘要'],
     ['Installation', '安装'],
     ['No description provided', '未提供描述'],
@@ -357,7 +357,7 @@ describe('packages 页面词条', () => {
   it('用户与存储库的软件包页同样生效', () => {
     expect(matcher.translate('Most downloads', ['common', 'profile', 'packages'])).toBe('下载最多')
     expect(matcher.translate('Published', ['common', 'repository', 'packages'])).toBe('发布于')
-    expect(matcher.translate('4,558 tagged', ['common', 'repository', 'packages'])).toBe('4,558 个带标记版本')
+    expect(matcher.translate('4,558 tagged', ['common', 'repository', 'packages'])).toBe('4,558 个带标签版本')
   })
 
   it('不在其他页面生效', () => {

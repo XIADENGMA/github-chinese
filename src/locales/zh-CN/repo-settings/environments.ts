@@ -2,7 +2,7 @@ import type { PageDictionary } from '../../../core/types'
 
 /**
  * 存储库设置 · 环境：环境列表、新建 / 删除、部署保护规则（必需审查者、等待计时器、自定义规则）、
- * 部署分支和标记、环境机密 / 变量。
+ * 部署分支和标签、环境机密 / 变量。
  * 机密与变量的通用对话框文字（Add secret、Delete secret 等）见 secrets.ts。
  */
 export default {
@@ -43,22 +43,22 @@ export default {
     'Allow administrators to bypass configured protection rules': '允许管理员绕过已配置的保护规则',
     'Save protection rules': '保存保护规则',
 
-    // 部署分支和标记
-    'Deployment branches and tags': '部署分支和标记',
+    // 部署分支和标签
+    'Deployment branches and tags': '部署分支和标签',
     'Limit which branches and tags can deploy to this environment based on rules or naming patterns.':
-      '根据规则或命名模式，限制哪些分支和标记可以部署到此环境。',
+      '根据规则或命名模式，限制哪些分支和标签可以部署到此环境。',
     'No restriction': '无限制',
     'No restriction to which branch or tag from this repository can deploy.':
-      '不限制此存储库的哪些分支或标记可以部署。',
+      '不限制此存储库的哪些分支或标签可以部署。',
     'Protected branches only': '仅受保护分支',
     'Deployment limited to branches with protection rules.': '仅允许带有保护规则的分支部署。',
-    'Selected branches and tags': '选定的分支和标记',
-    'Specify a list of branches and tags using naming patterns.': '使用命名模式指定分支和标记列表。',
+    'Selected branches and tags': '选定的分支和标签',
+    'Specify a list of branches and tags using naming patterns.': '使用命名模式指定分支和标签列表。',
     '. Based on the existing': '。依据现有的',
     'repository branch protection rules': '存储库分支保护规则',
-    'No branch or tag rules applied yet:': '尚未应用分支或标记规则：',
-    'all branches and tags are still allowed to deploy.': '所有分支和标记仍可部署。',
-    'Add deployment branch or tag rule': '添加部署分支或标记规则',
+    'No branch or tag rules applied yet:': '尚未应用分支或标签规则：',
+    'all branches and tags are still allowed to deploy.': '所有分支和标签仍可部署。',
+    'Add deployment branch or tag rule': '添加部署分支或标签规则',
     'Ref type:': '引用类型：',
     'Name pattern:': '名称模式：',
     'Update deployment branch rule': '更新部署分支规则',
@@ -66,7 +66,7 @@ export default {
     'Environment changes successfully saved: only protected branches can deploy.':
       '环境更改已保存：仅受保护分支可以部署。',
     'Environment changes successfully saved: only selected branches and tags can deploy.':
-      '环境更改已保存：仅选定的分支和标记可以部署。',
+      '环境更改已保存：仅选定的分支和标签可以部署。',
 
     // 环境机密 / 变量
     'Secrets are encrypted environment variables. They are accessible only by GitHub Actions in the context of this environment by using the':

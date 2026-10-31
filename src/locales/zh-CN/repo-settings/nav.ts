@@ -74,7 +74,7 @@ export default {
     'Interaction limits': '交互限制',
     'Code review limits': '代码审查限制',
     Branches: '分支',
-    Tags: '标记',
+    Tags: '标签',
     Rules: '规则',
     Rulesets: '规则集',
     Runners: '运行器',

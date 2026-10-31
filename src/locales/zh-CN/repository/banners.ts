@@ -112,7 +112,7 @@ const regexp: readonly RegExpRule[] = [
     '此存储库缺少 $1 个必填的自定义属性值',
   ],
   // 不可变操作迁移对话框：<5 out of 10 tags> from <owner/repo> …；1 tag → 1 version
-  [new RegExp(`^${COUNT} out of ${COUNT} tags?$`), '$2 个标记中的 $1 个'],
+  [new RegExp(`^${COUNT} out of ${COUNT} tags?$`), '$2 个标签中的 $1 个'],
   [new RegExp(`^${COUNT} versions?$`), '$1 个版本'],
   // 同步复刻后的提示
   [
@@ -189,10 +189,10 @@ export default {
     // 不可变操作迁移
     'Make your GitHub Action Immutable': '将你的 GitHub 操作设为不可变',
     'Upgrade to a newer, more secure, and more reliable way of releasing and referencing GitHub Actions by recreating your existing tags as immutable package versions.':
-      '通过将现有标记重新创建为不可变软件包版本来升级到更新、更安全、更可靠的 GitHub 操作发布与引用方式。',
+      '通过将现有标签重新创建为不可变软件包版本来升级到更新、更安全、更可靠的 GitHub 操作发布与引用方式。',
     'Immutable Action Migration Failed': '不可变操作迁移失败',
     'One or more of your tags failed to be migrated to immutable action versions. You can try the migration again to migrate the remaining tags.':
-      '一个或多个标记未能迁移为不可变操作版本。你可以重试迁移以迁移其余标记。',
+      '一个或多个标签未能迁移为不可变操作版本。你可以重试迁移以迁移其余标签。',
     'Retry migration': '重试迁移',
     'Create immutable action': '创建不可变操作',
     'Your Action is being migrated to an immutable package version.': '你的操作正在迁移为不可变软件包版本。',
@@ -203,12 +203,12 @@ export default {
       '完成后即可激活软件包，届时对你的操作的语义化版本引用将从不可变软件包版本而非 Git 引用解析。对你的操作的非语义化版本引用仍从 Git 引用解析。',
     'Failed to start migration, please try again. If this error persists, please ensure you are authenticated with the organization that owns this repository.':
       '启动迁移失败，请重试。如果仍然出错，请确认你已通过拥有此存储库的组织的身份验证。',
-    'Non-semantic version tags found': '发现非语义化版本标记',
+    'Non-semantic version tags found': '发现非语义化版本标签',
     'Continue anyways': '仍然继续',
-    // 非语义化版本标记对话框：<3 out of 10 tags> cannot be recreated …
+    // 非语义化版本标签对话框：<3 out of 10 tags> cannot be recreated …
     'cannot be recreated because they did not follow semantic versioning at the time of their release. To include these tags, re-release these versions following semantic versioning. You can still continue with the migration process without re-releasing these versions, but they will not be recreated as immutable package versions.':
-      '因发布时未遵循语义化版本而无法重新创建。要包含这些标记，请按语义化版本重新发布这些版本。也可以不重新发布这些版本而继续迁移，但它们不会被重新创建为不可变软件包版本。',
-    'Only the first 100 invalid tags are listed.': '仅列出前 100 个无效标记。',
+      '因发布时未遵循语义化版本而无法重新创建。要包含这些标签，请按语义化版本重新发布这些版本。也可以不重新发布这些版本而继续迁移，但它们不会被重新创建为不可变软件包版本。',
+    'Only the first 100 invalid tags are listed.': '仅列出前 100 个无效标签。',
 
     // 所有者被标记为垃圾信息发布者（员工可见）
     'Spammy Owner': '所有者疑似发布垃圾信息',

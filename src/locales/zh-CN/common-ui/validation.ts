@@ -30,7 +30,7 @@ const FIELDS: Readonly<Record<string, string>> = {
   'Organization name': '组织名称',
   Password: '密码',
   'Repository name': '存储库名称',
-  'Tag name': '标记名称',
+  'Tag name': '标签名称',
   'Team name': '团队名称',
   Title: '标题',
   URL: 'URL',

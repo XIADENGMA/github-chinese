@@ -3,7 +3,7 @@ import type { PageDictionary } from '../../../core/types'
 /** 规则集类型：英文 → 中文 */
 const RULE_KIND: Readonly<Record<string, string>> = {
   branch: '分支',
-  tag: '标记',
+  tag: '标签',
   push: '推送',
   repository: '存储库',
 }
@@ -41,7 +41,7 @@ const ACTOR_CATEGORY: Readonly<Record<string, string>> = {
 /** 条件缺失提示的对象：英文 → 中文 */
 const CONDITION_OBJECT: Readonly<Record<string, string>> = {
   Branch: '分支',
-  Tag: '标记',
+  Tag: '标签',
   Repository: '存储库',
   Organization: '组织',
   Workflow: '工作流',
@@ -51,7 +51,7 @@ const CONDITION_OBJECT: Readonly<Record<string, string>> = {
 function countNoun(noun: string): string {
   if (noun.startsWith('branch condition')) return '个分支条件'
   if (noun.startsWith('branch')) return '个分支'
-  if (noun.startsWith('tag')) return '个标记'
+  if (noun.startsWith('tag')) return '个标签'
   if (noun.startsWith('repositor')) return '个存储库'
   if (noun.startsWith('organization')) return '个组织'
   return '个目标'
@@ -73,7 +73,7 @@ function targeting(count: string, noun: string, all: string, many: string, inRep
 
 /**
  * 存储库设置 · 规则集：规则集列表、新建 / 导入 / 导出 / 删除、编辑器（名称、强制实施状态、绕过列表、
- * 目标分支 / 标记 / 存储库 / 组织 / 工作流）、保存提示、历史记录、升级提示。
+ * 目标分支 / 标签 / 存储库 / 组织 / 工作流）、保存提示、历史记录、升级提示。
  * 规则与参数见 ruleset-rules.ts，规则见解见 ruleset-insights.ts，导入 / 转换分支保护规则见 ruleset-import.ts。
  * 组织设置的规则集页面同样使用这些文字（static 全局生效；scoped 与 regexp 只在存储库设置页生效）；
  * 与经典分支保护同名的规则（Require signed commits 等）见 branches.ts；
@@ -84,7 +84,7 @@ export default {
     // 列表与新建
     'New ruleset': '新建规则集',
     'New branch ruleset': '新建分支规则集',
-    'New tag ruleset': '新建标记规则集',
+    'New tag ruleset': '新建标签规则集',
     'New push ruleset': '新建推送规则集',
     'Import a ruleset': '导入规则集',
     'Organization rulesets': '组织规则集',
@@ -227,12 +227,12 @@ export default {
 
     // 目标：存储库 / 组织（组织、企业规则集）
     'Which branches should be matched?': '应匹配哪些分支？',
-    'Which tags should be matched?': '应匹配哪些标记？',
+    'Which tags should be matched?': '应匹配哪些标签？',
     'Which repositories should be matched?': '应匹配哪些存储库？',
     'Which organizations should be matched?': '应匹配哪些组织？',
     'Which workflows should be matched?': '应匹配哪些工作流？',
     'Which branches do you want to make a ruleset for?': '要为哪些分支创建规则集？',
-    'Which tags do you want to make a ruleset for?': '要为哪些标记创建规则集？',
+    'Which tags do you want to make a ruleset for?': '要为哪些标签创建规则集？',
     'Which repositories and branches do you want to make a ruleset for?': '要为哪些存储库和分支创建规则集？',
     'Target repositories': '目标存储库',
     'Target organizations': '目标组织',
@@ -293,41 +293,41 @@ export default {
     'Search for values': '搜索值',
     'The count is based on repositories visible to an organization administrator.': '计数基于组织管理员可见的存储库。',
 
-    // 目标：分支 / 标记
+    // 目标：分支 / 标签
     'Target branches': '目标分支',
-    'Target tags': '目标标记',
+    'Target tags': '目标标签',
     'Add a target': '添加目标',
     'Add target': '添加目标',
     'Branch targeting determines which branches will be protected by this ruleset. Use inclusion patterns to expand the list of branches under this ruleset. Use exclusion patterns to exclude branches.':
       '分支目标决定此规则集保护哪些分支。使用包含模式扩展此规则集下的分支列表，使用排除模式排除分支。',
     'Tag targeting determines which tags will be protected by this ruleset. Use inclusion patterns to expand the list of tags under this ruleset. Use exclusion patterns to exclude tags.':
-      '标记目标决定此规则集保护哪些标记。使用包含模式扩展此规则集下的标记列表，使用排除模式排除标记。',
+      '标签目标决定此规则集保护哪些标签。使用包含模式扩展此规则集下的标签列表，使用排除模式排除标签。',
     'Branch targeting criteria': '分支目标条件',
-    'Tag targeting criteria': '标记目标条件',
+    'Tag targeting criteria': '标签目标条件',
     'Include default branch': '包含默认分支',
-    'Include all tags': '包含所有标记',
+    'Include all tags': '包含所有标签',
     'Target by inclusion or exclusion pattern': '按包含或排除模式选择目标',
     'Include by pattern': '按模式包含',
     'Exclude by pattern': '按模式排除',
     'Branch targeting has not been configured': '尚未配置分支目标',
-    'Tag targeting has not been configured': '尚未配置标记目标',
+    'Tag targeting has not been configured': '尚未配置标签目标',
     'Targets have changed and branch match list will update on save.': '目标已更改，分支匹配列表将在保存时更新。',
-    'Targets have changed and tag match list will update on save.': '目标已更改，标记匹配列表将在保存时更新。',
+    'Targets have changed and tag match list will update on save.': '目标已更改，标签匹配列表将在保存时更新。',
     'Targets have changed and repository match list will update on save.': '目标已更改，存储库匹配列表将在保存时更新。',
     'Targets have changed and organization match list will update on save.': '目标已更改，组织匹配列表将在保存时更新。',
     'Targets have changed and': '目标已更改并且',
     'match list will update on save.': '匹配列表将在保存时更新。',
     'Branches that match the matching pattern will be targeted by this ruleset.':
       '匹配此模式的分支将成为此规则集的目标。',
-    'Tags that match the matching pattern will be targeted by this ruleset.': '匹配此模式的标记将成为此规则集的目标。',
+    'Tags that match the matching pattern will be targeted by this ruleset.': '匹配此模式的标签将成为此规则集的目标。',
     'Branches that do not match the matching pattern will be targeted by this ruleset.':
       '不匹配此模式的分支将成为此规则集的目标。',
     'Tags that do not match the matching pattern will be targeted by this ruleset.':
-      '不匹配此模式的标记将成为此规则集的目标。',
+      '不匹配此模式的标签将成为此规则集的目标。',
     'Pattern cannot be empty': '模式不能为空',
     'Invalid pattern': '无效的模式',
     'Branch naming pattern': '分支命名模式',
-    'Tag naming pattern': '标记命名模式',
+    'Tag naming pattern': '标签命名模式',
     'Repository naming pattern': '存储库命名模式',
     'Organization naming pattern': '组织命名模式',
     'Example patterns:': '模式示例：',
@@ -427,12 +427,12 @@ export default {
     'targets including': '个目标包括',
     'naming pattern': '命名模式',
     'All branches': '所有分支',
-    'All tags': '所有标记',
+    'All tags': '所有标签',
     branch: '分支',
     branches: '分支',
-    tag: '标记',
-    Tag: '标记',
-    tags: '标记',
+    tag: '标签',
+    Tag: '标签',
+    tags: '标签',
     Export: '导出',
     Revert: '还原',
     // 保存 / 还原按钮：Save<span> changes</span>

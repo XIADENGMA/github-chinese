@@ -613,7 +613,7 @@ describe('code 静态词条', () => {
     ['Edit in place', '就地编辑'],
     ['View git blame', '查看追溯'],
     ['Reference in new issue', '在新议题中引用'],
-    ['View file in different branch/tag', '在其他分支/标记中查看文件'],
+    ['View file in different branch/tag', '在其他分支/标签中查看文件'],
     ['View raw', '查看原始文件'],
     // 渲染器错误（显示在 Error rendering embedded code 下）
     ['Invalid PDF', 'PDF 无效'],

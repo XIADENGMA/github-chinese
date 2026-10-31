@@ -660,7 +660,7 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Branch: main', '分支：main'],
-      ['Tag: v1.0.0', '标记：v1.0.0'],
+      ['Tag: v1.0.0', '标签：v1.0.0'],
     ],
     // 单独的 Branch: 由页面词条翻译（前缀与分支名拆开时），不作反例
     misses: ['Branches: main'],

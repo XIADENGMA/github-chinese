@@ -207,7 +207,7 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['main branch', 'main 分支'],
-      ['v1.0.0 tag', 'v1.0.0 标记'],
+      ['v1.0.0 tag', 'v1.0.0 标签'],
       ['feature/login-page branch', 'feature/login-page 分支'],
     ],
     misses: [
@@ -228,7 +228,7 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['3 branches found', '找到 3 个分支'],
-      ['1 tag found', '找到 1 个标记'],
+      ['1 tag found', '找到 1 个标签'],
     ],
     misses: ['branches found'],
   },
@@ -492,8 +492,8 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   // 不可变 Action 迁移对话框
   {
     hits: [
-      ['3 out of 10 tags', '10 个标记中的 3 个'],
-      ['1 out of 1 tag', '1 个标记中的 1 个'],
+      ['3 out of 10 tags', '10 个标签中的 3 个'],
+      ['1 out of 1 tag', '1 个标签中的 1 个'],
     ],
     misses: ['out of 10 tags', '3 out of 10 releases'],
   },
@@ -730,7 +730,7 @@ describe('repository 静态词条', () => {
     ['Edit Pins', '编辑置顶项'],
     ['Open in a codespace', '在代码空间中打开'],
     // 分支选择器的标记搜索框（整句，全站生效）
-    ['Search for a tag', '搜索标记'],
+    ['Search for a tag', '搜索标签'],
     ['Repository files navigation', '存储库文件导航'],
     ['Which remote URL should I use?', '应使用哪个远程 URL？'],
     ['Copy URL to clipboard', '复制 URL 到剪贴板'],
@@ -794,7 +794,7 @@ describe('repository 静态词条', () => {
       "This repository doesn't have a README yet. Ask Copilot to learn how this project works.",
       '此存储库还没有自述文件。向 Copilot 提问以了解此项目的工作原理。',
     ],
-    ['Only the first 100 invalid tags are listed.', '仅列出前 100 个无效标记。'],
+    ['Only the first 100 invalid tags are listed.', '仅列出前 100 个无效标签。'],
     ['Make your GitHub Action Immutable', '将你的 GitHub 操作设为不可变'],
     ['View on Marketplace', '在市场中查看'],
     // 产品名、客户端名译中文：Codespaces → 代码空间，GitHub Desktop → GitHub 桌面版，GitHub Pages → GitHub 页面，
@@ -819,7 +819,7 @@ describe('repository 静态词条', () => {
     ['Deploy to Pages', '部署到页面'],
     [
       'Upgrade to a newer, more secure, and more reliable way of releasing and referencing GitHub Actions by recreating your existing tags as immutable package versions.',
-      '通过将现有标记重新创建为不可变软件包版本来升级到更新、更安全、更可靠的 GitHub 操作发布与引用方式。',
+      '通过将现有标签重新创建为不可变软件包版本来升级到更新、更安全、更可靠的 GitHub 操作发布与引用方式。',
     ],
     ['Learn more about GitHub Sponsors', '了解 GitHub 赞助'],
     // 交互限制（与组织、个人设置的同类句子一致）
@@ -851,8 +851,8 @@ describe('repository 页面词条', () => {
   it.each([
     ['Participating', '参与'],
     ['Branches', '分支'],
-    ['Tags', '标记'],
-    ['Tag', '标记'],
+    ['Tags', '标签'],
+    ['Tag', '标签'],
     ['default', '默认'],
     ['Go to file', '转到文件'],
     ['Add file', '添加文件'],
@@ -872,14 +872,14 @@ describe('repository 页面词条', () => {
     ['Other', '其他'],
     ['Ignoring', '已忽略'],
     ['collaborators', '协作者'],
-    ['Find a tag...', '查找标记...'],
-    ['Find a tag…', '查找标记…'],
+    ['Find a tag...', '查找标签...'],
+    ['Find a tag…', '查找标签…'],
     ['Discarding changes...', '正在放弃更改...'],
-    ['Switch branches/tags', '切换分支/标记'],
-    ['Go to Tags page', '转到标记页面'],
+    ['Switch branches/tags', '切换分支/标签'],
+    ['Go to Tags page', '转到标签页面'],
     // 分支选择器的创建标记对话框
-    ['Create new tag', '创建新标记'],
-    ['Tag name', '标记名称'],
+    ['Create new tag', '创建新标签'],
+    ['Tag name', '标签名称'],
     ['Open Contribute dropdown', '打开贡献下拉菜单'],
     // Codespaces 标签页错误提示中的链接（句子其余部分由 inline 处理）
     ['sign in', '登录'],

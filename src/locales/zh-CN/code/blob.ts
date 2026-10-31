@@ -107,7 +107,7 @@ export default {
     'Reference in new discussion': '在新讨论中引用',
     'Expand current section': '展开当前代码段',
     'Collapse current section': '折叠当前代码段',
-    'View file in different branch/tag': '在其他分支/标记中查看文件',
+    'View file in different branch/tag': '在其他分支/标签中查看文件',
     'Copied permalink.': '已复制永久链接。',
     'Code section expanded': '代码段已展开',
     'Code section collapsed': '代码段已折叠',

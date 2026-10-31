@@ -80,10 +80,10 @@ export default {
     'Delivering payload...': '正在交付有效负载...',
 
     // 事件
-    'Branch or tag creation': '分支或标记创建',
-    'Branch or tag created.': '已创建分支或标记。',
-    'Branch or tag deletion': '分支或标记删除',
-    'Branch or tag deleted.': '已删除分支或标记。',
+    'Branch or tag creation': '分支或标签创建',
+    'Branch or tag created.': '已创建分支或标签。',
+    'Branch or tag deletion': '分支或标签删除',
+    'Branch or tag deleted.': '已删除分支或标签。',
     'Branch protection configurations': '分支保护配置',
     'All branch protections disabled or enabled for a repository.': '存储库的所有分支保护被禁用或启用。',
     'Branch protection rule created, deleted or edited.': '分支保护规则被创建、删除或编辑。',

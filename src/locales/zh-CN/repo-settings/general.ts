@@ -49,7 +49,7 @@ export default {
     // 发行版
     'Enable release immutability': '启用不可变发行版',
     'Immutable releases': '不可变发行版',
-    'Disallow assets and tags from being modified once a release is published.': '发行版发布后，禁止修改其资源和标记。',
+    'Disallow assets and tags from being modified once a release is published.': '发行版发布后，禁止修改其资源和标签。',
 
     // 社交预览
     'Social preview': '社交预览',
@@ -191,11 +191,11 @@ export default {
       '存档中的 Git LFS 使用量与客户端使用量按相同费率计费。',
 
     // 推送
-    'Limit how many branches and tags can be updated in a single push': '限制单次推送可更新的分支和标记数量',
+    'Limit how many branches and tags can be updated in a single push': '限制单次推送可更新的分支和标签数量',
     'Pushes will be rejected if they attempt to update more than this.': '尝试更新的数量超过此值时，推送将被拒绝。',
     'Learn more about this setting': '了解此设置',
     ', and send us your': '，并向我们发送',
-    'branches and tags can be updated in a push': '个分支和标记可在一次推送中更新',
+    'branches and tags can be updated in a push': '个分支和标签可在一次推送中更新',
     'Must be a whole number between 2 and 1000': '必须是 2 到 1000 之间的整数',
 
     // 议题自动关闭

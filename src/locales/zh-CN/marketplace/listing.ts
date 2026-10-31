@@ -278,7 +278,7 @@ export default {
     'file.': '文件中。',
     'No description': '暂无描述',
     'Security policy': '安全策略',
-    // 侧栏「Tags」下是 code-quality、code-review 等市场类别标签（链接到 /marketplace?category=…），不是 Git 标记
+    // 侧栏「Tags」下是 code-quality、code-review 等市场类别标签（链接到 /marketplace?category=…），不是 Git 标签
     Tags: '标签',
     contributors: '个贡献者',
     Transparency: '透明度',
@@ -371,12 +371,12 @@ export default {
     [/^access to ([A-Za-z][A-Za-z ,-]*[A-Za-z])$/, (_, list: string) => accessTo(list)],
   ],
   ignore: [
-    // 头部名称、面包屑末项、简介、版本号（标记名）
+    // 头部名称、面包屑末项、简介、版本号（标签名）
     '[data-testid="overview-header"] h1',
     '[data-testid="overview-header"] nav li:last-child',
     '[data-testid="about"] > span',
     '[data-testid="about"] [class*="prc-Truncate-Truncate-"]',
-    // 版本选择对话框：版本号（标记名）、发行版标题（与标记名不同时显示在条目描述中）
+    // 版本选择对话框：版本号（标签名）、发行版标题（与标签名不同时显示在条目描述中）
     '[data-testid="version-picker-dialog"] [data-component="ActionList.Item.Label"]',
     '[data-testid="version-picker-dialog"] [data-component="ActionList.Description"]',
     // 安装片段对话框标题中的名称与简介

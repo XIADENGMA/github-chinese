@@ -1,9 +1,9 @@
 import type { PageDictionary, RegExpRule } from '../../../core/types'
 
 const regexp: readonly RegExpRule[] = [
-  // 页头：父提交数、标记数（父提交行在 <pre> 内，已由引擎放行：2 parents <sha> + <sha> commit <sha>）
+  // 页头：父提交数、标签数（父提交行在 <pre> 内，已由引擎放行：2 parents <sha> + <sha> commit <sha>）
   [/^(\d+) parents?$/, '$1 个父提交'],
-  [/^(\d+) tags$/, '$1 个标记'],
+  [/^(\d+) tags$/, '$1 个标签'],
   // 更改统计：2 files changed（React 拆成 “2” “ file” “s” “ changed” 后拼接）
   [/^(\d[\d,]*) files? changed$/, '已更改 $1 个文件'],
   // 评论区标题：3 commit comments
@@ -33,8 +33,8 @@ const regexp: readonly RegExpRule[] = [
 export default {
   static: {
     // 页头
-    'Show more tags': '显示更多标记',
-    'Show all tags': '显示所有标记',
+    'Show more tags': '显示更多标签',
+    'Show all tags': '显示所有标签',
     'Loading branch information': '正在加载分支信息',
 
     // 文件树（展开 / 折叠、筛选文件等由 code、pulls 词典收录）

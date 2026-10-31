@@ -425,8 +425,8 @@ const REGEXP_CASES: Readonly<Record<PartName, readonly RegExpCase[]>> = {
     },
     {
       hits: [
-        ['Applies to 3 tags', '适用于 3 个标记'],
-        ['Applies to 1 tag.', '适用于 1 个标记。'],
+        ['Applies to 3 tags', '适用于 3 个标签'],
+        ['Applies to 1 tag.', '适用于 1 个标签。'],
       ],
       misses: ['Applies to tags'],
     },
@@ -435,7 +435,7 @@ const REGEXP_CASES: Readonly<Record<PartName, readonly RegExpCase[]>> = {
     {
       hits: [
         ['6 branch rules', '6 条分支规则'],
-        ['1 tag rule', '1 条标记规则'],
+        ['1 tag rule', '1 条标签规则'],
         ['6 branch rules • targeting 1 branch', '6 条分支规则 • 针对 1 个分支'],
         ['1 push rule · targeting 5 repositories', '1 条推送规则 • 针对 5 个存储库'],
         ['2 push rules • targeting all pushes', '2 条推送规则 • 针对所有推送'],
@@ -448,7 +448,7 @@ const REGEXP_CASES: Readonly<Record<PartName, readonly RegExpCase[]>> = {
     {
       hits: [
         ['• targeting 1 branch', '• 针对 1 个分支'],
-        [', targeting 2 tags', '，针对 2 个标记'],
+        [', targeting 2 tags', '，针对 2 个标签'],
         ['· targeting 100+ repositories', '• 针对 100+ 个存储库'],
       ],
       misses: ['• targeting branches'],
@@ -601,7 +601,7 @@ const REGEXP_CASES: Readonly<Record<PartName, readonly RegExpCase[]>> = {
         ['Author email must not end with a matching pattern', '作者电子邮件不得以匹配模式结尾'],
         ['Committer email must contain a matching pattern', '提交者电子邮件必须包含匹配模式'],
         ['Branch name must match a given regex pattern', '分支名称必须匹配给定的正则表达式'],
-        ['Tag name must not contain a matching pattern', '标记名称不得包含匹配模式'],
+        ['Tag name must not contain a matching pattern', '标签名称不得包含匹配模式'],
       ],
       misses: ['Commit message must be short'],
     },
@@ -1249,10 +1249,10 @@ describe('repo-settings 静态词条', () => {
     ['Temporary interaction limits', '临时交互限制'],
     ['Require a pull request before merging', '合并前必须提交拉取请求'],
     ['Require status checks to pass before merging', '合并前必须通过状态检查'],
-    ['Level up your tag protections with Repository Rules', '使用存储库规则升级标记保护'],
+    ['Level up your tag protections with Repository Rules', '使用存储库规则升级标签保护'],
     [
       'Protected tags are being deprecated. To continue protecting tags, please migrate to a tag ruleset by August 30th. You can learn more about the sunset in our',
-      '受保护标记即将弃用。如需继续保护标记，请在 8 月 30 日前迁移到标记规则集。你可以在',
+      '受保护标签即将弃用。如需继续保护标签，请在 8 月 30 日前迁移到标签规则集。你可以在',
     ],
     ['New branch ruleset', '新建分支规则集'],
     ['Organization rulesets', '组织规则集'],
@@ -1290,7 +1290,7 @@ describe('repo-settings 静态词条', () => {
     ['Loading deliveries...', '正在加载交付记录...'],
     ["You haven't invited any collaborators yet", '你尚未邀请任何协作者'],
     ['You haven’t invited any collaborators yet', '你尚未邀请任何协作者'],
-    ['New tag ruleset', '新建标记规则集'],
+    ['New tag ruleset', '新建标签规则集'],
     ['Reverting...', '还原中...'],
     ['Reverting…', '还原中…'],
     ['Require linear history', '要求线性历史记录'],
@@ -1304,7 +1304,7 @@ describe('repo-settings 静态词条', () => {
     ['Provider hooks', '提供程序钩子'],
     ['Page builds', '页面构建'],
     ['Pages site built.', '页面站点已构建。'],
-    ['Yes, remove this tag protection rule', '是，删除此标记保护规则'],
+    ['Yes, remove this tag protection rule', '是，删除此标签保护规则'],
     ['The Actions tab is hidden and no workflows can run.', '操作标签页将被隐藏，任何工作流都无法运行。'],
     // 产品名、计划名译成中文（见 nav.ts 文件头）：标题、复合词里的 Actions → 操作，句中指整个产品写 GitHub 操作
     ['Disable actions', '禁用 GitHub 操作'],
@@ -1338,7 +1338,7 @@ describe('repo-settings 静态词条', () => {
     ['This limit does not apply to Git Large File Storage (Git LFS).', '此限制不适用于 Git 大文件存储 (Git LFS)。'],
     ['Your GitHub Free plan', '你的 GitHub 免费版计划'],
     ['upgrade this organization to GitHub Team or Enterprise', '将此组织升级到 GitHub 团队版或企业版'],
-    ['Protected tags are available to Pro, Team, and Enterprise users', '专业版、团队版和企业版用户可以使用受保护标记'],
+    ['Protected tags are available to Pro, Team, and Enterprise users', '专业版、团队版和企业版用户可以使用受保护标签'],
     ['Upgrade to Enterprise to use this mode.', '升级到企业版即可使用此模式。'],
     ['Try GitHub Enterprise risk-free for 30 days', '免费试用 GitHub 企业版 30 天'],
     ['Automatically open pull requests for alerts with a patch.', '自动为有可用补丁的警报创建拉取请求。'],
@@ -1370,7 +1370,7 @@ describe('repo-settings 静态词条', () => {
     ],
     [
       'Metadata restrictions can ensure that commit messages contain a GitHub issue number, or enforce the format of new branch and tag names.',
-      '元数据限制可确保提交消息包含 GitHub 议题编号，或强制实施新分支和标记名称的格式。',
+      '元数据限制可确保提交消息包含 GitHub 议题编号，或强制实施新分支和标签名称的格式。',
     ],
     // 括号内是链接或域名，右括号是独立文本节点：左括号用半角，与原文右括号配对
     ['— Required for your site because you are using the default domain (', '— 你的站点必须启用，因为正在使用默认域 ('],

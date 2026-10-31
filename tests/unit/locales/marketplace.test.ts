@@ -480,7 +480,7 @@ describe('marketplace 页面词条', () => {
     ['Mobile CI', '移动端 CI'],
     ['Tools to manage your', '管理'],
     ['community', '社区的工具'],
-    // 操作页侧栏：Tags 下是 code-quality 等市场类别标签（链接到 /marketplace?category=…），不是版本标记
+    // 操作页侧栏：Tags 下是 code-quality 等市场类别标签（链接到 /marketplace?category=…），不是版本标签
     ['Tags', '标签'],
     ['Start a discussion', '开始讨论'],
     ['Open an issue', '提交议题'],

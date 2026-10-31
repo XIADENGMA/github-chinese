@@ -33,12 +33,12 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     ],
     misses: ['Releases: octo-org'],
   },
-  { hits: [['Tags: octo-org/hello-world', '标记：octo-org/hello-world']], misses: ['Tags: hello-world'] },
+  { hits: [['Tags: octo-org/hello-world', '标签：octo-org/hello-world']], misses: ['Tags: hello-world'] },
   // 隐藏的页面标题
   {
     hits: [
       ['Releases · octo-org/hello-world', '发行版 · octo-org/hello-world'],
-      ['Tags · octocat/Hello-World', '标记 · octocat/Hello-World'],
+      ['Tags · octocat/Hello-World', '标签 · octocat/Hello-World'],
     ],
     misses: ['Issues · octo-org/hello-world'],
   },
@@ -126,22 +126,22 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   // 发布表单：标记与上一个标记按钮的无障碍名称
   {
     hits: [
-      ['Tag: v1.0.0', '标记：v1.0.0'],
-      ['Tag: release/2026-10', '标记：release/2026-10'],
+      ['Tag: v1.0.0', '标签：v1.0.0'],
+      ['Tag: release/2026-10', '标签：release/2026-10'],
     ],
     misses: ['Tag:v1.0.0'],
   },
-  { hits: [['Previous tag: v0.9.0', '上一个标记：v0.9.0']], misses: ['Previous tag:v0.9.0'] },
+  { hits: [['Previous tag: v0.9.0', '上一个标签：v0.9.0']], misses: ['Previous tag:v0.9.0'] },
   // 发布表单：提交失败
   {
     hits: [
       [
         "There was an error creating your Release: tag name can't be blank, tag name is not well-formed, published releases must have a valid tag.",
-        '创建发行版时出错：标记名称不能为空，标记名称格式不正确，已发布的发行版必须有有效的标记。',
+        '创建发行版时出错：标签名称不能为空，标签名称格式不正确，已发布的发行版必须有有效的标签。',
       ],
       [
         'There was an error creating your Release: tag name is not well-formed.',
-        '创建发行版时出错：标记名称格式不正确。',
+        '创建发行版时出错：标签名称格式不正确。',
       ],
     ],
     misses: [
@@ -191,7 +191,7 @@ describe('releases 静态词条', () => {
     ['Draft a new release', '起草新发行版'],
     ['Release list', '发行版列表'],
     ['Jump to release', '跳转到发行版'],
-    ['Choose a tag to compare', '选择要比较的标记'],
+    ['Choose a tag to compare', '选择要比较的标签'],
     ['There aren’t any releases here', '暂无发行版'],
     // …供他人使用。有关发行版的更多信息请参阅 <文档>（末句原文无逗号，译文不加）
     [
@@ -199,7 +199,7 @@ describe('releases 静态词条', () => {
       '你可以创建发行版来打包软件，并附上发行说明和二进制文件链接，供他人使用。有关发行版的更多信息请参阅',
     ],
     ['our docs', '文档'],
-    ['tagging specific points of history', '标记存储库历史记录中的特定节点'],
+    ['tagging specific points of history', '给存储库历史记录中的特定节点打标签'],
     // 实现。适合标记发行节点如 <v0.2.0> 或 <v1.0.0>。（原文无逗号，译文不加）
     ['in a repository. They’re great for marking release points like', '实现。适合标记发行节点如'],
     ['released this', '发布于'],
@@ -210,20 +210,20 @@ describe('releases 静态词条', () => {
     ['Release attestation', '发行版证明'],
     ['Delete this release?', '删除此发行版？'],
     ['Discard draft', '放弃草稿'],
-    ['This will delete the information for the tag', '这将删除标记'],
+    ['This will delete the information for the tag', '这将删除标签'],
     ['and cannot be undone.', '的信息且无法撤销。'],
     // 原文无逗号，译文不加
-    ['This will delete the information for this tag and cannot be undone.', '这将删除此标记的信息且无法撤销。'],
-    ['Delete tag', '删除标记'],
+    ['This will delete the information for this tag and cannot be undone.', '这将删除此标签的信息且无法撤销。'],
+    ['Delete tag', '删除标签'],
     ['Toggle commit message', '切换提交消息'],
-    ['Choose a tag', '选择标记'],
-    ['Find or create a new tag', '查找或创建新标记'],
-    ['Loading tag information...', '正在加载标记信息...'],
-    ['Loading tag information…', '正在加载标记信息…'],
+    ['Choose a tag', '选择标签'],
+    ['Find or create a new tag', '查找或创建新标签'],
+    ['Loading tag information...', '正在加载标签信息...'],
+    ['Loading tag information…', '正在加载标签信息…'],
     ['Target:', '目标：'],
     ['Filter branches...', '筛选分支...'],
     ['Release title', '发行版标题'],
-    ['Previous tag', '上一个标记'],
+    ['Previous tag', '上一个标签'],
     ['Generate release notes', '生成发行说明'],
     ['Describe this release', '描述此发行版'],
     ['Attach binaries by dropping them here or selecting them.', '将二进制文件拖放到此处或选择文件以附加。'],
@@ -239,19 +239,19 @@ describe('releases 静态词条', () => {
     ['Saving release...', '正在保存发行版...'],
     ['Source code (zip)', '源代码 (zip)'],
     ['Source code (tar.gz)', '源代码 (tar.gz)'],
-    ['This tag was signed with the tagger’s', '此标记使用标记者的'],
-    ["This tag was signed with the committer's", '此标记使用提交者的'],
-    ['Tag cannot be blank', '标记不能为空'],
+    ['This tag was signed with the tagger’s', '此标签使用打标签者的'],
+    ["This tag was signed with the committer's", '此标签使用提交者的'],
+    ['Tag cannot be blank', '标签不能为空'],
     // 「X. Please try again.」句号随原文，不并成逗号句
-    ['Unable to validate tag name. Please try again.', '无法验证标记名称。请重试。'],
+    ['Unable to validate tag name. Please try again.', '无法验证标签名称。请重试。'],
     [
       'Creating a tag with the same name as a branch can cause ambiguity when selecting refs',
-      '创建与分支同名的标记可能导致选择引用时产生歧义',
+      '创建与分支同名的标签可能导致选择引用时产生歧义',
     ],
-    ['Tag: Select tag', '标记：选择标记'],
-    ['Previous tag: Auto', '上一个标记：自动'],
-    ['Tag name unavailable', '标记名称不可用'],
-    ['Branch with this tag name already exists', '已存在与此标记同名的分支'],
+    ['Tag: Select tag', '标签：选择标签'],
+    ['Previous tag: Auto', '上一个标签：自动'],
+    ['Tag name unavailable', '标签名称不可用'],
+    ['Branch with this tag name already exists', '已存在与此标签同名的分支'],
     ['Release description', '发行版描述'],
     ['Remove attached binary', '删除附加的二进制文件'],
     ['Uploading your file now…', '正在上传文件…'],
@@ -284,7 +284,7 @@ describe('releases 静态词条', () => {
 
   it('静态词条优先于贡献者正则', () => {
     // “Releases and Tags”形如“a and b”，由 static 先行命中
-    expect(translate('Releases and Tags')).toBe('发行版和标记')
+    expect(translate('Releases and Tags')).toBe('发行版和标签')
   })
 
   it('保留首尾空白', () => {
@@ -326,7 +326,7 @@ describe('releases 页面词条', () => {
       ['repository', repository],
       ['releases', releases],
     ])
-    expect(withRepository.translate('Tag name', [...SCOPE])).toBe('标记名称')
+    expect(withRepository.translate('Tag name', [...SCOPE])).toBe('标签名称')
   })
 
   it('页面词条优先于贡献者正则', () => {

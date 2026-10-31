@@ -17,7 +17,7 @@ const NOUNS: readonly (readonly [string, string])[] = [
   ['files?', '个文件'],
   ['commits?', '个提交'],
   ['branch(?:es)?', '个分支'],
-  ['tags?', '个标记'],
+  ['tags?', '个标签'],
   ['labels?', '个标签'],
   ['releases?', '个发行版'],
   ['downloads?', '次下载'],

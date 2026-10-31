@@ -1,7 +1,7 @@
 import type { PageDictionary, RegExpRule } from '../../../core/types'
 
 /**
- * 「<名称> branch / tag」里不是分支名、标记名的常见词（首字母大小写都排除）。
+ * 「<名称> branch / tag」里不是分支名、标签名的常见词（首字母大小写都排除）。
  * 分支选择器按钮的无障碍名称是「main branch」「v1.0.0 tag」，这些词开头的短语交给其它词条。
  */
 const NOT_REF_WORDS: readonly string[] = [
@@ -41,8 +41,8 @@ const DESKTOP_APPS: Readonly<Record<string, string>> = {
 const REF_TYPES: Readonly<Record<string, string>> = {
   branch: '分支',
   branches: '分支',
-  tag: '标记',
-  tags: '标记',
+  tag: '标签',
+  tags: '标签',
 }
 
 /** 检查状态徽章的状态值（术语表：Pending → 挂起） */
@@ -124,16 +124,16 @@ const regexp: readonly RegExpRule[] = [
 ]
 
 /**
- * 存储库首页与目录页的代码区：分支选择器、分支 / 标记计数、转到文件、添加文件、
+ * 存储库首页与目录页的代码区：分支选择器、分支 / 标签计数、转到文件、添加文件、
  * Code 下拉（本地克隆、Codespaces 标签页的错误提示）、最新提交行、文件列表、README 标签页与大纲、向 Copilot 提问。
  * 分支选择器、文件列表等组件也出现在目录页（页面类型 code），共用的短词与组件文字放在 scoped，
  * 只在存储库首页出现的整句放在 static。
- * 分支名、标记名、新建分支名与文件搜索结果属于用户内容，由 ignore 排除。
+ * 分支名、标签名、新建分支名与文件搜索结果属于用户内容，由 ignore 排除。
  */
 export default {
   static: {
-    // 分支选择器的标记搜索框（整句，全站生效）
-    'Search for a tag': '搜索标记',
+    // 分支选择器的标签搜索框（整句，全站生效）
+    'Search for a tag': '搜索标签',
 
     // README 标签页
     'Repository files navigation': '存储库文件导航',
@@ -217,52 +217,52 @@ export default {
   },
   scoped: {
     // 分支选择器
-    'Switch branches/tags': '切换分支/标记',
+    'Switch branches/tags': '切换分支/标签',
     'Switch branches': '切换分支',
-    'Switch tags': '切换标记',
+    'Switch tags': '切换标签',
     'Find a branch...': '查找分支...',
     'Find a branch…': '查找分支…',
     'Find or create a branch...': '查找或创建分支...',
     'Find or create a branch…': '查找或创建分支…',
     // 旧版分支选择器
-    'Find a tag...': '查找标记...',
-    'Find a tag…': '查找标记…',
-    'Filter branches/tags': '筛选分支/标记',
+    'Find a tag...': '查找标签...',
+    'Find a tag…': '查找标签…',
+    'Filter branches/tags': '筛选分支/标签',
     'Sorry, that branch already exists.': '抱歉，该分支已存在。',
-    'Search or create a new tag': '搜索或创建新标记',
+    'Search or create a new tag': '搜索或创建新标签',
     'Filter branches': '筛选分支',
-    'Filter tags': '筛选标记',
-    'Select a tag': '选择标记',
+    'Filter tags': '筛选标签',
+    'Select a tag': '选择标签',
     'Ref type': '引用类型',
     Branches: '分支',
-    Tags: '标记',
+    Tags: '标签',
     Branch: '分支',
-    // 引用类型选项；创建标记对话框的字段名
-    Tag: '标记',
+    // 引用类型选项；创建标签对话框的字段名
+    Tag: '标签',
     branches: '个分支',
-    tags: '个标记',
-    tag: '个标记',
+    tags: '个标签',
+    tag: '个标签',
     default: '默认',
     'View all branches': '查看全部分支',
-    'View all tags': '查看全部标记',
+    'View all tags': '查看全部标签',
     'All branches': '所有分支',
-    'All tags': '所有标记',
+    'All tags': '所有标签',
     'Loading branches...': '正在加载分支...',
-    'Loading tags...': '正在加载标记...',
+    'Loading tags...': '正在加载标签...',
     // 新建分支：创建分支 <名称> 来自 <当前分支>
     'Create branch': '创建分支',
     from: '来自',
     'A tag already exists with the provided branch name. Many Git commands accept both tag and branch names, so creating this branch may cause unexpected behavior. Are you sure you want to create this branch?':
-      '已存在与该分支同名的标记。许多 Git 命令同时接受标记名和分支名，因此创建此分支可能导致意外行为。确定要创建此分支吗？',
-    // 选择器的创建标记按钮与对话框（CreateTagDialog）：存储库首页不启用，发行版表单的标记选择器启用；
+      '已存在与该分支同名的标签。许多 Git 命令同时接受标签名和分支名，因此创建此分支可能导致意外行为。确定要创建此分支吗？',
+    // 选择器的创建标签按钮与对话框（CreateTagDialog）：存储库首页不启用，发行版表单的标签选择器启用；
     // 按钮与对话框标题、输入框的无障碍名称。校验提示（Tag cannot be blank、与分支同名等）由 releases 词典收录
-    'Create new tag': '创建新标记',
-    'Tag name': '标记名称',
+    'Create new tag': '创建新标签',
+    'Tag name': '标签名称',
     'Created on publish': '发布时创建',
 
-    // 工具栏：分支 / 标记页面、转到文件、添加文件
+    // 工具栏：分支 / 标签页面、转到文件、添加文件
     'Go to Branches page': '转到分支页面',
-    'Go to Tags page': '转到标记页面',
+    'Go to Tags page': '转到标签页面',
     'Go to file': '转到文件',
     'Go to folder': '转到文件夹',
     'See all results': '查看所有结果',
@@ -356,7 +356,7 @@ export default {
     ],
   ],
   ignore: [
-    // 分支选择器按钮上的当前分支名、列表中的分支 / 标记名、新建分支的名称与来源
+    // 分支选择器按钮上的当前分支名、列表中的分支 / 标签名、新建分支的名称与来源
     '[class*="RefSelectorText__"]',
     '[class*="HighlightedText__"]',
     '[class*="RefActionText__"]',

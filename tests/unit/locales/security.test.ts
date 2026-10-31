@@ -532,7 +532,7 @@ describe('security 页面词条', () => {
     ['closed', '关闭于'],
     ['Assignees', '受理人'],
     ['No one assigned', '无受理人'],
-    ['Tags', '标记'],
+    ['Tags', '标签'],
     ['Open', '未解决'],
     ['Summary', '摘要'],
     // 公告表单描述编辑器的已保存回复为空：You can create one in your <a>settings</a>.

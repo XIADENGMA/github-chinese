@@ -195,7 +195,7 @@ export default {
     'Find a branch...': '查找分支...',
     'Find a branch…': '查找分支…',
     Branches: '分支',
-    Tags: '标记',
+    Tags: '标签',
     'This repository has been deleted': '此存储库已删除',
     'unknown repository': '未知存储库',
     merged: '合并了',

@@ -14,10 +14,10 @@ function joinLogins(list: string): string {
 
 /** 发布表单提交失败的原因：There was an error creating your Release: tag name can't be blank, … */
 const RELEASE_ERRORS: Readonly<Record<string, string>> = {
-  "tag name can't be blank": '标记名称不能为空',
-  'tag name can’t be blank': '标记名称不能为空',
-  'tag name is not well-formed': '标记名称格式不正确',
-  'published releases must have a valid tag': '已发布的发行版必须有有效的标记',
+  "tag name can't be blank": '标签名称不能为空',
+  'tag name can’t be blank': '标签名称不能为空',
+  'tag name is not well-formed': '标签名称格式不正确',
+  'published releases must have a valid tag': '已发布的发行版必须有有效的标签',
 }
 const RELEASE_ERROR_SOURCE = Object.keys(RELEASE_ERRORS).join('|')
 const RELEASE_ERROR_LIST_SOURCE = `(?:${RELEASE_ERROR_SOURCE})(?:, (?:${RELEASE_ERROR_SOURCE}))*`
@@ -33,11 +33,11 @@ function joinReleaseErrors(list: string): string {
 const regexp: readonly RegExpRule[] = [
   // 屏幕阅读器标题：Releases: octo-org/hello-world
   [new RegExp(`^Releases: (${REPO})$`), '发行版：$1'],
-  [new RegExp(`^Tags: (${REPO})$`), '标记：$1'],
+  [new RegExp(`^Tags: (${REPO})$`), '标签：$1'],
   // 隐藏的页面标题（无刷新导航时用于更新标签页标题）
   [
     new RegExp(`^(Releases|Tags) · (${REPO})$`),
-    (_, page: string, repo: string) => `${page === 'Releases' ? '发行版' : '标记'} · ${repo}`,
+    (_, page: string, repo: string) => `${page === 'Releases' ? '发行版' : '标签'} · ${repo}`,
   ],
   // 标签页标题段：Release v3.5.0（只处理以版本号命名的发行版）
   [/^Release (v?\d[\w.+-]*)$/, '发行版 $1'],
@@ -57,7 +57,7 @@ const regexp: readonly RegExpRule[] = [
     new RegExp(`^(${LOGIN_LIST}), and (${LOGIN})$`),
     (_, list: string, last: string) => `${joinLogins(list)} 和 ${last}`,
   ],
-  // 标记页：切换提交消息按钮的提示
+  // 标签页：切换提交消息按钮的提示
   [/^Toggle (.+?)['’]s commit message$/, '切换 $1 的提交消息'],
   // 编辑 / 删除按钮的无障碍名称
   [/^Edit: (\S.*)$/, '编辑：$1'],
@@ -66,13 +66,13 @@ const regexp: readonly RegExpRule[] = [
   [/^This will delete the information for the release (\S+)\.$/, '这将删除发行版 $1 的信息。'],
   // 搜索无结果
   [/^There are no releases containing ["“](.+)["”]\.$/, '没有包含“$1”的发行版。'],
-  // 发布表单：标记选择
+  // 发布表单：标签选择
   [/^(\S+) will be created on publish$/, '$1 将在发布时创建'],
   [/^(\S+) is used by another release$/, '$1 已被其他发行版使用'],
   [/^(\S+) is used by an immutable release and cannot be reused$/, '$1 已被不可变发行版使用且无法再次使用'],
-  // 发布表单：标记与上一个标记按钮的无障碍名称（未选择时为 Tag: Select tag、Previous tag: Auto）
-  [/^Tag: (\S.*)$/, '标记：$1'],
-  [/^Previous tag: (\S.*)$/, '上一个标记：$1'],
+  // 发布表单：标签与上一个标签按钮的无障碍名称（未选择时为 Tag: Select tag、Previous tag: Auto）
+  [/^Tag: (\S.*)$/, '标签：$1'],
+  [/^Previous tag: (\S.*)$/, '上一个标签：$1'],
   // 发布表单：提交失败
   [
     new RegExp(`^There was an error creating your Release: (${RELEASE_ERROR_LIST_SOURCE})\\.$`),
@@ -81,18 +81,18 @@ const regexp: readonly RegExpRule[] = [
 ]
 
 /**
- * 页面类型 releases：发行版列表与详情（/releases、/releases/tag/<标记>）、标记页（/tags）、
- * 新建 / 编辑发行版表单（/releases/new、/releases/edit/<标记>）、删除确认、空状态。
+ * 页面类型 releases：发行版列表与详情（/releases、/releases/tag/<标签>）、标签页（/tags）、
+ * 新建 / 编辑发行版表单（/releases/new、/releases/edit/<标签>）、删除确认、空状态。
  * 发行说明正文（Markdown）、反应、通用按钮由其它词典处理。
  */
 export default {
   static: {
     // 页头与导航
-    'Releases and Tags': '发行版和标记',
-    'Releases and tags': '发行版和标记',
-    'Releases and tags navigation': '发行版和标记导航',
+    'Releases and Tags': '发行版和标签',
+    'Releases and tags': '发行版和标签',
+    'Releases and tags navigation': '发行版和标签导航',
     'Releases results': '发行版结果',
-    'Tags results': '标记结果',
+    'Tags results': '标签结果',
     'On this page': '本页内容',
     'Find a release': '查找发行版',
     'Draft a new release': '起草新发行版',
@@ -100,7 +100,7 @@ export default {
     'Release list navigation': '发行版列表导航',
     'Release list pagination': '发行版列表分页',
     'Jump to release': '跳转到发行版',
-    'Choose a tag to compare': '选择要比较的标记',
+    'Choose a tag to compare': '选择要比较的标签',
 
     // 空状态与搜索
     'There aren’t any releases here': '暂无发行版',
@@ -109,26 +109,26 @@ export default {
     'You can create a release to package software, along with release notes and links to binary files, for other people to use. Learn more about releases in':
       '你可以创建发行版来打包软件，并附上发行说明和二进制文件链接，供他人使用。有关发行版的更多信息请参阅',
     'our docs': '文档',
-    // 发行版基于 <标记存储库历史记录中的特定节点> 实现。适合标记发行节点如 <v0.2.0> 或 <v1.0.0>。（原文无逗号，译文不加）
-    'Releases are powered by': '发行版基于',
-    'tagging specific points of history': '标记存储库历史记录中的特定节点',
+    // 发行版通过 <给存储库历史记录中的特定节点打标签> 实现。适合标记发行节点如 <v0.2.0> 或 <v1.0.0>。（原文无逗号，译文不加）
+    'Releases are powered by': '发行版通过',
+    'tagging specific points of history': '给存储库历史记录中的特定节点打标签',
     'in a repository. They’re great for marking release points like': '实现。适合标记发行节点如',
     "in a repository. They're great for marking release points like": '实现。适合标记发行节点如',
     'No releases found': '未找到发行版',
 
     // 发行版卡片与详情：<用户> 发布于 <时间>
     'released this': '发布于',
-    'tagged this': '标记于',
+    'tagged this': '打标签于',
     'drafted this': '起草于',
     // 不可变 <发行版。只能修改发行版标题和说明。>
     Immutable: '不可变',
     'release. Only release title and notes can be modified.': '发行版。只能修改发行版标题和说明。',
     'Verified commit signature': '已验证的提交签名',
-    // 签名标记的验证弹层：此标记使用标记者的 <已验证签名>.
-    'This tag was signed with the tagger’s': '此标记使用标记者的',
-    "This tag was signed with the tagger's": '此标记使用标记者的',
-    'This tag was signed with the committer’s': '此标记使用提交者的',
-    "This tag was signed with the committer's": '此标记使用提交者的',
+    // 签名标签的验证弹层：此标签使用打标签者的 <已验证签名>.
+    'This tag was signed with the tagger’s': '此标签使用打标签者的',
+    "This tag was signed with the tagger's": '此标签使用打标签者的',
+    'This tag was signed with the committer’s': '此标签使用提交者的',
+    "This tag was signed with the committer's": '此标签使用提交者的',
     Assets: '资产',
     'Release attestation': '发行版证明',
     Downloads: '下载',
@@ -139,26 +139,26 @@ export default {
     'Delete release': '删除发行版',
     'Create release': '创建发行版',
 
-    // 标记页
+    // 标签页
     'Toggle commit message': '切换提交消息',
-    'Delete tag': '删除标记',
+    'Delete tag': '删除标签',
 
     // 删除确认与提示
     'Delete this release?': '删除此发行版？',
     'Are you sure you want to delete this release?': '确定要删除此发行版吗？',
     'This will delete the information for this release.': '这将删除此发行版的信息。',
-    // 这将删除发行版 <v1.0> 的信息（标记名在单独的元素中时）
+    // 这将删除发行版 <v1.0> 的信息（标签名在单独的元素中时）
     'This will delete the information for the release': '这将删除发行版',
     'Delete this release': '删除此发行版',
-    'Delete tag?': '删除标记？',
-    'Delete this tag?': '删除此标记？',
-    'This will delete the information for this tag and cannot be undone.': '这将删除此标记的信息且无法撤销。',
-    // 这将删除标记 <v1.0> 的信息且无法撤销。（原文无逗号，译文不加）
-    'This will delete the information for the tag': '这将删除标记',
+    'Delete tag?': '删除标签？',
+    'Delete this tag?': '删除此标签？',
+    'This will delete the information for this tag and cannot be undone.': '这将删除此标签的信息且无法撤销。',
+    // 这将删除标签 <v1.0> 的信息且无法撤销。（原文无逗号，译文不加）
+    'This will delete the information for the tag': '这将删除标签',
     'and cannot be undone.': '的信息且无法撤销。',
-    'I understand, delete this tag': '我了解，删除此标记',
-    'Delete this tag': '删除此标记',
-    'Your tag was removed': '标记已删除',
+    'I understand, delete this tag': '我了解，删除此标签',
+    'Delete this tag': '删除此标签',
+    'Your tag was removed': '标签已删除',
     'Your release was removed': '发行版已删除',
 
     // 草稿（原文无逗号，译文改语序不加）
@@ -169,55 +169,55 @@ export default {
     'This will delete the information for this draft.': '这将删除此草稿的信息。',
     'Delete this draft': '删除此草稿',
 
-    // 发布表单：标题与标记
+    // 发布表单：标题与标签
     'New release': '新建发行版',
     'New Release': '新建发行版',
     'Release notes': '发行说明',
-    'Choose a tag': '选择标记',
-    'Find or create a new tag': '查找或创建新标记',
-    'Search or create a new tag': '搜索或创建新标记',
-    'Tag:': '标记：',
-    'Select tag': '选择标记',
-    'Tag: Select tag': '标记：选择标记',
-    'Create new tag:': '创建新标记：',
-    // 创建新标记：<v1.0> 于发布时
+    'Choose a tag': '选择标签',
+    'Find or create a new tag': '查找或创建新标签',
+    'Search or create a new tag': '搜索或创建新标签',
+    'Tag:': '标签：',
+    'Select tag': '选择标签',
+    'Tag: Select tag': '标签：选择标签',
+    'Create new tag:': '创建新标签：',
+    // 创建新标签：<v1.0> 于发布时
     'on publish': '于发布时',
-    'Choose an existing tag, or create a new tag on publish': '选择现有标记，或在发布时创建新标记',
+    'Choose an existing tag, or create a new tag on publish': '选择现有标签，或在发布时创建新标签',
     'Choose an existing tag, or create a new tag when you publish this release.':
-      '选择现有标记，或在发布此发行版时创建新标记。',
-    'Loading tag information…': '正在加载标记信息…',
-    'Loading tag information...': '正在加载标记信息...',
-    'Existing tag': '现有标记',
-    'Duplicate tag name': '标记名称重复',
-    // 此标记已有发行说明。是否要 <编辑它们？>
-    'This tag already has release notes. Would you like to': '此标记已有发行说明。是否要',
+      '选择现有标签，或在发布此发行版时创建新标签。',
+    'Loading tag information…': '正在加载标签信息…',
+    'Loading tag information...': '正在加载标签信息...',
+    'Existing tag': '现有标签',
+    'Duplicate tag name': '标签名称重复',
+    // 此标签已有发行说明。是否要 <编辑它们？>
+    'This tag already has release notes. Would you like to': '此标签已有发行说明。是否要',
     'edit them?': '编辑它们？',
     'edit the existing notes': '编辑现有说明',
-    'Invalid tag name': '标记名称无效',
+    'Invalid tag name': '标签名称无效',
     'We weren’t able to create the release for you. Make sure you have a valid tag.':
-      '无法创建发行版。请确保标记有效。',
+      '无法创建发行版。请确保标签有效。',
     "We weren't able to create the release for you. Make sure you have a valid tag.":
-      '无法创建发行版。请确保标记有效。',
+      '无法创建发行版。请确保标签有效。',
     'We can’t create a tag with this name. Take a look at the suggestions in the sidebar for example tag names.':
-      '无法使用此名称创建标记。示例标记名称见侧边栏中的建议。',
+      '无法使用此名称创建标签。示例标签名称见侧边栏中的建议。',
     "We can't create a tag with this name. Take a look at the suggestions in the sidebar for example tag names.":
-      '无法使用此名称创建标记。示例标记名称见侧边栏中的建议。',
+      '无法使用此名称创建标签。示例标签名称见侧边栏中的建议。',
     'Excellent! This tag will be created from the target when you publish this release.':
-      '很好！发布此发行版时将基于目标创建此标记。',
-    // 新建标记对话框（标记选择器）
-    'Tag cannot be blank': '标记不能为空',
+      '很好！发布此发行版时将基于目标创建此标签。',
+    // 新建标签对话框（标签选择器）
+    'Tag cannot be blank': '标签不能为空',
     'Contains invalid characters. Use safe special characters ., -, or _ instead':
       '包含无效字符。请改用安全的特殊字符 .、- 或 _',
     // 「X. Please try again.」句号随原文（与 pulls、common-ui 一致）
-    'Unable to validate tag name. Please try again.': '无法验证标记名称。请重试。',
+    'Unable to validate tag name. Please try again.': '无法验证标签名称。请重试。',
     'Creating a tag with the same name as a branch can cause ambiguity when selecting refs':
-      '创建与分支同名的标记可能导致选择引用时产生歧义',
-    // 发布表单：标记与分支同名、标记曾用于不可变发行版
-    'Branch with this tag name already exists': '已存在与此标记同名的分支',
+      '创建与分支同名的标签可能导致选择引用时产生歧义',
+    // 发布表单：标签与分支同名、标签曾用于不可变发行版
+    'Branch with this tag name already exists': '已存在与此标签同名的分支',
     'Creating a tag with the same name as a branch can cause ambiguity when selecting refs. The tag will still be created when this release is published.':
-      '创建与分支同名的标记可能导致选择引用时产生歧义。发布此发行版时仍会创建该标记。',
-    'Tag name unavailable': '标记名称不可用',
-    'Tags previously bound to immutable releases can never be reused.': '曾用于不可变发行版的标记无法再次使用。',
+      '创建与分支同名的标签可能导致选择引用时产生歧义。发布此发行版时仍会创建该标签。',
+    'Tag name unavailable': '标签名称不可用',
+    'Tags previously bound to immutable releases can never be reused.': '曾用于不可变发行版的标签无法再次使用。',
 
     // 发布表单：目标
     'Target:': '目标：',
@@ -229,18 +229,18 @@ export default {
     'Recent Commits': '最近的提交',
     'Recent commits': '最近的提交',
 
-    // 发布表单：标题、说明与上一个标记
+    // 发布表单：标题、说明与上一个标签
     'Release title': '发行版标题',
     'Enter release title': '输入发行版标题',
-    'Previous tag:': '上一个标记：',
-    'Previous tag': '上一个标记',
-    'Previous tag: Auto': '上一个标记：自动',
-    'Select previous tag to compare': '选择要比较的上一个标记',
-    'Find previous tag': '查找上一个标记',
+    'Previous tag:': '上一个标签：',
+    'Previous tag': '上一个标签',
+    'Previous tag: Auto': '上一个标签：自动',
+    'Select previous tag to compare': '选择要比较的上一个标签',
+    'Find previous tag': '查找上一个标签',
     'Generate release notes': '生成发行说明',
-    'Select a previous tag to create generated release notes': '选择上一个标记以生成发行说明',
+    'Select a previous tag to create generated release notes': '选择上一个标签以生成发行说明',
     'Select a valid tag to automatically add the Markdown for all the merged pull requests from this diff and contributors of this release':
-      '选择有效标记以自动添加此差异中所有已合并拉取请求和此发行版贡献者的 Markdown',
+      '选择有效标签以自动添加此差异中所有已合并拉取请求和此发行版贡献者的 Markdown',
     'Automatically add the Markdown for all the merged pull requests from this diff and contributors of this release':
       '自动添加此差异中所有已合并拉取请求和此发行版贡献者的 Markdown',
     'Clear existing notes to automatically add the Markdown for all the merged pull requests from this diff and contributors of this release':
@@ -303,15 +303,15 @@ export default {
     "You can't publish releases for an empty repository.": '无法为空存储库发布发行版。',
 
     // 发布表单：侧边栏
-    'Tagging suggestions': '标记建议',
-    // 通常在版本名称前加上字母 <v>。合适的标记名称如 <v1.0.0> 或 <v2.3.4>。
+    'Tagging suggestions': '标签建议',
+    // 通常在版本名称前加上字母 <v>。合适的标签名称如 <v1.0.0> 或 <v2.3.4>。
     'It’s common practice to prefix your version names with the letter': '通常在版本名称前加上字母',
     "It's common practice to prefix your version names with the letter": '通常在版本名称前加上字母',
-    '. Some good tag names might be': '。合适的标记名称如',
+    '. Some good tag names might be': '。合适的标签名称如',
     'If the tag isn’t meant for production use, add a pre-release version after the version name. Some good pre-release versions might be':
-      '如果标记不用于生产环境，请在版本名称后添加预发行版本号。合适的预发行版本号如',
+      '如果标签不用于生产环境，请在版本名称后添加预发行版本号。合适的预发行版本号如',
     "If the tag isn't meant for production use, add a pre-release version after the version name. Some good pre-release versions might be":
-      '如果标记不用于生产环境，请在版本名称后添加预发行版本号。合适的预发行版本号如',
+      '如果标签不用于生产环境，请在版本名称后添加预发行版本号。合适的预发行版本号如',
     'Semantic versioning': '语义化版本',
     'If you’re new to releasing software, we highly recommend to': '如果你是初次发布软件，强烈建议',
     "If you're new to releasing software, we highly recommend to": '如果你是初次发布软件，强烈建议',
@@ -347,7 +347,7 @@ export default {
     Notes: '说明',
     // 自动生成的发行说明末尾的链接文字（位于 Markdown 正文内时不翻译）
     'Full Changelog': '完整更新日志',
-    // 新建标记对话框输入框的无障碍名称 Tag name 由 repository 词典按页面收录（作用域含 repository）
+    // 新建标签对话框输入框的无障碍名称 Tag name 由 repository 词典按页面收录（作用域含 repository）
     // 签名弹层徽章（Verified、Unverified、Partially verified、Expired 由 common-ui 收录）
     Revoked: '已撤销',
     // 发布表单

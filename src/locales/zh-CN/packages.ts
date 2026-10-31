@@ -33,8 +33,8 @@ const regexp: readonly RegExpRule[] = [
   [new RegExp(`^Published (${TIME_SOURCE}) · Digest$`), (_, time) => `${joinCjk(translateTime(time), '发布')} · 摘要`],
   [new RegExp(`^Published (${TIME_SOURCE})$`), (_, time) => joinCjk(translateTime(time), '发布')],
   // 版本列表标签页与筛选
-  [/^(\d[\d,]*) tagged$/, '$1 个带标记版本'],
-  [/^(\d[\d,]*) untagged$/, '$1 个无标记版本'],
+  [/^(\d[\d,]*) tagged$/, '$1 个带标签版本'],
+  [/^(\d[\d,]*) untagged$/, '$1 个无标签版本'],
   [/^(\d[\d,]*) active$/, '$1 个活跃版本'],
   [/^(\d[\d,]*) deleted$/, '$1 个已删除版本'],
   [/^Package versions of (.+)$/, '$1 的软件包版本'],
@@ -101,8 +101,8 @@ export default {
 
     // 软件包详情：版本与侧栏
     'About this package': '关于此软件包',
-    'Recent tagged image versions': '最近带标记的映像版本',
-    'View all tagged versions': '查看所有带标记的版本',
+    'Recent tagged image versions': '最近带标签的映像版本',
+    'View all tagged versions': '查看所有带标签的版本',
     'View and manage all versions': '查看并管理所有版本',
     'View all versions': '查看所有版本',
     'Recent Versions': '最近版本',
@@ -136,7 +136,7 @@ export default {
     'Learn more about labelling container images': '了解如何标注容器映像',
     'Download activity': '下载活动',
     'Download activity of this version': '此版本的下载活动',
-    'Other tags on this version': '此版本的其他标记',
+    'Other tags on this version': '此版本的其他标签',
     'Delete version': '删除版本',
     // This cannot be undone. This will permanently delete the version <strong> so users and processes won’t …
     // 原文片段之间没有逗号，译文用“并”衔接
@@ -276,8 +276,8 @@ export default {
     // GitHub Enterprise Server 的软件包设置侧栏
     'Manage versions': '管理版本',
     'Actions access': '操作访问权限',
-    Tagged: '带标记',
-    Untagged: '无标记',
+    Tagged: '带标签',
+    Untagged: '无标签',
     Active: '活跃',
     Deleted: '已删除',
     Digest: '摘要',
@@ -324,16 +324,16 @@ export default {
   },
   regexp,
   ignore: [
-    // 版本标记（如 latest、dev、2026.1.0）
+    // 版本标签（如 latest、dev、2026.1.0）
     'a.Label',
     // 列表中的软件包名、所有者名与存储库名
     '#package-results .Box-row a.f4',
     '#package-results .Box-row .f6 a',
     // 软件包描述
     '.flex-md-row.mt-n1 > .col-12 > p',
-    // 详情与版本页标题中的软件包名、版本标记
+    // 详情与版本页标题中的软件包名、版本标签
     'h1 > span.overflow-hidden.lh-condensed',
-    // 面包屑：软件包名、当前版本的标记
+    // 面包屑：软件包名、当前版本的标签
     '.breadcrumb-item:first-child > a',
     '.breadcrumb-item-selected > a[href*="?tag="]',
     // 侧栏 Details：所有者、链接的存储库（星标数链接是界面文字）

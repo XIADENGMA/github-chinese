@@ -82,7 +82,7 @@ export default {
     // 事件
     Pusher: '推送者',
     'Deleted branch': '已删除分支',
-    'Deleted tag': '已删除标记',
+    'Deleted tag': '已删除标签',
     'Created branch': '已创建分支',
     'Updated branch': '已更新分支',
     'Force push': '强制推送',
@@ -90,7 +90,7 @@ export default {
     'Merge queue merge': '合并队列合并',
     'Missing commit': '缺失的提交',
     'deleted this branch': '删除了此分支',
-    'deleted this tag': '删除了此标记',
+    'deleted this tag': '删除了此标签',
     'created this branch': '创建了此分支',
     'force pushed to': '强制推送到',
     'force pushed': '强制推送了',

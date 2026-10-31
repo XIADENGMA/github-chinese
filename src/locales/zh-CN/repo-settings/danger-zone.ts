@@ -78,7 +78,7 @@ export default {
     'This will hide the branch protection settings and disable branch protection rules for this repository.':
       '这将隐藏分支保护设置，并禁用此存储库的分支保护规则。',
     'Disabling branch protection rules allows you to enforce branch and tag protections exclusively with Repository Rules.':
-      '禁用分支保护规则后，可以仅使用存储库规则来强制实施分支和标记保护。',
+      '禁用分支保护规则后，可以仅使用存储库规则来强制实施分支和标签保护。',
     'This action will disable:': '此操作将禁用：',
     'Branch protection rule enforcement': '分支保护规则的强制实施',
     'Branch protection rule APIs': '分支保护规则 API',

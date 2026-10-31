@@ -13,7 +13,7 @@ const METADATA_SUBJECT: Readonly<Record<string, string>> = {
   'Author email': '作者电子邮件',
   'Committer email': '提交者电子邮件',
   'Branch name': '分支名称',
-  'Tag name': '标记名称',
+  'Tag name': '标签名称',
 }
 
 /** 元数据限制的匹配方式：英文 → 中文 */
@@ -40,7 +40,7 @@ const FIELD_PROBLEM: Readonly<Record<string, string>> = {
 }
 
 /**
- * 存储库设置 · 规则集的规则：分支 / 标记 / 推送规则及其参数（合并队列、部署、拉取请求与必需审查者、
+ * 存储库设置 · 规则集的规则：分支 / 标签 / 推送规则及其参数（合并队列、部署、拉取请求与必需审查者、
  * 状态检查、代码扫描、代码质量、工作流、机密扫描、代码覆盖率、文件路径 / 扩展名 / 大小）、元数据限制、规则错误提示。
  * 与经典分支保护同名的规则（Require signed commits 等）见 branches.ts。
  */
@@ -48,13 +48,13 @@ export default {
   static: {
     // 规则面板
     'Branch rules': '分支规则',
-    'Tag rules': '标记规则',
+    'Tag rules': '标签规则',
     'Push rules': '推送规则',
     'Branch protections': '分支保护',
-    'Tag protections': '标记保护',
+    'Tag protections': '标签保护',
     'Push protections': '推送保护',
     'No branch protections have been added': '尚未添加分支保护',
-    'No tag protections have been added': '尚未添加标记保护',
+    'No tag protections have been added': '尚未添加标签保护',
     'No push protections have been added': '尚未添加推送保护',
     'Which rules should be applied to the targets that you have selected?': '应对所选目标应用哪些规则？',
     'Which rules should be applied?': '应应用哪些规则？',
@@ -228,8 +228,8 @@ export default {
     'Add required workflow': '添加必需工作流',
     'Workflow already exists': '工作流已存在',
     'Unknown repository': '未知存储库',
-    'Select branch or tag': '选择分支或标记',
-    'Branch or tag': '分支或标记',
+    'Select branch or tag': '选择分支或标签',
+    'Branch or tag': '分支或标签',
     'Pin to commit': '固定到提交',
     'Always reference the current commit': '始终引用当前提交',
     'Enter a SHA': '输入 SHA',
@@ -341,11 +341,11 @@ export default {
     'Restrict commit author emails': '限制提交作者电子邮件',
     'Restrict committer emails': '限制提交者电子邮件',
     'Restrict branch names': '限制分支名称',
-    'Restrict tag names': '限制标记名称',
+    'Restrict tag names': '限制标签名称',
     'Metadata restrictions': '元数据限制',
     'Metadata restrictions are available to Enterprise organizations': '元数据限制仅适用于企业版组织',
     'Metadata restrictions can ensure that commit messages contain a GitHub issue number, or enforce the format of new branch and tag names.':
-      '元数据限制可确保提交消息包含 GitHub 议题编号，或强制实施新分支和标记名称的格式。',
+      '元数据限制可确保提交消息包含 GitHub 议题编号，或强制实施新分支和标签名称的格式。',
     'Learn more about metadata restrictions': '了解元数据限制',
     'No metadata restrictions have been added': '尚未添加元数据限制',
     'No restrictions have been added': '尚未添加限制',
@@ -413,7 +413,7 @@ export default {
     restrictions: '限制',
     Negate: '取反',
     'Branch name': '分支名称',
-    'Tag name': '标记名称',
+    'Tag name': '标签名称',
     'Commit message': '提交消息',
     'Additional settings': '其他设置',
     'Add workflow': '添加工作流',

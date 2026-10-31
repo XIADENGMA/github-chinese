@@ -146,7 +146,7 @@ export default {
     'Search error': '搜索出错',
     'Save error': '保存出错',
     'Sorry, something went wrong. Please try again.': '抱歉，出错了。请重试。',
-    Tags: '标记',
+    Tags: '标签',
     Development: '开发',
     // 警报列表与详情的状态（Closed 由 common 译作「已关闭」）
     Open: '未解决',

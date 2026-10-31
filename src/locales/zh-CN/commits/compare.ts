@@ -26,7 +26,7 @@ export default {
     "Choose two branches to see what's changed or to start a new pull request. If you need to, you can also":
       '选择两个分支以查看更改或创建新的拉取请求。如有需要，你也可以',
     'Compare changes across branches, commits, tags, and more below. If you need to, you can also':
-      '在下方比较分支、提交、标记等之间的更改。如有需要，你也可以',
+      '在下方比较分支、提交、标签等之间的更改。如有需要，你也可以',
     'compare across forks': '跨复刻比较',
     'learn more about diff comparisons': '了解差异比较',
     'Open a pull request': '创建拉取请求',
@@ -52,9 +52,9 @@ export default {
       '无法加载存储库。请确认所选基础引用有效后重试。',
     'Failed to load repositories. Confirm that selected head ref is valid, then try again.':
       '无法加载存储库。请确认所选头部引用有效后重试。',
-    'Find a tag': '查找标记',
+    'Find a tag': '查找标签',
     'Could not load branches': '无法加载分支',
-    'Could not load tags': '无法加载标记',
+    'Could not load tags': '无法加载标签',
     'Three-dot diff: changes since branches diverged': '三点差异：分支分叉以来的更改',
 
     // 合并状态
@@ -100,7 +100,7 @@ export default {
       '在上方选择不同的分支或复刻来讨论和审查更改。',
     'Compare and review just about anything': '比较和审查几乎任何内容',
     'Branches, tags, commit ranges, and time ranges. In the same repository and across forks.':
-      '分支、标记、提交范围和时间范围。同一存储库内或跨复刻均可。',
+      '分支、标签、提交范围和时间范围。同一存储库内或跨复刻均可。',
     'Example comparisons': '示例比较',
     'Learn about pull requests': '了解拉取请求',
 

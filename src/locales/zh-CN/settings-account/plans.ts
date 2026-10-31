@@ -193,7 +193,7 @@ export default {
       'GitHub 组织提供基于团队的访问控制和讨论。',
     'Learn more about organizations': '了解组织',
     'Enforce consistent code standards, security, and compliance across branches and tags.':
-      '在各分支和标记中强制实施一致的代码标准、安全性和合规性。',
+      '在各分支和标签中强制实施一致的代码标准、安全性和合规性。',
     'Export a software bill of materials (SBOM) for your repository.': '为存储库导出软件物料清单 (SBOM)。',
     'Ensure unfalsifiable provenance and integrity for your software.': '确保软件来源不可伪造且完整。',
     "Define users' level of access to your code, data and settings.": '定义用户对你的代码、数据和设置的访问级别。',

@@ -280,14 +280,14 @@ export default {
     'Workflow could not be run. Please try again.': '工作流无法运行。请重试。',
     'Workflow dispatch unavailable': '无法调度工作流',
     // Workflow does not exist or does not have a <code>workflow_dispatch</code> trigger in this branch / tag.
-    // 首段两种句子共用，分支、标记合称“此引用”（同对话框 Select ref → 选择引用），末段不加原文没有的括号
+    // 首段两种句子共用，分支、标签合称“此引用”（同对话框 Select ref → 选择引用），末段不加原文没有的括号
     'Workflow does not exist or does not have a': '工作流不存在或此引用中没有',
     'trigger in this branch.': '触发器。',
     'trigger in this tag.': '触发器。',
     'Workflow dispatch unavailable. Workflow does not exist or does not have a workflow_dispatch trigger in this branch.':
       '无法调度工作流。工作流不存在或此分支中没有 workflow_dispatch 触发器。',
     'Workflow dispatch unavailable. Workflow does not exist or does not have a workflow_dispatch trigger in this tag.':
-      '无法调度工作流。工作流不存在或此标记中没有 workflow_dispatch 触发器。',
+      '无法调度工作流。工作流不存在或此标签中没有 workflow_dispatch 触发器。',
     'This input expects a number.': '此输入需要数字。',
     'No environments are configured.': '尚未配置环境。',
     'Configure environments': '配置环境',
@@ -488,7 +488,7 @@ export default {
     ],
     // 手动运行、状态徽章的引用选择器
     [/^Use workflow from: (.+)$/, '工作流来源：$1'],
-    [/^(Branch|Tag): (.+)$/, (_, kind: string, name: string) => `${kind === 'Branch' ? '分支' : '标记'}：${name}`],
+    [/^(Branch|Tag): (.+)$/, (_, kind: string, name: string) => `${kind === 'Branch' ? '分支' : '标签'}：${name}`],
     [/^(.+) \(default\)$/, '$1（默认）'],
     // 宽泛规则：须在其他文件的具体规则之后
     [/^(Pin|Unpin) (.+)$/, (_, action: string, name: string) => `${action === 'Pin' ? '置顶' : '取消置顶'} ${name}`],

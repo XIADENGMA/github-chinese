@@ -376,7 +376,7 @@ export default {
     'Explore platform security features': '探索平台安全功能',
     'Securing your code, end to end': '端到端保护你的代码',
     'GitHub safeguards user accounts, branches, tags, and pushes, and supports SBOMs and artifact attestations for SLSA L3 builds.':
-      'GitHub 保护用户帐户、分支、标记和推送，并支持 SBOM 和工件证明，助力实现 SLSA L3 构建。',
+      'GitHub 保护用户帐户、分支、标签和推送，并支持 SBOM 和工件证明，助力实现 SLSA L3 构建。',
 
     // /security/plans：功能对比表（与 new/plans.ts 的 scoped 同名同译；Provider patterns、Generic patterns、
     // Dependency graph 已由其他文件的 static 收录；单元格的屏幕阅读器文字 Included / Not included）

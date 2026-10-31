@@ -380,7 +380,7 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   { hits: [['3 files', '3 个文件']], misses: ['files'] },
   { hits: [['12 commits', '12 个提交']], misses: ['12 commits ahead'] },
   { hits: [['5 branches', '5 个分支']], misses: ['branches'] },
-  { hits: [['20 tags', '20 个标记']], misses: ['tags'] },
+  { hits: [['20 tags', '20 个标签']], misses: ['tags'] },
   { hits: [['3 labels', '3 个标签']], misses: ['3 labels selected'] },
   { hits: [['2 releases', '2 个发行版']], misses: ['releases'] },
   {
