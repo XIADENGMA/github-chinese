@@ -39,6 +39,10 @@ describe('版本号与文件名', () => {
 })
 
 describe('命令参数', () => {
+  it('Bundle ID 的最后一段同应用名（空格换成 -）：转换器给应用、扩展的 Bundle ID 才同前缀', () => {
+    expect(BUNDLE_ID.split('.').at(-1)).toBe(APP_NAME.replaceAll(' ', '-'))
+  })
+
   it('转换：只含 macOS 应用的 Swift 工程，复制扩展文件，不打开 Xcode、不询问', () => {
     expect(converterArgs('/tmp/ext', '/tmp/work')).toEqual([
       'safari-web-extension-converter',

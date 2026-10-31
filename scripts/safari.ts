@@ -7,8 +7,12 @@ import { posix } from 'node:path'
 
 /** 宿主应用名：应用、Xcode 工程、构建目标同名 */
 export const APP_NAME = 'GitHub Chinese'
-/** 宿主应用的 Bundle ID；扩展为「<Bundle ID>.Extension」 */
-export const BUNDLE_ID = 'io.github.setube.github-chinese'
+/**
+ * 宿主应用的 Bundle ID；扩展为「<Bundle ID>.Extension」。最后一段须同应用名（空格换成 -）：
+ * 转换器（Xcode 26）给应用的 Bundle ID 取前几段加应用名，给扩展的取整个 Bundle ID 加 .Extension，
+ * 两者前缀不一致时 Xcode 拒绝把扩展嵌入应用
+ */
+export const BUNDLE_ID = 'io.github.setube.GitHub-Chinese'
 
 /** 应用的版本号（CFBundleShortVersionString）至多三段整数 */
 const APP_VERSION_RE = /^\d+(\.\d+){0,2}$/
