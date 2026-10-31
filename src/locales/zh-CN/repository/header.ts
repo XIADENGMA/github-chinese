@@ -58,9 +58,9 @@ const ORIGINS: Readonly<Record<string, string>> = {
 }
 
 const regexp: readonly RegExpRule[] = [
-  // 存档横幅（原文是两句，译文同样两句，不并成一句）
+  // 存档横幅（原文是两句，译文同样两句，不并成一句；原文有 repository、repo 两种写法）
   [
-    new RegExp(`^This repository was archived by the owner on (${DATE_SOURCE})\\. It is now read-only\\.$`),
+    new RegExp(`^This (?:repository|repo) was archived by the owner on (${DATE_SOURCE})\\. It is now read-only\\.$`),
     (_, date: string) => joinCjk(joinCjk('此存储库已由所有者于', translateTime(date)), '存档。现为只读。'),
   ],
   // 关注按钮的无障碍名称

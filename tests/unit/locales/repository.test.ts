@@ -30,15 +30,22 @@ const WATCH_TAIL = 'Click to change subscription settings.'
 /** 与本词典自有正则一一对应（顺序同 header → overview → banners → empty → sidebar → pages） */
 const REGEXP_CASES: readonly RegExpCase[] = [
   // —— 存储库头部 ——
-  // 存档横幅（原文两句，译文两句）
+  // 存档横幅（原文两句，译文两句；原文有 repository、repo 两种写法）
   {
     hits: [
+      [
+        'This repo was archived by the owner on Sep 3, 2024. It is now read-only.',
+        '此存储库已由所有者于 2024 年 9 月 3 日存档。现为只读。',
+      ],
       [
         'This repository was archived by the owner on Mar 3, 2023. It is now read-only.',
         '此存储库已由所有者于 2023 年 3 月 3 日存档。现为只读。',
       ],
     ],
-    misses: ['This repository was archived by the owner. It is now read-only.'],
+    misses: [
+      'This repository was archived by the owner. It is now read-only.',
+      'This repos was archived by the owner on Sep 3, 2024. It is now read-only.',
+    ],
   },
   // 关注按钮的无障碍名称
   {
@@ -921,6 +928,15 @@ describe('repository 繁体词条（zh-TW）', () => {
   it('许可证名正则：MIT license 译出，Exclude license 不当作许可证名', () => {
     expect(twMatcher.translate('MIT license', HOME)).toBe('MIT 授權條款')
     expect(twMatcher.translate('Exclude license', HOME)).toBeUndefined()
+  })
+
+  it('存档横幅：原文有 repository、repo 两种写法', () => {
+    expect(twMatcher.translate('This repo was archived by the owner on Sep 3, 2024. It is now read-only.', HOME)).toBe(
+      '此儲存庫已由擁有者於 2024 年 9 月 3 日封存。目前為唯讀。',
+    )
+    expect(
+      twMatcher.translate('This repository was archived by the owner on Mar 3, 2023. It is now read-only.', HOME),
+    ).toBe('此儲存庫已由擁有者於 2023 年 3 月 3 日封存。目前為唯讀。')
   })
 })
 
