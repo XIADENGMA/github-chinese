@@ -24,6 +24,12 @@ const state = vi.hoisted(() => ({
     language: 'auto' as string,
     uiLanguage: 'auto',
     theme: 'auto',
+    accelerate: false,
+    accelerateImages: false,
+    failover: false,
+    accelerateSource: 'ghfast',
+    customSources: [] as readonly unknown[],
+    removedSources: [] as readonly string[],
   },
   failSettings: false,
   /** 设置后读取设置要等它落定（模拟读存储较慢） */
@@ -91,7 +97,12 @@ interface FakeContext {
   readonly intervals: (() => void)[]
   readonly timeouts: (() => void)[]
   onInvalidated(callback: () => void): () => void
-  addEventListener(target: EventTarget, type: string, handler: () => void): void
+  addEventListener(
+    target: EventTarget,
+    type: string,
+    handler: () => void,
+    options?: boolean | AddEventListenerOptions,
+  ): void
   setInterval(handler: () => void, timeout: number): number
   setTimeout(handler: () => void, timeout: number): number
   /** 执行一轮定时任务 */
@@ -117,11 +128,11 @@ function createContext(): FakeContext {
       context.invalidated.push(callback)
       return () => undefined
     },
-    // 与 WXT 一致：失效时移除监听
-    addEventListener(target, type, handler) {
+    // 与 WXT 一致：传入监听选项，失效时移除监听
+    addEventListener(target, type, handler, options) {
       const name = type === 'wxt:locationchange' ? 'test:locationchange' : type
-      target.addEventListener(name, handler)
-      context.invalidated.push(() => target.removeEventListener(name, handler))
+      target.addEventListener(name, handler, options)
+      context.invalidated.push(() => target.removeEventListener(name, handler, options))
     },
     setInterval(handler) {
       context.intervals.push(handler)
@@ -233,7 +244,15 @@ beforeEach(() => {
   state.entries = {}
   state.failSettings = false
   state.settingsGate = undefined
-  state.settings = { ...state.settings, enabled: true, excludedPaths: [], language: 'auto' }
+  state.settings = {
+    ...state.settings,
+    enabled: true,
+    excludedPaths: [],
+    language: 'auto',
+    accelerate: false,
+    accelerateImages: false,
+    failover: false,
+  }
   locales.load.mockReset()
   locales.load.mockImplementation(async (locale) => (locale === 'zh-TW' ? TW_BUNDLE : TEST_BUNDLE))
   locales.deps = undefined
@@ -646,18 +665,21 @@ describe('页面翻译语言', () => {
     expect(locales.load).not.toHaveBeenCalledWith('zh-TW')
   })
 
-  it('Firefox 构建：取不到登记时先等注册的词典脚本登记，不动态导入；Chromium 不等，动态导入', async () => {
+  it('Firefox、Safari 构建：取不到登记时先等注册的词典脚本登记，不动态导入；Chromium 不等，动态导入', async () => {
     await load()
     expect(locales.deps?.waitForRegistration).toBeUndefined()
     expect(locales.deps?.importScript).toBeTypeOf('function')
-    vi.resetModules()
-    vi.stubEnv('FIREFOX', 'true')
-    await load()
-    const wait = locales.deps?.waitForRegistration
-    expect(wait).toBeTypeOf('function')
-    expect(locales.deps?.importScript).toBeUndefined()
-    // 页面已解析完：不等
-    await expect(wait!()).resolves.toBeUndefined()
+    for (const name of ['FIREFOX', 'SAFARI']) {
+      vi.resetModules()
+      vi.unstubAllEnvs()
+      vi.stubEnv(name, 'true')
+      await load()
+      const wait = locales.deps?.waitForRegistration
+      expect(wait, name).toBeTypeOf('function')
+      expect(locales.deps?.importScript, name).toBeUndefined()
+      // 页面已解析完：不等
+      await expect(wait!()).resolves.toBeUndefined()
+    }
   })
 })
 
@@ -1331,6 +1353,150 @@ describe('重置事件与实例标记', () => {
       uninstall()
       Reflect.deleteProperty(window, 'Turbo')
     }
+  })
+})
+
+describe('下载加速', () => {
+  const RELEASE = 'https://github.com/vuejs/core/releases/download/v3.5.0/vue.global.js'
+
+  /** 打开地址（内容脚本用 window.open，_self 为当前页） */
+  let open: ReturnType<typeof vi.fn>
+  /** 最近一次点击是否被内容脚本取消了默认行为 */
+  let handled = false
+
+  /** 点击页面上的下载链接，返回是否被内容脚本取消默认行为 */
+  function clickDownload(href = RELEASE): boolean {
+    document.body.innerHTML = `<a href="${href}">vue.global.js</a>`
+    $('a').dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, button: 0 }))
+    return handled
+  }
+
+  async function start(): Promise<void> {
+    const definition = await load()
+    context = createContext()
+    await definition.main(context as never)
+    // 排在内容脚本的监听之后：记下它是否取消了点击，再取消，不让测试环境真的跳转
+    const stop = (event: Event): void => {
+      handled = event.defaultPrevented
+      event.preventDefault()
+    }
+    window.addEventListener('click', stop)
+    cleanups.push(() => window.removeEventListener('click', stop))
+  }
+
+  beforeEach(() => {
+    open = vi.fn()
+    vi.stubGlobal('open', open)
+  })
+
+  it('开启时点击下载链接：在当前页打开首选加速源的地址，不发消息', async () => {
+    state.settings = { ...state.settings, accelerate: true }
+    await start()
+    expect(clickDownload()).toBe(true)
+    expect(open).toHaveBeenCalledExactlyOnceWith(`https://ghfast.top/${RELEASE}`, '_self', '')
+    expect(runtime.sendMessage).not.toHaveBeenCalled()
+  })
+
+  it('未开启时不处理；设置变化后随之开启', async () => {
+    await start()
+    expect(clickDownload()).toBe(false)
+    state.settingsListener?.({ ...state.settings, accelerate: true })
+    expect(clickDownload()).toBe(true)
+    expect(open).toHaveBeenCalledTimes(1)
+  })
+
+  it('故障转移：请后台选源，打开应答的地址', async () => {
+    state.settings = { ...state.settings, accelerate: true, failover: true }
+    runtime.sendMessage.mockResolvedValue({ ok: true, url: `https://wget.la/${RELEASE}` })
+    await start()
+    expect(clickDownload()).toBe(true)
+    expect(runtime.sendMessage).toHaveBeenCalledExactlyOnceWith({ type: 'gcn:resolve-download', url: RELEASE })
+    await flushTasks()
+    expect(open).toHaveBeenCalledExactlyOnceWith(`https://wget.la/${RELEASE}`, '_self', '')
+  })
+
+  it.each([
+    ['应答不合法', async () => ({ ok: false })],
+    ['后台出错', async () => Promise.reject(new Error('no receiver'))],
+  ])('故障转移，%s：打开原链接', async (_name, respond) => {
+    state.settings = { ...state.settings, accelerate: true, failover: true }
+    runtime.sendMessage.mockImplementation(respond)
+    await start()
+    expect(clickDownload()).toBe(true)
+    await flushTasks()
+    expect(open).toHaveBeenCalledExactlyOnceWith(RELEASE, '_self', '')
+  })
+
+  it('失效后不再处理点击', async () => {
+    state.settings = { ...state.settings, accelerate: true }
+    await start()
+    context?.invalidate()
+    expect(clickDownload()).toBe(false)
+    expect(open).not.toHaveBeenCalled()
+  })
+
+  it('克隆地址：开启时改写，设置关闭后还原；失效时还原', async () => {
+    const clone = 'https://github.com/vuejs/core.git'
+    document.body.innerHTML = `<div><input id="clone-with-https" readonly value="${clone}"><button></button></div>`
+    const input = $('input') as HTMLInputElement
+    state.settings = { ...state.settings, accelerate: true }
+    await start()
+    expect(input.value).toBe(`https://ghfast.top/${clone}`)
+    state.settingsListener?.({ ...state.settings, accelerate: false })
+    expect(input.value).toBe(clone)
+    state.settingsListener?.({ ...state.settings, accelerate: true })
+    expect(input.value).toBe(`https://ghfast.top/${clone}`)
+    context?.invalidate()
+    expect(input.value).toBe(clone)
+  })
+})
+
+describe('图片加速', () => {
+  const AVATAR = 'https://avatars.githubusercontent.com/u/583231?v=4'
+  const DATA = 'data:image/png;base64,iVBORw=='
+
+  async function start(): Promise<void> {
+    const definition = await load()
+    context = createContext()
+    await definition.main(context as never)
+  }
+
+  /** 页面上加一张图片并让它加载失败 */
+  function failImage(src = AVATAR): HTMLImageElement {
+    const img = document.createElement('img')
+    img.src = src
+    document.body.append(img)
+    img.dispatchEvent(new Event('error'))
+    return img
+  }
+
+  it('开启时图片加载失败：请后台取回，换上应答的 data: 地址', async () => {
+    state.settings = { ...state.settings, accelerateImages: true }
+    runtime.sendMessage.mockResolvedValue({ ok: true, url: DATA })
+    await start()
+    const img = failImage()
+    expect(runtime.sendMessage).toHaveBeenCalledExactlyOnceWith({ type: 'gcn:fetch-image', url: AVATAR })
+    await flushTasks()
+    expect(img.getAttribute('src')).toBe(DATA)
+  })
+
+  it('未开启时不处理；开启时补处理已加载失败的图片；应答不合法时不换', async () => {
+    runtime.sendMessage.mockResolvedValue({ ok: true, url: 'javascript:alert(1)' })
+    await start()
+    const img = failImage()
+    expect(runtime.sendMessage).not.toHaveBeenCalled()
+    state.settingsListener?.({ ...state.settings, accelerateImages: true })
+    expect(runtime.sendMessage).toHaveBeenCalledExactlyOnceWith({ type: 'gcn:fetch-image', url: AVATAR })
+    await flushTasks()
+    expect(img.getAttribute('src')).toBe(AVATAR)
+  })
+
+  it('失效后不再处理', async () => {
+    state.settings = { ...state.settings, accelerateImages: true }
+    await start()
+    context?.invalidate()
+    failImage()
+    expect(runtime.sendMessage).not.toHaveBeenCalled()
   })
 })
 

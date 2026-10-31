@@ -61,8 +61,25 @@ export default {
   loadFailed: '載入失敗',
   imported: '已匯入 {count} 筆',
 
+  accelerateSection: '加速',
+  accelerate: '加速下載',
+  accelerateImages: '加速圖片',
+  failover: '容錯移轉',
+  sources: '加速來源',
+  sourceName: '名稱',
+  sourceTemplate: '網址',
+  latency: '延遲',
+  ping: 'Ping',
+  testLatency: '測速',
+  testing: '測速中',
+  timeout: '逾時',
+  failed: '失敗',
+  restoreSources: '還原內建',
+  noSources: '尚無加速來源',
+  limitReached: '已達上限',
+
   about: '關於',
   githubRepository: 'GitHub',
 
-  badgeOff: '關'
+  badgeOff: '關',
 } satisfies Messages

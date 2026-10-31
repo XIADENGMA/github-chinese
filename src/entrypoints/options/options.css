@@ -1,4 +1,4 @@
-/* 设置页公共布局：各分区共用的标题与操作行 */
+/* 设置页公共布局：各分区共用的标题、工具栏、操作行与空列表 */
 
 .section {
   display: grid;
@@ -28,4 +28,18 @@
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.section-tools {
+  display: flex;
+  gap: 8px;
+}
+
+.blankslate {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--gcn-fg-muted);
+  background: var(--gcn-bg-muted);
+  border: 1px dashed var(--gcn-border);
+  border-radius: var(--gcn-radius-lg);
 }

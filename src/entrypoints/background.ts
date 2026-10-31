@@ -2,8 +2,10 @@ import { browser, type Browser } from 'wxt/browser'
 import { defineBackground } from 'wxt/utils/define-background'
 import type { ScriptPublicPath } from 'wxt/utils/inject-script'
 import { syncBadge } from '../shared/badge'
+import { createDownloadResolver } from '../shared/download-resolver'
 import { isFirefoxBuild } from '../shared/extension'
 import { parseGitHubUrl } from '../shared/github'
+import { fetchImage } from '../shared/image-fetcher'
 import { applyLegacySettingValues, removeLegacyUntranslated } from '../shared/legacy-storage'
 import type { PageLocale } from '../shared/locale'
 import { LOCALE_SCRIPT_FILES } from '../shared/locale-loader'
@@ -96,7 +98,7 @@ async function injectLocale(tabId: number, frameId: number, locale: PageLocale):
 
 /**
  * 扩展安装、更新后向已打开的 GitHub 页面注入内容脚本与桥接：Chromium 不自动注入，旧内容脚本失效后页面还原为英文。
- * Firefox 自动注入已打开的页面，再注入会出现两个实例：不注入
+ * Safari 同样注入（已有本版本内容脚本的标签页跳过）。Firefox 自动注入已打开的页面，再注入会出现两个实例：不注入
  */
 async function injectIntoOpenTabs(): Promise<void> {
   if (isFirefoxBuild() || typeof browser.scripting?.executeScript !== 'function') return
@@ -108,6 +110,8 @@ async function injectIntoOpenTabs(): Promise<void> {
 }
 
 export default defineBackground(() => {
+  // 下载加速的选源：探测结果随 Service Worker 存活期缓存
+  const downloads = createDownloadResolver()
   // 事件监听须在顶层同步注册，Service Worker 被唤醒时才能收到事件
   // 自定义词条由设置页保存后发消息，这里转发给各 GitHub 标签页
   browser.runtime.onMessage.addListener((message: unknown, sender: MessageSender, sendResponse) => {
@@ -130,6 +134,30 @@ export default defineBackground(() => {
         )
         return true
       }
+      case 'gcn:resolve-download':
+        if (!fromGitHubTab(sender)) return undefined
+        getSettings()
+          .then((settings) => downloads.resolve(message.url, settings))
+          .then(
+            (url) => sendResponse({ ok: true, url }),
+            (error: unknown) => {
+              reportError(error)
+              sendResponse({ ok: false })
+            },
+          )
+        return true
+      case 'gcn:fetch-image':
+        if (!fromGitHubTab(sender)) return undefined
+        getSettings()
+          .then((settings) => fetchImage(message.url, settings))
+          .then(
+            (url) => sendResponse(url ? { ok: true, url } : { ok: false }),
+            (error: unknown) => {
+              reportError(error)
+              sendResponse({ ok: false })
+            },
+          )
+        return true
     }
   })
   // 浏览器重启或扩展更新后徽标会重置。旧版本的未翻译文本：更新时删除，启动时再删一次（更新时没删成的）

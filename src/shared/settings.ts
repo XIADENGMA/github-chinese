@@ -1,4 +1,5 @@
 import { storage } from 'wxt/utils/storage'
+import { DEFAULT_SOURCE_ID, sanitizeCustomSources, sanitizeRemovedSources, type AccelerateSettings } from './accelerate'
 import {
   isPageLocalePreference,
   isUiLanguagePreference,
@@ -15,7 +16,7 @@ export function isThemePreference(value: unknown): value is ThemePreference {
   return (THEME_PREFERENCES as readonly unknown[]).includes(value)
 }
 
-export interface Settings {
+export interface Settings extends AccelerateSettings {
   /** 总开关 */
   readonly enabled: boolean
   /** 时间本地化：<relative-time> 等元素改用中文格式 */
@@ -33,6 +34,12 @@ export interface Settings {
   readonly uiLanguage: UiLanguagePreference
   /** 扩展界面外观；auto 跟随浏览器 */
   readonly theme: ThemePreference
+  /** 下载加速：Release 附件、源码包、Raw 文件、Gist 的链接与克隆地址改走加速源（见 shared/accelerate） */
+  readonly accelerate: boolean
+  /** 图片加速：GitHub 的图片加载失败时经加速源取回（见 core/image-accelerate） */
+  readonly accelerateImages: boolean
+  /** 故障转移：下载前探测加速源，首选不可用时换用其他加速源；图片取不到时依次换用其他加速源 */
+  readonly failover: boolean
 }
 
 /**
@@ -49,6 +56,12 @@ export const DEFAULT_SETTINGS: Settings = {
   language: 'auto',
   uiLanguage: 'auto',
   theme: 'auto',
+  accelerate: false,
+  accelerateImages: false,
+  failover: false,
+  accelerateSource: DEFAULT_SOURCE_ID,
+  customSources: [],
+  removedSources: [],
 }
 
 /**
@@ -83,6 +96,13 @@ export function mergeSettings(stored: unknown): Settings {
     language: isPageLocalePreference(value.language) ? value.language : DEFAULT_SETTINGS.language,
     uiLanguage: isUiLanguagePreference(value.uiLanguage) ? value.uiLanguage : DEFAULT_SETTINGS.uiLanguage,
     theme: isThemePreference(value.theme) ? value.theme : DEFAULT_SETTINGS.theme,
+    accelerate: pickBoolean('accelerate', DEFAULT_SETTINGS.accelerate),
+    accelerateImages: pickBoolean('accelerateImages', DEFAULT_SETTINGS.accelerateImages),
+    failover: pickBoolean('failover', DEFAULT_SETTINGS.failover),
+    accelerateSource:
+      typeof value.accelerateSource === 'string' ? value.accelerateSource : DEFAULT_SETTINGS.accelerateSource,
+    customSources: sanitizeCustomSources(value.customSources),
+    removedSources: sanitizeRemovedSources(value.removedSources),
   }
 }
 
@@ -100,9 +120,13 @@ export async function getSettings(): Promise<Settings> {
   return mergeSettings(await settingsItem.getValue())
 }
 
+/** 要写入的部分设置；按当前设置计算时传函数（如增删列表项，读改写不丢失之前的修改） */
+export type SettingsPatch = Partial<Settings> | ((current: Settings) => Partial<Settings>)
+
 /** 合并写入；已删除的设置项一并写入固定值（见 LEGACY_SETTING_VALUES） */
-export async function updateSettings(patch: Partial<Settings>): Promise<Settings> {
-  const next = { ...(await getSettings()), ...patch }
+export async function updateSettings(patch: SettingsPatch): Promise<Settings> {
+  const current = await getSettings()
+  const next = { ...current, ...(typeof patch === 'function' ? patch(current) : patch) }
   await settingsItem.setValue({ ...next, ...LEGACY_SETTING_VALUES })
   return next
 }

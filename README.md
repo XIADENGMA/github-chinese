@@ -11,9 +11,10 @@
 [![许可证](https://img.shields.io/badge/%E8%AE%B8%E5%8F%AF%E8%AF%81-MIT-blue)](LICENSE)
 ![Manifest V3](https://img.shields.io/badge/Manifest-V3-informational)
 <br />
-![Chrome](https://img.shields.io/badge/Chrome-MV3-4285F4?logo=googlechrome&logoColor=white)
-![Edge](https://img.shields.io/badge/Edge-MV3-0078D7?logo=microsoftedge&logoColor=white)
-![Firefox](https://img.shields.io/badge/Firefox-140%2B-FF7139?logo=firefoxbrowser&logoColor=white)
+[![Chrome 应用商店](https://img.shields.io/chrome-web-store/v/bgjbinlidnenibphgepagdkodcohgibe?label=Chrome&logo=googlechrome&logoColor=white&color=4285F4)](https://chromewebstore.google.com/detail/github-chinese/bgjbinlidnenibphgepagdkodcohgibe)
+[![Microsoft Edge 加载项](https://img.shields.io/badge/dynamic/json?label=Edge&logo=microsoftedge&logoColor=white&color=0078D7&prefix=v&query=%24.version&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Fahhkmjnecgfpaegcfpolmlfijmldhmbk)](https://microsoftedge.microsoft.com/addons/detail/ahhkmjnecgfpaegcfpolmlfijmldhmbk)
+[![Firefox 附加组件](https://img.shields.io/amo/v/github-chinese?label=Firefox&logo=firefoxbrowser&logoColor=white&color=FF7139)](https://addons.mozilla.org/zh-CN/firefox/addon/github-chinese/)
+[![Safari](https://img.shields.io/badge/Safari-18%2B-006CFF?logo=safari&logoColor=white)](#safarimacos)
 
 [安装](#安装) · [功能](#功能) · [使用](#使用) · [工作原理](#工作原理) · [隐私与权限](#隐私与权限) · [参与贡献](#参与贡献) · [反馈问题](https://github.com/setube/github-chinese/issues/new/choose)
 
@@ -44,15 +45,31 @@
 - 属性（`aria-label`、`placeholder`、`title` 等）与标签页标题一并翻译
 - 时间本地化：`<relative-time>` 按翻译语言显示为「3 天前」「2026 年 10 月 26 日」
 
+### 加速
+
+- 下载：Release 附件、源码包（zip、tar.gz，含 codeload）、Raw 文件、代码片段的压缩包与 Raw 文件，改走第三方加速源
+- 克隆：存储库与代码片段的 HTTPS 克隆地址换成加速后的地址
+- 图片：头像、GitHub 静态图片、Raw 图片加载失败时，经加速源重新获取
+- 默认关闭；故障转移：首选连不上时换用其他加速源，都连不上时直接从 GitHub 获取
+- 加速源可自定义、删除、测速（延迟、Ping）
+
 ### 控制
 
-- 弹出页：总开关、当前页状态、排除此页、时间本地化、翻译标题、界面语言、翻译语言、外观
-- 选项页（弹出页「规则」）：排除路径、自定义词条（导入、导出）
+- 弹出页：总开关、当前页状态、排除此页、时间本地化、翻译标题、加速下载、界面语言、翻译语言、外观
+- 选项页（弹出页「规则」）：排除路径、自定义词条（导入、导出）、加速
 - 翻译语言默认按浏览器语言识别（语言列表中第一个中文：台湾、香港、澳门及 Hant 为繁体；没有中文时按时区），可手动指定；切换后已打开的页面随即重译
 - 扩展界面：简体中文、繁體中文、English，默认跟随浏览器界面语言
 - 外观：自动（跟随系统）、浅色、深色
 
 ## 安装
+
+### 从扩展商店安装
+
+| 浏览器  | 商店                                                                                                        |
+| ------- | ----------------------------------------------------------------------------------------------------------- |
+| Chrome  | [Chrome 应用商店](https://chromewebstore.google.com/detail/github-chinese/bgjbinlidnenibphgepagdkodcohgibe) |
+| Edge    | [Microsoft Edge 加载项](https://microsoftedge.microsoft.com/addons/detail/ahhkmjnecgfpaegcfpolmlfijmldhmbk) |
+| Firefox | [Firefox 附加组件](https://addons.mozilla.org/zh-CN/firefox/addon/github-chinese/)                          |
 
 ### 从发行版安装
 
@@ -67,6 +84,24 @@
 - `.crx` 用于企业策略部署；Chrome、Edge 一般不允许直接安装商店之外的 crx。
 - 校验：`sha256sum -c --ignore-missing SHA256SUMS.txt`
 
+### Safari（macOS）
+
+未上架 App Store；宿主应用未签名、未经公证。需要 Safari 18+。
+
+1. 下载 `github-chinese-<版本>-safari-macos.zip`，解压，把「GitHub Chinese.app」移到「应用程序」。
+2. 解除隔离（未公证的应用默认打不开）：
+
+   ```bash
+   xattr -dr com.apple.quarantine "/Applications/GitHub Chinese.app"
+   ```
+
+3. 打开「GitHub Chinese」一次，扩展随之注册到 Safari。
+4. Safari「设置」→「高级」→ 勾选「显示网页开发者功能」；「开发者」→ 勾选「允许未签名的扩展」。
+5. 「设置」→「扩展」→ 勾选「GitHub 中文化」；「编辑网站…」中允许 github.com、gist.github.com、www.githubstatus.com。
+
+- 「允许未签名的扩展」在退出 Safari 后失效，每次启动 Safari 需重新勾选。
+- 更新：用新版替换「应用程序」中的旧版，重做第 2、3 步。
+
 ### 从源码构建
 
 环境：Bun 1.3+、Node.js 22.13+（LTS 版本）。
@@ -78,6 +113,8 @@ bun install
 bun run build           # Chrome → .output/chrome-mv3
 bun run build:edge      # Edge → .output/edge-mv3
 bun run build:firefox   # Firefox → .output/firefox-mv3
+bun run build:safari    # Safari → .output/safari-mv3
+bun run pack:safari     # 由 .output/safari-mv3 打包宿主应用（macOS，需 Xcode）→ .output/github-chinese-<版本>-safari-macos.zip
 ```
 
 加载方式同上表（不用解压）；Firefox 临时载入 `.output/firefox-mv3/manifest.json`。
@@ -110,6 +147,27 @@ bun run build:firefox   # Firefox → .output/firefox-mv3
 
 原文 → 译文，优先于内置词条。导入、导出格式为 JSON：`{ "原文": "译文" }`；导入时同一原文以导入的为准。
 
+### 加速
+
+- 下载：单击下载链接时改开加速源的地址；中键、带修饰键的单击照常从 GitHub 打开。
+- 克隆：存储库「Code」下拉框与代码片段的 HTTPS 克隆地址显示为加速后的地址，复制按钮复制加速后的地址。新建存储库页面中的地址不改。
+- 图片：在选项页开启「加速图片」。头像、GitHub 静态图片、Raw 图片加载失败时由后台经加速源获取，换成 `data:` 地址显示。
+- 私有、内部存储库与私密代码片段的页面不加速。
+- 页面的 CSS、JS 不加速：GitHub 的内容安全策略只允许从 `github.githubassets.com` 加载脚本与样式，换地址或重定向都会被浏览器拦截。
+
+加速源地址只接受 `https`：`{url}` 换成原链接，`{path}` 换成 github.com 上的路径；都不写时原链接接在地址之后。
+
+```text
+https://ghfast.top/{url}        https://ghfast.top/https://github.com/<所有者>/<存储库>/releases/download/…
+https://mirror.example/{path}   https://mirror.example/<所有者>/<存储库>/releases/download/…
+https://ghfast.top              同第一行
+```
+
+- 用 `{path}` 的加速源只加速 github.com 上的地址。各内置加速源支持的地址不同，首选不支持时用列表中下一个支持的。
+- 延迟：首次请求的耗时，含建立连接；Ping：连接建立后再请求 3 次的中位数。浏览器发不了 ICMP，两者都按 HTTP 请求计时。
+- 内置加速源是第三方公益服务，可用性随时变化。加速源能看到下载地址与你的 IP 地址，也能改动下载的文件。
+- 用加速地址克隆的存储库，远程地址指向加速源，推送时凭据会发给加速源。推送前改回 GitHub：`git remote set-url origin https://github.com/<所有者>/<存储库>.git`。
+
 ## 工作原理
 
 ```mermaid
@@ -123,7 +181,7 @@ flowchart LR
     lookup --> write["写回文本与属性值"]
 ```
 
-- **词典脚本**：每种翻译语言一个，只加载当前语言的。后台把它注册为 `document_start` 内容脚本，页面开始解析前就绪；未注册时（如刚安装）由内容脚本动态导入，Firefox 请后台注入。
+- **词典脚本**：每种翻译语言一个，只加载当前语言的。后台把它注册为 `document_start` 内容脚本，页面开始解析前就绪；未注册时（如刚安装）由内容脚本动态导入，Firefox、Safari 请后台注入。
 - **与 React 共存**：只改文本节点的内容与属性值，不增删、替换节点；React 重渲染写回英文时，以新内容为原文重新翻译。
 - **跳过用户内容**：用户内容、代码所在的区域整体跳过。
 - **时间本地化**：`<relative-time>` 等时间元素按翻译语言渲染，再补中文与数字间的空格、去掉时区名。
@@ -135,20 +193,21 @@ flowchart LR
 | Chrome、Edge    | 支持 Manifest V3 的版本 |
 | Firefox         | 140+                    |
 | Firefox Android | 142+                    |
+| Safari（macOS） | 18+                     |
 
 ## 隐私与权限
 
-翻译在本地完成，不向开发者或任何第三方发送数据。详见[隐私说明](docs/PRIVACY.md)。
+翻译在本地完成，不向开发者发送数据。开启加速后，下载链接、克隆地址、加载失败的图片地址交给你选的第三方加速源。详见[隐私说明](docs/PRIVACY.md)。
 
-| 权限                                                                                  | 用途                                                                                                                                                                              |
-| ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `storage`                                                                             | 保存设置（`storage.sync`）、自定义词条（`storage.local`）                                                                                                                         |
-| `https://github.com/*`、`https://gist.github.com/*`、`https://www.githubstatus.com/*` | 在这三个站点运行内容脚本，翻译页面界面                                                                                                                                            |
-| `scripting`                                                                           | 按当前语言注册词典脚本，页面开始解析前就绪；词典脚本动态加载失败（Firefox 不动态加载）时由后台注入；Chrome、Edge 安装、更新后向已打开的 GitHub 标签页注入脚本（Firefox 自动注入） |
+| 权限                                                                                  | 用途                                                                                                                                                                                              |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `storage`                                                                             | 保存设置（`storage.sync`）、自定义词条（`storage.local`）                                                                                                                                         |
+| `https://github.com/*`、`https://gist.github.com/*`、`https://www.githubstatus.com/*` | 在这三个站点运行内容脚本，翻译页面界面                                                                                                                                                            |
+| `scripting`                                                                           | 按当前语言注册词典脚本，页面开始解析前就绪；词典脚本动态加载失败（Firefox、Safari 不动态加载）时由后台注入；Chrome、Edge、Safari 安装、更新后向已打开的 GitHub 标签页注入脚本（Firefox 自动注入） |
 
-- 不申请其他权限。Firefox 中可在附加组件管理器撤销站点权限，撤销后弹出页显示「未授权」，点「授权」恢复。
-- 停用、排除、改自定义词条、改时间本地化开关、扩展更新或卸载时，以及 GitHub 从自身缓存写回译文时（前进后退、帧导航到带锚点的地址），可能重新请求当前 GitHub 页面（条件见隐私说明）；点弹出页「刷新」时重新加载当前页。不发起其他网络请求。
-- 设置存 `storage.sync`，可能随浏览器账号同步；自定义词条存 `storage.local`。
+- 不申请其他权限。Firefox 中可在附加组件管理器撤销站点权限，撤销后弹出页显示「未授权」，点「授权」恢复。Safari 中站点权限在「设置」→「扩展」中授予、撤销。
+- 停用、排除、改自定义词条、改时间本地化开关、扩展更新或卸载时，以及 GitHub 从自身缓存写回译文时（前进后退、帧导航到带锚点的地址），可能重新请求当前 GitHub 页面（条件见隐私说明）；点弹出页「刷新」时重新加载当前页。开启加速后：单击下载链接时打开加速源的地址；开启「加速图片」时，图片加载失败后由后台经加速源请求该图片；故障转移开启时，打开下载链接、换克隆地址前请求加速源站点的根路径探测能否连通；选项页「测速」时请求各加速源站点的根路径。不发起其他网络请求。
+- 设置存 `storage.sync`，可能随浏览器账号同步（Safari 不同步）；自定义词条存 `storage.local`。
 
 ## 参与贡献
 
@@ -167,18 +226,19 @@ bun run test
 
 ### 常用命令
 
-| 命令                                                        | 说明                                                                               |
-| ----------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| `bun run dev`、`dev:edge`、`dev:firefox`                    | 开发模式，修改后自动重载                                                           |
-| `bun run build`、`build:edge`、`build:firefox`、`build:all` | 构建到 `.output/<浏览器>-mv3/`                                                     |
-| `bun run zip`、`zip:edge`、`zip:firefox`、`zip:all`         | 打包 zip 到 `.output/`（Firefox 另出源码包）                                       |
-| `bun run pack:crx`                                          | 由 zip 打包 crx                                                                    |
-| `bun run test`、`test:watch`、`coverage`                    | 单元测试（Vitest）、监听模式、覆盖率                                               |
-| `bun run test:e2e`、`test:e2e:live`                         | 端到端测试（Playwright）、线上冒烟，均先构建                                       |
-| `bun run compile`、`lint`、`lint:firefox`、`format`         | 类型检查（vue-tsc）、ESLint、web-ext lint、Prettier                                |
-| `bun run check:locale`、`check:parity`                      | 词典自检、简繁对照                                                                 |
-| `bun run harvest`、`coverage:locale`                        | 采集界面文本、统计词典覆盖率                                                       |
-| `bun run icons`                                             | 由 `assets/icon.svg` 生成 `public/icon/*.png`（内嵌位图超过 512px 时先压缩并写回） |
+| 命令                                                                        | 说明                                                                               |
+| --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `bun run dev`、`dev:edge`、`dev:firefox`                                    | 开发模式，修改后自动重载                                                           |
+| `bun run build`、`build:edge`、`build:firefox`、`build:safari`、`build:all` | 构建到 `.output/<浏览器>-mv3/`                                                     |
+| `bun run zip`、`zip:edge`、`zip:firefox`、`zip:all`                         | 打包 zip 到 `.output/`（Firefox 另出源码包）                                       |
+| `bun run pack:crx`                                                          | 由 zip 打包 crx                                                                    |
+| `bun run pack:safari`                                                       | 由 Safari 版打包宿主应用（macOS，需 Xcode）                                        |
+| `bun run test`、`test:watch`、`coverage`                                    | 单元测试（Vitest）、监听模式、覆盖率                                               |
+| `bun run test:e2e`、`test:e2e:live`                                         | 端到端测试（Playwright）、线上冒烟，均先构建                                       |
+| `bun run compile`、`lint`、`lint:firefox`、`format`                         | 类型检查（vue-tsc）、ESLint、web-ext lint、Prettier                                |
+| `bun run check:locale`、`check:parity`                                      | 词典自检、简繁对照                                                                 |
+| `bun run harvest`、`coverage:locale`                                        | 采集界面文本、统计词典覆盖率                                                       |
+| `bun run icons`                                                             | 由 `assets/icon.svg` 生成 `public/icon/*.png`（内嵌位图超过 512px 时先压缩并写回） |
 
 `bun test`、`bun build` 是 Bun 自带命令，本项目脚本一律用 `bun run`。
 
@@ -223,7 +283,8 @@ docs/GLOSSARY.zh-TW.md   繁体翻译规范与术语表
 docs/PRIVACY.md          隐私说明
 public/_locales/         扩展名称、说明的多语言文本
 public/icon/             扩展图标（bun run icons 生成）
-scripts/                 采集、覆盖率、词典校验、图标渲染、crx 打包脚本
+scripts/                 采集、覆盖率、词典校验、图标渲染、crx 与 Safari 打包脚本
+scripts/safari-app/      Safari 宿主应用的页面
 src/
   core/                  匹配器、URL → 页面类型、忽略规则、翻译引擎
   locales/zh-CN/         简体中文词典
@@ -244,7 +305,7 @@ wxt.config.ts            WXT 配置与 manifest
 
 ## 发布
 
-推送标记 `v<版本>`（与 `package.json` 的 `version` 一致）后，[发布工作流](.github/workflows/release.yml)依次检查（lint、类型、词典、单元测试）、打包，并发布 GitHub 发行版（先建草稿，产物传完后发布）；版本号带 `-`（如 `v1.0.0-beta.1`）时为预发行版。在存储库的「操作」页手动运行时只检查、打包，产物在运行记录的工件里。
+推送标记 `v<版本>`（与 `package.json` 的 `version` 一致）后，[发布工作流](.github/workflows/release.yml)依次检查（lint、类型、词典、单元测试）、打包，并发布 GitHub 发行版（先建草稿，产物传完后发布）；Safari 版同时在 macOS 上打包，打包失败时发行版不含 Safari 版；版本号带 `-`（如 `v1.0.0-beta.1`）时为预发行版。在存储库的「操作」页手动运行时只检查、打包，产物在运行记录的工件里。
 
 | 产物                                                | 说明                                                    |
 | --------------------------------------------------- | ------------------------------------------------------- |
@@ -252,6 +313,7 @@ wxt.config.ts            WXT 配置与 manifest
 | `github-chinese-<版本>-firefox.zip`、`-sources.zip` | Firefox 扩展包、源码包（AMO 审核用）                    |
 | `github-chinese-<版本>-chrome.crx`、`-edge.crx`     | CRX3 扩展包                                             |
 | `github-chinese-<版本>-firefox.xpi`                 | Firefox 扩展包                                          |
+| `github-chinese-<版本>-safari-macos.zip`            | Safari 宿主应用（未签名、未公证）                       |
 | `SHA256SUMS.txt`                                    | 以上文件的 SHA-256，校验：`sha256sum -c SHA256SUMS.txt` |
 
 <details>

@@ -84,11 +84,16 @@ describe.skipIf(!App)('设置页组件', () => {
   })
 
   describe('布局', () => {
-    it('依次为排除路径、自定义词条、关于；常规开关、语言下拉、快捷键都不在这里', async () => {
+    it('依次为排除路径、自定义词条、加速、关于；常规开关、语言下拉、快捷键都不在这里', async () => {
       const wrapper = await render()
       expect(wrapper.get('h1').text()).toBe('GitHub 中文化')
-      expect(headings(wrapper)).toEqual(['排除路径', '自定义词条', '关于'])
-      expect(wrapper.find('[role="switch"]').exists()).toBe(false)
+      expect(headings(wrapper)).toEqual(['排除路径', '自定义词条', '加速', '关于'])
+      // 开关只有加速的三个
+      expect(wrapper.findAll('.ui-switch-label').map((item) => item.text())).toEqual([
+        '加速下载',
+        '加速图片',
+        '故障转移',
+      ])
       expect(wrapper.find('[role="combobox"]').exists()).toBe(false)
       expect(wrapper.text()).not.toContain('快捷键')
     })
@@ -114,8 +119,8 @@ describe.skipIf(!App)('设置页组件', () => {
     })
 
     it.each([
-      ['en', 'GitHub Chinese', ['Excluded paths', 'Custom entries', 'About'], 'GitHub repository'],
-      ['zh-TW', 'GitHub 中文化', ['排除路徑', '自訂詞條', '關於'], 'GitHub'],
+      ['en', 'GitHub Chinese', ['Excluded paths', 'Custom entries', 'Acceleration', 'About'], 'GitHub repository'],
+      ['zh-TW', 'GitHub 中文化', ['排除路徑', '自訂詞條', '加速', '關於'], 'GitHub'],
     ] as const)('界面语言随设置（如在弹出页修改）切换：%s', async (uiLanguage, title, sections, repository) => {
       const wrapper = await render()
       await updateSettings({ uiLanguage })

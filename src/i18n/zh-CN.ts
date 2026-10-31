@@ -59,10 +59,27 @@ const zhCN = {
   loadFailed: '加载失败',
   imported: '已导入 {count} 条',
 
+  accelerateSection: '加速',
+  accelerate: '加速下载',
+  accelerateImages: '加速图片',
+  failover: '故障转移',
+  sources: '加速源',
+  sourceName: '名称',
+  sourceTemplate: '地址',
+  latency: '延迟',
+  ping: 'Ping',
+  testLatency: '测速',
+  testing: '测速中',
+  timeout: '超时',
+  failed: '失败',
+  restoreSources: '恢复内置',
+  noSources: '暂无加速源',
+  limitReached: '已达上限',
+
   about: '关于',
   githubRepository: 'GitHub',
 
-  badgeOff: '关'
+  badgeOff: '关',
 }
 
 export type MessageKey = keyof typeof zhCN

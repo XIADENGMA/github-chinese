@@ -8,7 +8,14 @@ import {
   type EffectScope,
   type Ref,
 } from 'vue'
-import { DEFAULT_SETTINGS, getSettings, updateSettings, watchSettings, type Settings } from '../shared/settings'
+import {
+  DEFAULT_SETTINGS,
+  getSettings,
+  updateSettings,
+  watchSettings,
+  type Settings,
+  type SettingsPatch,
+} from '../shared/settings'
 
 export interface UseSettings {
   /** 当前设置；存储变化时自动更新 */
@@ -19,8 +26,8 @@ export interface UseSettings {
   readonly loadFailed: Readonly<Ref<boolean>>
   /** 已读取或读取失败；之前显示的是默认值 */
   readonly ready: ComputedRef<boolean>
-  /** 写入部分设置；失败返回 false */
-  update(patch: Partial<Settings>): Promise<boolean>
+  /** 写入部分设置（传函数时按写入前的最新设置计算）；失败返回 false */
+  update(patch: SettingsPatch): Promise<boolean>
 }
 
 function createSettings(): UseSettings {
@@ -49,7 +56,7 @@ function createSettings(): UseSettings {
     },
   )
 
-  function update(patch: Partial<Settings>): Promise<boolean> {
+  function update(patch: SettingsPatch): Promise<boolean> {
     const task = queue.then(() => updateSettings(patch))
     queue = task.catch(() => undefined)
     return task.then(

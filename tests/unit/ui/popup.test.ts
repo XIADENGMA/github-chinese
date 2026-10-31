@@ -349,7 +349,7 @@ describe.skipIf(!App)('弹出页组件', () => {
       mockContent(contentWith())
       const wrapper = await render()
       expect(wrapper.findAll('label').filter((item) => item.text() === '启用')).toHaveLength(1)
-      expect(wrapper.findAll('[role="switch"]')).toHaveLength(3)
+      expect(wrapper.findAll('[role="switch"]')).toHaveLength(4)
       expect(wrapper.findAll('[role="combobox"]').map((item) => item.attributes('data-test'))).toEqual([
         'ui-language',
         'page-language',
@@ -368,9 +368,9 @@ describe.skipIf(!App)('弹出页组件', () => {
         wrapper
           .findAll('[role="switch"], [data-test="theme-toggle"], [role="combobox"]')
           .map((item) => (item.element as HTMLButtonElement).disabled)
-      expect(disabled()).toEqual([true, true, true, true, true, true])
+      expect(disabled()).toEqual([true, true, true, true, true, true, true])
       await settle()
-      expect(disabled()).toEqual([false, false, false, false, false, false])
+      expect(disabled()).toEqual([false, false, false, false, false, false, false])
     })
 
     it.each([
@@ -392,14 +392,25 @@ describe.skipIf(!App)('弹出页组件', () => {
   })
 
   describe('常规', () => {
-    it('只有时间本地化、翻译标题', async () => {
+    it('只有时间本地化、翻译标题、加速下载', async () => {
       mockContent(contentWith())
       const wrapper = await render()
       expect(
         section(wrapper, '常规')
           .findAll('label')
           .map((item) => item.text()),
-      ).toEqual(['时间本地化', '翻译标题'])
+      ).toEqual(['时间本地化', '翻译标题', '加速下载'])
+    })
+
+    it('加速下载默认关闭，开关即时保存', async () => {
+      mockContent(contentWith())
+      const wrapper = await render()
+      const toggle = switchOf(section(wrapper, '常规'), '加速下载')
+      expect(toggle.attributes('aria-checked')).toBe('false')
+      await toggle.trigger('click')
+      await settle()
+      expect((await getSettings()).accelerate).toBe(true)
+      expect(toggle.attributes('aria-checked')).toBe('true')
     })
 
     it.each([

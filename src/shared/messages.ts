@@ -27,11 +27,34 @@ export type BackgroundMessage =
   | { readonly type: 'gcn:custom-entries-saved' }
   /** 内容脚本动态导入词典脚本失败时，请后台把词典脚本注入发送方所在的框架 */
   | { readonly type: 'gcn:inject-locale'; readonly locale: PageLocale }
+  /** 点击了下载链接、显示克隆地址（故障转移开启时）：请后台选出可用的加速源，应答加速后的地址（见 ResolvedDownload） */
+  | { readonly type: 'gcn:resolve-download'; readonly url: string }
+  /** 图片加载失败（开启图片加速时）：请后台经加速源取回，应答 data: 地址（见 FetchedImage） */
+  | { readonly type: 'gcn:fetch-image'; readonly url: string }
 
 /** 后台应答：处理成功为 ok */
 export interface BackgroundAck {
   readonly ok: boolean
 }
+
+/** 后台对 gcn:resolve-download 的应答：加速后的地址，或没有可用加速源时的原地址 */
+export interface ResolvedDownload {
+  readonly ok: true
+  readonly url: string
+}
+
+/** 后台对 gcn:fetch-image 的应答：经加速源取回的图片 */
+export interface FetchedImage {
+  readonly ok: true
+  /** data: 地址 */
+  readonly url: string
+}
+
+/** 图片的 data: 地址 */
+const DATA_IMAGE_RE = /^data:image\/[a-z0-9.+-]+;base64,/
+
+/** 下载链接的长度上限：超出的不处理 */
+const MAX_URL_LENGTH = 4096
 
 const CONTENT_MESSAGE_TYPES: ReadonlySet<string> = new Set<ContentMessage['type']>([
   'gcn:get-status',
@@ -65,11 +88,30 @@ export function isContentStatus(value: unknown): value is ContentStatus {
 /** 校验发往后台的消息 */
 export function isBackgroundMessage(value: unknown): value is BackgroundMessage {
   if (!isRecord(value)) return false
-  if (value.type === 'gcn:custom-entries-saved') return true
-  return value.type === 'gcn:inject-locale' && isPageLocale(value.locale)
+  switch (value.type) {
+    case 'gcn:custom-entries-saved':
+      return true
+    case 'gcn:inject-locale':
+      return isPageLocale(value.locale)
+    case 'gcn:resolve-download':
+    case 'gcn:fetch-image':
+      return typeof value.url === 'string' && value.url.length <= MAX_URL_LENGTH
+    default:
+      return false
+  }
 }
 
 /** 后台已确认处理 */
 export function isAcknowledged(value: unknown): value is BackgroundAck {
   return isRecord(value) && value.ok === true
+}
+
+/** 校验后台对 gcn:resolve-download 的应答 */
+export function isResolvedDownload(value: unknown): value is ResolvedDownload {
+  return isRecord(value) && value.ok === true && typeof value.url === 'string' && value.url.startsWith('https://')
+}
+
+/** 校验后台对 gcn:fetch-image 的应答：base64 编码的图片 data: 地址 */
+export function isFetchedImage(value: unknown): value is FetchedImage {
+  return isRecord(value) && value.ok === true && typeof value.url === 'string' && DATA_IMAGE_RE.test(value.url)
 }

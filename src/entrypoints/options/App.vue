@@ -11,6 +11,7 @@
     <main class="options-main">
       <ExcludedPathsSection />
       <CustomEntriesSection />
+      <AccelerateSection />
 
       <section class="section" aria-labelledby="about-title">
         <h2 id="about-title" class="section-title">{{ t('about') }}</h2>
@@ -33,6 +34,7 @@
 import ToastHost from '../../components/ToastHost.vue'
 import { useI18n, useUiPreferencesSync } from '../../components/ui-preferences'
 import { getExtensionVersion, REPOSITORY_URL } from '../../shared/extension'
+import AccelerateSection from './AccelerateSection.vue'
 import CustomEntriesSection from './CustomEntriesSection.vue'
 import ExcludedPathsSection from './ExcludedPathsSection.vue'
 

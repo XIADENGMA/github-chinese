@@ -9,7 +9,7 @@
       v-bind="attrs().field"
       v-model="model"
       class="ui-field ui-input-field"
-      :class="{ 'ui-input-inline': inline }"
+      :class="{ 'ui-input-inline': inline, 'ui-input-mono': mono }"
     />
   </span>
 </template>
@@ -30,6 +30,8 @@ const props = defineProps<{
   modelValue?: string
   /** 行内编辑（如表格单元格）：静止时无边框、透明底，悬停、聚焦时显示 */
   inline?: boolean
+  /** 等宽字体（地址、代码） */
+  mono?: boolean
 }>()
 
 const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
@@ -71,6 +73,10 @@ defineExpose({
 
 .ui-input-search .ui-input-field {
   padding-left: 32px;
+}
+
+.ui-input-mono {
+  font-family: var(--gcn-font-mono);
 }
 
 .ui-input-field[type='search']::-webkit-search-cancel-button {

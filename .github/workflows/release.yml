@@ -1,4 +1,5 @@
-# 推送 v* 标签：检查、打包，创建 GitHub Release；手动运行：检查、打包（xpi 不签名），产物在运行记录的 Artifacts 里
+# 推送 v* 标签：检查、打包（Safari 版在 macOS 上打包），创建 GitHub Release；
+# 手动运行：检查、打包（xpi 不签名），产物在运行记录的 Artifacts 里
 name: 发布
 
 on:
@@ -136,8 +137,71 @@ jobs:
           path: ${{ env.OUT }}/
           if-no-files-found: error
 
+  # Safari 版：宿主应用（临时签名，不公证），与上面并行
+  safari:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: 安装依赖
+        run: bun install --frozen-lockfile
+
+      - name: 版本号
+        id: version
+        run: echo "version=$(jq -r .version package.json)" >> "$GITHUB_OUTPUT"
+
+      - name: 打包
+        run: |
+          xcodebuild -version
+          bun run build:safari
+          bun run pack:safari --out .output/release
+
+      - name: 上传产物
+        uses: actions/upload-artifact@v7
+        with:
+          name: github-chinese-${{ steps.version.outputs.version }}-safari
+          path: .output/release/
+          if-no-files-found: error
+
+  # 汇总产物发布 Release；Safari 版打包失败时照常发布，不含 Safari 版
+  publish:
+    needs: [release, safari]
+    if: ${{ !cancelled() && needs.release.result == 'success' && github.event_name == 'push' && github.ref_type == 'tag' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    env:
+      OUT: release
+    steps:
+      - name: 下载产物
+        uses: actions/download-artifact@v8
+        with:
+          path: ${{ env.OUT }}
+          merge-multiple: true
+
+      - name: 核对 Safari 版
+        if: needs.safari.result != 'success'
+        run: echo "::warning title=safari::Safari 版打包失败，Release 不含 Safari 版"
+
+      - name: 校验和
+        working-directory: ${{ env.OUT }}
+        run: |
+          sha256sum -- *.zip *.crx *.xpi > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
       - name: 发布 Release
-        if: env.RELEASE == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}

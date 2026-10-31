@@ -2,11 +2,11 @@
  * 页面翻译语言包的加载。语言包很大（简体词典约 1.7 MB），按语言拆成独立的词典脚本（entrypoints/locale-*.ts），
  * 内容脚本只用当前语言的那一个。后台把当前语言的词典脚本注册为 document_start 内容脚本
  * （见 locale-script.ts）：页面开始解析前已登记，内容脚本直接取用，打开页面即显示中文。
- * Firefox 的注册脚本可能还在编译（脚本缓存未命中时挡住解析，编译完才执行），内容脚本先读完存储：
+ * Firefox 的注册脚本可能还在编译（脚本缓存未命中时挡住解析，编译完才执行），内容脚本先读完存储（Safari 同样处理）：
  * 取不到登记、页面仍在解析且注册的词典脚本还没执行（没有当前构建的登记，也没取到过语言包）时，
  * 先等它登记或 DOMContentLoaded（见 waitForRegistration）。
  * 没有注册（刚安装、扩展更新后尚未补回、总开关关闭时打开的页面之后开启、语言与注册的不一致）时动态导入
- * （词典脚本列在 web_accessible_resources），失败时请后台注入；Firefox 不动态导入，直接请后台注入。
+ * （词典脚本列在 web_accessible_resources），失败时请后台注入；Firefox、Safari 不动态导入，直接请后台注入。
  * 词典脚本执行后把语言包连同构建标识登记在扩展隔离环境的全局对象上（页面脚本读不到），内容脚本取走。
  */
 import type { LocaleBundle } from '../core/types'
@@ -76,7 +76,7 @@ export function takeLocale(locale: PageLocale): LocaleBundle | undefined {
 
 /**
  * 页面仍在解析时，等下一次登记或 DOMContentLoaded（二者先到者）；已解析完时不等。
- * 用于 Firefox：注册的词典脚本未命中脚本缓存时先挡住解析、编译完再执行，一定在 DOMContentLoaded 之前
+ * 用于 Firefox（Safari 同样用）：注册的词典脚本未命中脚本缓存时先挡住解析、编译完再执行，一定在 DOMContentLoaded 之前
  */
 export function waitForRegistration(doc: Document): Promise<void> {
   if (doc.readyState !== 'loading') return Promise.resolve()
@@ -95,11 +95,11 @@ export function waitForRegistration(doc: Document): Promise<void> {
 export interface LocaleLoaderDeps {
   /** 扩展内路径 → 完整地址（runtime.getURL） */
   resolveUrl(path: string): string
-  /** 动态导入脚本；不传时不导入，直接请后台注入（Firefox：AMO 的代码检查把参数不是字面量的 import() 报为不安全调用） */
+  /** 动态导入脚本；不传时不导入，直接请后台注入（Firefox：AMO 的代码检查把参数不是字面量的 import() 报为不安全调用；Safari 同样不传） */
   importScript?(url: string): Promise<unknown>
   /** 请后台注入词典脚本；成功返回 true */
   requestInjection(locale: PageLocale): Promise<boolean>
-  /** 注册的词典脚本还没执行时，先等它登记再动态导入（Firefox，见 waitForRegistration）；不传时不等 */
+  /** 注册的词典脚本还没执行时，先等它登记再动态导入（Firefox、Safari，见 waitForRegistration）；不传时不等 */
   waitForRegistration?(): Promise<void>
 }
 

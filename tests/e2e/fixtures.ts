@@ -53,6 +53,12 @@ export const DEFAULT_SETTINGS: Settings = {
   language: 'auto',
   uiLanguage: 'auto',
   theme: 'auto',
+  accelerate: false,
+  accelerateImages: false,
+  failover: false,
+  accelerateSource: 'ghfast',
+  customSources: [],
+  removedSources: [],
 }
 
 /** 中日韩统一表意文字（含扩展 A 区） */

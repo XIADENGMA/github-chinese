@@ -1,0 +1,38 @@
+:root {
+  color-scheme: light dark;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 100vh;
+  margin: 0;
+  font:
+    13px -apple-system,
+    system-ui,
+    sans-serif;
+  text-align: center;
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* 未取到开关状态时留空，不改变布局 */
+p {
+  min-height: 1.4em;
+  margin: 0;
+  color: -apple-system-secondary-label;
+}
+
+button {
+  font: inherit;
+}

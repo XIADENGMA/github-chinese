@@ -61,6 +61,23 @@ export default {
   loadFailed: 'Load failed',
   imported: 'Imported {count}',
 
+  accelerateSection: 'Acceleration',
+  accelerate: 'Accelerate downloads',
+  accelerateImages: 'Accelerate images',
+  failover: 'Failover',
+  sources: 'Source',
+  sourceName: 'Name',
+  sourceTemplate: 'URL',
+  latency: 'Latency',
+  ping: 'Ping',
+  testLatency: 'Test',
+  testing: 'Testing',
+  timeout: 'Timed out',
+  failed: 'Failed',
+  restoreSources: 'Restore built-in',
+  noSources: 'No sources',
+  limitReached: 'Limit reached',
+
   about: 'About',
   githubRepository: 'GitHub repository',
 

@@ -143,11 +143,6 @@ async function onFileChange(event: Event): Promise<void> {
 </script>
 
 <style scoped>
-.section-tools {
-  display: flex;
-  gap: 8px;
-}
-
 /* 两列可收窄到 0：输入框的固有宽度不撑开表单，窄屏（如 Firefox Android）不横向溢出 */
 .entry-form {
   display: grid;
@@ -192,14 +187,5 @@ async function onFileChange(event: Event): Promise<void> {
 /* 未渲染行的占位（数据行的样式见 CustomEntryRow.vue） */
 .entries-gap td {
   padding: 0;
-}
-
-.blankslate {
-  padding: 32px 16px;
-  text-align: center;
-  color: var(--gcn-fg-muted);
-  background: var(--gcn-bg-muted);
-  border: 1px dashed var(--gcn-border);
-  border-radius: var(--gcn-radius-lg);
 }
 </style>

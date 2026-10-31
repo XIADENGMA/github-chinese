@@ -1,13 +1,24 @@
 import { browser } from 'wxt/browser'
 import { defineContentScript } from 'wxt/utils/define-content-script'
+import { createCloneUrlRewriter } from '../core/clone-url'
 import { createController } from '../core/controller'
+import { createDownloadClickHandler } from '../core/download-click'
+import { createImageAccelerator } from '../core/image-accelerate'
 import { createInstanceMark } from '../core/instance-mark'
 import { TURBO_RESET_EVENT, TURBO_REVISIT_EVENT, TURBO_TRANSLATING_EVENT } from '../core/turbo-bridge'
 import type { LocaleBundle } from '../core/types'
+import { PROBE_TIMEOUT_MS } from '../shared/accelerate'
 import { pageLanguageEnvironment } from '../shared/language-env'
 import { resolvePageLocale, type PageLocale } from '../shared/locale'
 import { createLocaleLoader, TIME_LANGS, waitForRegistration } from '../shared/locale-loader'
-import { isAcknowledged, isContentMessage, type BackgroundMessage, type ContentMessage } from '../shared/messages'
+import {
+  isAcknowledged,
+  isContentMessage,
+  isFetchedImage,
+  isResolvedDownload,
+  type BackgroundMessage,
+  type ContentMessage,
+} from '../shared/messages'
 import {
   DEFAULT_SETTINGS,
   getCustomEntries,
@@ -16,6 +27,7 @@ import {
   watchSettings,
   type Settings,
 } from '../shared/settings'
+import { sendToBackground } from '../shared/tab-messages'
 
 type SendResponse = (response?: unknown) => void
 
@@ -34,7 +46,7 @@ function expectsResponse(message: ContentMessage): boolean {
   return message.type === 'gcn:get-status'
 }
 
-/** 当前语言的语言包：词典脚本按需加载，动态导入失败（Firefox 不动态导入）时请后台注入 */
+/** 当前语言的语言包：词典脚本按需加载，动态导入失败（Firefox、Safari 不动态导入）时请后台注入 */
 const locales = createLocaleLoader({
   resolveUrl: (path) => browser.runtime.getURL(path as Parameters<typeof browser.runtime.getURL>[0]),
   requestInjection: async (locale) => {
@@ -43,8 +55,9 @@ const locales = createLocaleLoader({
   },
   // Firefox 的注册脚本可能还在编译，本脚本先读完存储：先等它登记。Chromium 的注册脚本在解析前同步执行，不等。
   // Firefox 不动态导入：AMO 的代码检查把参数不是字面量的 import() 报为不安全调用。
+  // Safari 同 Firefox：不依赖内容脚本的动态导入与注册脚本的执行时机（词典脚本也不开放，见 wxt.config.ts）。
   // 条件直接写构建期常量（同 isFirefoxBuild）：函数调用不内联，经它判断时 Firefox 构建里仍留着 import()
-  ...(String(import.meta.env.FIREFOX) === 'true'
+  ...(String(import.meta.env.FIREFOX) === 'true' || String(import.meta.env.SAFARI) === 'true'
     ? { waitForRegistration: () => waitForRegistration(document) }
     : { importScript: (url: string) => import(/* @vite-ignore */ url) }),
 })
@@ -60,6 +73,28 @@ const STATUS_WAIT_MS = 1000
  * 靠 WXT 的 ctx.setInterval 到点时读 browser.runtime.id，读不到即触发 onInvalidated
  */
 const INVALIDATION_CHECK_MS = 3000
+
+/** 下载加速：等后台选源的时限（后台探测加速源最多 PROBE_TIMEOUT_MS），超时打开原链接 */
+const RESOLVE_TIMEOUT_MS = PROBE_TIMEOUT_MS + 2000
+
+/** 图片加速：等后台取回的时限（故障转移开启时后台依次试各加速源） */
+const FETCH_IMAGE_TIMEOUT_MS = 30_000
+
+/** 请后台为下载链接、克隆地址选源（故障转移），返回加速后的地址 */
+async function resolveDownload(url: string): Promise<string> {
+  const message: BackgroundMessage = { type: 'gcn:resolve-download', url }
+  const response = await sendToBackground(message, RESOLVE_TIMEOUT_MS)
+  if (!isResolvedDownload(response)) throw new Error('后台未选出下载地址')
+  return response.url
+}
+
+/** 请后台经加速源取回加载失败的图片，返回 data: 地址 */
+async function fetchImage(url: string): Promise<string> {
+  const message: BackgroundMessage = { type: 'gcn:fetch-image', url }
+  const response = await sendToBackground(message, FETCH_IMAGE_TIMEOUT_MS)
+  if (!isFetchedImage(response)) throw new Error('后台未取回图片')
+  return response.url
+}
 
 /** 消息入口：启动完成前收到的消息排队 */
 function createMessageGate(): MessageGate {
@@ -191,10 +226,23 @@ export default defineContentScript({
         settle(task)
       })
 
+    // 克隆地址加速：改写 Code 下拉框等处的克隆地址（见 core/clone-url）
+    const cloneUrls = createCloneUrlRewriter(document, {
+      settings: () => current,
+      resolve: resolveDownload,
+      copy: (text) => {
+        navigator.clipboard.writeText(text).catch(() => undefined)
+      },
+    })
+    // 图片加速：图片加载失败时经加速源取回（见 core/image-accelerate）
+    const images = createImageAccelerator({ settings: () => current, fetchImage })
+
     const applySettings = (next: Settings): void => {
       current = next
       controller.updateSettings(effective(next))
       requestLocale()
+      cloneUrls.refresh()
+      if (next.enabled && next.accelerateImages) images.retryFailed(document)
     }
 
     /** 最近一次读取浏览器语言的序号：读取期间又变化时，旧结果丢弃 */
@@ -215,6 +263,21 @@ export default defineContentScript({
     ctx.addEventListener(window, TURBO_TRANSLATING_EVENT, (event: Event) => {
       if (controller.translator.active) event.preventDefault()
     })
+    // 下载加速：在捕获阶段先于页面脚本处理下载链接的点击（见 core/download-click）
+    ctx.addEventListener(
+      window,
+      'click',
+      createDownloadClickHandler({
+        settings: () => current,
+        resolve: resolveDownload,
+        open: (url, newTab) => {
+          window.open(url, newTab ? '_blank' : '_self', newTab ? 'noopener' : '')
+        },
+      }),
+      { capture: true },
+    )
+    // 图片的 error 不冒泡：在捕获阶段监听
+    ctx.addEventListener(window, 'error', images.onError, { capture: true })
 
     const refreshCustomEntries = async (): Promise<void> => {
       try {
@@ -271,6 +334,7 @@ export default defineContentScript({
     ctx.onInvalidated(() => {
       controller.dispose()
       mark.disconnect()
+      cloneUrls.stop()
       removeMessageListener()
       try {
         unwatchSettings()

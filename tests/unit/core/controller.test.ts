@@ -16,6 +16,12 @@ const SETTINGS: Settings = {
   language: 'auto',
   uiLanguage: 'auto',
   theme: 'auto',
+  accelerate: false,
+  accelerateImages: false,
+  failover: false,
+  accelerateSource: 'ghfast',
+  customSources: [],
+  removedSources: [],
 }
 
 /** 简化的排除规则：前缀匹配（正式实现见 shared/settings） */

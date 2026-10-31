@@ -87,23 +87,23 @@ export default defineConfig({
       ],
     }
   },
-  // 三个浏览器统一使用 MV3
+  // 各浏览器统一使用 MV3（WXT 对 Firefox、Safari 默认 MV2）
   manifestVersion: 3,
   manifest: ({ browser }) => ({
     // 名称、描述随浏览器界面语言（public/_locales），没有对应语言时用英文
     name: '__MSG_extName__',
     description: '__MSG_extDescription__',
     default_locale: 'en',
-    // scripting：按当前语言注册词典内容脚本（页面开始解析前就绪），动态导入失败（Firefox 不动态导入）时注入词典脚本；
-    // Chromium 安装、更新后向已打开的 GitHub 标签页注入脚本（Firefox 自动注入）。Firefox 的 scripting 无安装、更新提示
+    // scripting：按当前语言注册词典内容脚本（页面开始解析前就绪），动态导入失败（Firefox、Safari 不动态导入）时注入词典脚本；
+    // Chromium、Safari 安装、更新后向已打开的 GitHub 标签页注入脚本（Firefox 自动注入）。Firefox 的 scripting 无安装、更新提示
     permissions: ['storage', 'scripting'],
     host_permissions: GITHUB_ORIGINS,
     action: {
       default_title: '__MSG_extName__',
     },
     // 词典脚本由内容脚本动态导入（见 src/shared/locale-loader.ts），只对 GitHub 页面开放，用会话随机地址，
-    // 页面无法据固定地址探测扩展。Firefox 不动态导入（改请后台注入），不开放
-    ...(browser === 'firefox'
+    // 页面无法据固定地址探测扩展。Firefox、Safari 不动态导入（改请后台注入），不开放
+    ...(browser === 'firefox' || browser === 'safari'
       ? {}
       : {
           web_accessible_resources: [{ resources: ['locale-*.js'], matches: GITHUB_ORIGINS, use_dynamic_url: true }],
@@ -123,6 +123,8 @@ export default defineConfig({
           },
         }
       : {}),
+    // 主世界内容脚本（src/entrypoints/turbo-bridge.content.ts）从 Safari 18 起支持
+    ...(browser === 'safari' ? { browser_specific_settings: { safari: { strict_min_version: '18.0' } } } : {}),
   }),
   zip: {
     includeSources: SOURCES,

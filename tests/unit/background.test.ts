@@ -18,6 +18,29 @@ async function settle(): Promise<void> {
   await new Promise((resolve) => setTimeout(resolve, 0))
 }
 
+type Sender = Browser.runtime.MessageSender
+
+/** GitHub 页面上的内容脚本 */
+function githubTab(frameId = 0): Sender {
+  return {
+    id: fakeBrowser.runtime.id,
+    url: 'https://github.com/vuejs/core',
+    frameId,
+    tab: { id: 7, incognito: false } as Browser.tabs.Tab,
+  }
+}
+
+/** 发消息给后台：handled 为监听器是否保持消息通道，保持时一并等到应答 */
+async function deliver(message: unknown, sender: Sender): Promise<{ handled: boolean; response?: unknown }> {
+  let respond: (value: unknown) => void = () => undefined
+  const response = new Promise((resolve) => {
+    respond = resolve
+  })
+  const results: unknown[] = await fakeBrowser.runtime.onMessage.trigger(message, sender, respond)
+  const handled = results.some((result) => result === true)
+  return handled ? { handled, response: await response } : { handled }
+}
+
 /** 动态注册的内容脚本（fakeBrowser 未实现，用内存表模拟） */
 let scripts: FakeContentScripts
 
@@ -31,6 +54,7 @@ beforeEach(() => {
 afterEach(() => {
   vi.restoreAllMocks()
   vi.unstubAllEnvs()
+  vi.unstubAllGlobals()
 })
 
 describe('background', () => {
@@ -551,28 +575,7 @@ describe('扩展安装、更新后向已打开的 GitHub 页面注入桥接与�
 })
 
 describe('词典脚本注入（内容脚本动态导入失败时的退路）', () => {
-  type Sender = Browser.runtime.MessageSender
-
   const INJECT = { type: 'gcn:inject-locale', locale: 'zh-TW' }
-
-  function githubTab(frameId = 0): Sender {
-    return {
-      id: fakeBrowser.runtime.id,
-      url: 'https://github.com/vuejs/core',
-      frameId,
-      tab: { id: 7, incognito: false } as Browser.tabs.Tab,
-    }
-  }
-
-  async function deliver(message: unknown, sender: Sender): Promise<{ handled: boolean; response?: unknown }> {
-    let respond: (value: unknown) => void = () => undefined
-    const response = new Promise((resolve) => {
-      respond = resolve
-    })
-    const results: unknown[] = await fakeBrowser.runtime.onMessage.trigger(message, sender, respond)
-    const handled = results.some((result) => result === true)
-    return handled ? { handled, response: await response } : { handled }
-  }
 
   beforeEach(() => {
     background.main()
@@ -627,5 +630,116 @@ describe('词典脚本注入（内容脚本动态导入失败时的退路）', (
     } finally {
       restore()
     }
+  })
+})
+
+describe('下载加速的选源', () => {
+  const RELEASE = 'https://github.com/vuejs/core/releases/download/v3.5.0/vue.global.js'
+  const RESOLVE = { type: 'gcn:resolve-download', url: RELEASE }
+
+  beforeEach(() => {
+    background.main()
+  })
+
+  it('故障转移关闭：应答首选加速源的地址，不探测', async () => {
+    const fetch = vi.fn()
+    vi.stubGlobal('fetch', fetch)
+    await updateSettings({ accelerate: true, accelerateSource: 'wget-la' })
+    expect(await deliver(RESOLVE, githubTab())).toEqual({
+      handled: true,
+      response: { ok: true, url: `https://wget.la/${RELEASE}` },
+    })
+    expect(fetch).not.toHaveBeenCalled()
+  })
+
+  it('故障转移开启：首选连不上时应答其他加速源的地址', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (url: string) => (url === 'https://ghfast.top/' ? Promise.reject(new TypeError('Failed')) : {})),
+    )
+    await updateSettings({ accelerate: true, failover: true })
+    expect(await deliver(RESOLVE, githubTab())).toEqual({
+      handled: true,
+      response: { ok: true, url: `https://wget.la/${RELEASE}` },
+    })
+  })
+
+  it('未开启下载加速：应答原链接', async () => {
+    expect(await deliver(RESOLVE, githubTab())).toEqual({ handled: true, response: { ok: true, url: RELEASE } })
+  })
+
+  it('读取设置失败：应答 ok: false 并记录错误', async () => {
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => undefined)
+    vi.spyOn(fakeBrowser.storage.sync, 'get').mockRejectedValue(new Error('storage unavailable'))
+    expect(await deliver(RESOLVE, githubTab())).toEqual({ handled: true, response: { ok: false } })
+    expect(consoleError).toHaveBeenCalled()
+  })
+
+  it.each([
+    ['扩展页面', RESOLVE, { id: fakeBrowser.runtime.id, url: fakeBrowser.runtime.getURL('/popup.html') }],
+    [
+      '其他网站',
+      RESOLVE,
+      { id: fakeBrowser.runtime.id, url: 'https://example.com/', tab: { id: 7 } as Browser.tabs.Tab },
+    ],
+    ['其他扩展（发送方 id 不符）', RESOLVE, { ...githubTab(), id: 'other-extension' }],
+    ['地址不是字符串', { type: 'gcn:resolve-download', url: 1 }, githubTab()],
+    ['地址过长', { type: 'gcn:resolve-download', url: `${RELEASE}?${'a'.repeat(5000)}` }, githubTab()],
+  ] as const)('%s → 不处理', async (_name, message, sender) => {
+    expect(await deliver(message, sender as Sender)).toEqual({ handled: false })
+  })
+
+  it('克隆地址：同样选源', async () => {
+    const clone = 'https://github.com/vuejs/core.git'
+    await updateSettings({ accelerate: true })
+    expect(await deliver({ type: 'gcn:resolve-download', url: clone }, githubTab())).toEqual({
+      handled: true,
+      response: { ok: true, url: `https://ghfast.top/${clone}` },
+    })
+  })
+})
+
+describe('图片加速的取回', () => {
+  const AVATAR = 'https://avatars.githubusercontent.com/u/583231?v=4'
+  const FETCH_IMAGE = { type: 'gcn:fetch-image', url: AVATAR }
+
+  beforeEach(() => {
+    background.main()
+  })
+
+  it('经支持该地址的加速源取回（头像：hk.gh-proxy.org），应答 data: 地址', async () => {
+    const fetch = vi.fn(
+      async () => new Response(new Uint8Array([1, 2, 3]), { headers: { 'content-type': 'image/png' } }),
+    )
+    vi.stubGlobal('fetch', fetch)
+    await updateSettings({ accelerateImages: true })
+    expect(await deliver(FETCH_IMAGE, githubTab())).toEqual({
+      handled: true,
+      response: { ok: true, url: 'data:image/png;base64,AQID' },
+    })
+    expect(fetch).toHaveBeenCalledExactlyOnceWith(`https://hk.gh-proxy.org/${AVATAR}`, expect.any(Object))
+  })
+
+  it('未开启图片加速、取不到：应答 ok: false', async () => {
+    const fetch = vi.fn(async () => new Response('', { status: 404 }))
+    vi.stubGlobal('fetch', fetch)
+    expect(await deliver(FETCH_IMAGE, githubTab())).toEqual({ handled: true, response: { ok: false } })
+    expect(fetch).not.toHaveBeenCalled()
+    await updateSettings({ accelerateImages: true })
+    expect(await deliver(FETCH_IMAGE, githubTab())).toEqual({ handled: true, response: { ok: false } })
+  })
+
+  it('读取设置失败：应答 ok: false 并记录错误', async () => {
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => undefined)
+    vi.spyOn(fakeBrowser.storage.sync, 'get').mockRejectedValue(new Error('storage unavailable'))
+    expect(await deliver(FETCH_IMAGE, githubTab())).toEqual({ handled: true, response: { ok: false } })
+    expect(consoleError).toHaveBeenCalled()
+  })
+
+  it.each([
+    ['扩展页面', { id: fakeBrowser.runtime.id, url: fakeBrowser.runtime.getURL('/popup.html') }],
+    ['其他扩展（发送方 id 不符）', { ...githubTab(), id: 'other-extension' }],
+  ] as const)('%s → 不处理', async (_name, sender) => {
+    expect(await deliver(FETCH_IMAGE, sender as Sender)).toEqual({ handled: false })
   })
 })

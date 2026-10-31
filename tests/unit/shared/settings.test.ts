@@ -69,6 +69,43 @@ describe('mergeSettings', () => {
   })
 })
 
+describe('加速设置', () => {
+  it('默认关闭，首选第一个内置源，没有自定义源', () => {
+    expect(DEFAULT_SETTINGS).toMatchObject({
+      accelerate: false,
+      accelerateImages: false,
+      failover: false,
+      accelerateSource: 'ghfast',
+      customSources: [],
+      removedSources: [],
+    })
+  })
+
+  it('保留合法字段；丢弃类型不符的字段与不合法的加速源', () => {
+    const mirror = { id: 'custom-1', name: 'Mirror', template: 'https://mirror.example/{url}' }
+    expect(
+      mergeSettings({
+        accelerate: true,
+        accelerateImages: true,
+        failover: 'yes',
+        accelerateSource: 'custom-1',
+        customSources: [mirror, { id: 'custom-2', name: 'HTTP', template: 'http://insecure.example/{url}' }],
+        removedSources: ['wget-la', 3],
+      }),
+    ).toEqual({
+      ...DEFAULT_SETTINGS,
+      accelerate: true,
+      accelerateImages: true,
+      accelerateSource: 'custom-1',
+      customSources: [mirror],
+      removedSources: ['wget-la'],
+    })
+    expect(
+      mergeSettings({ accelerateImages: 'yes', accelerateSource: 1, customSources: 'x', removedSources: {} }),
+    ).toEqual(DEFAULT_SETTINGS)
+  })
+})
+
 describe('sanitizeCustomEntries', () => {
   it.each([undefined, null, 'x', ['a', 'b']])('非对象 %s → 空对象', (input) => {
     expect(sanitizeCustomEntries(input)).toEqual({})
@@ -155,6 +192,13 @@ describe('存储读写', () => {
     const next = await updateSettings({ enabled: false })
     expect(next).toEqual({ ...DEFAULT_SETTINGS, enabled: false, translateTime: false })
     expect(await settingsItem.getValue()).toEqual({ ...next, collectUntranslated: false })
+  })
+
+  it('updateSettings 传函数：按写入前存储中的最新设置计算', async () => {
+    await settingsItem.setValue({ removedSources: ['wget-la'] })
+    const next = await updateSettings((current) => ({ removedSources: [...current.removedSources, 'ghfast'] }))
+    expect(next.removedSources).toEqual(['wget-la', 'ghfast'])
+    expect((await getSettings()).removedSources).toEqual(['wget-la', 'ghfast'])
   })
 
   it.each<[string, Record<string, unknown>]>([

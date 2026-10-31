@@ -1,7 +1,7 @@
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vitest/config'
 import { WxtVitest } from 'wxt/testing/vitest-plugin'
-import { VUE_COMPILER_OPTIONS } from './scripts/strip-vue-static-content'
+import { VUE_COMPILER_OPTIONS } from './scripts/strip-vue-static-content.ts'
 
 export default defineConfig({
   // 模板编译选项与构建相同（见 wxt.config.ts）

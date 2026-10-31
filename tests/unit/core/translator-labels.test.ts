@@ -554,6 +554,12 @@ describe('停用、换词典、切换语言、排除页面', () => {
       language: 'auto',
       uiLanguage: 'auto',
       theme: 'auto',
+      accelerate: false,
+      accelerateImages: false,
+      failover: false,
+      accelerateSource: 'ghfast',
+      customSources: [],
+      removedSources: [],
     }
     document.body.innerHTML = `${LIST('bug', 'list')}${SIDEBAR}<main></main>`
     const c = createController({

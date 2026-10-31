@@ -1,4 +1,11 @@
-import { isAcknowledged, isBackgroundMessage, isContentMessage, isContentStatus } from '../../../src/shared/messages'
+import {
+  isAcknowledged,
+  isBackgroundMessage,
+  isContentMessage,
+  isContentStatus,
+  isFetchedImage,
+  isResolvedDownload,
+} from '../../../src/shared/messages'
 
 const STATUS = {
   active: true,
@@ -69,6 +76,44 @@ describe('isBackgroundMessage', () => {
     ['旧版未翻译清空', { type: 'gcn:clear-untranslated' }],
   ])('%s → 非法', (_name, value) => {
     expect(isBackgroundMessage(value)).toBe(false)
+  })
+})
+
+describe('下载选源', () => {
+  const URL = 'https://github.com/vuejs/core/releases/download/v3.5.0/vue.global.js'
+
+  it('请求：地址为字符串，不超过上限', () => {
+    expect(isBackgroundMessage({ type: 'gcn:resolve-download', url: URL })).toBe(true)
+    expect(isBackgroundMessage({ type: 'gcn:resolve-download' })).toBe(false)
+    expect(isBackgroundMessage({ type: 'gcn:resolve-download', url: ['x'] })).toBe(false)
+    expect(isBackgroundMessage({ type: 'gcn:resolve-download', url: `${URL}?${'a'.repeat(5000)}` })).toBe(false)
+  })
+
+  it('应答：ok 为 true，地址为 https', () => {
+    expect(isResolvedDownload({ ok: true, url: `https://ghfast.top/${URL}` })).toBe(true)
+    expect(isResolvedDownload({ ok: true, url: 'javascript:alert(1)' })).toBe(false)
+    expect(isResolvedDownload({ ok: false, url: URL })).toBe(false)
+    expect(isResolvedDownload({ ok: true })).toBe(false)
+    expect(isResolvedDownload(undefined)).toBe(false)
+  })
+})
+
+describe('图片取回', () => {
+  const AVATAR = 'https://avatars.githubusercontent.com/u/583231?v=4'
+
+  it('请求：地址为字符串，不超过上限', () => {
+    expect(isBackgroundMessage({ type: 'gcn:fetch-image', url: AVATAR })).toBe(true)
+    expect(isBackgroundMessage({ type: 'gcn:fetch-image' })).toBe(false)
+    expect(isBackgroundMessage({ type: 'gcn:fetch-image', url: `${AVATAR}&${'a'.repeat(5000)}` })).toBe(false)
+  })
+
+  it('应答：ok 为 true，地址为 base64 的图片 data: 地址', () => {
+    expect(isFetchedImage({ ok: true, url: 'data:image/png;base64,iVBORw==' })).toBe(true)
+    expect(isFetchedImage({ ok: true, url: 'data:image/svg+xml;base64,PHN2Zz4=' })).toBe(true)
+    expect(isFetchedImage({ ok: true, url: 'data:text/html;base64,PGI+' })).toBe(false)
+    expect(isFetchedImage({ ok: true, url: AVATAR })).toBe(false)
+    expect(isFetchedImage({ ok: false, url: 'data:image/png;base64,iVBORw==' })).toBe(false)
+    expect(isFetchedImage(undefined)).toBe(false)
   })
 })
 
