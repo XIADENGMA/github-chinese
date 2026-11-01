@@ -5,16 +5,21 @@ import {
   canExcludePath,
   customEntriesItem,
   getCustomEntries,
+  getSearchBlockRules,
   getSettings,
   isPathExcluded,
+  normalizeExcludedPath,
   mergeSettings,
-  parseExcludedPaths,
   removeExcludedPath,
   sanitizeCustomEntries,
+  sanitizeSearchBlockRules,
+  searchBlockRulesItem,
   setCustomEntries,
+  setSearchBlockRules,
   settingsItem,
   updateSettings,
   watchCustomEntries,
+  watchSearchBlockRules,
   watchSettings,
 } from '../../../src/shared/settings'
 
@@ -106,6 +111,25 @@ describe('加速设置', () => {
   })
 })
 
+describe('搜索净化', () => {
+  it('默认开启；保留布尔值，其余用默认值', () => {
+    expect(DEFAULT_SETTINGS.purifySearch).toBe(true)
+    expect(mergeSettings({ purifySearch: false }).purifySearch).toBe(false)
+    expect(mergeSettings({ purifySearch: 'no' }).purifySearch).toBe(true)
+  })
+
+  it.each([undefined, null, 'x', { 0: '@octocat' }])('屏蔽规则不是数组 %s → 没有规则', (input) => {
+    expect(sanitizeSearchBlockRules(input)).toEqual([])
+  })
+
+  it('屏蔽规则：过滤非字符串与空行，去掉首尾空白', () => {
+    expect(sanitizeSearchBlockRules([' @octocat ', '', '  ', 3, null, 'vuejs/core'])).toEqual([
+      '@octocat',
+      'vuejs/core',
+    ])
+  })
+})
+
 describe('sanitizeCustomEntries', () => {
   it.each([undefined, null, 'x', ['a', 'b']])('非对象 %s → 空对象', (input) => {
     expect(sanitizeCustomEntries(input)).toEqual({})
@@ -140,20 +164,14 @@ describe('isPathExcluded', () => {
   })
 })
 
-describe('parseExcludedPaths', () => {
-  it('按行解析，去空行、首尾空白与重复', () => {
-    expect(parseExcludedPaths(' /settings \r\n\n/*/*/wiki\n/settings\n')).toEqual({
-      paths: ['/settings', '/*/*/wiki'],
-      invalid: [],
-    })
+describe('normalizeExcludedPath', () => {
+  it('去掉首尾空白', () => {
+    expect(normalizeExcludedPath(' /settings ')).toBe('/settings')
+    expect(normalizeExcludedPath('/*/*/wiki')).toBe('/*/*/wiki')
   })
 
-  it('不以 / 开头的行列为无效', () => {
-    expect(parseExcludedPaths('/ok\nsettings\n*/wiki')).toEqual({ paths: ['/ok'], invalid: ['settings', '*/wiki'] })
-  })
-
-  it('空文本', () => {
-    expect(parseExcludedPaths('')).toEqual({ paths: [], invalid: [] })
+  it('不以 / 开头：无效', () => {
+    for (const value of ['', '  ', 'settings', '*/wiki']) expect(normalizeExcludedPath(value), value).toBeUndefined()
   })
 })
 
@@ -241,6 +259,22 @@ describe('存储读写', () => {
     const stop = watchCustomEntries(callback)
     await customEntriesItem.setValue({ Pulls: '拉取请求', Bad: 1 as never })
     expect(callback).toHaveBeenLastCalledWith({ Pulls: '拉取请求' })
+    stop()
+  })
+
+  it('屏蔽规则存于 local 区：无存储值时没有规则；setSearchBlockRules 过滤后写入', async () => {
+    expect(await getSearchBlockRules()).toEqual([])
+    const saved = await setSearchBlockRules(['@octocat', ' '])
+    expect(saved).toEqual(['@octocat'])
+    expect(await fakeBrowser.storage.local.get('searchBlockRules')).toEqual({ searchBlockRules: ['@octocat'] })
+    expect(await getSearchBlockRules()).toEqual(['@octocat'])
+  })
+
+  it('watchSearchBlockRules 回调过滤后的规则', async () => {
+    const callback = vi.fn()
+    const stop = watchSearchBlockRules(callback)
+    await searchBlockRulesItem.setValue(['vuejs/core', 1 as never])
+    expect(callback).toHaveBeenLastCalledWith(['vuejs/core'])
     stop()
   })
 })

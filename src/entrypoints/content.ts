@@ -5,12 +5,14 @@ import { createController } from '../core/controller'
 import { createDownloadClickHandler } from '../core/download-click'
 import { createImageAccelerator } from '../core/image-accelerate'
 import { createInstanceMark } from '../core/instance-mark'
+import { createSearchPurifier } from '../core/search-purify'
 import { TURBO_RESET_EVENT, TURBO_REVISIT_EVENT, TURBO_TRANSLATING_EVENT } from '../core/turbo-bridge'
 import type { LocaleBundle } from '../core/types'
 import { PROBE_TIMEOUT_MS } from '../shared/accelerate'
 import { pageLanguageEnvironment } from '../shared/language-env'
 import { resolvePageLocale, type PageLocale } from '../shared/locale'
 import { createLocaleLoader, TIME_LANGS, waitForRegistration } from '../shared/locale-loader'
+import { compileSearchBlockRules } from '../shared/search-block'
 import {
   isAcknowledged,
   isContentMessage,
@@ -22,6 +24,7 @@ import {
 import {
   DEFAULT_SETTINGS,
   getCustomEntries,
+  getSearchBlockRules,
   getSettings,
   isPathExcluded,
   watchSettings,
@@ -133,19 +136,28 @@ export default defineContentScript({
       }
     }
 
-    const [settings, customEntries, initialLanguages] = await Promise.all([
+    const [settings, customEntries, searchRules, initialLanguages] = await Promise.all([
       getSettings().catch(() => DEFAULT_SETTINGS),
       getCustomEntries().catch(() => ({})),
+      getSearchBlockRules().catch(() => []),
       // 与后台注册词典脚本同一来源（见 shared/language-env）
       pageLanguageEnvironment(),
     ])
     let languages = initialLanguages
+    let current: Settings = settings
+    let blockList = compileSearchBlockRules(searchRules)
+    // 搜索净化不等语言包：结果插入页面时就隐藏（见 core/search-purify）
+    const purifier = createSearchPurifier(document, {
+      active: () => current.enabled && current.purifySearch,
+      rules: () => blockList,
+    })
     const locale: PageLocale = resolvePageLocale(settings.language, languages)
     // 总开关关闭时不加载语言包，开启时再加载（见 syncLocale）
     const bundle: LocaleBundle | undefined =
       ctx.isInvalid || !settings.enabled ? undefined : await locales.load(locale).catch(() => undefined)
     // 不再启动（已失效，或开启时语言包加载失败）。排队的查询不应答：页面上有新实例时由它应答
     if (ctx.isInvalid || (settings.enabled && !bundle)) {
+      purifier.stop()
       removeMessageListener()
       return
     }
@@ -171,7 +183,6 @@ export default defineContentScript({
         window.dispatchEvent(new Event(stale ? TURBO_REVISIT_EVENT : TURBO_RESET_EVENT))
       },
     })
-    let current: Settings = settings
     /** 最近一次加载请求的序号：加载期间又有变化（关闭、语言再变）时，旧请求的结果丢弃 */
     let localeRequest = 0
 
@@ -242,6 +253,7 @@ export default defineContentScript({
       controller.updateSettings(effective(next))
       requestLocale()
       cloneUrls.refresh()
+      purifier.refresh()
       if (next.enabled && next.accelerateImages) images.retryFailed(document)
     }
 
@@ -288,6 +300,17 @@ export default defineContentScript({
       }
     }
 
+    const refreshSearchRules = async (): Promise<void> => {
+      try {
+        const rules = await getSearchBlockRules()
+        if (!ctx.isValid) return
+        blockList = compileSearchBlockRules(rules)
+        purifier.refresh()
+      } catch {
+        // 读取失败时沿用当前规则
+      }
+    }
+
     const refreshSettings = async (): Promise<void> => {
       try {
         const next = await getSettings()
@@ -313,19 +336,26 @@ export default defineContentScript({
         case 'gcn:custom-entries-changed':
           void refreshCustomEntries()
           return undefined
+        case 'gcn:search-rules-changed':
+          void refreshSearchRules()
+          return undefined
       }
     }
 
-    // 往返缓存恢复：缓存期间收不到自定义词条通知，Firefox 还会丢弃设置变更事件，恢复后补读
+    // 往返缓存恢复：缓存期间收不到自定义词条、屏蔽规则的通知，Firefox 还会丢弃设置变更事件，恢复后补读
     ctx.addEventListener(window, 'pageshow', (event) => {
       if (!event.persisted) return
       void refreshCustomEntries()
+      void refreshSearchRules()
       void refreshSettings()
     })
 
-    // 软导航时顺带检查扩展是否失效（失效会触发 onInvalidated）
+    // 软导航时顺带检查扩展是否失效（失效会触发 onInvalidated）。
+    // 搜索净化随 DOM 变动处理，地址晚于结果改变时（进出搜索页）在这里补上
     ctx.addEventListener(window, 'wxt:locationchange', () => {
-      if (ctx.isValid) controller.checkLocation()
+      if (!ctx.isValid) return
+      controller.checkLocation()
+      purifier.refresh()
     })
     // 不导航时定时检查（见 INVALIDATION_CHECK_MS）：检查由 ctx.setInterval 完成，回调不做事
     ctx.setInterval(() => undefined, INVALIDATION_CHECK_MS)
@@ -335,6 +365,7 @@ export default defineContentScript({
       controller.dispose()
       mark.disconnect()
       cloneUrls.stop()
+      purifier.stop()
       removeMessageListener()
       try {
         unwatchSettings()

@@ -147,7 +147,7 @@ describe.skipIf(!ToastHost)('ToastHost', () => {
 
   it('成功的提示 3 秒后收起，失败的 5 秒后收起', async () => {
     const wrapper = render()
-    showToast('success', 'saved')
+    showToast('success', 'exists')
     showToast('danger', 'saveFailed')
     await nextTick()
     vi.advanceTimersByTime(3000)
@@ -162,13 +162,13 @@ describe.skipIf(!ToastHost)('ToastHost', () => {
 
   it('相同的提示再次出现时重新计时', async () => {
     render()
-    showToast('success', 'saved')
+    showToast('success', 'exists')
     await nextTick()
     vi.advanceTimersByTime(2000)
-    showToast('success', 'saved')
+    showToast('success', 'exists')
     await nextTick()
     vi.advanceTimersByTime(2000)
-    expect(shownToasts()).toEqual([{ tone: 'success', key: 'saved' }])
+    expect(shownToasts()).toEqual([{ tone: 'success', key: 'exists' }])
     vi.advanceTimersByTime(1000)
     await nextTick()
     expect(shownToasts()).toEqual([])

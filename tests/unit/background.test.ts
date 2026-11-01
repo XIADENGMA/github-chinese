@@ -300,7 +300,7 @@ describe('旧版本的未翻译文本', () => {
   })
 })
 
-describe('自定义词条转发', () => {
+describe('自定义词条、屏蔽规则转发', () => {
   type Sender = Browser.runtime.MessageSender
 
   const SAVED = { type: 'gcn:custom-entries-saved' }
@@ -356,6 +356,27 @@ describe('自定义词条转发', () => {
     const results: unknown[] = await fakeBrowser.runtime.onMessage.trigger(SAVED, sender(), respond)
     await settle()
     expect(results).not.toContain(true)
+    expect(respond).not.toHaveBeenCalled()
+    expect(send).not.toHaveBeenCalled()
+  })
+
+  it('设置页保存屏蔽规则后通知各 GitHub 标签页重新读取；内容脚本发来时不转发', async () => {
+    background.main()
+    const tab = await fakeBrowser.tabs.create({ url: 'https://github.com/search?q=vue' })
+    const other = await fakeBrowser.tabs.create({ url: 'https://example.com/' })
+    const send = vi.spyOn(fakeBrowser.tabs, 'sendMessage').mockResolvedValue(undefined as never)
+    const respond = vi.fn()
+    const message = { type: 'gcn:search-rules-saved' }
+    await fakeBrowser.runtime.onMessage.trigger(message, optionsPage(), respond)
+    await settle()
+    expect(respond).toHaveBeenCalledWith({ ok: true })
+    expect(send).toHaveBeenCalledWith(tab.id, { type: 'gcn:search-rules-changed' })
+    expect(send.mock.calls.map(([tabId]) => tabId)).not.toContain(other.id)
+
+    send.mockClear()
+    respond.mockClear()
+    await fakeBrowser.runtime.onMessage.trigger(message, githubTab(), respond)
+    await settle()
     expect(respond).not.toHaveBeenCalled()
     expect(send).not.toHaveBeenCalled()
   })

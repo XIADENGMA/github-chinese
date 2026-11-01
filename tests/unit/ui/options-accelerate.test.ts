@@ -1,6 +1,7 @@
 import { enableAutoUnmount, mount, type DOMWrapper, type VueWrapper } from '@vue/test-utils'
 import { fakeBrowser } from 'wxt/testing/fake-browser'
 import { clearToasts } from '../../../src/components/toast'
+import '../../../src/entrypoints/options/options.css'
 import { MAX_CUSTOM_SOURCES } from '../../../src/shared/accelerate'
 import { getSettings, settingsItem } from '../../../src/shared/settings'
 import { mockVersion, seedChineseUi, settle, ZH_SETTINGS } from './helpers'
@@ -12,16 +13,24 @@ enableAutoUnmount(afterEach)
 
 const BUILTIN_NAMES = ['ghfast.top', 'wget.la', 'hk.gh-proxy.org', 'cdn.gh-proxy.org']
 
+/** 打开设置页并切到加速设置标签页 */
 async function render(): Promise<VueWrapper> {
   const wrapper = mount(required(App), { attachTo: document.body })
+  await settle()
+  await tab(wrapper).trigger('click')
   await settle()
   return wrapper
 }
 
-function section(wrapper: VueWrapper): DOMWrapper<Element> {
-  const found = wrapper.findAll('section').find((item) => item.find('h2').text() === '加速')
-  if (!found) throw new Error('未找到分区：加速')
+function tab(wrapper: VueWrapper): DOMWrapper<Element> {
+  const found = wrapper.findAll('[role="tab"]').find((item) => item.text() === '加速设置')
+  if (!found) throw new Error('未找到标签：加速设置')
   return found
+}
+
+/** 加速设置标签页的面板 */
+function section(wrapper: VueWrapper): DOMWrapper<Element> {
+  return wrapper.get(`#${CSS.escape(tab(wrapper).attributes('aria-controls') ?? '')}`) as DOMWrapper<Element>
 }
 
 /** 页面顶部的提示文字 */
@@ -100,6 +109,37 @@ describe.skipIf(!App)('设置页：加速', () => {
     clearToasts()
     vi.restoreAllMocks()
     vi.unstubAllGlobals()
+  })
+
+  it('标签页内依次为开关、测速与恢复内置、加速源列表、添加表单；标签即标题，面板内不再有标题', async () => {
+    const wrapper = await render()
+    const scope = section(wrapper)
+    expect(tab(wrapper).attributes('aria-selected')).toBe('true')
+    expect(scope.find('h2').exists()).toBe(false)
+    const content = scope.get('.section').element
+    const order = ['.switches', '.sources-tools', '.list-frame', '.source-form'].map((selector) =>
+      [...content.children].indexOf(content.querySelector(`:scope > ${selector}`)!),
+    )
+    expect(order).toEqual([...order].sort((a, b) => a - b))
+    expect(order.every((index) => index >= 0)).toBe(true)
+    expect(
+      scope
+        .get('.sources-tools')
+        .findAll('button')
+        .map((item) => item.text()),
+    ).toEqual(['测速', '恢复内置'])
+  })
+
+  it('列表框限高、框内滚动；表头固定在顶部，键盘切换焦点时滚动留出表头高度', async () => {
+    const wrapper = await render()
+    const frame = getComputedStyle(section(wrapper).get('.list-frame').element)
+    const head = getComputedStyle(section(wrapper).get('th').element)
+    expect(frame.maxHeight).toMatch(/^min\(480px, /)
+    expect(frame.overflowY).toBe('auto')
+    expect(head.position).toBe('sticky')
+    expect(head.top).toBe('0px')
+    expect(head.height).toBe('36px')
+    expect(frame.scrollPaddingTop).toBe(head.height)
   })
 
   it('默认：三个开关关闭；内置加速源，首选第一个；未测速；不用恢复', async () => {

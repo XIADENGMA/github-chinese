@@ -1,4 +1,9 @@
-/* 设置页公共布局：各分区共用的标题、工具栏、操作行与空列表 */
+/* 设置页公共布局：各分区共用的标题、工具栏、操作行、开关列表、列表与空列表 */
+
+/* 切换标签页时页面高度变化：始终留出纵向滚动条的位置，滚动条出现、消失时内容不左右跳动 */
+html {
+  scrollbar-gutter: stable;
+}
 
 .section {
   display: grid;
@@ -33,6 +38,61 @@
 .section-tools {
   display: flex;
   gap: 8px;
+}
+
+.switches {
+  margin: 0;
+  padding: 0 16px;
+  list-style: none;
+  border: 1px solid var(--gcn-border);
+  border-radius: var(--gcn-radius-lg);
+}
+
+.switches li {
+  padding: 6px 0;
+}
+
+.switches li + li {
+  border-top: 1px solid var(--gcn-border-muted);
+}
+
+/*
+ * 列表（自定义词条、加速源、排除路径、屏蔽规则）：限高（约 10 行），超出时在框内滚动，表头固定在顶部；
+ * 圆角裁切表头与悬停底色
+ */
+.list-frame {
+  /* 表头高度：键盘切换焦点时滚动留出这段，行不被固定的表头遮住 */
+  --list-head: 36px;
+  max-height: min(480px, 60vh);
+  overflow-y: auto;
+  scroll-padding-top: var(--list-head);
+  border: 1px solid var(--gcn-border);
+  border-radius: var(--gcn-radius-lg);
+}
+
+.list-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.list-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  height: var(--list-head);
+  padding: 0 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  color: var(--gcn-fg-muted);
+  background: var(--gcn-bg-muted);
+  border-bottom: 1px solid var(--gcn-border);
+}
+
+/* 单元格里是行内输入框：表头文字与输入框文字对齐（单元格内边距 8 + 边框 1 + 输入框内边距 12） */
+.list-table-inline th {
+  padding: 0 8px 0 21px;
 }
 
 .blankslate {

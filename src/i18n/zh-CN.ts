@@ -15,7 +15,7 @@ const zhCN = {
   authorize: '授权',
   excludePage: '排除此页',
   includePage: '取消排除',
-  rules: '规则',
+  settings: '设置',
   saveFailed: '保存失败',
   authorizeFailed: '授权失败',
   reloadFailed: '刷新失败',
@@ -37,9 +37,10 @@ const zhCN = {
   languageZhTW: '繁体中文',
   languageEn: '英文',
 
+  translationSection: '汉化设置',
   excludedPaths: '排除路径',
-  save: '保存',
-  saved: '已保存',
+  path: '路径',
+  noPaths: '暂无路径',
   invalidFormat: '格式错误',
 
   customEntries: '自定义词条',
@@ -59,7 +60,7 @@ const zhCN = {
   loadFailed: '加载失败',
   imported: '已导入 {count} 条',
 
-  accelerateSection: '加速',
+  accelerateSection: '加速设置',
   accelerate: '加速下载',
   accelerateImages: '加速图片',
   failover: '故障转移',
@@ -75,6 +76,11 @@ const zhCN = {
   restoreSources: '恢复内置',
   noSources: '暂无加速源',
   limitReached: '已达上限',
+
+  purifySection: '净化设置',
+  purifySearch: '净化搜索',
+  searchBlockRules: '屏蔽规则',
+  noRules: '暂无规则',
 
   about: '关于',
   githubRepository: 'GitHub',

@@ -17,7 +17,7 @@ export default {
   authorize: '授權',
   excludePage: '排除此頁',
   includePage: '取消排除',
-  rules: '規則',
+  settings: '設定',
   saveFailed: '儲存失敗',
   authorizeFailed: '授權失敗',
   reloadFailed: '重新整理失敗',
@@ -39,9 +39,10 @@ export default {
   languageZhTW: '繁體中文',
   languageEn: '英文',
 
+  translationSection: '中文化設定',
   excludedPaths: '排除路徑',
-  save: '儲存',
-  saved: '已儲存',
+  path: '路徑',
+  noPaths: '尚無路徑',
   invalidFormat: '格式錯誤',
 
   customEntries: '自訂詞條',
@@ -61,7 +62,7 @@ export default {
   loadFailed: '載入失敗',
   imported: '已匯入 {count} 筆',
 
-  accelerateSection: '加速',
+  accelerateSection: '加速設定',
   accelerate: '加速下載',
   accelerateImages: '加速圖片',
   failover: '容錯移轉',
@@ -77,6 +78,11 @@ export default {
   restoreSources: '還原內建',
   noSources: '尚無加速來源',
   limitReached: '已達上限',
+
+  purifySection: '淨化設定',
+  purifySearch: '淨化搜尋',
+  searchBlockRules: '封鎖規則',
+  noRules: '尚無規則',
 
   about: '關於',
   githubRepository: 'GitHub',

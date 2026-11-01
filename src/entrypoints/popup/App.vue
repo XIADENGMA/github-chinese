@@ -70,7 +70,7 @@
     <LanguageSection class="popup-section" />
 
     <footer class="popup-footer">
-      <UiButton size="sm" @click="openOptions">{{ t('rules') }}</UiButton>
+      <UiButton size="sm" @click="openOptions">{{ t('settings') }}</UiButton>
       <UiButton v-if="tab" size="sm" :disabled="!canToggleExcluded" @click="toggleExcluded">
         {{ excluded ? t('includePage') : t('excludePage') }}
       </UiButton>
@@ -137,7 +137,7 @@ const themeLabel = computed(() => t('appearanceCurrent', { mode: t(THEME_MESSAGE
 
 <style scoped>
 /*
- * 宽度：中文界面下语言标签（4 字）与下拉（最小 180px）同一行，英文界面下拉换到标签下方。
+ * 宽度：语言标签（中文界面 4 字，英文界面一个单词）与下拉（最小 180px）放得下同一行。
  * 不设高度上限、不做内层滚动：内容低于弹出页上限 600px；超出时（页面缩放、最小字号）整页滚动。
  * Chromium 不随窗口收窄：自适应尺寸时先在很窄的窗口里排版，收窄后内容变高、超出上限，
  * 量出的宽度带上了滚动条；内容恢复 300px 后滚动条消失，宽度不变，右侧留下一条空白。

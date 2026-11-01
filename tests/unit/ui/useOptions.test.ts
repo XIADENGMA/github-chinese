@@ -1,9 +1,11 @@
+import { ref } from 'vue'
 import { fakeBrowser } from 'wxt/testing/fake-browser'
 import { REVOKE_DELAY_MS, downloadText } from '../../../src/components/download'
 import { clearToasts } from '../../../src/components/toast'
 import { useSettings } from '../../../src/components/useSettings'
 import { useCustomEntries } from '../../../src/entrypoints/options/useCustomEntries'
 import { useExcludedPaths } from '../../../src/entrypoints/options/useExcludedPaths'
+import { useTextList } from '../../../src/entrypoints/options/useTextList'
 import { EXPORT_FILE_NAME } from '../../../src/shared/custom-entries'
 import {
   DEFAULT_SETTINGS,
@@ -160,73 +162,145 @@ describe('useSettings', () => {
   })
 })
 
-describe('useExcludedPaths', () => {
-  it('载入现有规则，每行一条', async () => {
-    await settingsItem.setValue({ ...DEFAULT_SETTINGS, excludedPaths: ['/settings', '/*/*/wiki'] })
-    const { text } = scoped(useExcludedPaths)
-    await settle()
-    expect(text.value).toBe('/settings\n/*/*/wiki')
+describe('useTextList', () => {
+  /** 条目存在 ref 里；save 写入 ref，fail 为 true 时失败 */
+  function createList(initial: readonly string[], keyOf?: (item: string) => string) {
+    const items = ref<readonly string[]>(initial)
+    const state = { fail: false }
+    const save = vi.fn(async (next: readonly string[]) => {
+      if (state.fail) return false
+      items.value = next
+      return true
+    })
+    const normalize = (value: string): string | undefined => (value.trim() === '' ? undefined : value.trim())
+    const list = scoped(() => useTextList({ items, save, normalize, keyOf }))
+    return { items, state, save, list }
+  }
+
+  it('列表新添加的在前', () => {
+    const { list } = createList(['a', 'b'])
+    expect(list.rows.value).toEqual(['b', 'a'])
   })
 
-  it('保存：去空行与重复，提示已保存', async () => {
-    const { text, markDirty, save } = scoped(useExcludedPaths)
-    await settle()
-    text.value = ' /settings \n\n/**/wiki\n/settings'
-    markDirty()
-    await save()
-    expect((await getSettings()).excludedPaths).toEqual(['/settings', '/**/wiki'])
-    expect(text.value).toBe('/settings\n/**/wiki')
-    expect(shownToasts()).toEqual([{ tone: 'success', key: 'saved' }])
-  })
-
-  it('格式错误时不保存：标记错误并提示；再输入时清除', async () => {
-    const { text, invalid, markDirty, save } = scoped(useExcludedPaths)
-    await settle()
-    text.value = '/ok\nsettings'
-    markDirty()
-    await save()
-    expect(invalid.value).toBe(true)
-    expect(shownToasts()).toEqual([{ tone: 'danger', key: 'invalidFormat' }])
-    expect((await getSettings()).excludedPaths).toEqual([])
-
-    markDirty()
-    expect(invalid.value).toBe(false)
+  it('添加、改写、删除：规范化后保存', async () => {
+    const { items, list } = createList(['a'])
+    expect(await list.add(' b ')).toBe(true)
+    expect(items.value).toEqual(['a', 'b'])
+    expect(await list.edit('a', ' c ')).toBe('c')
+    expect(items.value).toEqual(['c', 'b'])
+    expect(await list.remove('b')).toBe(true)
+    expect(items.value).toEqual(['c'])
     expect(shownToasts()).toEqual([])
   })
 
+  it('格式错误、已存在：提示，不保存', async () => {
+    const { save, list } = createList(['a', 'b'])
+    expect(await list.add('  ')).toBe(false)
+    expect(shownToasts()).toEqual([{ tone: 'danger', key: 'invalidFormat' }])
+    expect(await list.add(' a ')).toBe(false)
+    expect(shownToasts()).toEqual([{ tone: 'danger', key: 'exists' }])
+    expect(await list.edit('a', 'b')).toBeUndefined()
+    expect(await list.edit('a', '')).toBeUndefined()
+    expect(save).not.toHaveBeenCalled()
+  })
+
+  it('判重按 keyOf：键相同即已存在；改写时不与自己比较', async () => {
+    const { items, list } = createList(['@octocat'], (item) => item.toLowerCase())
+    expect(await list.add('@OctoCat')).toBe(false)
+    expect(shownToasts()).toEqual([{ tone: 'danger', key: 'exists' }])
+    expect(await list.edit('@octocat', '@OctoCat')).toBe('@OctoCat')
+    expect(items.value).toEqual(['@OctoCat'])
+    expect(shownToasts()).toEqual([])
+  })
+
+  it('改写后不变：不保存，返回规范化后的值，收起之前的提示', async () => {
+    const { save, list } = createList(['a'])
+    await list.add('a')
+    expect(await list.edit('a', ' a ')).toBe('a')
+    expect(save).not.toHaveBeenCalled()
+    expect(shownToasts()).toEqual([])
+  })
+
+  it('保存失败：提示，返回失败；再次成功时收起', async () => {
+    const { items, state, list } = createList(['a'])
+    state.fail = true
+    expect(await list.add('b')).toBe(false)
+    expect(await list.edit('a', 'c')).toBeUndefined()
+    expect(await list.remove('a')).toBe(false)
+    expect(items.value).toEqual(['a'])
+    expect(shownToasts()).toEqual([{ tone: 'danger', key: 'saveFailed' }])
+    state.fail = false
+    expect(await list.add('b')).toBe(true)
+    expect(shownToasts()).toEqual([])
+  })
+
+  it('行的键：同一条不变；改写后沿用原来的键，保存失败时仍是原值的键', async () => {
+    const { state, list } = createList(['a', 'b'])
+    const a = list.rowKey('a')
+    expect(list.rowKey('a')).toBe(a)
+    expect(list.rowKey('b')).not.toBe(a)
+    await list.edit('a', 'c')
+    expect(list.rowKey('c')).toBe(a)
+    state.fail = true
+    await list.edit('c', 'd')
+    expect(list.rowKey('c')).toBe(a)
+    expect(list.rowKey('d')).not.toBe(a)
+  })
+})
+
+describe('useExcludedPaths', () => {
+  it('载入现有规则，新添加的在前；跟随存储变化（如弹出页排除此页）', async () => {
+    await settingsItem.setValue({ ...DEFAULT_SETTINGS, excludedPaths: ['/settings', '/*/*/wiki'] })
+    const { rows } = scoped(useExcludedPaths)
+    await settle()
+    expect(rows.value).toEqual(['/*/*/wiki', '/settings'])
+    await updateSettings({ excludedPaths: ['/settings', '/*/*/wiki', '/vuejs/core/issues'] })
+    await settle()
+    expect(rows.value).toEqual(['/vuejs/core/issues', '/*/*/wiki', '/settings'])
+  })
+
+  it('添加、改写、删除即时保存；去掉首尾空白', async () => {
+    const { add, edit, remove } = scoped(useExcludedPaths)
+    await settle()
+    expect(await add(' /settings ')).toBe(true)
+    expect(await add('/**/wiki')).toBe(true)
+    expect((await getSettings()).excludedPaths).toEqual(['/settings', '/**/wiki'])
+    expect(await edit('/settings', '/settings/profile')).toBe('/settings/profile')
+    expect(await remove('/**/wiki')).toBe(true)
+    expect((await getSettings()).excludedPaths).toEqual(['/settings/profile'])
+    expect(shownToasts()).toEqual([])
+  })
+
+  it('不以 / 开头 → 格式错误；重复 → 已存在；都不保存', async () => {
+    await settingsItem.setValue({ ...DEFAULT_SETTINGS, excludedPaths: ['/settings'] })
+    const { add } = scoped(useExcludedPaths)
+    await settle()
+    expect(await add('settings')).toBe(false)
+    expect(shownToasts()).toEqual([{ tone: 'danger', key: 'invalidFormat' }])
+    expect(await add(' /settings')).toBe(false)
+    expect(shownToasts()).toEqual([{ tone: 'danger', key: 'exists' }])
+    expect((await getSettings()).excludedPaths).toEqual(['/settings'])
+  })
+
   it('写入失败 → 保存失败', async () => {
-    const { text, invalid, save } = scoped(useExcludedPaths)
+    const { add, rows } = scoped(useExcludedPaths)
     await settle()
     failStorage('sync', 'set')
-    text.value = '/settings'
-    await save()
+    expect(await add('/settings')).toBe(false)
     expect(shownToasts()).toEqual([{ tone: 'danger', key: 'saveFailed' }])
-    expect(invalid.value).toBe(false)
+    expect(rows.value).toEqual([])
   })
 
-  it('未编辑时跟随存储，编辑后保留输入', async () => {
-    const { text, markDirty } = scoped(useExcludedPaths)
+  it('读取失败 → 加载失败；之后收到设置（其他页面写入）时不再算', async () => {
+    failStorage('sync', 'get')
+    const { loadFailed, rows } = scoped(useExcludedPaths)
     await settle()
-    await updateSettings({ excludedPaths: ['/a'] })
+    expect(loadFailed.value).toBe(true)
+    vi.restoreAllMocks()
+    await settingsItem.setValue({ ...DEFAULT_SETTINGS, excludedPaths: ['/settings'] })
     await settle()
-    expect(text.value).toBe('/a')
-
-    text.value = '/draft'
-    markDirty()
-    await updateSettings({ excludedPaths: ['/b'] })
-    await settle()
-    expect(text.value).toBe('/draft')
-  })
-
-  it('保存后恢复跟随：之后其他页面写入（如弹出页排除此页）时同步', async () => {
-    const { text, markDirty, save } = scoped(useExcludedPaths)
-    await settle()
-    text.value = '/settings'
-    markDirty()
-    await save()
-    await updateSettings({ excludedPaths: ['/settings', '/vuejs/core/issues'] })
-    await settle()
-    expect(text.value).toBe('/settings\n/vuejs/core/issues')
+    expect(loadFailed.value).toBe(false)
+    expect(rows.value).toEqual(['/settings'])
   })
 })
 

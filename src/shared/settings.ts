@@ -40,6 +40,8 @@ export interface Settings extends AccelerateSettings {
   readonly accelerateImages: boolean
   /** 故障转移：下载前探测加速源，首选不可用时换用其他加速源；图片取不到时依次换用其他加速源 */
   readonly failover: boolean
+  /** 搜索净化：搜索结果中命中屏蔽规则的直接隐藏（规则见 searchBlockRulesItem，处理见 core/search-purify） */
+  readonly purifySearch: boolean
 }
 
 /**
@@ -59,6 +61,7 @@ export const DEFAULT_SETTINGS: Settings = {
   accelerate: false,
   accelerateImages: false,
   failover: false,
+  purifySearch: true,
   accelerateSource: DEFAULT_SOURCE_ID,
   customSources: [],
   removedSources: [],
@@ -76,6 +79,11 @@ export const settingsItem = storage.defineItem<Partial<Settings>>('sync:settings
 
 export const customEntriesItem = storage.defineItem<CustomEntries>('local:customEntries', {
   fallback: {},
+})
+
+/** 搜索净化的屏蔽规则：每项一条（写法见 shared/search-block）。可能较多，不放进同步的设置 */
+export const searchBlockRulesItem = storage.defineItem<readonly string[]>('local:searchBlockRules', {
+  fallback: [],
 })
 
 function isStringArray(value: unknown): value is string[] {
@@ -99,6 +107,7 @@ export function mergeSettings(stored: unknown): Settings {
     accelerate: pickBoolean('accelerate', DEFAULT_SETTINGS.accelerate),
     accelerateImages: pickBoolean('accelerateImages', DEFAULT_SETTINGS.accelerateImages),
     failover: pickBoolean('failover', DEFAULT_SETTINGS.failover),
+    purifySearch: pickBoolean('purifySearch', DEFAULT_SETTINGS.purifySearch),
     accelerateSource:
       typeof value.accelerateSource === 'string' ? value.accelerateSource : DEFAULT_SETTINGS.accelerateSource,
     customSources: sanitizeCustomSources(value.customSources),
@@ -176,23 +185,34 @@ export async function setCustomEntries(entries: CustomEntries): Promise<CustomEn
   return next
 }
 
-export interface ParsedExcludedPaths {
-  /** 去重后的规则 */
-  readonly paths: readonly string[]
-  /** 不以 / 开头的行 */
-  readonly invalid: readonly string[]
+/** 过滤非字符串与空行，去掉首尾空白 */
+export function sanitizeSearchBlockRules(stored: unknown): readonly string[] {
+  if (!Array.isArray(stored)) return []
+  return stored
+    .filter((item): item is string => typeof item === 'string')
+    .map((item) => item.trim())
+    .filter((item) => item !== '')
 }
 
-/** 解析排除路径文本：每行一条，忽略空行与首尾空白 */
-export function parseExcludedPaths(text: string): ParsedExcludedPaths {
-  const lines = text
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter((line) => line !== '')
-  return {
-    paths: [...new Set(lines.filter((line) => line.startsWith('/')))],
-    invalid: lines.filter((line) => !line.startsWith('/')),
-  }
+export async function getSearchBlockRules(): Promise<readonly string[]> {
+  return sanitizeSearchBlockRules(await searchBlockRulesItem.getValue())
+}
+
+export function watchSearchBlockRules(callback: (rules: readonly string[]) => void): () => void {
+  return searchBlockRulesItem.watch((value) => callback(sanitizeSearchBlockRules(value)))
+}
+
+/** 写入屏蔽规则（先过滤无效项），返回实际写入的值 */
+export async function setSearchBlockRules(rules: readonly string[]): Promise<readonly string[]> {
+  const next = sanitizeSearchBlockRules(rules)
+  await searchBlockRulesItem.setValue(next)
+  return next
+}
+
+/** 规范化一条排除规则：去掉首尾空白；不以 / 开头时为 undefined */
+export function normalizeExcludedPath(value: string): string | undefined {
+  const path = value.trim()
+  return path.startsWith('/') ? path : undefined
 }
 
 /** 根路径 / 作为规则会命中全部页面，不能单独排除 */

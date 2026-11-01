@@ -7,6 +7,13 @@ export type UiButtonSize = 'sm' | 'md'
 /** 提示条：成功（绿色勾）、失败（红色叉） */
 export type UiToastTone = 'success' | 'danger'
 
+/** 标签页 */
+export interface UiTab {
+  /** 标识：也是对应面板的插槽名 */
+  readonly value: string
+  readonly label: string
+}
+
 /** 下拉框选项 */
 export interface UiSelectOption {
   readonly value: string

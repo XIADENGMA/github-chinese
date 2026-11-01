@@ -26,8 +26,8 @@
 
     <UiInput ref="searchInput" v-model="query" type="search" :aria-label="t('search')" :placeholder="t('search')" />
 
-    <div v-if="rows.length > 0" ref="viewport" class="entries-viewport">
-      <table class="entries" :aria-rowcount="rows.length + 1">
+    <div v-if="rows.length > 0" ref="viewport" class="list-frame entries-viewport">
+      <table class="list-table list-table-inline" :aria-rowcount="rows.length + 1">
         <thead>
           <tr aria-rowindex="1">
             <th scope="col">{{ t('source') }}</th>
@@ -150,38 +150,9 @@ async function onFileChange(event: Event): Promise<void> {
   gap: 8px;
 }
 
-/* 列表限高（约 10 行），超出时在框内滚动；圆角裁切表头与悬停底色 */
+/* 限高、表头见 options.css 的 .list-frame；虚拟列表替换行与占位时不做滚动锚定，滚动位置不跳 */
 .entries-viewport {
-  /* 表头高度：键盘切换焦点时滚动留出这段，行不被固定的表头遮住 */
-  --entries-head: 36px;
-  max-height: min(480px, 60vh);
-  overflow-y: auto;
-  /* 虚拟列表替换行与占位时不做滚动锚定，滚动位置不跳 */
   overflow-anchor: none;
-  scroll-padding-top: var(--entries-head);
-  border: 1px solid var(--gcn-border);
-  border-radius: var(--gcn-radius-lg);
-}
-
-.entries {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-}
-
-.entries th {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  height: var(--entries-head);
-  /* 与单元格内输入框的文字对齐：td 内边距 8 + 边框 1 + 输入框内边距 12 */
-  padding: 0 8px 0 21px;
-  font-size: 12px;
-  font-weight: 600;
-  text-align: left;
-  color: var(--gcn-fg-muted);
-  background: var(--gcn-bg-muted);
-  border-bottom: 1px solid var(--gcn-border);
 }
 
 /* 未渲染行的占位（数据行的样式见 CustomEntryRow.vue） */

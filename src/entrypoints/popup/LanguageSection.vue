@@ -106,22 +106,22 @@ async function setOption(key: SelectKey, value: string): Promise<void> {
   list-style: none;
 }
 
-/* 标签在左、下拉靠右；放不下时（英文界面的长语言名）下拉换到标签下方 */
+/* 标签在左、下拉靠右，同一行。放不下时（最小字号等）标签折行，下拉不收窄：语言名不被省略 */
 .select-item {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 4px 12px;
+  gap: 12px;
 }
 
 .select-label {
+  min-width: 0;
+  overflow-wrap: anywhere;
   cursor: pointer;
 }
 
 .select {
-  width: auto;
+  flex: none;
   min-width: 180px;
-  max-width: 100%;
 }
 </style>

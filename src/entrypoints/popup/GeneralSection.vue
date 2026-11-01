@@ -32,6 +32,7 @@ const OPTIONS: readonly ToggleOption[] = [
   { key: 'translateTime', label: 'translateTime' },
   { key: 'translateTitle', label: 'translateTitle' },
   { key: 'accelerate', label: 'accelerate' },
+  { key: 'purifySearch', label: 'purifySearch' },
 ]
 
 const { t } = useI18n()

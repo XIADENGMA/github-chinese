@@ -3,12 +3,11 @@ import { h, nextTick, ref, type Component } from 'vue'
 import { importSfc, required } from './sfc'
 
 const UiInput = await importSfc(() => import('../../../src/components/ui/UiInput.vue'))
-const UiTextarea = await importSfc(() => import('../../../src/components/ui/UiTextarea.vue'))
 
 enableAutoUnmount(afterEach)
 
 /** 输入法组字：开始后改值并触发 input，此时不应更新 */
-async function compose(element: HTMLInputElement | HTMLTextAreaElement, value: string): Promise<void> {
+async function compose(element: HTMLInputElement, value: string): Promise<void> {
   element.dispatchEvent(new Event('compositionstart'))
   element.value = value
   element.dispatchEvent(new Event('input'))
@@ -95,51 +94,5 @@ describe.skipIf(!UiInput)('UiInput', () => {
     expect(wrapper.get('input').classes()).toContain('ui-input-inline')
     ;(wrapper.vm as unknown as { focus(): void }).focus()
     expect(document.activeElement).toBe(field(wrapper))
-  })
-})
-
-describe.skipIf(!UiTextarea)('UiTextarea', () => {
-  it('v-model；rows、placeholder、aria-labelledby 与 input 监听落在原生 textarea 上', async () => {
-    const onInput = vi.fn()
-    const wrapper = mount(required(UiTextarea), {
-      props: { modelValue: '/settings', mono: true },
-      attrs: { rows: '6', placeholder: '/settings', 'aria-labelledby': 'title', onInput },
-    })
-    const textarea = wrapper.element as HTMLTextAreaElement
-    expect(textarea.tagName).toBe('TEXTAREA')
-    expect(textarea.value).toBe('/settings')
-    expect(wrapper.attributes()).toMatchObject({ rows: '6', placeholder: '/settings', 'aria-labelledby': 'title' })
-    expect(wrapper.classes()).toContain('ui-textarea-mono')
-    await wrapper.get('textarea').setValue('/settings\n/*/*/wiki')
-    expect(wrapper.emitted('update:modelValue')).toEqual([['/settings\n/*/*/wiki']])
-    expect(onInput).toHaveBeenCalled()
-  })
-
-  it('组字期间父组件重新渲染（如清除错误标记）不改写正在输入的文字', async () => {
-    const textarea = required(UiTextarea)
-    const text = ref('/settings')
-    const invalid = ref(true)
-    const Parent: Component = {
-      setup: () => () =>
-        h(textarea, {
-          modelValue: text.value,
-          'onUpdate:modelValue': (value: string) => {
-            text.value = value
-          },
-          'aria-invalid': invalid.value,
-          onInput: () => {
-            invalid.value = false
-          },
-        }),
-    }
-    const wrapper = mount(Parent)
-    const element = wrapper.get('textarea').element as HTMLTextAreaElement
-    await compose(element, '/settings\nlu jing')
-    expect(wrapper.get('textarea').attributes('aria-invalid')).toBe('false')
-    expect(element.value).toBe('/settings\nlu jing')
-    expect(text.value).toBe('/settings')
-    element.value = '/settings\n路径'
-    element.dispatchEvent(new Event('compositionend'))
-    expect(text.value).toBe('/settings\n路径')
   })
 })

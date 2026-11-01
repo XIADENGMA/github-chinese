@@ -1,23 +1,20 @@
 <template>
-  <section class="section" aria-labelledby="accelerate-title">
-    <div class="section-head">
-      <h2 id="accelerate-title" class="section-title">{{ t('accelerateSection') }}</h2>
-      <div class="section-tools">
-        <UiButton size="sm" :disabled="testing || rows.length === 0" @click="test">{{ t('testLatency') }}</UiButton>
-        <UiButton size="sm" :disabled="!ready || removedCount === 0" @click="restore">
-          {{ t('restoreSources') }}
-        </UiButton>
-      </div>
-    </div>
-
+  <div class="section">
     <ul class="switches">
       <li v-for="key in SWITCHES" :key="key">
         <UiSwitch :label="t(key)" :checked="settings[key]" :disabled="!ready" @change="setSwitch(key, $event)" />
       </li>
     </ul>
 
-    <div v-if="items.length > 0" ref="frame" class="sources-frame">
-      <table class="sources" :aria-busy="testing">
+    <div class="section-tools sources-tools">
+      <UiButton size="sm" :disabled="testing || rows.length === 0" @click="test">{{ t('testLatency') }}</UiButton>
+      <UiButton size="sm" :disabled="!ready || removedCount === 0" @click="restore">
+        {{ t('restoreSources') }}
+      </UiButton>
+    </div>
+
+    <div v-if="items.length > 0" ref="frame" class="list-frame">
+      <table class="list-table sources" :aria-busy="testing">
         <thead>
           <tr>
             <th scope="col">{{ t('sources') }}</th>
@@ -85,7 +82,7 @@
       />
       <UiButton type="submit" variant="primary" :disabled="!canAdd">{{ t('add') }}</UiButton>
     </form>
-  </section>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -167,46 +164,12 @@ async function onRemove(id: string, index: number): Promise<void> {
 </script>
 
 <style scoped>
-.switches {
-  margin: 0;
-  padding: 0 16px;
-  list-style: none;
-  border: 1px solid var(--gcn-border);
-  border-radius: var(--gcn-radius-lg);
+/* 测速、恢复内置：作用于下面的加速源列表，靠右放在列表上方 */
+.sources-tools {
+  justify-content: flex-end;
 }
 
-.switches li {
-  padding: 6px 0;
-}
-
-.switches li + li {
-  border-top: 1px solid var(--gcn-border-muted);
-}
-
-/* 圆角裁切表头底色 */
-.sources-frame {
-  overflow: hidden;
-  border: 1px solid var(--gcn-border);
-  border-radius: var(--gcn-radius-lg);
-}
-
-.sources {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-}
-
-.sources th {
-  height: 36px;
-  padding: 0 12px;
-  font-size: 12px;
-  font-weight: 600;
-  text-align: left;
-  color: var(--gcn-fg-muted);
-  background: var(--gcn-bg-muted);
-  border-bottom: 1px solid var(--gcn-border);
-}
-
+/* 限高、表头见 options.css 的 .list-frame */
 .sources td {
   padding: 8px 12px;
   vertical-align: middle;

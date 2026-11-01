@@ -9,9 +9,16 @@
     </header>
 
     <main class="options-main">
-      <ExcludedPathsSection />
-      <CustomEntriesSection />
-      <AccelerateSection />
+      <UiTabs v-model="tab" :tabs="tabs" :label="t('settings')">
+        <template #translation>
+          <div class="options-group">
+            <ExcludedPathsSection />
+            <CustomEntriesSection />
+          </div>
+        </template>
+        <template #accelerate><AccelerateSection /></template>
+        <template #purify><SearchBlockSection /></template>
+      </UiTabs>
 
       <section class="section" aria-labelledby="about-title">
         <h2 id="about-title" class="section-title">{{ t('about') }}</h2>
@@ -31,21 +38,35 @@
 </template>
 
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import ToastHost from '../../components/ToastHost.vue'
+import type { UiTab } from '../../components/ui/types'
+import UiTabs from '../../components/ui/UiTabs.vue'
 import { useI18n, useUiPreferencesSync } from '../../components/ui-preferences'
+import type { MessageKey } from '../../i18n'
 import { getExtensionVersion, REPOSITORY_URL } from '../../shared/extension'
 import AccelerateSection from './AccelerateSection.vue'
 import CustomEntriesSection from './CustomEntriesSection.vue'
 import ExcludedPathsSection from './ExcludedPathsSection.vue'
+import SearchBlockSection from './SearchBlockSection.vue'
 
 /** 扩展图标（public/ 下的文件）。用绑定而非静态属性：模板里静态的绝对路径会被编译成模块导入 */
 const LOGO_URL = '/icon/96.png'
 /** 显示的存储库地址：省略协议 */
 const REPOSITORY_LABEL = REPOSITORY_URL.replace(/^https:\/\//, '')
 
+/** 按功能分标签页：汉化（排除路径、自定义词条）、加速、净化（搜索结果）。值是 UiTabs 的插槽名 */
+const TABS: readonly { readonly value: string; readonly label: MessageKey }[] = [
+  { value: 'translation', label: 'translationSection' },
+  { value: 'accelerate', label: 'accelerateSection' },
+  { value: 'purify', label: 'purifySection' },
+]
+
 useUiPreferencesSync()
 const { t } = useI18n()
 const version = getExtensionVersion()
+const tab = ref('translation')
+const tabs = computed<UiTab[]>(() => TABS.map(({ value, label }) => ({ value, label: t(label) })))
 </script>
 
 <style scoped>
@@ -91,7 +112,8 @@ const version = getExtensionVersion()
   white-space: nowrap;
 }
 
-.options-main {
+.options-main,
+.options-group {
   display: grid;
   gap: 40px;
 }

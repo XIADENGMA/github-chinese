@@ -10,7 +10,9 @@
 [![版本](https://img.shields.io/github/v/release/setube/github-chinese?include_prereleases&label=%E7%89%88%E6%9C%AC)](https://github.com/setube/github-chinese/releases)
 [![许可证](https://img.shields.io/badge/%E8%AE%B8%E5%8F%AF%E8%AF%81-MIT-blue)](LICENSE)
 ![Manifest V3](https://img.shields.io/badge/Manifest-V3-informational)
+
 <br />
+
 [![Chrome 应用商店](https://img.shields.io/chrome-web-store/v/bgjbinlidnenibphgepagdkodcohgibe?label=Chrome&logo=googlechrome&logoColor=white&color=4285F4)](https://chromewebstore.google.com/detail/github-chinese/bgjbinlidnenibphgepagdkodcohgibe)
 [![Microsoft Edge 加载项](https://img.shields.io/badge/dynamic/json?label=Edge&logo=microsoftedge&logoColor=white&color=0078D7&prefix=v&query=%24.version&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Fahhkmjnecgfpaegcfpolmlfijmldhmbk)](https://microsoftedge.microsoft.com/addons/detail/ahhkmjnecgfpaegcfpolmlfijmldhmbk)
 [![Firefox 附加组件](https://img.shields.io/amo/v/github-chinese?label=Firefox&logo=firefoxbrowser&logoColor=white&color=FF7139)](https://addons.mozilla.org/zh-CN/firefox/addon/github-chinese/)
@@ -53,10 +55,15 @@
 - 默认关闭；故障转移：首选连不上时换用其他加速源，都连不上时直接从 GitHub 获取
 - 加速源可自定义、删除、测速（延迟、Ping）
 
+### 搜索净化
+
+- 搜索结果中命中屏蔽规则的结果直接隐藏，不留占位、不提示
+- 规则按所有者、存储库、关键词填写；默认没有规则
+
 ### 控制
 
-- 弹出页：总开关、当前页状态、排除此页、时间本地化、翻译标题、加速下载、界面语言、翻译语言、外观
-- 选项页（弹出页「规则」）：排除路径、自定义词条（导入、导出）、加速
+- 弹出页：总开关、当前页状态、排除此页、时间本地化、翻译标题、加速下载、净化搜索、界面语言、翻译语言、外观
+- 设置页（弹出页「设置」）分三个标签页：汉化设置（排除路径、自定义词条及其导入导出）、加速设置（加速开关、加速源）、净化设置（净化搜索开关、屏蔽规则）；改动即时保存
 - 翻译语言默认按浏览器语言识别（语言列表中第一个中文：台湾、香港、澳门及 Hant 为繁体；没有中文时按时区），可手动指定；切换后已打开的页面随即重译
 - 扩展界面：简体中文、繁體中文、English，默认跟随浏览器界面语言
 - 外观：自动（跟随系统）、浅色、深色
@@ -136,22 +143,29 @@ bun run pack:safari     # 由 .output/safari-mv3 打包宿主应用（macOS，�
 
 ### 排除路径
 
-每行一条，以 `/` 开头，不区分大小写；`*` 匹配一段，`**` 匹配任意多段；同时排除下级路径。
+弹出页「排除此页」加入当前页的路径；设置页「汉化设置」中逐条添加、修改、删除。
+
+每条以 `/` 开头，不区分大小写；`*` 匹配一段，`**` 匹配任意多段；同时排除下级路径。
 
 ```text
 /settings        设置页及其下级页面
 /*/*/wiki        所有存储库的维基
 ```
 
+- 只停止翻译；加速、搜索净化照常。
+- 弹出页「取消排除」删除命中当前页的全部规则，含通配规则。
+
 ### 自定义词条
 
-原文 → 译文，优先于内置词条。导入、导出格式为 JSON：`{ "原文": "译文" }`；导入时同一原文以导入的为准。
+设置页「汉化设置」中添加、搜索、修改、删除。原文 → 译文，优先于内置词条。导入、导出格式为 JSON：`{ "原文": "译文" }`；导入时同一原文以导入的为准。
 
 ### 加速
 
+「加速下载」（弹出页、设置页）管下载与克隆；设置页「加速设置」另有「加速图片」「故障转移」开关与加速源列表：选首选、测速、添加、删除，「恢复内置」找回删除的内置源。
+
 - 下载：单击下载链接时改开加速源的地址；中键、带修饰键的单击照常从 GitHub 打开。
 - 克隆：存储库「Code」下拉框与代码片段的 HTTPS 克隆地址显示为加速后的地址，复制按钮复制加速后的地址。新建存储库页面中的地址不改。
-- 图片：在选项页开启「加速图片」。头像、GitHub 静态图片、Raw 图片加载失败时由后台经加速源获取，换成 `data:` 地址显示。
+- 图片：开启「加速图片」后，头像、GitHub 静态图片、Raw 图片加载失败时由后台经加速源获取，换成 `data:` 地址显示。
 - 私有、内部存储库与私密代码片段的页面不加速。
 - 页面的 CSS、JS 不加速：GitHub 的内容安全策略只允许从 `github.githubassets.com` 加载脚本与样式，换地址或重定向都会被浏览器拦截。
 
@@ -167,6 +181,22 @@ https://ghfast.top              同第一行
 - 延迟：首次请求的耗时，含建立连接；Ping：连接建立后再请求 3 次的中位数。浏览器发不了 ICMP，两者都按 HTTP 请求计时。
 - 内置加速源是第三方公益服务，可用性随时变化。加速源能看到下载地址与你的 IP 地址，也能改动下载的文件。
 - 用加速地址克隆的存储库，远程地址指向加速源，推送时凭据会发给加速源。推送前改回 GitHub：`git remote set-url origin https://github.com/<所有者>/<存储库>.git`。
+
+### 搜索净化
+
+设置页「净化设置」中逐条添加、修改、删除，不区分大小写：
+
+```text
+@octocat               所有者：其存储库、存储库下的议题与代码等结果，以及该用户本身
+octocat/hello-world    存储库
+hello world            关键词：名称、标题、描述、主题、标签含这段文字
+```
+
+- GitHub 地址按所有者、存储库识别，存为上面的写法：`https://github.com/octocat`、`https://github.com/octocat/hello-world/issues`。
+- 其余写法都按关键词。不带 `@` 的用户名也是关键词，会命中名称里含它的其他结果。以 `@` 开头、写成「所有者/存储库」的关键词加引号：`"@octocat"`。
+- 指向同一所有者、存储库或关键词（关键词加不加引号）的规则不重复添加。
+- 只处理 github.com 的搜索结果页。结果数、分页不变；一页全部命中时该页为空。
+- 总开关或「净化搜索」（弹出页、设置页）关闭后不再隐藏。改规则、开关后已打开的搜索页随即更新，无需刷新。
 
 ## 工作原理
 
@@ -185,6 +215,7 @@ flowchart LR
 - **与 React 共存**：只改文本节点的内容与属性值，不增删、替换节点；React 重渲染写回英文时，以新内容为原文重新翻译。
 - **跳过用户内容**：用户内容、代码所在的区域整体跳过。
 - **时间本地化**：`<relative-time>` 等时间元素按翻译语言渲染，再补中文与数字间的空格、去掉时区名。
+- **搜索净化**：随页面变动逐条检查搜索结果，命中规则的结果改行内 `display`，不删节点；变动回调在绘制前执行，命中的结果不会先显示再消失。
 
 ## 浏览器支持
 
@@ -197,17 +228,17 @@ flowchart LR
 
 ## 隐私与权限
 
-翻译在本地完成，不向开发者发送数据。开启加速后，下载链接、克隆地址、加载失败的图片地址交给你选的第三方加速源。详见[隐私说明](docs/PRIVACY.md)。
+翻译、搜索净化在本地完成，不向开发者发送数据。开启加速后，下载链接、克隆地址、加载失败的图片地址交给你选的第三方加速源。详见[隐私说明](docs/PRIVACY.md)。
 
 | 权限                                                                                  | 用途                                                                                                                                                                                              |
 | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `storage`                                                                             | 保存设置（`storage.sync`）、自定义词条（`storage.local`）                                                                                                                                         |
+| `storage`                                                                             | 保存设置（`storage.sync`）、自定义词条与屏蔽规则（`storage.local`）                                                                                                                               |
 | `https://github.com/*`、`https://gist.github.com/*`、`https://www.githubstatus.com/*` | 在这三个站点运行内容脚本，翻译页面界面                                                                                                                                                            |
 | `scripting`                                                                           | 按当前语言注册词典脚本，页面开始解析前就绪；词典脚本动态加载失败（Firefox、Safari 不动态加载）时由后台注入；Chrome、Edge、Safari 安装、更新后向已打开的 GitHub 标签页注入脚本（Firefox 自动注入） |
 
 - 不申请其他权限。Firefox 中可在附加组件管理器撤销站点权限，撤销后弹出页显示「未授权」，点「授权」恢复。Safari 中站点权限在「设置」→「扩展」中授予、撤销。
-- 停用、排除、改自定义词条、改时间本地化开关、扩展更新或卸载时，以及 GitHub 从自身缓存写回译文时（前进后退、帧导航到带锚点的地址），可能重新请求当前 GitHub 页面（条件见隐私说明）；点弹出页「刷新」时重新加载当前页。开启加速后：单击下载链接时打开加速源的地址；开启「加速图片」时，图片加载失败后由后台经加速源请求该图片；故障转移开启时，打开下载链接、换克隆地址前请求加速源站点的根路径探测能否连通；选项页「测速」时请求各加速源站点的根路径。不发起其他网络请求。
-- 设置存 `storage.sync`，可能随浏览器账号同步（Safari 不同步）；自定义词条存 `storage.local`。
+- 停用、排除、改自定义词条、改时间本地化开关、扩展更新或卸载时，以及 GitHub 从自身缓存写回译文时（前进后退、帧导航到带锚点的地址），可能重新请求当前 GitHub 页面（条件见隐私说明）；点弹出页「刷新」时重新加载当前页。开启加速后：单击下载链接时打开加速源的地址；开启「加速图片」时，图片加载失败后由后台经加速源请求该图片；故障转移开启时，打开下载链接、换克隆地址前请求加速源站点的根路径探测能否连通；设置页「测速」时请求各加速源站点的根路径。不发起其他网络请求。
+- 设置存 `storage.sync`，可能随浏览器账号同步（Safari 不同步）；自定义词条、屏蔽规则存 `storage.local`。
 
 ## 参与贡献
 
@@ -286,14 +317,14 @@ public/icon/             扩展图标（bun run icons 生成）
 scripts/                 采集、覆盖率、词典校验、图标渲染、crx 与 Safari 打包脚本
 scripts/safari-app/      Safari 宿主应用的页面
 src/
-  core/                  匹配器、URL → 页面类型、忽略规则、翻译引擎
+  core/                  匹配器、URL → 页面类型、忽略规则、翻译引擎、加速、搜索净化
   locales/zh-CN/         简体中文词典
   locales/zh-TW/         繁体中文词典（与简体同结构）
   locales/shared/        简繁共用的时间、拼接工具
   i18n/                  扩展界面文案（简体、繁体、英文）
   shared/                设置存储、消息协议等共用模块
-  components/            弹出页与选项页共用组件
-  components/ui/         基础控件：按钮（含水波纹）、输入框、多行输入框、下拉框、开关
+  components/            弹出页与设置页共用组件
+  components/ui/         基础控件：按钮（含水波纹）、输入框、下拉框、开关、标签页
   entrypoints/           background、content、词典脚本、popup、options
 tests/
   unit/                  单元测试
@@ -343,12 +374,17 @@ wxt.config.ts            WXT 配置与 manifest
 
 ### 只在部分页面关闭？
 
-弹出页「排除此页」，或在选项页设置排除路径。
+弹出页「排除此页」，或在设置页「汉化设置」添加排除路径。
+
+### 搜索结果比 GitHub 显示的少？
+
+命中屏蔽规则的结果被隐藏，不提示。关闭「净化搜索」或删除对应规则后恢复。
 
 ## 致谢
 
 - 术语参照 [GitHub 官方中文文档](https://docs.github.com/zh)与 [Pro Git 中文版](https://git-scm.com/book/zh/v2)
 - [maboloshi/github-chinese](https://github.com/maboloshi/github-chinese)：用于发现漏收的原文，不搬运译文
+- [BonjourFeng/Github-Search-Purification](https://github.com/BonjourFeng/Github-Search-Purification)：搜索净化参考其思路，不搬运代码与屏蔽名单
 - 基于 [WXT](https://wxt.dev)、[Vue](https://vuejs.org) 构建
 
 ## 许可证

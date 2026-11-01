@@ -128,6 +128,8 @@ export function useVirtualList<T>(options: VirtualListOptions<T>): VirtualList<T
 
   function measure(element: HTMLElement): void {
     viewportHeight.value = element.clientHeight
+    // 容器隐藏后再显示（如所在的标签页切换回来），浏览器把滚动位置归零且不派发 scroll：尺寸变化时一并同步
+    scrollTop.value = element.scrollTop
     const height = element.querySelector('[data-index]')?.getBoundingClientRect().height ?? 0
     if (height > 0 && Math.abs(height - rowHeight.value) >= MEASURE_TOLERANCE) rowHeight.value = height
   }

@@ -11,6 +11,7 @@ import {
   settingsItem,
   updateSettings,
 } from '../../../src/shared/settings'
+import '../../../src/entrypoints/options/options.css'
 import { mockVersion, seedChineseUi, settle, ZH_SETTINGS } from './helpers'
 import { importSfc, required } from './sfc'
 
@@ -24,10 +25,31 @@ async function render(): Promise<VueWrapper> {
   return wrapper
 }
 
+function tab(wrapper: VueWrapper, label: string): DOMWrapper<Element> {
+  const found = wrapper.findAll('[role="tab"]').find((item) => item.text() === label)
+  if (!found) throw new Error(`未找到标签：${label}`)
+  return found
+}
+
+/** 分区：标签页（加速设置、净化设置）按标签文字取对应的面板，其余按标题（h2）取 section */
 function section(wrapper: VueWrapper, title: string): DOMWrapper<Element> {
+  const tabbed = wrapper.findAll('[role="tab"]').find((item) => item.text() === title)
+  if (tabbed) return wrapper.get(`#${CSS.escape(tabbed.attributes('aria-controls') ?? '')}`) as DOMWrapper<Element>
   const found = wrapper.findAll('section').find((item) => item.find('h2').text() === title)
   if (!found) throw new Error(`未找到分区：${title}`)
   return found
+}
+
+function tabLabels(wrapper: VueWrapper): string[] {
+  return wrapper.findAll('[role="tab"]').map((item) => item.text())
+}
+
+/** 显示中的面板对应的标签 */
+function visiblePanels(wrapper: VueWrapper): string[] {
+  return wrapper
+    .findAll<HTMLElement>('[role="tabpanel"]')
+    .filter((panel) => panel.element.style.display !== 'none')
+    .map((panel) => wrapper.get(`#${CSS.escape(panel.attributes('aria-labelledby') ?? '')}`).text())
 }
 
 /** 页面顶部的提示文字（读屏朗读的区域内），先显示的在前 */
@@ -48,8 +70,22 @@ function button(scope: VueWrapper | DOMWrapper<Element>, text: string): DOMWrapp
   return found as DOMWrapper<HTMLButtonElement>
 }
 
-function textareaValue(wrapper: VueWrapper): string {
-  return (section(wrapper, '排除路径').get('textarea').element as HTMLTextAreaElement).value
+function addInput(scope: DOMWrapper<Element>): DOMWrapper<HTMLInputElement> {
+  return scope.get('form input') as DOMWrapper<HTMLInputElement>
+}
+
+/** 排除路径列表各行的值，新添加的在前 */
+function pathRows(wrapper: VueWrapper): string[] {
+  return section(wrapper, '排除路径')
+    .findAll<HTMLInputElement>('tbody input')
+    .map((input) => input.element.value)
+}
+
+async function addPath(wrapper: VueWrapper, value: string): Promise<void> {
+  const excluded = section(wrapper, '排除路径')
+  await addInput(excluded).setValue(value)
+  await excluded.get('form').trigger('submit')
+  await settle()
 }
 
 async function chooseFile(wrapper: VueWrapper, content: string): Promise<void> {
@@ -84,18 +120,46 @@ describe.skipIf(!App)('设置页组件', () => {
   })
 
   describe('布局', () => {
-    it('依次为排除路径、自定义词条、加速、关于；常规开关、语言下拉、快捷键都不在这里', async () => {
+    it('先是汉化设置（排除路径、自定义词条）、加速设置、净化设置三个标签页，再是关于；常规开关、语言下拉、快捷键都不在这里', async () => {
       const wrapper = await render()
       expect(wrapper.get('h1').text()).toBe('GitHub 中文化')
-      expect(headings(wrapper)).toEqual(['排除路径', '自定义词条', '加速', '关于'])
-      // 开关只有加速的三个
+      expect(wrapper.get('[role="tablist"]').attributes('aria-label')).toBe('设置')
+      expect(tabLabels(wrapper)).toEqual(['汉化设置', '加速设置', '净化设置'])
+      expect(headings(wrapper)).toEqual(['排除路径', '自定义词条', '关于'])
+      for (const title of ['排除路径', '自定义词条']) {
+        expect(section(wrapper, title).element.closest('[role="tabpanel"]')?.getAttribute('aria-labelledby')).toBe(
+          tab(wrapper, '汉化设置').attributes('id'),
+        )
+      }
+      expect(section(wrapper, '关于').element.closest('[role="tabpanel"]')).toBeNull()
+      const main = wrapper.get('main').element
+      expect(main.firstElementChild?.contains(wrapper.get('[role="tablist"]').element)).toBe(true)
+      // 开关只有加速的三个与净化搜索
       expect(wrapper.findAll('.ui-switch-label').map((item) => item.text())).toEqual([
         '加速下载',
         '加速图片',
         '故障转移',
+        '净化搜索',
       ])
       expect(wrapper.find('[role="combobox"]').exists()).toBe(false)
       expect(wrapper.text()).not.toContain('快捷键')
+    })
+
+    it('默认显示汉化设置；点标签切换面板，其他面板里未提交的输入保留', async () => {
+      const wrapper = await render()
+      expect(visiblePanels(wrapper)).toEqual(['汉化设置'])
+      expect(tab(wrapper, '汉化设置').attributes('aria-selected')).toBe('true')
+      await addInput(section(wrapper, '排除路径')).setValue('/draft')
+      await tab(wrapper, '加速设置').trigger('click')
+      await settle()
+      expect(visiblePanels(wrapper)).toEqual(['加速设置'])
+      await tab(wrapper, '净化设置').trigger('click')
+      await settle()
+      expect(visiblePanels(wrapper)).toEqual(['净化设置'])
+      await tab(wrapper, '汉化设置').trigger('click')
+      await settle()
+      expect(visiblePanels(wrapper)).toEqual(['汉化设置'])
+      expect(addInput(section(wrapper, '排除路径')).element.value).toBe('/draft')
     })
 
     it('标题后紧跟版本号（不在标题内）', async () => {
@@ -119,17 +183,36 @@ describe.skipIf(!App)('设置页组件', () => {
     })
 
     it.each([
-      ['en', 'GitHub Chinese', ['Excluded paths', 'Custom entries', 'Acceleration', 'About'], 'GitHub repository'],
-      ['zh-TW', 'GitHub 中文化', ['排除路徑', '自訂詞條', '加速', '關於'], 'GitHub'],
-    ] as const)('界面语言随设置（如在弹出页修改）切换：%s', async (uiLanguage, title, sections, repository) => {
-      const wrapper = await render()
-      await updateSettings({ uiLanguage })
-      await settle()
-      expect(wrapper.get('h1').text()).toBe(title)
-      expect(headings(wrapper)).toEqual(sections)
-      expect(wrapper.get('dt').text()).toBe(repository)
-      expect(document.documentElement.lang).toBe(uiLanguage)
-    })
+      [
+        'en',
+        'GitHub Chinese',
+        'Settings',
+        ['Translation', 'Acceleration', 'Search filter'],
+        ['Excluded paths', 'Custom entries', 'About'],
+        'GitHub repository',
+      ],
+      [
+        'zh-TW',
+        'GitHub 中文化',
+        '設定',
+        ['中文化設定', '加速設定', '淨化設定'],
+        ['排除路徑', '自訂詞條', '關於'],
+        'GitHub',
+      ],
+    ] as const)(
+      '界面语言随设置（如在弹出页修改）切换：%s',
+      async (uiLanguage, title, tabsLabel, tabs, sections, repository) => {
+        const wrapper = await render()
+        await updateSettings({ uiLanguage })
+        await settle()
+        expect(wrapper.get('h1').text()).toBe(title)
+        expect(wrapper.get('[role="tablist"]').attributes('aria-label')).toBe(tabsLabel)
+        expect(tabLabels(wrapper)).toEqual(tabs)
+        expect(headings(wrapper)).toEqual(sections)
+        expect(wrapper.get('dt').text()).toBe(repository)
+        expect(document.documentElement.lang).toBe(uiLanguage)
+      },
+    )
 
     it('外观随设置', async () => {
       await settingsItem.setValue({ ...ZH_SETTINGS, theme: 'dark' })
@@ -142,59 +225,143 @@ describe.skipIf(!App)('设置页组件', () => {
   })
 
   describe('排除路径', () => {
-    it('每行一条，保存后提示已保存', async () => {
+    it('显示已有规则，新添加的在前；列名、添加框、行内输入框以「路径」为名', async () => {
+      await settingsItem.setValue({ ...ZH_SETTINGS, excludedPaths: ['/settings', '/*/*/wiki'] })
       const wrapper = await render()
-      const textarea = section(wrapper, '排除路径').get('textarea')
-      await textarea.setValue('/settings\n\n/*/*/wiki')
-      await button(section(wrapper, '排除路径'), '保存').trigger('click')
-      await settle()
-      expect((await getSettings()).excludedPaths).toEqual(['/settings', '/*/*/wiki'])
-      expect(toastTexts(wrapper)).toEqual(['已保存'])
+      const excluded = section(wrapper, '排除路径')
+      expect(pathRows(wrapper)).toEqual(['/*/*/wiki', '/settings'])
+      expect(excluded.findAll('th').map((item) => item.text())).toEqual(['路径', '操作'])
+      expect(addInput(excluded).attributes('aria-label')).toBe('路径')
+      expect(addInput(excluded).attributes('placeholder')).toBe('/*/*/wiki')
+      expect(excluded.findAll('tbody input').map((input) => input.attributes('aria-label'))).toEqual(['路径', '路径'])
+      expect(excluded.findAll('tbody button').map((item) => item.attributes('aria-label'))).toEqual([
+        '删除 /*/*/wiki',
+        '删除 /settings',
+      ])
     })
 
-    it('格式错误时不保存：标记文本框并提示；再输入时清除', async () => {
+    it('空时显示暂无路径；添加框为空时不能添加', async () => {
       const wrapper = await render()
-      const textarea = section(wrapper, '排除路径').get('textarea')
-      await textarea.setValue('settings')
-      await button(section(wrapper, '排除路径'), '保存').trigger('click')
-      await settle()
-      expect(toastTexts(wrapper)).toEqual(['格式错误'])
-      expect(textarea.attributes('aria-invalid')).toBe('true')
-      expect((await getSettings()).excludedPaths).toEqual([])
-      await textarea.setValue('/settings')
-      expect(textarea.attributes('aria-invalid')).toBe('false')
+      const excluded = section(wrapper, '排除路径')
+      expect(excluded.get('[data-test="list-empty"]').text()).toBe('暂无路径')
+      expect(excluded.find('table').exists()).toBe(false)
+      expect(button(excluded, '添加').element.disabled).toBe(true)
+      await addInput(excluded).setValue('  ')
+      expect(button(excluded, '添加').element.disabled).toBe(true)
+    })
+
+    it('添加：去掉首尾空白，即时保存；清空添加框，焦点回到添加框', async () => {
+      const wrapper = await render()
+      await addPath(wrapper, ' /settings ')
+      await addPath(wrapper, '/*/*/wiki')
+      expect((await getSettings()).excludedPaths).toEqual(['/settings', '/*/*/wiki'])
+      expect(pathRows(wrapper)).toEqual(['/*/*/wiki', '/settings'])
+      const input = addInput(section(wrapper, '排除路径'))
+      expect(input.element.value).toBe('')
+      expect(document.activeElement).toBe(input.element)
       expect(toastTexts(wrapper)).toEqual([])
     })
 
-    it('显示已有规则；文本框以分区标题为名', async () => {
+    it.each([
+      ['不以 / 开头', 'settings', '格式错误'],
+      ['已存在', ' /settings ', '已存在'],
+    ])('添加失败（%s）：提示，不保存，添加框保留', async (_name, value, message) => {
       await settingsItem.setValue({ ...ZH_SETTINGS, excludedPaths: ['/settings'] })
       const wrapper = await render()
-      const excluded = section(wrapper, '排除路径')
-      expect(textareaValue(wrapper)).toBe('/settings')
-      expect(excluded.get('textarea').attributes('aria-labelledby')).toBe(excluded.get('h2').attributes('id'))
+      await addPath(wrapper, value)
+      expect(toastTexts(wrapper)).toEqual([message])
+      expect((await getSettings()).excludedPaths).toEqual(['/settings'])
+      expect(addInput(section(wrapper, '排除路径')).element.value).toBe(value)
     })
 
-    it('保存后，弹出页排除此页、取消排除时文本框随之更新', async () => {
+    it('行内改写即时保存；无效、已存在时恢复原值并提示', async () => {
+      await settingsItem.setValue({ ...ZH_SETTINGS, excludedPaths: ['/settings', '/*/*/wiki'] })
       const wrapper = await render()
-      await section(wrapper, '排除路径').get('textarea').setValue('/settings')
-      await button(section(wrapper, '排除路径'), '保存').trigger('click')
+      const input = section(wrapper, '排除路径').get<HTMLInputElement>('tbody input')
+      await input.setValue(' /*/*/wiki/new ')
       await settle()
+      expect((await getSettings()).excludedPaths).toEqual(['/settings', '/*/*/wiki/new'])
+      expect(input.element.value).toBe('/*/*/wiki/new')
+
+      await input.setValue('wiki')
+      await settle()
+      expect(input.element.value).toBe('/*/*/wiki/new')
+      expect(toastTexts(wrapper)).toEqual(['格式错误'])
+
+      await input.setValue('/settings')
+      await settle()
+      expect(input.element.value).toBe('/*/*/wiki/new')
+      expect(toastTexts(wrapper)).toEqual(['已存在'])
+      expect((await getSettings()).excludedPaths).toEqual(['/settings', '/*/*/wiki/new'])
+    })
+
+    it('改写：同一行就地更新，焦点保留', async () => {
+      await settingsItem.setValue({ ...ZH_SETTINGS, excludedPaths: ['/settings'] })
+      const wrapper = await render()
+      const input = section(wrapper, '排除路径').get<HTMLInputElement>('tbody input')
+      input.element.focus()
+      await input.setValue('/settings/profile')
+      await settle()
+      expect(section(wrapper, '排除路径').get('tbody input').element).toBe(input.element)
+      expect(document.activeElement).toBe(input.element)
+    })
+
+    it('删除；用键盘删除时焦点移到原位置这一条（原来的下一条）的删除按钮，删空时移到添加框', async () => {
+      await settingsItem.setValue({ ...ZH_SETTINGS, excludedPaths: ['/a', '/b', '/c'] })
+      const wrapper = await render()
+      const excluded = section(wrapper, '排除路径')
+      expect(pathRows(wrapper)).toEqual(['/c', '/b', '/a'])
+
+      await pressButton(excluded, 'button[aria-label="删除 /b"]')
+      expect((await getSettings()).excludedPaths).toEqual(['/a', '/c'])
+      expect(document.activeElement?.getAttribute('aria-label')).toBe('删除 /a')
+
+      await pressButton(excluded, 'button[aria-label="删除 /a"]')
+      expect(document.activeElement?.getAttribute('aria-label')).toBe('删除 /c')
+
+      await pressButton(excluded, 'button[aria-label="删除 /c"]')
+      expect((await getSettings()).excludedPaths).toEqual([])
+      expect(document.activeElement).toBe(addInput(excluded).element)
+      expect(excluded.get('[data-test="list-empty"]').text()).toBe('暂无路径')
+    })
+
+    it('弹出页排除此页、取消排除时列表随之更新；行内未提交的修改保留', async () => {
+      await settingsItem.setValue({ ...ZH_SETTINGS, excludedPaths: ['/settings'] })
+      const wrapper = await render()
+      const input = section(wrapper, '排除路径').get<HTMLInputElement>('tbody input')
+      input.element.value = '/settings/draft'
+      await input.trigger('input')
 
       await updateSettings({ excludedPaths: ['/settings', '/vuejs/core/issues'] })
       await settle()
-      expect(textareaValue(wrapper)).toBe('/settings\n/vuejs/core/issues')
+      expect(pathRows(wrapper)).toEqual(['/vuejs/core/issues', '/settings/draft'])
 
       await updateSettings({ excludedPaths: ['/settings'] })
       await settle()
-      expect(textareaValue(wrapper)).toBe('/settings')
+      expect(pathRows(wrapper)).toEqual(['/settings/draft'])
     })
 
-    it('有未保存的输入时，弹出页排除此页不覆盖文本框', async () => {
+    it('保存失败：提示，列表不变', async () => {
+      await settingsItem.setValue({ ...ZH_SETTINGS, excludedPaths: ['/settings'] })
       const wrapper = await render()
-      await section(wrapper, '排除路径').get('textarea').setValue('/draft')
-      await updateSettings({ excludedPaths: ['/vuejs/core/issues'] })
-      await settle()
-      expect(textareaValue(wrapper)).toBe('/draft')
+      vi.spyOn(fakeBrowser.storage.sync, 'set').mockRejectedValue(new Error('配额'))
+      await addPath(wrapper, '/vuejs/core/issues')
+      expect(toastTexts(wrapper)).toEqual(['保存失败'])
+      expect(pathRows(wrapper)).toEqual(['/settings'])
+    })
+
+    it('列表框限高、框内滚动；表头固定在顶部，键盘切换焦点时滚动留出表头高度', async () => {
+      await settingsItem.setValue({ ...ZH_SETTINGS, excludedPaths: ['/settings'] })
+      const wrapper = await render()
+      const table = section(wrapper, '排除路径').get('table').element
+      const frame = getComputedStyle(table.parentElement!)
+      const head = getComputedStyle(table.querySelector('th')!)
+      expect(frame.maxHeight).toMatch(/^min\(480px, /)
+      expect(frame.overflowY).toBe('auto')
+      expect(head.position).toBe('sticky')
+      expect(head.top).toBe('0px')
+      expect(head.height).toBe('36px')
+      expect(frame.scrollPaddingTop).toBe(head.height)
     })
   })
 

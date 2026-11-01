@@ -199,6 +199,28 @@ describe('useVirtualList', () => {
     expect(disconnect).toHaveBeenCalled()
   })
 
+  it('容器隐藏后再显示（所在标签页切换回来）：浏览器把滚动位置归零、不派发 scroll，尺寸变化时同步', async () => {
+    const callbacks: (() => void)[] = []
+    vi.stubGlobal(
+      'ResizeObserver',
+      class {
+        constructor(callback: () => void) {
+          callbacks.push(callback)
+        }
+        observe(): void {}
+        disconnect(): void {}
+      },
+    )
+    const { element, list } = await setup(100, container(400))
+    await scrollTo(element, 50 * ROW)
+    expect(shape(list.result.items.value)[0]).toBe(`gap ${48 * ROW}`)
+
+    element.scrollTop = 0
+    for (const callback of callbacks) callback()
+    await nextTick()
+    expect(shape(list.result.items.value)[0]).toBe(0)
+  })
+
   it('没有 ResizeObserver 时照常工作', async () => {
     vi.stubGlobal('ResizeObserver', undefined)
     const { element, list } = await setup(100, container(400))

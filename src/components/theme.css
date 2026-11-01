@@ -81,6 +81,9 @@
   --gcn-switch-on: light-dark(#0969da, #1f6feb);
   --gcn-switch-on-hover: light-dark(#0860ca, #388bfd);
   --gcn-knob: light-dark(#ffffff, #f0f6fc);
+
+  /* 标签页：选中标签下的指针（同 GitHub 页面导航的下划线） */
+  --gcn-tab-indicator: light-dark(#fd8c73, #f78166);
 }
 
 :root:lang(zh-TW) {
@@ -173,7 +176,7 @@ p {
   outline-offset: 2px;
 }
 
-/* 输入框、多行输入框、下拉框共用的外观（ui/ 下的组件自带此类名） */
+/* 输入框、下拉框共用的外观（ui/ 下的组件自带此类名） */
 .ui-field {
   width: 100%;
   min-height: var(--gcn-control-md);

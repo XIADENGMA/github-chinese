@@ -26,7 +26,8 @@ test.describe('弹出页', () => {
 
   test('没有未翻译一行与收集开关', async ({ extension }) => {
     const { page } = extension
-    await expect(page.getByRole('switch')).toHaveCount(3)
+    // 启用，以及常规里的时间本地化、翻译标题、加速下载、净化搜索
+    await expect(page.getByRole('switch')).toHaveCount(5)
     await expect(page.getByText('收集未翻译')).toHaveCount(0)
     await expect(page.locator('[data-test="untranslated"]')).toHaveCount(0)
   })

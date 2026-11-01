@@ -6,6 +6,8 @@ export type ContentMessage =
   | { readonly type: 'gcn:get-status' }
   /** 自定义词条已变化，重新读取（后台转发设置页的保存通知） */
   | { readonly type: 'gcn:custom-entries-changed' }
+  /** 搜索净化的屏蔽规则已变化，重新读取（同上） */
+  | { readonly type: 'gcn:search-rules-changed' }
 
 /** popup 向内容脚本发的请求 */
 export type TabRequest = Extract<ContentMessage, { readonly type: 'gcn:get-status' }>
@@ -25,6 +27,8 @@ export interface ContentStatus {
 export type BackgroundMessage =
   /** 自定义词条已保存（设置页），由后台转发给各 GitHub 标签页 */
   | { readonly type: 'gcn:custom-entries-saved' }
+  /** 搜索净化的屏蔽规则已保存（设置页），由后台转发给各 GitHub 标签页 */
+  | { readonly type: 'gcn:search-rules-saved' }
   /** 内容脚本动态导入词典脚本失败时，请后台把词典脚本注入发送方所在的框架 */
   | { readonly type: 'gcn:inject-locale'; readonly locale: PageLocale }
   /** 点击了下载链接、显示克隆地址（故障转移开启时）：请后台选出可用的加速源，应答加速后的地址（见 ResolvedDownload） */
@@ -59,6 +63,7 @@ const MAX_URL_LENGTH = 4096
 const CONTENT_MESSAGE_TYPES: ReadonlySet<string> = new Set<ContentMessage['type']>([
   'gcn:get-status',
   'gcn:custom-entries-changed',
+  'gcn:search-rules-changed',
 ])
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -90,6 +95,7 @@ export function isBackgroundMessage(value: unknown): value is BackgroundMessage 
   if (!isRecord(value)) return false
   switch (value.type) {
     case 'gcn:custom-entries-saved':
+    case 'gcn:search-rules-saved':
       return true
     case 'gcn:inject-locale':
       return isPageLocale(value.locale)

@@ -14,24 +14,24 @@ afterEach(() => {
 
 describe('提示队列', () => {
   it('按显示顺序排列，新的在后；返回各自的 id', () => {
-    const first = showToast('success', 'saved')
+    const first = showToast('success', 'exists')
     const second = showToast('danger', 'imported', { count: 2 })
     expect(first).not.toBe(second)
     expect(useToasts().value.map((toast) => toast.id)).toEqual([first, second])
     expect(shownToasts()).toEqual([
-      { tone: 'success', key: 'saved' },
+      { tone: 'success', key: 'exists' },
       { tone: 'danger', key: 'imported', params: { count: 2 } },
     ])
   })
 
   it('相同的提示不叠加：换成新的一条（新 id，排到最后）', () => {
     const first = showToast('danger', 'saveFailed')
-    showToast('success', 'saved')
+    showToast('success', 'exists')
     const again = showToast('danger', 'saveFailed')
     expect(again).not.toBe(first)
     expect(useToasts().value.map((toast) => toast.id)).not.toContain(first)
     expect(shownToasts()).toEqual([
-      { tone: 'success', key: 'saved' },
+      { tone: 'success', key: 'exists' },
       { tone: 'danger', key: 'saveFailed' },
     ])
   })
@@ -52,7 +52,7 @@ describe('提示队列', () => {
   })
 
   it('按 id 收起；id 不存在时不变', () => {
-    const first = showToast('success', 'saved')
+    const first = showToast('success', 'exists')
     showToast('danger', 'saveFailed')
     dismissToast(first)
     expect(shownToasts()).toEqual([{ tone: 'danger', key: 'saveFailed' }])
@@ -76,7 +76,7 @@ describe('createToastSource', () => {
   it('各处互不影响', () => {
     const save = createToastSource()
     const load = createToastSource()
-    save.show('success', 'saved')
+    save.show('success', 'exists')
     load.show('danger', 'readFailed')
     save.clear()
     expect(shownToasts()).toEqual([{ tone: 'danger', key: 'readFailed' }])

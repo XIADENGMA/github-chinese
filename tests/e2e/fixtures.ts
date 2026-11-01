@@ -56,6 +56,7 @@ export const DEFAULT_SETTINGS: Settings = {
   accelerate: false,
   accelerateImages: false,
   failover: false,
+  purifySearch: true,
   accelerateSource: 'ghfast',
   customSources: [],
   removedSources: [],

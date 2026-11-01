@@ -113,13 +113,18 @@ export default defineBackground(() => {
   // 下载加速的选源：探测结果随 Service Worker 存活期缓存
   const downloads = createDownloadResolver()
   // 事件监听须在顶层同步注册，Service Worker 被唤醒时才能收到事件
-  // 自定义词条由设置页保存后发消息，这里转发给各 GitHub 标签页
+  // 自定义词条、屏蔽规则由设置页保存后发消息，这里转发给各 GitHub 标签页
   browser.runtime.onMessage.addListener((message: unknown, sender: MessageSender, sendResponse) => {
     if (!isBackgroundMessage(message)) return undefined
     switch (message.type) {
       case 'gcn:custom-entries-saved':
         if (!fromExtensionPage(sender)) return undefined
         notifyGitHubTabs({ type: 'gcn:custom-entries-changed' }).catch(reportError)
+        sendResponse({ ok: true })
+        return undefined
+      case 'gcn:search-rules-saved':
+        if (!fromExtensionPage(sender)) return undefined
+        notifyGitHubTabs({ type: 'gcn:search-rules-changed' }).catch(reportError)
         sendResponse({ ok: true })
         return undefined
       case 'gcn:inject-locale': {

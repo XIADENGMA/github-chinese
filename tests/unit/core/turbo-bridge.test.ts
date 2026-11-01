@@ -1649,6 +1649,7 @@ describe('与控制器一起：排除路径', () => {
         accelerate: false,
         accelerateImages: false,
         failover: false,
+        purifySearch: true,
         accelerateSource: 'ghfast',
         customSources: [],
         removedSources: [],

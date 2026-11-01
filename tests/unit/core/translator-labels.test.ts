@@ -557,6 +557,7 @@ describe('停用、换词典、切换语言、排除页面', () => {
       accelerate: false,
       accelerateImages: false,
       failover: false,
+      purifySearch: true,
       accelerateSource: 'ghfast',
       customSources: [],
       removedSources: [],

@@ -15,7 +15,7 @@ const STATUS = {
 }
 
 describe('isContentMessage', () => {
-  it.each(['gcn:get-status', 'gcn:custom-entries-changed'])('%s 合法', (type) => {
+  it.each(['gcn:get-status', 'gcn:custom-entries-changed', 'gcn:search-rules-changed'])('%s 合法', (type) => {
     expect(isContentMessage({ type })).toBe(true)
   })
 
@@ -56,8 +56,8 @@ describe('isContentStatus', () => {
 })
 
 describe('isBackgroundMessage', () => {
-  it('词条已保存合法', () => {
-    expect(isBackgroundMessage({ type: 'gcn:custom-entries-saved' })).toBe(true)
+  it.each(['gcn:custom-entries-saved', 'gcn:search-rules-saved'])('%s（设置页已保存）合法', (type) => {
+    expect(isBackgroundMessage({ type })).toBe(true)
   })
 
   it('注入词典脚本：只认已知语言', () => {
@@ -72,6 +72,7 @@ describe('isBackgroundMessage', () => {
     ['null', null],
     ['数组', [{ type: 'gcn:custom-entries-saved' }]],
     ['未知类型', { type: 'gcn:get-status' }],
+    ['发给内容脚本的类型', { type: 'gcn:search-rules-changed' }],
     ['旧版未翻译上报', { type: 'gcn:report-untranslated', items: [['Open issues', 'issues', 1, 2, 1]] }],
     ['旧版未翻译清空', { type: 'gcn:clear-untranslated' }],
   ])('%s → 非法', (_name, value) => {

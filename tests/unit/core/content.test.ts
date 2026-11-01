@@ -27,6 +27,7 @@ const state = vi.hoisted(() => ({
     accelerate: false,
     accelerateImages: false,
     failover: false,
+    purifySearch: true,
     accelerateSource: 'ghfast',
     customSources: [] as readonly unknown[],
     removedSources: [] as readonly string[],
@@ -36,6 +37,8 @@ const state = vi.hoisted(() => ({
   settingsGate: undefined as Promise<void> | undefined,
   settingsListener: undefined as ((settings: unknown) => void) | undefined,
   entries: {} as Record<string, string>,
+  /** 搜索净化的屏蔽规则 */
+  searchRules: [] as readonly string[],
   unwatchSettings: vi.fn(),
   listeners: [] as Listener[],
 }))
@@ -82,6 +85,7 @@ vi.mock('../../../src/shared/settings', () => ({
     return state.settings
   }),
   getCustomEntries: vi.fn(async () => state.entries),
+  getSearchBlockRules: vi.fn(async () => state.searchRules),
   watchSettings: vi.fn((listener: (settings: unknown) => void) => {
     state.settingsListener = listener
     return state.unwatchSettings
@@ -242,6 +246,7 @@ beforeEach(() => {
   runtime.sendMessage.mockImplementation(async () => ({ ok: true }))
   state.listeners = []
   state.entries = {}
+  state.searchRules = []
   state.failSettings = false
   state.settingsGate = undefined
   state.settings = {
@@ -252,6 +257,7 @@ beforeEach(() => {
     accelerate: false,
     accelerateImages: false,
     failover: false,
+    purifySearch: true,
   }
   locales.load.mockReset()
   locales.load.mockImplementation(async (locale) => (locale === 'zh-TW' ? TW_BUNDLE : TEST_BUNDLE))
@@ -337,7 +343,7 @@ describe('content script', () => {
     expect($('p').textContent).toBe('Issues')
   })
 
-  it('从往返缓存恢复时补读设置与自定义词条；普通 pageshow 与失效后不读', async () => {
+  it('从往返缓存恢复时补读设置、自定义词条与屏蔽规则；普通 pageshow 与失效后不读', async () => {
     const settings = await import('../../../src/shared/settings')
     const definition = await load()
     context = createContext()
@@ -345,6 +351,7 @@ describe('content script', () => {
     const reads = (): number[] => [
       vi.mocked(settings.getSettings).mock.calls.length,
       vi.mocked(settings.getCustomEntries).mock.calls.length,
+      vi.mocked(settings.getSearchBlockRules).mock.calls.length,
     ]
     const before = reads()
     const pageshow = (persisted: boolean): void => {
@@ -360,7 +367,7 @@ describe('content script', () => {
     state.entries = { Issues: '问题' }
     pageshow(true)
     await flushTasks()
-    expect(reads()).toEqual([before[0]! + 1, before[1]! + 1])
+    expect(reads()).toEqual([before[0]! + 1, before[1]! + 1, before[2]! + 1])
     expect($('p').textContent).toBe('问题')
 
     state.settings = { ...state.settings, enabled: false }
@@ -957,6 +964,16 @@ describe('读存储期间收到的消息', () => {
     expect(state.listeners).toHaveLength(1)
   })
 
+  it('屏蔽规则变化：不占消息通道', async () => {
+    const release = holdSettings()
+    const definition = await load()
+    context = createContext()
+    const started = definition.main(context as never)
+    expect(sendAsync({ type: 'gcn:search-rules-changed' }).handled).toBe(false)
+    release()
+    await started
+  })
+
   it('词条变化：不占消息通道，就绪后照常处理', async () => {
     const release = holdSettings()
     const definition = await load()
@@ -1497,6 +1514,117 @@ describe('图片加速', () => {
     context?.invalidate()
     failImage()
     expect(runtime.sendMessage).not.toHaveBeenCalled()
+  })
+})
+
+describe('搜索净化', () => {
+  const RESULTS =
+    '<div data-testid="results-list">' +
+    '<div><h3><div class="search-title"><a href="/octocat/hello-world">octocat/hello-world</a></div></h3></div>' +
+    '<div><h3><div class="search-title"><a href="/vuejs/core">vuejs/core</a></div></h3></div>' +
+    '</div>'
+
+  /** 各条搜索结果是否隐藏 */
+  function hidden(): boolean[] {
+    return [...document.querySelectorAll<HTMLElement>('[data-testid="results-list"] > div')].map(
+      (item) => item.style.getPropertyValue('display') === 'none',
+    )
+  }
+
+  async function start(): Promise<void> {
+    const definition = await load()
+    context = createContext()
+    await definition.main(context as never)
+  }
+
+  beforeEach(() => {
+    history.replaceState(null, '', '/search?q=vue')
+    state.searchRules = ['@octocat']
+    document.body.innerHTML = RESULTS
+  })
+
+  it('读完存储即隐藏命中的结果，不等语言包加载完成', async () => {
+    let release: (bundle: LocaleBundle) => void = () => undefined
+    locales.load.mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          release = resolve
+        }),
+    )
+    const definition = await load()
+    context = createContext()
+    const started = definition.main(context as never)
+    await flushTasks()
+    expect(hidden()).toEqual([true, false])
+    release(TEST_BUNDLE)
+    await started
+    expect(hidden()).toEqual([true, false])
+  })
+
+  it('规则变化由后台通知后重新读取；关闭净化搜索、总开关时显示', async () => {
+    await start()
+    expect(hidden()).toEqual([true, false])
+    state.searchRules = ['vuejs/core']
+    expect(send({ type: 'gcn:search-rules-changed' })).toBeUndefined()
+    await flushTasks()
+    expect(hidden()).toEqual([false, true])
+    state.settingsListener!({ ...state.settings, purifySearch: false })
+    expect(hidden()).toEqual([false, false])
+    state.settingsListener!({ ...state.settings, purifySearch: true })
+    expect(hidden()).toEqual([false, true])
+    state.settingsListener!({ ...state.settings, enabled: false })
+    expect(hidden()).toEqual([false, false])
+  })
+
+  it('总开关关闭时启动：不隐藏；开启后隐藏', async () => {
+    state.settings = { ...state.settings, enabled: false }
+    await start()
+    expect(hidden()).toEqual([false, false])
+    state.settingsListener!({ ...state.settings, enabled: true })
+    expect(hidden()).toEqual([true, false])
+  })
+
+  it('往返缓存恢复时补读规则', async () => {
+    await start()
+    state.searchRules = []
+    pageshow(true)
+    await flushTasks()
+    expect(hidden()).toEqual([false, false])
+  })
+
+  it('软导航进入搜索页（结果先于地址出现）：地址变化时补上', async () => {
+    history.replaceState(null, '', '/vuejs/core')
+    document.body.innerHTML = ''
+    await start()
+    document.body.innerHTML = RESULTS
+    await flushTasks()
+    expect(hidden()).toEqual([false, false])
+    history.pushState(null, '', '/search?q=vue')
+    window.dispatchEvent(new Event('test:locationchange'))
+    expect(hidden()).toEqual([true, false])
+  })
+
+  it('读取规则失败：不隐藏，照常启动', async () => {
+    const settings = await import('../../../src/shared/settings')
+    vi.mocked(settings.getSearchBlockRules).mockRejectedValueOnce(new Error('storage unavailable'))
+    await start()
+    expect(hidden()).toEqual([false, false])
+    expect(send({ type: 'gcn:get-status' })).toMatchObject({ excluded: false })
+  })
+
+  it('语言包加载失败（不启动）：显示已隐藏的结果', async () => {
+    locales.load.mockRejectedValue(new Error('语言包加载失败：zh-CN'))
+    await start()
+    expect(hidden()).toEqual([false, false])
+  })
+
+  it('失效时显示已隐藏的结果，不再处理', async () => {
+    await start()
+    context!.invalidate()
+    expect(hidden()).toEqual([false, false])
+    document.body.innerHTML = RESULTS
+    await flushTasks()
+    expect(hidden()).toEqual([false, false])
   })
 })
 

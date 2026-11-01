@@ -12,8 +12,16 @@ export default defineConfig({
     env: { TZ: 'Asia/Shanghai' },
     include: ['tests/unit/**/*.test.ts'],
     globals: true,
-    // 样式默认不处理；这几个组件的布局约束（列表限高、表头固定、弹出页宽度）有用例按计算样式断言
-    css: { include: [/options[\\/]CustomEntriesSection\.vue/, /popup[\\/]App\.vue/] },
+    // 样式默认不处理；这几处的布局约束（列表限高、表头固定、弹出页宽度、语言下拉同一行）有用例按计算样式断言。
+    // 设置页的公共样式表由入口引入，用例里另行引入
+    css: {
+      include: [
+        /options[\\/]options\.css/,
+        /options[\\/]CustomEntriesSection\.vue/,
+        /popup[\\/]App\.vue/,
+        /popup[\\/]LanguageSection\.vue/,
+      ],
+    },
     coverage: {
       provider: 'v8',
       // 只统计脚本与组件：入口目录里的 index.html、样式表不是可执行代码，纳入时 HTML 解析报错
