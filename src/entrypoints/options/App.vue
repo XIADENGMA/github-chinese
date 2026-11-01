@@ -5,6 +5,7 @@
       <div class="options-brand">
         <h1 class="options-title">{{ t('appName') }}</h1>
         <span v-if="version" class="options-version" data-test="version">v{{ version }}</span>
+        <UpdateBadge />
       </div>
     </header>
 
@@ -43,6 +44,7 @@ import ToastHost from '../../components/ToastHost.vue'
 import type { UiTab } from '../../components/ui/types'
 import UiTabs from '../../components/ui/UiTabs.vue'
 import { useI18n, useUiPreferencesSync } from '../../components/ui-preferences'
+import UpdateBadge from '../../components/UpdateBadge.vue'
 import type { MessageKey } from '../../i18n'
 import { getExtensionVersion, REPOSITORY_URL } from '../../shared/extension'
 import AccelerateSection from './AccelerateSection.vue'

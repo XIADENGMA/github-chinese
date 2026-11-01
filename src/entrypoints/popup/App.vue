@@ -5,6 +5,7 @@
       <div class="popup-brand">
         <h1 class="popup-title">{{ t('appName') }}</h1>
         <span v-if="version" class="popup-version" data-test="version">v{{ version }}</span>
+        <UpdateBadge />
       </div>
       <UiButton
         class="popup-end"
@@ -105,6 +106,7 @@ import ToastHost from '../../components/ToastHost.vue'
 import UiButton from '../../components/ui/UiButton.vue'
 import UiSwitch from '../../components/ui/UiSwitch.vue'
 import { THEME_MESSAGE, useI18n, useUiPreferencesSync } from '../../components/ui-preferences'
+import UpdateBadge from '../../components/UpdateBadge.vue'
 import { REPOSITORY_URL } from '../../shared/extension'
 import GeneralSection from './GeneralSection.vue'
 import LanguageSection from './LanguageSection.vue'
@@ -178,9 +180,10 @@ const themeLabel = computed(() => t('appearanceCurrent', { mode: t(THEME_MESSAGE
   box-shadow: 0 0 0 1px var(--gcn-border-muted);
 }
 
-/* 名称与版本号按文字基线对齐 */
+/* 名称与版本号按文字基线对齐；放不下时「新版本」换到下一行（英文界面、版本号较长） */
 .popup-brand {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   gap: 6px;
   min-width: 0;

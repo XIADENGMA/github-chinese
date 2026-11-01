@@ -3,6 +3,8 @@ import type { Messages } from './zh-CN'
 /** 扩展界面文案：英文（浏览器界面语言不是中文时使用） */
 export default {
   appName: 'GitHub Chinese',
+  newVersion: 'Update',
+  newVersionLabel: 'Update v{version}',
 
   enable: 'Enable',
   status: 'Status',

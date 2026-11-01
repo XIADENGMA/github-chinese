@@ -1,6 +1,8 @@
 /** 扩展界面文案：简体中文（键的来源，其余语言须逐键对应） */
 const zhCN = {
   appName: 'GitHub 中文化',
+  newVersion: '新版本',
+  newVersionLabel: '新版本 v{version}',
 
   enable: '启用',
   status: '状态',

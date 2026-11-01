@@ -11,6 +11,7 @@ export default defineConfig({
     // 时区固定为 GMT+8：完整时间是否写时区取决于浏览器本地时区（见 time-text.ts、common-ui/time.ts）
     env: { TZ: 'Asia/Shanghai' },
     include: ['tests/unit/**/*.test.ts'],
+    setupFiles: ['tests/unit/setup.ts'],
     globals: true,
     // 样式默认不处理；这几处的布局约束（列表限高、表头固定、弹出页宽度、语言下拉同一行）有用例按计算样式断言。
     // 设置页的公共样式表由入口引入，用例里另行引入

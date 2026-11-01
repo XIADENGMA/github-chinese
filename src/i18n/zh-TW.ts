@@ -3,6 +3,8 @@ import type { Messages } from './zh-CN'
 /** 扩展界面文案：繁体中文（台湾通行用语，见 docs/GLOSSARY.zh-TW.md） */
 export default {
   appName: 'GitHub 中文化',
+  newVersion: '新版本',
+  newVersionLabel: '新版本 v{version}',
 
   enable: '啟用',
   status: '狀態',
