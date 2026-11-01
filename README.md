@@ -10,9 +10,7 @@
 [![版本](https://img.shields.io/github/v/release/setube/github-chinese?include_prereleases&label=%E7%89%88%E6%9C%AC)](https://github.com/setube/github-chinese/releases)
 [![许可证](https://img.shields.io/badge/%E8%AE%B8%E5%8F%AF%E8%AF%81-MIT-blue)](LICENSE)
 ![Manifest V3](https://img.shields.io/badge/Manifest-V3-informational)
-
 <br />
-
 [![Chrome 应用商店](https://img.shields.io/chrome-web-store/v/bgjbinlidnenibphgepagdkodcohgibe?label=Chrome&logo=googlechrome&logoColor=white&color=4285F4)](https://chromewebstore.google.com/detail/github-chinese/bgjbinlidnenibphgepagdkodcohgibe)
 [![Microsoft Edge 加载项](https://img.shields.io/badge/dynamic/json?label=Edge&logo=microsoftedge&logoColor=white&color=0078D7&prefix=v&query=%24.version&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Fahhkmjnecgfpaegcfpolmlfijmldhmbk)](https://microsoftedge.microsoft.com/addons/detail/ahhkmjnecgfpaegcfpolmlfijmldhmbk)
 [![Firefox 附加组件](https://img.shields.io/amo/v/github-chinese?label=Firefox&logo=firefoxbrowser&logoColor=white&color=FF7139)](https://addons.mozilla.org/zh-CN/firefox/addon/github-chinese/)
