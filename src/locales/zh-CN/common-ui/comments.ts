@@ -388,6 +388,8 @@ export default {
         `${REACTIONS[name]!} (${count})：${author}，${translateCompactDate(date)}`,
     ],
     [/^(\d[\d,]*) (?:people|person) reacted$/, '$1 人做出了反应'],
+    // 反应摘要（发行版卡片等）：自己与他人都做出反应时
+    [/^You and (\d[\d,]*) others? reacted$/, '你和其他 $1 人做出了反应'],
 
     // 反应（React）：👍 4 reactions、React with 👀、Reacted by a, b and c、+3 more people
     [new RegExp(`^${EMOJI_SOURCE} (\\d[\\d,]*) reactions?$`), '$1 $2 个反应'],

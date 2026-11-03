@@ -691,6 +691,14 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     ],
     misses: ['Some people reacted'],
   },
+  {
+    hits: [
+      ['You and 2 others reacted', '你和其他 2 人做出了反应'],
+      ['You and 1 other reacted', '你和其他 1 人做出了反应'],
+      ['You and 1,024 others reacted', '你和其他 1,024 人做出了反应'],
+    ],
+    misses: ['You and others reacted'],
+  },
   // 反应（React）
   {
     hits: [
@@ -1523,6 +1531,8 @@ describe('common-ui 繁体词条', () => {
     ['You can also', '你也可以'],
     ['view this object as it appeared at the time of the comment', '查看此物件在留言當時的版本'],
     ['You reacted', '你做出表情回應'],
+    ['You and 2 others reacted', '你和其他 2 人做出表情回應'],
+    ['You and 1 other reacted', '你和其他 1 人做出表情回應'],
     ['You’ve been unsubscribed from this thread.', '你已取消訂閱此討論串。'],
     ['to subscribe to this conversation on GitHub', '以訂閱 GitHub 上的此對話'],
     ['This conversation has been locked as', '此對話已鎖定為'],
