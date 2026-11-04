@@ -206,6 +206,6 @@ export function createTextFit(records: RecordStore, spaceable: (node: Text) => b
       written = []
       edges = []
       touched = new Set()
-    },
+    }
   }
 }

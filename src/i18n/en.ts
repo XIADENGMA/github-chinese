@@ -117,5 +117,5 @@ export default {
   about: 'About',
   githubRepository: 'GitHub repository',
 
-  badgeOff: 'OFF',
+  badgeOff: 'OFF'
 } satisfies Messages

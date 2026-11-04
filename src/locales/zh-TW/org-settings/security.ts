@@ -39,20 +39,18 @@ export const DEPENDABOT_RULES_SCOPED: Readonly<Record<string, string>> = {
   Scopes: '範圍',
   'Rules will be applied for alerts matching all included metadata.': '規則會套用到與所有包含的中繼資料相符的警示。',
   'Select one or more rules to apply to matching alerts.': '選取一或多個要套用到相符警示的規則。',
-  'Dependabot will automatically close or reopen alerts based on selected criteria.':
-    'Dependabot 會根據選取的條件自動關閉或重新開啟警示。',
+  'Dependabot will automatically close or reopen alerts based on selected criteria.': 'Dependabot 會根據選取的條件自動關閉或重新開啟警示。',
   'Until patch is available': '直到有可用的修補程式',
   // 拉取请求语境的动词 open → 建立（安全更新即 Dependabot 创建的拉取请求）
   'Open a pull request to resolve alerts': '建立拉取請求以解決警示',
-  'Dependabot will attempt to open security updates based on selected criteria.':
-    'Dependabot 會根據選取的條件嘗試建立安全性更新。',
+  'Dependabot will attempt to open security updates based on selected criteria.': 'Dependabot 會根據選取的條件嘗試建立安全性更新。',
   'Create rule': '建立規則',
   '/ Edit rule': '/ 編輯規則',
   'Save rule': '儲存規則',
   'Delete this rule': '刪除此規則',
   'Deleting this rule can potentially reopen associated alerts.': '刪除此規則可能會重新開啟關聯的警示。',
   'Are you sure you want to delete this rule?': '確定要刪除此規則嗎？',
-  '/ GitHub Preset rule': '/ GitHub 預設集規則',
+  '/ GitHub Preset rule': '/ GitHub 預設集規則'
 }
 
 /** Dependabot 规则的正则：安全设置页的已启用条数、删除确认（repo-settings/security.ts 同样取用） */
@@ -61,8 +59,8 @@ export const DEPENDABOT_RULES_REGEXP: readonly RegExpRule[] = [
   // 规则名两侧的引号随原文（作「」），原文无逗号，译文不加
   [
     /^This will permanently delete the rule "([^"]{1,200})" and potentially reopen associated alerts\.$/,
-    '這會永久刪除規則「$1」並可能重新開啟關聯的警示。',
-  ],
+    '這會永久刪除規則「$1」並可能重新開啟關聯的警示。'
+  ]
 ]
 
 /**
@@ -74,7 +72,7 @@ const BYPASS_ACTOR_NAMES: ReadonlyMap<string, string> = new Map([
   ['maintain', '維護'],
   ['write', '寫入'],
   ['Organization admin', '組織管理員'],
-  ['Unknown', '未知'],
+  ['Unknown', '未知']
 ])
 
 /**
@@ -86,7 +84,7 @@ export const BYPASS_ACTOR_ACTIONS_RULE: RegExpRule = [
   (_, name: string) => {
     const builtin = BYPASS_ACTOR_NAMES.get(name)
     return builtin === undefined ? `可繞過的執行者 ${name} 的動作` : `可繞過的執行者${builtin}的動作`
-  },
+  }
 ]
 
 /**
@@ -111,8 +109,7 @@ export default {
     // 身份验证安全：SSH 证书颁发机构
     'SSH Certificate Authorities': 'SSH 憑證授權單位',
     'SSH certificate authorities': 'SSH 憑證授權單位',
-    'Provide SSH certificates that members can use to access your resources with Git':
-      '提供 SSH 憑證供成員透過 Git 存取你的資源',
+    'Provide SSH certificates that members can use to access your resources with Git': '提供 SSH 憑證供成員透過 Git 存取你的資源',
     'New CA': '新增 CA',
     'Add CA': '新增 CA',
     'Require SSH Certificates': '要求使用 SSH 憑證',
@@ -190,8 +187,7 @@ export default {
     'Public and internal repositories only': '僅限公開和內部儲存庫',
     'Grant a team permission to manage security alerts and settings across your organization. This team will also be granted read access to all repositories.':
       '授予團隊管理整個組織安全性警示和設定的權限。此團隊也會獲得所有儲存庫的讀取權限。',
-    'Keep scheduled scans running every 30 days for inactive repositories':
-      '對不活躍的儲存庫繼續每 30 天執行一次排程掃描',
+    'Keep scheduled scans running every 30 days for inactive repositories': '對不活躍的儲存庫繼續每 30 天執行一次排程掃描',
 
     // Dependabot 规则（组织专用）
     'Rules will target all public repositories in this organization.': '規則將以此組織中的所有公開儲存庫為目標。',
@@ -220,8 +216,7 @@ export default {
     'Compliance reports': '合規性報告',
     'ISO/IEC 27001:2022 certification': 'ISO/IEC 27001:2022 認證',
     'ISO/IEC 27001:2013 certification': 'ISO/IEC 27001:2013 認證',
-    'Cloud Security Alliance CAIQ self-assessment (CSA CAIQ - Level 1)':
-      '雲端安全聯盟 CAIQ 自我評估 (CSA CAIQ - Level 1)',
+    'Cloud Security Alliance CAIQ self-assessment (CSA CAIQ - Level 1)': '雲端安全聯盟 CAIQ 自我評估 (CSA CAIQ - Level 1)'
   },
   scoped: {
     // 身份验证安全
@@ -255,8 +250,7 @@ export default {
     'Bypass privileges': '繞過權限',
 
     // 推送保护的绕过执行者（安全配置、规则集共用的绕过列表组件）；原文无逗号，译文不加
-    'Push Protection will run and the selected actor(s) will be prompted to bypass':
-      '推送保護會執行並向選取的執行者顯示繞過提示',
+    'Push Protection will run and the selected actor(s) will be prompted to bypass': '推送保護會執行並向選取的執行者顯示繞過提示',
     'Push Protection will not run and no bypass prompt will be shown': '推送保護不會執行也不會顯示繞過提示',
     'No actors have been selected': '尚未選取執行者',
     'At least one actor is required.': '至少需要一個執行者。',
@@ -272,8 +266,7 @@ export default {
     // Advanced Security：全局设置（与个人、存储库「程式碼安全性」设置共用）
     'Try our new settings': '試用新設定',
     'Security & analysis': '安全性和分析',
-    'Security and analysis features help keep your repositories secure and updated.':
-      '安全性和分析功能可協助你的儲存庫保持安全和最新。',
+    'Security and analysis features help keep your repositories secure and updated.': '安全性和分析功能可協助你的儲存庫保持安全和最新。',
     'Disable all': '全部停用',
     'Enable all': '全部啟用',
     // 「全部啟用 / 全部停用」按钮的无障碍标签（与个人设置一致）
@@ -309,8 +302,7 @@ export default {
     '. Default CodeQL analysis will be set up on': '識別漏洞和錯誤。預設的 CodeQL 分析將設定在',
     eligible: '符合資格的',
     'public repositories.': '公開儲存庫上。',
-    'Recommend the extended query suite for repositories enabling default setup':
-      '為啟用預設設定的儲存庫建議擴充查詢套件',
+    'Recommend the extended query suite for repositories enabling default setup': '為啟用預設設定的儲存庫建議擴充查詢套件',
     'The extended query includes the default suite, plus lower severity and precision queries.':
       '擴充查詢包含預設套件，以及嚴重性和精確度較低的查詢。',
     'Enable code scanning default setup': '啟用程式碼掃描預設設定',
@@ -336,8 +328,7 @@ export default {
     'supported secrets': '支援的機密',
     'Automatically enable for repositories added to secret scanning': '為加入機密掃描的儲存庫自動啟用',
     'Add a resource link in the CLI and web UI when a commit is blocked': '提交遭阻擋時在 CLI 和網頁介面中新增資源連結',
-    'Add a resource link in the CLI and the web UI when a commit is blocked':
-      '提交遭阻擋時在 CLI 和網頁介面中新增資源連結',
+    'Add a resource link in the CLI and the web UI when a commit is blocked': '提交遭阻擋時在 CLI 和網頁介面中新增資源連結',
     // 「Link will show in addition to」+「the message GitHub displays」
     'Link will show in addition to': '連結會附加於',
     'the message GitHub displays': 'GitHub 顯示的訊息',
@@ -347,8 +338,7 @@ export default {
     'This will turn on secret scanning for all public repositories.': '這會為所有公開儲存庫開啟機密掃描。',
     'Enable for eligible repositories': '為符合資格的儲存庫啟用',
     'Disable secret scanning?': '停用機密掃描？',
-    'This will disable secret scanning on all repositories where it is enabled.':
-      '這會在所有已啟用機密掃描的儲存庫上停用此功能。',
+    'This will disable secret scanning on all repositories where it is enabled.': '這會在所有已啟用機密掃描的儲存庫上停用此功能。',
     'Disable secret scanning': '停用機密掃描',
     'Enable push protection for eligible repositories?': '為符合資格的儲存庫啟用推送保護？',
     'This will turn on push protection for all repositories that have secret scanning enabled.':
@@ -361,8 +351,7 @@ export default {
     'You can still enable push protection at the repository level.': '你仍可在儲存庫層級啟用推送保護。',
     'Disable push protection': '停用推送保護',
     'Enable push protection': '啟用推送保護',
-    'This will disable push protection on all repositories where it is enabled.':
-      '這會在所有已啟用推送保護的儲存庫上停用此功能。',
+    'This will disable push protection on all repositories where it is enabled.': '這會在所有已啟用推送保護的儲存庫上停用此功能。',
     'Learn more about these security privileges': '瞭解這些安全性權限',
     'Search for teams': '搜尋團隊',
     'Edit runner type for Dependabot': '編輯 Dependabot 的執行器類型',
@@ -403,73 +392,71 @@ export default {
     'Add team': '新增團隊',
 
     // 已验证和批准的域
-    'Approve domain': '核准網域',
+    'Approve domain': '核准網域'
   },
   regexp: [
     // 句号随原文
     [
       new RegExp(`^Require two-factor authentication for everyone in the ${ORG} organization(\\.?)$`),
-      (_, org: string, dot: string) => `要求 ${org} 組織中的所有人啟用雙重驗證${dot ? '。' : ''}`,
+      (_, org: string, dot: string) => `要求 ${org} 組織中的所有人啟用雙重驗證${dot ? '。' : ''}`
     ],
     [
       new RegExp(`^Require SAML SSO authentication for all members of the ${ORG} organization(\\.?)$`),
-      (_, org: string, dot: string) => `要求 ${org} 組織的所有成員透過 SAML SSO 驗證身分${dot ? '。' : ''}`,
+      (_, org: string, dot: string) => `要求 ${org} 組織的所有成員透過 SAML SSO 驗證身分${dot ? '。' : ''}`
     ],
     [
       new RegExp(`^You[’']re about to enable private vulnerability reporting on all public repositories in ${ORG}\\.$`),
-      '你即將為 $1 中的所有公開儲存庫啟用私下回報漏洞。',
+      '你即將為 $1 中的所有公開儲存庫啟用私下回報漏洞。'
     ],
     [
-      new RegExp(
-        `^You[’']re about to disable private vulnerability reporting on all public repositories in ${ORG}\\.$`,
-      ),
-      '你即將為 $1 中的所有公開儲存庫停用私下回報漏洞。',
+      new RegExp(`^You[’']re about to disable private vulnerability reporting on all public repositories in ${ORG}\\.$`),
+      '你即將為 $1 中的所有公開儲存庫停用私下回報漏洞。'
     ],
     [
       new RegExp(`^You[’']re about to enable dependency graph on all private repositories in ${ORG}\\.$`),
-      '你即將為 $1 中的所有私人儲存庫啟用相依性圖表。',
+      '你即將為 $1 中的所有私人儲存庫啟用相依性圖表。'
     ],
     [
       new RegExp(
-        `^You[’']re about to disable dependency graph on all private repositories in ${ORG}\\. This will also disable Dependabot alerts and Dependabot security updates on those repositories\\.$`,
+        `^You[’']re about to disable dependency graph on all private repositories in ${ORG}\\. This will also disable Dependabot alerts and Dependabot security updates on those repositories\\.$`
       ),
-      '你即將為 $1 中的所有私人儲存庫停用相依性圖表。這也會停用這些儲存庫的 Dependabot 警示和 Dependabot 安全性更新。',
+      '你即將為 $1 中的所有私人儲存庫停用相依性圖表。這也會停用這些儲存庫的 Dependabot 警示和 Dependabot 安全性更新。'
     ],
     [
       new RegExp(
-        `^You[’']re about to enable Dependabot alerts on all repositories in ${ORG}\\. Alerts require the dependency graph, so we[’']ll also turn that on for all repositories\\. No notifications will be sent while Dependabot alerts are being enabled\\.$`,
+        `^You[’']re about to enable Dependabot alerts on all repositories in ${ORG}\\. Alerts require the dependency graph, so we[’']ll also turn that on for all repositories\\. No notifications will be sent while Dependabot alerts are being enabled\\.$`
       ),
-      '你即將為 $1 中的所有儲存庫啟用 Dependabot 警示。警示需要相依性圖表，因此我們也會為所有儲存庫開啟相依性圖表。啟用 Dependabot 警示期間不會傳送通知。',
+      '你即將為 $1 中的所有儲存庫啟用 Dependabot 警示。警示需要相依性圖表，因此我們也會為所有儲存庫開啟相依性圖表。啟用 Dependabot 警示期間不會傳送通知。'
     ],
     [
       new RegExp(
-        `^You[’']re about to disable Dependabot alerts on all repositories in ${ORG}\\. This will also disable Dependabot security updates on those repositories\\.$`,
+        `^You[’']re about to disable Dependabot alerts on all repositories in ${ORG}\\. This will also disable Dependabot security updates on those repositories\\.$`
       ),
-      '你即將為 $1 中的所有儲存庫停用 Dependabot 警示。這也會停用這些儲存庫的 Dependabot 安全性更新。',
+      '你即將為 $1 中的所有儲存庫停用 Dependabot 警示。這也會停用這些儲存庫的 Dependabot 安全性更新。'
     ],
     [
       new RegExp(
-        `^You[’']re about to enable Dependabot security updates on all repositories in ${ORG}\\. Dependabot security updates require the dependency graph and Dependabot alerts, so we[’']ll also turn that on for all repositories\\.$`,
+        `^You[’']re about to enable Dependabot security updates on all repositories in ${ORG}\\. Dependabot security updates require the dependency graph and Dependabot alerts, so we[’']ll also turn that on for all repositories\\.$`
       ),
-      '你即將為 $1 中的所有儲存庫啟用 Dependabot 安全性更新。Dependabot 安全性更新需要相依性圖表和 Dependabot 警示，因此我們也會為所有儲存庫開啟這些功能。',
+      '你即將為 $1 中的所有儲存庫啟用 Dependabot 安全性更新。Dependabot 安全性更新需要相依性圖表和 Dependabot 警示，因此我們也會為所有儲存庫開啟這些功能。'
     ],
     [
       new RegExp(`^You[’']re about to disable Dependabot security updates on all repositories in ${ORG}\\.$`),
-      '你即將為 $1 中的所有儲存庫停用 Dependabot 安全性更新。',
+      '你即將為 $1 中的所有儲存庫停用 Dependabot 安全性更新。'
     ],
     [
       new RegExp(
-        `^You[’']re about to enable grouped security updates on all repositories in ${ORG}\\. Grouped security updates require the dependency graph, Dependabot alerts, Dependabot security updates and Dependabot security updates, so we[’']ll also turn that on for all repositories\\.$`,
+        `^You[’']re about to enable grouped security updates on all repositories in ${ORG}\\. Grouped security updates require the dependency graph, Dependabot alerts, Dependabot security updates and Dependabot security updates, so we[’']ll also turn that on for all repositories\\.$`
       ),
-      '你即將為 $1 中的所有儲存庫啟用分組安全性更新。分組安全性更新需要相依性圖表、Dependabot 警示和 Dependabot 安全性更新，因此我們也會為所有儲存庫開啟這些功能。',
+      '你即將為 $1 中的所有儲存庫啟用分組安全性更新。分組安全性更新需要相依性圖表、Dependabot 警示和 Dependabot 安全性更新，因此我們也會為所有儲存庫開啟這些功能。'
     ],
     [
       new RegExp(`^You[’']re about to disable grouped security updates on all repositories in ${ORG}\\.$`),
-      '你即將為 $1 中的所有儲存庫停用分組安全性更新。',
+      '你即將為 $1 中的所有儲存庫停用分組安全性更新。'
     ],
     [
       /^This will disable push protection on (\d+) repositor(?:y|ies) where it is enabled\.$/,
-      '這會在 $1 個已啟用推送保護的儲存庫上停用此功能。',
+      '這會在 $1 個已啟用推送保護的儲存庫上停用此功能。'
     ],
     // Dependabot 规则（与存储库设置共用）；「Managed by <组织>」由合并进来的规则集词典收录
     ...DEPENDABOT_RULES_REGEXP,
@@ -477,6 +464,6 @@ export default {
     [/^(\d+) actors?$/, '$1 個執行者'],
     // 绕过列表每行菜单按钮的读屏名称：「<名称> Bypass actor actions」（与存储库设置共用）
     BYPASS_ACTOR_ACTIONS_RULE,
-    [/^Approve ([\w-]+(?:\.[\w-]+)+)$/, '核准 $1'],
-  ],
+    [/^Approve ([\w-]+(?:\.[\w-]+)+)$/, '核准 $1']
+  ]
 } satisfies PageDictionary

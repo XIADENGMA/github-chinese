@@ -37,7 +37,7 @@ const NOUNS: readonly (readonly [string, string])[] = [
   ['reactions?', '個表情回應'],
   ['watching', '位關注者'],
   ['hidden items?', '個隱藏項目'],
-  ['lines? changed', '行變更'],
+  ['lines? changed', '行變更']
 ]
 
 export default {
@@ -47,6 +47,6 @@ export default {
     [/^(\d[\d,]*) remaining$/, '剩餘 $1'],
     // 列表省略：Member of Vue, Vite, and 2 more
     [/^, and (\d[\d,]*) more$/, '，和其他 $1 個'],
-    [/^and (\d[\d,]*) more$/, '和其他 $1 個'],
-  ],
+    [/^and (\d[\d,]*) more$/, '和其他 $1 個']
+  ]
 } satisfies PageDictionary

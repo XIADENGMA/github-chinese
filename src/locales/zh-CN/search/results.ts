@@ -18,7 +18,7 @@ const RESULT_HEADINGS: Readonly<Record<string, string>> = {
   wikis: 'Wiki 搜索结果',
   topics: '主题搜索结果',
   // 产品名译中文（用户定）：Marketplace → 市场
-  marketplace: '市场搜索结果',
+  marketplace: '市场搜索结果'
 }
 
 /** 排序菜单（各结果类型的并集），排序按钮复用 */
@@ -47,7 +47,7 @@ const SORT_OPTIONS: Readonly<Record<string, string>> = {
   'Recently committed': '最近提交',
   'Least recently committed': '最早提交',
   'Recently authored': '最近编写',
-  'Least recently authored': '最早编写',
+  'Least recently authored': '最早编写'
 }
 
 const SORT_SOURCE = Object.keys(SORT_OPTIONS).join('|')
@@ -57,9 +57,7 @@ const commonText = lookupTable(mergeTables([common.static, commonUi.static]))
 
 /** 去掉译文与原文相同、或与 common 全站词条译文相同的词条，避免重复收录 */
 function pageOnly(entries: Readonly<Record<string, string>>): Record<string, string> {
-  return Object.fromEntries(
-    Object.entries(entries).filter(([source, target]) => source !== target && commonText(source) !== target),
-  )
+  return Object.fromEntries(Object.entries(entries).filter(([source, target]) => source !== target && commonText(source) !== target))
 }
 
 /** 提交结果的检查摘要：20 successful, 1 skipped, and 1 failing checks（状态词与句式同 commits 的检查摘要） */
@@ -79,7 +77,7 @@ const CHECK_STATES: Readonly<Record<string, string>> = {
   'timed out': '已超时',
   'action required': '需要操作',
   stale: '已过时',
-  'startup failure': '启动失败',
+  'startup failure': '启动失败'
 }
 
 const CHECK_PART = `\\d+ (?:${Object.keys(CHECK_STATES).join('|')})`
@@ -106,7 +104,7 @@ const PACKAGE_TYPES: Readonly<Record<string, string>> = {
   maven: 'Maven 类型',
   nuget: 'NuGet 类型',
   rubygems: 'RubyGems 类型',
-  gradle: 'Gradle 类型',
+  gradle: 'Gradle 类型'
 }
 
 /** 1.1M results / 1 result / 1.2k files（common-ui 的计数规则不含 B） */
@@ -118,7 +116,7 @@ function countLabel(count: string, kind: string): string {
 const SIGNATURE_STATES: Readonly<Record<string, string>> = {
   verified: '已验证',
   unverified: '未验证',
-  'partially verified': '部分验证',
+  'partially verified': '部分验证'
 }
 
 /**
@@ -126,8 +124,7 @@ const SIGNATURE_STATES: Readonly<Record<string, string>> = {
  * <span aria-label="Vue language">Vue</span></li>。名称不译（ignore），aria-label 由 attributeRules 改写，
  * 两处共用的选择器不依赖 aria-label
  */
-const LANGUAGE_NAME =
-  '[data-testid="results-list"] li[class*="footerItem__"] > [class*="languageCircleWrapper__"] + span'
+const LANGUAGE_NAME = '[data-testid="results-list"] li[class*="footerItem__"] > [class*="languageCircleWrapper__"] + span'
 
 /**
  * 搜索首页与结果页（React）：侧栏筛选、结果头部与排序、各类结果条目、
@@ -242,7 +239,7 @@ export default {
     'Before you can access our code search functionality please sign in or sign up.': '请先登录或注册再使用代码搜索。',
 
     // 头部搜索框输入无法识别的限定符时的提示
-    'Possible unrecognized qualifier, searching for this term literally': '可能是无法识别的限定符，将按字面搜索该词',
+    'Possible unrecognized qualifier, searching for this term literally': '可能是无法识别的限定符，将按字面搜索该词'
   },
   scoped: {
     ...pageOnly(SORT_OPTIONS),
@@ -294,13 +291,13 @@ export default {
     Application: '应用',
     // 产品名译中文（用户定）：单个 GitHub Action → GitHub 操作，同 marketplace 词典
     'GitHub Action': 'GitHub 操作',
-    'Verified by GitHub': '已由 GitHub 验证',
+    'Verified by GitHub': '已由 GitHub 验证'
   },
   regexp: [
     // 结果页 sr-only 标题：repositories Search Results · vue（查询词原样保留）
     [
       new RegExp(`^(${Object.keys(RESULT_HEADINGS).join('|')}) Search Results · (.+)$`),
-      (_, type, query) => `${RESULT_HEADINGS[type] ?? type} · ${query}`,
+      (_, type, query) => `${RESULT_HEADINGS[type] ?? type} · ${query}`
     ],
     // 登录后可见类型为空、没有前缀的版本：Search Results · vue is:public
     [/^Search Results · (.+)$/, '搜索结果 · $1'],
@@ -315,8 +312,7 @@ export default {
     // 数字与年月日之间有无空格都匹配，日期按 helpers 的格式重写，与全站日期一致
     [
       /^on (?:(\d{4}) ?年 ?)?(\d{1,2}) ?月 ?(\d{1,2}) ?日$/,
-      (_, year: string, month: string, day: string) =>
-        formatDate(year ? Number(year) : undefined, Number(month), Number(day)),
+      (_, year: string, month: string, day: string) => formatDate(year ? Number(year) : undefined, Number(month), Number(day))
     ],
 
     // 存储库结果
@@ -327,7 +323,7 @@ export default {
     [/^Copy full commit hash ([\da-f]{7,40})$/, '复制完整提交哈希 $1'],
     [
       new RegExp(`^(${Object.keys(SIGNATURE_STATES).join('|')}): ([\\da-f]{7,40})$`),
-      (_, state, hash) => `${SIGNATURE_STATES[state] ?? state}：${hash}`,
+      (_, state, hash) => `${SIGNATURE_STATES[state] ?? state}：${hash}`
     ],
     // 软件包结果
     [new RegExp(`^(${Object.keys(PACKAGE_TYPES).join('|')}) type$`), (_, type) => PACKAGE_TYPES[type] ?? type],
@@ -336,7 +332,7 @@ export default {
     [/^This file contains (\d[\d,]*) more match(?:es)? not shown\.$/, '此文件另有 $1 处匹配未显示。'],
     [/^See all (\d[\d,]*) match(?:es)? in the full file$/, '查看完整文件中的全部 $1 处匹配'],
     // 搜索首页页脚：「GitHub, Inc. © 」「2026」拼接，品牌与年份保持原样（同 common 的全站页脚）
-    [/^GitHub, Inc\. © (\d{4})$/, 'GitHub, Inc. © $1'],
+    [/^GitHub, Inc\. © (\d{4})$/, 'GitHub, Inc. © $1']
   ],
   ignore: [
     // 结果中的用户内容：摘要与描述（Marketplace 应用描述不带 search-match）、主题名、提交与讨论作者名、用户所在地
@@ -357,10 +353,10 @@ export default {
     // 头部搜索框按钮显示的当前查询（占位文字带 kbd，不忽略）；高亮层与尺寸层由全局忽略规则处理
     '#qb-input-query:not(:has(kbd))',
     // 搜索建议中的限定符取值（state:open 的 open 等，及存储库名、用户名）
-    '[data-type="filter-item"] .ActionListItem-label',
+    '[data-type="filter-item"] .ActionListItem-label'
   ],
   attributeRules: [
     // 结果中语言名的无障碍名称：Vue language → Vue 语言（语言名原样）
-    [LANGUAGE_NAME, 'aria-label', /^(.+) language$/, '$1 语言'],
-  ],
+    [LANGUAGE_NAME, 'aria-label', /^(.+) language$/, '$1 语言']
+  ]
 } satisfies PageDictionary

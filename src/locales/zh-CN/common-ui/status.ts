@@ -15,7 +15,7 @@ const STATES: Readonly<Record<string, string>> = {
   Completed: '已完成',
   'Not planned': '未计划',
   Duplicate: '重复',
-  Archived: '已存档',
+  Archived: '已存档'
 }
 
 /** Primer Label 的 title：Label: Verified */
@@ -33,7 +33,7 @@ const LABELS: Readonly<Record<string, string>> = {
   'Public mirror': '公共镜像',
   Preview: '预览',
   'Public preview': '公开预览',
-  Staff: '员工',
+  Staff: '员工'
 }
 
 /** 作者关系说明的主语：This user is → 此用户；You are → 你 */
@@ -54,13 +54,13 @@ function period(dot: string): string {
 const ROLES: Readonly<Record<string, string>> = {
   maintainer: '维护者',
   collaborator: '协作者',
-  contributor: '贡献者',
+  contributor: '贡献者'
 }
 
 const ITEM_KINDS: Readonly<Record<string, string>> = {
   issue: '议题',
   'pull request': '拉取请求',
-  discussion: '讨论',
+  discussion: '讨论'
 }
 
 export default {
@@ -146,48 +146,48 @@ export default {
     'This is a mannequin user.': '这是一个占位帐户。',
     'This is your first pull request on GitHub.': '这是你在 GitHub 上的第一个拉取请求。',
     "This user's first pull request on GitHub.": '这是此用户在 GitHub 上的第一个拉取请求。',
-    'This user’s first pull request on GitHub.': '这是此用户在 GitHub 上的第一个拉取请求。',
+    'This user’s first pull request on GitHub.': '这是此用户在 GitHub 上的第一个拉取请求。'
   },
   regexp: [
     // 状态与标签 title
     [
       /^Status: (Open|Closed|Merged|Draft|Queued|Completed|Not planned|Duplicate|Archived)$/,
-      (_, state: string) => `状态：${STATES[state]!}`,
+      (_, state: string) => `状态：${STATES[state]!}`
     ],
     [
       /^Label: (Verified|Unverified|GitHub Sponsor|Public|Private|Internal|Public archive|Private archive|Public template|Private template|Public mirror|Preview|Public preview|Staff)$/,
-      (_, label: string) => `标签：${LABELS[label]!}`,
+      (_, label: string) => `标签：${LABELS[label]!}`
     ],
 
     // 作者关系说明（评论头部徽章的 tooltip；原文有的带句号，有的不带）
     [
       /^(This user is|You are) a member of the ([\w.-]+) organization(\.?)$/,
-      (_, who: string, org: string, dot: string) => `${subject(who)}是 ${org} 组织的成员${period(dot)}`,
+      (_, who: string, org: string, dot: string) => `${subject(who)}是 ${org} 组织的成员${period(dot)}`
     ],
     [
       /^(This user is|You are) the owner of (?:the ([\w.-]+)|this) repository(\.?)$/,
-      (_, who: string, repo: string, dot: string) => `${subject(who)}是${repository(repo)}的所有者${period(dot)}`,
+      (_, who: string, repo: string, dot: string) => `${subject(who)}是${repository(repo)}的所有者${period(dot)}`
     ],
     [
       /^(This user has|You have) been invited to collaborate on (?:the ([\w.-]+)|this) repository(\.?)$/,
-      (_, who: string, repo: string, dot: string) => `${subject(who)}已受邀协作${repository(repo)}${period(dot)}`,
+      (_, who: string, repo: string, dot: string) => `${subject(who)}已受邀协作${repository(repo)}${period(dot)}`
     ],
     [
       /^(This user has|You have) previously committed to (?:the ([\w.-]+)|this) repository(\.?)$/,
-      (_, who: string, repo: string, dot: string) => `${subject(who)}曾向${repository(repo)}提交过代码${period(dot)}`,
+      (_, who: string, repo: string, dot: string) => `${subject(who)}曾向${repository(repo)}提交过代码${period(dot)}`
     ],
     [
       /^(This user is|You are) a first-time contributor to (?:the ([\w.-]+)|this) repository(\.?)$/,
-      (_, who: string, repo: string, dot: string) => `${subject(who)}是${repository(repo)}的首次贡献者${period(dot)}`,
+      (_, who: string, repo: string, dot: string) => `${subject(who)}是${repository(repo)}的首次贡献者${period(dot)}`
     ],
     [
       /^(This user is|You are) a (maintainer|collaborator|contributor) on this repository(\.?)$/,
-      (_, who: string, role: string, dot: string) => `${subject(who)}是此存储库的${ROLES[role]!}${period(dot)}`,
+      (_, who: string, role: string, dot: string) => `${subject(who)}是此存储库的${ROLES[role]!}${period(dot)}`
     ],
     [
       /^(This user is|You are) the author(?: of this (issue|pull request|discussion))?(\.?)$/,
       (_, who: string, kind: string | undefined, dot: string) =>
-        `${subject(who)}是${kind ? `此${ITEM_KINDS[kind]!}的` : ''}作者${period(dot)}`,
-    ],
-  ],
+        `${subject(who)}是${kind ? `此${ITEM_KINDS[kind]!}的` : ''}作者${period(dot)}`
+    ]
+  ]
 } satisfies PageDictionary

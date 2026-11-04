@@ -10,14 +10,14 @@ const bundle: LocaleBundle = [
       static: { Open: '打开', Issues: '议题', Shared: '共享-通用' },
       regexp: [
         [/^(\d+) stars?$/, '$1 个星标'],
-        [/^Opened by (.+)$/, (_match, user) => `由 ${user} 打开`],
+        [/^Opened by (.+)$/, (_match, user) => `由 ${user} 打开`]
       ],
-      ignore: ['.common-ignore'],
-    },
+      ignore: ['.common-ignore']
+    }
   ],
   ['common', { static: { Open: '不应覆盖', Close: '关闭' } }],
   ['repository', { scoped: { Open: '仓库-打开' }, regexp: [[/^(\d+) forks?$/, '$1 个复刻']] }],
-  ['issues', { scoped: { Open: '未解决' }, regexp: [[/^(\d+) stars?$/, '议题页 $1 星']], ignore: ['.issue-ignore'] }],
+  ['issues', { scoped: { Open: '未解决' }, regexp: [[/^(\d+) stars?$/, '议题页 $1 星']], ignore: ['.issue-ignore'] }]
 ]
 
 describe('normalizeText / hasLatin', () => {
@@ -61,18 +61,18 @@ describe('createMatcher', () => {
               /^boom (\d+)$/,
               () => {
                 throw new RangeError('boom')
-              },
+              }
             ],
             [/^boom (\d+)$/, (_match, n) => `爆炸 ${n}`],
             [
               /^only (\d+)$/,
               () => {
                 throw new Error('only')
-              },
-            ],
-          ],
-        },
-      ],
+              }
+            ]
+          ]
+        }
+      ]
     ])
     expect(throwing.translate('boom 1', ['common'])).toBe('爆炸 1')
     expect(throwing.translate('only 1', ['common'])).toBeUndefined()
@@ -82,7 +82,7 @@ describe('createMatcher', () => {
     const states: Readonly<Record<string, string>> = { Open: '打开' }
     const rule: RegExpRule = [/^State: (.+)$/, (_match, name) => `状态：${states[name] ?? name}`]
     const leaky = createMatcher([
-      ['common', { regexp: [rule], inline: [['{} is {}', () => `是${String(Object.getPrototypeOf(states))}`]] }],
+      ['common', { regexp: [rule], inline: [['{} is {}', () => `是${String(Object.getPrototypeOf(states))}`]] }]
     ])
     expect(leaky.translate('State: Open', ['common'])).toBe('状态：打开')
     for (const key of ['constructor', 'toString', 'valueOf', 'hasOwnProperty', '__proto__']) {
@@ -106,9 +106,7 @@ describe('createMatcher', () => {
   })
 
   it('translateRaw：译文那一端是全角标点时不保留原文的空白', () => {
-    const punct = createMatcher([
-      ['common', { static: { 'Tip:': '提示：', '(optional)': '（可选）', Done: '完成', '— Done': '——完成' } }],
-    ])
+    const punct = createMatcher([['common', { static: { 'Tip:': '提示：', '(optional)': '（可选）', Done: '完成', '— Done': '——完成' } }]])
     expect(punct.translateRaw('Tip: ', ['common'])).toBe('提示：')
     expect(punct.translateRaw(' (optional) ', ['common'])).toBe('（可选）')
     expect(punct.translateRaw(' Done ', ['common'])).toBe(' 完成 ')
@@ -134,7 +132,7 @@ describe('createMatcher', () => {
     const specific = ['a', 'title', /^(.+)$/, '具体'] as const
     const rules = createMatcher([
       ['common', { attributeRules: [general] }],
-      ['issues', { attributeRules: [specific] }],
+      ['issues', { attributeRules: [specific] }]
     ])
     expect(rules.attributeRules(['common'])).toEqual([general])
     expect(rules.attributeRules(['common', 'repository', 'issues'])).toEqual([specific, general])
@@ -156,24 +154,20 @@ describe('createMatcher', () => {
               '{} fail',
               () => {
                 throw new Error('fail')
-              },
-            ],
-          ],
-        },
+              }
+            ]
+          ]
+        }
       ],
-      ['pulls', { inline: [['{#} merged', '{#} 个已合并']] }],
+      ['pulls', { inline: [['{#} merged', '{#} 个已合并']] }]
     ])
     const key = patternKey
-    expect(inline.translateInline(key('Are you sure you want to unblock {} from {}?'), ['common'])).toBe(
-      '确定要取消阻止 {} 访问 {} 吗？',
-    )
+    expect(inline.translateInline(key('Are you sure you want to unblock {} from {}?'), ['common'])).toBe('确定要取消阻止 {} 访问 {} 吗？')
     expect(inline.translateInline(key('{#} merged'), ['common'])).toBe('{} 合并了')
     expect(inline.translateInline(key('{#} merged'), ['common', 'repository', 'pulls'])).toBe('{#} 个已合并')
     expect(inline.translateInline(key('{} merged'), ['common', 'repository', 'pulls'])).toBe('{} 合并了')
     expect(inline.translateInline(key('{} published {} {}'), ['common'])).toBe('{} 发布了 {} {}')
-    expect(inline.translateInline(key('Allow this OAuth App via the {}.'), ['common'])).toBe(
-      '允许此 OAuth 应用通过 {}。',
-    )
+    expect(inline.translateInline(key('Allow this OAuth App via the {}.'), ['common'])).toBe('允许此 OAuth 应用通过 {}。')
     expect(inline.translateInline(key('{} boom'), ['common'])).toBe('爆炸 {}')
     expect(inline.translateInline(key('{} fail'), ['common'])).toBeUndefined()
     expect(inline.translateInline(key('{} unknown'), ['common'])).toBeUndefined()
@@ -190,11 +184,11 @@ describe('createMatcher', () => {
           inline: [
             [/^\{\} merged$/, '正则 {}'],
             ['{} merged', '{} 合并了'],
-            ['{} merged', '{} 重复'],
-          ],
-        },
+            ['{} merged', '{} 重复']
+          ]
+        }
       ],
-      ['issues', { inline: [[/^\{\} closed$/, '{} 已关闭']] }],
+      ['issues', { inline: [[/^\{\} closed$/, '{} 已关闭']] }]
     ])
     expect(inline.translateInline(patternKey('{} merged'), ['common'])).toBe('{} 合并了')
     expect(inline.hasInline(['common', 'repository', 'issues'])).toBe(true)
@@ -215,10 +209,10 @@ describe('createMatcher', () => {
         {
           inline: [
             ['{#} of {} checks passed', '{}/{} 项检查通过'],
-            ['{} pushed {#} commits', '{} 推送了 {} 个提交'],
-          ],
-        },
-      ],
+            ['{} pushed {#} commits', '{} 推送了 {} 个提交']
+          ]
+        }
+      ]
     ])
     const key = patternKey
     expect(inline.translateInline(key('{#} of {} checks passed'), ['common'])).toBe('{}/{} 项检查通过')
@@ -243,11 +237,11 @@ describe('createMatcher', () => {
               '{#} merged',
               () => {
                 throw new Error('merged')
-              },
-            ],
-          ],
-        },
-      ],
+              }
+            ]
+          ]
+        }
+      ]
     ])
     const key = patternKey
     expect(inline.translateInline(key('{} of {}'), ['common'])).toBe('{} 之 {}')
@@ -259,7 +253,7 @@ describe('createMatcher', () => {
   it('mergeSelectors 按页面类型合并', () => {
     const merging = createMatcher([
       ['common', { mergeText: ['.month'] }],
-      ['issues', { mergeText: ['.remaining'] }],
+      ['issues', { mergeText: ['.remaining'] }]
     ])
     expect(merging.mergeSelectors(['common'])).toEqual(['.month'])
     expect(merging.mergeSelectors(['common', 'repository', 'issues'])).toEqual(['.month', '.remaining'])
@@ -280,11 +274,11 @@ describe('多句文本按句翻译', () => {
           'Saved.': '已保存',
           'Saved!': '已保存！',
           'Are you sure?': '确定吗？',
-          'Loading...': '加载中...',
+          'Loading...': '加载中...'
         },
-        regexp: [[/^(\d+) errors?\.$/, '$1 个错误。']],
-      },
-    ],
+        regexp: [[/^(\d+) errors?\.$/, '$1 个错误。']]
+      }
+    ]
   ])
   const translate = (text: string): string | undefined => sentences.translate(text, ['common'])
 
@@ -327,17 +321,17 @@ describe('名称表、说明表与标签正则（translateLabel）', () => {
       {
         labels: { bug: '缺陷', 'help wanted': '需要帮助' },
         labelDescriptions: { 'Good for newcomers': '适合新手' },
-        labelRegexp: [ECOSYSTEM],
-      },
+        labelRegexp: [ECOSYSTEM]
+      }
     ],
     [
       'pulls',
       {
         labels: { bug: '错误', question: '疑问' },
         labelDescriptions: { 'Good for newcomers': '后收录', 'Further information is requested': '需要更多信息' },
-        labelRegexp: [[/^Pull requests that update (.+)$/, '后收录']],
-      },
-    ],
+        labelRegexp: [[/^Pull requests that update (.+)$/, '后收录']]
+      }
+    ]
   ]
   const labels = createMatcher(labelBundle)
 
@@ -346,12 +340,8 @@ describe('名称表、说明表与标签正则（translateLabel）', () => {
     expect(labels.translateLabel('question', 'name')).toBe('疑问')
     expect(labels.translateLabel('Good for newcomers', 'description')).toBe('适合新手')
     expect(labels.translateLabel('Further information is requested', 'description')).toBe('需要更多信息')
-    expect(labels.translateLabel('Pull requests that update Javascript code', 'description')).toBe(
-      '更新 Javascript 代码的拉取请求',
-    )
-    expect(labels.translateLabel('Pull requests that update GitHub Actions code', 'description')).toBe(
-      '更新 GitHub Actions 代码的拉取请求',
-    )
+    expect(labels.translateLabel('Pull requests that update Javascript code', 'description')).toBe('更新 Javascript 代码的拉取请求')
+    expect(labels.translateLabel('Pull requests that update GitHub Actions code', 'description')).toBe('更新 GitHub Actions 代码的拉取请求')
     expect(labels.translateLabel('Pull requests that update docs', 'description')).toBe('后收录')
     expect(labels.hasLabels()).toBe(true)
   })
@@ -388,8 +378,8 @@ describe('名称表、说明表与标签正则（translateLabel）', () => {
         bug: '程序缺陷',
         'scope: vapor': '范围',
         'Good for newcomers': '新手友好',
-        'Pull requests that update Ruby code': '更新 Ruby 依赖',
-      },
+        'Pull requests that update Ruby code': '更新 Ruby 依赖'
+      }
     })
     expect(custom.translateLabel(' bug ', 'name')).toBe(' 缺陷 ')
     expect(custom.translateLabel('Good for newcomers', 'description')).toBe('适合新手')
@@ -405,9 +395,7 @@ describe('名称表、说明表与标签正则（translateLabel）', () => {
     expect(none.translateLabel('bug', 'name')).toBeUndefined()
     const rulesOnly = createMatcher([['common', { labelRegexp: [ECOSYSTEM] }]])
     expect(rulesOnly.hasLabels()).toBe(true)
-    expect(rulesOnly.translateLabel('Pull requests that update python code', 'description')).toBe(
-      '更新 python 代码的拉取请求',
-    )
+    expect(rulesOnly.translateLabel('Pull requests that update python code', 'description')).toBe('更新 python 代码的拉取请求')
     expect(rulesOnly.translateLabel('bug', 'name')).toBeUndefined()
     const descriptionsOnly = createMatcher([['common', { labelDescriptions: { 'Good for newcomers': '适合新手' } }]])
     expect(descriptionsOnly.hasLabels()).toBe(true)
@@ -418,7 +406,7 @@ describe('名称表、说明表与标签正则（translateLabel）', () => {
     const lists = createMatcher([
       ['common', { static: { '✨ Inspiration': '✨ 灵感' }, labels: { bug: '缺陷' } }],
       ['profile', { listNames: { '✨ Inspiration': '✨ 灵感', '🚀 My stack': '🚀 我的技术栈' } }],
-      ['explore', { listNames: { '🚀 My stack': '后收录' } }],
+      ['explore', { listNames: { '🚀 My stack': '后收录' } }]
     ])
 
     it('全局生效，同一原文先收录的生效；整段、区分大小写匹配，首尾空白照原文保留', () => {
@@ -441,7 +429,7 @@ describe('名称表、说明表与标签正则（translateLabel）', () => {
 
     it('只有列表名表时也算有名称表；自定义词条不参与', () => {
       const only = createMatcher([['profile', { listNames: { '✨ Inspiration': '✨ 灵感' } }]], {
-        custom: { '✨ Inspiration': '灵感集' },
+        custom: { '✨ Inspiration': '灵感集' }
       })
       expect(only.hasLabels()).toBe(true)
       expect(only.translateLabel('✨ Inspiration', 'list')).toBe('✨ 灵感')
@@ -453,7 +441,7 @@ describe('名称表、说明表与标签正则（translateLabel）', () => {
     const types = createMatcher([
       ['common', { static: { Feature: '特性' }, labels: { bug: '缺陷' } }],
       ['issues', { issueTypes: { Task: '任务', Bug: '缺陷' } }],
-      ['org-settings', { issueTypes: { Bug: '后收录', Feature: '功能' } }],
+      ['org-settings', { issueTypes: { Bug: '后收录', Feature: '功能' } }]
     ])
 
     it('全局生效，同一原文先收录的生效；整段、区分大小写匹配，首尾空白照原文保留', () => {

@@ -18,7 +18,7 @@ const CHECK_RESULT: Readonly<Record<string, string>> = {
   'is pending': '处于挂起状态',
   'is waiting': '正在等待',
   'is stale': '已过时',
-  'had a startup failure': '启动失败',
+  'had a startup failure': '启动失败'
 }
 
 const CHECK_RESULT_SOURCE = Object.keys(CHECK_RESULT).join('|')
@@ -32,7 +32,7 @@ const ANNOTATION_UNIT: Readonly<Record<string, string>> = {
   warning: '个警告',
   warnings: '个警告',
   notice: '个提示',
-  notices: '个提示',
+  notices: '个提示'
 }
 
 const ANNOTATION_PART = '\\d+ (?:error|warning|notice)s?'
@@ -43,7 +43,7 @@ const ANNOTATION_PART = '\\d+ (?:error|warning|notice)s?'
  */
 function annotationCounts(text: string): string {
   const items = [...text.matchAll(/(\d+) ((?:error|warning|notice)s?)/g)].map(
-    ([, count, unit]) => `${count} ${ANNOTATION_UNIT[unit!] ?? unit}`,
+    ([, count, unit]) => `${count} ${ANNOTATION_UNIT[unit!] ?? unit}`
   )
   if (items.length < 2) return items.join('')
   return `${items.slice(0, -1).join('、')}和 ${items.at(-1)}`
@@ -61,7 +61,7 @@ export default {
     'Check run summary': '检查运行摘要',
     'Re-running checks...': '正在重新运行检查...',
     'Re-running checks…': '正在重新运行检查…',
-    'This check run has no output.': '此检查运行没有输出。',
+    'This check run has no output.': '此检查运行没有输出。'
   },
   scoped: {
     // 运行状态（小写）
@@ -96,23 +96,20 @@ export default {
     'View raw logs': '查看原始日志',
     'Show timestamps': '显示时间戳',
     'Go to next result': '转到下一个结果',
-    'Go to previous result': '转到上一个结果',
+    'Go to previous result': '转到上一个结果'
   },
   regexp: [
     [
       new RegExp(`^This (check|job) (${CHECK_RESULT_SOURCE})$`),
-      (_, subject, result) => `${CHECK_SUBJECT[subject] ?? subject}${CHECK_RESULT[result] ?? result}`,
+      (_, subject, result) => `${CHECK_SUBJECT[subject] ?? subject}${CHECK_RESULT[result] ?? result}`
     ],
     // 耗时：completed 9 minutes ago in 30s
     [new RegExp(`^in (${DURATION_SOURCE})$`), (_, time) => `用时 ${duration(time)}`],
     // 第三方检查的详细信息链接
     [/^View more details on (.+)$/, '在 $1 上查看更多详细信息'],
     // 注释计数：3 errors、2 errors and 6 notices
-    [
-      new RegExp(`^${ANNOTATION_PART}(?:(?:,| and|, and) ${ANNOTATION_PART}){0,2}$`),
-      (match: string) => annotationCounts(match),
-    ],
+    [new RegExp(`^${ANNOTATION_PART}(?:(?:,| and|, and) ${ANNOTATION_PART}){0,2}$`), (match: string) => annotationCounts(match)],
     // 注释内容（GitHub 生成，与 actions 词典同译；原文只有句号，不加逗号）
-    [/^Process completed with exit code (-?\d+)\.$/, '进程以退出代码 $1 完成。'],
-  ],
+    [/^Process completed with exit code (-?\d+)\.$/, '进程以退出代码 $1 完成。']
+  ]
 } satisfies PageDictionary

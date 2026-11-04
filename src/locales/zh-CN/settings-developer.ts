@@ -30,5 +30,5 @@ export default mergeDictionaries(
   applications,
   apps,
   tokens,
-  permissions,
+  permissions
 ) satisfies PageDictionary

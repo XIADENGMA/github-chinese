@@ -12,7 +12,7 @@ export default {
     'No one you follow has starred this repository yet.': '你关注的人中还没有人为此存储库加星标。',
     'Learn more about how starring works on GitHub.': '了解 GitHub 上星标的工作方式。',
     // Learn more <about how starring works on GitHub.>
-    'about how starring works on GitHub.': '关于 GitHub 上星标的工作方式。',
+    'about how starring works on GitHub.': '关于 GitHub 上星标的工作方式。'
   },
   regexp: [
     // 关注按钮的 aria-label
@@ -21,6 +21,6 @@ export default {
     // 用户卡片：Joined on Apr 13, 2014 / Works for @octo-org / Is from San Francisco
     [new RegExp(`^Joined on (${DATE_SOURCE})$`), (_, date: string) => joinCjk('加入于', translateTime(date))],
     [/^Works for (@?[\w.-]+)$/, '就职于 $1'],
-    [/^Is from (.+)$/, '来自 $1'],
-  ],
+    [/^Is from (.+)$/, '来自 $1']
+  ]
 } satisfies PageDictionary

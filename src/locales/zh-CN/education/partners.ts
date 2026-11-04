@@ -47,8 +47,7 @@ export default {
 
     // CTA
     'Ready to work with us?': '准备好与我们合作了吗？',
-    'Join us today in our mission to empower the tech innovators of tomorrow.':
-      '立即加入我们赋能未来技术创新者的使命。',
+    'Join us today in our mission to empower the tech innovators of tomorrow.': '立即加入我们赋能未来技术创新者的使命。',
 
     // 三类合作伙伴卡片
     'There are multiple ways you can partner with us. Choose what best aligns with your business goals.':
@@ -84,8 +83,7 @@ export default {
     'GitHub Education partnerships drive adoption and engagement by seeking out and providing industry standard tools and resources for all future developers. We do this by partnering with companies who support our learners with free use of their tools, special events, training opportunities, product testing, and more for a mutually beneficial learning environment. To grow your business with GitHub, please visit the':
       'GitHub 教育合作关系通过为所有未来开发人员寻找并提供行业标准工具和资源来推动采用和参与。为此，我们与支持学习者的公司合作，这些公司提供工具免费使用、特别活动、培训机会、产品测试等，共建互惠的学习环境。要与 GitHub 共同发展业务，请访问',
     'partner portal': '合作伙伴门户',
-    'to better understand Channel, Service, and Technical Partnership opportunities.':
-      '，进一步了解渠道、服务和技术合作机会。',
+    'to better understand Channel, Service, and Technical Partnership opportunities.': '，进一步了解渠道、服务和技术合作机会。',
     'What kinds of partners are you looking for?': '你们在寻找什么样的合作伙伴？',
     'GitHub Education’s mission is to enable all future developers. We seek partners who align with this mission to share knowledge, tools, and resources to make the future of development as strong as it can be. Partners must be willing to offer free resources to students that align with the learning journey.':
       'GitHub 教育的使命是赋能所有未来的开发人员。我们寻找认同这一使命的合作伙伴，共享知识、工具和资源，让开发的未来尽可能强大。合作伙伴必须愿意向学生免费提供契合学习历程的资源。',
@@ -94,11 +92,9 @@ export default {
     // … but please fill out <!-- -->our partnership form<!-- --> and we will be in touch …
     'We have limited capacity to support all in person event requests, but please fill out our partnership form and we will be in touch if we are able to move forward with your request.':
       '我们支持所有线下活动请求的能力有限，但请填写我们的合作表单，如果我们能够推进你的请求，将与你联系。',
-    'We have limited capacity to support all in person event requests, but please fill out':
-      '我们支持所有线下活动请求的能力有限，但请填写',
+    'We have limited capacity to support all in person event requests, but please fill out': '我们支持所有线下活动请求的能力有限，但请填写',
     'our partnership form': '我们的合作表单',
-    'and we will be in touch if we are able to move forward with your request.':
-      '，如果我们能够推进你的请求，将与你联系。',
+    'and we will be in touch if we are able to move forward with your request.': '，如果我们能够推进你的请求，将与你联系。',
     'There was a product I thought was in the Student Developer Pack but I no longer see it. What happened?':
       '我记得学生开发人员包中有某个产品，但现在看不到了。发生了什么？',
     // … visit our <!-- -->Student Developer Pack public repository<!-- -->, which is updated regularly.
@@ -106,18 +102,18 @@ export default {
       '有时，某家公司不得不退出学生开发人员包，不再通过我们的系统向学生提供资源。有些情况是因为该公司决定直接提供自己的学生福利，另一些情况则是因为提供免费福利与其业务目标不符。要获取最新的开发人员包合作伙伴列表，请访问我们的学生开发人员包公共存储库，该存储库定期更新。',
     'Sometimes, a company has to leave the Student Developer Pack and no longer offers their resources to students through our system. In some cases, it’s because the company has decided to offer their own student benefit directly. In other cases, it’s because offering a free benefit isn’t aligned with their business goals. For the most up to date list of Pack partners, visit our':
       '有时，某家公司不得不退出学生开发人员包，不再通过我们的系统向学生提供资源。有些情况是因为该公司决定直接提供自己的学生福利，另一些情况则是因为提供免费福利与其业务目标不符。要获取最新的开发人员包合作伙伴列表，请访问我们的',
-    'Student Developer Pack public repository': '学生开发人员包公共存储库',
+    'Student Developer Pack public repository': '学生开发人员包公共存储库'
   },
   scoped: {
     'Partner now': '立即合作',
     // 只用于「… visit our <!-- -->Student Developer Pack public repository<!-- -->, which is updated regularly.」逐段回退，「该存储库」只对本句成立
-    ', which is updated regularly.': '，该存储库定期更新。',
+    ', which is updated regularly.': '，该存储库定期更新。'
   },
   regexp: [
     // +50% of students will influence their workplaces / 75% of student developers actively self-educate
     [/^\+(\d+)% of students will influence their workplaces$/, '超过 $1% 的学生将影响其工作场所'],
     [/^(\d+)% of student developers actively self-educate$/, '$1% 的学生开发人员主动自学'],
     // 5M students use GitHub Education
-    [/^(\d+)M students use GitHub Education$/, (_, count) => joinCjk(millions(count!), '学生使用 GitHub 教育')],
-  ],
+    [/^(\d+)M students use GitHub Education$/, (_, count) => joinCjk(millions(count!), '学生使用 GitHub 教育')]
+  ]
 } satisfies PageDictionary

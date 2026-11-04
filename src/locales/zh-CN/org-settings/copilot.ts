@@ -109,10 +109,8 @@ export default {
     'We couldn’t check your export status. Please try again later.': '无法检查导出状态。请稍后重试。',
 
     // 内容排除（组织）
-    'Choose the repositories and paths that GitHub Copilot should exclude.':
-      '选择 GitHub Copilot 应排除的存储库和路径。',
-    'All exclusions defined will apply to all members of your organization.':
-      '定义的所有排除项都将适用于组织的所有成员。',
+    'Choose the repositories and paths that GitHub Copilot should exclude.': '选择 GitHub Copilot 应排除的存储库和路径。',
+    'All exclusions defined will apply to all members of your organization.': '定义的所有排除项都将适用于组织的所有成员。',
     'Repositories and paths to exclude:': '要排除的存储库和路径：',
 
     // 运行器类型（组织级）
@@ -147,7 +145,7 @@ export default {
     'Add API key': '添加 API 密钥',
     'Available models': '可用模型',
     'Deployment URL': '部署 URL',
-    'Enable GitHub Copilot': '启用 GitHub Copilot',
+    'Enable GitHub Copilot': '启用 GitHub Copilot'
   },
   scoped: {
     // 「…will have access to」+「Copilot」+「inside your organization.」
@@ -220,8 +218,7 @@ export default {
     'Excluded paths not updated, check the errors and try again.': '排除路径未更新，请检查错误后重试。',
     'Excluded paths updated.': '已更新排除路径。',
     'Delete excluded paths': '删除排除路径',
-    'You are about to delete all excluded paths. Are you sure you want to proceed?':
-      '你即将删除所有排除路径。确定要继续吗？',
+    'You are about to delete all excluded paths. Are you sure you want to proceed?': '你即将删除所有排除路径。确定要继续吗？',
     'Copilot won’t be able to access or utilize the contents located in those specified paths.':
       'Copilot 将无法访问或使用这些指定路径中的内容。',
     "Copilot won't be able to access or utilize the contents located in those specified paths.":
@@ -281,7 +278,7 @@ export default {
     Firewall: '防火墙',
     Allowlist: '允许列表',
     'Paths to exclude': '要排除的路径',
-    'Repositories and paths to exclude': '要排除的存储库和路径',
+    'Repositories and paths to exclude': '要排除的存储库和路径'
   },
   regexp: [
     [/^(\d+) seats? assigned$/, '已分配 $1 个席位'],
@@ -290,7 +287,7 @@ export default {
     [/^(\d+) teams? selected$/, '已选择 $1 个团队'],
     [
       /^You have (\d+) characters, but the maximum is (\d+)(\.?)$/,
-      (_, count: string, max: string, dot: string) => `当前 ${count} 个字符，上限为 ${max} 个${dot ? '。' : ''}`,
+      (_, count: string, max: string, dot: string) => `当前 ${count} 个字符，上限为 ${max} 个${dot ? '。' : ''}`
     ],
     // 模型策略说明（与个人 Copilot 设置一致）
     [/^If enabled, you can access and send data to ([\w .()/:-]{1,100})\.$/, '启用后，你可以访问 $1 并向其发送数据。'],
@@ -301,36 +298,33 @@ export default {
     // 删除、下载记忆对话框首段：整句是一个文本节点（登录名、计费的组织或企业）
     [
       /^This will permanently delete user-scoped Copilot memories for ([\w-]+) that are billed to (.+)\.$/,
-      '这将永久删除计费到 $2 的 $1 用户范围 Copilot 记忆。',
+      '这将永久删除计费到 $2 的 $1 用户范围 Copilot 记忆。'
     ],
     [
       /^This will permanently delete user-scoped Copilot memories for all users with Copilot seats billed to (.+)\.$/,
-      '这将永久删除 Copilot 席位计费到 $1 的所有用户的用户范围 Copilot 记忆。',
+      '这将永久删除 Copilot 席位计费到 $1 的所有用户的用户范围 Copilot 记忆。'
     ],
     [
       /^This will download user-scoped Copilot memories for ([\w-]+) that are billed to (.+)\.$/,
-      '这将下载计费到 $2 的 $1 用户范围 Copilot 记忆。',
+      '这将下载计费到 $2 的 $1 用户范围 Copilot 记忆。'
     ],
     [
       /^This will download user-scoped Copilot memories for all users with Copilot seats billed to (.+)\.$/,
-      '这将下载 Copilot 席位计费到 $1 的所有用户的用户范围 Copilot 记忆。',
+      '这将下载 Copilot 席位计费到 $1 的所有用户的用户范围 Copilot 记忆。'
     ],
     // 下载记忆对话框第二段：「… in this 」+ 实体类型 +「.」三个相邻文本节点，整段拼读
     [
       /^By clicking Download memories, you confirm you have permission to access this information on behalf of users in this (organization|enterprise)\.$/,
-      (_, entity: string) => `单击下载记忆即表示你确认有权代表此${ENTITY_TYPES[entity]}的用户访问这些信息。`,
+      (_, entity: string) => `单击下载记忆即表示你确认有权代表此${ENTITY_TYPES[entity]}的用户访问这些信息。`
     ],
     // 内容排除的继承规则说明：图标 +「 Values defined by 」+ 名称 +「's administrators can't be edited」，整段拼读
     [/^Values defined by (.+?)['’]s administrators can['’]t be edited$/, '由 $1 的管理员定义的值无法编辑'],
     // 继承规则标签：「Excluded paths inherited from 」+ 层级 +「 」+ 名称 +「:」。名称有链接时前三段拼读、
     // 冒号是孤立标点（拼读为“排除路径继承自企业 <a>octo-ent</a>：”）；没有链接时名称也是文本，整段拼读
-    [
-      /^Excluded paths inherited from (enterprise|organization)$/,
-      (_, level: string) => `排除路径继承自${ENTITY_TYPES[level]}`,
-    ],
+    [/^Excluded paths inherited from (enterprise|organization)$/, (_, level: string) => `排除路径继承自${ENTITY_TYPES[level]}`],
     [
       /^Excluded paths inherited from (enterprise|organization) (.+):$/,
-      (_, level: string, name: string) => `排除路径继承自${ENTITY_TYPES[level]} ${name}：`,
-    ],
-  ],
+      (_, level: string, name: string) => `排除路径继承自${ENTITY_TYPES[level]} ${name}：`
+    ]
+  ]
 } satisfies PageDictionary

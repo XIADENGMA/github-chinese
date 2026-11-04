@@ -73,7 +73,7 @@ function tableLiteral(object: ESTree.ObjectExpression): TableLiteral | undefined
 /** 代码中可改写的 static / scoped 对象字面量（按出现顺序） */
 export function findTables(program: ESTree.Program): TableLiteral[] {
   const tables: TableLiteral[] = []
-  walk(program, (node) => {
+  walk(program, node => {
     if (node.type !== 'Property' || node.computed || node.value.type !== 'ObjectExpression') return false
     const name = keyName(node.key)
     if (name !== 'static' && name !== 'scoped') return false
@@ -110,7 +110,7 @@ export function packTablesPlugin(dir: string): Plugin {
         const file = id.split('?', 1)[0]!
         if (!isInside(file, dir) || !TABLE_KEY_RE.test(code)) return null
         return packTables(code, this.parse(code), file) ?? null
-      },
-    },
+      }
+    }
   }
 }

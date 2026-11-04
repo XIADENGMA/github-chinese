@@ -6,7 +6,7 @@ import { copilotPlan } from './plans'
 const AUTO_TIER: Readonly<Record<string, string>> = {
   Efficiency: '效率',
   Balance: '平衡',
-  Intelligence: '智慧',
+  Intelligence: '智慧'
 }
 
 /** 优化方向的短语：效率 → 效率最佳化（原文无引号，译文不加引号） */
@@ -22,14 +22,14 @@ const EFFORT: Readonly<Record<string, string>> = {
   Medium: '中',
   High: '高',
   'Extra High': '超高',
-  Max: '最高',
+  Max: '最高'
 }
 
 /** 使用量类别 */
 const QUOTA_KIND: Readonly<Record<string, string>> = {
   'free requests': '免費請求',
   'premium requests': '進階請求',
-  'premium responses': '進階回應',
+  'premium responses': '進階回應'
 }
 
 /** 可选的「限额重置」尾句：Limit resets on Nov 1. */
@@ -42,12 +42,12 @@ const FREEZE_TEXT = '暫時無法升級方案。'
 /** 使用量计量横幅的升级提示尾句 */
 const UPGRADE_TAIL: Readonly<Record<string, string>> = {
   ' Upgrade to increase your limit.': '升級以提高限額。',
-  ' Enable additional requests to get more usage after the limit is reached.': '啟用額外請求，達到上限後仍可繼續使用。',
+  ' Enable additional requests to get more usage after the limit is reached.': '啟用額外請求，達到上限後仍可繼續使用。'
 }
 
 /** 升级提示尾句的正则片段（可选） */
 const UPGRADE = `(${Object.keys(UPGRADE_TAIL)
-  .map((tail) => tail.replaceAll('.', '\\.'))
+  .map(tail => tail.replaceAll('.', '\\.'))
   .join('|')})?`
 
 /** 限额重置尾句：限額將於 11 月 1 日重設。无时间时为空 */
@@ -98,8 +98,7 @@ export default {
     'Choose an optimization for the next message': '為下一則訊息選擇最佳化方向',
     'Optimized for:': '最佳化方向：',
     'will be used for the next message.': '將用於下一則訊息。',
-    'The selected model is unavailable. Choose another model and try again.':
-      '所選模型無法使用。選擇其他模型後再試一次。',
+    'The selected model is unavailable. Choose another model and try again.': '所選模型無法使用。選擇其他模型後再試一次。',
     "No supported model is currently available. This may be caused by your organization's model policy. Contact your organization administrator or try again later.":
       '目前沒有可用的受支援模型。這可能是你組織的模型政策所致。聯絡組織管理員或稍後再試。',
     'You were rate limited on the selected model. Please try again using another model.':
@@ -115,10 +114,8 @@ export default {
     'Model options could not be loaded. Auto is still available.': '無法載入模型選項。仍可使用 Auto。',
 
     // 模型说明（按模型名和系列匹配的固定文案）
-    'Microsoft AI model optimized for coding and software development tasks.':
-      '針對程式撰寫和軟體開發任務最佳化的 Microsoft AI 模型。',
-    'Excellent for complex analysis, coding tasks, and nuanced creative writing.':
-      '擅長複雜分析、程式撰寫任務和細膩的創意寫作。',
+    'Microsoft AI model optimized for coding and software development tasks.': '針對程式撰寫和軟體開發任務最佳化的 Microsoft AI 模型。',
+    'Excellent for complex analysis, coding tasks, and nuanced creative writing.': '擅長複雜分析、程式撰寫任務和細膩的創意寫作。',
     'Balanced Claude model offering strong performance for everyday coding and chat tasks at faster speeds.':
       '均衡的 Claude 模型，能以更快的速度在日常程式撰寫和聊天任務中提供強大效能。',
     'Fastest and most compact Claude model. Ideal for quick responses and simple tasks.':
@@ -126,13 +123,10 @@ export default {
     'Versatile Claude model for coding and general assistance.': '適用於程式撰寫和一般協助的多用途 Claude 模型。',
     'OpenAI Codex model specialized for code generation, debugging, and software development tasks.':
       '專門用於程式碼產生、偵錯和軟體開發任務的 OpenAI Codex 模型。',
-    'Lightweight GPT model for quick responses and simple tasks with low latency.':
-      '輕量級 GPT 模型，適合低延遲的快速回應和簡單任務。',
+    'Lightweight GPT model for quick responses and simple tasks with low latency.': '輕量級 GPT 模型，適合低延遲的快速回應和簡單任務。',
     'GPT model fine-tuned for Copilot code completions.': '針對 Copilot 程式碼自動完成微調的 GPT 模型。',
-    'Optimized GPT-4 model with faster responses and multimodal capabilities.':
-      '經過最佳化的 GPT-4 模型，回應更快並具備多模態能力。',
-    'Enhanced GPT-4 model with improved instruction following and coding performance.':
-      '增強版 GPT-4 模型，指令遵循和程式撰寫效能更佳。',
+    'Optimized GPT-4 model with faster responses and multimodal capabilities.': '經過最佳化的 GPT-4 模型，回應更快並具備多模態能力。',
+    'Enhanced GPT-4 model with improved instruction following and coding performance.': '增強版 GPT-4 模型，指令遵循和程式撰寫效能更佳。',
     'OpenAI GPT model for coding and general assistance.': '適用於程式撰寫和一般協助的 OpenAI GPT 模型。',
     'Fast and efficient Gemini model optimized for quick responses and high throughput.':
       '快速高效的 Gemini 模型，針對快速回應和高輸送量最佳化。',
@@ -140,8 +134,7 @@ export default {
       'Google 的進階 Gemini Pro 模型，具備強大的推理和程式撰寫能力。',
     'Google Gemini model with balanced performance for coding and general assistance.':
       '在程式撰寫和一般協助方面表現均衡的 Google Gemini 模型。',
-    'xAI Grok model optimized for fast code generation and development tasks.':
-      '針對快速程式碼產生和開發任務最佳化的 xAI Grok 模型。',
+    'xAI Grok model optimized for fast code generation and development tasks.': '針對快速程式碼產生和開發任務最佳化的 xAI Grok 模型。',
 
     // 推理强度
     'Reasoning effort': '推理強度',
@@ -219,8 +212,7 @@ export default {
     'You have used all premium requests available this month.': '本月可用的進階請求已全部用完。',
     'You have reached your monthly limit for premium requests.': '本月進階請求已達上限。',
     'Upgrade to increase your limit.': '升級以提高限額。',
-    'Enable additional requests to get more usage after the limit is reached.':
-      '啟用額外請求，達到上限後仍可繼續使用。',
+    'Enable additional requests to get more usage after the limit is reached.': '啟用額外請求，達到上限後仍可繼續使用。',
     'Ask your admin to upgrade to increase your limit.': '請管理員升級以提高限額。',
     'Payment is needed to continue usage.': '需要付款才能繼續使用。',
     'Contact your administrator to keep your services running.': '聯絡管理員以維持服務運作。',
@@ -267,8 +259,7 @@ export default {
     'You have reached your monthly limit for premium requests. Ask your admin to': '本月進階請求已達上限。請管理員',
     'You have reached your monthly limit for premium requests. Enable additional requests or switch to the default model. Limit resets on':
       '本月進階請求已達上限。啟用額外請求或切換到預設模型。限額重設日期為',
-    'You have used all premium requests available this month. Limit resets on':
-      '本月可用的進階請求已全部用完。限額重設日期為',
+    'You have used all premium requests available this month. Limit resets on': '本月可用的進階請求已全部用完。限額重設日期為',
     'You have used all premium requests available this month. You will be charged per premium request until the limit resets on':
       '本月可用的進階請求已全部用完。限額重設前將按進階請求次數計費，重設日期為',
     'You have reached your monthly limit for': '你已達到本月',
@@ -278,7 +269,7 @@ export default {
 
     // 套餐推广
     'Available on Copilot Pro': '適用於 Copilot 專業版',
-    'Try Copilot code review for 30 days free.': '免費試用 Copilot 程式碼審查 30 天。',
+    'Try Copilot code review for 30 days free.': '免費試用 Copilot 程式碼審查 30 天。'
   },
   scoped: {
     Efficiency: '效率',
@@ -290,14 +281,13 @@ export default {
     Resets: '重設時間',
     Exceeded: '已超出',
     Ends: '結束於',
-    '(current)': '（目前）',
+    '(current)': '（目前）'
   },
   regexp: [
     // 模型
     [
       /^Model: (.+), (applying optimization|selected for the next message)$/,
-      (_, model: string, state: string) =>
-        `模型：${model}，${state === 'applying optimization' ? '正在套用最佳化' : '已為下一則訊息選擇'}`,
+      (_, model: string, state: string) => `模型：${model}，${state === 'applying optimization' ? '正在套用最佳化' : '已為下一則訊息選擇'}`
     ],
     [/^Model: (.+)$/, '模型：$1'],
     [/^Retry with (.+)$/, '改用 $1 重試'],
@@ -310,38 +300,27 @@ export default {
     [
       /^(Use of this model|Model use) through Auto will be billed at a (\d+(?:\.\d+)?%) discount\.$/,
       (_, subject: string, discount: string) =>
-        `${subject === 'Model use' ? '透過 Auto 使用模型' : '透過 Auto 使用此模型'}可享 ${discount} 的計費折扣。`,
+        `${subject === 'Model use' ? '透過 Auto 使用模型' : '透過 Auto 使用此模型'}可享 ${discount} 的計費折扣。`
     ],
     [
       /^Optimized for(:)? (Efficiency|Balance|Intelligence)$/,
-      (_, colon = '', tier: string) =>
-        colon ? `最佳化方向：${AUTO_TIER[tier] ?? tier}` : `針對${AUTO_TIER[tier] ?? tier}最佳化`,
+      (_, colon = '', tier: string) => (colon ? `最佳化方向：${AUTO_TIER[tier] ?? tier}` : `針對${AUTO_TIER[tier] ?? tier}最佳化`)
     ],
     [/^(Efficiency|Balance|Intelligence) optimization applied\.$/, (_, tier: string) => `已套用${tierPhrase(tier)}。`],
     [/^Applying (Efficiency|Balance|Intelligence)…$/, (_, tier: string) => `正在套用${tierPhrase(tier)}…`],
     [
       /^Optimized for (Efficiency|Balance|Intelligence) · Applying (Efficiency|Balance|Intelligence)…$/,
-      (_, current: string, pending: string) =>
-        `針對${AUTO_TIER[current] ?? current}最佳化 · 正在套用${tierPhrase(pending)}…`,
+      (_, current: string, pending: string) => `針對${AUTO_TIER[current] ?? current}最佳化 · 正在套用${tierPhrase(pending)}…`
     ],
     [/^(Efficiency|Balance|Intelligence) applying$/, (_, tier: string) => `正在套用${tierPhrase(tier)}`],
-    [
-      /^(Efficiency|Balance|Intelligence) selected for the next message$/,
-      (_, tier: string) => `已為下一則訊息選擇${tierPhrase(tier)}`,
-    ],
-    [
-      /^Reasoning effort: (Default|None|Low|Medium|High|Extra High|Max)$/,
-      (_, effort: string) => `推理強度：${EFFORT[effort] ?? effort}`,
-    ],
+    [/^(Efficiency|Balance|Intelligence) selected for the next message$/, (_, tier: string) => `已為下一則訊息選擇${tierPhrase(tier)}`],
+    [/^Reasoning effort: (Default|None|Low|Medium|High|Extra High|Max)$/, (_, effort: string) => `推理強度：${EFFORT[effort] ?? effort}`],
     [/^(Low|Medium|High|Extra High|Max) reasoning$/, (_, effort: string) => `${EFFORT[effort] ?? effort}強度推理`],
     [
       /^(.+) \((?:(Low|Medium|High|Extra High|Max) reasoning|No reasoning)\)$/,
-      (_, model: string, effort: string) => `${model}（${effort ? `${EFFORT[effort] ?? effort}強度推理` : '不推理'}）`,
+      (_, model: string, effort: string) => `${model}（${effort ? `${EFFORT[effort] ?? effort}強度推理` : '不推理'}）`
     ],
-    [
-      /^(None|Low|Medium|High|Extra High|Max) \(Default\)$/,
-      (_, effort: string) => `${EFFORT[effort] ?? effort}（預設）`,
-    ],
+    [/^(None|Low|Medium|High|Extra High|Max) \(Default\)$/, (_, effort: string) => `${EFFORT[effort] ?? effort}（預設）`],
 
     // 使用量
     [/^([\d,]+(?:\.\d+)?) AI credits?$/, '$1 AI 點數'],
@@ -357,7 +336,7 @@ export default {
     [/^Monthly limit: (\d+(?:\.\d+)?)% used$/, '每月上限：已使用 $1%'],
     [
       /^Copilot (code completions|chat messages) quota usage$/,
-      (_, kind: string) => `Copilot ${kind === 'chat messages' ? '聊天訊息' : '程式碼自動完成'}配額使用量`,
+      (_, kind: string) => `Copilot ${kind === 'chat messages' ? '聊天訊息' : '程式碼自動完成'}配額使用量`
     ],
     [new RegExp(`^Resets (${TIME_SOURCE})$`), (_, time: string) => joinCjk(translateTime(time), '重設')],
     [new RegExp(`^Limit resets (${TIME_SOURCE})\\.$`), (_, time: string) => resetTail(time)],
@@ -365,107 +344,96 @@ export default {
     // 使用量横幅整句
     [
       new RegExp(`^You['’]ve used (\\d+(?:\\.\\d+)?)% of your included AI credits\\.${RESET}$`),
-      (_, percent: string, time = '') => `你已使用方案內含 AI 點數的 ${percent}%。${resetTail(time)}`,
+      (_, percent: string, time = '') => `你已使用方案內含 AI 點數的 ${percent}%。${resetTail(time)}`
     ],
     [
       /^You have used (\d+(?:\.\d+)?)% of your (included AI credits|additional AI credit usage|monthly usage limit)\.$/,
       (_, percent: string, kind: string) =>
-        `你已使用${kind === 'included AI credits' ? '方案內含 AI 點數' : kind === 'monthly usage limit' ? '每月使用量上限' : '額外 AI 點數使用量'}的 ${percent}%。`,
+        `你已使用${kind === 'included AI credits' ? '方案內含 AI 點數' : kind === 'monthly usage limit' ? '每月使用量上限' : '額外 AI 點數使用量'}的 ${percent}%。`
     ],
+    [/^You['’]ve used (\d+(?:\.\d+)?)% of your budget for additional AI credits\.$/, '你已使用額外 AI 點數預算的 $1%。'],
     [
-      /^You['’]ve used (\d+(?:\.\d+)?)% of your budget for additional AI credits\.$/,
-      '你已使用額外 AI 點數預算的 $1%。',
-    ],
-    [
-      new RegExp(
-        `^You(?: have|['’]ve) used (\\d+)% of your (free requests|premium requests|premium responses) this month\\.${UPGRADE}$`,
-      ),
-      (_, percent: string, kind: string, tail = '') =>
-        `你已使用本月${QUOTA_KIND[kind] ?? kind}的 ${percent}%。${UPGRADE_TAIL[tail] ?? ''}`,
+      new RegExp(`^You(?: have|['’]ve) used (\\d+)% of your (free requests|premium requests|premium responses) this month\\.${UPGRADE}$`),
+      (_, percent: string, kind: string, tail = '') => `你已使用本月${QUOTA_KIND[kind] ?? kind}的 ${percent}%。${UPGRADE_TAIL[tail] ?? ''}`
     ],
     [
       new RegExp(`^You['’]re (almost out of|out of) your included usage with the free plan\\.${RESET}$`),
-      (_, state: string, time = '') =>
-        `免費方案包含的使用量${state === 'out of' ? '已用完' : '即將用完'}。${resetTail(time)}`,
+      (_, state: string, time = '') => `免費方案包含的使用量${state === 'out of' ? '已用完' : '即將用完'}。${resetTail(time)}`
     ],
     [
       new RegExp(`^You['’]ve run out of your included (usage with the free plan|AI credits for the month)\\.${RESET}$`),
       (_, kind: string, time = '') =>
-        `${kind.startsWith('usage') ? '免費方案包含的使用量' : '本月方案內含的 AI 點數'}已用完。${resetTail(time)}`,
+        `${kind.startsWith('usage') ? '免費方案包含的使用量' : '本月方案內含的 AI 點數'}已用完。${resetTail(time)}`
+    ],
+    [
+      new RegExp(`^Usage paused until your monthly limit resets (${TIME_SOURCE})\\. Request your administrator for additional usage\\.$`),
+      (_, time: string) => `${joinCjk(joinCjk('每月上限於', translateTime(time)), '重設前暫停使用。')}向管理員申請額外使用量。`
     ],
     [
       new RegExp(
-        `^Usage paused until your monthly limit resets (${TIME_SOURCE})\\. Request your administrator for additional usage\\.$`,
-      ),
-      (_, time: string) =>
-        `${joinCjk(joinCjk('每月上限於', translateTime(time)), '重設前暫停使用。')}向管理員申請額外使用量。`,
-    ],
-    [
-      new RegExp(
-        `^You have used all (premium )?requests available this month\\.( Upgrade your plan to increase your limit\\.)? Limit resets on (.+?)\\.${FREEZE}$`,
+        `^You have used all (premium )?requests available this month\\.( Upgrade your plan to increase your limit\\.)? Limit resets on (.+?)\\.${FREEZE}$`
       ),
       (_, premium: string, upgrade: string, date: string, freeze = '') =>
-        `本月可用的${premium ? '進階' : ''}請求已全部用完。${upgrade ? '升級方案以提高限額。' : ''}${resetTail(date)}${freeze ? FREEZE_TEXT : ''}`,
+        `本月可用的${premium ? '進階' : ''}請求已全部用完。${upgrade ? '升級方案以提高限額。' : ''}${resetTail(date)}${freeze ? FREEZE_TEXT : ''}`
     ],
     [
       /^You have used all premium requests available this month\. Enable additional requests to get more\. Limit resets on (.+)\.$/,
-      (_, date: string) => `本月可用的進階請求已全部用完。啟用額外請求以取得更多使用量。${resetTail(date)}`,
+      (_, date: string) => `本月可用的進階請求已全部用完。啟用額外請求以取得更多使用量。${resetTail(date)}`
     ],
     [
       /^You have reached your monthly limit for premium requests\. Ask your admin to increase your limit\. Limit resets on (.+)\.$/,
-      (_, date: string) => `本月進階請求已達上限。請管理員提高限額。${resetTail(date)}`,
+      (_, date: string) => `本月進階請求已達上限。請管理員提高限額。${resetTail(date)}`
     ],
     [
       /^You have used all premium requests available this month\. You will be charged per additional premium request until the limit resets on (.+)\.$/,
       (_, date: string) =>
-        `本月可用的進階請求已全部用完。${joinCjk(joinCjk('限額於', translateTime(date)), '重設前，每個額外的進階請求都將個別計費。')}`,
+        `本月可用的進階請求已全部用完。${joinCjk(joinCjk('限額於', translateTime(date)), '重設前，每個額外的進階請求都將個別計費。')}`
     ],
     [
       new RegExp(`^You have reached your free plan limit\\. Limit resets on (.+?)\\.${FREEZE}$`),
-      (_, date: string, freeze = '') => `已達免費方案上限。${resetTail(date)}${freeze ? FREEZE_TEXT : ''}`,
+      (_, date: string, freeze = '') => `已達免費方案上限。${resetTail(date)}${freeze ? FREEZE_TEXT : ''}`
     ],
     [
       /^You don['’]t have enough AI credits to start a session\. Limit resets on (.+)\.$/,
-      (_, date: string) => `AI 點數不足，無法開始工作階段。${resetTail(date)}`,
+      (_, date: string) => `AI 點數不足，無法開始工作階段。${resetTail(date)}`
     ],
     [
       /^You['’]ve hit your session limit\. Please upgrade your plan or wait (?:(\d+) (hour|minute)s? )?for your limit to reset\.$/,
       (_, amount: string, unit: string) =>
-        `已達工作階段上限。請升級方案或等待${amount ? ` ${amount} ${unit === 'hour' ? '小時' : '分鐘'}後` : ''}限額重設。`,
+        `已達工作階段上限。請升級方案或等待${amount ? ` ${amount} ${unit === 'hour' ? '小時' : '分鐘'}後` : ''}限額重設。`
     ],
     [
       /^You['’]ve exceeded your weekly usage limit\.(?: Your limit will reset in (\d+) (hour|minute)s?\.)? Please upgrade your plan or wait for your limit to reset\.$/,
       (_, amount = '', unit = '') =>
-        `已超出每週使用量上限。${amount ? `限額將在 ${amount} ${unit === 'hour' ? '小時' : '分鐘'}後重設。` : ''}請升級方案或等待限額重設。`,
+        `已超出每週使用量上限。${amount ? `限額將在 ${amount} ${unit === 'hour' ? '小時' : '分鐘'}後重設。` : ''}請升級方案或等待限額重設。`
     ],
 
     // 额外使用量上限横幅（「額外使用量上限」链接之后的整段）
     [
       new RegExp(
-        `^You['’]ve reached your additional usage limit for your plan\\. Pay for your additional usage to continue\\. Otherwise, wait until your credits reset (${TIME_SOURCE})\\.$`,
+        `^You['’]ve reached your additional usage limit for your plan\\. Pay for your additional usage to continue\\. Otherwise, wait until your credits reset (${TIME_SOURCE})\\.$`
       ),
       (_, time: string) =>
-        `已達方案的額外使用量上限。支付額外使用量費用以繼續。否則，${joinCjk(joinCjk('請等到點數於', translateTime(time)), '重設。')}`,
+        `已達方案的額外使用量上限。支付額外使用量費用以繼續。否則，${joinCjk(joinCjk('請等到點數於', translateTime(time)), '重設。')}`
     ],
     [
       new RegExp(
-        `^\\. Upgrade to (.+?) for (\\S+) to get an additional (\\S+) in credits, or pay (\\S+) to continue on (.+?)\\. Credits reset (${TIME_SOURCE})\\.$`,
+        `^\\. Upgrade to (.+?) for (\\S+) to get an additional (\\S+) in credits, or pay (\\S+) to continue on (.+?)\\. Credits reset (${TIME_SOURCE})\\.$`
       ),
       (_, plan: string, price: string, credit: string, pay: string, current: string, time: string) =>
-        `。以 ${price} ${upgradeTo(plan, '可額外獲得價值')} ${credit} 的點數，或支付 ${pay} ${joinCjk('繼續使用', copilotPlan(current))}。${creditResetTail(time)}`,
+        `。以 ${price} ${upgradeTo(plan, '可額外獲得價值')} ${credit} 的點數，或支付 ${pay} ${joinCjk('繼續使用', copilotPlan(current))}。${creditResetTail(time)}`
     ],
     [
       new RegExp(
-        `^\\. Upgrade to (.+?) for (\\S+) and cut additional usage from (\\S+) to (\\S+), or pay (\\S+) to continue on (.+?)\\. Credits reset (${TIME_SOURCE})\\.$`,
+        `^\\. Upgrade to (.+?) for (\\S+) and cut additional usage from (\\S+) to (\\S+), or pay (\\S+) to continue on (.+?)\\. Credits reset (${TIME_SOURCE})\\.$`
       ),
       (_, plan: string, price: string, from: string, to: string, pay: string, current: string, time: string) =>
-        `。以 ${price} ${upgradeTo(plan, '可將額外使用量費用從')} ${from} 降至 ${to}，或支付 ${pay} ${joinCjk('繼續使用', copilotPlan(current))}。${creditResetTail(time)}`,
+        `。以 ${price} ${upgradeTo(plan, '可將額外使用量費用從')} ${from} 降至 ${to}，或支付 ${pay} ${joinCjk('繼續使用', copilotPlan(current))}。${creditResetTail(time)}`
     ],
     // 额外使用量生效横幅：包含的点数重置前改用额外使用量（重置日期可省略）
     [
       new RegExp(`^You['’]re now using additional usage until your included credits reset(?: (${TIME_SOURCE}))?\\.$`),
-      (_, time = '') =>
-        `你目前正在使用額外使用量，直到包含的點數${time ? joinCjk(joinCjk('於', translateTime(time)), '重設。') : '重設。'}`,
-    ],
-  ],
+      (_, time = '') => `你目前正在使用額外使用量，直到包含的點數${time ? joinCjk(joinCjk('於', translateTime(time)), '重設。') : '重設。'}`
+    ]
+  ]
 } satisfies PageDictionary

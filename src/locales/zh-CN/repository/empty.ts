@@ -4,7 +4,7 @@ import { joinCjk } from '../helpers'
 /** 引导卡片申请的功能名：产品名译出，Copilot 等品牌词与未收录的名称原样保留（Map 查找不会命中原型链上的键） */
 const FEATURE_NAMES: ReadonlyMap<string, string> = new Map([
   ['Codespaces', '代码空间'],
-  ['GitHub Codespaces', 'GitHub 代码空间'],
+  ['GitHub Codespaces', 'GitHub 代码空间']
 ])
 
 /** 「<前缀><功能名><后缀>」：功能名为英文时与两侧中文之间补空格 */
@@ -16,19 +16,13 @@ const regexp: readonly RegExpRule[] = [
   // 正在创建存储库时的自动刷新提示（原文无逗号，译文不加）
   [
     /^This page will automatically refresh in (\d+) seconds to check if the repository is ready\.$/,
-    '此页面将在 $1 秒后自动刷新以检查存储库是否就绪。',
+    '此页面将在 $1 秒后自动刷新以检查存储库是否就绪。'
   ],
   // 空存储库的功能申请（引导卡片）：读屏播报
   [/^Request for (.+) submitted successfully$/, (_, name: string) => featureRequest('已提交', name, '的申请')],
-  [
-    /^Request for (.+) failed, please try again$/,
-    (_, name: string) => featureRequest('', name, '的申请提交失败，请重试'),
-  ],
+  [/^Request for (.+) failed, please try again$/, (_, name: string) => featureRequest('', name, '的申请提交失败，请重试')],
   [/^Request for (.+) removed$/, (_, name: string) => featureRequest('已撤回', name, '的申请')],
-  [
-    /^Removing request for (.+) failed, please try again$/,
-    (_, name: string) => featureRequest('撤回', name, '的申请失败，请重试'),
-  ],
+  [/^Removing request for (.+) failed, please try again$/, (_, name: string) => featureRequest('撤回', name, '的申请失败，请重试')]
 ]
 
 /**
@@ -84,18 +78,16 @@ export default {
     'Add a README file and start coding in a secure, configurable, and dedicated development environment.':
       '添加自述文件并在安全、可配置的专用开发环境中开始编码。',
     'Set up GitHub Copilot': '设置 GitHub Copilot',
-    "Use GitHub's AI pair programmer to autocomplete suggestions as you code.":
-      '编码时使用 GitHub 的 AI 结对程序员自动补全建议。',
-    'Use GitHub’s AI pair programmer to autocomplete suggestions as you code.':
-      '编码时使用 GitHub 的 AI 结对程序员自动补全建议。',
+    "Use GitHub's AI pair programmer to autocomplete suggestions as you code.": '编码时使用 GitHub 的 AI 结对程序员自动补全建议。',
+    'Use GitHub’s AI pair programmer to autocomplete suggestions as you code.': '编码时使用 GitHub 的 AI 结对程序员自动补全建议。',
     'Get started with GitHub Copilot': '开始使用 GitHub Copilot',
     'Add collaborators to this repository': '为此存储库添加协作者',
-    'Search for people using their GitHub username or email address.': '使用 GitHub 用户名或电子邮件地址搜索用户。',
+    'Search for people using their GitHub username or email address.': '使用 GitHub 用户名或电子邮件地址搜索用户。'
   },
   scoped: {
     // 快速设置：README、LICENSE，以及 .gitignore（逗号无英文，不翻译）
     ', and': '，以及',
-    'Invite collaborators': '邀请协作者',
+    'Invite collaborators': '邀请协作者'
   },
-  regexp,
+  regexp
 } satisfies PageDictionary

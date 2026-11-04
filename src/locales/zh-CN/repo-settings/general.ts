@@ -35,8 +35,7 @@ export default {
     'This setting is enabled on the upstream repository. Disabling this setting may block commits from being merged upstream.':
       '上游存储库已启用此设置。禁用此设置可能导致提交无法合并到上游。',
     'Allow comments on individual commits': '允许对单个提交发表评论',
-    'Enabling this setting will allow anyone who can view this repository to add':
-      '启用此设置将允许任何能查看此存储库的人添加',
+    'Enabling this setting will allow anyone who can view this repository to add': '启用此设置将允许任何能查看此存储库的人添加',
     '. Existing commit comments are not affected by this setting and will remain viewable, editable, and deletable.':
       '。现有的提交评论不受此设置影响，仍可查看、编辑和删除。',
 
@@ -53,18 +52,14 @@ export default {
 
     // 社交预览
     'Social preview': '社交预览',
-    'Upload an image to customize your repository’s social media preview.':
-      '上传图片，自定义存储库在社交媒体上的预览。',
-    "Upload an image to customize your repository's social media preview.":
-      '上传图片，自定义存储库在社交媒体上的预览。',
-    'Images should be at least 640×320px (1280×640px for best display).':
-      '图片尺寸至少为 640×320 像素（1280×640 像素显示效果最佳）。',
+    'Upload an image to customize your repository’s social media preview.': '上传图片，自定义存储库在社交媒体上的预览。',
+    "Upload an image to customize your repository's social media preview.": '上传图片，自定义存储库在社交媒体上的预览。',
+    'Images should be at least 640×320px (1280×640px for best display).': '图片尺寸至少为 640×320 像素（1280×640 像素显示效果最佳）。',
     'Download template': '下载模板',
     'Upload an image…': '上传图片…',
     'Upload an image...': '上传图片...',
     'Remove image': '删除图片',
-    'You can upload a social image, but it will not be visible publicly while':
-      '你可以上传社交图片，但它不会公开显示，因为',
+    'You can upload a social image, but it will not be visible publicly while': '你可以上传社交图片，但它不会公开显示，因为',
 
     // 功能：Wiki
     'Wikis host documentation for your repository.': 'Wiki 用于托管存储库的文档。',
@@ -96,8 +91,7 @@ export default {
     'If disabled, existing forks will be unaffected.': '禁用后，现有复刻不受影响。',
 
     // 功能：赞助
-    'Sponsorships help your community know how to financially support this repository.':
-      '赞助可让社区了解如何为此存储库提供资金支持。',
+    'Sponsorships help your community know how to financially support this repository.': '赞助可让社区了解如何为此存储库提供资金支持。',
     'Display a "Sponsor" button': '显示“赞助”按钮',
     'Display a “Sponsor” button': '显示“赞助”按钮',
     'Add links to GitHub Sponsors or third-party methods your repository accepts for financial contributions to your project.':
@@ -148,24 +142,21 @@ export default {
     'You must select squashing or rebasing option. This is because linear history is required on at least one protected branch.':
       '必须选择压缩或变基。这是因为至少有一个受保护分支要求线性历史记录。',
     'Allow merge commits': '允许合并提交',
-    'Add all commits from the head branch to the base branch with a merge commit.':
-      '通过合并提交将头部分支的所有提交添加到基础分支。',
+    'Add all commits from the head branch to the base branch with a merge commit.': '通过合并提交将头部分支的所有提交添加到基础分支。',
     'Default commit message': '默认提交消息',
     'Presented when merging a pull request with merge.': '以合并方式合并拉取请求时显示。',
     'Default message': '默认消息',
     'Pull request title and commit details': '拉取请求标题和提交详细信息',
     'Pull request title and description': '拉取请求标题和描述',
     'Allow squash merging': '允许压缩合并',
-    'Combine all commits from the head branch into a single commit in the base branch.':
-      '将头部分支的所有提交压缩为基础分支中的一个提交。',
+    'Combine all commits from the head branch into a single commit in the base branch.': '将头部分支的所有提交压缩为基础分支中的一个提交。',
     'Presented when merging a pull request with squash.': '以压缩方式合并拉取请求时显示。',
     'Default to pull request title and commit details': '默认使用拉取请求标题和提交详细信息',
     'Default to PR title for squash merge commits': '压缩合并提交默认使用 PR 标题',
     'This will pre-populate the commit message with the PR title when performing a squash merge.':
       '执行压缩合并时，会用 PR 标题预填提交消息。',
     'Allow rebase merging': '允许变基合并',
-    'Add all commits from the head branch onto the base branch individually.':
-      '将头部分支的所有提交逐个添加到基础分支。',
+    'Add all commits from the head branch onto the base branch individually.': '将头部分支的所有提交逐个添加到基础分支。',
     'Control how and when users are prompted to update their branches if there are new changes available in the base branch.':
       '控制基础分支有新更改时，以何种方式、在何时提示用户更新其分支。',
     'Always suggest updating pull request branches': '始终建议更新拉取请求分支',
@@ -178,8 +169,7 @@ export default {
     'Allow auto-merge': '允许自动合并',
     'Waits for merge requirements to be met and then merges automatically.': '等待满足合并要求后自动合并。',
     'Learn more about auto-merge': '了解自动合并',
-    'After pull requests are merged, you can have head branches deleted automatically.':
-      '拉取请求合并后，可以自动删除头部分支。',
+    'After pull requests are merged, you can have head branches deleted automatically.': '拉取请求合并后，可以自动删除头部分支。',
     'Automatically delete head branches': '自动删除头部分支',
     'Deleted branches will still be able to be restored.': '已删除的分支仍可恢复。',
 
@@ -199,8 +189,7 @@ export default {
     'Must be a whole number between 2 and 1000': '必须是 2 到 1000 之间的整数',
 
     // 议题自动关闭
-    'After merging a pull request, linked issues can be closed automatically.':
-      '合并拉取请求后，可以自动关闭链接的议题。',
+    'After merging a pull request, linked issues can be closed automatically.': '合并拉取请求后，可以自动关闭链接的议题。',
     'Auto-close issues with merged linked pull requests': '链接的拉取请求合并后自动关闭议题',
     'Whenever linked pull requests have merged, auto-close the issue.': '链接的拉取请求合并后，自动关闭议题。',
 
@@ -225,9 +214,8 @@ export default {
     'Switch default branch': '切换默认分支',
     'Update default branch': '更新默认分支',
     'Changing your default branch': '更改默认分支',
-    'can have unintended consequences that can affect new pull requests and clones.':
-      '可能产生意外后果，影响新的拉取请求和克隆。',
-    'I understand, update the default branch.': '我已了解，更新默认分支。',
+    'can have unintended consequences that can affect new pull requests and clones.': '可能产生意外后果，影响新的拉取请求和克隆。',
+    'I understand, update the default branch.': '我已了解，更新默认分支。'
   },
   scoped: {
     'Repository name': '存储库名称',
@@ -257,14 +245,14 @@ export default {
     Archives: '存档',
     Pushes: '推送',
     'Up to': '最多',
-    feedback: '反馈',
+    feedback: '反馈'
   },
   regexp: [
     // 存储库名称可用性
     [new RegExp(`^${NAME} is available\\.$`), '$1 可用。'],
     [
       new RegExp(`^The repository ${NAME} already exists on this account(\\.?)$`),
-      (_, name: string, dot: string) => `存储库 ${name} 已存在于此帐户中${dot ? '。' : ''}`,
+      (_, name: string, dot: string) => `存储库 ${name} 已存在于此帐户中${dot ? '。' : ''}`
     ],
     // 默认分支：重命名对话框（片段被 <code> 隔开时由 static 分别匹配）
     [new RegExp(`^Rename ${BRANCH} to:$`), '将 $1 重命名为：'],
@@ -272,28 +260,21 @@ export default {
     [/^Will update (\d+) pull requests? targeting this branch\.$/, '将更新 $1 个以此分支为目标的拉取请求。'],
     [
       new RegExp(`^Will update (\\d+) branch protection rules? that explicitly targets? (\\S+?)(\\.?)$`),
-      (_, count: string, branch: string, dot: string) =>
-        `将更新 ${count} 条明确针对 ${branch} 的分支保护规则${dot ? '。' : ''}`,
+      (_, count: string, branch: string, dot: string) => `将更新 ${count} 条明确针对 ${branch} 的分支保护规则${dot ? '。' : ''}`
     ],
     [/^Will close (\d+) open pull requests? for this branch\.$/, '将关闭 $1 个来自此分支的打开的拉取请求。'],
     // 默认分支：切换对话框
     [
       new RegExp(`^Choose another branch to use as the default branch of ${NAME}(?:/${NAME})? instead of ${BRANCH}$`),
       (_, owner: string, repo: string, branch: string) =>
-        `选择另一个分支替代 ${branch} 作为 ${repo ? `${owner}/${repo}` : owner} 的默认分支`,
+        `选择另一个分支替代 ${branch} 作为 ${repo ? `${owner}/${repo}` : owner} 的默认分支`
     ],
     [new RegExp(`^Default branch (?:changed|updated) to ${BRANCH}$`), '默认分支已更改为 $1'],
     // 社交预览（专用存储库、删除确认）
     [
-      new RegExp(
-        `^You can upload a social image, but it will not be visible publicly while ${NAME}(?:/${NAME})? is private\\.$`,
-      ),
-      (_, owner: string, repo: string) =>
-        `你可以上传社交图片，但 ${repo ? `${owner}/${repo}` : owner} 为专用存储库，图片不会公开显示。`,
+      new RegExp(`^You can upload a social image, but it will not be visible publicly while ${NAME}(?:/${NAME})? is private\\.$`),
+      (_, owner: string, repo: string) => `你可以上传社交图片，但 ${repo ? `${owner}/${repo}` : owner} 为专用存储库，图片不会公开显示。`
     ],
-    [
-      new RegExp(`^Are you sure you want to remove ${NAME}/${NAME}[’']s promotional image\\?$`),
-      '确定要删除 $1/$2 的推广图片吗？',
-    ],
-  ],
+    [new RegExp(`^Are you sure you want to remove ${NAME}/${NAME}[’']s promotional image\\?$`), '确定要删除 $1/$2 的推广图片吗？']
+  ]
 } satisfies PageDictionary

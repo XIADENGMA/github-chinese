@@ -15,7 +15,7 @@ export const OPTION_NAMES: Readonly<Record<string, string>> = {
   Backlog: '待办池',
   Ready: '就绪',
   'In review': '审查中',
-  'No Status': '无状态',
+  'No Status': '无状态'
 }
 
 export function translateOptionName(name: string): string {
@@ -24,7 +24,7 @@ export function translateOptionName(name: string): string {
 
 const AUTO_ADD_SUB_ISSUES: Readonly<Record<string, string>> = {
   ' and its sub-issues': '及其子议题',
-  ' and their sub-issues': '及其子议题',
+  ' and their sub-issues': '及其子议题'
 }
 
 export default {
@@ -51,20 +51,17 @@ export default {
 
     // 系统模板
     'Team planning': '团队规划',
-    "Manage your team's work items, plan upcoming cycles, and understand team capacity":
-      '管理团队的工作项，规划后续周期，了解团队容量',
+    "Manage your team's work items, plan upcoming cycles, and understand team capacity": '管理团队的工作项，规划后续周期，了解团队容量',
     'Visualize the status of your project and limit work in progress': '直观呈现项目状态并限制进行中的工作量',
     'Feature release': '功能发布',
-    "Manage your team's prioritized work items when planning for a feature release 🚀":
-      '规划功能发布时管理团队按优先级排列的工作项 🚀',
+    "Manage your team's prioritized work items when planning for a feature release 🚀": '规划功能发布时管理团队按优先级排列的工作项 🚀',
     'Bug tracker': '缺陷跟踪',
     'Track and triage your bugs 🐛': '跟踪和分类缺陷 🐛',
     'Iterative development': '迭代开发',
     'Plan your current and upcoming iterations as you work through your prioritized backlog of items':
       '在处理按优先级排列的待办项时规划当前和后续迭代',
     'Product launch': '产品发布',
-    'Manage work items across teams and functions when planning for a product launch 🚀':
-      '规划产品发布时跨团队和职能管理工作项 🚀',
+    'Manage work items across teams and functions when planning for a product launch 🚀': '规划产品发布时跨团队和职能管理工作项 🚀',
     "Manage your team's long term plans as you plan out your roadmap": '制定路线图时管理团队的长期计划',
     'Team retrospective': '团队回顾',
     'Reflect as a team what went well, what can be improved next time, and action items':
@@ -75,8 +72,7 @@ export default {
     'Import items from search query': '从搜索查询导入项',
     'All new and existing items from the selected repository will be added to this project.':
       '所选存储库中的所有新增和现有项都将添加到此项目。',
-    'All existing items matching the search query will be added to this project.':
-      '所有与搜索查询匹配的现有项都将添加到此项目。',
+    'All existing items matching the search query will be added to this project.': '所有与搜索查询匹配的现有项都将添加到此项目。',
     'Import items based on search query': '根据搜索查询导入项',
     'Items to import': '要导入的项',
     'We were unable to bulk import items at this time. Please try again.': '暂时无法批量导入项。请重试。',
@@ -85,7 +81,7 @@ export default {
       '企业环境出于安全考虑要求明确指定存储库范围 (repo:owner/name)。不允许只使用组织或用户限定符。',
     'Select entities to add': '选择要添加的内容',
     'Import query': '导入查询',
-    '0 items will be added': '不会添加任何项',
+    '0 items will be added': '不会添加任何项'
   },
   scoped: {
     // 通用文本（仅项目页生效）
@@ -167,8 +163,7 @@ export default {
     'Interaction count': '交互数',
     'Reactions count': '反应数',
     'Search for draft items': '搜索草稿项',
-    'Restrict your search to the title, body, comments, or any combination of these':
-      '将搜索范围限定为标题、正文、评论或其任意组合',
+    'Restrict your search to the title, body, comments, or any combination of these': '将搜索范围限定为标题、正文、评论或其任意组合',
     'Items linked to an issue or pull request': '链接了议题或拉取请求的项',
     'Specify a review state': '指定审查状态',
     'Commit status: pending | success | failure': '提交状态：pending | success | failure',
@@ -203,24 +198,22 @@ export default {
     'Most commented': '评论最多',
     'Items with pending status': '状态为 pending 的项',
     'Items with success status': '状态为 success 的项',
-    'Items with failure status': '状态为 failure 的项',
+    'Items with failure status': '状态为 failure 的项'
   },
   regexp: [
     [/^(\d+) results$/, '$1 个结果'],
     [
       /^The most recent 500 items( and (?:its|their) sub-issues)? will be added to the project$/,
-      (_, subIssues?: string) =>
-        `将把最近的 500 个项${subIssues ? (AUTO_ADD_SUB_ISSUES[subIssues] ?? '') : ''}添加到项目`,
+      (_, subIssues?: string) => `将把最近的 500 个项${subIssues ? (AUTO_ADD_SUB_ISSUES[subIssues] ?? '') : ''}添加到项目`
     ],
     [
       /^(\d+) items?( and (?:its|their) sub-issues)? will be added$/,
-      (_, count: string, subIssues?: string) =>
-        `将添加 ${count} 个项${subIssues ? (AUTO_ADD_SUB_ISSUES[subIssues] ?? '') : ''}`,
-    ],
+      (_, count: string, subIssues?: string) => `将添加 ${count} 个项${subIssues ? (AUTO_ADD_SUB_ISSUES[subIssues] ?? '') : ''}`
+    ]
   ],
   inline: [
     // 批量添加 / 从搜索查询导入的模式切换（bulk-add-configuration.tsx）：
     // <p>Add from a <button>search query</button> instead</p>，按钮文字 search query / repository 照常翻译
-    ['Add from a {} instead', '改为从{}添加'],
-  ],
+    ['Add from a {} instead', '改为从{}添加']
+  ]
 } satisfies PageDictionary

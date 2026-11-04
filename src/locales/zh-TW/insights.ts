@@ -15,13 +15,4 @@ import traffic from './insights/traffic'
  * 许可证 / 行为准则模板选择器（/community/license/new、/community/code-of-conduct/new）同时属于 code 页面类型，
  * 由 code 词典收录。
  */
-export default mergeDictionaries(
-  pulse,
-  graphs,
-  charts,
-  dependencyGraph,
-  network,
-  community,
-  people,
-  traffic,
-) satisfies PageDictionary
+export default mergeDictionaries(pulse, graphs, charts, dependencyGraph, network, community, people, traffic) satisfies PageDictionary

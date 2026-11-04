@@ -11,8 +11,7 @@ export default {
     'Try the new pull requests Overview page!': '試用新的拉取請求總覽頁面！',
     'Focus on what matters most and take action with confidence.': '專注於最重要的事項並從容採取行動。',
     'Welcome to the new pull requests Overview page!': '歡迎使用新的拉取請求總覽頁面！',
-    'You can learn more, turn it off, or send feedback anytime from here.':
-      '你可以隨時在這裡瞭解詳情、關閉此功能或傳送意見回饋。',
+    'You can learn more, turn it off, or send feedback anytime from here.': '你可以隨時在這裡瞭解詳情、關閉此功能或傳送意見回饋。',
     'Overview preview could not be turned on. Try again.': '無法開啟總覽預覽。請再試一次。',
     'Try the Overview page': '試用總覽頁面',
     'Try the Overview page, try again': '試用總覽頁面，再試一次',
@@ -122,12 +121,10 @@ export default {
     '(view description edit history)': '（查看描述編輯歷史記錄）',
     'Failed to update description': '無法更新描述',
     'Pull request description updated successfully.': '已更新拉取請求描述。',
-    'This comment could not be found. It may have been deleted or is no longer visible to you.':
-      '找不到此留言。可能已刪除或你已無法查看。',
+    'This comment could not be found. It may have been deleted or is no longer visible to you.': '找不到此留言。可能已刪除或你已無法查看。',
     'Skip comments': '略過留言',
     'Copilot summary warning': 'Copilot 摘要警告',
-    'Copilot couldn’t regenerate this summary. The previous summary is shown.':
-      'Copilot 無法重新產生此摘要。目前顯示的是先前的摘要。',
+    'Copilot couldn’t regenerate this summary. The previous summary is shown.': 'Copilot 無法重新產生此摘要。目前顯示的是先前的摘要。'
   },
   scoped: {
     // 功能预览
@@ -207,7 +204,7 @@ export default {
     'None yet - feature coming soon': '尚無 - 功能即將推出',
     Prompt: '提示',
     'Failed to load comments': '無法載入留言',
-    'refresh the page': '重新整理頁面',
+    'refresh the page': '重新整理頁面'
   },
   regexp: [
     // 迷你合并状态
@@ -233,6 +230,6 @@ export default {
     // 参与者：+3 more（同一规则也可能命中其他列表的计数，量词用「個」）
     [/^\+(\d+) more$/, '還有 $1 個'],
     // 意见回馈字数
-    [/^Feedback is too long\. Use (\d+) characters or fewer\.$/, '意見回饋過長。最多 $1 個字元。'],
-  ],
+    [/^Feedback is too long\. Use (\d+) characters or fewer\.$/, '意見回饋過長。最多 $1 個字元。']
+  ]
 } satisfies PageDictionary

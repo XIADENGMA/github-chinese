@@ -23,13 +23,13 @@ export default {
     'Install MCP server': '安裝 MCP 伺服器',
     'Install in VS Code': '在 VS Code 中安裝',
     'Install in VS Code Insiders': '在 VS Code Insiders 中安裝',
-    'Install in GitHub Copilot app': '在 GitHub Copilot 應用程式中安裝',
+    'Install in GitHub Copilot app': '在 GitHub Copilot 應用程式中安裝'
   },
   scoped: {
     // 卡片页脚与详情页「关于」块：By <所有者>（与 Marketplace 一致）
     By: '來自',
     // 目录页标签页标题「MCP Registry · Connect Agents to tools」的第二段
-    'Connect Agents to tools': '將代理連接到工具',
+    'Connect Agents to tools': '將代理連接到工具'
   },
   regexp: [
     // 详情页标签页标题「MCP Registry | <服务器名>」只有一段：服务器名保持原文
@@ -38,7 +38,7 @@ export default {
     // （查询词与前后文是相邻文本节点，引擎先整组匹配；屏幕阅读器通知同一句）
     [/^No MCPs found matching "(.+)"\. Try a different search term\.$/, '找不到與「$1」相符的 MCP。嘗試其他搜尋字詞。'],
     // 屏幕阅读器通知：648 MCPs available.、1 MCP available.（「648 results / 1 result」由 common-ui/counts.ts 覆盖）
-    [/^(\d+) MCPs? available\.$/, '有 $1 個 MCP 可用。'],
+    [/^(\d+) MCPs? available\.$/, '有 $1 個 MCP 可用。']
   ],
   ignore: [
     // 面包屑第二项：服务器名（登录后在页头，未登录时在详情页顶部；首项「MCP Registry」/「MCP registry」照常翻译）
@@ -52,6 +52,6 @@ export default {
     'a[class*="ownerLink__"]',
     '[class*="about__"] > p[class*="description__"]',
     // 详情页侧栏「资源」：存储库「所有者 / 名称」链接（「Contact support」是外链，照常翻译）
-    '[class*="resourceLinks__"] a[href^="/"]',
-  ],
+    '[class*="resourceLinks__"] a[href^="/"]'
+  ]
 } satisfies PageDictionary

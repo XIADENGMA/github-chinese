@@ -130,9 +130,7 @@ function findKey(text: string, key: string, from: number, whole: boolean): numbe
   const guardStart = whole && WORD_CHAR_RE.test(key[0] ?? '')
   const guardEnd = whole && WORD_CHAR_RE.test(key[key.length - 1] ?? '')
   for (let at = text.indexOf(key, from); at >= 0; at = text.indexOf(key, at + 1)) {
-    const embedded =
-      (guardStart && WORD_CHAR_RE.test(text[at - 1] ?? '')) ||
-      (guardEnd && WORD_CHAR_RE.test(text[at + key.length] ?? ''))
+    const embedded = (guardStart && WORD_CHAR_RE.test(text[at - 1] ?? '')) || (guardEnd && WORD_CHAR_RE.test(text[at + key.length] ?? ''))
     if (!embedded) return at
   }
   return -1
@@ -167,7 +165,7 @@ const FULL_WIDTH: ReadonlyMap<string, string> = new Map([
   ['?', '？'],
   ['!', '！'],
   [':', '：'],
-  [';', '；'],
+  [';', '；']
 ])
 /** 两个元素之间的逗号 */
 const ENUMERATION_COMMA = '、'
@@ -239,9 +237,7 @@ export function fullWidthPunct(node: Text, source: string): string | undefined {
   const full = FULL_WIDTH.get(mark)
   if (full === undefined || mark !== ',') return full
   const anchor = punctAnchor(node)
-  return isElement(meaningfulSibling(anchor, false)) && isElement(meaningfulSibling(anchor, true))
-    ? ENUMERATION_COMMA
-    : full
+  return isElement(meaningfulSibling(anchor, false)) && isElement(meaningfulSibling(anchor, true)) ? ENUMERATION_COMMA : full
 }
 
 function nearestText(node: Node, forward: boolean): Text | null {
@@ -288,7 +284,7 @@ function memoDirectContext(): DirectContext {
     for (const node of passed) memo.set(node, found)
     return found
   }
-  return (anchor) => nearest(anchor, false) ?? nearest(anchor, true)
+  return anchor => nearest(anchor, false) ?? nearest(anchor, true)
 }
 
 /** 元素内（含后代）最后一段有意义的文字：跳过只有空白、标点、符号的文本节点；没有时返回 null */
@@ -339,9 +335,7 @@ export interface Sentence {
 
 /** 槽位的标记：只含数字（可带千分位）的叶子元素为 NUM_SLOT，其余为 SLOT */
 function slotMark(element: Element): string {
-  return element.firstElementChild === null && NUMERIC_RE.test(normalizeText(element.textContent ?? ''))
-    ? NUM_SLOT
-    : SLOT
+  return element.firstElementChild === null && NUMERIC_RE.test(normalizeText(element.textContent ?? '')) ? NUM_SLOT : SLOT
 }
 
 /** 按元素子节点把宿主的直接文本分组 */
@@ -462,7 +456,7 @@ export function createInlineFragments(host: InlineHost): InlineFragments {
   /** 本轮向上查找过的元素：它及其祖先中含过孤立标点的都已加入 punctPending（见 notePunctAround） */
   let aroundWalked = new Set<Element>()
 
-  const sourcesOf = (run: readonly Text[]): (string | Contested)[] => run.map((node) => host.textSource(node))
+  const sourcesOf = (run: readonly Text[]): (string | Contested)[] => run.map(node => host.textSource(node))
 
   /**
    * kbd 片段：整句命中后按 kbd 文字切分译文，第 i 段写入第 i 组的第一个文本节点、其余置空（按整句写入，不算孤立标点）；
@@ -473,19 +467,14 @@ export function createInlineFragments(host: InlineHost): InlineFragments {
   function processKbdSpan(span: KbdSpan): void {
     const { groups, keys } = span
     const found = groups.map(sourcesOf)
-    if (found.some((group) => group.includes(CONTESTED))) {
-      const holding = groups.some((group, i) =>
-        group.some((node, j) => found[i]![j] === CONTESTED && records.ownText(node)),
-      )
+    if (found.some(group => group.includes(CONTESTED))) {
+      const holding = groups.some((group, i) => group.some((node, j) => found[i]![j] === CONTESTED && records.ownText(node)))
       if (!holding) applySpan(groups, found, false)
       return
     }
     const sources = found as string[][]
-    const texts = sources.map((group) => group.join(''))
-    const sentence =
-      NON_SPACE_RE.test(texts[0]!) &&
-      NON_SPACE_RE.test(texts[texts.length - 1]!) &&
-      texts.some((text) => LATIN_RE.test(text))
+    const texts = sources.map(group => group.join(''))
+    const sentence = NON_SPACE_RE.test(texts[0]!) && NON_SPACE_RE.test(texts[texts.length - 1]!) && texts.some(text => LATIN_RE.test(text))
     if (!sentence) {
       applySpan(groups, sources, true)
       return
@@ -498,7 +487,7 @@ export function createInlineFragments(host: InlineHost): InlineFragments {
         group.forEach((node, j) => {
           kbdNodes.add(node)
           records.writeText(node, sources[i]![j]!, j === 0 ? host.fit(node, segments[i]!) : '')
-        }),
+        })
       )
       return
     }
@@ -510,11 +499,7 @@ export function createInlineFragments(host: InlineHost): InlineFragments {
   /**
    * kbd 片段的各组照常处理（之前整句写入的孤立标点按孤立标点重算，留到轮末）；collect 为 false 时不记未翻译
    */
-  function applySpan(
-    groups: readonly (readonly Text[])[],
-    found: readonly (readonly (string | Contested)[])[],
-    collect: boolean,
-  ): void {
+  function applySpan(groups: readonly (readonly Text[])[], found: readonly (readonly (string | Contested)[])[], collect: boolean): void {
     groups.forEach((group, i) => {
       for (const node of group) kbdNodes.delete(node)
       notePunct(group)
@@ -537,7 +522,7 @@ export function createInlineFragments(host: InlineHost): InlineFragments {
     groups: readonly (readonly Text[])[],
     sources: readonly (readonly string[])[],
     texts: readonly string[],
-    segments: readonly string[],
+    segments: readonly string[]
   ): void {
     const last = groups.length - 1
     groups.forEach((group, i) => {
@@ -557,11 +542,7 @@ export function createInlineFragments(host: InlineHost): InlineFragments {
   }
 
   /** 各组照常处理（只有孤立标点的组留到轮末）；collect 为 false 时不记未翻译 */
-  function applyGroups(
-    groups: readonly (readonly Text[])[],
-    found: readonly (readonly (string | Contested)[])[],
-    collect: boolean,
-  ): void {
+  function applyGroups(groups: readonly (readonly Text[])[], found: readonly (readonly (string | Contested)[])[], collect: boolean): void {
     groups.forEach((group, i) => {
       for (const node of group) sentenceNodes.delete(node)
       if (group.length > 0 && !notePunct(group)) host.applyRun(group, found[i]!, collect)
@@ -581,10 +562,7 @@ export function createInlineFragments(host: InlineHost): InlineFragments {
    * 整句宿主保持现状：有节点须保持显示（解析器刚追加标点：CONTESTED 且仍是自身写入），
    * 且没有新到的英文文字（同一解析任务里插入的文字照常处理）
    */
-  function holdsSentence(
-    groups: readonly (readonly Text[])[],
-    found: readonly (readonly (string | Contested)[])[],
-  ): boolean {
+  function holdsSentence(groups: readonly (readonly Text[])[], found: readonly (readonly (string | Contested)[])[]): boolean {
     let held = false
     for (let i = 0; i < groups.length; i++) {
       const group = groups[i]!
@@ -609,15 +587,15 @@ export function createInlineFragments(host: InlineHost): InlineFragments {
     const { groups, slots, marks } = sentence
     slots.forEach((slot, i) => slotMarks.set(slot, marks[i]!))
     const active = activeHosts.has(parent)
-    const peeked = groups.map((group) => group.map((node) => records.peekText(node)).join(''))
+    const peeked = groups.map(group => group.map(node => records.peekText(node)).join(''))
     if (!active && matchSentence(sentence, peeked) === undefined) return false
     const found = groups.map(sourcesOf)
-    if (found.some((group) => group.includes(CONTESTED))) {
+    if (found.some(group => group.includes(CONTESTED))) {
       if (!active || !holdsSentence(groups, found)) applyGroups(groups, found, !active)
       return true
     }
     const sources = found as string[][]
-    const texts = sources.map((group) => group.join(''))
+    const texts = sources.map(group => group.join(''))
     const segments = matchSentence(sentence, texts)
     if (segments) {
       writeSentence(groups, sources, texts, segments)
@@ -638,7 +616,7 @@ export function createInlineFragments(host: InlineHost): InlineFragments {
     sentenceHosts.set(parent, true)
     const { groups } = splitGroups(parent)
     for (const group of groups) for (const node of group) sentenceNodes.delete(node)
-    const plain = groups.filter((group) => group.length > 0 && !besideKbd(group))
+    const plain = groups.filter(group => group.length > 0 && !besideKbd(group))
     applyGroups(plain, plain.map(sourcesOf), true)
     processKbdSpans(parent)
   }
@@ -836,6 +814,6 @@ export function createInlineFragments(host: InlineHost): InlineFragments {
       punctPending = new Set()
       punctParents = new WeakSet()
       aroundWalked = new Set()
-    },
+    }
   }
 }

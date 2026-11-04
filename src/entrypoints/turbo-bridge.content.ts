@@ -10,5 +10,5 @@ export default defineContentScript({
   world: 'MAIN',
   main() {
     installTurboBridge(window)
-  },
+  }
 })

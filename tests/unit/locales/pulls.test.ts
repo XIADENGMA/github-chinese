@@ -35,9 +35,9 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['wants to merge 3 commits into', '想要将 3 个提交合并到'],
       ['wants to merge 1 commit into', '想要将 1 个提交合并到'],
-      ['wants to merge 1,024 commits into', '想要将 1,024 个提交合并到'],
+      ['wants to merge 1,024 commits into', '想要将 1,024 个提交合并到']
     ],
-    misses: ['wants to merge some commits into'],
+    misses: ['wants to merge some commits into']
   },
   { hits: [['merged 2 commits into', '已将 2 个提交合并到']], misses: ['merged commits into'] },
   { hits: [['5 commits merged into', '5 个提交已合并到']], misses: ['All commits merged into'] },
@@ -45,84 +45,79 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['commits into', '个提交到'],
-      ['commit into', '个提交到'],
+      ['commit into', '个提交到']
     ],
-    misses: ['commits onto'],
+    misses: ['commits onto']
   },
   {
     hits: [
       ['and merged', '并合并于'],
-      ['and closed', '并关闭于'],
+      ['and closed', '并关闭于']
     ],
-    misses: ['and reopened'],
+    misses: ['and reopened']
   },
   {
     hits: [
       ['; merged', '；合并于'],
-      ['; closed', '；关闭于'],
+      ['; closed', '；关闭于']
     ],
-    misses: ['; reopened'],
+    misses: ['; reopened']
   },
   // header：行数统计（& 译“和”，与 commits 词典一致）
   {
     hits: [
       ['Lines changed: 120 additions & 4 deletions', '更改行数：新增 120 行和删除 4 行'],
-      ['Lines changed: 1 addition & 1 deletion', '更改行数：新增 1 行和删除 1 行'],
+      ['Lines changed: 1 addition & 1 deletion', '更改行数：新增 1 行和删除 1 行']
     ],
-    misses: ['Lines changed: many additions & 4 deletions'],
+    misses: ['Lines changed: many additions & 4 deletions']
   },
   {
     hits: [['124 changes: 120 additions & 4 deletions', '124 处更改：新增 120 行和删除 4 行']],
-    misses: ['Many changes: 120 additions & 4 deletions'],
+    misses: ['Many changes: 120 additions & 4 deletions']
   },
   // header：状态与标签页
   {
     hits: [
       ['Pull request state: Draft', '拉取请求状态：草稿'],
-      ['Pull request state: Merged', '拉取请求状态：已合并'],
+      ['Pull request state: Merged', '拉取请求状态：已合并']
     ],
-    misses: ['Pull request state: Archived'],
+    misses: ['Pull request state: Archived']
   },
   {
     hits: [
       ['Switch tab (current: Files changed)', '切换标签页（当前：已更改的文件）'],
       ['Switch tab (current: Checks)', '切换标签页（当前：检查）'],
-      ['Switch tab (current: Insights)', '切换标签页（当前：Insights）'],
+      ['Switch tab (current: Insights)', '切换标签页（当前：Insights）']
     ],
-    misses: ['Switch tab (current)'],
+    misses: ['Switch tab (current)']
   },
   {
-    hits: [
-      [
-        "Title can't be longer than 256 characters (currently 300 characters)",
-        '标题不能超过 256 个字符（当前 300 个字符）',
-      ],
-    ],
-    misses: ["Title can't be longer than 256 characters"],
+    hits: [["Title can't be longer than 256 characters (currently 300 characters)", '标题不能超过 256 个字符（当前 300 个字符）']],
+    misses: ["Title can't be longer than 256 characters"]
   },
   { hits: [['Pull Request #123', '拉取请求 #123']], misses: ['Pull Request #abc'] },
   {
     hits: [
       ['Create codespace on feature-branch', '在 feature-branch 上创建代码空间'],
-      ['Create a codespace on main', '在 main 上创建代码空间'],
+      ['Create a codespace on main', '在 main 上创建代码空间']
     ],
-    misses: ['Create codespace on my branch'],
+    misses: ['Create codespace on my branch']
   },
   // header：堆栈
   {
     hits: [['Navigate pull request stack, position 2 of 5', '浏览拉取请求堆栈，5 个中的第 2 个']],
-    misses: ['Navigate pull request stack'],
+    misses: ['Navigate pull request stack']
   },
   {
     hits: [['Pull request stack, position 1 of 3', '拉取请求堆栈，3 个中的第 1 个']],
-    misses: ['Pull request stack, position one of 3'],
+    misses: ['Pull request stack, position one of 3']
   },
   {
     hits: [
       ['Stack #4', '堆栈 #4'],
-      ['stack #12', '堆栈 #12'],
+      ['stack #12', '堆栈 #12']
     ],
-    misses: ['Stack #abc'],
+    misses: ['Stack #abc']
   },
   { hits: [['Stack #', '堆栈 #']], misses: ['Stacks #'] },
   { hits: [['Already in stack #4', '已在堆栈 #4 中']], misses: ['Already in stack'] },
@@ -130,62 +125,56 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Proposed stack loaded with 3 pull requests.', '已加载包含 3 个拉取请求的建议堆栈。'],
-      ['Proposed stack loaded with 1 pull request.', '已加载包含 1 个拉取请求的建议堆栈。'],
+      ['Proposed stack loaded with 1 pull request.', '已加载包含 1 个拉取请求的建议堆栈。']
     ],
-    misses: ['Proposed stack loaded with 3 pull requests'],
+    misses: ['Proposed stack loaded with 3 pull requests']
   },
   { hits: [['Pull requests in stack #4', '堆栈 #4 中的拉取请求']], misses: ['Pull requests in stack'] },
   {
     hits: [
       [
         'Auto-merge will be disabled for this stack. All pull requests will be removed from the stack. Their base branches will not be retargeted and their commit histories will remain the same.',
-        '此堆栈的自动合并将被禁用。所有拉取请求都将从堆栈中删除。其基础分支不会重新指定且提交历史记录保持不变。',
+        '此堆栈的自动合并将被禁用。所有拉取请求都将从堆栈中删除。其基础分支不会重新指定且提交历史记录保持不变。'
       ],
-      [
-        'Auto-merge will be disabled for this stack. Review the stack first.',
-        '此堆栈的自动合并将被禁用。Review the stack first.',
-      ],
+      ['Auto-merge will be disabled for this stack. Review the stack first.', '此堆栈的自动合并将被禁用。Review the stack first.']
     ],
-    misses: ['Auto-merge will be disabled for this stack.'],
+    misses: ['Auto-merge will be disabled for this stack.']
   },
   {
     hits: [
       ['Stack Created Banner', '堆栈已创建横幅'],
-      ['Stack Updated Banner', '堆栈已更新横幅'],
+      ['Stack Updated Banner', '堆栈已更新横幅']
     ],
-    misses: ['Stack Deleted Banner'],
+    misses: ['Stack Deleted Banner']
   },
   // header：Dependabot 横幅
   {
     hits: [
       ['on lodash including a', '涉及 lodash 并包括一个'],
-      ['on @babel/core including a', '涉及 @babel/core 并包括一个'],
+      ['on @babel/core including a', '涉及 @babel/core 并包括一个']
     ],
-    misses: ['on lodash including an'],
+    misses: ['on lodash including an']
   },
   {
     hits: [
       ['on lodash', '涉及 lodash'],
-      ['on @babel/core', '涉及 @babel/core'],
+      ['on @babel/core', '涉及 @babel/core']
     ],
-    misses: ['on GitHub', 'on 2026-10-26', 'on the main branch'],
+    misses: ['on GitHub', 'on 2026-10-26', 'on the main branch']
   },
   {
     hits: [
       ['This pull request resolved a Dependabot alert on lodash.', '此拉取请求已解决 lodash 的一个 Dependabot 警报。'],
-      [
-        'This pull request would resolve a Dependabot alert on @babel/core.',
-        '此拉取请求将解决 @babel/core 的一个 Dependabot 警报。',
-      ],
+      ['This pull request would resolve a Dependabot alert on @babel/core.', '此拉取请求将解决 @babel/core 的一个 Dependabot 警报。']
     ],
-    misses: ['This pull request resolved a Dependabot alert on lodash'],
+    misses: ['This pull request resolved a Dependabot alert on lodash']
   },
   {
     hits: [
       ['This pull request would resolve a Dependabot alert', '此拉取请求将解决一个 Dependabot 警报'],
-      ['This pull request resolved a Dependabot alert', '此拉取请求已解决一个 Dependabot 警报'],
+      ['This pull request resolved a Dependabot alert', '此拉取请求已解决一个 Dependabot 警报']
     ],
-    misses: ['This pull request resolved 2 Dependabot alerts'],
+    misses: ['This pull request resolved 2 Dependabot alerts']
   },
 
   // mergebox：检查汇总
@@ -198,23 +187,23 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['15 successful checks', '15 个检查成功'],
       ['1 in progress check', '1 个检查正在进行'],
       ['2 pending and 1 timed out checks', '2 个检查挂起和 1 个已超时'],
-      ['1 neutral check', '1 个检查中性'],
+      ['1 neutral check', '1 个检查中性']
     ],
-    misses: ['3 flaky checks'],
+    misses: ['3 flaky checks']
   },
   {
     hits: [
       ['18 checks', '18 个检查'],
-      ['1 check', '1 个检查'],
+      ['1 check', '1 个检查']
     ],
-    misses: ['Many checks'],
+    misses: ['Many checks']
   },
   {
     hits: [
       ['Collapse 1 failing check group', '折叠分组 1 个检查失败'],
-      ['Expand 15 successful checks group', '展开分组 15 个检查成功'],
+      ['Expand 15 successful checks group', '展开分组 15 个检查成功']
     ],
-    misses: ['Collapse failing checks group'],
+    misses: ['Collapse failing checks group']
   },
   { hits: [['Expand 3 checks group', '展开分组 3 个检查']], misses: ['Expand all checks group'] },
   // mergebox：检查耗时
@@ -223,9 +212,9 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Successful in 2m', '成功用时 2 分钟'],
       ['Successful in 1h 5m', '成功用时 1 小时 5 分钟'],
       ['Completed in 30s', '完成用时 30 秒'],
-      ['Success in 1d 2h 3m', '成功用时 1 天 2 小时 3 分钟'],
+      ['Success in 1d 2h 3m', '成功用时 1 天 2 小时 3 分钟']
     ],
-    misses: ['Successful in two minutes'],
+    misses: ['Successful in two minutes']
   },
   {
     hits: [
@@ -233,40 +222,34 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Failing after 2m 5s', '2 分钟 5 秒后失败'],
       ['Cancelled after 1m 2s', '1 分钟 2 秒后取消'],
       ['Timed out after 6h', '6 小时后超时'],
-      ['Neutral after 41s', '41 秒后结果为中性'],
+      ['Neutral after 41s', '41 秒后结果为中性']
     ],
-    misses: ['Failing after a while'],
+    misses: ['Failing after a while']
   },
   {
     hits: [
       ['2 checks are failing and need attention.', '2 个检查失败且需要处理。'],
-      ['1 check is failing and needs attention.', '1 个检查失败且需要处理。'],
+      ['1 check is failing and needs attention.', '1 个检查失败且需要处理。']
     ],
-    misses: ['2 checks are failing and need attention'],
+    misses: ['2 checks are failing and need attention']
   },
   {
     hits: [
       ['2 workflows awaiting approval', '2 个工作流等待批准'],
-      ['1 workflow awaiting approval', '1 个工作流等待批准'],
+      ['1 workflow awaiting approval', '1 个工作流等待批准']
     ],
-    misses: ['Workflows awaiting approval'],
+    misses: ['Workflows awaiting approval']
   },
   {
     hits: [
-      [
-        'Ready to merge when you are. Click to view details in the merge panel.',
-        '随时可以合并。单击可在合并面板中查看详细信息。',
-      ],
+      ['Ready to merge when you are. Click to view details in the merge panel.', '随时可以合并。单击可在合并面板中查看详细信息。'],
       [
         '2 checks are failing and need attention. Click to view details in the merge panel.',
-        '2 个检查失败且需要处理。单击可在合并面板中查看详细信息。',
+        '2 个检查失败且需要处理。单击可在合并面板中查看详细信息。'
       ],
-      [
-        'Merge queue is paused. Click to view details in the merge panel.',
-        'Merge queue is paused. 单击可在合并面板中查看详细信息。',
-      ],
+      ['Merge queue is paused. Click to view details in the merge panel.', 'Merge queue is paused. 单击可在合并面板中查看详细信息。']
     ],
-    misses: ['Click to view details in the merge panel.'],
+    misses: ['Click to view details in the merge panel.']
   },
   // mergebox：审查分组
   {
@@ -274,166 +257,142 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['2 approvals', '2 个批准'],
       ['1 approval', '1 个批准'],
       ['3 requested changes', '3 个更改请求'],
-      ['1 pending review', '1 个待处理的审查'],
+      ['1 pending review', '1 个待处理的审查']
     ],
-    misses: ['2 approvers'],
+    misses: ['2 approvers']
   },
   {
     hits: [
       ['Expand 2 approvals group', '展开分组 2 个批准'],
-      ['Collapse 1 pending review group', '折叠分组 1 个待处理的审查'],
+      ['Collapse 1 pending review group', '折叠分组 1 个待处理的审查']
     ],
-    misses: ['Expand approvals group'],
+    misses: ['Expand approvals group']
   },
   {
     hits: [
       ['list of approvals', '批准列表'],
       ['list of requested changes', '更改请求列表'],
-      ['list of pending reviews', '待处理的审查列表'],
+      ['list of pending reviews', '待处理的审查列表']
     ],
-    misses: ['list of reviewers'],
+    misses: ['list of reviewers']
   },
   // mergebox：审查者状态
   {
     hits: [
       ['Approved these changes', '批准了这些更改'],
       ['Commented with read-only permissions', '以只读权限发表了评论'],
-      [
-        'Approved these changes with read-only permissions for octo-org/core',
-        '代表 octo-org/core 以只读权限批准了这些更改',
-      ],
-      ['Requested changes for octo-org/core', '代表 octo-org/core 请求了更改'],
+      ['Approved these changes with read-only permissions for octo-org/core', '代表 octo-org/core 以只读权限批准了这些更改'],
+      ['Requested changes for octo-org/core', '代表 octo-org/core 请求了更改']
     ],
-    misses: ['Approved some changes'],
+    misses: ['Approved some changes']
   },
   {
     hits: [
       ['octocat approved these changes', 'octocat 批准了这些更改'],
       ['copilot-pull-request-reviewer[bot] commented', 'copilot-pull-request-reviewer[bot] 发表了评论'],
       ['hubot requested changes with read-only permissions', 'hubot 以只读权限请求了更改'],
-      ['octocat approved these changes for octo-org/core', 'octocat 代表 octo-org/core 批准了这些更改'],
+      ['octocat approved these changes for octo-org/core', 'octocat 代表 octo-org/core 批准了这些更改']
     ],
-    misses: ['Mona Lisa approved these changes'],
+    misses: ['Mona Lisa approved these changes']
   },
   {
     hits: [
       ['octocat was requested for review', 'octocat 被请求审查'],
-      ['hubot was requested for review as a codeowner', 'hubot 被请求以代码所有者身份审查'],
+      ['hubot was requested for review as a codeowner', 'hubot 被请求以代码所有者身份审查']
     ],
-    misses: ['Mona Lisa was requested for review'],
+    misses: ['Mona Lisa was requested for review']
   },
   {
     hits: [
       ["octocat's avatar image", 'octocat 的头像'],
-      ["dependabot[bot]'s avatar image", 'dependabot[bot] 的头像'],
+      ["dependabot[bot]'s avatar image", 'dependabot[bot] 的头像']
     ],
-    misses: ["Mona Lisa's avatar image"],
+    misses: ["Mona Lisa's avatar image"]
   },
   // mergebox：审查要求
   {
     hits: [['At least 2 approving reviews are required', '至少需要 2 个批准审查']],
-    misses: ['At least two approving reviews are required'],
+    misses: ['At least two approving reviews are required']
   },
   {
     hits: [
-      [
-        'At least 2 approving reviews are required by reviewers with write access.',
-        '至少需要 2 个具有写入访问权限的审查者批准。',
-      ],
-      [
-        'At least 1 approving review is required by reviewers with write access.',
-        '至少需要 1 个具有写入访问权限的审查者批准。',
-      ],
+      ['At least 2 approving reviews are required by reviewers with write access.', '至少需要 2 个具有写入访问权限的审查者批准。'],
+      ['At least 1 approving review is required by reviewers with write access.', '至少需要 1 个具有写入访问权限的审查者批准。']
     ],
-    misses: ['At least 2 approving reviews are required by reviewers.'],
+    misses: ['At least 2 approving reviews are required by reviewers.']
   },
   {
-    hits: [
-      [
-        'At least 2 approving reviews are required to merge this pull request.',
-        '合并此拉取请求至少需要 2 个批准审查。',
-      ],
-    ],
-    misses: ['At least 2 approving reviews are required to merge.'],
+    hits: [['At least 2 approving reviews are required to merge this pull request.', '合并此拉取请求至少需要 2 个批准审查。']],
+    misses: ['At least 2 approving reviews are required to merge.']
   },
   {
     hits: [
       ['Code owner review required by reviewers with write access.', '需要具有写入访问权限的代码所有者审查。'],
       [
         'An approval on the most recent push is required by reviewers with write access.',
-        '最近一次推送需要获得具有写入访问权限的审查者批准。',
+        '最近一次推送需要获得具有写入访问权限的审查者批准。'
       ],
-      [
-        'A review from a compliance team is required by reviewers with write access.',
-        '需要具有写入访问权限的合规团队审查。',
-      ],
+      ['A review from a compliance team is required by reviewers with write access.', '需要具有写入访问权限的合规团队审查。']
     ],
-    misses: ['Security review required by reviewers with write access.'],
+    misses: ['Security review required by reviewers with write access.']
   },
   {
-    hits: [
-      [
-        'No applicable reviews submitted by reviewers with write access.',
-        '具有写入访问权限的审查者没有提交适用的审查。',
-      ],
-    ],
-    misses: ['No applicable reviews submitted by reviewers.'],
+    hits: [['No applicable reviews submitted by reviewers with write access.', '具有写入访问权限的审查者没有提交适用的审查。']],
+    misses: ['No applicable reviews submitted by reviewers.']
   },
   {
     hits: [
       [
         '1 change requested, 2 approving reviews by reviewers with write access.',
-        '具有写入访问权限的审查者提交了 1 个更改请求、2 个批准审查。',
+        '具有写入访问权限的审查者提交了 1 个更改请求、2 个批准审查。'
       ],
       ['2 changes requested by reviewers with write access.', '具有写入访问权限的审查者提交了 2 个更改请求。'],
-      ['3 approving reviews by reviewers with write access.', '具有写入访问权限的审查者提交了 3 个批准审查。'],
+      ['3 approving reviews by reviewers with write access.', '具有写入访问权限的审查者提交了 3 个批准审查。']
     ],
-    misses: ['Some approving reviews by reviewers with write access.'],
+    misses: ['Some approving reviews by reviewers with write access.']
   },
   {
     hits: [['2 reviews requesting changes by reviewers with write access.', '2 个具有写入访问权限的审查者请求更改。']],
-    misses: ['Reviews requesting changes by reviewers with write access.'],
+    misses: ['Reviews requesting changes by reviewers with write access.']
   },
   {
     hits: [
       ['2 changes requested', '2 个更改请求'],
-      ['1 change requested', '1 个更改请求'],
+      ['1 change requested', '1 个更改请求']
     ],
-    misses: ['No changes requested'],
+    misses: ['No changes requested']
   },
   {
     hits: [
       ['2 approving reviews', '2 个批准审查'],
-      ['1 approving review', '1 个批准审查'],
+      ['1 approving review', '1 个批准审查']
     ],
-    misses: ['No approving reviews'],
+    misses: ['No approving reviews']
   },
   {
     hits: [
       ['3 pending reviewers', '3 个待审查者'],
-      ['1 pending reviewer', '1 个待审查者'],
+      ['1 pending reviewer', '1 个待审查者']
     ],
-    misses: ['Pending reviewers'],
+    misses: ['Pending reviewers']
   },
   {
     hits: [['Waiting on code owner review from octo-org/core.', '正在等待代码所有者 octo-org/core 的审查。']],
-    misses: ['Waiting on code owner review.'],
+    misses: ['Waiting on code owner review.']
   },
   // mergebox：更新分支
   {
     hits: [
       [
         'Merge the latest changes from main into this branch. This merge commit will be associated with octocat.',
-        '将 main 的最新更改合并到此分支。此合并提交将与 octocat 关联。',
-      ],
+        '将 main 的最新更改合并到此分支。此合并提交将与 octocat 关联。'
+      ]
     ],
-    misses: [
-      'Merge the latest changes from main into this branch. This merge commit will be associated with Mona Lisa.',
-    ],
+    misses: ['Merge the latest changes from main into this branch. This merge commit will be associated with Mona Lisa.']
   },
   {
     hits: [['Merge the latest changes from main into this branch.', '将 main 的最新更改合并到此分支。']],
-    misses: ['Merge the latest changes from main into that branch.'],
+    misses: ['Merge the latest changes from main into that branch.']
   },
   { hits: [['Merge the latest changes from', '将']], misses: ['Merge the latest changes'] },
   { hits: [['into this branch.', '的最新更改合并到此分支。']], misses: ['into this branch'] },
@@ -441,215 +400,196 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Step 1:', '第 1 步：'],
-      ['Step 2', '第 2 步'],
+      ['Step 2', '第 2 步']
     ],
-    misses: ['Step one:'],
+    misses: ['Step one:']
   },
   // mergebox：合并方式说明
   {
     hits: [
       [
         'The 3 commits from this branch will be combined into one commit in the base branch.',
-        '此分支的 3 个提交将压缩为基础分支中的一个提交。',
-      ],
+        '此分支的 3 个提交将压缩为基础分支中的一个提交。'
+      ]
     ],
-    misses: ['The commits from this branch will be combined into one commit in the base branch.'],
+    misses: ['The commits from this branch will be combined into one commit in the base branch.']
   },
   {
-    hits: [
-      [
-        'The 3 commits from this branch will be rebased and added to the base branch.',
-        '此分支的 3 个提交将变基后添加到基础分支。',
-      ],
-    ],
-    misses: ['The 3 commits from this branch will be rebased.'],
+    hits: [['The 3 commits from this branch will be rebased and added to the base branch.', '此分支的 3 个提交将变基后添加到基础分支。']],
+    misses: ['The 3 commits from this branch will be rebased.']
   },
   {
     hits: [['The 5 commits from this branch will be added to the base branch.', '此分支的 5 个提交将添加到基础分支。']],
-    misses: ['The five commits from this branch will be added to the base branch.'],
+    misses: ['The five commits from this branch will be added to the base branch.']
   },
   {
     hits: [
       [
         'All commits from these 3 branches will be added to the base branch via merge commits.',
-        '这 3 个分支的所有提交将通过合并提交添加到基础分支。',
-      ],
+        '这 3 个分支的所有提交将通过合并提交添加到基础分支。'
+      ]
     ],
-    misses: ['All commits from these branches will be added to the base branch via merge commits.'],
+    misses: ['All commits from these branches will be added to the base branch via merge commits.']
   },
   {
     hits: [
       [
         'The commits from these 3 branches will be combined into one commit per branch in the base branch.',
-        '这 3 个分支的提交将在基础分支中按分支各压缩为一个提交。',
-      ],
+        '这 3 个分支的提交将在基础分支中按分支各压缩为一个提交。'
+      ]
     ],
-    misses: ['The commits from these branches will be combined into one commit per branch in the base branch.'],
+    misses: ['The commits from these branches will be combined into one commit per branch in the base branch.']
   },
   {
     hits: [
-      [
-        'All commits from these 2 branches will be rebased and added to the base branch.',
-        '这 2 个分支的所有提交将变基后添加到基础分支。',
-      ],
+      ['All commits from these 2 branches will be rebased and added to the base branch.', '这 2 个分支的所有提交将变基后添加到基础分支。']
     ],
-    misses: ['All commits from these 2 branches will be rebased.'],
+    misses: ['All commits from these 2 branches will be rebased.']
   },
   {
     hits: [
       ['Merging is blocked due to failing merge requirements', '因合并要求未满足而无法合并'],
-      ['Merging is blocked due to pending merge requirements', '因合并要求尚未完成而无法合并'],
+      ['Merging is blocked due to pending merge requirements', '因合并要求尚未完成而无法合并']
     ],
-    misses: ['Merging is blocked due to unknown merge requirements'],
+    misses: ['Merging is blocked due to unknown merge requirements']
   },
   {
     hits: [['This commit will be authored by octocat@github.com.', '此提交的作者电子邮件为 octocat@github.com。']],
-    misses: ['This commit will be authored by Mona Lisa.'],
+    misses: ['This commit will be authored by Mona Lisa.']
   },
   {
     hits: [['This will rebase your changes and merge them into main.', '这将变基你的更改并合并到 main。']],
-    misses: ['This will rebase your changes.'],
+    misses: ['This will rebase your changes.']
   },
   {
     hits: [['This will squash your changes and merge them into main.', '这将压缩你的更改并合并到 main。']],
-    misses: ['This will squash your changes.'],
+    misses: ['This will squash your changes.']
   },
   // mergebox：规则失败原因
   {
     hits: [
       ['Required status check "build" is expected.', '必需的状态检查“build”尚未报告。'],
       ['Required status check "ci / test" is in progress.', '必需的状态检查“ci / test”正在进行。'],
-      ['Required status check "build" is pending.', '必需的状态检查“build”处于挂起状态。'],
+      ['Required status check "build" is pending.', '必需的状态检查“build”处于挂起状态。']
     ],
-    misses: ['Required status check "build" is flaky.'],
+    misses: ['Required status check "build" is flaky.']
   },
   {
     hits: [['1 of 2 required status checks has not succeeded: build.', '2 个必需的状态检查中有 1 个未成功：build。']],
-    misses: ['1 of 2 required status checks has not succeeded.'],
+    misses: ['1 of 2 required status checks has not succeeded.']
   },
   {
     hits: [['2 of 3 required status checks are expected.', '3 个必需的状态检查中有 2 个尚未报告。']],
-    misses: ['Some required status checks are expected.'],
+    misses: ['Some required status checks are expected.']
   },
   {
     hits: [
       ['1 of 3 required status checks is pending.', '3 个必需的状态检查中有 1 个处于挂起状态。'],
-      ['2 of 3 required status checks are in progress.', '3 个必需的状态检查中有 2 个正在进行。'],
+      ['2 of 3 required status checks are in progress.', '3 个必需的状态检查中有 2 个正在进行。']
     ],
-    misses: ['1 of 3 required status checks is queued.'],
+    misses: ['1 of 3 required status checks is queued.']
   },
   // mergebox：网址为纯文本时的无权推送原因（链接时的前半由 static 收录）
   {
     hits: [
       [
         "You're not authorized to push to this branch. Visit https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches for more information.",
-        '你无权推送到此分支。请访问 https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches 了解详细信息。',
+        '你无权推送到此分支。请访问 https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches 了解详细信息。'
       ],
       [
         'You’re not authorized to push to this branch. Visit https://docs.github.com/ for more information.',
-        '你无权推送到此分支。请访问 https://docs.github.com/ 了解详细信息。',
-      ],
+        '你无权推送到此分支。请访问 https://docs.github.com/ 了解详细信息。'
+      ]
     ],
-    misses: ["You're not authorized to push to this branch. Visit the branch settings for more information."],
+    misses: ["You're not authorized to push to this branch. Visit the branch settings for more information."]
   },
 
   // merge-flow：合并队列
   {
     hits: [['for all merges into the main branch.', '来合并所有更改到 main 分支。']],
-    misses: ['for all merges into the main branch'],
+    misses: ['for all merges into the main branch']
   },
   {
     hits: [
       ['There is 1 pull request ahead of this one in the', '此拉取请求在以下队列中前面还有 1 个拉取请求'],
-      ['There are 3 pull requests ahead of this one in the', '此拉取请求在以下队列中前面还有 3 个拉取请求'],
+      ['There are 3 pull requests ahead of this one in the', '此拉取请求在以下队列中前面还有 3 个拉取请求']
     ],
-    misses: ['There is 1 pull request ahead of this one', 'There are many pull requests ahead of this one in the'],
+    misses: ['There is 1 pull request ahead of this one', 'There are many pull requests ahead of this one in the']
   },
   {
     hits: [
       [
         'This pull request will be automatically grouped with other pull requests and merged into main.',
-        '此拉取请求将自动与其他拉取请求分组并合并到 main。',
-      ],
+        '此拉取请求将自动与其他拉取请求分组并合并到 main。'
+      ]
     ],
-    misses: ['This pull request will be automatically grouped with other pull requests.'],
+    misses: ['This pull request will be automatically grouped with other pull requests.']
   },
   {
     hits: [['This pull request will be merged into main by itself.', '此拉取请求将单独合并到 main。']],
-    misses: ['This pull request will be merged into main.'],
+    misses: ['This pull request will be merged into main.']
   },
   // merge-flow：自动合并
   {
     hits: [
       [
         'This pull request and 2 others in the stack will automatically merge when they all meet the merge requirements.',
-        '此拉取请求与堆栈中的其他 2 个拉取请求将在全部满足合并要求后自动合并。',
+        '此拉取请求与堆栈中的其他 2 个拉取请求将在全部满足合并要求后自动合并。'
       ],
       [
         'This pull request and 1 other in the stack will be added to the merge queue when they all meet the merge requirements.',
-        '此拉取请求与堆栈中的其他 1 个拉取请求将在全部满足合并要求后加入合并队列。',
-      ],
+        '此拉取请求与堆栈中的其他 1 个拉取请求将在全部满足合并要求后加入合并队列。'
+      ]
     ],
-    misses: [
-      'This pull request and others in the stack will automatically merge when they all meet the merge requirements.',
-    ],
+    misses: ['This pull request and others in the stack will automatically merge when they all meet the merge requirements.']
   },
   {
-    hits: [
-      ['Are you sure you want to disable auto-merge for 3 pull requests?', '确定要为 3 个拉取请求禁用自动合并吗？'],
-    ],
-    misses: ['Are you sure you want to disable auto-merge?'],
+    hits: [['Are you sure you want to disable auto-merge for 3 pull requests?', '确定要为 3 个拉取请求禁用自动合并吗？']],
+    misses: ['Are you sure you want to disable auto-merge?']
   },
   // merge-flow：codespace 清理
   {
     hits: [
       ['Delete 2 codespaces', '删除 2 个代码空间'],
-      ['Delete codespace', '删除代码空间'],
+      ['Delete codespace', '删除代码空间']
     ],
-    misses: ['Delete all codespaces'],
+    misses: ['Delete all codespaces']
   },
   {
     hits: [
       ['Deleting 2 codespaces.', '正在删除 2 个代码空间。'],
-      ['Deleting codespace.', '正在删除代码空间。'],
+      ['Deleting codespace.', '正在删除代码空间。']
     ],
-    misses: ['Deleting codespaces'],
+    misses: ['Deleting codespaces']
   },
   {
     hits: [
       ["Couldn't delete 2 codespaces", '无法删除 2 个代码空间'],
-      ['Couldn’t delete codespace', '无法删除代码空间'],
+      ['Couldn’t delete codespace', '无法删除代码空间']
     ],
-    misses: ['Could not delete codespace'],
+    misses: ['Could not delete codespace']
   },
   {
     hits: [
       [
         'You’re all set — the 2 codespaces for head branch can be safely deleted. You can also manage your codespaces in',
-        '一切就绪——头部分支的 2 个代码空间可以安全删除。你也可以在以下位置管理代码空间',
-      ],
+        '一切就绪——头部分支的 2 个代码空间可以安全删除。你也可以在以下位置管理代码空间'
+      ]
     ],
-    misses: ['You’re all set — the 2 codespaces for head branch can be safely deleted.'],
+    misses: ['You’re all set — the 2 codespaces for head branch can be safely deleted.']
   },
   {
-    hits: [
-      ['Are you sure you want to delete 2 codespaces for the head branch?', '确定要删除头部分支的 2 个代码空间吗？'],
-    ],
-    misses: ['Are you sure you want to delete codespaces for the head branch?'],
+    hits: [['Are you sure you want to delete 2 codespaces for the head branch?', '确定要删除头部分支的 2 个代码空间吗？']],
+    misses: ['Are you sure you want to delete codespaces for the head branch?']
   },
   // merge-flow：堆栈合并与变基
   {
     hits: [['3 pull requests are being merged.', '正在合并 3 个拉取请求。']],
-    misses: ['Pull requests are being merged.'],
+    misses: ['Pull requests are being merged.']
   },
   {
-    hits: [
-      [
-        'Merging this pull request will also merge 2 pull requests below it.',
-        '合并此拉取请求还将合并其下方的 2 个拉取请求。',
-      ],
-    ],
-    misses: ['Merging this pull request will also merge pull requests below it.'],
+    hits: [['Merging this pull request will also merge 2 pull requests below it.', '合并此拉取请求还将合并其下方的 2 个拉取请求。']],
+    misses: ['Merging this pull request will also merge pull requests below it.']
   },
   { hits: [['2 of 5 pull requests loading', '正在加载 2/5 个拉取请求']], misses: ['Pull requests loading'] },
   { hits: [['2 of 4 branches rebased', '已变基 2/4 个分支']], misses: ['All branches rebased'] },
@@ -657,28 +597,25 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       [
         'Resolve the merge conflicts in pull request #12, then try to rebase this stack again.',
-        '请先解决拉取请求 #12 中的合并冲突，然后重新变基此堆栈。',
-      ],
+        '请先解决拉取请求 #12 中的合并冲突，然后重新变基此堆栈。'
+      ]
     ],
-    misses: ['Resolve the merge conflicts in pull request #12.'],
+    misses: ['Resolve the merge conflicts in pull request #12.']
   },
   {
     hits: [
-      [
-        'Check pull request #12 for any issues, then try to rebase this stack again.',
-        '请检查拉取请求 #12 是否有问题，然后重新变基此堆栈。',
-      ],
+      ['Check pull request #12 for any issues, then try to rebase this stack again.', '请检查拉取请求 #12 是否有问题，然后重新变基此堆栈。']
     ],
-    misses: ['Check pull request #12 for any issues.'],
+    misses: ['Check pull request #12 for any issues.']
   },
   {
     hits: [['Rebase this stack onto the latest version of main.', '将此堆栈变基到 main 的最新版本。']],
-    misses: ['Rebase this stack onto main.'],
+    misses: ['Rebase this stack onto main.']
   },
   // merge-flow：在场证明
   {
     hits: [['This requirement was satisfied by octocat', '此要求已由 octocat 满足']],
-    misses: ['This requirement was satisfied by Mona Lisa'],
+    misses: ['This requirement was satisfied by Mona Lisa']
   },
 
   // timeline：审查强度
@@ -686,114 +623,106 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['requested a balanced review from', '请求均衡审查者'],
       ['requested a Lite review from', '请求轻量审查者'],
-      ['requested an auto review from', '请求自动审查者'],
+      ['requested an auto review from', '请求自动审查者']
     ],
-    misses: ['requested a quick review from'],
+    misses: ['requested a quick review from']
   },
   {
     hits: [
       ['and a thorough review from', '以及深度审查者'],
-      ['and a max review from', '以及最高审查者'],
+      ['and a max review from', '以及最高审查者']
     ],
-    misses: ['and a review from'],
+    misses: ['and a review from']
   },
   // timeline：提交
   {
     hits: [
       ['added 3 commits', '添加了 3 个提交'],
-      ['added 1 commit', '添加了 1 个提交'],
+      ['added 1 commit', '添加了 1 个提交']
     ],
-    misses: ['added some commits'],
+    misses: ['added some commits']
   },
   { hits: [['and others added 5 commits', '等人添加了 5 个提交']], misses: ['and others added commits'] },
   // timeline：自动合并与合并队列
   { hits: [['enabled auto-merge (squash)', '启用了自动合并（压缩）']], misses: ['enabled auto-merge (fast-forward)'] },
   {
     hits: [['enabled auto-merge for pull request #12 (rebase)', '为拉取请求 #12 启用了自动合并（变基）']],
-    misses: ['enabled auto-merge for pull request #12'],
+    misses: ['enabled auto-merge for pull request #12']
   },
   {
     hits: [
       ['removed from the queue due to failed status checks', '因状态检查失败从队列中删除'],
-      ['removed from the queue due to a conflict with the base branch', '因与基础分支冲突从队列中删除'],
+      ['removed from the queue due to a conflict with the base branch', '因与基础分支冲突从队列中删除']
     ],
-    misses: ['removed from the queue due to cosmic rays'],
+    misses: ['removed from the queue due to cosmic rays']
   },
   {
-    hits: [
-      ['removed this pull request from the merge queue due to a manual request', '因手动请求将此拉取请求移出合并队列'],
-    ],
-    misses: ['removed this pull request from the merge queue'],
+    hits: [['removed this pull request from the merge queue due to a manual request', '因手动请求将此拉取请求移出合并队列']],
+    misses: ['removed this pull request from the merge queue']
   },
   // 原因在链接后：removed this pull request from the <merge queue> due to …
   {
     hits: [
       ['due to failed status checks', '原因是状态检查失败'],
-      ['because a manual request', '原因是手动请求'],
+      ['because a manual request', '原因是手动请求']
     ],
-    misses: ['due to a typo'],
+    misses: ['due to a typo']
   },
   // timeline：堆栈
   {
     hits: [['added this pull request to stack #4', '将此拉取请求添加到堆栈 #4']],
-    misses: ['added this pull request to stack'],
+    misses: ['added this pull request to stack']
   },
   {
     hits: [['removed this pull request from stack #4', '将此拉取请求移出堆栈 #4']],
-    misses: ['removed this pull request from stack'],
+    misses: ['removed this pull request from stack']
   },
   // timeline：项目状态（原文无标点，与问题时间线同一写法：状态名不加引号，项目链接前用“于”）
   {
     hits: [
       ['moved this from Todo to In Progress in', '将此拉取请求从 Todo 移至 In Progress 于'],
-      ['moved this from No status to Done in', '将此拉取请求从无状态移至 Done 于'],
+      ['moved this from No status to Done in', '将此拉取请求从无状态移至 Done 于']
     ],
-    misses: ['moved this from Todo to In Progress'],
+    misses: ['moved this from Todo to In Progress']
   },
   { hits: [['moved this to Done in', '将此拉取请求移至 Done 于']], misses: ['moved this to Done'] },
   // timeline：交叉引用
   {
     hits: [
       ['mentioned this in 3 issues', '在 3 个议题中提及了此拉取请求'],
-      ['mentioned this in 2 pull requests', '在 2 个拉取请求中提及了此拉取请求'],
+      ['mentioned this in 2 pull requests', '在 2 个拉取请求中提及了此拉取请求']
     ],
-    misses: ['mentioned this in an issue'],
+    misses: ['mentioned this in an issue']
   },
   // timeline：锁定
   {
     hits: [
       ['locked and limited conversation to collaborators', '锁定了对话并限制为仅协作者可评论'],
-      [
-        'locked as off-topic and limited conversation to collaborators',
-        '以偏离主题为由锁定了对话并限制为仅协作者可评论',
-      ],
-      [
-        'locked as too heated and limited conversation to collaborators',
-        '以争论过激为由锁定了对话并限制为仅协作者可评论',
-      ],
+      ['locked as off-topic and limited conversation to collaborators', '以偏离主题为由锁定了对话并限制为仅协作者可评论'],
+      ['locked as too heated and limited conversation to collaborators', '以争论过激为由锁定了对话并限制为仅协作者可评论']
     ],
-    misses: ['locked as rude and limited conversation to collaborators'],
+    misses: ['locked as rude and limited conversation to collaborators']
   },
   {
     hits: [['locked this conversation as spam', '以垃圾信息为由锁定了此对话']],
-    misses: ['locked this conversation as rude'],
+    misses: ['locked this conversation as rude']
   },
   // 单独的原因片段（与问题时间线同一写法）
   {
     hits: [
       ['as off topic', '以偏离主题为由'],
-      ['as resolved', '以已解决为由'],
+      ['as resolved', '以已解决为由']
     ],
-    misses: ['as rude'],
+    misses: ['as rude']
   },
   // timeline：检查结果
   { hits: [['12 of 15 checks passed', '12/15 个检查通过']], misses: ['All checks passed'] },
   {
     hits: [
       ['3 checks passed', '3 个检查通过'],
-      ['1 check passed', '1 个检查通过'],
+      ['1 check passed', '1 个检查通过']
     ],
-    misses: ['Checks passed'],
+    misses: ['Checks passed']
   },
   { hits: [['2 checks failed', '2 个检查失败']], misses: ['Checks failed'] },
   // timeline：评论
@@ -802,18 +731,18 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ["Reason for dismissing octocat's review", '消除 octocat 审查的原因'],
-      ['Reason for dismissing hubot’s review', '消除 hubot 审查的原因'],
+      ['Reason for dismissing hubot’s review', '消除 hubot 审查的原因']
     ],
-    misses: ['Reason for dismissing the review'],
+    misses: ['Reason for dismissing the review']
   },
   // timeline：活动面板
   { hits: [['Showing 20 of 45 loaded events', '显示 20/45 条已加载事件']], misses: ['Showing all loaded events'] },
   {
     hits: [
       ['12 activities', '12 条活动'],
-      ['1 activity', '1 条活动'],
+      ['1 activity', '1 条活动']
     ],
-    misses: ['Recent activities'],
+    misses: ['Recent activities']
   },
   { hits: [['Expand 3 activities', '展开 3 条活动']], misses: ['Expand activities'] },
   { hits: [['Collapse 1 activity', '折叠 1 条活动']], misses: ['Collapse activities'] },
@@ -823,155 +752,134 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Sort comments: Oldest', '评论排序：最早'],
-      ['Sort activity: Newest', '活动排序：最新'],
+      ['Sort activity: Newest', '活动排序：最新']
     ],
-    misses: ['Sort comments: Popular'],
+    misses: ['Sort comments: Popular']
   },
   // timeline：活动筛选报错
   {
     hits: [
       ['Enter a value for type:.', '请输入 type: 的值。'],
-      ['Enter a value for since:.', '请输入 since: 的值。'],
+      ['Enter a value for since:.', '请输入 since: 的值。']
     ],
-    misses: ['Enter a value for author:.'],
+    misses: ['Enter a value for author:.']
   },
   {
     hits: [
       [
         'Use an available since: preset or an ISO timestamp, such as 2026-10-01T00:00:00Z.',
-        '请使用可用的 since: 预设或 ISO 时间戳，例如 2026-10-01T00:00:00Z。',
-      ],
+        '请使用可用的 since: 预设或 ISO 时间戳，例如 2026-10-01T00:00:00Z。'
+      ]
     ],
-    misses: ['Use an available since: preset or an ISO timestamp.'],
+    misses: ['Use an available since: preset or an ISO timestamp.']
   },
   {
     hits: [['View session cdd1a9dd-ca4f-4c64-9b37-08e6eb49d588', '查看会话 cdd1a9dd-ca4f-4c64-9b37-08e6eb49d588']],
-    misses: ['View session details'],
+    misses: ['View session details']
   },
 
   // review
   {
     hits: [
       ['3 pending comments', '3 条待处理的评论'],
-      ['1 pending comment', '1 条待处理的评论'],
+      ['1 pending comment', '1 条待处理的评论']
     ],
-    misses: ['Many pending comments'],
+    misses: ['Many pending comments']
   },
   {
     hits: [
       ['Comment on line R12', '评论第 R12 行'],
       ['Commenting on lines +12 to +14', '评论第 +12 至 +14 行'],
-      ['Comment on lines L3 to L5', '评论第 L3 至 L5 行'],
+      ['Comment on lines L3 to L5', '评论第 L3 至 L5 行']
     ],
-    misses: ['Comment on this line'],
+    misses: ['Comment on this line']
   },
   { hits: [['Commit 3 suggestions', '提交 3 条建议']], misses: ['Commit all suggestions'] },
   {
     hits: [
       ['2 suggestions in batch', '批次中有 2 条建议'],
-      ['1 suggestion in batch', '批次中有 1 条建议'],
+      ['1 suggestion in batch', '批次中有 1 条建议']
     ],
-    misses: ['Suggestions in batch'],
+    misses: ['Suggestions in batch']
   },
   // review：放弃批次（数量后是独立的 <suggestions> 片段）
   {
-    hits: [
-      [
-        'Are you sure you want to discard this batch? This will remove all 3',
-        '确定要放弃此批次吗？此操作会将全部 3 条',
-      ],
-    ],
-    misses: ['Are you sure you want to discard this batch?'],
+    hits: [['Are you sure you want to discard this batch? This will remove all 3', '确定要放弃此批次吗？此操作会将全部 3 条']],
+    misses: ['Are you sure you want to discard this batch?']
   },
   // review：提交建议失败的原因
   {
-    hits: [
-      [
-        'There was an error trying to commit changes: Head branch was modified.',
-        '提交更改时出错：Head branch was modified.',
-      ],
-    ],
-    misses: ['There was an error trying to commit changes:'],
+    hits: [['There was an error trying to commit changes: Head branch was modified.', '提交更改时出错：Head branch was modified.']],
+    misses: ['There was an error trying to commit changes:']
   },
   // review：自动审查警报的消除状态
   {
     hits: [
       ['requested to dismiss', '请求消除'],
       ['requested to close as false positive', '请求以误报为由关闭'],
-      ["requested to dismiss as won't fix", '请求以不予修复为由消除'],
+      ["requested to dismiss as won't fix", '请求以不予修复为由消除']
     ],
-    misses: ['requested to reopen'],
+    misses: ['requested to reopen']
   },
   {
     hits: [
       ['This alert was dismissed', '此警报已被消除'],
-      ['This finding was dismissed as used in tests', '此发现已以用于测试为由消除'],
+      ['This finding was dismissed as used in tests', '此发现已以用于测试为由消除']
     ],
-    misses: ['This alert was fixed'],
+    misses: ['This alert was fixed']
   },
   {
     hits: [
       ['dismissed this alert as false positive', '以误报为由消除了此警报'],
-      ['closed this finding', '关闭了此发现'],
+      ['closed this finding', '关闭了此发现']
     ],
-    misses: ['reopened this alert'],
+    misses: ['reopened this alert']
   },
   {
     hits: [
       ['Dismissing the alert will mark this conversation as resolved.', '消除此警报会将此对话标记为已解决。'],
-      ['Dismissing the finding will mark this conversation as resolved.', '消除此发现会将此对话标记为已解决。'],
+      ['Dismissing the finding will mark this conversation as resolved.', '消除此发现会将此对话标记为已解决。']
     ],
-    misses: ['Dismissing the review will mark this conversation as resolved.'],
+    misses: ['Dismissing the review will mark this conversation as resolved.']
   },
 
   // sidebar：审查者
   {
     hits: [
       ['Awaiting requested review from octocat', '正在等待 octocat 的审查'],
-      [
-        'Awaiting requested review from copilot-pull-request-reviewer[bot]',
-        '正在等待 copilot-pull-request-reviewer[bot] 的审查',
-      ],
+      ['Awaiting requested review from copilot-pull-request-reviewer[bot]', '正在等待 copilot-pull-request-reviewer[bot] 的审查']
     ],
-    misses: ['Awaiting requested review from Mona Lisa'],
+    misses: ['Awaiting requested review from Mona Lisa']
   },
   {
     hits: [
       ['Awaiting requested review from octo-org/core', '正在等待 octo-org/core 的审查'],
-      ['Awaiting requested review from @octo-org/core', '正在等待 @octo-org/core 的审查'],
+      ['Awaiting requested review from @octo-org/core', '正在等待 @octo-org/core 的审查']
     ],
-    misses: ['Awaiting requested review'],
+    misses: ['Awaiting requested review']
+  },
+  {
+    hits: [['octocat is a code owner automatically assigned from octo-org/core', 'octocat 是从 octo-org/core 自动分配的代码所有者']],
+    misses: ['octocat is a code owner automatically assigned']
   },
   {
     hits: [
-      [
-        'octocat is a code owner automatically assigned from octo-org/core',
-        'octocat 是从 octo-org/core 自动分配的代码所有者',
-      ],
+      ['octo-org/docs is a code owner automatically assigned from octo-org/core', 'octo-org/docs 是从 octo-org/core 自动分配的代码所有者']
     ],
-    misses: ['octocat is a code owner automatically assigned'],
-  },
-  {
-    hits: [
-      [
-        'octo-org/docs is a code owner automatically assigned from octo-org/core',
-        'octo-org/docs 是从 octo-org/core 自动分配的代码所有者',
-      ],
-    ],
-    misses: ['Docs team is a code owner automatically assigned from octo-org/core'],
+    misses: ['Docs team is a code owner automatically assigned from octo-org/core']
   },
   { hits: [['octocat is a code owner', 'octocat 是代码所有者']], misses: ['Mona Lisa is a code owner'] },
   {
     hits: [['@octo-org/core is a code owner', '@octo-org/core 是代码所有者']],
-    misses: ['octo-org core is a code owner'],
+    misses: ['octo-org core is a code owner']
   },
   { hits: [['octocat left review comments', 'octocat 留下了审查评论']], misses: ['Mona Lisa left review comments'] },
   {
     hits: [
       ['3 more reviewers', '另外 3 个审查者'],
-      ['1 more reviewer', '另外 1 个审查者'],
+      ['1 more reviewer', '另外 1 个审查者']
     ],
-    misses: ['More reviewers'],
+    misses: ['More reviewers']
   },
   { hits: [['Re-request review from octocat', '重新请求 octocat 审查']], misses: ['Re-request review from Mona Lisa'] },
   { hits: [['Request review from hubot', '请求 hubot 审查']], misses: ['Request review from Mona Lisa'] },
@@ -980,56 +888,48 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['No reviews—at least 1 approving review is required.', '暂无审查——至少需要 1 个批准审查。'],
-      ['No reviews—at least 2 approving reviews are required.', '暂无审查——至少需要 2 个批准审查。'],
+      ['No reviews—at least 2 approving reviews are required.', '暂无审查——至少需要 2 个批准审查。']
     ],
-    misses: ['No reviews—at least one approving review is required.'],
+    misses: ['No reviews—at least one approving review is required.']
   },
   // sidebar：请求审查的进度与结果
   {
     hits: [
       ['Re-requesting review from octocat', '正在重新请求 octocat 审查'],
-      ['Re-requesting review from @octo-org/core', '正在重新请求 @octo-org/core 审查'],
+      ['Re-requesting review from @octo-org/core', '正在重新请求 @octo-org/core 审查']
     ],
-    misses: ['Re-requesting review'],
+    misses: ['Re-requesting review']
   },
   { hits: [['Requesting review from Copilot', '正在请求 Copilot 审查']], misses: ['Requesting review from'] },
   { hits: [['Request a review from octocat now', '立即请求 octocat 审查']], misses: ['Request a review now'] },
   { hits: [['Review requested from octocat', '已请求 octocat 审查']], misses: ['Review requested from'] },
   {
     hits: [['Failed to re-request review from octocat.', '重新请求 octocat 审查失败。']],
-    misses: ['Failed to re-request review from octocat'],
+    misses: ['Failed to re-request review from octocat']
   },
   { hits: [['Members of @octo-org/core', '@octo-org/core 的成员']], misses: ['Members of'] },
   {
     hits: [
-      [
-        'Copilot will automatically review once the pull request is marked ready for review',
-        'Copilot 将在拉取请求标记为可供审查后自动审查',
-      ],
+      ['Copilot will automatically review once the pull request is marked ready for review', 'Copilot 将在拉取请求标记为可供审查后自动审查']
     ],
-    misses: ['Someone will automatically review once marked ready'],
+    misses: ['Someone will automatically review once marked ready']
   },
   {
-    hits: [
-      [
-        'octocat will be requested when the pull request is marked ready for review',
-        '将在拉取请求标记为可供审查后请求 octocat 审查',
-      ],
-    ],
-    misses: ['octocat will be requested soon'],
+    hits: [['octocat will be requested when the pull request is marked ready for review', '将在拉取请求标记为可供审查后请求 octocat 审查']],
+    misses: ['octocat will be requested soon']
   },
   {
     hits: [
       ['Reviewing', '正在审查'],
       ['Reviewing at balanced effort', '正在以均衡强度审查'],
-      ['Reviewing at thorough effort · Last completed: lite', '正在以深度强度审查 · 上次完成：轻量'],
+      ['Reviewing at thorough effort · Last completed: lite', '正在以深度强度审查 · 上次完成：轻量']
     ],
-    misses: ['Reviewing at extreme effort'],
+    misses: ['Reviewing at extreme effort']
   },
   // sidebar：受理人
   {
     hits: [['Assign up to 10 people to this pull request', '最多为此拉取请求分配 10 人']],
-    misses: ['Assign up to 10 people to this issue'],
+    misses: ['Assign up to 10 people to this issue']
   },
 
   // files：已查看进度
@@ -1037,18 +937,18 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['1 / 3 files viewed', '已查看 1/3 个文件'],
-      ['2/5 files viewed', '已查看 2/5 个文件'],
+      ['2/5 files viewed', '已查看 2/5 个文件']
     ],
-    misses: ['1 / many files viewed'],
+    misses: ['1 / many files viewed']
   },
   { hits: [['/ 3 files viewed', '/ 3 个文件已查看']], misses: ['/ many files viewed'] },
   // files：提交范围
   {
     hits: [
       ['3 commits selected', '已选择 3 个提交'],
-      ['1 commit selected', '已选择 1 个提交'],
+      ['1 commit selected', '已选择 1 个提交']
     ],
-    misses: ['Some commits selected'],
+    misses: ['Some commits selected']
   },
   { hits: [['Commit 2 selected', '已选择第 2 个提交']], misses: ['Commit selected'] },
   { hits: [['Commits 2 to 5 selected', '已选择第 2 至 5 个提交']], misses: ['Commits 2 to 5'] },
@@ -1057,9 +957,9 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['octocat committed 3 days ago', 'octocat 提交于 3 天前'],
       ['dependabot[bot] committed 3 days ago', 'dependabot[bot] 提交于 3 天前'],
       ['octocat committed yesterday', 'octocat 提交于昨天'],
-      ['octocat committed about 1 year ago', 'octocat 提交于约 1 年前'],
+      ['octocat committed about 1 year ago', 'octocat 提交于约 1 年前']
     ],
-    misses: ['octocat committed recently'],
+    misses: ['octocat committed recently']
   },
   { hits: [['All 3 file types selected', '已选择全部 3 种文件类型']], misses: ['All file types selected'] },
   // files：侧边面板
@@ -1067,57 +967,52 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['Open merge status panel', '打开合并状态面板'],
       ['Close description panel', '关闭描述面板'],
-      ['Open activity panel', '打开活动面板'],
+      ['Open activity panel', '打开活动面板']
     ],
-    misses: ['Open settings panel'],
+    misses: ['Open settings panel']
   },
   {
     hits: [
       ['The description panel cannot currently be opened.', '暂时无法打开描述面板。'],
-      ['The merge status panel cannot currently be opened.', '暂时无法打开合并状态面板。'],
+      ['The merge status panel cannot currently be opened.', '暂时无法打开合并状态面板。']
     ],
-    misses: ['The settings panel cannot currently be opened.'],
+    misses: ['The settings panel cannot currently be opened.']
   },
   {
     hits: [
       ['3 alerts', '3 条警报'],
-      ['1 alert', '1 条警报'],
+      ['1 alert', '1 条警报']
     ],
-    misses: ['No alerts'],
+    misses: ['No alerts']
   },
   {
     hits: [
       ['Only the first 300 files are currently being shown.', '当前仅显示前 300 个文件。'],
       // 原文只有 and、没有逗号：不加顿号
-      [
-        'Only the first 300 files and latest 100 comments are currently being shown.',
-        '当前仅显示前 300 个文件和最新 100 条评论。',
-      ],
+      ['Only the first 300 files and latest 100 comments are currently being shown.', '当前仅显示前 300 个文件和最新 100 条评论。'],
       [
         'Only the first 300 files, latest 100 comments, and first 50 alerts are currently being shown.',
-        '当前仅显示前 300 个文件、最新 100 条评论、前 50 条警报。',
-      ],
+        '当前仅显示前 300 个文件、最新 100 条评论、前 50 条警报。'
+      ]
     ],
-    misses: ['Only the first files are currently being shown.'],
+    misses: ['Only the first files are currently being shown.']
   },
   // files：文件头
   {
     hits: [['src/old.ts renamed to src/new.ts', 'src/old.ts 重命名为 src/new.ts']],
-    misses: ['old file renamed to new file'],
+    misses: ['old file renamed to new file']
   },
   {
     hits: [
       ['Expand all lines: src/app.ts', '展开所有行：src/app.ts'],
-      ['Collapse non-diff lines: README.md', '折叠无差异的行：README.md'],
+      ['Collapse non-diff lines: README.md', '折叠无差异的行：README.md']
     ],
-    misses: ['Expand some lines: src/app.ts'],
+    misses: ['Expand some lines: src/app.ts']
   },
   { hits: [['(from CODEOWNERS line 12)', '（来自 CODEOWNERS 第 12 行）']], misses: ['(from CODEOWNERS)'] },
   {
-    hits: [
-      ['Owned by @octo-org/core (from CODEOWNERS line 12)', '所有者为 @octo-org/core（来自 CODEOWNERS 第 12 行）'],
-    ],
-    misses: ['Owned by @octo-org/core'],
+    hits: [['Owned by @octo-org/core (from CODEOWNERS line 12)', '所有者为 @octo-org/core（来自 CODEOWNERS 第 12 行）']],
+    misses: ['Owned by @octo-org/core']
   },
   { hits: [['Diff for: src/app.ts', '差异：src/app.ts']], misses: ['Diff for src/app.ts'] },
   { hits: [['Loading src/app.ts', '正在加载 src/app.ts']], misses: ['Loading Makefile'] },
@@ -1125,18 +1020,18 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['src/app.ts has 3 comments', 'src/app.ts 有 3 条评论'],
-      ['src/app.ts has 9+ comments and has warning annotations', 'src/app.ts 有 9+ 条评论和警告注释'],
+      ['src/app.ts has 9+ comments and has warning annotations', 'src/app.ts 有 9+ 条评论和警告注释']
     ],
-    misses: ['src/app.ts has no comments'],
+    misses: ['src/app.ts has no comments']
   },
   {
     hits: [['src/app.ts has failure annotations', 'src/app.ts 有失败注释']],
-    misses: ['src/app.ts has error annotations'],
+    misses: ['src/app.ts has error annotations']
   },
   // files：展开隐藏行
   {
     hits: [['Expand file from line 10 to line 30', '展开文件第 10 行至第 30 行']],
-    misses: ['Expand file from line 10'],
+    misses: ['Expand file from line 10']
   },
   { hits: [['Expand file down from line 42', '从第 42 行向下展开文件']], misses: ['Expand file down'] },
   { hits: [['Expand file up from line 7', '从第 7 行向上展开文件']], misses: ['Expand file up'] },
@@ -1145,47 +1040,47 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['Add comment on line R12', '在 R12 行添加评论'],
       ['Suggest change, modified lines R3-R5', '在修改后的 R3-R5 行建议更改'],
-      ['Add comment, original line L7', '在原始的 L7 行添加评论'],
+      ['Add comment, original line L7', '在原始的 L7 行添加评论']
     ],
-    misses: ['Add comment on line 12'],
+    misses: ['Add comment on line 12']
   },
   { hits: [['R12 selected.', '已选择 R12。']], misses: ['R12 selected'] },
   { hits: [['L3 to R5 selected.', '已选择 L3 至 R5。']], misses: ['L3 to R5 selected'] },
   {
     hits: [["octocat's avatar image with pending indicator", 'octocat 的头像带有待处理标记']],
-    misses: ["Mona Lisa's avatar image with pending indicator"],
+    misses: ["Mona Lisa's avatar image with pending indicator"]
   },
 
   // commits
   {
     hits: [
       ['Commits on Oct 26, 2026', '2026 年 10 月 26 日的提交'],
-      ['Commits on Jan 5', '1 月 5 日的提交'],
+      ['Commits on Jan 5', '1 月 5 日的提交']
     ],
-    misses: ['Commits on main'],
+    misses: ['Commits on main']
   },
   { hits: [['Copy full SHA for 1a2b3c4', '复制 1a2b3c4 的完整 SHA']], misses: ['Copy full SHA for main'] },
   {
     hits: [
       ['Show description for 0ff253b', '显示 0ff253b 的描述'],
-      ['Hide description for 0ff253bcd', '隐藏 0ff253bcd 的描述'],
+      ['Hide description for 0ff253bcd', '隐藏 0ff253bcd 的描述']
     ],
-    misses: ['Show description for main'],
+    misses: ['Show description for main']
   },
   {
     hits: [
       ['View 2 commit comments', '查看 2 条提交评论'],
-      ['View 1 commit comment', '查看 1 条提交评论'],
+      ['View 1 commit comment', '查看 1 条提交评论']
     ],
-    misses: ['View commit comments'],
+    misses: ['View commit comments']
   },
   { hits: [['3 people', '3 人']], misses: ['many people'] },
   {
     hits: [
       ['verified: 0ff253b', '已验证：0ff253b'],
-      ['partially verified: 0ff253b', '部分验证：0ff253b'],
+      ['partially verified: 0ff253b', '部分验证：0ff253b']
     ],
-    misses: ['verified: main'],
+    misses: ['verified: main']
   },
   { hits: [['Verification error: 0ff253b', '验证错误：0ff253b']], misses: ['Verification error'] },
 
@@ -1196,16 +1091,16 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['This job was skipped', '此作业已跳过'],
       ['This check had a startup failure', '此检查启动失败'],
       // Pending（检查）→ 挂起，整句作“处于挂起状态”
-      ['This check is pending', '此检查处于挂起状态'],
+      ['This check is pending', '此检查处于挂起状态']
     ],
-    misses: ['This check exploded'],
+    misses: ['This check exploded']
   },
   {
     hits: [
       ['in 30s', '用时 30 秒'],
-      ['in 1m 5s', '用时 1 分钟 5 秒'],
+      ['in 1m 5s', '用时 1 分钟 5 秒']
     ],
-    misses: ['in 30 seconds'],
+    misses: ['in 30 seconds']
   },
   { hits: [['View more details on Codecov', '在 Codecov 上查看更多详细信息']], misses: ['View more details'] },
   {
@@ -1215,17 +1110,17 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['2 notices', '2 个提示'],
       // 原文只有 and：不加顿号（与 actions 词典同译）
       ['2 errors and 6 notices', '2 个错误和 6 个提示'],
-      ['1 error, 2 warnings, and 3 notices', '1 个错误、2 个警告和 3 个提示'],
+      ['1 error, 2 warnings, and 3 notices', '1 个错误、2 个警告和 3 个提示']
     ],
-    misses: ['3 failures'],
+    misses: ['3 failures']
   },
   {
     hits: [
       // 原文只有句号：不加逗号（与 actions 词典同译）
       ['Process completed with exit code 1.', '进程以退出代码 1 完成。'],
-      ['Process completed with exit code -1.', '进程以退出代码 -1 完成。'],
+      ['Process completed with exit code -1.', '进程以退出代码 -1 完成。']
     ],
-    misses: ['Process completed with exit code one.'],
+    misses: ['Process completed with exit code one.']
   },
 
   // compare
@@ -1233,21 +1128,21 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       [
         'Pull request creation failed. Validation failed: A pull request already exists for octocat:feature.',
-        '拉取请求创建失败。验证失败：octocat:feature 已存在拉取请求。',
-      ],
+        '拉取请求创建失败。验证失败：octocat:feature 已存在拉取请求。'
+      ]
     ],
-    misses: ['Pull request creation failed.'],
+    misses: ['Pull request creation failed.']
   },
   {
     hits: [['No commits between main and feature', 'main 和 feature 之间没有提交']],
-    misses: ['No commits between these branches'],
+    misses: ['No commits between these branches']
   },
 
   // overview：迷你合并状态
   { hits: [['2 of 3 approvals', '2/3 个批准']], misses: ['2 of 3 approvals pending'] },
   {
     hits: [['1 of 2 required approvals received', '已获得 1/2 个必需的批准']],
-    misses: ['required approvals received'],
+    misses: ['required approvals received']
   },
   { hits: [['1 of 2 reviews approved', '1/2 个审查已批准']], misses: ['all reviews approved'] },
   { hits: [['5 of 7 successful checks', '5/7 个检查成功']], misses: ['all successful checks'] },
@@ -1256,81 +1151,81 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['2 approved with 1 comment', '2 个批准含 1 条评论'],
-      ['1 approved with 3 comments', '1 个批准含 3 条评论'],
+      ['1 approved with 3 comments', '1 个批准含 3 条评论']
     ],
-    misses: ['approved with comments'],
+    misses: ['approved with comments']
   },
   {
     hits: [['1 requested changes with 2 comments', '1 个更改请求含 2 条评论']],
-    misses: ['requested changes with comments'],
+    misses: ['requested changes with comments']
   },
   {
     hits: [
       ['3 approved', '3 个批准'],
-      ['1 approved', '1 个批准'],
+      ['1 approved', '1 个批准']
     ],
-    misses: ['all approved'],
+    misses: ['all approved']
   },
   {
     hits: [
       ['4 new commits', '4 个新提交'],
-      ['1 new commit', '1 个新提交'],
+      ['1 new commit', '1 个新提交']
     ],
-    misses: ['new commits'],
+    misses: ['new commits']
   },
   {
     hits: [
       ['2 review comments', '2 条审查评论'],
-      ['1 review comment', '1 条审查评论'],
+      ['1 review comment', '1 条审查评论']
     ],
-    misses: ['review comments'],
+    misses: ['review comments']
   },
   {
     hits: [
       ['2 requested reviewers changed', '已更改 2 个请求的审查者'],
-      ['1 requested reviewer changed', '已更改 1 个请求的审查者'],
+      ['1 requested reviewer changed', '已更改 1 个请求的审查者']
     ],
-    misses: ['requested reviewers changed'],
+    misses: ['requested reviewers changed']
   },
   {
     hits: [
       ['3 Copilot events', '3 个 Copilot 事件'],
-      ['1 Copilot event', '1 个 Copilot 事件'],
+      ['1 Copilot event', '1 个 Copilot 事件']
     ],
-    misses: ['all Copilot events'],
+    misses: ['all Copilot events']
   },
   {
     hits: [
       ['2 base changes, 1 force push', '2 次基础分支更改、1 次强制推送'],
-      ['1 base change, 3 force pushes', '1 次基础分支更改、3 次强制推送'],
+      ['1 base change, 3 force pushes', '1 次基础分支更改、3 次强制推送']
     ],
-    misses: ['base changes, force pushes'],
+    misses: ['base changes, force pushes']
   },
   {
     hits: [
       ['2 base changes', '2 次基础分支更改'],
-      ['1 base change', '1 次基础分支更改'],
+      ['1 base change', '1 次基础分支更改']
     ],
-    misses: ['base changes'],
+    misses: ['base changes']
   },
   {
     hits: [
       ['2 force pushes', '2 次强制推送'],
-      ['1 force push', '1 次强制推送'],
+      ['1 force push', '1 次强制推送']
     ],
-    misses: ['force pushes'],
+    misses: ['force pushes']
   },
   {
     hits: [
       ['3 unsubmitted items — only visible to you until submitted', '3 个未提交的项——提交前仅你可见'],
-      ['1 unsubmitted item — only visible to you until submitted', '1 个未提交的项——提交前仅你可见'],
+      ['1 unsubmitted item — only visible to you until submitted', '1 个未提交的项——提交前仅你可见']
     ],
-    misses: ['unsubmitted items — only visible to you until submitted'],
+    misses: ['unsubmitted items — only visible to you until submitted']
   },
   { hits: [['+3 more', '另外 3 个']], misses: ['+ more'] },
   {
     hits: [['Feedback is too long. Use 1000 characters or fewer.', '反馈过长。最多 1000 个字符。']],
-    misses: ['Feedback is too long.'],
+    misses: ['Feedback is too long.']
   },
 
   // comments：评论列表
@@ -1338,76 +1233,67 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['Showing 3 of 10 comments', '显示 3/10 条评论'],
       ['Showing 3 of 10 loaded comments', '显示 3/10 条已加载的评论'],
-      ['Showing 3 of 10 review comments', '显示 3/10 条审查评论'],
+      ['Showing 3 of 10 review comments', '显示 3/10 条审查评论']
     ],
-    misses: ['Showing all comments'],
+    misses: ['Showing all comments']
   },
   {
     hits: [['Only the 200 latest comments are being shown.', '仅显示最新的 200 条评论。']],
-    misses: ['Only the latest comments are being shown.'],
+    misses: ['Only the latest comments are being shown.']
   },
   {
     hits: [
       ['2 earlier comments', '2 条更早的评论'],
-      ['1 earlier comment', '1 条更早的评论'],
+      ['1 earlier comment', '1 条更早的评论']
     ],
-    misses: ['earlier comments'],
+    misses: ['earlier comments']
   },
   {
     hits: [
       ['1 later reply', '1 条后续回复'],
-      ['4 later replies', '4 条后续回复'],
+      ['4 later replies', '4 条后续回复']
     ],
-    misses: ['later replies'],
+    misses: ['later replies']
   },
   // comments：折叠的提交
   { hits: [['3 additional commits', '另外 3 个提交']], misses: ['additional commits'] },
   { hits: [['3 additional commits by', '另外 3 个提交来自']], misses: ['additional commits by'] },
   {
     hits: [
-      [
-        '3 additional commits by alice, bob, starting at commit 0ff253b',
-        '另外 3 个提交来自 alice, bob，从提交 0ff253b 开始',
-      ],
-      ['2 additional commits, starting at commit 0ff253b', '另外 2 个提交，从提交 0ff253b 开始'],
+      ['3 additional commits by alice, bob, starting at commit 0ff253b', '另外 3 个提交来自 alice, bob，从提交 0ff253b 开始'],
+      ['2 additional commits, starting at commit 0ff253b', '另外 2 个提交，从提交 0ff253b 开始']
     ],
-    misses: ['additional commits, starting at commit 0ff253b'],
+    misses: ['additional commits, starting at commit 0ff253b']
   },
   { hits: [['Commit: Fix the login redirect', '提交：Fix the login redirect']], misses: ['Commit:'] },
   // comments：条目加载与更新失败
   {
     hits: [
       ['Failed to load comment', '加载评论失败'],
-      ['Failed to load review', '加载审查失败'],
+      ['Failed to load review', '加载审查失败']
     ],
-    misses: ['Failed to load pull request'],
+    misses: ['Failed to load pull request']
   },
   {
     hits: [
-      [
-        'This comment cannot be displayed. Please reload the page to try again.',
-        '无法显示此评论。请重新加载页面后重试。',
-      ],
-      [
-        'This review cannot be displayed. Please reload the page to try again.',
-        '无法显示此审查。请重新加载页面后重试。',
-      ],
+      ['This comment cannot be displayed. Please reload the page to try again.', '无法显示此评论。请重新加载页面后重试。'],
+      ['This review cannot be displayed. Please reload the page to try again.', '无法显示此审查。请重新加载页面后重试。']
     ],
-    misses: ['This file cannot be displayed. Please reload the page to try again.'],
+    misses: ['This file cannot be displayed. Please reload the page to try again.']
   },
   {
     hits: [
       ['Failed to update comment', '更新评论失败'],
-      ['Failed to update review', '更新审查失败'],
+      ['Failed to update review', '更新审查失败']
     ],
-    misses: ['Failed to update pull request'],
+    misses: ['Failed to update pull request']
   },
   {
     hits: [
       ['Review comment by octocat', 'octocat 的审查评论'],
-      ['Review comment by unknown user', '未知用户的审查评论'],
+      ['Review comment by unknown user', '未知用户的审查评论']
     ],
-    misses: ['Review comment by'],
+    misses: ['Review comment by']
   },
   // comments：线程标题
   { hits: [['Line 12', '第 12 行']], misses: ['Line twelve'] },
@@ -1416,173 +1302,168 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['Resolved as Addressed', '已解决为已处理'],
       ["Resolved as Won't fix", '已解决为不予修复'],
-      ['Resolved as Incorrect', '已解决为不正确'],
+      ['Resolved as Incorrect', '已解决为不正确']
     ],
-    misses: ['Resolved as duplicate'],
+    misses: ['Resolved as duplicate']
   },
   // comments：带线程位置的读屏名称
   {
     hits: [
       ['Open review comment in src/app.ts, line 5', '展开 src/app.ts 第 5 行的审查评论'],
-      ['Close review comment in docs/a b.md', '收起 docs/a b.md 的审查评论'],
+      ['Close review comment in docs/a b.md', '收起 docs/a b.md 的审查评论']
     ],
-    misses: ['Open review comment in'],
+    misses: ['Open review comment in']
   },
   {
     hits: [['Jump to the comment in the diff for src/app.ts, line 5', '跳转到差异中 src/app.ts 第 5 行的评论']],
-    misses: ['Jump to the comment'],
+    misses: ['Jump to the comment']
   },
   {
     hits: [
       ['Resolve comment in src/app.ts, line 5', '解决 src/app.ts 第 5 行的评论'],
       ['Unresolve conversation in src/app.ts, lines 3 to 5', '取消解决 src/app.ts 第 3 至 5 行的对话'],
-      ['Resolve conversation in docs/a b.md', '解决 docs/a b.md 的对话'],
+      ['Resolve conversation in docs/a b.md', '解决 docs/a b.md 的对话']
     ],
-    misses: ['Resolve comment in'],
+    misses: ['Resolve comment in']
   },
   {
     hits: [['Resolve with reason in src/app.ts, line 5', '附理由解决 src/app.ts 第 5 行的评论']],
-    misses: ['Resolve with reason in'],
+    misses: ['Resolve with reason in']
   },
   {
     hits: [
       ['Write a reply in src/app.ts, line 5', '在 src/app.ts 第 5 行中回复'],
-      ['Write a reply in README.md', '在 README.md 中回复'],
+      ['Write a reply in README.md', '在 README.md 中回复']
     ],
-    misses: ['Write a reply'],
+    misses: ['Write a reply']
   },
   {
     hits: [
-      [
-        'View comment in diff for src/app.ts, line 5, 2 previous comments',
-        '在差异中查看 src/app.ts 第 5 行的评论，之前有 2 条评论',
-      ],
+      ['View comment in diff for src/app.ts, line 5, 2 previous comments', '在差异中查看 src/app.ts 第 5 行的评论，之前有 2 条评论'],
       [
         'View comment in diff for src/app.ts, lines 3 to 5, 1 previous comment',
-        '在差异中查看 src/app.ts 第 3 至 5 行的评论，之前有 1 条评论',
-      ],
+        '在差异中查看 src/app.ts 第 3 至 5 行的评论，之前有 1 条评论'
+      ]
     ],
-    misses: ['View comment in diff for src/app.ts'],
+    misses: ['View comment in diff for src/app.ts']
   },
   {
     hits: [
       ["More actions for octocat's comment, 3:45 PM today", 'octocat 的评论的更多操作，今天 15:45'],
-      ['More actions for review, 10:02 AM on October 26, 2025', '审查的更多操作，2025 年 10 月 26 日 10:02'],
+      ['More actions for review, 10:02 AM on October 26, 2025', '审查的更多操作，2025 年 10 月 26 日 10:02']
     ],
-    misses: ["More actions for octocat's comment"],
+    misses: ["More actions for octocat's comment"]
   },
   {
     hits: [
       ["for octocat's review, 9:15 PM yesterday", '关于 octocat 的审查，昨天 21:15'],
-      ['for comment, 3:45 PM on Oct 26', '关于评论，10 月 26 日 15:45'],
+      ['for comment, 3:45 PM on Oct 26', '关于评论，10 月 26 日 15:45']
     ],
-    misses: ['for octocat'],
+    misses: ['for octocat']
   },
   // comments：批次管理
   {
     hits: [['View src/app.ts:12-14 in Files changed', '在已更改的文件中查看 src/app.ts:12-14']],
-    misses: ['View in Files changed'],
+    misses: ['View in Files changed']
   },
   { hits: [['View comment on src/app.ts:12', '查看 src/app.ts:12 上的评论']], misses: ['View comment on'] },
   {
     hits: [['View full comment by octocat on src/app.ts', '查看 octocat 在 src/app.ts 上的完整评论']],
-    misses: ['View full comment by octocat'],
+    misses: ['View full comment by octocat']
   },
   {
     hits: [['Remove src/app.ts:12-14 from batch (outdated)', '从批次中删除 src/app.ts:12-14（过时）']],
-    misses: ['Remove from batch (outdated)'],
+    misses: ['Remove from batch (outdated)']
   },
   { hits: [['Remove src/app.ts from batch', '从批次中删除 src/app.ts']], misses: ['Remove src/app.ts from the batch'] },
   {
     hits: [
       [
         'This batch doesn’t contain any suggestions to commit, and Fix with Copilot isn’t available on your account. You can still publish your review from the review menu.',
-        '此批次不包含可提交的建议，且你的帐户不支持使用 Copilot 修复。你仍可在审查菜单中发布审查。',
+        '此批次不包含可提交的建议，且你的帐户不支持使用 Copilot 修复。你仍可在审查菜单中发布审查。'
       ],
       [
         'This batch contains items other than committable suggestions, so it can’t be committed, and Fix with Copilot isn’t available on pull requests from a fork. You can still publish your review from the review menu.',
-        '此批次包含可提交建议以外的项，无法提交，且来自复刻的拉取请求不支持使用 Copilot 修复。你仍可在审查菜单中发布审查。',
-      ],
+        '此批次包含可提交建议以外的项，无法提交，且来自复刻的拉取请求不支持使用 Copilot 修复。你仍可在审查菜单中发布审查。'
+      ]
     ],
-    misses: [
-      'This batch doesn’t contain any suggestions to commit. You can still publish your review from the review menu.',
-    ],
+    misses: ['This batch doesn’t contain any suggestions to commit. You can still publish your review from the review menu.']
   },
 
   // conflicts
   {
     hits: [
       ['2 conflicting files', '2 个冲突文件'],
-      ['1 conflicting file', '1 个冲突文件'],
+      ['1 conflicting file', '1 个冲突文件']
     ],
-    misses: ['many conflicting files'],
+    misses: ['many conflicting files']
   },
   {
     hits: [
       ['1 conflict', '1 处冲突'],
-      ['4 conflicts', '4 处冲突'],
+      ['4 conflicts', '4 处冲突']
     ],
-    misses: ['no conflicts'],
+    misses: ['no conflicts']
   },
   {
     hits: [['on this commit as Mona Lisa <mona@example.com>', '此提交并署名为 Mona Lisa <mona@example.com>']],
-    misses: ['on this commit'],
+    misses: ['on this commit']
   },
   {
     hits: [['I understand, sign off and update feature', '我已了解，签署并更新 feature']],
-    misses: ['I understand, sign off and update the branch'],
+    misses: ['I understand, sign off and update the branch']
   },
 
   // dashboard：全局 /pulls 收件箱
   {
     hits: [
       ['About the “Needs your review” section', '关于“需要你审查”分区'],
-      ["About the “Needs your teams' review” section", '关于“需要你的团队审查”分区'],
+      ["About the “Needs your teams' review” section", '关于“需要你的团队审查”分区']
     ],
-    misses: ['About the “Inbox” section'],
+    misses: ['About the “Inbox” section']
   },
   // 原文无引号：补“分区”，不加“”
   {
     hits: [
       ['More options for Merging', '合并中分区的更多选项'],
-      ['More options for Needs your teams’ review', '需要你的团队审查分区的更多选项'],
+      ['More options for Needs your teams’ review', '需要你的团队审查分区的更多选项']
     ],
-    misses: ['More options for Inbox'],
+    misses: ['More options for Inbox']
   },
   {
     hits: [
       ['Expand Needs your review', '展开需要你审查分区'],
-      ["Collapse Needs your teams' review", '折叠需要你的团队审查分区'],
+      ["Collapse Needs your teams' review", '折叠需要你的团队审查分区']
     ],
-    misses: ['Expand Inbox'],
+    misses: ['Expand Inbox']
   },
   {
     hits: [
       ['Default to this view when visiting /pulls', '访问 /pulls 时默认打开此视图'],
-      ['Default to this view when visiting github.com/pulls', '访问 github.com/pulls 时默认打开此视图'],
+      ['Default to this view when visiting github.com/pulls', '访问 github.com/pulls 时默认打开此视图']
     ],
-    misses: ['Default to this view'],
+    misses: ['Default to this view']
   },
   {
     hits: [
       ['Updated: Last month', '更新时间：过去一个月'],
-      ['Updated: Any time', '更新时间：任意时间'],
+      ['Updated: Any time', '更新时间：任意时间']
     ],
-    misses: ['Updated: Last decade'],
+    misses: ['Updated: Last decade']
   },
   {
     hits: [
       ['Filter by age: Last 3 months', '按更新时间筛选：过去 3 个月'],
-      ['Filter by age: Last year', '按更新时间筛选：过去一年'],
+      ['Filter by age: Last year', '按更新时间筛选：过去一年']
     ],
-    misses: ['Filter by age: Last decade'],
+    misses: ['Filter by age: Last decade']
   },
   {
     hits: [
       ['3 repositories selected', '已选择 3 个存储库'],
-      ['1 repository selected', '已选择 1 个存储库'],
+      ['1 repository selected', '已选择 1 个存储库']
     ],
-    misses: ['All repositories selected'],
+    misses: ['All repositories selected']
   },
   // dashboard：选择存储库筛选框中组织自定义属性的 Exclude 建议项
   // 属性名为空时不命中（不带点的 Exclude <key> 由列表末尾的筛选框规则处理）
@@ -1598,9 +1479,9 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Language, Filter, Programming language', '语言，筛选器，编程语言'],
       // 自定义属性子键
       ['Property: team, Filter', '属性：team，筛选器'],
-      ['Property: cost-center, Filter', '属性：cost-center，筛选器'],
+      ['Property: cost-center, Filter', '属性：cost-center，筛选器']
     ],
-    misses: ['Fork Filter'],
+    misses: ['Fork Filter']
   },
   // 选择存储库筛选框中取值的 aria-label 由属性规则处理（见“选择存储库筛选框（全局 /pulls，DOM）”）
   // 非必填自定义属性的 Has / No 建议项（选择存储库筛选框不出；先于 <值>, Property: <属性名> 命中）
@@ -1609,34 +1490,34 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Has property: team', '有属性：team'],
       ['No property: cost center', '无属性：cost center'],
       ['Has Property: team, Property: team', '有属性：team，属性：team'],
-      ['No Property: team, Property: team', '无属性：team，属性：team'],
+      ['No Property: team, Property: team', '无属性：team，属性：team']
     ],
-    misses: ['Has property:', 'Had property: team'],
+    misses: ['Has property:', 'Had property: team']
   },
   {
     hits: [
       ['True, Property: team', '是，属性：team'],
       ['False, Property: team', '否，属性：team'],
       // 组织自定义的取值保留原文
-      ['Production, Property: environment', 'Production，属性：environment'],
+      ['Production, Property: environment', 'Production，属性：environment']
     ],
-    misses: [', Property: team', 'True, Property:'],
+    misses: [', Property: team', 'True, Property:']
   },
   {
     hits: [
       ['Property: team', '属性：team'],
-      ['Property: cost center', '属性：cost center'],
+      ['Property: cost center', '属性：cost center']
     ],
-    misses: ['Property:', 'Properties: team'],
+    misses: ['Property:', 'Properties: team']
   },
 
   // list：计数
   {
     hits: [
       ['546 Open', '546 个打开的'],
-      ['1,234 Open', '1,234 个打开的'],
+      ['1,234 Open', '1,234 个打开的']
     ],
-    misses: ['All Open'],
+    misses: ['All Open']
   },
   { hits: [['12,345 Closed', '12,345 个已关闭的']], misses: ['All Closed'] },
   { hits: [['42 Total', '共 42 个']], misses: ['Grand Total'] },
@@ -1645,24 +1526,24 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   { hits: [['#123 by', '#123 由']], misses: ['#abc by'] },
   {
     hits: [['Open pull requests created by octocat', 'octocat 创建的打开的拉取请求']],
-    misses: ['Open pull requests created by Mona Lisa'],
+    misses: ['Open pull requests created by Mona Lisa']
   },
   // list：空状态
   {
     hits: [['No issues and pull requests matched your search', '没有匹配的议题和拉取请求']],
-    misses: ['No issues matched your search'],
+    misses: ['No issues matched your search']
   },
   {
     hits: [
       ['Search for pull requests.', '搜索拉取请求。'],
-      ['Search for issues and pull requests.', '搜索议题和拉取请求。'],
+      ['Search for issues and pull requests.', '搜索议题和拉取请求。']
     ],
-    misses: ['Search for issues.'],
+    misses: ['Search for issues.']
   },
   // list：首次贡献横幅标题（存储库名是相邻文本节点，拼接后整句匹配）
   {
     hits: [['👋 Want to contribute to vuejs/core?', '👋 想为 vuejs/core 做贡献吗？']],
-    misses: ['👋 Want to contribute to this repository?'],
+    misses: ['👋 Want to contribute to this repository?']
   },
   { hits: [['3 pull requests in this stack', '此堆栈中有 3 个拉取请求']], misses: ['Pull requests in this stack'] },
   // list：筛选
@@ -1671,94 +1552,94 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   { hits: [['Filter by label good first issue', '按标签 good first issue 筛选']], misses: ['Filter by labeling'] },
   {
     hits: [['Filter by repository octo-org/octo-repo', '按存储库 octo-org/octo-repo 筛选']],
-    misses: ['Filter by repository octo-repo'],
+    misses: ['Filter by repository octo-repo']
   },
   {
     hits: [
       ['Filter by review: Approved', '按审查筛选：已批准'],
-      ['Filter by review: Awaiting review from you or your team', '按审查筛选：等待你或你的团队审查'],
+      ['Filter by review: Awaiting review from you or your team', '按审查筛选：等待你或你的团队审查']
     ],
-    misses: ['Filter by review: Pending'],
+    misses: ['Filter by review: Pending']
   },
   // list：排序
   {
     hits: [
       ['Sort by Newest descending', '按最新降序排序'],
-      ['Sort by Total comments ascending', '按评论总数升序排序'],
+      ['Sort by Total comments ascending', '按评论总数升序排序']
     ],
-    misses: ['Sort by Newest random'],
+    misses: ['Sort by Newest random']
   },
   {
     hits: [
       ['Sort by Last updated', '按最后更新排序'],
-      ['Sort by Comments', '按评论数排序'],
+      ['Sort by Comments', '按评论数排序']
     ],
-    misses: ['Sort by Priority'],
+    misses: ['Sort by Priority']
   },
   // list：审查与检查状态
   {
     hits: [
       ['2 review approvals', '2 个批准'],
-      ['1 review approval', '1 个批准'],
+      ['1 review approval', '1 个批准']
     ],
-    misses: ['Review approvals'],
+    misses: ['Review approvals']
   },
   { hits: [['1 review requesting changes', '1 个审查请求更改']], misses: ['Reviews requesting changes'] },
   { hits: [['3/5 checks passing', '3/5 个检查通过']], misses: ['3 of 5 checks passing'] },
   {
     hits: [
       ['5 / 5 checks OK', '5/5 个检查正常'],
-      ['4/5 checks OK', '4/5 个检查正常'],
+      ['4/5 checks OK', '4/5 个检查正常']
     ],
-    misses: ['All checks OK'],
+    misses: ['All checks OK']
   },
   {
     hits: [
       ['Status checks: success', '状态检查：成功'],
-      ['Status checks: pending', '状态检查：挂起'],
+      ['Status checks: pending', '状态检查：挂起']
     ],
-    misses: ['Status checks: unknown'],
+    misses: ['Status checks: unknown']
   },
   // list：任务列表（量词用“个”，与问题、个人主页贡献同译）
   {
     hits: [
       ['2 of 5 tasks', '5 个任务中已完成 2 个'],
-      ['1 of 1 task', '1 个任务中已完成 1 个'],
+      ['1 of 1 task', '1 个任务中已完成 1 个']
     ],
-    misses: ['2 of many tasks'],
+    misses: ['2 of many tasks']
   },
   { hits: [['3 tasks done', '3 个任务已完成']], misses: ['All tasks done'] },
   {
     hits: [
       ['3 tasks', '3 个任务'],
-      ['1 task', '1 个任务'],
+      ['1 task', '1 个任务']
     ],
-    misses: ['Some tasks'],
+    misses: ['Some tasks']
   },
   // list：链接的问题与反应
   {
     hits: [
       ['2 linked issues', '2 个链接的议题'],
-      ['1 linked issue', '1 个链接的议题'],
+      ['1 linked issue', '1 个链接的议题']
     ],
-    misses: ['Linked issues'],
+    misses: ['Linked issues']
   },
   {
     hits: [
       [
         '2 linked issues for pull request octo-org/octo-repo#12: Fix login bug',
-        '拉取请求 octo-org/octo-repo#12 的 2 个链接的议题：Fix login bug',
-      ],
+        '拉取请求 octo-org/octo-repo#12 的 2 个链接的议题：Fix login bug'
+      ]
     ],
-    misses: ['2 linked issues for pull request #12: Fix login bug'],
+    misses: ['2 linked issues for pull request #12: Fix login bug']
   },
   {
     hits: [
       ['3 Thumbs up reactions', '👍 3 个反应'],
       ['12 total reactions', '12 个反应'],
-      ['1 Heart reaction', '❤️ 1 个反应'],
+      ['1 Heart reaction', '❤️ 1 个反应']
     ],
-    misses: ['5 Sparkles reactions'],
+    misses: ['5 Sparkles reactions']
   },
   { hits: [['Milestone: v2.0', '里程碑：v2.0']], misses: ['Milestone v2.0'] },
   { hits: [['+3, show all 5 assignees', '+3，显示全部 5 个受理人']], misses: ['+3 assignees'] },
@@ -1770,16 +1651,16 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Status: Draft (not ready).', '状态：草稿（未就绪）。'],
       ['Status: Open (in progress).', '状态：打开（正在进行）。'],
       ['Status: Not planned (skipped).', '状态：未计划（已跳过）。'],
-      ['Status: Duplicate of an existing item.', '状态：与已有项重复。'],
+      ['Status: Duplicate of an existing item.', '状态：与已有项重复。']
     ],
-    misses: ['Status: Pending.'],
+    misses: ['Status: Pending.']
   },
   {
     hits: [
       ['Select: Fix login bug', '选择：Fix login bug'],
-      ['Select:', '选择'],
+      ['Select:', '选择']
     ],
-    misses: ['Select Fix login bug'],
+    misses: ['Select Fix login bug']
   },
   { hits: [['Selected. Fix login bug.', '已选择。Fix login bug。']], misses: ['Selected. Fix login bug'] },
   { hits: [['Unselected. Fix login bug.', '未选择。Fix login bug。']], misses: ['Unselected. Fix login bug'] },
@@ -1787,149 +1668,147 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Select all pull requests: Open pull requests', '全选拉取请求：Open pull requests'],
-      ['Select all pull requests:', '全选拉取请求'],
+      ['Select all pull requests:', '全选拉取请求']
     ],
-    misses: ['Select all issues: Open issues'],
+    misses: ['Select all issues: Open issues']
   },
   {
     hits: [
       ['3 pull requests selected', '已选择 3 个拉取请求'],
-      ['1 pull request of 25 selected', '25 个拉取请求中已选择 1 个'],
+      ['1 pull request of 25 selected', '25 个拉取请求中已选择 1 个']
     ],
-    misses: ['pull requests selected'],
+    misses: ['pull requests selected']
   },
   // 计数在独立节点中时的后半段（与问题列表同一写法）
   { hits: [['of 25 selected', '/25 已选择']], misses: ['of many selected'] },
   // list：批量更新
   {
     hits: [['2 pull requests returned to the list', '2 个拉取请求已返回列表']],
-    misses: ['Pull requests returned to the list'],
+    misses: ['Pull requests returned to the list']
   },
   {
     hits: [
       ['Updating 10 pull requests', '正在更新 10 个拉取请求'],
-      ['Updating 1 pull request', '正在更新 1 个拉取请求'],
+      ['Updating 1 pull request', '正在更新 1 个拉取请求']
     ],
-    misses: ['Updating pull requests'],
+    misses: ['Updating pull requests']
   },
   { hits: [['Bulk update is in progress 40 %', '批量更新进行中 40%']], misses: ['Bulk update is in progress'] },
   {
     hits: [['Could not update 2 of 10 pull requests', '10 个拉取请求中有 2 个无法更新']],
-    misses: ['Could not update some pull requests'],
+    misses: ['Could not update some pull requests']
   },
   {
     hits: [
       ['10 pull requests updated', '已更新 10 个拉取请求'],
-      ['1 pull request updated', '已更新 1 个拉取请求'],
+      ['1 pull request updated', '已更新 1 个拉取请求']
     ],
-    misses: ['Pull requests updated'],
+    misses: ['Pull requests updated']
   },
   // list：筛选框（与议题列表同一组件，规则取自 issues/filter.ts）
   {
     hits: [
       ['Author, Filter, The author of the item', '作者，筛选器，项的作者'],
-      ['Base, Filter, Pull Request base branch', '基础分支，筛选器，拉取请求的基础分支'],
+      ['Base, Filter, Pull Request base branch', '基础分支，筛选器，拉取请求的基础分支']
     ],
-    misses: ['Author Filter'],
+    misses: ['Author Filter']
   },
   { hits: [['@me, Signed-in user', '@me，已登录用户']], misses: ['@octocat, Signed-in user'] },
   // 键与选择存储库筛选框的数据键同名时仍由本条处理（dashboard 的取值规则不收 Has / No 开头的）
   {
     hits: [
       ['Has Label, Label', '有标签，标签'],
-      ['Has Language, Language', '有语言，语言'],
+      ['Has Language, Language', '有语言，语言']
     ],
-    misses: ['Has Label, Milestone'],
+    misses: ['Has Label, Milestone']
   },
   {
     hits: [
       ['No Milestone, Milestone', '无里程碑，里程碑'],
-      ['No Organization, Organization', '无组织，组织'],
+      ['No Organization, Organization', '无组织，组织']
     ],
-    misses: ['No Milestone, Label'],
+    misses: ['No Milestone, Label']
   },
   {
     hits: [
       ['Has label', '有标签'],
-      ['Has parent issue', '有父议题'],
+      ['Has parent issue', '有父议题']
     ],
-    misses: ['Has Label'],
+    misses: ['Has Label']
   },
   {
     hits: [
       ['Exclude author', '排除作者'],
       ['Exclude review-requested', '排除已请求审查'],
-      ['Exclude merged', '排除合并日期'],
+      ['Exclude merged', '排除合并日期']
     ],
-    misses: ['Exclude Author'],
+    misses: ['Exclude Author']
   },
   {
     hits: [
       ['No assignee', '无受理人'],
-      ['No label', '无标签'],
+      ['No label', '无标签']
     ],
-    misses: ['No priority'],
+    misses: ['No priority']
   },
   {
     hits: [
       ['Advanced filter dialog', '高级筛选器对话框'],
-      ['Advanced filter dialog: 2 valid filters', '高级筛选器对话框：2 个有效筛选器'],
+      ['Advanced filter dialog: 2 valid filters', '高级筛选器对话框：2 个有效筛选器']
     ],
-    misses: ['Advanced filter dialog: no valid filters'],
+    misses: ['Advanced filter dialog: no valid filters']
   },
   { hits: [['Row 2', '第 2 行']], misses: ['Row two'] },
   { hits: [['Delete filter 1: label:bug', '删除筛选器 1：label:bug']], misses: ['Delete filter: label:bug'] },
   {
     hits: [
       ['Qualifier 1', '限定符 1'],
-      ['Label, Qualifier 2', '标签，限定符 2'],
+      ['Label, Qualifier 2', '标签，限定符 2']
     ],
-    misses: ['Qualifier one'],
+    misses: ['Qualifier one']
   },
   {
     hits: [
       ['Operator 1', '运算符 1'],
-      ['is one of, Operator 1', '是以下之一，运算符 1'],
+      ['is one of, Operator 1', '是以下之一，运算符 1']
     ],
-    misses: ['Operator one'],
+    misses: ['Operator one']
   },
   {
     hits: [
       ['Value 1 From', '值 1 起始'],
-      ['Value 2 To', '值 2 结束'],
+      ['Value 2 To', '值 2 结束']
     ],
-    misses: ['Value 1 Until'],
+    misses: ['Value 1 Until']
   },
   {
     hits: [
       ['Value 1', '值 1'],
-      ['True, Value 2', '是，值 2'],
+      ['True, Value 2', '是，值 2']
     ],
-    misses: ['Value one'],
+    misses: ['Value one']
   },
   { hits: [['Enter a number', '输入数字']], misses: ['Enter a color'] },
   { hits: [['Filter contains 2 issues:', '筛选器有 2 处错误：']], misses: ['Filter contains 2 issues'] },
   { hits: [["Filter 'reason' not supported", '不支持筛选器“reason”']], misses: ['Filter reason not supported'] },
   {
-    hits: [
-      ["Filter 'involves' is deprecated and will be removed in the future", '筛选器“involves”已弃用且将来会被删除'],
-    ],
-    misses: ["Filter 'involves' is deprecated"],
+    hits: [["Filter 'involves' is deprecated and will be removed in the future", '筛选器“involves”已弃用且将来会被删除']],
+    misses: ["Filter 'involves' is deprecated"]
   },
   { hits: [['Maximum nested groups of 5 exceeded', '嵌套分组超过上限 5']], misses: ['Maximum nested groups exceeded'] },
   {
     hits: [['Authenticate with SAML SSO to access', '使用 SAML SSO 进行身份验证以访问']],
-    misses: ['Authenticate to access'],
+    misses: ['Authenticate to access']
   },
   { hits: [['SSO required for octo-org', 'octo-org 需要 SSO']], misses: ['SSO required'] },
   {
     hits: [['label:bug is invalid', 'label:bug 无效']],
-    misses: ['Title is invalid', "Name can't be blank. Name is invalid"],
-  },
+    misses: ['Title is invalid', "Name can't be blank. Name is invalid"]
+  }
 ]
 
-const HITS = REGEXP_CASES.flatMap((item) => item.hits)
-const MISSES = REGEXP_CASES.flatMap((item) => item.misses)
+const HITS = REGEXP_CASES.flatMap(item => item.hits)
+const MISSES = REGEXP_CASES.flatMap(item => item.misses)
 const RULES = dict.regexp ?? []
 
 function firstRule(input: string): number {
@@ -1943,14 +1822,14 @@ describe('pulls 正则词条', () => {
     expect(translate(input)).toBe(expected)
   })
 
-  it.each(MISSES)('不命中：%s', (input) => {
+  it.each(MISSES)('不命中：%s', input => {
     expect(translate(input)).toBeUndefined()
   })
 
   it('用例与正则一一对应，正例首个命中对应的正则', () => {
     expect(REGEXP_CASES).toHaveLength(RULES.length)
     const mismatched = REGEXP_CASES.flatMap((item, index) =>
-      item.hits.filter(([input]) => firstRule(input) !== index).map(([input]) => `#${index} ${input}`),
+      item.hits.filter(([input]) => firstRule(input) !== index).map(([input]) => `#${index} ${input}`)
     )
     expect(mismatched).toEqual([])
   })
@@ -1966,15 +1845,15 @@ describe('pulls 正则词条', () => {
     const labels = [
       ...['previously approved', 'previously recommended approval', 'previously suggested changes'],
       ...['previously commented', 'previously reviewed', 'previously requested changes'],
-      'previously approved these changes',
+      'previously approved these changes'
     ]
-    expect(labels.filter((label) => firstRule(label) !== -1)).toEqual([])
-    expect(labels.filter((label) => dict.scoped?.[label] === undefined)).toEqual([])
+    expect(labels.filter(label => firstRule(label) !== -1)).toEqual([])
+    expect(labels.filter(label => dict.scoped?.[label] === undefined)).toEqual([])
   })
 
   it('正则均锚定且不带 g / y 标志', () => {
     const invalid = RULES.map(([pattern]) => pattern).filter(
-      (pattern) => !pattern.source.startsWith('^') || !pattern.source.endsWith('$') || /[gy]/.test(pattern.flags),
+      pattern => !pattern.source.startsWith('^') || !pattern.source.endsWith('$') || /[gy]/.test(pattern.flags)
     )
     expect(invalid.map(String)).toEqual([])
   })
@@ -1993,7 +1872,7 @@ describe('pulls 正则词条', () => {
       `View comment in diff for ${'a, 1 previous comments, '.repeat(200)}x`,
       `on this commit as ${'a@'.repeat(300)} `,
       `3 additional commits by ${'a, starting at commit 0ff253b, '.repeat(200)}!`,
-      `Resolve comment in ${'src/a.ts, line 1, '.repeat(300)}`,
+      `Resolve comment in ${'src/a.ts, line 1, '.repeat(300)}`
     ]
     const start = performance.now()
     for (const input of inputs) translate(input)
@@ -2004,28 +1883,22 @@ describe('pulls 正则词条', () => {
     expect(translate(normalizeText(['wants to merge ', '3', ' commits into'].join('')))).toBe('想要将 3 个提交合并到')
     expect(translate(normalizeText('wants to merge\n      3\n      commits into'))).toBe('想要将 3 个提交合并到')
     expect(translate(normalizeText(['Lines changed: ', '120', ' additions & ', '4', ' deletions'].join('')))).toBe(
-      '更改行数：新增 120 行和删除 4 行',
+      '更改行数：新增 120 行和删除 4 行'
     )
-    expect(
-      translate(
-        normalizeText(['1', ' failing', ', ', '2', ' skipped', ', and ', '15', ' successful', ' checks'].join('')),
-      ),
-    ).toBe('1 个检查失败、2 个已跳过、15 个成功')
+    expect(translate(normalizeText(['1', ' failing', ', ', '2', ' skipped', ', and ', '15', ' successful', ' checks'].join('')))).toBe(
+      '1 个检查失败、2 个已跳过、15 个成功'
+    )
     expect(translate(normalizeText(['There are ', '3', ' pull requests ahead of this one in the'].join('')))).toBe(
-      '此拉取请求在以下队列中前面还有 3 个拉取请求',
+      '此拉取请求在以下队列中前面还有 3 个拉取请求'
     )
     expect(translate(normalizeText(['1', ' / ', '3', ' files viewed'].join('')))).toBe('已查看 1/3 个文件')
     expect(translate(normalizeText(['Bulk update is in progress ', '40', ' %'].join('')))).toBe('批量更新进行中 40%')
     expect(translate(normalizeText(['Commits on ', 'Oct 26, 2026'].join('')))).toBe('2026 年 10 月 26 日的提交')
     // Showing {3} of {10}{ loaded}{ comments}、This {comment} cannot be displayed. …
-    expect(translate(normalizeText(['Showing ', '3', ' of ', '10', ' loaded', ' comments'].join('')))).toBe(
-      '显示 3/10 条已加载的评论',
+    expect(translate(normalizeText(['Showing ', '3', ' of ', '10', ' loaded', ' comments'].join('')))).toBe('显示 3/10 条已加载的评论')
+    expect(translate(normalizeText(['This ', 'review', ' cannot be displayed. Please reload the page to try again.'].join('')))).toBe(
+      '无法显示此审查。请重新加载页面后重试。'
     )
-    expect(
-      translate(
-        normalizeText(['This ', 'review', ' cannot be displayed. Please reload the page to try again.'].join('')),
-      ),
-    ).toBe('无法显示此审查。请重新加载页面后重试。')
     expect(translate(normalizeText(['3 additional commits', ' by '].join('')))).toBe('另外 3 个提交来自')
     // 审查菜单 comments 模式：Submit {comments} / Discard {comments}
     expect(translate(normalizeText(['Submit ', 'comments'].join('')))).toBe('提交评论')
@@ -2122,15 +1995,12 @@ describe('pulls 静态词条', () => {
     ['Pull requests requesting your review', '请求你审查的拉取请求'],
     // write access → 写入访问权限；原文界面名无引号，译文不加；Pending（检查）→ 挂起；Filter → 筛选器
     ['Head branch was pushed to by a user without write access', '没有写入访问权限的用户推送了头部分支'],
-    [
-      'Only reviews by reviewers with write access count toward mergeability',
-      '只有具有写入访问权限的审查者的审查计入可合并性',
-    ],
+    ['Only reviews by reviewers with write access count toward mergeability', '只有具有写入访问权限的审查者的审查计入可合并性'],
     ['Some comments aren’t visible on the classic Files Changed page.', '部分评论在经典已更改的文件页面不可见。'],
     ['Fix with Copilot isn’t available.', '使用 Copilot 修复不可用。'],
     [
       'Command-line conflict-resolution instructions are available below. Select Done to proceed.',
-      '下方提供了命令行解决冲突的说明。选择完成以继续。',
+      '下方提供了命令行解决冲突的说明。选择完成以继续。'
     ],
     ['Some of the pull requests in this stack have pending status checks.', '此堆栈中部分拉取请求有挂起的状态检查。'],
     ['No alerts match the current filter', '没有匹配当前筛选器的警报'],
@@ -2140,22 +2010,13 @@ describe('pulls 静态词条', () => {
     ['This pull request is not ready for review yet.', '此拉取请求尚不可供审查。'],
     // 标点随原文：原文没有的逗号不加（句间句号照译，因果、条件改语序）
     ['An error occurred while closing this pull request. Please try again.', '关闭此拉取请求时出错。请重试。'],
-    [
-      'This pull request cannot be reopened because the head branch has been deleted.',
-      '此拉取请求因头部分支已删除而无法重新打开。',
-    ],
-    [
-      'This pull request will be automatically merged when all requirements are met.',
-      '此拉取请求将在满足所有要求时自动合并。',
-    ],
+    ['This pull request cannot be reopened because the head branch has been deleted.', '此拉取请求因头部分支已删除而无法重新打开。'],
+    ['This pull request will be automatically merged when all requirements are met.', '此拉取请求将在满足所有要求时自动合并。'],
     ['Checks are failing and need attention.', '检查失败且需要处理。'],
-    [
-      "This pull request is big! We're only showing the most recent 250 commits",
-      '此拉取请求较大！仅显示最近 250 个提交',
-    ],
+    ["This pull request is big! We're only showing the most recent 250 commits", '此拉取请求较大！仅显示最近 250 个提交'],
     [
       'This page has been optimized for large pull requests. Some browser features (like Find on Page or Select All) may not work as expected.',
-      '此页面已针对大型拉取请求优化。部分浏览器功能（如页面查找或全选）可能无法正常使用。',
+      '此页面已针对大型拉取请求优化。部分浏览器功能（如页面查找或全选）可能无法正常使用。'
     ],
     // open 指打开状态；名词 Filter → 筛选器
     ['Author has reached the open pull request limit', '作者已达到打开的拉取请求上限'],
@@ -2168,7 +2029,7 @@ describe('pulls 静态词条', () => {
     ['Some codespaces could not be deleted.', '部分代码空间无法删除。'],
     [
       'Copilot can monitor this pull request for failed Actions workflows and merge conflicts and fix them automatically.',
-      'Copilot 可以监视此拉取请求中失败的操作工作流和合并冲突并自动修复。',
+      'Copilot 可以监视此拉取请求中失败的操作工作流和合并冲突并自动修复。'
     ],
     // list：经典列表筛选菜单、空状态与首次贡献说明、全局 /pulls
     ['Filter Issues', '筛选议题'],
@@ -2182,7 +2043,7 @@ describe('pulls 静态词条', () => {
     [', consider opening a pull request for it.', '，可以考虑为其创建拉取请求。'],
     [
       'If you would like to submit code to this repository, consider opening a pull request.',
-      '如果你想向此存储库提交代码，可以考虑创建拉取请求。',
+      '如果你想向此存储库提交代码，可以考虑创建拉取请求。'
     ],
     ['You can read this repository’s', '你可以阅读此存储库的'],
     ['to learn how to open a good pull request.', '以了解如何创建优质的拉取请求。'],
@@ -2201,7 +2062,7 @@ describe('pulls 静态词条', () => {
     ['No files found.', '未找到文件。'],
     [
       'Marking files as viewed can help keep track of your progress, but will not affect your submitted review',
-      '将文件标记为已查看有助于跟踪你的进度，但不会影响你已提交的审查',
+      '将文件标记为已查看有助于跟踪你的进度，但不会影响你已提交的审查'
     ],
     ['View workflow job for this annotation', '查看此注释的工作流作业'],
     ['This merge commit was added into this branch cleanly.', '此合并提交已无冲突地添加到此分支。'],
@@ -2211,13 +2072,10 @@ describe('pulls 静态词条', () => {
     // review：经典审查菜单与批次建议
     ['Submit feedback approving these changes.', '提交批准这些更改的反馈。'],
     ['Pull request authors can’t approve their own pull request.', '拉取请求作者无法批准自己的拉取请求。'],
-    [
-      'Pull request authors can’t request changes on their own pull request.',
-      '拉取请求作者无法对自己的拉取请求请求更改。',
-    ],
+    ['Pull request authors can’t request changes on their own pull request.', '拉取请求作者无法对自己的拉取请求请求更改。'],
     [
       'Only users with explicit access to this repository may request changes to pull requests',
-      '只有对此存储库具有明确访问权限的用户才能对拉取请求请求更改',
+      '只有对此存储库具有明确访问权限的用户才能对拉取请求请求更改'
     ],
     ['You need to leave a comment indicating the requested changes.', '你需要发表评论说明所请求的更改。'],
     ['Commenting on lines', '评论行'],
@@ -2227,7 +2085,7 @@ describe('pulls 静态词条', () => {
     ['Apply all batched suggestions as a single commit', '将批次中的所有建议作为单个提交应用'],
     [
       'Multiple suggested changes can be batched together in a single commit. Each suggestion author will be attributed in the commit as a co-author.',
-      '多个建议更改可以批量放入单个提交。每个建议作者都会在提交中被列为共同作者。',
+      '多个建议更改可以批量放入单个提交。每个建议作者都会在提交中被列为共同作者。'
     ],
     ['Applying commit...', '正在应用提交...'],
     ['This diff has recently been updated.', '此差异最近已更新。'],
@@ -2236,7 +2094,7 @@ describe('pulls 静态词条', () => {
     ['Requested changes must be addressed to merge this pull request.', '必须处理所请求的更改才能合并此拉取请求。'],
     [
       'Only receive notifications from this pull request when you have participated or have been @mentioned.',
-      '仅在你参与或被 @提及时接收此拉取请求的通知。',
+      '仅在你参与或被 @提及时接收此拉取请求的通知。'
     ],
     ['Receive all notifications from this pull request.', '接收此拉取请求的所有通知。'],
     ['You will only be notified for the events selected from the list below.', '仅接收下方所选事件的通知。'],
@@ -2247,7 +2105,7 @@ describe('pulls 静态词条', () => {
     ['You can always change this setting later.', '你随时可以更改此设置。'],
     [
       "Note: By granting write access, maintainers could potentially edit your repository's workflows to reveal values of secrets and gain access to other branches.",
-      '注意：授予写入访问权限后，维护者可能会编辑你存储库中的工作流以泄露机密的值并获得其他分支的访问权限。',
+      '注意：授予写入访问权限后，维护者可能会编辑你存储库中的工作流以泄露机密的值并获得其他分支的访问权限。'
     ],
     ['will be able to comment on this pull request once more.', '都可以再次对此拉取请求发表评论。'],
     ['You can always unlock this pull request again in the future.', '你随时可以再次解锁此拉取请求。'],
@@ -2255,7 +2113,7 @@ describe('pulls 静态词条', () => {
     ['Reason for locking', '锁定原因'],
     [
       'Optionally, choose a reason for locking that others can see. Learn more about when it’s appropriate to',
-      '可选择其他人可见的锁定原因。了解何时适合',
+      '可选择其他人可见的锁定原因。了解何时适合'
     ],
     ['lock conversations', '锁定对话'],
     // merge-flow：草稿拉取请求推广、还原提示、状态链接
@@ -2263,15 +2121,12 @@ describe('pulls 静态词条', () => {
     ['Try draft pull requests', '试用草稿拉取请求'],
     [
       "Open an in-progress pull request without asking for formal review or risking an unwanted merge. When you're ready for code review, you can mark your draft pull request as ready for review, which will request reviews from any code owners.",
-      '创建进行中的拉取请求而不必请求正式审查或担心意外合并。准备好接受代码审查时，你可以将草稿拉取请求标记为可供审查，这将向所有代码所有者请求审查。',
+      '创建进行中的拉取请求而不必请求正式审查或担心意外合并。准备好接受代码审查时，你可以将草稿拉取请求标记为可供审查，这将向所有代码所有者请求审查。'
     ],
     ['Create a new pull request to revert these changes', '创建新的拉取请求以还原这些更改'],
     ['View status', '查看状态'],
     // timeline：经典时间线隐去操作者的事件
-    [
-      'Repository owner locked and limited conversation to collaborators',
-      '存储库所有者锁定了对话并限制为仅协作者可评论',
-    ],
+    ['Repository owner locked and limited conversation to collaborators', '存储库所有者锁定了对话并限制为仅协作者可评论'],
     ['Repository owner deleted a comment', '存储库所有者删除了一条评论'],
     ['Repository owner deleted a comment from', '存储库所有者删除了以下用户的一条评论'],
     // header：正文编辑按钮、经典页闪现提示
@@ -2293,13 +2148,13 @@ describe('pulls 静态词条', () => {
     ['Copilot can review pull requests', 'Copilot 可以审查拉取请求'],
     [
       'Request a review from Copilot to get fast, actionable feedback on your code, so you can start iterating before you receive a human review.',
-      '请求 Copilot 审查，快速获得针对你代码的可操作反馈，以便在收到人工审查前开始迭代。',
+      '请求 Copilot 审查，快速获得针对你代码的可操作反馈，以便在收到人工审查前开始迭代。'
     ],
     ['Use Closing keywords to add a closing reference', '使用关闭关键词添加关闭引用'],
     ['Allowing edits by maintainers', '允许维护者编辑'],
     [
       "Maintainers could potentially edit this repository's workflows to reveal values of secrets and gain access to other branches.",
-      '维护者可能会编辑此存储库的工作流以泄露机密的值并获得其他分支的访问权限。',
+      '维护者可能会编辑此存储库的工作流以泄露机密的值并获得其他分支的访问权限。'
     ],
     ['Maintainers are allowed to edit this pull request.', '维护者可以编辑此拉取请求。'],
     // files：经典版空状态（带句号）
@@ -2315,7 +2170,7 @@ describe('pulls 静态词条', () => {
     ['Looking for help?', '需要帮助？'],
     ["Check out the project's", '请查看此项目的'],
     ['Check out the project’s', '请查看此项目的'],
-    ['instructions for getting support', '支持说明'],
+    ['instructions for getting support', '支持说明']
   ])('%s → %s', (input, expected) => {
     expect(dict.static?.[input]).toBe(expected)
     expect(translate(input)).toBe(expected)
@@ -2323,8 +2178,7 @@ describe('pulls 静态词条', () => {
 
   it('有贡献指南时的空状态说明按句拼读，不另收整句', () => {
     // If you would like to submit code … consider opening a pull request. You can read this repository’s <contributing guidelines> …
-    const lead =
-      'If you would like to submit code to this repository, consider opening a pull request. You can read this repository’s'
+    const lead = 'If you would like to submit code to this repository, consider opening a pull request. You can read this repository’s'
     expect(dict.static?.[lead]).toBeUndefined()
     expect(translate(lead)).toBe('如果你想向此存储库提交代码，可以考虑创建拉取请求。你可以阅读此存储库的')
   })
@@ -2337,7 +2191,7 @@ describe('pulls 静态词条', () => {
 /** 全局 /pulls 选择存储库筛选框的筛选键与说明（与组织页同一组件） */
 const REPO_PICKER_TEXTS = [
   ...['Topic', 'Total stars', 'Total help-wanted issues', 'Total good-first issues', 'Total forks', 'Size (Kb)'],
-  ...['Total topics', 'Custom properties', 'Order of results', 'Programming language', 'Filter by custom properties'],
+  ...['Total topics', 'Custom properties', 'Order of results', 'Programming language', 'Filter by custom properties']
 ]
 
 /** 选择存储库筛选框的取值（README、Size 不收，见下方用例） */
@@ -2346,22 +2200,17 @@ const REPO_PICKER_VALUES = [
   ...['Recently pushed (descending)', 'Name (descending)', 'Language (descending)', 'License (descending)'],
   ...['Topics (ascending)', 'Size (ascending)', 'Total stars (ascending)', 'Total forks (ascending)'],
   ...['Help-wanted issues (ascending)', 'Help-wanted issues (descending)', 'Me', 'Public', 'Private', 'Internal'],
-  ...['Description', 'True', 'False', 'Today', 'This month', 'This year', 'More than 10'],
+  ...['Description', 'True', 'False', 'Today', 'This month', 'This year', 'More than 10']
 ]
 
 /** 选择存储库筛选框中自定义属性子键的 aria-label 与子键名（按文字翻译） */
-const REPO_PICKER_LABELS = [
-  'Property: team, Filter',
-  'True, Property: team',
-  'Production, Property: environment',
-  'Property: team',
-]
+const REPO_PICKER_LABELS = ['Property: team, Filter', 'True, Property: team', 'Production, Property: environment', 'Property: team']
 
 /** 选择存储库筛选框中取值的 aria-label：属性规则只改该对话框的建议项（README 见下方用例） */
 const REPO_PICKER_VALUE_LABELS = [
   ...['Public, Visibility', 'Recently pushed, Sort', 'Total stars (ascending), Sort', 'Me, Owner', 'Funding file, Has'],
   ...['True, Template', 'Today, Created', 'More than 10, Total forks', 'TypeScript, Language', 'MIT License, License'],
-  ...['octo-org, Organization', 'Property: team, Custom properties', 'Me, Admin Access', 'This month, Created'],
+  ...['octo-org, Organization', 'Property: team, Custom properties', 'Me, Admin Access', 'This month, Created']
 ]
 
 /** 拉取请求列表的筛选框（与议题列表同一组件）里与选择存储库筛选框同形的取值 aria-label */
@@ -2371,7 +2220,7 @@ const PULLS_FILTER_VALUE_LABELS = [
   'Open, Is',
   'True, Archived',
   'octo-org, Organization',
-  'TypeScript, Language',
+  'TypeScript, Language'
 ]
 
 /**
@@ -2391,7 +2240,7 @@ function suggestionLabels(using: typeof cnFull, labels: readonly string[], listI
   document.body.replaceChildren(list)
   const translator = createTranslator({ matcher: using, host: window, resolvePages: () => ['common', 'pulls'] })
   translator.start()
-  const result = [...list.children].map((option) => option.getAttribute('aria-label') ?? '')
+  const result = [...list.children].map(option => option.getAttribute('aria-label') ?? '')
   translator.stop()
   document.body.innerHTML = ''
   return result
@@ -2479,10 +2328,7 @@ describe('pulls 页面词条', () => {
     ['branch on', '分支位于'],
     // 自动合并说明的片段兜底：原文无括号、逗号，条件作句末状语（整句由行内句处理，见下方 DOM 用例）
     ['when all requirements are met.', '于满足所有要求时。'],
-    [
-      'You’re receiving notifications because you modified the open/close state.',
-      '你因更改了打开/关闭状态而收到通知。',
-    ],
+    ['You’re receiving notifications because you modified the open/close state.', '你因更改了打开/关闭状态而收到通知。'],
     // 标点随原文：原文没有的逗号、分号不加
     ['You’re receiving notifications because you’re subscribed to this thread.', '你因已订阅此线程而收到通知。'],
     ['Try reloading the page, or if the problem persists', '请重新加载页面，或在问题持续存在时'],
@@ -2603,7 +2449,7 @@ describe('pulls 页面词条', () => {
     ['Unbalanced quotation marks', '引号不匹配'],
     // 议题页由 issues/metadata.ts 收录的筛选器名称
     ['Parent issue', '父议题'],
-    ['Blocked by', '被阻止'],
+    ['Blocked by', '被阻止']
   ])('%s → %s', (input, expected) => {
     expect(dict.scoped?.[input]).toBe(expected)
     expect(translate(input)).toBe(expected)
@@ -2617,7 +2463,7 @@ describe('pulls 页面词条', () => {
       ...['Value 1 From', 'Filter contains 2 issues:', 'label:bug is invalid'],
       // 键名与选择存储库筛选框的数据键同名、或含逗号的：不被 dashboard 的选择存储库筛选框规则抢先
       ...['Code language, Filter, Language', 'Has Language, Language', 'No Organization, Organization'],
-      'Property: team, Qualifier 1',
+      'Property: team, Qualifier 1'
     ]
     for (const input of inputs) {
       const expected = cnFull.translate(input, issues)
@@ -2638,7 +2484,7 @@ describe('pulls 页面词条', () => {
     }
     // 其他筛选框的建议列表（id 不是 picker-filter-results）：aria-label 与议题列表一致
     expect(suggestionLabels(cnFull, PULLS_FILTER_VALUE_LABELS, '_R_3lko5_-results')).toEqual(
-      PULLS_FILTER_VALUE_LABELS.map((input) => cnFull.translate(input, issues) ?? input),
+      PULLS_FILTER_VALUE_LABELS.map(input => cnFull.translate(input, issues) ?? input)
     )
   })
 
@@ -2674,7 +2520,7 @@ describe('pulls 页面词条', () => {
       'Custom properties, Filter, Filter by custom properties',
       'Created, Filter, Creation date',
       'Last updated, Filter, Last updated date',
-      'Sort, Filter, Order of results',
+      'Sort, Filter, Order of results'
     ]
     for (const input of inputs) {
       const expected = cnFull.translate(input, organization)
@@ -2684,12 +2530,8 @@ describe('pulls 页面词条', () => {
     }
     // 拉取请求列表筛选框的同名键带另一组说明
     expect(cnFull.translate('Sort, Filter, Sort results', SCOPE)).toBe('排序，筛选器，排序结果')
-    expect(cnFull.translate('Organization, Filter, Filter by organization', ['common', 'pulls'])).toBe(
-      '组织，筛选器，按组织筛选',
-    )
-    expect(cnFull.translate('Author, Filter, The author of the item', ['common', 'pulls'])).toBe(
-      '作者，筛选器，项的作者',
-    )
+    expect(cnFull.translate('Organization, Filter, Filter by organization', ['common', 'pulls'])).toBe('组织，筛选器，按组织筛选')
+    expect(cnFull.translate('Author, Filter, The author of the item', ['common', 'pulls'])).toBe('作者，筛选器，项的作者')
   })
 
   it('选择存储库筛选框的筛选键与说明：/pulls 与组织页同译', () => {
@@ -2711,7 +2553,7 @@ describe('pulls 页面词条', () => {
   })
 
   it('选择存储库筛选框中取值的 aria-label：对话框的建议项与组织页同译', () => {
-    const expected = REPO_PICKER_VALUE_LABELS.map((input) => cnFull.translate(input, ['common', 'organization']))
+    const expected = REPO_PICKER_VALUE_LABELS.map(input => cnFull.translate(input, ['common', 'organization']))
     expect(expected).not.toContain(undefined)
     expect(suggestionLabels(cnFull, REPO_PICKER_VALUE_LABELS)).toEqual(expected)
   })
@@ -2724,7 +2566,7 @@ describe('pulls 页面词条', () => {
     expect(suggestionLabels(cnFull, ['README, In', 'Size, Sort', 'Size (ascending), Sort'])).toEqual([
       'README，范围',
       'Size，排序',
-      '大小（升序），排序',
+      '大小（升序），排序'
     ])
     // 筛选框的建议项与经典标签都是单独一段文字，按结构区分不了；aria-label 与组织页同译
     expect(cnFull.translate('Created', ['common', 'pulls'])).toBe('已创建')
@@ -2741,9 +2583,7 @@ describe('pulls 页面词条', () => {
   it('全局 /pulls 与比较页同样生效', () => {
     expect(matcher.translate('Review requests', ['common', 'pulls'])).toBe('审查请求')
     expect(matcher.translate('546 Open', ['common', 'pulls'])).toBe('546 个打开的')
-    expect(matcher.translate('Create draft pull request', ['common', 'repository', 'commits', 'pulls'])).toBe(
-      '创建草稿拉取请求',
-    )
+    expect(matcher.translate('Create draft pull request', ['common', 'repository', 'commits', 'pulls'])).toBe('创建草稿拉取请求')
   })
 
   it('不覆盖比较页提交词典的通用片段', () => {
@@ -2772,7 +2612,7 @@ describe('pulls 页面词条', () => {
   it('通用文字不在拉取请求词典中', () => {
     const keys = [
       ...['Cancel', 'Save', 'Edit', 'Delete', 'Close', 'Learn more', 'Load more', 'Loading…', 'Commits'],
-      ...['Review required', 'Approve', 'No description provided.', 'Refresh', 'Discard', 'Customize'],
+      ...['Review required', 'Approve', 'No description provided.', 'Refresh', 'Discard', 'Customize']
     ]
     for (const key of keys) {
       expect(dict.static?.[key]).toBeUndefined()
@@ -2901,7 +2741,7 @@ describe('pulls 行内句', () => {
     const queue = (): HTMLAnchorElement =>
       Object.assign(document.createElement('a'), {
         href: '/octo-org/hello-world/queue/main',
-        textContent: 'merge queue',
+        textContent: 'merge queue'
       })
     const checks = Object.assign(document.createElement('button'), { textContent: 'failed status checks' })
     const lead = ['removed this pull request from the ', ' due to ']
@@ -2944,9 +2784,7 @@ describe('pulls 行内句', () => {
       <h3 class="sr-only" id="heading"><relative-time datetime="2026-10-26T10:00:00Z">on Oct 26, 2026 </relative-time></h3>
       <h3 class="sr-only" id="bot">github-actions[bot] commented <relative-time datetime="2026-10-26T10:00:00Z">on Oct 26, 2026 </relative-time></h3>
       <ul><li id="reviewer" aria-label="octocat commented"></li></ul>`
-    document
-      .getElementById('heading')
-      ?.prepend(...['octocat', ' ', 'commented', ' '].map((text) => document.createTextNode(text)))
+    document.getElementById('heading')?.prepend(...['octocat', ' ', 'commented', ' '].map(text => document.createTextNode(text)))
     translator = createTranslator({ matcher, host: window, resolvePages: () => SCOPE })
     translator.start()
     expect(shown('heading')).toBe('octocat 评论于 <时间>')
@@ -2962,20 +2800,18 @@ describe('pulls 行内句', () => {
     const repo = Object.assign(document.createElement('strong'), { textContent: 'octo-org/hello-world' })
     const settings = Object.assign(document.createElement('a'), {
       href: '/octocat/hello-world/settings',
-      textContent: 'settings',
+      textContent: 'settings'
     })
     document
       .getElementById('cross')
       ?.append(
         ...["You're all set — the", ' ', branch(), ' ', 'branch can be safely deleted.', ' '],
-        ...['If you wish, you can also delete this fork of', ' ', repo, ' in the', ' ', settings, '.'],
+        ...['If you wish, you can also delete this fork of', ' ', repo, ' in the', ' ', settings, '.']
       )
     document.getElementById('same')?.append("You're all set — the", ' ', branch(), ' ', 'branch can be safely deleted.')
     translator = createTranslator({ matcher, host: window, resolvePages: () => SCOPE })
     translator.start()
-    expect(shown('cross')).toBe(
-      '一切就绪——feature-branch 分支可以安全删除。如有需要也可以删除 octo-org/hello-world 的此复刻，入口在设置。',
-    )
+    expect(shown('cross')).toBe('一切就绪——feature-branch 分支可以安全删除。如有需要也可以删除 octo-org/hello-world 的此复刻，入口在设置。')
     // 同一存储库时只有前半句，同样整句收录（按片段翻译时“——”后的空白文本节点会留下空格）
     expect(shown('same')).toBe('一切就绪——feature-branch 分支可以安全删除。')
   })
@@ -3008,9 +2844,7 @@ describe('pulls 行内句', () => {
       <p id="maintainer">If checked, <strong>users with write access to</strong> octo-org/hello-world
         <strong>can add new commits</strong> to your <span class="branch-name">feature</span> branch.</p>`)
     expect(shown('lock')).toBe('其他用户 将无法 对此拉取请求发表新评论。')
-    expect(shown('maintainer')).toBe(
-      '勾选后，对 octo-org/hello-world 具有写入访问权限的用户可以添加新提交 到你的 feature 分支。',
-    )
+    expect(shown('maintainer')).toBe('勾选后，对 octo-org/hello-world 具有写入访问权限的用户可以添加新提交 到你的 feature 分支。')
   })
 
   it('经典列表首次贡献说明：If you know how to fix an <issue>, … 片段拼读', () => {
@@ -3020,18 +2854,13 @@ describe('pulls 行内句', () => {
   })
 
   it('行内句只在拉取请求页面类型生效', () => {
-    translator = render(`<span id="merged"><span class="progressCount__hw0GIB">3</span> merged</span>`, [
-      'common',
-      'repository',
-      'issues',
-    ])
+    translator = render(`<span id="merged"><span class="progressCount__hw0GIB">3</span> merged</span>`, ['common', 'repository', 'issues'])
     expect(shown('merged')).toBe('3 merged')
   })
 
   it('依赖项审查富差异底部：Give feedback on <a>dependency review</a> 整句调语序（同提交页）', () => {
     // 服务端渲染的片段：链接后有换行文本，整句的末段写在这里；链接文字由提交页词典的全局词条翻译
-    document.body.innerHTML =
-      '<div id="feedback">\n  Give feedback on <a href="#feedback">dependency review</a>\n</div>'
+    document.body.innerHTML = '<div id="feedback">\n  Give feedback on <a href="#feedback">dependency review</a>\n</div>'
     translator = createTranslator({ matcher: cnFull, host: window, resolvePages: () => SCOPE })
     translator.start()
     expect(shown('feedback')).toBe('对依赖项审查提供反馈')
@@ -3041,9 +2870,7 @@ describe('pulls 行内句', () => {
   it('侧栏维护者编辑弹出框：If checked, users with write access to <存储库> can add new commits to <分支> branch.', () => {
     translator = render(`
       <p id="popover">If checked, users with write access to <strong>octo-org/hello-world</strong> can add new commits to <span class="branch-name">octocat:feature</span> branch.</p>`)
-    expect(shown('popover')).toBe(
-      '勾选后，对 octo-org/hello-world 具有写入访问权限的用户可以添加新提交到 octocat:feature 分支。',
-    )
+    expect(shown('popover')).toBe('勾选后，对 octo-org/hello-world 具有写入访问权限的用户可以添加新提交到 octocat:feature 分支。')
   })
 
   it('消除审查：stale review 是链接时 ’s 单独成段，片段按原文顺序拼读', () => {
@@ -3149,8 +2976,8 @@ describe('选择存储库筛选框（全局 /pulls，DOM）', () => {
         ['value', '是', '是，属性：team'],
         ['readme', 'README', 'README，范围'],
         ['size', 'Size', 'Size，排序'],
-        ['license', 'MIT License', 'MIT License，许可证'],
-      ],
+        ['license', 'MIT License', 'MIT License，许可证']
+      ]
     ],
     [
       '繁体',
@@ -3163,9 +2990,9 @@ describe('选择存储库筛选框（全局 /pulls，DOM）', () => {
         ['value', '是', '是，屬性：team'],
         ['readme', 'README', 'README，範圍'],
         ['size', 'Size', 'Size，排序'],
-        ['license', 'MIT License', 'MIT License，授權條款'],
-      ],
-    ],
+        ['license', 'MIT License', 'MIT License，授權條款']
+      ]
+    ]
   ] as const)(
     '%s：排序取值、可见性取值、自定义属性子键的文字与 aria-label；README、Size 的文字与 aria-label 都保留原文',
     (_, using, expected) => {
@@ -3176,27 +3003,25 @@ describe('选择存储库筛选框（全局 /pulls，DOM）', () => {
         expect(shown(id)).toBe(text)
         expect(document.getElementById(id)?.getAttribute('aria-label')).toBe(label)
       }
-    },
+    }
   )
 
   it.each([
     ['简体', cnFull],
-    ['繁体', twMatcher],
+    ['繁体', twMatcher]
   ] as const)('%s：拉取请求列表筛选框的同形取值 aria-label 不按选择存储库筛选框改写，与议题列表一致', (_, using) => {
-    const expected = PULLS_FILTER_VALUE_LABELS.map((input) => using.translate(input, ['common', 'issues']) ?? input)
+    const expected = PULLS_FILTER_VALUE_LABELS.map(input => using.translate(input, ['common', 'issues']) ?? input)
     expect(suggestionLabels(using, PULLS_FILTER_VALUE_LABELS, '_R_3lko5_-results')).toEqual(expected)
     // 同样的 aria-label 在选择存储库对话框里按组织页译出（Open, Is 不是该筛选框的取值）
     expect(suggestionLabels(using, PULLS_FILTER_VALUE_LABELS)).toEqual(
-      PULLS_FILTER_VALUE_LABELS.map((input) =>
-        input === 'Open, Is' ? input : using.translate(input, ['common', 'organization']),
-      ),
+      PULLS_FILTER_VALUE_LABELS.map(input => (input === 'Open, Is' ? input : using.translate(input, ['common', 'organization'])))
     )
   })
 
   it('属性规则选择器不依赖 aria-label 的取值', () => {
     const selectors = (dict.attributeRules ?? []).map(([selector]) => selector)
     expect(selectors.length).toBeGreaterThan(0)
-    expect(selectors.filter((selector) => /\[aria-label[~|^$*]?=/.test(selector))).toEqual([])
+    expect(selectors.filter(selector => /\[aria-label[~|^$*]?=/.test(selector))).toEqual([])
     for (const selector of selectors) expect(() => document.createElement('div').querySelector(selector)).not.toThrow()
   })
 })
@@ -3220,7 +3045,7 @@ describe('pulls 繁体词条（zh-TW）', () => {
     ['issue', '議題'],
     [
       'If you would like to submit code to this repository, consider opening a pull request. You can read this repository’s',
-      '如果你想向此儲存庫提交程式碼，可以考慮建立拉取請求。你可以閱讀此儲存庫的',
+      '如果你想向此儲存庫提交程式碼，可以考慮建立拉取請求。你可以閱讀此儲存庫的'
     ],
     ['to exclude labels', '排除標籤'],
     ['advanced search', '進階搜尋'],
@@ -3274,7 +3099,7 @@ describe('pulls 繁体词条（zh-TW）', () => {
     ['User does not have push access to the repository.', '使用者沒有此儲存庫的推送權限。'],
     [
       "You're not authorized to push to this branch. Visit https://docs.github.com/ for more information.",
-      '你無權推送到此分支。請造訪 https://docs.github.com/ 以瞭解詳情。',
+      '你無權推送到此分支。請造訪 https://docs.github.com/ 以瞭解詳情。'
     ],
     // review / sidebar / files
     ['Your review was submitted successfully.', '你的審查已成功送出。'],
@@ -3341,17 +3166,14 @@ describe('pulls 繁体词条（zh-TW）', () => {
     ['Blocked by', '受阻於'],
     ['Row 2', '第 2 列'],
     ['No', '否'],
-    ['Pending', '待處理'],
+    ['Pending', '待處理']
   ])('%s → %s', (input, expected) => {
     expect(twMatcher.translate(input, SCOPE)).toBe(expected)
   })
 
-  it.each(['No reviews—at least one approving review is required.', '👋 Want to contribute to this repository?'])(
-    '不命中：%s',
-    (input) => {
-      expect(twMatcher.translate(input, SCOPE)).toBeUndefined()
-    },
-  )
+  it.each(['No reviews—at least one approving review is required.', '👋 Want to contribute to this repository?'])('不命中：%s', input => {
+    expect(twMatcher.translate(input, SCOPE)).toBeUndefined()
+  })
 
   it('选择存储库筛选框的筛选键与说明：/pulls 与组织页同译', () => {
     const organization: readonly PageKey[] = ['common', 'organization']
@@ -3372,7 +3194,7 @@ describe('pulls 繁体词条（zh-TW）', () => {
   })
 
   it('选择存储库筛选框中取值的 aria-label：对话框的建议项与组织页同译', () => {
-    const expected = REPO_PICKER_VALUE_LABELS.map((input) => twMatcher.translate(input, ['common', 'organization']))
+    const expected = REPO_PICKER_VALUE_LABELS.map(input => twMatcher.translate(input, ['common', 'organization']))
     expect(expected).not.toContain(undefined)
     expect(suggestionLabels(twMatcher, REPO_PICKER_VALUE_LABELS)).toEqual(expected)
   })
@@ -3392,12 +3214,10 @@ describe('pulls 繁体词条（zh-TW）', () => {
     expect(suggestionLabels(twMatcher, ['README, In', 'Size, Sort', 'Size (ascending), Sort'])).toEqual([
       'README，範圍',
       'Size，排序',
-      '大小（遞增），排序',
+      '大小（遞增），排序'
     ])
     expect(twMatcher.translate('Created', ['common', 'pulls'])).toBe('已建立')
-    expect(twMatcher.translate('Created, Filter, Creation date', ['common', 'pulls'])).toBe(
-      '建立日期，篩選器，建立日期',
-    )
+    expect(twMatcher.translate('Created, Filter, Creation date', ['common', 'pulls'])).toBe('建立日期，篩選器，建立日期')
   })
 
   it('经典时间线锁定事件：原因提到句首', () => {
@@ -3427,8 +3247,7 @@ describe('pulls 繁体词条（zh-TW）', () => {
   })
 
   it('依赖项审查富差异底部：提供 <相依性審查> 的意見回饋', () => {
-    document.body.innerHTML =
-      '<div id="feedback">\n  Give feedback on <a href="#feedback">dependency review</a>\n</div>'
+    document.body.innerHTML = '<div id="feedback">\n  Give feedback on <a href="#feedback">dependency review</a>\n</div>'
     translator = createTranslator({ matcher: twMatcher, host: window, resolvePages: () => SCOPE })
     translator.start()
     expect(shown('feedback')).toBe('提供相依性審查的意見回饋')
@@ -3441,9 +3260,7 @@ describe('pulls 繁体词条（zh-TW）', () => {
     translator = createTranslator({ matcher: twMatcher, host: window, resolvePages: () => SCOPE })
     translator.start()
     expect(shown('dismissed')).toBe('駁回了 octocat的 過時審查 因提交 0ff253b')
-    expect(shown('popover')).toBe(
-      '勾選後，對 octo-org/hello-world 具有寫入權限的使用者可以加入新的提交到 octocat:feature 分支。',
-    )
+    expect(shown('popover')).toBe('勾選後，對 octo-org/hello-world 具有寫入權限的使用者可以加入新的提交到 octocat:feature 分支。')
   })
 
   it('经典时间线编码代理事件：用户名提到动词前；结构对不上时按片段拼读', () => {
@@ -3477,11 +3294,11 @@ describe('pulls 繁体词条（zh-TW）', () => {
   it('与全局词条同译的片段：拉取请求页照常翻译', () => {
     expect(twMatcher.translate('and the', SCOPE)).toBe('和')
     expect(twMatcher.translate('. We’ll occasionally send you account related emails.', SCOPE)).toBe(
-      '。我們會不定期傳送與帳號相關的電子郵件給你。',
+      '。我們會不定期傳送與帳號相關的電子郵件給你。'
     )
     // 直撇号版由本词典收录，与弯撇号版同译
     expect(twMatcher.translate(". We'll occasionally send you account related emails.", SCOPE)).toBe(
-      '。我們會不定期傳送與帳號相關的電子郵件給你。',
+      '。我們會不定期傳送與帳號相關的電子郵件給你。'
     )
     expect(twMatcher.translate('You can also', SCOPE)).toBe('你也可以')
   })

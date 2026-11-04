@@ -24,7 +24,7 @@ export default {
     'Committing merge…': '正在提交合併…',
     'Heads up, this will commit to': '請注意，這會提交到',
     'and commit updates. Your pull request will be updated automatically.': '並提交更新。你的拉取請求將會自動更新。',
-    'I understand, sign off and update': '我瞭解，簽署並更新',
+    'I understand, sign off and update': '我瞭解，簽署並更新'
   },
   scoped: {
     // 标题：Resolving conflicts between <main> and <feature> and committing changes → <feature>
@@ -46,13 +46,13 @@ export default {
     // 缩进模式下拉框（与 code、gist 一致）。拉取请求页没有其他单独的 Spaces / Tabs：
     // Copilot 导航的 Spaces（空間）只在代理会话页，该页作用域含 copilot，以 copilot 的译法为准
     Spaces: '空格',
-    Tabs: '定位字元',
+    Tabs: '定位字元'
   },
   regexp: [
     [/^(\d+) conflicting files?$/, '$1 個衝突檔案'],
     [/^(\d+) conflicts?$/, '$1 處衝突'],
     // 原文无标点：You are <signing off> on this commit as … → 你正在 簽署 此提交並署名為 …（与 code 词典同译）
     [/^on this commit as (.+@.+)$/, '此提交並署名為 $1'],
-    [/^I understand, sign off and update (\S+)$/, '我瞭解，簽署並更新 $1'],
-  ],
+    [/^I understand, sign off and update (\S+)$/, '我瞭解，簽署並更新 $1']
+  ]
 } satisfies PageDictionary

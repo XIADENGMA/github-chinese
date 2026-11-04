@@ -8,7 +8,7 @@ const LEGACY_UNTRANSLATED = {
   'untranslated:Pull requests': { count: 1, kinds: 2, seen: 2, pages: { pulls: 1 } },
   untranslatedMeta: { count: 2, full: false },
   untranslatedEpoch: 3,
-  untranslated: { records: [] },
+  untranslated: { records: [] }
 }
 
 /** 不属于未翻译文本的键 */
@@ -92,27 +92,24 @@ describe('applyLegacySettingValues', () => {
   it.each<[string, Record<string, unknown>]>([
     ['开启', { collectUntranslated: true }],
     ['类型不符', { collectUntranslated: 'off' }],
-    ['没有该字段', {}],
-  ])(
-    'collectUntranslated %s：改为 false（设置会同步，未更新的旧版本读不到时按开启处理），其余字段原样保留',
-    async (_name, legacy) => {
-      const stored = { enabled: false, excludedPaths: ['/settings'], theme: 'neon', ...legacy }
-      await fakeBrowser.storage.sync.set({ settings: stored })
-      await applyLegacySettingValues()
-      expect((await fakeBrowser.storage.sync.get('settings')).settings).toEqual({
-        enabled: false,
-        excludedPaths: ['/settings'],
-        theme: 'neon',
-        collectUntranslated: false,
-      })
-      expect(await getSettings()).toEqual({ ...DEFAULT_SETTINGS, enabled: false, excludedPaths: ['/settings'] })
-    },
-  )
+    ['没有该字段', {}]
+  ])('collectUntranslated %s：改为 false（设置会同步，未更新的旧版本读不到时按开启处理），其余字段原样保留', async (_name, legacy) => {
+    const stored = { enabled: false, excludedPaths: ['/settings'], theme: 'neon', ...legacy }
+    await fakeBrowser.storage.sync.set({ settings: stored })
+    await applyLegacySettingValues()
+    expect((await fakeBrowser.storage.sync.get('settings')).settings).toEqual({
+      enabled: false,
+      excludedPaths: ['/settings'],
+      theme: 'neon',
+      collectUntranslated: false
+    })
+    expect(await getSettings()).toEqual({ ...DEFAULT_SETTINGS, enabled: false, excludedPaths: ['/settings'] })
+  })
 
   it.each<[string, Record<string, unknown>]>([
     ['已是 false（关闭过收集）', { settings: { enabled: false, collectUntranslated: false } }],
     ['没有存储的设置', {}],
-    ['存储值不是对象', { settings: ['collectUntranslated'] }],
+    ['存储值不是对象', { settings: ['collectUntranslated'] }]
   ])('%s：不写入', async (_name, stored) => {
     await fakeBrowser.storage.sync.set(stored)
     const set = vi.spyOn(fakeBrowser.storage.sync, 'set')

@@ -25,8 +25,7 @@ export default {
       '選擇儲存庫是否要求貢獻者簽署透過 GitHub 網頁介面所做的提交。簽署是貢獻者確認其提交符合儲存庫條款的一種方式，通常是',
     'Developer Certificate of Origin (DCO)': '開發人員來源證明 (DCO)',
     'Learn more about signing off on commits': '瞭解提交簽署',
-    'Require signoff on web-based commits for all repositories in this organization':
-      '此組織中的所有儲存庫都要求簽署網頁提交',
+    'Require signoff on web-based commits for all repositories in this organization': '此組織中的所有儲存庫都要求簽署網頁提交',
     'Each repository chooses whether to require signoff on web-based commits': '由各儲存庫自行選擇是否要求簽署網頁提交',
     'Commit signoff settings were updated.': '已更新提交簽署設定。',
     'Require contributors to sign off on web-based commits': '要求貢獻者簽署網頁提交',
@@ -165,8 +164,7 @@ export default {
       '來源儲存庫中的所有討論都將顯示在組織的討論分頁中。',
     'Permissions from the repository will be applied to the organization Discussions. By default, all members of the organization will be able to create and comment on discussions.':
       '儲存庫的權限將套用至組織討論。預設情況下，組織的所有成員都可以建立討論並留言。',
-    'Members can now share updates or ask questions to the entire organization.':
-      '成員現在可以向整個組織分享最新動態或提問。',
+    'Members can now share updates or ask questions to the entire organization.': '成員現在可以向整個組織分享最新動態或提問。',
     'For more information, see our documentation.': '詳情請參閱我們的說明文件。',
     'Choose a repository': '選擇儲存庫',
     'Search for a repository': '搜尋儲存庫',
@@ -177,8 +175,7 @@ export default {
       'GitHub 上的專案可協助你整理工作並排定優先順序。你可以為特定功能的開發工作、完整的藍圖，甚至發行版本檢查清單建立專案。',
     'Enable Projects for the organization': '為組織啟用專案',
     'This allows members to create projects for the': '這可讓成員為',
-    'organization. Members can create projects to organize and track issues from any':
-      '組織建立專案。成員可以建立專案來整理並追蹤任何',
+    'organization. Members can create projects to organize and track issues from any': '組織建立專案。成員可以建立專案來整理並追蹤任何',
     '-owned repository.': '所擁有儲存庫中的議題。',
     'Allow members to change project visibilities for this organization': '允許成員變更此組織的專案可見度',
     'If enabled, members with admin permissions on a project can make the project public or private. If disabled, only organization owners can make the project public or private. All projects are private by default.':
@@ -199,7 +196,7 @@ export default {
     'Add failover network': '新增容錯移轉網路',
     'Edit configuration': '編輯設定',
     'Network settings resource ID': '網路設定資源 ID',
-    'Failover network': '容錯移轉網路',
+    'Failover network': '容錯移轉網路'
   },
   scoped: {
     // 与个人设置、存储库设置共用
@@ -270,12 +267,12 @@ export default {
       '以下是此組織先前刪除的套件。你可以還原過去 30 天內刪除的套件。',
 
     // Pages（与个人设置共用）
-    'There are no verified domains for this organization.': '此組織沒有已驗證的網域。',
+    'There are no verified domains for this organization.': '此組織沒有已驗證的網域。'
   },
   regexp: [
     [
       new RegExp(`^New repositories created in ${ORG} will use ${BRANCH} as their default branch\\.$`),
-      '在 $1 中建立的新儲存庫將使用 $2 作為預設分支。',
+      '在 $1 中建立的新儲存庫將使用 $2 作為預設分支。'
     ],
     [new RegExp(`^Your default branch name will be ${BRANCH}$`), '預設分支名稱將為 $1'],
     [/^(\d+) labels?$/, '$1 個標籤'],
@@ -289,9 +286,6 @@ export default {
     [/^(\d+) issue fields?$/, '$1 個議題欄位'],
     [/^(\d+) network configurations?$/, '$1 個網路設定'],
     [new RegExp(`^No recoverable packages were found for ${ORG}\\.$`), '找不到 $1 可還原的套件。'],
-    [
-      /^Successfully verified ([\w-]+(?:\.[\w-]+)+?)(\.?)$/,
-      (_, domain: string, dot: string) => `已成功驗證 ${domain}${dot ? '。' : ''}`,
-    ],
-  ],
+    [/^Successfully verified ([\w-]+(?:\.[\w-]+)+?)(\.?)$/, (_, domain: string, dot: string) => `已成功驗證 ${domain}${dot ? '。' : ''}`]
+  ]
 } satisfies PageDictionary

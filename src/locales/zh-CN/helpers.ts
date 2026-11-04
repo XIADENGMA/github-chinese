@@ -18,12 +18,12 @@ export {
   RELATIVE_SOURCE,
   spaceDigits,
   TIME_SOURCE,
-  translateDate,
+  translateDate
 } from '../shared/helpers'
 
 export const { relativeTime, translateRelativeTime, translateTime } = createTimeHelpers({
   locale: 'zh-CN',
   namedDays: { now: '刚刚', 'just now': '刚刚', yesterday: '昨天', today: '今天', tomorrow: '明天' },
   // 与 projects 词典的距离前缀一致
-  qualifiers: { about: '约', almost: '将近', over: '超过' },
+  qualifiers: { about: '约', almost: '将近', over: '超过' }
 })

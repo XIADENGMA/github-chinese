@@ -16,7 +16,7 @@ const CHECK_STATE: Readonly<Record<string, string>> = {
   skipped: '已跳过',
   expected: '等待报告',
   successful: '成功',
-  'action required': '需要操作',
+  'action required': '需要操作'
 }
 
 const CHECK_STATE_SOURCE = Object.keys(CHECK_STATE).join('|')
@@ -29,7 +29,7 @@ const CHECK_PART_RE = new RegExp(`(\\d+) (${CHECK_STATE_SOURCE})`, 'g')
  */
 function checkSummary(list: string): string {
   const parts = [...list.matchAll(CHECK_PART_RE)].map(
-    ([, count, state], i) => `${count} 个${i === 0 ? '检查' : ''}${CHECK_STATE[state!] ?? state}`,
+    ([, count, state], i) => `${count} 个${i === 0 ? '检查' : ''}${CHECK_STATE[state!] ?? state}`
   )
   return list.includes(',') ? parts.join('、') : parts.join('和 ')
 }
@@ -41,9 +41,7 @@ export const DURATION_SOURCE = '\\d+[smhd](?: \\d+[smhd]){0,2}'
 export function duration(text: string): string {
   return text
     .split(' ')
-    .map((part) =>
-      part.replace(/^(\d+)([smhd])$/, (_, amount: string, unit: string) => `${amount} ${DURATION_UNIT[unit]}`),
-    )
+    .map(part => part.replace(/^(\d+)([smhd])$/, (_, amount: string, unit: string) => `${amount} ${DURATION_UNIT[unit]}`))
     .join(' ')
 }
 
@@ -62,7 +60,7 @@ const CHECK_CONCLUSION: Readonly<Record<string, string>> = {
   Neutral: '结果为中性',
   Skipped: '跳过',
   Stale: '过时',
-  'Action required': '需要操作',
+  'Action required': '需要操作'
 }
 
 const CHECK_CONCLUSION_SOURCE = Object.keys(CHECK_CONCLUSION).join('|')
@@ -74,7 +72,7 @@ const REVIEW_GROUP: Readonly<Record<string, string>> = {
   'requested changes': '个更改请求',
   'requested change': '个更改请求',
   'pending reviews': '个待处理的审查',
-  'pending review': '个待处理的审查',
+  'pending review': '个待处理的审查'
 }
 
 const REVIEW_GROUP_SOURCE = Object.keys(REVIEW_GROUP).join('|')
@@ -83,7 +81,7 @@ const REVIEW_GROUP_SOURCE = Object.keys(REVIEW_GROUP).join('|')
 const REVIEW_STATUS: Readonly<Record<string, string>> = {
   'approved these changes': '批准了这些更改',
   'requested changes': '请求了更改',
-  commented: '发表了评论',
+  commented: '发表了评论'
 }
 
 /** 合并要求摘要（审查部分副标题） */
@@ -91,7 +89,7 @@ const REVIEW_REQUIREMENT: Readonly<Record<string, string>> = {
   'At least 1 approving review is required': '至少需要 1 个具有写入访问权限的审查者批准。',
   'An approval on the most recent push is required': '最近一次推送需要获得具有写入访问权限的审查者批准。',
   'Code owner review required': '需要具有写入访问权限的代码所有者审查。',
-  'A review from a compliance team is required': '需要具有写入访问权限的合规团队审查。',
+  'A review from a compliance team is required': '需要具有写入访问权限的合规团队审查。'
 }
 
 const REVIEW_REQUIREMENT_SOURCE = Object.keys(REVIEW_REQUIREMENT).join('|')
@@ -101,18 +99,14 @@ const REQUIRED_CHECK_STATE: Readonly<Record<string, string>> = {
   expected: '尚未报告',
   failing: '失败',
   'in progress': '正在进行',
-  pending: '处于挂起状态',
+  pending: '处于挂起状态'
 }
 
 /** 1 change requested, 2 approving reviews → 1 个更改请求、2 个批准审查 */
 function reviewSummary(text: string): string {
   return text
     .split(', ')
-    .map((part) =>
-      part
-        .replace(/^(\d+) changes? requested$/, '$1 个更改请求')
-        .replace(/^(\d+) approving reviews?$/, '$1 个批准审查'),
-    )
+    .map(part => part.replace(/^(\d+) changes? requested$/, '$1 个更改请求').replace(/^(\d+) approving reviews?$/, '$1 个批准审查'))
     .join('、')
 }
 
@@ -147,7 +141,7 @@ const MERGE_STATUS_MESSAGE: Readonly<Record<string, string>> = {
   'Ready to merge. Some optional checks have not passed.': '可以合并。部分可选检查未通过。',
   'Some optional checks have not passed.': '部分可选检查未通过。',
   'Some optional checks are failing.': '部分可选检查失败。',
-  'An authorized user must authenticate to merge.': '必须由获授权的用户完成身份验证才能合并。',
+  'An authorized user must authenticate to merge.': '必须由获授权的用户完成身份验证才能合并。'
 }
 
 /** 2 checks are failing and need attention. */
@@ -184,8 +178,7 @@ export default {
     'An approval on the most recent push is required': '最近一次推送需要获得批准',
     'Code owner review required': '需要代码所有者审查',
     'A review from a compliance team is required': '需要合规团队审查',
-    'Review has been requested on this pull request. It is not required to merge.':
-      '已请求审查此拉取请求。合并不要求此审查。',
+    'Review has been requested on this pull request. It is not required to merge.': '已请求审查此拉取请求。合并不要求此审查。',
     'Learn more about requesting a pull request review.': '了解请求拉取请求审查。',
     'Learn more about pull request reviews.': '了解拉取请求审查。',
     'At least 1 approving review is required to merge this pull request.': '合并此拉取请求至少需要 1 个批准审查。',
@@ -223,8 +216,7 @@ export default {
       '一个或多个工作流因创建于一个多月前而无法重新运行。',
     'Learn more about approving workflows.': '了解批准工作流。',
     'This workflow requires approval from a maintainer.': '此工作流需要维护者批准。',
-    'First-time contributors need a maintainer to approve running workflows.':
-      '首次贡献者需要维护者批准才能运行工作流。',
+    'First-time contributors need a maintainer to approve running workflows.': '首次贡献者需要维护者批准才能运行工作流。',
     'Copilot failure analysis': 'Copilot 失败分析',
     'is analyzing CI failures': '正在分析 CI 失败',
     'View failure analysis': '查看失败分析',
@@ -256,8 +248,7 @@ export default {
     'Use the command line to resolve conflicts before continuing.': '请先使用命令行解决冲突再继续。',
     'or the command line to resolve conflicts before continuing.': '或命令行解决冲突后再继续。',
     'Use the web editor or the command line to resolve conflicts.': '使用 Web 编辑器或命令行解决冲突。',
-    'Use the command line to resolve conflicts within the stack before continuing.':
-      '请先使用命令行解决堆栈中的冲突再继续。',
+    'Use the command line to resolve conflicts within the stack before continuing.': '请先使用命令行解决堆栈中的冲突再继续。',
     'Changes can be cleanly merged.': '更改可以无冲突合并。',
     'Conflicting files': '冲突的文件',
     'Retry loading Agent Merge': '重试加载代理合并',
@@ -269,8 +260,7 @@ export default {
     'Update with merge commit': '使用合并提交更新',
     'Update with rebase': '使用变基更新',
     'The merge commit will be associated with your account.': '合并提交将与你的帐户关联。',
-    'This pull request will be rebased on top of the latest changes and then force pushed.':
-      '此拉取请求将先变基到最新更改之上再强制推送。',
+    'This pull request will be rebased on top of the latest changes and then force pushed.': '此拉取请求将先变基到最新更改之上再强制推送。',
     'This branch cannot be rebased at this time.': '此分支暂时无法变基。',
     'Update branch options': '更新分支选项',
     "Couldn't update branch": '无法更新分支',
@@ -297,15 +287,13 @@ export default {
       '如果不想使用合并按钮或无法自动合并，可以在命令行中手动合并。但如果基础分支受保护，以下步骤不适用。',
     'If you cannot merge a pull request automatically here, you have the option of checking it out via command line to resolve conflicts and perform a manual merge.':
       '如果无法在此自动合并拉取请求，可以通过命令行检出以解决冲突并手动合并。',
-    'Clone the repository or update your local repository with the latest changes.':
-      '克隆存储库或将本地存储库更新到最新。',
+    'Clone the repository or update your local repository with the latest changes.': '克隆存储库或将本地存储库更新到最新。',
     'Switch to the base branch of the pull request.': '切换到拉取请求的基础分支。',
     'Switch to the head branch of the pull request.': '切换到拉取请求的头部分支。',
     'Merge the head branch into the base branch.': '将头部分支合并到基础分支。',
     'Merge the base branch into the head branch.': '将基础分支合并到头部分支。',
     'Fix the conflicts and commit the result.': '修复冲突并提交结果。',
-    'From your project repository, check out a new branch and test the changes.':
-      '在项目存储库中检出一个新分支并测试更改。',
+    'From your project repository, check out a new branch and test the changes.': '在项目存储库中检出一个新分支并测试更改。',
     'Merge the changes and update on GitHub.': '合并更改并在 GitHub 上更新。',
     // 旧版合并框的命令行说明与冲突提示
     'Checkout via the command line': '通过命令行检出',
@@ -353,11 +341,9 @@ export default {
     'Confirm bypass rules and merge (squash)': '确认绕过规则并合并（压缩）',
     'Confirm bypass rules and merge (rebase)': '确认绕过规则并合并（变基）',
     'Select merge method': '选择合并方式',
-    'All commits from this branch will be added to the base branch via a merge commit.':
-      '此分支的所有提交将通过合并提交添加到基础分支。',
+    'All commits from this branch will be added to the base branch via a merge commit.': '此分支的所有提交将通过合并提交添加到基础分支。',
     'The 1 commit from this branch will be added to the base branch.': '此分支的 1 个提交将添加到基础分支。',
-    'The 1 commit from this branch will be rebased and added to the base branch.':
-      '此分支的 1 个提交将变基后添加到基础分支。',
+    'The 1 commit from this branch will be rebased and added to the base branch.': '此分支的 1 个提交将变基后添加到基础分支。',
     'Merge commits are not allowed on this repository.': '此存储库不允许合并提交。',
     'Squash merges are not allowed on this repository.': '此存储库不允许压缩合并。',
     'Rebase merges are not allowed on this repository.': '此存储库不允许变基合并。',
@@ -383,8 +369,7 @@ export default {
 
     // 绕过规则
     'Merge without waiting for requirements to be met (bypass rules)': '不等待满足要求即合并（绕过规则）',
-    'Merge without waiting for requirements to be met (bypass branch protections)':
-      '不等待满足要求即合并（绕过分支保护）',
+    'Merge without waiting for requirements to be met (bypass branch protections)': '不等待满足要求即合并（绕过分支保护）',
     'Skip the queue and merge directly.': '跳过队列直接合并。',
     'Use the selected merge method without waiting.': '立即使用所选合并方式。',
 
@@ -392,8 +377,7 @@ export default {
     'Merging is blocked': '合并被阻止',
     'The base branch restricts merging to authorized users.': '基础分支仅允许获授权的用户合并。',
     'Learn more about protected branches.': '了解受保护分支。',
-    'Merging can be performed automatically once the requested changes are addressed.':
-      '处理所请求的更改后即可自动合并。',
+    'Merging can be performed automatically once the requested changes are addressed.': '处理所请求的更改后即可自动合并。',
     'The base branch requires all commits to be signed.': '基础分支要求所有提交都已签名。',
     'Commits must have verified signatures.': '提交必须有经过验证的签名。',
     'Learn more about signing commits.': '了解提交签名。',
@@ -417,7 +401,7 @@ export default {
     'Merge is not an allowed merge method in this repository.': '合并不是此存储库允许的合并方式。',
     'Squash is not an allowed merge method in this repository.': '压缩不是此存储库允许的合并方式。',
     'Rebase is not an allowed merge method in this repository.': '变基不是此存储库允许的合并方式。',
-    'User does not have push access to the repository.': '用户没有此存储库的推送权限。',
+    'User does not have push access to the repository.': '用户没有此存储库的推送权限。'
   },
   scoped: {
     // 合并框里的短词与句子片段（被链接、分支名拆开）
@@ -507,31 +491,25 @@ export default {
     'Confirming...': '确认中...',
     'Confirming…': '确认中…',
     'Merging...': '合并中...',
-    'Merging…': '合并中…',
+    'Merging…': '合并中…'
   },
   regexp: [
     // 检查汇总：1 failing, 2 skipped, 15 successful checks（经典版：… and 3 successful checks）
-    [
-      new RegExp(`^(${CHECK_PART_SOURCE}(?:(?:, and |, | and )${CHECK_PART_SOURCE})*) checks?$`),
-      (_, list) => checkSummary(list),
-    ],
+    [new RegExp(`^(${CHECK_PART_SOURCE}(?:(?:, and |, | and )${CHECK_PART_SOURCE})*) checks?$`), (_, list) => checkSummary(list)],
     [/^(\d+) checks?$/, '$1 个检查'],
     [
       new RegExp(`^(Collapse|Expand) (${CHECK_PART_SOURCE}) checks? group$`),
-      (_, action, part) => `${collapseOrExpand(action)}分组 ${checkSummary(part)}`,
+      (_, action, part) => `${collapseOrExpand(action)}分组 ${checkSummary(part)}`
     ],
-    [
-      /^(Collapse|Expand) (\d+) checks? group$/,
-      (_, action, count) => `${collapseOrExpand(action)}分组 ${count} 个检查`,
-    ],
+    [/^(Collapse|Expand) (\d+) checks? group$/, (_, action, count) => `${collapseOrExpand(action)}分组 ${count} 个检查`],
     // 检查耗时：Successful in 2m / Failing after 30s（原文无标点，译文不加逗号）
     [
       new RegExp(`^(Successful|Success|Completed) in (${DURATION_SOURCE})$`),
-      (_, state, time) => `${state === 'Completed' ? '完成' : '成功'}用时 ${duration(time)}`,
+      (_, state, time) => `${state === 'Completed' ? '完成' : '成功'}用时 ${duration(time)}`
     ],
     [
       new RegExp(`^(${CHECK_CONCLUSION_SOURCE}) after (${DURATION_SOURCE})$`),
-      (_, state, time) => `${duration(time)}后${CHECK_CONCLUSION[state] ?? state}`,
+      (_, state, time) => `${duration(time)}后${CHECK_CONCLUSION[state] ?? state}`
     ],
     [FAILING_CHECKS_RE, '$1 个检查失败且需要处理。'],
     [/^(\d+) workflows? awaiting approval$/, '$1 个工作流等待批准'],
@@ -540,51 +518,42 @@ export default {
     [new RegExp(`^(\\d+) (${REVIEW_GROUP_SOURCE})$`), (_, count, group) => `${count} ${REVIEW_GROUP[group] ?? group}`],
     [
       new RegExp(`^(Collapse|Expand) (\\d+) (${REVIEW_GROUP_SOURCE}) group$`),
-      (_, action, count, group) => `${collapseOrExpand(action)}分组 ${count} ${REVIEW_GROUP[group] ?? group}`,
+      (_, action, count, group) => `${collapseOrExpand(action)}分组 ${count} ${REVIEW_GROUP[group] ?? group}`
     ],
-    [
-      /^list of (approvals|requested changes|pending reviews)$/,
-      (_, group) => `${(REVIEW_GROUP[group] ?? group).replace(/^个/, '')}列表`,
-    ],
+    [/^list of (approvals|requested changes|pending reviews)$/, (_, group) => `${(REVIEW_GROUP[group] ?? group).replace(/^个/, '')}列表`],
     // 审查者状态：Approved these changes [with read-only permissions] [for org/team]
     // 合并框审查者列表的状态不带时间：commented 作“发表了评论”；后接时间的 commented 作“评论于”
     // （审查头部的状态标签见 common-ui，评论头部的读屏标题 <用户名> commented <时间> 见 comments.ts 的行内句）
     [
       /^(Approved these changes|Requested changes|Commented)( with read-only permissions)?(?: for (.+))?$/,
-      (_, status, readOnly, teams) => reviewStatus(status, readOnly, teams),
+      (_, status, readOnly, teams) => reviewStatus(status, readOnly, teams)
     ],
     // 排除 previously：评论列表审查头部的已消除审查标签（previously commented 等）由 timeline.ts 收录
     [
       /^(?!previously )([\w-]+(?:\[bot\])?) (approved these changes|requested changes|commented)( with read-only permissions)?(?: for (.+))?$/,
-      (_, login, status, readOnly, teams) => `${login} ${reviewStatus(status, readOnly, teams)}`,
+      (_, login, status, readOnly, teams) => `${login} ${reviewStatus(status, readOnly, teams)}`
     ],
     [
       /^([\w-]+(?:\[bot\])?) was requested for review( as a codeowner)?$/,
-      (_, login, owner) => `${login} ${owner ? '被请求以代码所有者身份审查' : '被请求审查'}`,
+      (_, login, owner) => `${login} ${owner ? '被请求以代码所有者身份审查' : '被请求审查'}`
     ],
     [/^([\w-]+(?:\[bot\])?)['’]s avatar image$/, '$1 的头像'],
     // 审查要求
     [/^At least (\d+) approving reviews are required$/, '至少需要 $1 个批准审查'],
     [
       /^At least (\d+) approving reviews? (?:is|are) required by reviewers with write access\.$/,
-      '至少需要 $1 个具有写入访问权限的审查者批准。',
+      '至少需要 $1 个具有写入访问权限的审查者批准。'
     ],
-    [
-      /^At least (\d+) approving reviews are required to merge this pull request\.$/,
-      '合并此拉取请求至少需要 $1 个批准审查。',
-    ],
+    [/^At least (\d+) approving reviews are required to merge this pull request\.$/, '合并此拉取请求至少需要 $1 个批准审查。'],
     [
       new RegExp(`^(${REVIEW_REQUIREMENT_SOURCE}) by reviewers with write access\\.$`),
-      (_, summary) => REVIEW_REQUIREMENT[summary] ?? summary,
+      (_, summary) => REVIEW_REQUIREMENT[summary] ?? summary
     ],
-    [
-      /^No applicable reviews submitted by reviewers with write access\.$/,
-      '具有写入访问权限的审查者没有提交适用的审查。',
-    ],
+    [/^No applicable reviews submitted by reviewers with write access\.$/, '具有写入访问权限的审查者没有提交适用的审查。'],
     // 原文无冒号：改语序
     [
       /^(\d+ changes? requested(?:, \d+ approving reviews?)?|\d+ approving reviews?) by reviewers with write access\.$/,
-      (_, summary) => `具有写入访问权限的审查者提交了 ${reviewSummary(summary)}。`,
+      (_, summary) => `具有写入访问权限的审查者提交了 ${reviewSummary(summary)}。`
     ],
     [/^(\d+) reviews? requesting changes by reviewers with write access\.$/, '$1 个具有写入访问权限的审查者请求更改。'],
     [/^(\d+) changes? requested$/, '$1 个更改请求'],
@@ -594,7 +563,7 @@ export default {
     // 冲突与更新分支
     [
       /^Merge the latest changes from (.+) into this branch\. This merge commit will be associated with ([\w-]+)\.$/,
-      '将 $1 的最新更改合并到此分支。此合并提交将与 $2 关联。',
+      '将 $1 的最新更改合并到此分支。此合并提交将与 $2 关联。'
     ],
     [/^Merge the latest changes from (.+) into this branch\.$/, '将 $1 的最新更改合并到此分支。'],
     [/^Merge the latest changes from$/, '将'],
@@ -604,28 +573,25 @@ export default {
     // 合并方式说明
     [
       /^The (\d+) commits from this branch will be combined into one commit in the base branch\.$/,
-      '此分支的 $1 个提交将压缩为基础分支中的一个提交。',
+      '此分支的 $1 个提交将压缩为基础分支中的一个提交。'
     ],
-    [
-      /^The (\d+) commits from this branch will be rebased and added to the base branch\.$/,
-      '此分支的 $1 个提交将变基后添加到基础分支。',
-    ],
+    [/^The (\d+) commits from this branch will be rebased and added to the base branch\.$/, '此分支的 $1 个提交将变基后添加到基础分支。'],
     [/^The (\d+) commits from this branch will be added to the base branch\.$/, '此分支的 $1 个提交将添加到基础分支。'],
     [
       /^All commits from these (\d+) branches will be added to the base branch via merge commits\.$/,
-      '这 $1 个分支的所有提交将通过合并提交添加到基础分支。',
+      '这 $1 个分支的所有提交将通过合并提交添加到基础分支。'
     ],
     [
       /^The commits from these (\d+) branches will be combined into one commit per branch in the base branch\.$/,
-      '这 $1 个分支的提交将在基础分支中按分支各压缩为一个提交。',
+      '这 $1 个分支的提交将在基础分支中按分支各压缩为一个提交。'
     ],
     [
       /^All commits from these (\d+) branches will be rebased and added to the base branch\.$/,
-      '这 $1 个分支的所有提交将变基后添加到基础分支。',
+      '这 $1 个分支的所有提交将变基后添加到基础分支。'
     ],
     [
       /^Merging is blocked due to (failing|pending) merge requirements$/,
-      (_, verb) => (verb === 'pending' ? '因合并要求尚未完成而无法合并' : '因合并要求未满足而无法合并'),
+      (_, verb) => (verb === 'pending' ? '因合并要求尚未完成而无法合并' : '因合并要求未满足而无法合并')
     ],
     [/^This commit will be authored by (\S+)\.$/, '此提交的作者电子邮件为 $1。'],
     [/^This will rebase your changes and merge them into (.+)\.$/, '这将变基你的更改并合并到 $1。'],
@@ -633,21 +599,18 @@ export default {
     // 服务端下发的规则失败原因
     [
       /^Required status check "(.+)" is (expected|failing|in progress|pending)\.$/,
-      (_, name, state) => `必需的状态检查“${name}”${REQUIRED_CHECK_STATE[state] ?? state}。`,
+      (_, name, state) => `必需的状态检查“${name}”${REQUIRED_CHECK_STATE[state] ?? state}。`
     ],
-    [
-      /^(\d+) of (\d+) required status checks? (?:has|have) not succeeded: (.+)\.$/,
-      '$2 个必需的状态检查中有 $1 个未成功：$3。',
-    ],
+    [/^(\d+) of (\d+) required status checks? (?:has|have) not succeeded: (.+)\.$/, '$2 个必需的状态检查中有 $1 个未成功：$3。'],
     [/^(\d+) of (\d+) required status checks? (?:is|are) expected\.$/, '$2 个必需的状态检查中有 $1 个尚未报告。'],
     [
       /^(\d+) of (\d+) required status checks? (?:is|are) (pending|in progress)\.$/,
-      (_, count, total, state) => `${total} 个必需的状态检查中有 ${count} 个${REQUIRED_CHECK_STATE[state] ?? state}。`,
+      (_, count, total, state) => `${total} 个必需的状态检查中有 ${count} 个${REQUIRED_CHECK_STATE[state] ?? state}。`
     ],
     // 网址为纯文本时整句（链接时的前半见 static）
     [
       /^You['’]re not authorized to push to this branch\. Visit (\S+) for more information\.$/,
-      '你无权推送到此分支。请访问 $1 了解详细信息。',
-    ],
-  ],
+      '你无权推送到此分支。请访问 $1 了解详细信息。'
+    ]
+  ]
 } satisfies PageDictionary

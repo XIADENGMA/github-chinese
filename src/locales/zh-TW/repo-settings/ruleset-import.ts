@@ -56,8 +56,7 @@ export default {
     'Ruleset name is invalid': '規則集名稱無效',
     'Unable to create the ruleset.': '無法建立規則集。',
     'Unable to load the migration preview.': '無法載入移轉預覽。',
-    'This branch protection rule has no rules that can be converted to a ruleset yet.':
-      '此分支保護規則中尚無可轉換為規則集的規則。',
+    'This branch protection rule has no rules that can be converted to a ruleset yet.': '此分支保護規則中尚無可轉換為規則集的規則。',
 
     // 用自定义属性选择目标
     'Automate targeting with custom properties': '使用自訂屬性自動設定目標',
@@ -75,14 +74,14 @@ export default {
     'This is the default value that will be set for this property. Changing it has immediate effect, although on large organizations it may take minutes to be available in search results.':
       '這是將為此屬性設定的預設值。變更會立即生效，但在大型組織中，可能需要幾分鐘才會出現在搜尋結果中。',
     'When creating, transferring, or updating the property values of repositories, users must provide an explicit value.':
-      '建立、轉移儲存庫或更新儲存庫的屬性值時，使用者必須提供明確的值。',
+      '建立、轉移儲存庫或更新儲存庫的屬性值時，使用者必須提供明確的值。'
   },
   regexp: [
     // 导入对话框：<span>3 rulesets <span>will be created from 2 branch protection rules.</span></span>
     [/^will be created from (\d+) branch protection rules?\.$/, '將從 $1 個分支保護規則建立。'],
     [
       /^(\d+) rulesets? will be created\. Would you like to delete the (\d+) original branch protection rules? now covered by rulesets\?$/,
-      '將建立 $1 個規則集。要刪除現已由規則集涵蓋的 $2 個原始分支保護規則嗎？',
+      '將建立 $1 個規則集。要刪除現已由規則集涵蓋的 $2 個原始分支保護規則嗎？'
     ],
     // 转换对话框
     [/^Create (\d+) rulesets from "(.{1,100})"$/, '從「$2」建立 $1 個規則集'],
@@ -93,18 +92,15 @@ export default {
     // 用自定义属性选择目标
     [
       /^You've manually selected (\d+) repositories\. A custom property lets you target them as a group and keeps the list up to date as repositories change\.$/,
-      '你已手動選取 $1 個儲存庫。自訂屬性可將它們整組設為目標，並在儲存庫變動時讓清單保持最新。',
+      '你已手動選取 $1 個儲存庫。自訂屬性可將它們整組設為目標，並在儲存庫變動時讓清單保持最新。'
     ],
     [/^Ruleset updated to target (.{1,100}) value$/, '規則集已更新為以 $1 值為目標'],
     [
       /^The (.{1,100}) property has been created and applied to the (\d+) selected repositories\. You should make sure to set values for the remaining repositories\.$/,
-      '已建立 $1 屬性並套用到 $2 個選取的儲存庫。請務必為其餘儲存庫設定值。',
+      '已建立 $1 屬性並套用到 $2 個選取的儲存庫。請務必為其餘儲存庫設定值。'
     ],
-    [
-      /^This property will be set to this value on the (\d+) selected repositories\.$/,
-      '此屬性將在 $1 個選取的儲存庫上設為此值。',
-    ],
+    [/^This property will be set to this value on the (\d+) selected repositories\.$/, '此屬性將在 $1 個選取的儲存庫上設為此值。'],
     [/^and (\d+) more$/, '和其他 $1 個'],
-    [/^Step (\d+) of (\d+)$/, '步驟 $1/$2'],
-  ],
+    [/^Step (\d+) of (\d+)$/, '步驟 $1/$2']
+  ]
 } satisfies PageDictionary

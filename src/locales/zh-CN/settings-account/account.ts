@@ -51,10 +51,8 @@ export default {
     '. Exports will be available for 7 days.': '的所有存储库和个人资料元数据。导出文件将保留 7 天。',
     'Recent exports': '最近的导出',
     'New export': '新建导出',
-    "We're preparing your export! We'll send you an email when it's finished.":
-      '正在准备导出！完成后会向你发送电子邮件。',
-    'We’re preparing your export! We’ll send you an email when it’s finished.':
-      '正在准备导出！完成后会向你发送电子邮件。',
+    "We're preparing your export! We'll send you an email when it's finished.": '正在准备导出！完成后会向你发送电子邮件。',
+    'We’re preparing your export! We’ll send you an email when it’s finished.': '正在准备导出！完成后会向你发送电子邮件。',
     'New exports cannot be requested while an export is currently in progress': '导出进行中时无法请求新的导出',
     'Resend email with link': '重新发送含链接的电子邮件',
     'Download deleted': '下载文件已删除',
@@ -64,10 +62,8 @@ export default {
     'Successor settings': '继任者设置',
     // 继任者搜索框的无障碍名称
     'Designate Successor': '指定继任者',
-    'By clicking "Add Successor" below, I acknowledge that I am the owner of the':
-      '单击下方“添加继任者”，即表示我确认自己是',
-    'By clicking “Add Successor” below, I acknowledge that I am the owner of the':
-      '单击下方“添加继任者”，即表示我确认自己是',
+    'By clicking "Add Successor" below, I acknowledge that I am the owner of the': '单击下方“添加继任者”，即表示我确认自己是',
+    'By clicking “Add Successor” below, I acknowledge that I am the owner of the': '单击下方“添加继任者”，即表示我确认自己是',
     'account, and am authorizing GitHub to transfer content within that account to my GitHub Successor,':
       '帐户的所有者，并授权 GitHub 在我去世后将该帐户中的内容转让给我的 GitHub 继任者，',
     'designated below': '即下方指定的人',
@@ -121,7 +117,7 @@ export default {
     'You’ll be prompted to verify your identity before account deletion.': '删除帐户前系统会提示你验证身份。',
     'Confirm your password:': '确认你的密码：',
     'Cancel plan and delete this account': '取消计划并删除此帐户',
-    'Delete this account': '删除此帐户',
+    'Delete this account': '删除此帐户'
   },
   scoped: {
     // 重命名警告「We will create … / We will not set up …」中的 We 不收：按流量计费的使用情况等页面的日期选择器
@@ -151,68 +147,61 @@ export default {
     Accepted: '已接受',
     // 危险区域
     'Danger zone': '危险区域',
-    'Danger Zone': '危险区域',
+    'Danger Zone': '危险区域'
   },
   regexp: [
     // 更改用户名：可用性检查（标点随原文：句号不改成逗号）
     [
-      new RegExp(
-        `^Username ${LOGIN} is not available\\. Please choose another\\. To submit a trademark claim, please see our$`,
-      ),
-      '用户名 $1 不可用。请另选一个。如需提交商标申诉，请参阅我们的',
+      new RegExp(`^Username ${LOGIN} is not available\\. Please choose another\\. To submit a trademark claim, please see our$`),
+      '用户名 $1 不可用。请另选一个。如需提交商标申诉，请参阅我们的'
     ],
     [
       new RegExp(`^Username ${LOGIN} is not available\\. ([\\w-]+(?:, [\\w-]+)*(?:,? or [\\w-]+)?) are available\\.$`),
-      (_, name: string, list: string) => `用户名 ${name} 不可用。${joinNames(list)} 可用。`,
+      (_, name: string, list: string) => `用户名 ${name} 不可用。${joinNames(list)} 可用。`
     ],
     [new RegExp(`^Username ${LOGIN} is not available\\.$`), '用户名 $1 不可用。'],
     [new RegExp(`^${LOGIN} is available\\.$`), '$1 可用。'],
     [
       // 句号随原文；原文只有一个逗号，“alphanumeric characters” 不拆成“字母、数字”
       /^Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen(\.?)$/,
-      (_, dot: string) => `用户名只能包含字母数字字符或单个连字符，且不能以连字符开头或结尾${dot ? '。' : ''}`,
+      (_, dot: string) => `用户名只能包含字母数字字符或单个连字符，且不能以连字符开头或结尾${dot ? '。' : ''}`
     ],
     // 更改用户名的完成页：按钮文字含新用户名（未被元素拆开时）
     [new RegExp(`^View ${LOGIN} settings$`), '查看 $1 的设置'],
     // Patreon：帐户名未被拆开时（GitHub Sponsors profile → GitHub 赞助个人资料）
     [
       new RegExp(
-        `^Connect a Patreon account for ${LOGIN} to sponsor maintainers with\\. Get recognition on GitHub for sponsorships made on Patreon when the sponsored person has linked Patreon and GitHub, too, and has a public GitHub Sponsors profile\\.$`,
+        `^Connect a Patreon account for ${LOGIN} to sponsor maintainers with\\. Get recognition on GitHub for sponsorships made on Patreon when the sponsored person has linked Patreon and GitHub, too, and has a public GitHub Sponsors profile\\.$`
       ),
-      '为 $1 连接 Patreon 帐户以赞助维护者。如果被赞助者也链接了 Patreon 和 GitHub，并且拥有公开的 GitHub 赞助个人资料，你在 Patreon 上的赞助也会在 GitHub 上得到认可。',
+      '为 $1 连接 Patreon 帐户以赞助维护者。如果被赞助者也链接了 Patreon 和 GitHub，并且拥有公开的 GitHub 赞助个人资料，你在 Patreon 上的赞助也会在 GitHub 上得到认可。'
     ],
     // 导出：帐户名未被拆开时
     [
-      new RegExp(
-        `^Export all repositories and profile metadata for ${LOGIN}\\. Exports will be available for (\\d+) days?\\.$`,
-      ),
-      '导出 $1 的所有存储库和个人资料元数据。导出文件将保留 $2 天。',
+      new RegExp(`^Export all repositories and profile metadata for ${LOGIN}\\. Exports will be available for (\\d+) days?\\.$`),
+      '导出 $1 的所有存储库和个人资料元数据。导出文件将保留 $2 天。'
     ],
     // 继任者说明的前半句（“designated below” 链接之前）
     [
       new RegExp(
-        `^By clicking ["“]Add Successor["”] below, I acknowledge that I am the owner of the ${LOGIN} account, and am authorizing GitHub to transfer content within that account to my GitHub Successor,$`,
+        `^By clicking ["“]Add Successor["”] below, I acknowledge that I am the owner of the ${LOGIN} account, and am authorizing GitHub to transfer content within that account to my GitHub Successor,$`
       ),
-      '单击下方“添加继任者”，即表示我确认自己是 $1 帐户的所有者，并授权 GitHub 在我去世后将该帐户中的内容转让给我的 GitHub 继任者，',
+      '单击下方“添加继任者”，即表示我确认自己是 $1 帐户的所有者，并授权 GitHub 在我去世后将该帐户中的内容转让给我的 GitHub 继任者，'
     ],
     [new RegExp(`^This link will only work for ${LOGIN}\\.$`), '此链接仅对 $1 有效。'],
     [new RegExp(`^You have successfully sent the successor invitation to ${LOGIN}\\.$`), '已向 $1 发送继任者邀请。'],
     [new RegExp(`^You have revoked the successor invitation to ${LOGIN}\\.$`), '已撤销对 $1 的继任者邀请。'],
-    [
-      new RegExp(`^You have canceled the invitation to ${LOGIN} to be your designated successor\\.$`),
-      '已取消邀请 $1 成为你指定的继任者。',
-    ],
+    [new RegExp(`^You have canceled the invitation to ${LOGIN} to be your designated successor\\.$`), '已取消邀请 $1 成为你指定的继任者。'],
     // 删除确认：存储库数在 <strong> 中；整句未被拆开时
     [/^immediately delete all of your repositor(?:y|ies) \((\d[\d,]*)\)$/, '立即删除你的所有存储库（$1 个）'],
     [
       /^We will immediately delete all of your repositor(?:y|ies) \((\d[\d,]*)\), along with all of your forks, wikis, issues, pull requests, and GitHub Pages sites\.$/,
-      '我们将立即删除你的所有存储库（$1 个），以及你的所有复刻、Wiki、议题、拉取请求和 GitHub 页面站点。',
-    ],
+      '我们将立即删除你的所有存储库（$1 个），以及你的所有复刻、Wiki、议题、拉取请求和 GitHub 页面站点。'
+    ]
   ],
   // 更改用户名的完成页：「Remember to <a>update your local repositories</a> to point to the new location.」，
   // 链接文字由 static 译出，拼读为“记得更新本地存储库，使其指向新位置。”；按钮里的用户名包在元素中时见第二条
   inline: [
     ['Remember to {} to point to the new location.', '记得{}，使其指向新位置。'],
-    ['View {} settings', '查看 {} 的设置'],
-  ],
+    ['View {} settings', '查看 {} 的设置']
+  ]
 } satisfies PageDictionary

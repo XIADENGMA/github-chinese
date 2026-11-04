@@ -1,13 +1,7 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vitest'
 import type { InlineRule, PageDictionary, RegExpRule } from '../../../src/core/types'
-import {
-  isDictionaryLike,
-  isEmptyDictionary,
-  isMerged,
-  overriddenKeys,
-  ownEntries,
-} from '../../../scripts/locale-wiring'
+import { isDictionaryLike, isEmptyDictionary, isMerged, overriddenKeys, ownEntries } from '../../../scripts/locale-wiring'
 
 const RULE: InlineRule = ['{} merged', '{} 已合并']
 const OTHER: InlineRule = ['{} pushed', '{} 推送了']
@@ -65,18 +59,17 @@ describe('词典接线：说明表', () => {
     const child: PageDictionary = { labelDescriptions: { 'Good for newcomers': '适合新手' } }
     expect(
       isMerged(child, {
-        labelDescriptions: { 'Good for newcomers': '适合新手', 'Extra attention is needed': '需要额外关注' },
-      }),
+        labelDescriptions: { 'Good for newcomers': '适合新手', 'Extra attention is needed': '需要额外关注' }
+      })
     ).toBe(true)
     expect(isMerged(child, { labels: { 'Good for newcomers': '适合新手' } })).toBe(false)
     expect(isMerged(child, { static: { 'Good for newcomers': '适合新手' } })).toBe(false)
     expect(overriddenKeys(child, { labelDescriptions: { 'Good for newcomers': '新手友好' } })).toEqual([
-      'labelDescriptions "Good for newcomers"',
+      'labelDescriptions "Good for newcomers"'
     ])
-    const own = ownEntries(
-      { labelDescriptions: { 'Good for newcomers': '适合新手', 'Extra attention is needed': '需要额外关注' } },
-      [child],
-    )
+    const own = ownEntries({ labelDescriptions: { 'Good for newcomers': '适合新手', 'Extra attention is needed': '需要额外关注' } }, [
+      child
+    ])
     expect(own.labelDescriptions).toEqual({ 'Extra attention is needed': '需要额外关注' })
   })
 })
@@ -92,9 +85,7 @@ describe('词典接线：星标列表名表', () => {
     const child: PageDictionary = { listNames: { '✨ Inspiration': '✨ 灵感' } }
     expect(isMerged(child, { listNames: { '✨ Inspiration': '✨ 灵感', '🚀 My stack': '🚀 我的技术栈' } })).toBe(true)
     expect(isMerged(child, { static: { '✨ Inspiration': '✨ 灵感' } })).toBe(false)
-    expect(overriddenKeys(child, { listNames: { '✨ Inspiration': '✨ 启发' } })).toEqual([
-      'listNames "✨ Inspiration"',
-    ])
+    expect(overriddenKeys(child, { listNames: { '✨ Inspiration': '✨ 启发' } })).toEqual(['listNames "✨ Inspiration"'])
     const own = ownEntries({ listNames: { '✨ Inspiration': '✨ 灵感', '🚀 My stack': '🚀 我的技术栈' } }, [child])
     expect(own.listNames).toEqual({ '🚀 My stack': '🚀 我的技术栈' })
   })

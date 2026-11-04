@@ -21,7 +21,7 @@ let nextId = 0
 
 function sameParams(a: MessageParams = {}, b: MessageParams = {}): boolean {
   const keys = Object.keys(a)
-  return keys.length === Object.keys(b).length && keys.every((key) => a[key] === b[key])
+  return keys.length === Object.keys(b).length && keys.every(key => a[key] === b[key])
 }
 
 function sameToast(a: Toast, b: Toast): boolean {
@@ -36,12 +36,12 @@ export function useToasts(): Readonly<Ref<readonly Toast[]>> {
 /** 显示一条提示，返回其 id。已有相同的提示时换成这条（重新计时，读屏重新朗读），不叠加 */
 export function showToast(tone: ToastTone, key: MessageKey, params?: MessageParams): number {
   const toast: Toast = params ? { id: nextId++, tone, key, params } : { id: nextId++, tone, key }
-  list.value = [...list.value.filter((item) => !sameToast(item, toast)), toast].slice(-MAX_TOASTS)
+  list.value = [...list.value.filter(item => !sameToast(item, toast)), toast].slice(-MAX_TOASTS)
   return toast.id
 }
 
 export function dismissToast(id: number): void {
-  list.value = list.value.filter((toast) => toast.id !== id)
+  list.value = list.value.filter(toast => toast.id !== id)
 }
 
 export function clearToasts(): void {
@@ -66,6 +66,6 @@ export function createToastSource(): ToastSource {
       clear()
       current = showToast(tone, key, params)
     },
-    clear,
+    clear
   }
 }

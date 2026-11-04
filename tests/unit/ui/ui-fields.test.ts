@@ -34,7 +34,7 @@ describe.skipIf(!UiInput)('UiInput', () => {
     const onChange = vi.fn((event: Event) => (event.target as HTMLInputElement).value)
     const wrapper = mount(required(UiInput), {
       props: { modelValue: '' },
-      attrs: { class: 'cell', style: 'width: 120px', placeholder: '原文', 'aria-label': '原文', onChange },
+      attrs: { class: 'cell', style: 'width: 120px', placeholder: '原文', 'aria-label': '原文', onChange }
     })
     expect(wrapper.classes()).toEqual(expect.arrayContaining(['ui-input', 'cell']))
     expect(wrapper.attributes('style')).toContain('width: 120px')
@@ -76,9 +76,9 @@ describe.skipIf(!UiInput)('UiInput', () => {
             modelValue: 'Code',
             onChange: (event: Event) => {
               ;(event.target as HTMLInputElement).value = 'Code'
-            },
-          }),
-        ]),
+            }
+          })
+        ])
     }
     const wrapper = mount(Parent)
     const field = wrapper.get('input')

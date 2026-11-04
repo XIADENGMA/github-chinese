@@ -1,10 +1,4 @@
-import {
-  isBlockedResult,
-  isEmptyBlockList,
-  ownerOfPath,
-  type SearchBlockList,
-  type SearchResultInfo,
-} from '../shared/search-block'
+import { isBlockedResult, isEmptyBlockList, ownerOfPath, type SearchBlockList, type SearchResultInfo } from '../shared/search-block'
 
 /**
  * 搜索净化：github.com 的搜索结果页中命中屏蔽规则（见 shared/search-block）的结果直接隐藏，不留占位、不提示。
@@ -38,7 +32,7 @@ const TEXT_SELECTOR = [
   '[class*="RepositoryContext"] a',
   ':is([class^="Content__"], [class*=" Content__"])',
   'a[href^="/topics/"]',
-  '.search-match',
+  '.search-match'
 ].join(', ')
 
 /**
@@ -49,7 +43,7 @@ const OBSERVE_OPTIONS: MutationObserverInit = {
   childList: true,
   subtree: true,
   attributes: true,
-  attributeFilter: ['href'],
+  attributeFilter: ['href']
 }
 
 /** 隐藏前的行内 display，显示时还原 */
@@ -76,7 +70,7 @@ function describeResult(item: Element, origin: string): SearchResultInfo {
     repo = path.name === undefined ? undefined : `${path.owner}/${path.name}`
     break
   }
-  const text = Array.from(item.querySelectorAll(TEXT_SELECTOR), (element) => element.textContent ?? '').join('\n')
+  const text = Array.from(item.querySelectorAll(TEXT_SELECTOR), element => element.textContent ?? '').join('\n')
   return { owner, repo, text }
 }
 
@@ -139,6 +133,6 @@ export function createSearchPurifier(doc: Document, options: SearchPurifierOptio
     stop() {
       observer.disconnect()
       showAll()
-    },
+    }
   }
 }

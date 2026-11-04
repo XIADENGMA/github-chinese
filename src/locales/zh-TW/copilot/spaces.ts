@@ -58,18 +58,15 @@ export default {
     'Pick a color to make your space more recognizable.': '選擇顏色，讓空間更容易辨識。',
     'Select a color': '選擇顏色',
     'Filter colors': '篩選顏色',
-    'Displays beneath the title on your spaces overview page without impacting responses.':
-      '顯示在空間總覽頁面的標題下方，不影響回應。',
+    'Displays beneath the title on your spaces overview page without impacting responses.': '顯示在空間總覽頁面的標題下方，不影響回應。',
     'Changes how Copilot responds on specific questions or tasks.': '變更 Copilot 回應特定問題或任務的方式。',
     // 描述、说明输入框的占位符
     "Add a short description to explain this space's purpose (e.g., 'Frontend design system' or 'API docs hub').":
       '新增簡短描述，說明此空間的用途（例如「前端設計系統」或「API 說明文件中心」）。',
     'Define Copilot’s role, focus, and what to avoid in this space. Ex. “You are a [role]. Follow our [framework/patterns] to [type of task]. Avoid [practices or tools] unless specified”.':
       '定義 Copilot 在此空間中的角色、重點和應避免的事項。例如：「你是 [角色]。遵循我們的 [架構/模式] 來 [任務類型]。除非另有指定，否則避免 [做法或工具]」。',
-    'Add text, code files, or GitHub data to set a permanent context':
-      '新增文字、程式碼檔案或 GitHub 資料以設定永久上下文',
-    "You've exceeded the size limit for this space. Remove some references to continue.":
-      '已超出此空間的大小上限。移除部分參考以繼續。',
+    'Add text, code files, or GitHub data to set a permanent context': '新增文字、程式碼檔案或 GitHub 資料以設定永久上下文',
+    "You've exceeded the size limit for this space. Remove some references to continue.": '已超出此空間的大小上限。移除部分參考以繼續。',
     'The size of the space exceeds the current limit': '空間大小超出目前上限',
     'Copilot Space not found': '找不到 Copilot 空間',
     'Copilot Space SSO error': 'Copilot 空間 SSO 錯誤',
@@ -99,8 +96,7 @@ export default {
     'Add sources to get started': '新增來源以開始使用',
     'Provide files, docs, issues, or repositories so Copilot can give more relevant answers.':
       '提供檔案、說明文件、議題或儲存庫，讓 Copilot 的回答更切題。',
-    'Start a new conversation in this space by typing in the input box at the top.':
-      '在頂端輸入框中輸入內容，在此空間開始新對話。',
+    'Start a new conversation in this space by typing in the input box at the top.': '在頂端輸入框中輸入內容，在此空間開始新對話。',
 
     // 文件树选择器：最多 <N> 個檔案可同時新增。
     'Add files, folders...': '新增檔案、資料夾...',
@@ -118,7 +114,7 @@ export default {
     // 空间选择器
     'Recent spaces': '最近的空間',
     // 聊天附件菜单的空间入口
-    'Spaces…': '空間…',
+    'Spaces…': '空間…'
   },
   scoped: {
     'Never mind': '取消',
@@ -163,19 +159,16 @@ export default {
     purple: '紫色',
     red: '紅色',
     teal: '藍綠色',
-    yellow: '黃色',
+    yellow: '黃色'
   },
   regexp: [
-    [
-      /^Private resources owned by (.+) will not be duplicated to the new space\.$/,
-      '屬於 $1 的私人資源不會複製到新空間。',
-    ],
+    [/^Private resources owned by (.+) will not be duplicated to the new space\.$/, '屬於 $1 的私人資源不會複製到新空間。'],
     [/^(\d+) entries not shown$/, '另有 $1 項未顯示'],
     [/^(\d+) \/ (\d+) possible sources selected, add fewer files\.$/, '已選取 $1 / $2 個可用來源，需減少檔案。'],
     [
       /^Up to (\d+) (files|items) can be added at a time\.$/,
-      (_, count: string, kind: string) => `一次最多可新增 ${count} ${kind === 'files' ? '個檔案' : '項'}。`,
+      (_, count: string, kind: string) => `一次最多可新增 ${count} ${kind === 'files' ? '個檔案' : '項'}。`
     ],
-    [/^Add files from ([\w.-]+\/[\w.-]+)$/, '從 $1 新增檔案'],
-  ],
+    [/^Add files from ([\w.-]+\/[\w.-]+)$/, '從 $1 新增檔案']
+  ]
 } satisfies PageDictionary

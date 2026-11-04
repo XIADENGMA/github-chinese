@@ -5,7 +5,7 @@ const STATE_LABEL: Readonly<Record<string, string>> = {
   Closed: '已關閉',
   Merged: '已合併',
   Draft: '草稿',
-  Queued: '已排入佇列',
+  Queued: '已排入佇列'
 }
 
 /** 标签页名称（切换标签页按钮的当前项） */
@@ -13,7 +13,7 @@ const TAB_LABEL: Readonly<Record<string, string>> = {
   Conversation: '對話',
   Commits: '提交',
   Checks: '檢查',
-  'Files changed': '變更的檔案',
+  'Files changed': '變更的檔案'
 }
 
 /** 取消堆叠对话框的说明，也跟在「此堆疊的自動合併將會停用。」之后 */
@@ -21,7 +21,7 @@ const UNSTACK_NOTE: Readonly<Record<string, string>> = {
   'Pull requests queued for merge or already merged will remain in the stack. For pull requests that are removed, base branches will not be retargeted and commit histories will remain the same.':
     '已排入合併佇列或已合併的拉取請求將保留在堆疊中。移除的拉取請求不會重新指定基底分支，提交歷史記錄也會維持不變。',
   'All pull requests will be removed from the stack. Their base branches will not be retargeted and their commit histories will remain the same.':
-    '所有拉取請求都將從堆疊中移除。其基底分支不會重新指定且提交歷史記錄維持不變。',
+    '所有拉取請求都將從堆疊中移除。其基底分支不會重新指定且提交歷史記錄維持不變。'
 }
 
 /**
@@ -67,8 +67,7 @@ export default {
     'Local checkout options': '本機簽出選項',
     'Open in a new github.dev tab': '在新的 github.dev 分頁中開啟',
     // 代码按钮的代码空间标签页：拉取请求已关闭
-    'This pull request must be reopened to create new codespaces on it.':
-      '必須重新開啟此拉取請求，才能在其上建立新的程式碼空間。',
+    'This pull request must be reopened to create new codespaces on it.': '必須重新開啟此拉取請求，才能在其上建立新的程式碼空間。',
 
     // 状态切换
     'Convert to draft': '轉換為草稿',
@@ -78,8 +77,7 @@ export default {
     // 经典页“可供审查”操作后的闪现提示
     'Marked pull request as ready for review.': '已將拉取請求標示為可供審查。',
     'Failed to convert to draft': '無法轉換為草稿',
-    'An error occurred while converting this pull request to a draft. Please try again.':
-      '將此拉取請求轉換為草稿時發生錯誤。請再試一次。',
+    'An error occurred while converting this pull request to a draft. Please try again.': '將此拉取請求轉換為草稿時發生錯誤。請再試一次。',
     'Failed to mark ready for review': '無法標示為可供審查',
     'An error occurred while marking this pull request as ready for review. Please try again.':
       '將此拉取請求標示為可供審查時發生錯誤。請再試一次。',
@@ -93,11 +91,9 @@ export default {
     'Failed to close pull request': '無法關閉拉取請求',
     'Failed to reopen pull request': '無法重新開啟拉取請求',
     'An error occurred while closing this pull request. Please try again.': '關閉此拉取請求時發生錯誤。請再試一次。',
-    'An error occurred while reopening this pull request. Please try again.':
-      '重新開啟此拉取請求時發生錯誤。請再試一次。',
+    'An error occurred while reopening this pull request. Please try again.': '重新開啟此拉取請求時發生錯誤。請再試一次。',
     'Merged pull requests cannot be reopened': '已合併的拉取請求無法重新開啟',
-    'This pull request cannot be reopened because the head branch has been deleted.':
-      '此拉取請求因來源分支已刪除而無法重新開啟。',
+    'This pull request cannot be reopened because the head branch has been deleted.': '此拉取請求因來源分支已刪除而無法重新開啟。',
 
     // 页面错误
     'Changes cannot be loaded': '無法載入變更',
@@ -174,10 +170,9 @@ export default {
     "Some comments aren't visible on the classic Files Changed page.": '部分留言不會顯示在傳統版變更的檔案頁面上。',
     'This page has been optimized for large pull requests.': '此頁面已針對大型拉取請求最佳化。',
     'Switch to single file mode': '切換到單一檔案模式',
-    'Due to the size of this pull request, only one file can be shown at a time.':
-      '此拉取請求過大，一次只能顯示一個檔案。',
+    'Due to the size of this pull request, only one file can be shown at a time.': '此拉取請求過大，一次只能顯示一個檔案。',
     'To view all files in a single page,': '若要在單一頁面中查看所有檔案，',
-    'try a new experimental mode': '請試用新的實驗性模式',
+    'try a new experimental mode': '請試用新的實驗性模式'
   },
   scoped: {
     // 标签页与导航（Walkthrough 取 VS Code 繁中「逐步解說」）
@@ -221,8 +216,7 @@ export default {
 
     // 页面错误
     'The page is unavailable due to a system error.': '頁面因系統錯誤而無法使用。',
-    'Try reloading the page, or if the problem persists, contact support.':
-      '請嘗試重新載入頁面，若問題持續發生，請聯絡支援團隊。',
+    'Try reloading the page, or if the problem persists, contact support.': '請嘗試重新載入頁面，若問題持續發生，請聯絡支援團隊。',
     'Refresh page': '重新整理頁面',
     'Try refreshing the page.': '請嘗試重新整理頁面。',
 
@@ -236,8 +230,7 @@ export default {
 
     // Dependabot 横幅片段（与 security 词典同译，作用域内兜底）
     'Your first automated security update': '你的第一個自動安全性更新',
-    'Dependabot security updates keep your projects secure and up-to-date.':
-      'Dependabot 安全性更新可確保你的專案安全且保持最新。',
+    'Dependabot security updates keep your projects secure and up-to-date.': 'Dependabot 安全性更新可確保你的專案安全且保持最新。',
     'Automated security update': '自動安全性更新',
     'You can opt out at any time in': '你隨時可以在以下位置選擇退出',
     'this repository’s settings': '此儲存庫的設定',
@@ -262,10 +255,9 @@ export default {
     // 旧版横幅：This automated pull request fixes a <security vulnerability> …
     'This automated pull request fixes a': '此自動拉取請求修正了一個',
     'security vulnerability': '安全性漏洞',
-    'Only users with access to Dependabot alerts can see this message.':
-      '只有具備 Dependabot 警示存取權的使用者才能看到此訊息。',
+    'Only users with access to Dependabot alerts can see this message.': '只有具備 Dependabot 警示存取權的使用者才能看到此訊息。',
     'opt out': '選擇退出',
-    'Opted out of Dependabot security updates.': '已選擇退出 Dependabot 安全性更新。',
+    'Opted out of Dependabot security updates.': '已選擇退出 Dependabot 安全性更新。'
   },
   regexp: [
     // 头部摘要（React 整句；经典版数字在独立元素中，按片段收录于下方）
@@ -280,16 +272,10 @@ export default {
     [/^Lines changed: ([\d,]+) additions? & ([\d,]+) deletions?$/, '變更行數：新增 $1 行和刪除 $2 行'],
     [/^([\d,]+) changes?: ([\d,]+) additions? & ([\d,]+) deletions?$/, '$1 處變更：新增 $2 行和刪除 $3 行'],
     // 状态标签
-    [
-      /^Pull request state: (Open|Closed|Merged|Draft|Queued)$/,
-      (_, state) => `拉取請求狀態：${STATE_LABEL[state] ?? state}`,
-    ],
+    [/^Pull request state: (Open|Closed|Merged|Draft|Queued)$/, (_, state) => `拉取請求狀態：${STATE_LABEL[state] ?? state}`],
     [/^Switch tab \(current: (.+)\)$/, (_, tab) => `切換分頁（目前：${TAB_LABEL[tab] ?? tab}）`],
     // 标题校验
-    [
-      /^Title can't be longer than (\d+) characters \(currently (\d+) characters\)$/,
-      '標題不能超過 $1 個字元（目前為 $2 個字元）',
-    ],
+    [/^Title can't be longer than (\d+) characters \(currently (\d+) characters\)$/, '標題不能超過 $1 個字元（目前為 $2 個字元）'],
     // 标签页标题片段：Pull Request #123
     [/^Pull Request #(\d+)$/, '拉取請求 #$1'],
     // 代码按钮：Create codespace on feature-branch（产品名按 product-names.md：codespace → 程式碼空間）
@@ -298,20 +284,14 @@ export default {
     [/^Navigate pull request stack, position (\d+) of (\d+)$/, '瀏覽拉取請求堆疊，共 $2 個中的第 $1 個'],
     [/^Pull request stack, position (\d+) of (\d+)$/, '拉取請求堆疊，共 $2 個中的第 $1 個'],
     // 堆栈编号；堆栈创建横幅的堆栈引用不是链接时与前文是相邻的文本节点，整段命中（按片段会在「加入」后留空格）
-    [
-      /^(This pull request was added to )?[Ss]tack #(\d+)$/,
-      (_, added, n) => `${added ? '此拉取請求已加入' : ''}堆疊 #${n}`,
-    ],
+    [/^(This pull request was added to )?[Ss]tack #(\d+)$/, (_, added, n) => `${added ? '此拉取請求已加入' : ''}堆疊 #${n}`],
     [/^[Ss]tack #$/, '堆疊 #'],
     [/^Already in stack #(\d+)$/, '已在堆疊 #$1 中'],
     [/^Remove #(\d+) from preview stack$/, '從預覽堆疊中移除 #$1'],
     // 原文只有句号：改语序代替逗号
     [/^Proposed stack loaded with (\d+) pull requests?\.$/, '已載入包含 $1 個拉取請求的建議堆疊。'],
     [/^Pull requests in stack #(\d+)$/, '堆疊 #$1 中的拉取請求'],
-    [
-      /^Auto-merge will be disabled for this stack\. (.+)$/,
-      (_, note) => `此堆疊的自動合併將會停用。${UNSTACK_NOTE[note] ?? note}`,
-    ],
+    [/^Auto-merge will be disabled for this stack\. (.+)$/, (_, note) => `此堆疊的自動合併將會停用。${UNSTACK_NOTE[note] ?? note}`],
     [/^Stack (Created|Updated) Banner$/, (_, verb) => (verb === 'Created' ? '堆疊已建立橫幅' : '堆疊已更新橫幅')],
     // Dependabot 横幅：… severity <Dependabot Alert> on lodash / <Dependabot Alerts> on lodash including a …
     // 整句由下方 inline 处理；不命中时按片段拼读（原文无标点，不加逗号）
@@ -320,26 +300,23 @@ export default {
     // Dependabot 横幅（非打开状态）
     [
       /^This pull request (would resolve|resolved) a Dependabot alert on ([@\w./:-]+)\.$/,
-      (_, verb, pkg) => `此拉取請求${verb === 'resolved' ? '已解決' : '將解決'} ${pkg} 的一個 Dependabot 警示。`,
+      (_, verb, pkg) => `此拉取請求${verb === 'resolved' ? '已解決' : '將解決'} ${pkg} 的一個 Dependabot 警示。`
     ],
     [
       /^This pull request (would resolve|resolved) a Dependabot alert$/,
-      (_, verb) => `此拉取請求${verb === 'resolved' ? '已解決' : '將解決'}一個 Dependabot 警示`,
-    ],
+      (_, verb) => `此拉取請求${verb === 'resolved' ? '已解決' : '將解決'}一個 Dependabot 警示`
+    ]
   ],
   inline: [
     // Dependabot 安全更新横幅（React，<span> 内为 HTML 字符串）：包名提到警报链接之前；原文无标点，不加逗号。
     // 严重性写作「嚴重性為 X 的」，避免 critical 译出「重大嚴重性」之类的叠词。
     // Merging this pull request will resolve a <strong>high</strong> severity <a>Dependabot Alert</a> on lodash
-    [
-      /^Merging this pull request will resolve a \{\} severity \{\} on ([@\w./:-]+)$/,
-      '合併此拉取請求將解決 $1 的一個嚴重性為{}的 {}',
-    ],
+    [/^Merging this pull request will resolve a \{\} severity \{\} on ([@\w./:-]+)$/, '合併此拉取請求將解決 $1 的一個嚴重性為{}的 {}'],
     // Merging this pull request will resolve <a>Dependabot Alerts</a> on lodash including a <strong>high</strong> severity alert
     // 不加逗号时「警示其中包括」连读不通，改作「將解決的警示涉及 X 並包括…」；槽位两侧的空白按译文
     [
       /^Merging this pull request will resolve \{\} on ([@\w./:-]+) including a \{\} severity alert$/,
-      '合併此拉取請求將解決的 {}涉及 $1 並包括一個嚴重性為{}的警示',
-    ],
-  ],
+      '合併此拉取請求將解決的 {}涉及 $1 並包括一個嚴重性為{}的警示'
+    ]
+  ]
 } satisfies PageDictionary

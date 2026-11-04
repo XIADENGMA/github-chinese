@@ -5,7 +5,7 @@
 const TEXT = {
   'zh-CN': { name: 'GitHub 中文化', on: '已开启', off: '已关闭', open: '打开 Safari 设置' },
   'zh-TW': { name: 'GitHub 中文化', on: '已開啟', off: '已關閉', open: '打開 Safari 設定' },
-  en: { name: 'GitHub Chinese', on: 'On', off: 'Off', open: 'Open Safari Settings' },
+  en: { name: 'GitHub Chinese', on: 'On', off: 'Off', open: 'Open Safari Settings' }
 }
 
 /** 繁体的地区 */
@@ -20,7 +20,7 @@ function uiLanguage(tag) {
   if (language !== 'zh' && language !== 'yue') return 'en'
   if (subtags.includes('hant')) return 'zh-TW'
   if (subtags.includes('hans')) return 'zh-CN'
-  return language === 'yue' || subtags.some((subtag) => TRADITIONAL_REGIONS.has(subtag)) ? 'zh-TW' : 'zh-CN'
+  return language === 'yue' || subtags.some(subtag => TRADITIONAL_REGIONS.has(subtag)) ? 'zh-TW' : 'zh-CN'
 }
 
 const language = uiLanguage(navigator.languages?.[0] ?? navigator.language)
@@ -30,7 +30,7 @@ document.getElementById('name').textContent = text.name
 document.getElementById('open-settings').textContent = text.open
 
 window.show = (...args) => {
-  const enabled = args.find((arg) => typeof arg === 'boolean')
+  const enabled = args.find(arg => typeof arg === 'boolean')
   document.getElementById('state').textContent = enabled === undefined ? '' : enabled ? text.on : text.off
 }
 

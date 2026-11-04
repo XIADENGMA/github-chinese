@@ -15,7 +15,7 @@ const ORDERINGS: Readonly<Record<string, string>> = {
   'Fewest sponsors': '赞助者最少',
   'Newest Sponsors profile': '赞助个人资料最新',
   'Oldest Sponsors profile': '赞助个人资料最早',
-  Unknown: '未知',
+  Unknown: '未知'
 }
 
 /** 生态系统筛选按钮文字：All ecosystems / 2 ecosystems / npm */
@@ -42,10 +42,8 @@ export default {
 
     // 探索页：依赖
     'None of your dependencies can be sponsored': '你的依赖都不可赞助',
-    "You don't directly depend on any repositories whose maintainers can be sponsored.":
-      '你没有直接依赖任何维护者可赞助的存储库。',
-    'You don’t directly depend on any repositories whose maintainers can be sponsored.':
-      '你没有直接依赖任何维护者可赞助的存储库。',
+    "You don't directly depend on any repositories whose maintainers can be sponsored.": '你没有直接依赖任何维护者可赞助的存储库。',
+    'You don’t directly depend on any repositories whose maintainers can be sponsored.': '你没有直接依赖任何维护者可赞助的存储库。',
     'developers who maintain your dependencies': '个维护你的依赖的开发者',
     'Explore people and projects': '探索人员和项目',
     'Bulk Sponsor': '批量赞助',
@@ -110,7 +108,7 @@ export default {
     'Your dependencies they maintain or own': '他们维护或拥有的你的依赖',
     'Export dependencies': '导出依赖',
     'There was a problem exporting your dependencies.': '导出依赖时出现问题。',
-    'Sponsorable dependencies': '可赞助的依赖',
+    'Sponsorable dependencies': '可赞助的依赖'
   },
   scoped: {
     Ecosystems: '生态系统',
@@ -139,7 +137,7 @@ export default {
     'Get email updates': '获取电子邮件动态',
     'Change email updates': '更改电子邮件动态',
     // 产品名：探索页子导航标签、全局导航「Open Source」菜单项与页面标题里的 GitHub Sponsors；common 没有全局词条
-    'GitHub Sponsors': 'GitHub 赞助',
+    'GitHub Sponsors': 'GitHub 赞助'
   },
   regexp: [
     [/^(\d[\d,]*) sponsored developers and organizations loaded\.$/, '已加载 $1 个被赞助的开发者和组织。'],
@@ -149,7 +147,7 @@ export default {
     [/^Order by: (.+)$/, (_, label: string) => `排序依据：${ORDERINGS[label] ?? label}`],
     [
       /^(.+) does not directly depend on any repositories whose maintainers can be sponsored\.$/,
-      '$1 没有直接依赖任何维护者可赞助的存储库。',
+      '$1 没有直接依赖任何维护者可赞助的存储库。'
     ],
     [/^(\d[\d,]*) repositor(?:y|ies) they own or maintain$/, '他们拥有或维护的 $1 个存储库'],
     [/^others? sponsor, including (\d[\d,]*) organizations?$/, '个其他赞助者，包括 $1 个组织'],
@@ -162,10 +160,10 @@ export default {
     [/^(\d[\d,]*) members?$/, '$1 个成员'],
     [/^(\d[\d,]*) of your repositories depends? on this$/, '你有 $1 个存储库依赖于此'],
     [/^\+(\d[\d,]*) more$/, '另有 $1 个'],
-    [/^Sponsor (\d[\d,]*) maintainers?$/, '赞助 $1 个维护者'],
+    [/^Sponsor (\d[\d,]*) maintainers?$/, '赞助 $1 个维护者']
   ],
   ignore: [
     // 探索页卡片：名称与简介
-    'article.Box-row .col-sm-9',
-  ],
+    'article.Box-row .col-sm-9'
+  ]
 } satisfies PageDictionary

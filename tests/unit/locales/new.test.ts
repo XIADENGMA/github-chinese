@@ -18,7 +18,7 @@ const fullMatcher = createMatcher([
   ['common', common],
   ['common', commonUi],
   ['settings', settingsPlans],
-  ['new', newPages],
+  ['new', newPages]
 ])
 const NEW_SCOPE: readonly PageKey[] = ['common', 'new']
 const REPO_SCOPE: readonly PageKey[] = ['common', 'repository']
@@ -44,129 +44,120 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['hello-world is available.', 'hello-world 可用。'],
-      ['my.repo_1 is available.', 'my.repo_1 可用。'],
+      ['my.repo_1 is available.', 'my.repo_1 可用。']
     ],
-    misses: ['hello world is available.', 'hello-world is available'],
+    misses: ['hello world is available.', 'hello-world is available']
   },
   {
     hits: [
       ['The repository hello already exists on this account.', '此帐户中已存在存储库 hello。'],
-      ['The repository hello already exists on this account', '此帐户中已存在存储库 hello'],
+      ['The repository hello already exists on this account', '此帐户中已存在存储库 hello']
     ],
-    misses: ['The repository hello already exists on that account.'],
+    misses: ['The repository hello already exists on that account.']
   },
   {
     hits: [
       ['Your new repository will be created as my-repo.', '你的新存储库将创建为 my-repo。'],
       ['Your new repository will be created as my-repo', '你的新存储库将创建为 my-repo'],
-      ['Your new repository will be created as my.site.', '你的新存储库将创建为 my.site。'],
+      ['Your new repository will be created as my.site.', '你的新存储库将创建为 my.site。']
     ],
-    misses: ['Your new repository will be created as my repo.'],
+    misses: ['Your new repository will be created as my repo.']
   },
   {
     hits: [
-      [
-        'Great repository names are short and memorable. How about super-chainsaw?',
-        '好的存储库名称简短易记。不妨试试 super-chainsaw？',
-      ],
+      ['Great repository names are short and memorable. How about super-chainsaw?', '好的存储库名称简短易记。不妨试试 super-chainsaw？'],
       [
         'Great repository names are short and memorable. Need inspiration? How about automatic-octo-telegram?',
-        '好的存储库名称简短易记。需要灵感？不妨试试 automatic-octo-telegram？',
-      ],
+        '好的存储库名称简短易记。需要灵感？不妨试试 automatic-octo-telegram？'
+      ]
     ],
     misses: [
       'Great repository names are short and memorable. How about this one?',
-      'Great repository names are short and memorable. Need inspiration? How about this one?',
-    ],
+      'Great repository names are short and memorable. Need inspiration? How about this one?'
+    ]
   },
   {
     hits: [
       ['acme-org, Owner (Required)', 'acme-org，所有者（必填）'],
-      ['octocat, Owner (Required)', 'octocat，所有者（必填）'],
+      ['octocat, Owner (Required)', 'octocat，所有者（必填）']
     ],
-    misses: ['octocat, Owner', 'octo cat, Owner (Required)'],
+    misses: ['octocat, Owner', 'octo cat, Owner (Required)']
   },
   {
     hits: [['Use suggested repository name super-chainsaw', '使用建议的存储库名称 super-chainsaw']],
-    misses: ['Use suggested repository name', 'Use suggested repository name my repo'],
+    misses: ['Use suggested repository name', 'Use suggested repository name my repo']
   },
   {
     hits: [
       ['0/350 characters', '0/350 个字符'],
-      ['12 / 350 characters', '12/350 个字符'],
+      ['12 / 350 characters', '12/350 个字符']
     ],
-    misses: ['350 characters'],
+    misses: ['350 characters']
   },
   {
     hits: [
       ['Choose visibility: Public', '选择可见性：公共'],
-      ['Choose visibility: Internal', '选择可见性：内部'],
+      ['Choose visibility: Internal', '选择可见性：内部']
     ],
-    misses: ['Choose visibility: Secret', 'Choose visibility: public'],
+    misses: ['Choose visibility: Secret', 'Choose visibility: public']
   },
   // 可见性与默认分支
   {
     hits: [
       ['You are creating a private repository in the acme organization.', '你正在 acme 组织中创建专用存储库。'],
-      ['You are creating an internal repository in the big-co organization.', '你正在 big-co 组织中创建内部存储库。'],
+      ['You are creating an internal repository in the big-co organization.', '你正在 big-co 组织中创建内部存储库。']
     ],
-    misses: [
-      'You are creating a private repository in the acme team.',
-      'You are creating a secret repository in the acme organization.',
-    ],
+    misses: ['You are creating a private repository in the acme team.', 'You are creating a secret repository in the acme organization.']
   },
   {
     hits: [
       [
         'Octo Corp enterprise members can see this repository. You choose who can commit.',
-        'Octo Corp 企业成员可以查看此存储库。你可以选择谁能提交。',
-      ],
+        'Octo Corp 企业成员可以查看此存储库。你可以选择谁能提交。'
+      ]
     ],
-    misses: ['Octo Corp members can see this repository. You choose who can commit.'],
+    misses: ['Octo Corp members can see this repository. You choose who can commit.']
   },
   {
     hits: [['This will set main as the default branch.', '这会将 main 设为默认分支。']],
-    misses: ['This will set main as the base branch.'],
+    misses: ['This will set main as the base branch.']
   },
   {
     hits: [
       [
         'This will set trunk as the default branch. Change the default name in your settings.',
-        '这会将 trunk 设为默认分支。可在你的设置中更改默认名称。',
-      ],
+        '这会将 trunk 设为默认分支。可在你的设置中更改默认名称。'
+      ]
     ],
-    misses: ['This will set trunk as the default branch. Change it later.'],
+    misses: ['This will set trunk as the default branch. Change it later.']
   },
   // 模板与 GitHub 应用
   {
     hits: [
-      [
-        'Copy all branches from octo/template and not just the default branch.',
-        '复制 octo/template 的所有分支，而不仅仅是默认分支。',
-      ],
+      ['Copy all branches from octo/template and not just the default branch.', '复制 octo/template 的所有分支，而不仅仅是默认分支。']
     ],
-    misses: ['Copy all branches from template and not just the default branch.'],
+    misses: ['Copy all branches from template and not just the default branch.']
   },
   {
     hits: [
       ['Connect this repository to apps octocat is subscribed to', '将此存储库连接到 octocat 订阅的应用'],
-      ['Connect this repository to apps acme is subscribed to.', '将此存储库连接到 acme 订阅的应用。'],
+      ['Connect this repository to apps acme is subscribed to.', '将此存储库连接到 acme 订阅的应用。']
     ],
-    misses: ['Connect this repository to apps you like'],
+    misses: ['Connect this repository to apps you like']
   },
   {
     hits: [
       ['You are subscribed to 1 Marketplace app', '你订阅了 1 个市场应用'],
-      ['You are subscribed to 3 Marketplace apps.', '你订阅了 3 个市场应用。'],
+      ['You are subscribed to 3 Marketplace apps.', '你订阅了 3 个市场应用。']
     ],
-    misses: ['You are subscribed to many Marketplace apps'],
+    misses: ['You are subscribed to many Marketplace apps']
   },
   {
     hits: [
       ['1 app selected', '已选择 1 个应用'],
-      ['4 apps selected', '已选择 4 个应用'],
+      ['4 apps selected', '已选择 4 个应用']
     ],
-    misses: ['No apps selected'],
+    misses: ['No apps selected']
   },
   { hits: [['Auto-installed by acme', '由 acme 自动安装']], misses: ['Auto-installed by the acme org'] },
   // 特殊存储库
@@ -174,42 +165,37 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       [
         'octocat/octocat is a ✨special✨ repository that you can use to add a README.md to your GitHub profile. Make sure it’s public and initialize it with a README to get started.',
-        'octocat/octocat 是一个 ✨特殊✨ 存储库，可用于将 README.md 添加到你的 GitHub 个人资料。请确保它是公共的，并使用自述文件初始化即可开始。',
-      ],
+        'octocat/octocat 是一个 ✨特殊✨ 存储库，可用于将 README.md 添加到你的 GitHub 个人资料。请确保它是公共的，并使用自述文件初始化即可开始。'
+      ]
     ],
-    misses: ['octocat/octocat is a special repository.'],
+    misses: ['octocat/octocat is a special repository.']
   },
   {
     hits: [
       [
         "acme/.github is a ✨special✨ repository that you can use to add a README.md to your organization's GitHub profile. Make sure it's public and initialize it with a README in the profile directory to get started.",
-        'acme/.github 是一个 ✨特殊✨ 存储库，可用于将 README.md 添加到你组织的 GitHub 个人资料。请确保它是公共的，并使用自述文件初始化 profile 目录即可开始。',
-      ],
+        'acme/.github 是一个 ✨特殊✨ 存储库，可用于将 README.md 添加到你组织的 GitHub 个人资料。请确保它是公共的，并使用自述文件初始化 profile 目录即可开始。'
+      ]
     ],
     misses: [
-      "acme/docs is a ✨special✨ repository that you can use to add a README.md to your organization's GitHub profile. Make sure it's public and initialize it with a README in the profile directory to get started.",
-    ],
+      "acme/docs is a ✨special✨ repository that you can use to add a README.md to your organization's GitHub profile. Make sure it's public and initialize it with a README in the profile directory to get started."
+    ]
   },
   // 复刻
   {
     hits: [
       ['Copy the main branch only', '仅复制 main 分支'],
-      ['Copy the release/v2 branch only', '仅复制 release/v2 分支'],
+      ['Copy the release/v2 branch only', '仅复制 release/v2 分支']
     ],
-    misses: ['Copy the main branch'],
+    misses: ['Copy the main branch']
   },
   {
-    hits: [
-      [
-        'Contribute back to octocat/hello-world by adding your own branch.',
-        '通过添加你自己的分支向 octocat/hello-world 回馈贡献。',
-      ],
-    ],
-    misses: ['Contribute back to octocat by adding your own branch.'],
+    hits: [['Contribute back to octocat/hello-world by adding your own branch.', '通过添加你自己的分支向 octocat/hello-world 回馈贡献。']],
+    misses: ['Contribute back to octocat by adding your own branch.']
   },
   {
     hits: [['You are creating a fork in the acme organization.', '你正在 acme 组织中创建复刻。']],
-    misses: ['You are creating a fork in the acme enterprise.'],
+    misses: ['You are creating a fork in the acme enterprise.']
   },
   { hits: [['Fork octocat/hello-world', '复刻 octocat/hello-world']], misses: ['Fork this repository'] },
   { hits: [['Forking octocat/hello-world', '正在复刻 octocat/hello-world']], misses: ['Forking a repository'] },
@@ -217,132 +203,127 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Updating branches and 3 commit authors…', '正在更新分支和 3 个提交作者…'],
-      ['Updating branches and 1 commit author...', '正在更新分支和 1 个提交作者...'],
+      ['Updating branches and 1 commit author...', '正在更新分支和 1 个提交作者...']
     ],
-    misses: ['Updating branches and commit authors…'],
+    misses: ['Updating branches and commit authors…']
   },
   {
     hits: [
       [
         'No source repositories were detected at https://example.com/repo.git. Please check the URL and try again.',
-        '在 https://example.com/repo.git 未检测到源存储库。请检查 URL 后重试。',
-      ],
+        '在 https://example.com/repo.git 未检测到源存储库。请检查 URL 后重试。'
+      ]
     ],
-    misses: ['No source repositories were detected. Please check the URL and try again.'],
+    misses: ['No source repositories were detected. Please check the URL and try again.']
   },
   {
-    hits: [
-      [
-        'Importing complete! Your new repository octocat/hello is ready.',
-        '导入完成！你的新存储库 octocat/hello 已就绪。',
-      ],
-    ],
-    misses: ['Importing complete! Your new repository is ready.'],
+    hits: [['Importing complete! Your new repository octocat/hello is ready.', '导入完成！你的新存储库 octocat/hello 已就绪。']],
+    misses: ['Importing complete! Your new repository is ready.']
   },
   // 新建组织
   {
     hits: [["The name 'acme' is already taken.", '名称“acme”已被占用。']],
-    misses: ['The name acme is already taken.', "The name 'a'b' is already taken."],
+    misses: ['The name acme is already taken.', "The name 'a'b' is already taken."]
   },
   {
     hits: [
       [
         "The name 'acme--' may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen.",
-        '名称“acme--”只能包含字母、数字或单个连字符，且不能以连字符开头或结尾。',
-      ],
+        '名称“acme--”只能包含字母、数字或单个连字符，且不能以连字符开头或结尾。'
+      ]
     ],
-    misses: ["The name 'acme--' may only contain alphanumeric characters."],
+    misses: ["The name 'acme--' may only contain alphanumeric characters."]
   },
   {
     hits: [["Organization name 'octo-org' is unavailable.", '组织名称“octo-org”不可用。']],
-    misses: ["Organization name 'octo-org' is available."],
+    misses: ["Organization name 'octo-org' is available."]
   },
   {
     hits: [
       ['Your URL will be: https://github.com/acme', '你的 URL 将是：https://github.com/acme'],
-      ['Your URL will be: https://github.com/my-org', '你的 URL 将是：https://github.com/my-org'],
+      ['Your URL will be: https://github.com/my-org', '你的 URL 将是：https://github.com/my-org']
     ],
-    misses: ['Your URL will be: https://gitlab.com/acme'],
+    misses: ['Your URL will be: https://gitlab.com/acme']
   },
   {
     hits: [['I.e., octocat (your personal account)', '即 octocat（你的个人帐户）']],
-    misses: ['I.e., the octocat team'],
+    misses: ['I.e., the octocat team']
   },
   {
     hits: [
       [
         'Boost developer productivity for $19/user/month. Pay only for assigned seats after setup.',
-        '以每用户每月 $19 的价格提升开发人员效率。设置后仅为已分配的席位付费。',
+        '以每用户每月 $19 的价格提升开发人员效率。设置后仅为已分配的席位付费。'
       ],
       [
         'Boost developer productivity for $21.50/user/month. Pay only for assigned seats after setup.',
-        '以每用户每月 $21.50 的价格提升开发人员效率。设置后仅为已分配的席位付费。',
-      ],
+        '以每用户每月 $21.50 的价格提升开发人员效率。设置后仅为已分配的席位付费。'
+      ]
     ],
-    misses: ['Boost developer productivity for free. Pay only for assigned seats after setup.'],
+    misses: ['Boost developer productivity for free. Pay only for assigned seats after setup.']
   },
   // 计划卡片
   {
     hits: [
       ['2,000 CI/CD minutes/month', '每月 2,000 分钟 CI/CD'],
-      ['50,000 CI/CD minutes/month', '每月 50,000 分钟 CI/CD'],
+      ['50,000 CI/CD minutes/month', '每月 50,000 分钟 CI/CD']
     ],
-    misses: ['Unlimited CI/CD minutes/month'],
+    misses: ['Unlimited CI/CD minutes/month']
   },
   {
     hits: [
       ['500MB of Packages storage', '500MB 软件包存储'],
       ['2GB of Packages storage', '2GB 软件包存储'],
-      ['50 GB of Packages storage', '50 GB 软件包存储'],
+      ['50 GB of Packages storage', '50 GB 软件包存储']
     ],
-    misses: ['Unlimited Packages storage', '500MB of Codespaces storage'],
+    misses: ['Unlimited Packages storage', '500MB of Codespaces storage']
   },
   {
     hits: [
       [
         'Blazing fast cloud developer environments with flexible compute and pre-configured containers, developers can code, collaborate, and debug from any browser. Pay only for what you use with compute fees starting at $0.18/hr and storage fees at $0.07/GB per month.',
-        '极速云端开发环境，提供灵活的算力和预配置容器，开发人员可在任意浏览器中编码、协作和调试。按使用量付费，计算费用低至每小时 $0.18，存储费用为每月每 GB $0.07。',
-      ],
+        '极速云端开发环境，提供灵活的算力和预配置容器，开发人员可在任意浏览器中编码、协作和调试。按使用量付费，计算费用低至每小时 $0.18，存储费用为每月每 GB $0.07。'
+      ]
     ],
-    misses: ['Blazing fast cloud developer environments with flexible compute and pre-configured containers.'],
+    misses: ['Blazing fast cloud developer environments with flexible compute and pre-configured containers.']
   },
   // 转让与邀请页
   {
     hits: [['Transfer repository: octocat/hello', '转让存储库：octocat/hello']],
-    misses: ['Transfer repository: hello'],
+    misses: ['Transfer repository: hello']
   },
   {
     hits: [
       ['There are 2 codespaces that may be affected by this transfer.', '有 2 个代码空间可能会受到此次转让的影响。'],
-      ['There is 1 codespace that may be affected by this transfer.', '有 1 个代码空间可能会受到此次转让的影响。'],
+      ['There is 1 codespace that may be affected by this transfer.', '有 1 个代码空间可能会受到此次转让的影响。']
     ],
-    misses: ['There are codespaces that may be affected by this transfer.'],
+    misses: ['There are codespaces that may be affected by this transfer.']
   },
   {
     hits: [
       ['There are', '当前有'],
-      ['There is', '当前有'],
+      ['There is', '当前有']
     ],
-    misses: ['There were'],
+    misses: ['There were']
   },
   {
     hits: [
       ['2 codespaces', '2 个代码空间'],
-      ['1 codespace', '1 个代码空间'],
+      ['1 codespace', '1 个代码空间']
     ],
-    misses: ['many codespaces'],
+    misses: ['many codespaces']
   },
   { hits: [['Type octocat/hello to confirm.', '输入 octocat/hello 以确认。']], misses: ['Type hello to confirm.'] },
   {
     hits: [['monalisa invited you to collaborate on octocat/hello', 'monalisa 邀请你协作开发 octocat/hello']],
-    misses: ['monalisa invited you to collaborate on hello'],
+    misses: ['monalisa invited you to collaborate on hello']
   },
   {
     hits: [
       ['of hello will be able to see:', '(hello) 将能够看到：'],
-      ['of acme may be able to see:', '(acme) 可能会看到：'],
+      ['of acme may be able to see:', '(acme) 可能会看到：']
     ],
-    misses: ['of acme might see:'],
+    misses: ['of acme might see:']
   },
   { hits: [['Block monalisa', '阻止 monalisa']], misses: ['Block this user'] },
   { hits: [['Join acme', '加入 acme']], misses: ['Join the acme organization', 'Join the team now'] },
@@ -350,32 +331,32 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       [
         "As an account successor, you would be able to manage octocat's repositories if they're not able to.",
-        '作为帐户继任者，你可以在 octocat 无法管理其存储库时代为管理。',
+        '作为帐户继任者，你可以在 octocat 无法管理其存储库时代为管理。'
       ],
       [
         'As an account successor, you would be able to manage mona-lisa’s repositories if they’re not able to.',
-        '作为帐户继任者，你可以在 mona-lisa 无法管理其存储库时代为管理。',
-      ],
+        '作为帐户继任者，你可以在 mona-lisa 无法管理其存储库时代为管理。'
+      ]
     ],
-    misses: ['As an account successor, you would be able to manage repositories.'],
+    misses: ['As an account successor, you would be able to manage repositories.']
   },
   {
     hits: [
       [
         'By clicking "Accept invitation" below, I acknowledge that I agree to serve as the successor for octocat, in such ways authorized by their successor request. I agree to abide by GitHub\'s',
-        '单击下方的“接受邀请”，即表示我同意按照 octocat 的继任者请求所授权的方式担任其继任者。我同意在使用和维护其帐户内容时遵守 GitHub 的',
-      ],
+        '单击下方的“接受邀请”，即表示我同意按照 octocat 的继任者请求所授权的方式担任其继任者。我同意在使用和维护其帐户内容时遵守 GitHub 的'
+      ]
     ],
     misses: [
-      'By clicking "Decline" below, I acknowledge that I agree to serve as the successor for octocat, in such ways authorized by their successor request. I agree to abide by GitHub\'s',
-    ],
+      'By clicking "Decline" below, I acknowledge that I agree to serve as the successor for octocat, in such ways authorized by their successor request. I agree to abide by GitHub\'s'
+    ]
   },
   // 将工作移至组织：进度
-  { hits: [['10% complete', '已完成 10%']], misses: ['10 percent complete'] },
+  { hits: [['10% complete', '已完成 10%']], misses: ['10 percent complete'] }
 ]
 
-const HITS = REGEXP_CASES.flatMap((item) => item.hits)
-const MISSES = REGEXP_CASES.flatMap((item) => item.misses)
+const HITS = REGEXP_CASES.flatMap(item => item.hits)
+const MISSES = REGEXP_CASES.flatMap(item => item.misses)
 
 describe('new 正则词条', () => {
   it.each(HITS)('%s → %s', (input, expected) => {
@@ -383,7 +364,7 @@ describe('new 正则词条', () => {
     expect(translate(input)).toBe(expected)
   })
 
-  it.each(MISSES)('不命中：%s', (input) => {
+  it.each(MISSES)('不命中：%s', input => {
     expect(translate(input)).toBeUndefined()
   })
 
@@ -392,9 +373,7 @@ describe('new 正则词条', () => {
     // 计划比较表的正则在下方单独测试
     const planRules = new Set((plansDictionary.regexp ?? []).map(([pattern]) => pattern))
     const covered = new Set(HITS.map(([input]) => rules.findIndex(([pattern]) => pattern.test(input))))
-    const uncovered = rules
-      .filter(([pattern], index) => !covered.has(index) && !planRules.has(pattern))
-      .map(([pattern]) => String(pattern))
+    const uncovered = rules.filter(([pattern], index) => !covered.has(index) && !planRules.has(pattern)).map(([pattern]) => String(pattern))
     expect(uncovered).toEqual([])
   })
 
@@ -406,11 +385,9 @@ describe('new 正则词条', () => {
   it('React 拆分的相邻文本节点拼接后命中', () => {
     const join = (parts: readonly string[]): string => normalizeText(parts.join(''))
     expect(translate(join(['You are creating a ', 'private', ' repository in your personal account.']))).toBe(
-      '你正在个人帐户中创建专用存储库。',
+      '你正在个人帐户中创建专用存储库。'
     )
-    expect(translate(join(['The repository ', 'hello', ' already exists on this account.']))).toBe(
-      '此帐户中已存在存储库 hello。',
-    )
+    expect(translate(join(['The repository ', 'hello', ' already exists on this account.']))).toBe('此帐户中已存在存储库 hello。')
     expect(translate(join(['Updating branches and ', '12', ' commit authors…']))).toBe('正在更新分支和 12 个提交作者…')
   })
 })
@@ -428,10 +405,7 @@ describe('new 静态词条', () => {
     ['Add README', '添加自述文件'],
     ['No .gitignore', '无 .gitignore'],
     ['Add license', '添加许可证'],
-    [
-      "A license tells others what they can and can't do with your code.",
-      '许可证说明他人可以和不可以用你的代码做什么。',
-    ],
+    ["A license tells others what they can and can't do with your code.", '许可证说明他人可以和不可以用你的代码做什么。'],
     ['Create repository', '创建存储库'],
     ['Checking availability...', '正在检查可用性...'],
     ['Fetching templates...', '正在获取模板...'],
@@ -446,22 +420,19 @@ describe('new 静态词条', () => {
     ['Continue with Team', '选择团队版'],
     ['I understand, transfer this repository.', '我已了解，转让此存储库。'],
     ['Transfer repository', '转让存储库'],
-    [
-      'Pulse, Contributors, Community, Traffic, Commits, Code Frequency, Network,',
-      '脉搏、贡献者、社区、流量、提交、代码频率、网络',
-    ],
+    ['Pulse, Contributors, Community, Traffic, Commits, Code Frequency, Network,', '脉搏、贡献者、社区、流量、提交、代码频率、网络'],
     ['You’ve been invited to the', '你已受邀加入'],
     ["You've been invited to the", '你已受邀加入'],
     ['Accept invitation', '接受邀请'],
     // 导入进度：email → 电子邮件；句号、逗号随原文
     [
       'There is no need to keep this window open, we’ll email you when the import is done.',
-      '无需保持此窗口打开，导入完成后我们会通过电子邮件通知你。',
+      '无需保持此窗口打开，导入完成后我们会通过电子邮件通知你。'
     ],
     [
       "There is no need to keep this window open. We'll email you when the import is done.",
-      '无需保持此窗口打开。导入完成后我们会通过电子邮件通知你。',
-    ],
+      '无需保持此窗口打开。导入完成后我们会通过电子邮件通知你。'
+    ]
   ])('%s → %s', (input, expected) => {
     expect(translate(input)).toBe(expected)
   })
@@ -469,10 +440,10 @@ describe('new 静态词条', () => {
   it('日期与数字两侧加空格，缩写括号用半角', () => {
     expect(
       translate(
-        'Support for importing Mercurial, Subversion and Team Foundation Version Control (TFVC) repositories ended on April 12, 2024. For more details, see the',
-      ),
+        'Support for importing Mercurial, Subversion and Team Foundation Version Control (TFVC) repositories ended on April 12, 2024. For more details, see the'
+      )
     ).toBe(
-      '已于 2024 年 4 月 12 日停止支持导入 Mercurial、Subversion 和 Team Foundation Version Control (TFVC) 存储库。有关详细信息，请参阅',
+      '已于 2024 年 4 月 12 日停止支持导入 Mercurial、Subversion 和 Team Foundation Version Control (TFVC) 存储库。有关详细信息，请参阅'
     )
   })
 
@@ -480,8 +451,8 @@ describe('new 静态词条', () => {
     expect(
       translate(
         'Transfer this repository to another user or to an organization where you have the ability to create repositories.',
-        REPO_SCOPE,
-      ),
+        REPO_SCOPE
+      )
     ).toBe('将此存储库转让给其他用户，或转让给你有权创建存储库的组织。')
     expect(translate('Your public profile information', ['common', 'organization'])).toBe('你的公开个人资料信息')
     expect(translate('Required fields are marked with an asterisk (*).', REPO_SCOPE)).toBe('带星号 (*) 的为必填字段。')
@@ -489,21 +460,12 @@ describe('new 静态词条', () => {
     expect(translate('Learn more about account successors', ['common', 'settings'])).toBe('了解帐户继任者')
     expect(newPages.static?.['Learn more about account successors.']).toBeUndefined()
     // 计费计划页共用，词条只在本文件收录
-    expect(translate('The basics for organizations and developers', ['common', 'settings'])).toBe(
-      '面向组织和开发人员的基础功能',
-    )
+    expect(translate('The basics for organizations and developers', ['common', 'settings'])).toBe('面向组织和开发人员的基础功能')
   })
 
   it('不收录 common 已有或与其他词典重复的词条', () => {
     // Creating repository... / Creating fork... 由 codespaces 收录
-    for (const key of [
-      'Terms of Service',
-      'Learn more',
-      'Learn more.',
-      'Cancel',
-      'Creating repository...',
-      'Creating fork...',
-    ]) {
+    for (const key of ['Terms of Service', 'Learn more', 'Learn more.', 'Cancel', 'Creating repository...', 'Creating fork...']) {
       expect(newPages.static?.[key]).toBeUndefined()
     }
   })
@@ -542,7 +504,7 @@ describe('new 静态词条', () => {
       'Scheduled reminders',
       // common
       'Features on',
-      'Switch plans',
+      'Switch plans'
     ]) {
       expect(newPages.scoped?.[key]).toBeUndefined()
       expect(newPages.static?.[key]).toBeUndefined()
@@ -580,15 +542,13 @@ describe('new 静态词条', () => {
   })
 
   it('继任邀请：句首与句尾片段围绕 Terms of Service 链接', () => {
-    expect(
-      translate("and the user's written requests, if any, in my use and maintaining of their account's content."),
-    ).toBe('以及该用户的书面请求（如有）。')
+    expect(translate("and the user's written requests, if any, in my use and maintaining of their account's content.")).toBe(
+      '以及该用户的书面请求（如有）。'
+    )
   })
 
   it('个人帐户提示整句命中', () => {
-    expect(translate('You are creating a public repository in your personal account.')).toBe(
-      '你正在个人帐户中创建公共存储库。',
-    )
+    expect(translate('You are creating a public repository in your personal account.')).toBe('你正在个人帐户中创建公共存储库。')
     expect(translate('You are creating a fork in your personal account.')).toBe('你正在个人帐户中创建复刻。')
   })
 
@@ -617,8 +577,8 @@ describe('new 页面专用词条', () => {
     ['Everything included in Team, plus…', '包含团队版的全部功能，另加…'],
     [
       'Enforce branch and tag protections, as well as push rules across your enterprise. Rule insights allow you to assess impact of rules before and during enforcement.',
-      '在整个企业中强制实施分支和标签保护以及推送规则。规则见解可帮助你在强制实施前和强制实施期间评估规则的影响。',
-    ],
+      '在整个企业中强制实施分支和标签保护以及推送规则。规则见解可帮助你在强制实施前和强制实施期间评估规则的影响。'
+    ]
   ])('%s → %s', (input, expected) => {
     expect(translate(input)).toBe(expected)
   })
@@ -627,7 +587,7 @@ describe('new 页面专用词条', () => {
     const planNames: readonly (readonly [string, string])[] = [
       ['Free', '免费版'],
       ['Team', '团队版'],
-      ['Enterprise', '企业版'],
+      ['Enterprise', '企业版']
     ]
     for (const [plan, expected] of planNames) {
       expect(newPages.scoped?.[plan]).toBe(expected)
@@ -642,35 +602,29 @@ describe('new 页面专用词条', () => {
     expect(translate('GitHub Codespaces Access')).toBe('GitHub 代码空间访问权限')
     expect(translate('Access to GitHub Codespaces')).toBe('可使用 GitHub 代码空间')
     expect(translate('Pages and Wikis')).toBe('页面和 Wiki')
-    expect(translate('Grant your Marketplace apps access to this repository')).toBe(
-      '授予你的市场应用访问此存储库的权限',
-    )
+    expect(translate('Grant your Marketplace apps access to this repository')).toBe('授予你的市场应用访问此存储库的权限')
     expect(
       translate(
-        'Use execution minutes with GitHub Actions to automate your software development workflows. Write tasks and combine them to build, test, and deploy any code project on GitHub.',
-      ),
-    ).toBe(
-      '使用 GitHub 操作的执行分钟数自动化软件开发工作流。编写任务并加以组合，即可构建、测试和部署 GitHub 上的任何代码项目。',
+        'Use execution minutes with GitHub Actions to automate your software development workflows. Write tasks and combine them to build, test, and deploy any code project on GitHub.'
+      )
+    ).toBe('使用 GitHub 操作的执行分钟数自动化软件开发工作流。编写任务并加以组合，即可构建、测试和部署 GitHub 上的任何代码项目。')
+    expect(translate('Share features and workflows between your GitHub Enterprise Server instance and GitHub Enterprise Cloud.')).toBe(
+      '在 GitHub 企业服务器实例与 GitHub 企业云之间共享功能和工作流。'
     )
-    expect(
-      translate(
-        'Share features and workflows between your GitHub Enterprise Server instance and GitHub Enterprise Cloud.',
-      ),
-    ).toBe('在 GitHub 企业服务器实例与 GitHub 企业云之间共享功能和工作流。')
     // Premium Plus → 高级增强（与 common 的 /premium-support 页一致）
     expect(
       translate(
-        'With Premium, get a 30-minute SLA on Urgent tickets and 24/7 web and phone support via callback request. With Premium Plus, get everything in Premium, assigned Customer Reliability Engineer and more.',
-      ),
+        'With Premium, get a 30-minute SLA on Urgent tickets and 24/7 web and phone support via callback request. With Premium Plus, get everything in Premium, assigned Customer Reliability Engineer and more.'
+      )
     ).toBe(
-      '高级支持提供紧急工单 30 分钟 SLA，以及全天候网页和电话回拨支持。高级增强支持包含高级支持的全部内容，另有分配的客户可靠性工程师等服务。',
+      '高级支持提供紧急工单 30 分钟 SLA，以及全天候网页和电话回拨支持。高级增强支持包含高级支持的全部内容，另有分配的客户可靠性工程师等服务。'
     )
     expect(fullMatcher.translate('GitHub Premium Plus Support', NEW_SCOPE)).toBe('GitHub 高级增强支持')
     // 第三方产品名 Team Foundation Version Control 不是方案名，保留
     expect(
       translate(
-        'Support for importing Mercurial, Subversion and Team Foundation Version Control (TFVC) repositories ended on April 12, 2024. For more details, see the',
-      ),
+        'Support for importing Mercurial, Subversion and Team Foundation Version Control (TFVC) repositories ended on April 12, 2024. For more details, see the'
+      )
     ).toContain('Team Foundation Version Control (TFVC)')
   })
 
@@ -691,26 +645,23 @@ describe('new 页面专用词条', () => {
     expect(translate('This will set')).toBe('这会将')
     expect(translate('as the default branch.')).toBe('设为默认分支。')
     // You are creating a <strong>public</strong> repository in your personal account.
-    expect([
-      translate('You are creating a'),
-      translate('public'),
-      translate('repository in your personal account.'),
-    ]).toEqual(['你正在创建的', '公共', '存储库将位于你的个人帐户。'])
+    expect([translate('You are creating a'), translate('public'), translate('repository in your personal account.')]).toEqual([
+      '你正在创建的',
+      '公共',
+      '存储库将位于你的个人帐户。'
+    ])
     // A <a>fork</a> is a copy of a repository…
     expect(translate('A')).toBe('所谓')
     expect(translate('fork')).toBe('复刻')
     // Contribute back to <strong>owner/repo</strong> by adding your own branch.
     expect(`${translate('Contribute back to')} octocat/hello-world ${translate('by adding your own branch.')}`).toBe(
-      '通过添加你自己的分支向 octocat/hello-world 回馈贡献。',
+      '通过添加你自己的分支向 octocat/hello-world 回馈贡献。'
     )
     // This will set <strong>main</strong> as the default branch. Change the default name in <a>your settings</a>.
     expect(translate('as the default branch. Change the default name in')).toBe('设为默认分支。更改默认名称请前往')
     expect(translate('Change the default name in')).toBe('更改默认名称请前往')
     // Learn more about <a>importing git repositories</a>（Learn more about 由 common-ui 翻译）
-    expect([translateFull('Learn more about'), translate('importing git repositories')]).toEqual([
-      '了解',
-      '导入 Git 存储库',
-    ])
+    expect([translateFull('Learn more about'), translate('importing git repositories')]).toEqual(['了解', '导入 Git 存储库'])
     // Type <strong>owner/repo</strong> to confirm.
     expect([translate('Type'), translate('to confirm.')]).toEqual(['输入', '以确认。'])
     // There <span>are</span> <a>2 codespaces</a> that may be affected by this transfer.
@@ -722,12 +673,12 @@ describe('new 页面专用词条', () => {
     expect([translate('README'), translate('in the'), translate('directory to get started.')]).toEqual([
       '自述文件',
       '初始化',
-      '目录即可开始。',
+      '目录即可开始。'
     ])
     // This business or institution — not <strong>user</strong> (your personal account) — will control this organization.
     expect([
       translate('This business or institution — not'),
-      translate('(your personal account) — will control this organization.'),
+      translate('(your personal account) — will control this organization.')
     ]).toEqual(['将由此企业或机构而不是', '（你的个人帐户）控制此组织。'])
   })
 
@@ -737,7 +688,7 @@ describe('new 页面专用词条', () => {
     const entries = [
       ...Object.entries(newPages.static ?? {}),
       ...Object.entries(newPages.scoped ?? {}),
-      ...Object.entries(plansDictionary.scoped ?? {}),
+      ...Object.entries(plansDictionary.scoped ?? {})
     ]
     const offenders = entries
       .filter(([source, target]) => !SOURCE_PUNCT.test(source) && TARGET_PUNCT.test(target))
@@ -761,8 +712,8 @@ describe('new 页面类型覆盖的路由', () => {
     'https://github.com/organizations/new',
     'https://github.com/organizations/acme/repositories/new',
     'https://github.com/account/organizations/new',
-    'https://github.com/pricing',
-  ])('%s', (url) => {
+    'https://github.com/pricing'
+  ])('%s', url => {
     expect(detectPages(new URL(url))).toContain('new')
   })
 })
@@ -823,17 +774,17 @@ describe('new 计划页 DOM（计划名、产品名译成中文）', () => {
   })
 
   function texts(selector: string): string[] {
-    return [...document.querySelectorAll(selector)].map((element) => element.textContent?.trim() ?? '')
+    return [...document.querySelectorAll(selector)].map(element => element.textContent?.trim() ?? '')
   }
 
   it.each(['https://github.com/pricing', 'https://github.com/organizations/plan'])(
     '%s：计划卡片、比较表、窄屏菜单的计划名译“X 版”，页头 Enterprise 栏目仍译“企业”',
-    (url) => {
+    url => {
       document.body.innerHTML = PLAN_PAGE
       translator = createTranslator({
         matcher: fullMatcher,
         host: window,
-        resolvePages: () => detectPages(new URL(url)),
+        resolvePages: () => detectPages(new URL(url))
       })
       translator.start()
       expect(texts('.js-pricing-plan h2')).toEqual(PLANS)
@@ -852,7 +803,7 @@ describe('new 计划页 DOM（计划名、产品名译成中文）', () => {
       expect(texts('#github-secret-protection h3')).toEqual(['GitHub 机密保护'])
       expect(texts('.text-bold')).toEqual(['GitHub 操作'])
       expect(texts('[role="cell"]')).toEqual(['企业云'])
-    },
+    }
   )
 
   it('页头栏目的 inline 规则只对“Enterprise + 元素”的宿主生效', () => {
@@ -868,7 +819,7 @@ describe('new 计划页 DOM（计划名、产品名译成中文）', () => {
     translator = createTranslator({
       matcher: fullMatcher,
       host: window,
-      resolvePages: () => detectPages(new URL('https://github.com/octocat/hello-world')),
+      resolvePages: () => detectPages(new URL('https://github.com/octocat/hello-world'))
     })
     translator.start()
     // Free 的全局译法由 common 决定（Copilot 计划标签），Team / Enterprise 仍是导航义的 团队 / 企业
@@ -882,36 +833,35 @@ describe('new 计划比较表（new/plans.ts）', () => {
   const plans: PageDictionary = plansDictionary
   const plansMatcher = createMatcher([
     ['new', newPages],
-    ['new', plans],
+    ['new', plans]
   ])
-  const translatePlan = (text: string, scope: readonly PageKey[] = NEW_SCOPE): string | undefined =>
-    plansMatcher.translate(text, scope)
+  const translatePlan = (text: string, scope: readonly PageKey[] = NEW_SCOPE): string | undefined => plansMatcher.translate(text, scope)
 
   /** 按词典中的正则顺序排列 */
   const PLAN_REGEXP_CASES: readonly RegExpCase[] = [
     {
       hits: [
         ['50,000 minutes/month', '每月 50,000 分钟'],
-        ['400 minutes/month', '每月 400 分钟'],
+        ['400 minutes/month', '每月 400 分钟']
       ],
-      misses: ['unlimited minutes/month', '50,000 minutes per month'],
+      misses: ['unlimited minutes/month', '50,000 minutes per month']
     },
     {
       hits: [
         ['$0 spend limit', '$0 支出上限'],
-        ['$1,500.50 spend limit', '$1,500.50 支出上限'],
+        ['$1,500.50 spend limit', '$1,500.50 支出上限']
       ],
-      misses: ['0 spend limit', '$0 spend limits'],
-    },
+      misses: ['0 spend limit', '$0 spend limits']
+    }
   ]
-  const planHits = PLAN_REGEXP_CASES.flatMap((item) => item.hits)
+  const planHits = PLAN_REGEXP_CASES.flatMap(item => item.hits)
 
   it.each(planHits)('%s → %s', (input, expected) => {
     expect(plans.scoped?.[input]).toBeUndefined()
     expect(translatePlan(input)).toBe(expected)
   })
 
-  it.each(PLAN_REGEXP_CASES.flatMap((item) => item.misses))('不命中：%s', (input) => {
+  it.each(PLAN_REGEXP_CASES.flatMap(item => item.misses))('不命中：%s', input => {
     expect(translatePlan(input)).toBeUndefined()
   })
 
@@ -941,18 +891,15 @@ describe('new 计划比较表（new/plans.ts）', () => {
     ['Required 2FA', '强制 2FA'],
     // 机密扫描语境的 provider → 提供程序
     ['Provider notification', '提供程序通知'],
-    [
-      'Prioritize active secrets with validity checks for provider patterns.',
-      '通过提供程序模式的有效性检查，优先处理仍有效的机密。',
-    ],
+    ['Prioritize active secrets with validity checks for provider patterns.', '通过提供程序模式的有效性检查，优先处理仍有效的机密。'],
     [
       'Providers get real-time alerts when their tokens appear in public code, enabling them to notify, quarantine, or revoke secrets.',
-      '提供程序的令牌出现在公共代码中时，提供程序会实时收到警报，以便通知、隔离或撤销机密。',
+      '提供程序的令牌出现在公共代码中时，提供程序会实时收到警报，以便通知、隔离或撤销机密。'
     ],
     [
       'Detect tokens from unknown providers, including HTTP authentication headers, connection strings, and private keys.',
-      '检测来自未知提供程序的令牌，包括 HTTP 身份验证标头、连接字符串和私钥。',
-    ],
+      '检测来自未知提供程序的令牌，包括 HTTP 身份验证标头、连接字符串和私钥。'
+    ]
   ])('%s → %s', (input, expected) => {
     expect(translatePlan(input)).toBe(expected)
   })
@@ -961,16 +908,14 @@ describe('new 计划比较表（new/plans.ts）', () => {
     const commonDictionary: PageDictionary = common
     const usageBased = plans.scoped?.['Usage-based']
     expect(usageBased).toBe('基于使用情况')
-    expect(commonDictionary.static?.['is now usage-based. Set a per-user budget to manage costs.']).toContain(
-      `${usageBased}的计费`,
-    )
+    expect(commonDictionary.static?.['is now usage-based. Set a per-user budget to manage costs.']).toContain(`${usageBased}的计费`)
   })
 
   it('Provider patterns 由 repo-settings 的 static 翻译，此处不重复', () => {
     const providerMatcher = createMatcher([
       ['common', common],
       ['repo-settings', repoSettings],
-      ['new', newPages],
+      ['new', newPages]
     ])
     expect(plans.scoped?.['Provider patterns']).toBeUndefined()
     expect(newPages.scoped?.['Provider patterns']).toBeUndefined()
@@ -982,7 +927,7 @@ describe('new 计划比较表（new/plans.ts）', () => {
     const planNames: readonly (readonly [string, string])[] = [
       ['free', '免费版'],
       ['team', '团队版'],
-      ['enterprise', '企业版'],
+      ['enterprise', '企业版']
     ]
     for (const [plan, expected] of planNames) {
       expect(plans.scoped?.[plan]).toBe(expected)
@@ -997,13 +942,13 @@ describe('new 计划比较表（new/plans.ts）', () => {
       'Switch plans',
       'Scheduled reminders',
       "Define users' level of access to your code, data and settings.",
-      'Define users’ level of access to your code, data and settings.',
+      'Define users’ level of access to your code, data and settings.'
     ]) {
       expect(plans.scoped?.[key]).toBeUndefined()
     }
     expect(fullMatcher.translate('Not available', NEW_SCOPE)).toBe('不可用')
     expect(fullMatcher.translate('Define users’ level of access to your code, data and settings.', NEW_SCOPE)).toBe(
-      '定义用户对你的代码、数据和设置的访问级别。',
+      '定义用户对你的代码、数据和设置的访问级别。'
     )
   })
 
@@ -1019,7 +964,7 @@ describe('new 计划比较表（new/plans.ts）', () => {
     ['Pages and wikis', '页面和 Wiki'],
     ['Quickly remediate with context provided by Copilot Autofix.', '借助 Copilot 自动修复提供的上下文快速修复。'],
     // Premium Plus → 高级增强（与 common 的 /premium-support 页一致）
-    ['Premium and Premium Plus Support', '高级支持和高级增强支持'],
+    ['Premium and Premium Plus Support', '高级支持和高级增强支持']
   ])('产品名译成中文：%s → %s', (input, expected) => {
     expect(translatePlan(input)).toBe(expected)
   })
@@ -1027,7 +972,7 @@ describe('new 计划比较表（new/plans.ts）', () => {
   it('Enterprise Cloud、Enterprise Server 由 common 的全局词条翻译，此处不重复', () => {
     const products: readonly (readonly [string, string])[] = [
       ['Enterprise Cloud', '企业云'],
-      ['Enterprise Server', '企业服务器'],
+      ['Enterprise Server', '企业服务器']
     ]
     for (const [key, expected] of products) {
       expect(plans.scoped?.[key]).toBeUndefined()

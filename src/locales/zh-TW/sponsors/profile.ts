@@ -54,10 +54,8 @@ export default {
     'Choose a custom amount.': '選擇自訂金額。',
     'A Public Sponsor achievement will be added to your profile.': PUBLIC_SPONSOR_ACHIEVEMENT,
     // 后接加粗的「你是贊助者。」；原文没有逗号，译文不加。hover 取微软繁中的「暫留」
-    'Hover over your avatar to review the badge you’ll get that shows':
-      '將游標暫留在頭像上可預覽你將獲得的徽章並看到它標示',
-    "Hover over your avatar to review the badge you'll get that shows":
-      '將游標暫留在頭像上可預覽你將獲得的徽章並看到它標示',
+    'Hover over your avatar to review the badge you’ll get that shows': '將游標暫留在頭像上可預覽你將獲得的徽章並看到它標示',
+    "Hover over your avatar to review the badge you'll get that shows": '將游標暫留在頭像上可預覽你將獲得的徽章並看到它標示',
 
     // 结帐
     'Sponsor as': '贊助身分',
@@ -69,7 +67,7 @@ export default {
     'Your sponsorships': '你的贊助',
     'Sponsorship log': '贊助記錄',
     'Switch to invoiced billing': '切換為發票付款',
-    'GitHub Invoiced Sponsor Agreement': 'GitHub 發票付款贊助者合約',
+    'GitHub Invoiced Sponsor Agreement': 'GitHub 發票付款贊助者合約'
   },
   scoped: {
     Invoices: '發票',
@@ -89,7 +87,7 @@ export default {
     'sponsors this goal': '支持此目標',
     'sponsor this goal': '支持此目標',
     'you’re a sponsor.': '你是贊助者。',
-    "you're a sponsor.": '你是贊助者。',
+    "you're a sponsor.": '你是贊助者。'
   },
   regexp: [
     // 页面标题与按钮
@@ -119,11 +117,11 @@ export default {
     // 所在的 #sponsors-custom-amount-message 带 markdown-body、comment-body 类，需全局忽略规则豁免后才会翻译
     [
       /^You['’]ll receive any rewards listed in the (\$[\d,]+(?:\.\d{2})?) (monthly|one-time) tier\. Additionally, a Public Sponsor achievement will be added to your profile\.$/,
-      (_, amount: string, frequency: string) => customAmountReward(amount, frequency),
+      (_, amount: string, frequency: string) => customAmountReward(amount, frequency)
     ],
 
     // 结帐
-    [/^Receive email updates from (.+)$/, '接收 $1 的電子郵件動態'],
+    [/^Receive email updates from (.+)$/, '接收 $1 的電子郵件動態']
   ],
   ignore: [
     // 头部所在地
@@ -135,6 +133,6 @@ export default {
     // 精选作品的储存库描述
     'ol.list-style-none li p.color-fg-muted.text-small',
     // 团队成员卡片
-    '.sponsors-featured-item',
-  ],
+    '.sponsors-featured-item'
+  ]
 } satisfies PageDictionary

@@ -12,7 +12,7 @@ const copy = vi.fn()
 
 /** 等 MutationObserver 回调与异步选源 */
 async function flush(): Promise<void> {
-  await new Promise((done) => setTimeout(done, 0))
+  await new Promise(done => setTimeout(done, 0))
 }
 
 function start(): CloneUrlRewriter {
@@ -113,7 +113,7 @@ describe('createCloneUrlRewriter', () => {
 
   it.each([
     ['未开启下载加速', { accelerate: false }],
-    ['总开关关闭', { enabled: false }],
+    ['总开关关闭', { enabled: false }]
   ] as const)('%s：不改；之后开启再改写，再关闭时还原', (_name, overrides) => {
     settings = { ...settings, ...overrides }
     const { input } = repoClone()

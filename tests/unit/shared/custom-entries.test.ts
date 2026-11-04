@@ -6,7 +6,7 @@ import {
   normalizeEntry,
   parseCustomEntriesJson,
   removeEntry,
-  serializeEntries,
+  serializeEntries
 } from '../../../src/shared/custom-entries'
 
 describe('normalizeEntry', () => {
@@ -18,7 +18,7 @@ describe('normalizeEntry', () => {
     ['', '译文'],
     ['原文', ''],
     ['   ', '译文'],
-    ['原文', '  '],
+    ['原文', '  ']
   ])('空值 %j / %j → undefined', (source, target) => {
     expect(normalizeEntry(source, target)).toBeUndefined()
   })
@@ -37,12 +37,9 @@ describe('parseCustomEntriesJson', () => {
     expect(parseCustomEntriesJson('{}')).toEqual({})
   })
 
-  it.each(['', 'not json', '[]', '["Code"]', '"Code"', '1', 'null', '{"Bad": 1}', '{"": "空"}'])(
-    '%j → 格式错误',
-    (text) => {
-      expect(parseCustomEntriesJson(text)).toBeUndefined()
-    },
-  )
+  it.each(['', 'not json', '[]', '["Code"]', '"Code"', '1', 'null', '{"Bad": 1}', '{"": "空"}'])('%j → 格式错误', text => {
+    expect(parseCustomEntriesJson(text)).toBeUndefined()
+  })
 
   it('__proto__ 作为普通键，不污染原型', () => {
     const entries = parseCustomEntriesJson('{"__proto__": "原型", "Code": "代码"}')
@@ -57,7 +54,7 @@ describe('addEntry', () => {
   it('新增词条', () => {
     expect(addEntry({ Code: '代码' }, ' Issues ', '议题')).toEqual({
       ok: true,
-      entries: { Code: '代码', Issues: '议题' },
+      entries: { Code: '代码', Issues: '议题' }
     })
   })
 
@@ -76,7 +73,7 @@ describe('editEntry', () => {
   it('改译文', () => {
     expect(editEntry(entries, 'Issues', 'Issues', '问题')).toEqual({
       ok: true,
-      entries: { Code: '代码', Issues: '问题', Pulls: '拉取请求' },
+      entries: { Code: '代码', Issues: '问题', Pulls: '拉取请求' }
     })
   })
 
@@ -96,7 +93,7 @@ describe('editEntry', () => {
   it('原词条不存在时追加', () => {
     expect(editEntry({ Code: '代码' }, 'Gone', 'New', '新')).toEqual({
       ok: true,
-      entries: { Code: '代码', New: '新' },
+      entries: { Code: '代码', New: '新' }
     })
   })
 })
@@ -110,7 +107,7 @@ describe('removeEntry / mergeEntries / filterEntries / serializeEntries', () => 
     expect(mergeEntries({ Code: '代码', Issues: '议题' }, { Issues: '问题', Wiki: 'Wiki' })).toEqual({
       Code: '代码',
       Issues: '问题',
-      Wiki: 'Wiki',
+      Wiki: 'Wiki'
     })
   })
 
@@ -119,7 +116,7 @@ describe('removeEntry / mergeEntries / filterEntries / serializeEntries', () => 
     expect(filterEntries(entries, '')).toEqual([
       ['Pull requests', '拉取请求'],
       ['Issues', '议题'],
-      ['Code', '代码'],
+      ['Code', '代码']
     ])
     expect(filterEntries(entries, ' pull ')).toEqual([['Pull requests', '拉取请求']])
     expect(filterEntries(entries, '议题')).toEqual([['Issues', '议题']])

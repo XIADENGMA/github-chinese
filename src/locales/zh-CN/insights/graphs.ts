@@ -45,8 +45,7 @@ export default {
     // 原文无标点（撇号不算），译文不加逗号
     "We don't have enough data to generate this graph": '数据不足以生成此图表',
     'We don’t have enough data to generate this graph': '数据不足以生成此图表',
-    'We need at least one non-empty commit with an email to generate this graph':
-      '至少需要一个带电子邮件的非空提交才能生成此图表',
+    'We need at least one non-empty commit with an email to generate this graph': '至少需要一个带电子邮件的非空提交才能生成此图表',
     'There was an error generating this graph': '生成此图表时出错',
     'Graph could not be rendered': '无法渲染图表',
     'Crunching the latest data, just for you. Hang tight…': '正在计算最新数据，请稍候…',
@@ -70,7 +69,7 @@ export default {
     'There are too many commits to generate this graph.': '提交过多而无法生成此图表。',
     // More information about this data can be found in the <activity documentation>.
     'More information about this data can be found in the': '有关此数据的更多信息请参阅',
-    'activity documentation': '活动文档',
+    'activity documentation': '活动文档'
   },
   scoped: {
     'Last month': '最近 1 个月',
@@ -80,7 +79,7 @@ export default {
     // 拼接失败时的单节点兜底：Contributions per week to <main>, excluding merge commits
     'Contributions per week to': '每周贡献到',
     ', excluding merge commits': '，不含合并提交',
-    'over time': '趋势',
+    'over time': '趋势'
   },
   regexp: [
     // 无障碍标题与页面标题
@@ -91,13 +90,10 @@ export default {
     [/^Contributions per week to (\S+), excluding merge commits$/, '每周对 $1 的贡献，不含合并提交'],
     [
       /^Contributions per week to (\S+), line counts have been omitted because commit count exceeds ([\d,]+)\.$/,
-      '每周对 $1 的贡献，因提交数超过 $2 而省略了行数统计。',
+      '每周对 $1 的贡献，因提交数超过 $2 而省略了行数统计。'
     ],
     // 拼接失败时的单节点兜底（同 scoped 的「, excluding merge commits」）
-    [
-      /^, line counts have been omitted because commit count exceeds ([\d,]+)\.$/,
-      '，因提交数超过 $1 而省略了行数统计。',
-    ],
+    [/^, line counts have been omitted because commit count exceeds ([\d,]+)\.$/, '，因提交数超过 $1 而省略了行数统计。'],
     // 周期按钮：<span>Period</span>: Last 3 months
     [/^: (All|Last month|Last \d+ months|Custom range)$/, (_, name) => `：${translatePeriod(name)}`],
     [/^Last (\d+) months$/, '最近 $1 个月'],
@@ -108,11 +104,11 @@ export default {
     // 周统计说明：Weekly from Jul 25, 2026 to Oct 25, 2026（原文无冒号，译文不加）；前缀与日期用 joinCjk 拼接
     [
       new RegExp(`^Weekly from ${WEEK_DATE} to ${WEEK_DATE}$`),
-      (_, from, to) => `${joinCjk('每周统计', weekDate(from))}${joinCjk('至', weekDate(to))}`,
+      (_, from, to) => `${joinCjk('每周统计', weekDate(from))}${joinCjk('至', weekDate(to))}`
     ],
     // 提交数：Pulse 摘要、贡献者卡片
-    [/^([\d,]+) commits?$/, '$1 个提交'],
+    [/^([\d,]+) commits?$/, '$1 个提交']
   ],
   // 贡献者卡片标题里的用户名链接
-  ignore: ['[class*="chartListItem"] h2 a'],
+  ignore: ['[class*="chartListItem"] h2 a']
 } satisfies PageDictionary

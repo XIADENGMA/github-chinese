@@ -75,10 +75,10 @@ export default {
     'This cannot be undone': '此操作无法撤销',
 
     // 登录提示
-    'Sign in to view': '登录后查看',
+    'Sign in to view': '登录后查看'
   },
   regexp: [
     // 赞助按钮的未登录提示：You must be logged in to sponsor octocat
-    [/^You must be logged in to sponsor ([\w-]+)$/, '登录后才能赞助 $1'],
-  ],
+    [/^You must be logged in to sponsor ([\w-]+)$/, '登录后才能赞助 $1']
+  ]
 } satisfies PageDictionary

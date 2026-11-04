@@ -39,9 +39,8 @@ export default {
     'Explore topics': '探索主题',
 
     // 集合
-    'Curated lists and insight into burgeoning industries, topics, and communities.':
-      '精选列表，以及对新兴行业、主题和社区的见解。',
-    'Open Source, AI & Coding Repo Collections on GitHub': 'GitHub 上的开源、AI 与编程存储库集合',
+    'Curated lists and insight into burgeoning industries, topics, and communities.': '精选列表，以及对新兴行业、主题和社区的见解。',
+    'Open Source, AI & Coding Repo Collections on GitHub': 'GitHub 上的开源、AI 与编程存储库集合'
   },
   scoped: {
     The: '主题',
@@ -56,24 +55,21 @@ export default {
     Followers: '关注者',
     Website: '网站',
     Wikipedia: '维基百科',
-    Collection: '集合',
+    Collection: '集合'
   },
   regexp: [
     // 主题详情：Here are 67,180 public repositories matching this topic...
-    [
-      /^Here (?:are|is) ([\d,]+) public repositor(?:ies|y) matching this topic\.\.\.$/,
-      '共有 $1 个公共存储库匹配此主题...',
-    ],
+    [/^Here (?:are|is) ([\d,]+) public repositor(?:ies|y) matching this topic\.\.\.$/, '共有 $1 个公共存储库匹配此主题...'],
     // 列表计数的另一写法：There are 1,234 public repositories matching this topic（句号随原文）
     [
       /^There (?:are|is) ([\d,]+) public repositor(?:ies|y) matching this topic(\.)?$/,
-      (_, count, period) => `共有 ${count} 个公共存储库匹配此主题${period ? '。' : ''}`,
+      (_, count, period) => `共有 ${count} 个公共存储库匹配此主题${period ? '。' : ''}`
     ],
     // 侧栏关注者计数（59k followers）由 common-ui 的通用计数规则翻译
     // 侧栏发布日期与最新发行版时间：February 11, 2014 / 13 days ago
-    [new RegExp(`^${TIME_SOURCE}$`), (time) => translateTime(time)],
+    [new RegExp(`^${TIME_SOURCE}$`), time => translateTime(time)],
     // 集合详情标签页标题段
-    [/^Collection: (.+)$/, '集合：$1'],
+    [/^Collection: (.+)$/, '集合：$1']
   ],
   ignore: [
     // 主题名：页头、空状态、侧栏“添加到存储库”说明
@@ -85,6 +81,6 @@ export default {
     'a.exploregrid-item > p',
     // 集合详情页头：集合名与描述
     'h1.h1.lh-condensed',
-    'h1.h1.lh-condensed + .f3.color-fg-muted',
-  ],
+    'h1.h1.lh-condensed + .f3.color-fg-muted'
+  ]
 } satisfies PageDictionary

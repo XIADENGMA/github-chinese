@@ -19,7 +19,7 @@ const matcher = createMatcher([['dashboard', dashboard]])
 const fullMatcher = createMatcher([
   ['common', common],
   ['common', commonUi],
-  ['dashboard', dashboard],
+  ['dashboard', dashboard]
 ])
 /** 完整语言包：其他页面词典的全局 static 也生效 */
 const bundleMatcher = createMatcher(zhCN)
@@ -47,7 +47,7 @@ function copilotText(text: string): string {
 
 /** 沿用 copilot 规则的样例：期望译文取 Copilot 页的译文 */
 function sameAsCopilot(texts: readonly string[]): readonly (readonly [string, string])[] {
-  return texts.map((text) => [text, copilotText(text)] as const)
+  return texts.map(text => [text, copilotText(text)] as const)
 }
 
 /** 首页 Copilot 输入框沿用的 copilot 规则（由 copilot 词典自己的测试逐条覆盖） */
@@ -56,7 +56,7 @@ const IMPORTED_RULES: ReadonlySet<unknown> = new Set([
   ...(copilotComposer.regexp ?? []),
   ...(agents.regexp ?? []),
   ...(chat.regexp ?? []),
-  ...(skills.regexp ?? []),
+  ...(skills.regexp ?? [])
 ])
 
 interface RegExpCase {
@@ -74,177 +74,166 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['octo-org/hello-world#123 · Opened by octocat · Updated', 'octo-org/hello-world#123 · 由 octocat 创建 · 更新于'],
-      ['octo-org/hello#5 · Opened by Copilot · Created', 'octo-org/hello#5 · 由 Copilot 创建 · 创建于'],
+      ['octo-org/hello#5 · Opened by Copilot · Created', 'octo-org/hello#5 · 由 Copilot 创建 · 创建于']
     ],
-    misses: ['octo-org/hello-world#123 · Opened by octocat'],
+    misses: ['octo-org/hello-world#123 · Opened by octocat']
   },
   {
     hits: [
       ['· Working', '· 工作中'],
       ['· 2 revisions · Ready for review', '· 2 次修订 · 可供审查'],
-      ['· Queued to merge', '· 已排队等待合并'],
+      ['· Queued to merge', '· 已排队等待合并']
     ],
-    misses: ['· Sleeping'],
+    misses: ['· Sleeping']
   },
   {
     hits: [['octocat/hello-world · Initializing session...', 'octocat/hello-world · 正在初始化会话...']],
-    misses: ['Initializing session...'],
+    misses: ['Initializing session...']
   },
   {
     hits: [['Please keep your feedback within 1,000 characters or less.', '反馈请控制在 1,000 个字符以内。']],
-    misses: ['Please keep your feedback short.'],
+    misses: ['Please keep your feedback short.']
   },
   {
     hits: [
       ['More options for Agent sessions', '代理会话的更多选项'],
-      ['More options for Top repositories', 'Top repositories 的更多选项'],
+      ['More options for Top repositories', 'Top repositories 的更多选项']
     ],
-    misses: ['More options'],
+    misses: ['More options']
   },
   {
     hits: [
       ['Show Agent sessions', '显示代理会话'],
-      ['Show Pull requests', '显示拉取请求'],
+      ['Show Pull requests', '显示拉取请求']
     ],
-    misses: ['Show Top repositories'],
+    misses: ['Show Top repositories']
   },
 
   // 组织仪表板
   {
     hits: [['You’re an owner of the octo-org organization!', '你是 octo-org 组织的所有者！']],
-    misses: ['You’re an owner of this organization!'],
+    misses: ['You’re an owner of this organization!']
   },
   { hits: [['Create a repository for octo-org', '为 octo-org 创建存储库']], misses: ['Create a repository'] },
   { hits: [["Edit octo-org's settings", '编辑 octo-org 的设置']], misses: ['Edit settings'] },
   {
     hits: [['Check out octo-org’s public profile', '查看 octo-org 的公开个人资料']],
-    misses: ['Check out the public profile'],
+    misses: ['Check out the public profile']
   },
   // 顶部提示：删除存储库、继任者邀请
   {
     hits: [
       ['Your repository "octocat/hello-world" was successfully deleted.', '存储库“octocat/hello-world”已删除。'],
-      ['Your repository “octo-org/docs” was successfully deleted.', '存储库“octo-org/docs”已删除。'],
+      ['Your repository “octo-org/docs” was successfully deleted.', '存储库“octo-org/docs”已删除。']
     ],
-    misses: ['Your repository was successfully deleted.'],
+    misses: ['Your repository was successfully deleted.']
   },
   {
     hits: [["You are now the designated successor for octocat's account.", '你已成为 octocat 帐户的指定继任者。']],
-    misses: ['You are now the designated successor.'],
+    misses: ['You are now the designated successor.']
   },
   {
-    hits: [
-      [
-        'You have declined to become the designated successor for mona’s account.',
-        '已拒绝成为 mona 帐户的指定继任者。',
-      ],
-    ],
-    misses: ['You have declined to become the designated successor.'],
+    hits: [['You have declined to become the designated successor for mona’s account.', '已拒绝成为 mona 帐户的指定继任者。']],
+    misses: ['You have declined to become the designated successor.']
   },
 
   // 动态（推荐原因：标点随原文，不加冒号）
   {
     hits: [
-      [
-        "You're seeing this because you starred octo-org/hello-world",
-        '你看到此内容是因为你为 octo-org/hello-world 加了星标',
-      ],
+      ["You're seeing this because you starred octo-org/hello-world", '你看到此内容是因为你为 octo-org/hello-world 加了星标'],
       ['You’re seeing this because you follow mona', '你看到此内容是因为你关注了 mona'],
       ["You're seeing this because you collaborated with octocat", '你看到此内容是因为你与 octocat 协作过'],
-      ["You're seeing this because you starred", '你看到此内容是因为你加了星标'],
+      ["You're seeing this because you starred", '你看到此内容是因为你加了星标']
     ],
-    misses: ["You're seeing this because you forked octo-org/hello-world"],
+    misses: ["You're seeing this because you forked octo-org/hello-world"]
   },
   { hits: [['and 3 more', '以及另外 3 个']], misses: ['and more'] },
   {
     hits: [
       ['5 more commits »', '另有 5 个提交 »'],
-      ['1 more commit »', '另有 1 个提交 »'],
+      ['1 more commit »', '另有 1 个提交 »']
     ],
-    misses: ['more commits »'],
+    misses: ['more commits »']
   },
   {
     hits: [
       ['3 commits to', '3 个提交到'],
-      ['1 commit to', '1 个提交到'],
+      ['1 commit to', '1 个提交到']
     ],
-    misses: ['commits to'],
+    misses: ['commits to']
   },
   { hits: [['added 2 repositories to', '将 2 个存储库添加到']], misses: ['added repositories to'] },
   { hits: [['3 of your repositories', '你的 3 个存储库']], misses: ['all of your repositories'] },
   {
     hits: [
       ['4 issues need help', '4 个议题需要帮助'],
-      ['1 issue needs help', '1 个议题需要帮助'],
+      ['1 issue needs help', '1 个议题需要帮助']
     ],
-    misses: ['issues need help'],
+    misses: ['issues need help']
   },
   {
     hits: [["Support octocat's open source work", '支持 octocat 的开源工作']],
-    misses: ['Support open source work'],
+    misses: ['Support open source work']
   },
   // 旧版动态卡片：“不感兴趣”菜单与反馈
   {
     hits: [
       ["I'm not interested in starred repositories from octocat", '对 octocat 加星标的存储库不感兴趣'],
-      ['I’m not interested in forked repositories from mona', '对 mona 复刻的存储库不感兴趣'],
+      ['I’m not interested in forked repositories from mona', '对 mona 复刻的存储库不感兴趣']
     ],
-    misses: ["I'm not interested in watched repositories from octocat"],
+    misses: ["I'm not interested in watched repositories from octocat"]
   },
   {
     hits: [["I'm not interested in octo-org/hello-world", '对 octo-org/hello-world 不感兴趣']],
-    misses: ["I'm not interested in this"],
+    misses: ["I'm not interested in this"]
   },
   {
     hits: [
       // starred repositories → 已加星标的存储库（GLOSSARY star 行）
       ['I want to see fewer starred repositories', '减少已加星标的存储库动态'],
       ['I want to see fewer forked repositories', '减少复刻存储库动态'],
-      ['I want to see fewer trending repositories', '减少趋势存储库动态'],
+      ['I want to see fewer trending repositories', '减少趋势存储库动态']
     ],
-    misses: ['I want to see fewer repositories'],
+    misses: ['I want to see fewer repositories']
   },
   {
     hits: [
-      [
-        'Dismissed a repository from octo-org/hello-world. Thank you for the feedback!',
-        '已从动态中删除 octo-org/hello-world。感谢反馈！',
-      ],
+      ['Dismissed a repository from octo-org/hello-world. Thank you for the feedback!', '已从动态中删除 octo-org/hello-world。感谢反馈！']
     ],
-    misses: ['Dismissed a repository. Thank you for the feedback!'],
+    misses: ['Dismissed a repository. Thank you for the feedback!']
   },
   { hits: [['repository body 0', '存储库内容 0']], misses: ['repository body'] },
   { hits: [['Repo Details 3', '存储库详细信息 3']], misses: ['Repo Details: 3'] },
   {
     hits: [
       ['523 stargazers', '523 个标星者'],
-      ['1 stargazer', '1 个标星者'],
+      ['1 stargazer', '1 个标星者']
     ],
-    misses: ['stargazers'],
+    misses: ['stargazers']
   },
   {
     hits: [
       ['Follow octocat', '关注 octocat'],
-      ['Unfollow mona-lisa', '取消关注 mona-lisa'],
+      ['Unfollow mona-lisa', '取消关注 mona-lisa']
     ],
-    misses: ['Follow me on Mastodon'],
+    misses: ['Follow me on Mastodon']
   },
 
   // 新手引导
   {
     hits: [
       ['2/3 completed', '已完成 2/3'],
-      ['1/4 complete', '已完成 1/4'],
+      ['1/4 complete', '已完成 1/4']
     ],
-    misses: ['two of three completed'],
+    misses: ['two of three completed']
   },
   { hits: [['Read · Est. 5m', '阅读 · 约 5 分钟']], misses: ['Read · 5 minutes'] },
   {
     hits: [
       ['Watch · 9 videos', '观看 · 9 个视频'],
-      ['Watch · 1 video', '观看 · 1 个视频'],
+      ['Watch · 1 video', '观看 · 1 个视频']
     ],
-    misses: ['Watch · videos'],
+    misses: ['Watch · videos']
   },
 
   // Copilot 输入框：问候语
@@ -252,33 +241,24 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['Good morning, Mona!', '早上好，Mona！'],
       ['Good afternoon, octocat!', '下午好，octocat！'],
-      ['Good evening, The Octocat!', '晚上好，The Octocat！'],
+      ['Good evening, The Octocat!', '晚上好，The Octocat！']
     ],
-    misses: ['Good night, Mona!'],
+    misses: ['Good night, Mona!']
   },
   { hits: [['Welcome to GitHub, octocat!', '欢迎来到 GitHub，octocat！']], misses: ['Welcome to GitHub!'] },
   // 免费计划额度用尽：输入框横幅与首页提示
   {
     hits: [
-      [
-        'You have reached your free plan limit. Limit resets on November 1, 2026.',
-        '已达免费计划上限。限额将于 2026 年 11 月 1 日重置。',
-      ],
-      [
-        'You have reached your free plan limit. It will reset on May 07, 2026.',
-        '已达免费计划上限。限额将于 2026 年 5 月 7 日重置。',
-      ],
+      ['You have reached your free plan limit. Limit resets on November 1, 2026.', '已达免费计划上限。限额将于 2026 年 11 月 1 日重置。'],
+      ['You have reached your free plan limit. It will reset on May 07, 2026.', '已达免费计划上限。限额将于 2026 年 5 月 7 日重置。'],
       [
         'You have reached your free plan limit. Limit resets on November 1, 2026. Plan upgrades are temporarily unavailable.',
-        '已达免费计划上限。限额将于 2026 年 11 月 1 日重置。计划升级暂不可用。',
+        '已达免费计划上限。限额将于 2026 年 11 月 1 日重置。计划升级暂不可用。'
       ],
       // 缺年份的日期同样以数字开头，前缀后补空格
-      [
-        'You have reached your free plan limit. Limit resets on Dec 31.',
-        '已达免费计划上限。限额将于 12 月 31 日重置。',
-      ],
+      ['You have reached your free plan limit. Limit resets on Dec 31.', '已达免费计划上限。限额将于 12 月 31 日重置。']
     ],
-    misses: ['You have reached your free plan limit.'],
+    misses: ['You have reached your free plan limit.']
   },
   // 任务创建失败的读屏播报：说明沿用 agents 的横幅规则与 models 的计费提示（与 Copilot 页同译），其余保留原文
   {
@@ -286,14 +266,12 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ...[
         "Unable to start task for 'Fix the login bug'. Please try again.",
         "Unable to start task for 'Fix the login bug': Repository not found",
-        'Before you can use Copilot cloud agent, you need to pick a "Usage billed to" option in your Copilot settings.',
-      ].map(
-        (description) => [`Task creation failed. ${description}`, `任务创建失败。${copilotText(description)}`] as const,
-      ),
+        'Before you can use Copilot cloud agent, you need to pick a "Usage billed to" option in your Copilot settings.'
+      ].map(description => [`Task creation failed. ${description}`, `任务创建失败。${copilotText(description)}`] as const),
       ['Task creation failed. Internal error', '任务创建失败。Internal error'],
-      ['Task creation failed. constructor', '任务创建失败。constructor'],
+      ['Task creation failed. constructor', '任务创建失败。constructor']
     ],
-    misses: ['Task creation failed.', 'Task creation failed'],
+    misses: ['Task creation failed.', 'Task creation failed']
   },
   // 沿用的 copilot 规则：模型选择器、推理强度、引用选择器与附件
   {
@@ -302,9 +280,9 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       'Model: Claude Sonnet 4.5',
       'Reasoning effort: High',
       'Files and folders › octocat/hello-world ›',
-      "Couldn't attach setup.exe. This file type is unsupported.",
+      "Couldn't attach setup.exe. This file type is unsupported."
     ]),
-    misses: ['Optimized for: Speed', 'Files and folders'],
+    misses: ['Optimized for: Speed', 'Files and folders']
   },
   // 沿用的 copilot 规则：环境条、图片附件、任务创建失败横幅、粘贴代码块的读屏播报
   {
@@ -334,20 +312,20 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       'notes.txt could not be attached. Text and PDF files must be 10 MB or smaller, and you can attach up to 10 text, PDF, or image files at a time.',
       "The GPT-5 model doesn't support answering questions about images. Select a different model and try again.",
       'Block pasted, 2 total',
-      'Block removed, 1 left',
+      'Block removed, 1 left'
     ]),
     misses: [
       'Repositories in octo-org',
       'Image limit reached',
       "Unable to start task for 'Fix the login bug'",
       'Block pasted',
-      'Block removed, none left',
-    ],
-  },
+      'Block removed, none left'
+    ]
+  }
 ]
 
-const HITS = REGEXP_CASES.flatMap((item) => item.hits)
-const MISSES = REGEXP_CASES.flatMap((item) => item.misses)
+const HITS = REGEXP_CASES.flatMap(item => item.hits)
+const MISSES = REGEXP_CASES.flatMap(item => item.misses)
 
 describe('dashboard 正则词条', () => {
   it.each(HITS)('%s → %s', (input, expected) => {
@@ -356,26 +334,24 @@ describe('dashboard 正则词条', () => {
     expect(translate(input)).toBe(expected)
   })
 
-  it.each(MISSES)('不命中：%s', (input) => {
+  it.each(MISSES)('不命中：%s', input => {
     expect(translate(input)).toBeUndefined()
   })
 
   it('每条正则都有首个命中它的正例', () => {
     const rules = dashboard.regexp ?? []
     const covered = new Set(HITS.map(([input]) => rules.findIndex(([pattern]) => pattern.test(input))))
-    const uncovered = rules
-      .filter((rule, index) => !IMPORTED_RULES.has(rule) && !covered.has(index))
-      .map(([pattern]) => String(pattern))
+    const uncovered = rules.filter((rule, index) => !IMPORTED_RULES.has(rule) && !covered.has(index)).map(([pattern]) => String(pattern))
     expect(uncovered).toEqual([])
   })
 
   it('沿用的 agents / chat / skills 规则只取输入框用到的部分', () => {
     const agentAndChatRules: ReadonlySet<unknown> = new Set([...(agents.regexp ?? []), ...(chat.regexp ?? [])])
-    const imported = (dashboard.regexp ?? []).filter((rule) => agentAndChatRules.has(rule))
+    const imported = (dashboard.regexp ?? []).filter(rule => agentAndChatRules.has(rule))
     expect(imported.length).toBeGreaterThan(0)
     expect(imported.length).toBeLessThan((agents.regexp ?? []).length)
     const skillRules: ReadonlySet<unknown> = new Set(skills.regexp ?? [])
-    const importedSkills = (dashboard.regexp ?? []).filter((rule) => skillRules.has(rule))
+    const importedSkills = (dashboard.regexp ?? []).filter(rule => skillRules.has(rule))
     expect(importedSkills).toHaveLength(2)
     // 代理会话页专用的规则不带到首页
     expect(translate('octocat is working…')).toBeUndefined()
@@ -385,17 +361,15 @@ describe('dashboard 正则词条', () => {
   it('React 拆分的相邻文本节点拼接后命中', () => {
     // `${repo}#${number} · Opened by ${author} · ` + 'Updated '，其后是 <relative-time>
     expect(translate(normalizeText(['octo-org/hello-world#123 · Opened by octocat · ', 'Updated '].join('')))).toBe(
-      'octo-org/hello-world#123 · 由 octocat 创建 · 更新于',
+      'octo-org/hello-world#123 · 由 octocat 创建 · 更新于'
     )
     // <relative-time> 之后：' · ' + '2 revisions ·' + ' ' + 状态
     expect(translate(normalizeText([' · ', '2 revisions ·', ' ', 'Merged'].join('')))).toBe('· 2 次修订 · 已合并')
     expect(translate(normalizeText([' · ', ' ', 'Failed'].join('')))).toBe('· 失败')
     // 免费计划横幅：'You have reached your free plan limit. Limit resets on ' + 日期 + '.'
-    expect(
-      translate(
-        normalizeText(['You have reached your free plan limit. Limit resets on ', 'June 1, 2026', '.'].join('')),
-      ),
-    ).toBe('已达免费计划上限。限额将于 2026 年 6 月 1 日重置。')
+    expect(translate(normalizeText(['You have reached your free plan limit. Limit resets on ', 'June 1, 2026', '.'].join('')))).toBe(
+      '已达免费计划上限。限额将于 2026 年 6 月 1 日重置。'
+    )
     // 清单进度：'1' + '/' + '4' + ' complete'
     expect(translate(normalizeText(['1', '/', '4', ' complete'].join('')))).toBe('已完成 1/4')
   })
@@ -419,17 +393,15 @@ describe('dashboard 正则词条', () => {
     expect(translate('You’ve been added to the')).toBe('你已被添加到')
     expect(translate('organization!')).toBe('组织！')
     // 个人上下文 ( + <用户名> + ) 和你所属的组织之间切换。（括号内是英文用户名，用半角括号）
-    expect(
-      translate(
-        'Use the switch context button in the upper left corner of this page to switch between your personal context (',
-      ),
-    ).toBe('使用页面左上角的上下文切换按钮，在你的个人上下文 (')
+    expect(translate('Use the switch context button in the upper left corner of this page to switch between your personal context (')).toBe(
+      '使用页面左上角的上下文切换按钮，在你的个人上下文 ('
+    )
     expect(translate(') and organizations you are a member of.')).toBe(') 和你所属的组织之间切换。')
     // 隐私说明 + <Privacy Policy> + .
     expect(
       translateFull(
-        "Please don't include sensitive, confidential, or personal data. Your feedback helps us improve our services in line with our",
-      ),
+        "Please don't include sensitive, confidential, or personal data. Your feedback helps us improve our services in line with our"
+      )
     ).toBe('请勿包含敏感、机密或个人数据。你的反馈将用于改进我们的服务，并遵循我们的')
     expect(translateFull('Privacy Policy')).toBe('隐私政策')
     // 模型选择器按钮：<span class="sr-only">Model: </span> + 模型名（models 词典的全局词条）
@@ -470,7 +442,7 @@ describe('dashboard 静态词条', () => {
     // 原文没有给界面名加引号，译文也不加
     [
       'We’ve combined the power of the Following feed with the For you feed so there’s one place to discover content on GitHub. There’s improved filtering so you can customize your feed exactly how you like it, and a shiny new visual design. ✨',
-      '我们把正在关注动态与为你推荐动态合二为一，在同一处发现 GitHub 上的内容。筛选功能已改进，可按喜好定制动态，还换上了全新的视觉设计。✨',
+      '我们把正在关注动态与为你推荐动态合二为一，在同一处发现 GitHub 上的内容。筛选功能已改进，可按喜好定制动态，还换上了全新的视觉设计。✨'
     ],
     ['One moment please...', '请稍候...'],
     ['Loading activity...', '正在加载活动...'],
@@ -496,13 +468,10 @@ describe('dashboard 静态词条', () => {
     ['Copilot Chat Cookbook', 'Copilot 聊天实用手册'],
     ['Download GitHub for Desktop', '下载 GitHub 桌面版'],
     ['Install GitHub Desktop', '安装 GitHub 桌面版'],
-    [
-      'Create a site or blog from your GitHub repositories with GitHub Pages.',
-      '使用 GitHub 页面从 GitHub 存储库创建网站或博客。',
-    ],
+    ['Create a site or blog from your GitHub repositories with GitHub Pages.', '使用 GitHub 页面从 GitHub 存储库创建网站或博客。'],
     [
       'Develop with AI-powered code suggestions using GitHub Copilot, Codespaces, and VS Code.',
-      '借助 GitHub Copilot、代码空间和 VS Code 的 AI 代码建议进行开发。',
+      '借助 GitHub Copilot、代码空间和 VS Code 的 AI 代码建议进行开发。'
     ],
     ['Learn with a tutorial project', '通过教程项目学习'],
     // 分句间的 — 译作 ——，两侧不加空格
@@ -511,10 +480,7 @@ describe('dashboard 静态词条', () => {
     ['Hello GitHub Actions', 'GitHub 操作入门'],
     ['Create a GitHub Action and use it in a workflow.', '创建 GitHub 操作并在工作流中使用。'],
     ['name your new repository...', '为新存储库命名...'],
-    [
-      "You're seeing this because you haven't opened a pull request in a while.",
-      '你看到此内容是因为你有一段时间没有创建拉取请求了。',
-    ],
+    ["You're seeing this because you haven't opened a pull request in a while.", '你看到此内容是因为你有一段时间没有创建拉取请求了。'],
     ['write comments, and open a pull request.', '撰写评论并创建拉取请求。'],
     ['Try GitHub Copilot free for 30 days,', '免费试用 GitHub Copilot 30 天，'],
     ['Repository name', '存储库名称'],
@@ -540,7 +506,7 @@ describe('dashboard 静态词条', () => {
     ['Allow all', '全部允许'],
     ['Waking', '唤醒中'],
     ['Draining', '排空中'],
-    ['Offline', '离线'],
+    ['Offline', '离线']
   ])('%s → %s', (input, expected) => {
     expect(translateFull(input)).toBe(expected)
   })
@@ -556,7 +522,7 @@ describe('dashboard 静态词条', () => {
     expect(tw.translate('Hello GitHub Actions', ['common', 'dashboard'])).toBe('GitHub 動作入門')
     expect(tw.translate('Introduction to GitHub', ['common', 'dashboard'])).toBe('GitHub 入門')
     expect(tw.translate('Create a GitHub Action and use it in a workflow.', ['common', 'dashboard'])).toBe(
-      '建立 GitHub 動作並在工作流程中使用。',
+      '建立 GitHub 動作並在工作流程中使用。'
     )
   })
 
@@ -590,7 +556,7 @@ describe('dashboard 静态词条', () => {
       'Allow all',
       'Degraded',
       'Waking',
-      'Draining',
+      'Draining'
     ]
     for (const text of copied) expect([text, translate(text)]).toEqual([text, copilotText(text)])
   })
@@ -616,7 +582,7 @@ describe('dashboard 静态词条', () => {
       ['Summarize my latest issue', skills.static],
       ['Model:', models.static],
       ['Agent sessions', app.static],
-      ['Assign to Copilot', code.static],
+      ['Assign to Copilot', code.static]
     ]
     for (const [text, owner] of shared) {
       expect(dashboard.static?.[text]).toBeUndefined()
@@ -628,7 +594,7 @@ describe('dashboard 静态词条', () => {
 })
 
 describe('dashboard 忽略规则', () => {
-  it.each(dashboard.ignore ?? [])('%s 是合法选择器', (selector) => {
+  it.each(dashboard.ignore ?? [])('%s 是合法选择器', selector => {
     expect(() => document.createElement('div').querySelector(selector)).not.toThrow()
   })
 
@@ -639,7 +605,7 @@ describe('dashboard 忽略规则', () => {
       '<span class="ItemTitleInner__vXJ_4I">Update README</span></a>',
       '<div class="ItemDescription__MNF-Pl">octo-org/hello-world#1 · Opened by octocat · Updated </div></li></ul>',
       '<p class="ItemTitle__EGVYZ_ emptyTitle__J8HcTG"><span class="ItemTitleInner__vXJ_4I">',
-      'No issues found, try a different filter.</span></p>',
+      'No issues found, try a different filter.</span></p>'
     ].join('')
     const selector = (dashboard.ignore ?? []).join(', ')
     expect(root.querySelector('a span')?.closest(selector)).not.toBeNull()
@@ -655,7 +621,7 @@ describe('dashboard 忽略规则', () => {
       '<span class="prc-TooltipV2-Tooltip-cYMVY" id="t1" aria-hidden="true" popover="auto">',
       'Fix the login bug in the settings page</span>',
       '<button aria-labelledby="t2">x</button>',
-      '<span class="prc-TooltipV2-Tooltip-cYMVY" id="t2" aria-hidden="true" popover="auto">Hide section</span>',
+      '<span class="prc-TooltipV2-Tooltip-cYMVY" id="t2" aria-hidden="true" popover="auto">Hide section</span>'
     ].join('')
     const selector = (dashboard.ignore ?? []).join(', ')
     expect(root.querySelector('#t1')?.closest(selector)).not.toBeNull()

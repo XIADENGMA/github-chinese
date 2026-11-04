@@ -26,7 +26,7 @@ const MONTHS: Readonly<Record<string, number>> = {
   sep: 9,
   oct: 10,
   nov: 11,
-  dec: 12,
+  dec: 12
 }
 
 const UNITS = ['second', 'minute', 'hour', 'day', 'week', 'month', 'year'] as const
@@ -54,8 +54,7 @@ const LATIN_START_RE = /^[A-Za-z0-9]/
 
 /** 拼接两段文字：一侧是中文、另一侧是字母或数字时补空格，中文与中文、标点直接相连 */
 export function joinCjk(left: string, right: string): string {
-  const spaced =
-    (CJK_END_RE.test(left) && LATIN_START_RE.test(right)) || (LATIN_END_RE.test(left) && CJK_START_RE.test(right))
+  const spaced = (CJK_END_RE.test(left) && LATIN_START_RE.test(right)) || (LATIN_END_RE.test(left) && CJK_START_RE.test(right))
   return spaced ? `${left} ${right}` : `${left}${right}`
 }
 
@@ -111,14 +110,7 @@ const MINUTE_MS = 60_000
  * 原文的时区与浏览器本地时区在该时刻相同（同一偏移）：按原文时区的年月日时分（24 小时制）换算出时刻再比较。
  * 原文缺年份时按今年算。按调用时的系统时区判断；译文由匹配器按原文缓存，改了系统时区后由 core/controller 重建匹配器重译
  */
-export function isLocalZone(
-  zone: string,
-  year: number | undefined,
-  month: number,
-  day: number,
-  hour: number,
-  minute: number,
-): boolean {
+export function isLocalZone(zone: string, year: number | undefined, month: number, day: number, hour: number, minute: number): boolean {
   const offset = zoneOffset(zone)
   if (offset === undefined) return false
   const instant = Date.UTC(year ?? new Date().getFullYear(), month - 1, day, hour, minute) - offset * MINUTE_MS
@@ -189,7 +181,7 @@ export function createTimeHelpers(words: TimeWords): TimeHelpers {
   return {
     relativeTime,
     translateRelativeTime,
-    translateTime: (text) => translateRelativeTime(text) ?? translateDate(text) ?? text,
+    translateTime: text => translateRelativeTime(text) ?? translateDate(text) ?? text
   }
 }
 
@@ -200,17 +192,17 @@ export function createTimeHelpers(words: TimeWords): TimeHelpers {
  */
 export function mergeDictionaries(...dicts: readonly PageDictionary[]): PageDictionary {
   return {
-    static: mergeTables(dicts.map((dict) => dict.static)),
-    scoped: mergeTables(dicts.map((dict) => dict.scoped)),
-    regexp: dicts.flatMap((dict) => dict.regexp ?? []),
-    ignore: dicts.flatMap((dict) => dict.ignore ?? []),
-    attributeRules: dicts.flatMap((dict) => dict.attributeRules ?? []),
-    inline: dicts.flatMap((dict) => dict.inline ?? []),
-    mergeText: dicts.flatMap((dict) => dict.mergeText ?? []),
-    labels: mergeTables(dicts.map((dict) => dict.labels)),
-    labelDescriptions: mergeTables(dicts.map((dict) => dict.labelDescriptions)),
-    labelRegexp: dicts.flatMap((dict) => dict.labelRegexp ?? []),
-    listNames: mergeTables(dicts.map((dict) => dict.listNames)),
-    issueTypes: mergeTables(dicts.map((dict) => dict.issueTypes)),
+    static: mergeTables(dicts.map(dict => dict.static)),
+    scoped: mergeTables(dicts.map(dict => dict.scoped)),
+    regexp: dicts.flatMap(dict => dict.regexp ?? []),
+    ignore: dicts.flatMap(dict => dict.ignore ?? []),
+    attributeRules: dicts.flatMap(dict => dict.attributeRules ?? []),
+    inline: dicts.flatMap(dict => dict.inline ?? []),
+    mergeText: dicts.flatMap(dict => dict.mergeText ?? []),
+    labels: mergeTables(dicts.map(dict => dict.labels)),
+    labelDescriptions: mergeTables(dicts.map(dict => dict.labelDescriptions)),
+    labelRegexp: dicts.flatMap(dict => dict.labelRegexp ?? []),
+    listNames: mergeTables(dicts.map(dict => dict.listNames)),
+    issueTypes: mergeTables(dicts.map(dict => dict.issueTypes))
   }
 }

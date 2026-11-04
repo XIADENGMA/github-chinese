@@ -6,7 +6,7 @@ const LOCK_REASON: Readonly<Record<string, string>> = {
   'off topic': '離題',
   'too heated': '過於激烈',
   resolved: '已解決',
-  spam: '垃圾內容',
+  spam: '垃圾內容'
 }
 
 /** 项目状态名：无状态时 GitHub 显示 No status */
@@ -52,8 +52,7 @@ export default {
     'changed the issue type from': '將議題類型從',
     'This milestone has been deleted': '此里程碑已刪除',
     'Issues mentioned': '提及的議題',
-    'This event is from a private repository and is only visible to repository members':
-      '此事件來自私人儲存庫且僅儲存庫成員可見',
+    'This event is from a private repository and is only visible to repository members': '此事件來自私人儲存庫且僅儲存庫成員可見',
     'Hide commit message body': '隱藏提交訊息內文',
     'Show commit message body': '顯示提交訊息內文',
     'Load newer activity': '載入較新的活動',
@@ -66,7 +65,7 @@ export default {
     'Timeline cannot be loaded': '無法載入時間軸',
     'The timeline is currently unavailable due to a system error. Try reloading the page.':
       '時間軸因系統錯誤而暫時無法使用。請嘗試重新載入頁面。',
-    'Issue timeline is being transferred.': '正在轉移議題時間軸。',
+    'Issue timeline is being transferred.': '正在轉移議題時間軸。'
   },
   scoped: {
     // 关闭 / 重新打开（原因链接：completed / not planned / duplicate）
@@ -167,27 +166,22 @@ export default {
     'Load all': '全部載入',
     Events: '事件',
     // 加载更多旁的菜单按钮（较早 / 较新的加载方向）
-    'Load more actions': '載入選項',
+    'Load more actions': '載入選項'
   },
   regexp: [
     // 锁定：locked [as off topic] and limited conversation to collaborators（原文无标点，译文不加）
     [
       /^locked (?:as (off topic|too heated|resolved|spam) )?and limited conversation to collaborators$/,
-      (_, reason) =>
-        reason ? `${lockReason(reason)}鎖定了對話並限制為僅協作者可留言` : '鎖定了對話並限制為僅協作者可留言',
+      (_, reason) => (reason ? `${lockReason(reason)}鎖定了對話並限制為僅協作者可留言` : '鎖定了對話並限制為僅協作者可留言')
     ],
     [/^as (off topic|too heated|resolved|spam)$/, (_, reason) => lockReason(reason)],
     // 通过项目状态关闭：closed this [as …] by moving to Done in <项目>（项目链接接在「於」后）
-    [
-      /^closed this by moving to (.+) in$/,
-      (_, status) => joinName(joinName('透過移至', projectStatus(status)), '關閉了此議題於'),
-    ],
+    [/^closed this by moving to (.+) in$/, (_, status) => joinName(joinName('透過移至', projectStatus(status)), '關閉了此議題於')],
     [/^by moving to (.+) in$/, (_, status) => joinName(joinName('透過移至', projectStatus(status)), '於')],
     // 项目状态变更：moved this from Todo to Done in <项目>
     [
       /^moved this from (.+?) to (.+) in$/,
-      (_, from, to) =>
-        joinName(joinName(joinName(joinName('將此議題從', projectStatus(from)), '移至'), projectStatus(to)), '於'),
+      (_, from, to) => joinName(joinName(joinName(joinName('將此議題從', projectStatus(from)), '移至'), projectStatus(to)), '於')
     ],
     [/^moved this to (.+) in$/, (_, status) => joinName(joinName('將此議題移至', projectStatus(status)), '於')],
     // 交叉引用
@@ -198,8 +192,7 @@ export default {
     [/^Only people who can see ([\w.-]+\/[\w.-]+) will see this reference\.$/, '只有能查看 $1 的人才會看到此參考。'],
     [
       /^This (issue|pull request) will close once commit ([0-9a-f]{7,40}) is merged into the '(.+)' branch\.$/,
-      (_, subject, sha, branch) =>
-        `提交 ${sha} 合併到「${branch}」分支後此${subject === 'issue' ? '議題' : '拉取請求'}將會關閉。`,
+      (_, subject, sha, branch) => `提交 ${sha} 合併到「${branch}」分支後此${subject === 'issue' ? '議題' : '拉取請求'}將會關閉。`
     ],
     [/^Undo marking issue as duplicate of issue #(\d+)$/, '復原將此議題標示為議題 #$1 的重複項目'],
     [/^Discussion #(\d+)$/, '討論 #$1'],
@@ -214,7 +207,7 @@ export default {
     [/^Load (\d+) more$/, '再載入 $1 個'],
     [/^(\d+) new items? loaded\.$/, '已載入 $1 個新項目。'],
     // 加载更多标题（mergeText 整段合并）：<h3><span>12</span><span> remaining <span>items</span></span></h3>
-    [/^(\d[\d,]*) remaining items?$/, '還有 $1 個項目'],
+    [/^(\d[\d,]*) remaining items?$/, '還有 $1 個項目']
   ],
   inline: [
     // 删除评论事件：<操作者> deleted a comment from <用户链接> [<时间链接>]。
@@ -226,11 +219,11 @@ export default {
     // 不命中时按 static 说明与 viewer.ts 的片段「（若問題持續發生）。」逐段翻译
     [
       'The timeline is currently unavailable due to a system error. Try reloading the page. {} if the problem persists.',
-      '時間軸因系統錯誤而暫時無法使用。請嘗試重新載入頁面。若問題持續發生，請{}。',
-    ],
+      '時間軸因系統錯誤而暫時無法使用。請嘗試重新載入頁面。若問題持續發生，請{}。'
+    ]
   ],
   mergeText: [
     // 时间线“加载更多”的标题：计数与 remaining / items 分在嵌套 span 中（LoadMore.module.css 的 remainingItemsHeading）
-    'h3[class*="remainingItemsHeading__"]',
-  ],
+    'h3[class*="remainingItemsHeading__"]'
+  ]
 } satisfies PageDictionary

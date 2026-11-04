@@ -1,11 +1,4 @@
-import {
-  MAX_TOASTS,
-  clearToasts,
-  createToastSource,
-  dismissToast,
-  showToast,
-  useToasts,
-} from '../../../src/components/toast'
+import { MAX_TOASTS, clearToasts, createToastSource, dismissToast, showToast, useToasts } from '../../../src/components/toast'
 import { shownToasts } from './helpers'
 
 afterEach(() => {
@@ -17,10 +10,10 @@ describe('提示队列', () => {
     const first = showToast('success', 'exists')
     const second = showToast('danger', 'imported', { count: 2 })
     expect(first).not.toBe(second)
-    expect(useToasts().value.map((toast) => toast.id)).toEqual([first, second])
+    expect(useToasts().value.map(toast => toast.id)).toEqual([first, second])
     expect(shownToasts()).toEqual([
       { tone: 'success', key: 'exists' },
-      { tone: 'danger', key: 'imported', params: { count: 2 } },
+      { tone: 'danger', key: 'imported', params: { count: 2 } }
     ])
   })
 
@@ -29,10 +22,10 @@ describe('提示队列', () => {
     showToast('success', 'exists')
     const again = showToast('danger', 'saveFailed')
     expect(again).not.toBe(first)
-    expect(useToasts().value.map((toast) => toast.id)).not.toContain(first)
+    expect(useToasts().value.map(toast => toast.id)).not.toContain(first)
     expect(shownToasts()).toEqual([
       { tone: 'success', key: 'exists' },
-      { tone: 'danger', key: 'saveFailed' },
+      { tone: 'danger', key: 'saveFailed' }
     ])
   })
 
@@ -48,7 +41,7 @@ describe('提示队列', () => {
     showToast('success', 'imported', { count: 2 })
     showToast('success', 'imported', { count: 3 })
     showToast('success', 'imported', { count: 4 })
-    expect(shownToasts().map((toast) => toast.params)).toEqual([{ count: 2 }, { count: 3 }, { count: 4 }])
+    expect(shownToasts().map(toast => toast.params)).toEqual([{ count: 2 }, { count: 3 }, { count: 4 }])
   })
 
   it('按 id 收起；id 不存在时不变', () => {

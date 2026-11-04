@@ -16,10 +16,10 @@ const BUNDLE: LocaleBundle = [
       static: {
         'Suggested change': '建议的更改',
         'Commit suggestion': '提交建议',
-        'Add suggestion to batch': '将建议加入批次',
-      },
-    },
-  ],
+        'Add suggestion to batch': '将建议加入批次'
+      }
+    }
+  ]
 ]
 
 /** 评论正文中的建议块：标题栏、代码表格、按钮区 */
@@ -44,11 +44,7 @@ const SUGGESTION = `
 
 let translator: Translator | undefined
 
-function start(
-  html: string,
-  matcher: Matcher = testMatcher(undefined, BUNDLE),
-  options: Partial<TranslatorOptions> = {},
-): Translator {
+function start(html: string, matcher: Matcher = testMatcher(undefined, BUNDLE), options: Partial<TranslatorOptions> = {}): Translator {
   document.body.innerHTML = html
   translator = createTranslator({ matcher, host: window, collectUntranslated: true, ...options })
   translator.start()
@@ -87,7 +83,7 @@ function countingMatcher(): { matcher: Matcher; calls: Map<string, number> } {
     translateRaw(raw, pages) {
       calls.set(raw.trim(), (calls.get(raw.trim()) ?? 0) + 1)
       return inner.translateRaw(raw, pages)
-    },
+    }
   }
   return { matcher, calls }
 }
@@ -116,9 +112,7 @@ function expectNested(calls: ReadonlyMap<string, number>): void {
   expect($('#direct-label').textContent).toBe('提交建议')
   expect($('#inner-user').textContent).toBe('Close')
   // 不隔忽略区域的嵌套建议块已随外层遍历，不再单独遍历
-  expect([calls.get('Suggested change'), calls.get('Add suggestion to batch'), calls.get('Commit suggestion')]).toEqual(
-    [1, 1, 1],
-  )
+  expect([calls.get('Suggested change'), calls.get('Add suggestion to batch'), calls.get('Commit suggestion')]).toEqual([1, 1, 1])
 }
 
 afterEach(() => {
@@ -137,9 +131,15 @@ describe('REENTRY_SELECTORS', () => {
 
   it('目标都是容器类的直接子元素（引擎按类名查找容器，只检查其直接子元素）', () => {
     // 自检：后代、相邻、并列形式都算；括号、方括号内的不算
-    expect(
-      ['.a .b', '.a > .b', '.a + .b', '.a ~ .b', '.a, .b', ':not(.a .b)', '[title="a b"]'].map(hasTopLevelCombinator),
-    ).toEqual([true, true, true, true, true, false, false])
+    expect(['.a .b', '.a > .b', '.a + .b', '.a ~ .b', '.a, .b', ':not(.a .b)', '[title="a b"]'].map(hasTopLevelCombinator)).toEqual([
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false
+    ])
     const prefix = `.${REENTRY_CONTAINER_CLASS} > `
     for (const selector of REENTRY_SELECTORS) {
       expect(selector.startsWith(prefix), selector).toBe(true)
@@ -170,8 +170,7 @@ describe('忽略区域内的重新进入区域', () => {
   it('经典视图用模板克隆替换按钮区（插入的是建议块的直接子元素）', async () => {
     start(SUGGESTION)
     const template = document.createElement('template')
-    template.innerHTML =
-      '<div class="d-flex" id="form"><button>Commit suggestion</button></div><span id="tip">Cancel</span>'
+    template.innerHTML = '<div class="d-flex" id="form"><button>Commit suggestion</button></div><span id="tip">Cancel</span>'
     $('#apply').replaceWith(template.content.cloneNode(true))
     await settle()
     expect($('#form button').textContent).toBe('提交建议')
@@ -241,9 +240,7 @@ describe('忽略区域内的重新进入区域', () => {
   })
 
   it('显式退出标记、跳过标签内不重新进入', async () => {
-    start(
-      `<div translate="no">${SUGGESTION}</div><pre><div class="js-suggested-changes-blob"><span id="in-pre">Close</span></div></pre>`,
-    )
+    start(`<div translate="no">${SUGGESTION}</div><pre><div class="js-suggested-changes-blob"><span id="in-pre">Close</span></div></pre>`)
     expect($('#label').textContent).toBe('Suggested change')
     expect($('#in-pre').textContent).toBe('Close')
     $('#apply').innerHTML = '<button>Commit suggestion</button>'
@@ -254,7 +251,7 @@ describe('忽略区域内的重新进入区域', () => {
   it.each([
     ['显式退出标记', '<div translate="no">', '</div>'],
     ['跳过标签', '<pre>', '</pre>'],
-    ['纯代码容器', '<div class="react-code-lines">', '</div>'],
+    ['纯代码容器', '<div class="react-code-lines">', '</div>']
   ])('正文内%s中的建议块不重新进入：首轮、插入直接子元素后都保持原文', async (_, open, close) => {
     start(`<div class="comment-body markdown-body">${open}<div class="js-suggested-changes-blob" id="blob">
       <div><span id="label">Suggested change</span></div>
@@ -332,7 +329,7 @@ describe('查找范围', () => {
   it.each([
     ['纯代码容器', '<div class="react-code-lines" id="lines"></div>'],
     ['显式退出标记', '<div translate="no" id="lines"></div>'],
-    ['跳过标签', '<pre id="lines"></pre>'],
+    ['跳过标签', '<pre id="lines"></pre>']
   ])('向%s内插入大量行：不查找，同一父元素只判断一次', (_, container) => {
     const rows = 50
     const t = start(`${container}${SUGGESTION}`)
@@ -372,8 +369,7 @@ describe('查找范围', () => {
     expect($('#first').textContent).toBe('建议的更改')
     expectKept()
 
-    $('#first-apply').innerHTML =
-      '<button type="button" aria-label="Add suggestion to batch">Commit suggestion</button>'
+    $('#first-apply').innerHTML = '<button type="button" aria-label="Add suggestion to batch">Commit suggestion</button>'
     await settle()
     const button = $('#first-apply button')
     expect(button.textContent).toBe('提交建议')

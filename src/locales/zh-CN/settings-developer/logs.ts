@@ -5,7 +5,7 @@ const TOKEN_ACTION: Readonly<Record<string, string>> = {
   Created: '创建了',
   Regenerated: '重新生成了',
   Updated: '更新了',
-  Revoked: '撤销了',
+  Revoked: '撤销了'
 }
 
 const TWO_FACTOR_METHOD: Readonly<Record<string, string>> = {
@@ -14,7 +14,7 @@ const TWO_FACTOR_METHOD: Readonly<Record<string, string>> = {
   'security key': '安全密钥',
   passkey: '通行密钥',
   'GitHub Mobile': 'GitHub 移动版',
-  'recovery code': '恢复代码',
+  'recovery code': '恢复代码'
 }
 
 /** 审核日志搜索建议「action: filter by action」中的筛选对象 */
@@ -26,7 +26,7 @@ const FILTER_TARGET: Readonly<Record<string, string>> = {
   operation: '操作类型',
   organization: '组织',
   repository: '存储库',
-  user: '用户',
+  user: '用户'
 }
 
 const FILTER_TARGET_SOURCE = '(action|actor|country|created date|operation|organization|repository|user)'
@@ -90,10 +90,8 @@ export default {
     'Created environment': '创建了环境',
     'Added deployment branch pattern with value': '添加的部署分支模式值为',
     'Created a deployment branch protection rule for': '为以下环境创建了部署分支保护规则',
-    'The environment can only deploy in branches matching a branch policy pattern.':
-      '该环境只能部署到与分支策略模式匹配的分支。',
-    '. The environment can only deploy in branches matching a branch policy pattern.':
-      '。该环境只能部署到与分支策略模式匹配的分支。',
+    'The environment can only deploy in branches matching a branch policy pattern.': '该环境只能部署到与分支策略模式匹配的分支。',
+    '. The environment can only deploy in branches matching a branch policy pattern.': '。该环境只能部署到与分支策略模式匹配的分支。',
     'Added the following repositories to the': '已将以下存储库添加到',
     'Removed the following repositories from the': '已将以下存储库移出',
     'Enabled GitHub Actions for': '为以下存储库启用了 GitHub 操作',
@@ -141,14 +139,12 @@ export default {
     'Receive immediate Slack messages when certain events happen': '发生特定事件时立即接收 Slack 消息',
     // 「… because the current plan for <strong>组织</strong> does not support reminders for private repositories.」
     // because 从句用“因…而…”，原文无逗号，译文不加
-    'You will only receive notifications from public repositories in this organization because the current plan for':
-      '你因组织',
-    'does not support reminders for private repositories.':
-      '的当前计划不支持专用存储库的提醒而只会收到此组织公共存储库的通知。',
+    'You will only receive notifications from public repositories in this organization because the current plan for': '你因组织',
+    'does not support reminders for private repositories.': '的当前计划不支持专用存储库的提醒而只会收到此组织公共存储库的通知。',
     'Upgrade to Team': '升级到团队版',
     'Create reminder': '创建提醒',
     'Update reminder': '更新提醒',
-    'Delete reminder': '删除提醒',
+    'Delete reminder': '删除提醒'
   },
   scoped: {
     'Period:': '时间段：',
@@ -191,7 +187,7 @@ export default {
     Friday: '星期五',
     Saturday: '星期六',
     Sunday: '星期日',
-    Times: '时间',
+    Times: '时间'
   },
   regexp: [
     [/^Found (\d+) events?$/, '找到 $1 个事件'],
@@ -199,32 +195,32 @@ export default {
     // 搜索建议的无障碍标签：「action: filter by action」
     [
       new RegExp(`^([a-z_]+): filter by ${FILTER_TARGET_SOURCE}$`),
-      (_, qualifier: string, target: string) => `${qualifier}: 按${FILTER_TARGET[target] ?? target}筛选`,
+      (_, qualifier: string, target: string) => `${qualifier}: 按${FILTER_TARGET[target] ?? target}筛选`
     ],
     [
       /^Two-factor auth challenge solved with (authenticator app|SMS|security key|passkey|GitHub Mobile|recovery code)$/,
-      (_, method: string) => joinCjk(joinCjk('已通过', TWO_FACTOR_METHOD[method] ?? method), '完成双因素身份验证质询'),
+      (_, method: string) => joinCjk(joinCjk('已通过', TWO_FACTOR_METHOD[method] ?? method), '完成双因素身份验证质询')
     ],
     // 原文句中无标点，译文也不加：「Created a token for octocat ending in abcd for the Copilot GitHub App.」
     [
       /^(Created|Regenerated|Updated|Revoked) a token for ([\w-]+) ending in (\S+) for the (.+) (GitHub App|OAuth app)(\.?)$/,
       (_, action: string, owner: string, suffix: string, app: string, kind: string, dot: string) =>
-        `${joinCjk(`${TOKEN_ACTION[action] ?? action} ${owner} 的尾号为 ${suffix} 的`, app)} ${APP_KIND[kind] ?? kind}令牌${dot ? '。' : ''}`,
+        `${joinCjk(`${TOKEN_ACTION[action] ?? action} ${owner} 的尾号为 ${suffix} 的`, app)} ${APP_KIND[kind] ?? kind}令牌${dot ? '。' : ''}`
     ],
     [/^Added deployment branch pattern with value (.+) for (.+)\.$/, '为 $2 添加了值为 $1 的部署分支模式。'],
     [
       /^Created a deployment branch protection rule for (.+)\. The environment can only deploy in branches matching a branch policy pattern\.$/,
-      '为 $1 创建了部署分支保护规则。该环境只能部署到与分支策略模式匹配的分支。',
+      '为 $1 创建了部署分支保护规则。该环境只能部署到与分支策略模式匹配的分支。'
     ],
     [/^Changed GitHub Pages visibility to public (.+)$/, '将 $1 的 GitHub 页面可见性更改为公共'],
     // 工作流令牌策略：句尾的存储库是链接
     [
       /^Set policy to default workflow token permission to (read|write) for$/,
-      (_, level: string) => `为以下存储库将默认工作流令牌权限策略设为${WORKFLOW_PERMISSION[level] ?? level}`,
+      (_, level: string) => `为以下存储库将默认工作流令牌权限策略设为${WORKFLOW_PERMISSION[level] ?? level}`
     ],
     [
       /^Set policy to default workflow token can create or approve PR to (true|false) for$/,
-      (_, value: string) => `为以下存储库${value === 'true' ? '允许' : '禁止'}默认工作流令牌创建或批准拉取请求`,
-    ],
-  ],
+      (_, value: string) => `为以下存储库${value === 'true' ? '允许' : '禁止'}默认工作流令牌创建或批准拉取请求`
+    ]
+  ]
 } satisfies PageDictionary

@@ -45,13 +45,7 @@
     </header>
 
     <section class="popup-section popup-status">
-      <UiSwitch
-        class="popup-enable"
-        :label="t('enable')"
-        :checked="settings.enabled"
-        :disabled="!settingsReady"
-        @change="setEnabled"
-      />
+      <UiSwitch class="popup-enable" :label="t('enable')" :checked="settings.enabled" :disabled="!settingsReady" @change="setEnabled" />
       <div class="popup-row">
         <span>{{ t('status') }}</span>
         <span class="popup-row-end">
@@ -101,189 +95,189 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import ToastHost from '../../components/ToastHost.vue'
-import UiButton from '../../components/ui/UiButton.vue'
-import UiSwitch from '../../components/ui/UiSwitch.vue'
-import { THEME_MESSAGE, useI18n, useUiPreferencesSync } from '../../components/ui-preferences'
-import UpdateBadge from '../../components/UpdateBadge.vue'
-import { REPOSITORY_URL } from '../../shared/extension'
-import GeneralSection from './GeneralSection.vue'
-import LanguageSection from './LanguageSection.vue'
-import { PAGE_STATE_MESSAGE, usePopup } from './usePopup'
+  import { computed } from 'vue'
+  import ToastHost from '../../components/ToastHost.vue'
+  import UiButton from '../../components/ui/UiButton.vue'
+  import UiSwitch from '../../components/ui/UiSwitch.vue'
+  import { THEME_MESSAGE, useI18n, useUiPreferencesSync } from '../../components/ui-preferences'
+  import UpdateBadge from '../../components/UpdateBadge.vue'
+  import { REPOSITORY_URL } from '../../shared/extension'
+  import GeneralSection from './GeneralSection.vue'
+  import LanguageSection from './LanguageSection.vue'
+  import { PAGE_STATE_MESSAGE, usePopup } from './usePopup'
 
-/** 扩展图标（public/ 下的文件）。用绑定而非静态属性：模板里静态的绝对路径会被编译成模块导入 */
-const LOGO_URL = '/icon/48.png'
+  /** 扩展图标（public/ 下的文件）。用绑定而非静态属性：模板里静态的绝对路径会被编译成模块导入 */
+  const LOGO_URL = '/icon/48.png'
 
-useUiPreferencesSync()
-const { t } = useI18n()
+  useUiPreferencesSync()
+  const { t } = useI18n()
 
-const {
-  version,
-  settings,
-  settingsReady,
-  tab,
-  state,
-  excluded,
-  canToggleExcluded,
-  setEnabled,
-  cycleTheme,
-  toggleExcluded,
-  authorize,
-  reloadTab,
-  openOptions,
-} = usePopup()
+  const {
+    version,
+    settings,
+    settingsReady,
+    tab,
+    state,
+    excluded,
+    canToggleExcluded,
+    setEnabled,
+    cycleTheme,
+    toggleExcluded,
+    authorize,
+    reloadTab,
+    openOptions
+  } = usePopup()
 
-const themeLabel = computed(() => t('appearanceCurrent', { mode: t(THEME_MESSAGE[settings.value.theme]) }))
+  const themeLabel = computed(() => t('appearanceCurrent', { mode: t(THEME_MESSAGE[settings.value.theme]) }))
 </script>
 
 <style scoped>
-/*
+  /*
  * 宽度：语言标签（中文界面 4 字，英文界面一个单词）与下拉（最小 180px）放得下同一行。
  * 不设高度上限、不做内层滚动：内容低于弹出页上限 600px；超出时（页面缩放、最小字号）整页滚动。
  * Chromium 不随窗口收窄：自适应尺寸时先在很窄的窗口里排版，收窄后内容变高、超出上限，
  * 量出的宽度带上了滚动条；内容恢复 300px 后滚动条消失，宽度不变，右侧留下一条空白。
  * min-width：弹出页比 300px 宽时铺满，不留空白；计算弹出页宽度时百分比不计，仍为 300px
  */
-.popup {
-  width: 300px;
-  min-width: 100%;
-}
-
-/* Firefox 出现占宽的纵向滚动条时不加宽弹出页：随之收窄，不出横向滚动条（判断方式同 theme.css 的滚动条样式） */
-@supports not selector(::-webkit-scrollbar) {
   .popup {
-    max-width: 100%;
+    width: 300px;
+    min-width: 100%;
   }
-}
 
-/* 设置读取前显示的是默认值，避免开关从默认状态动画切换 */
-.popup.is-loading :deep(*) {
-  transition: none !important;
-}
+  /* Firefox 出现占宽的纵向滚动条时不加宽弹出页：随之收窄，不出横向滚动条（判断方式同 theme.css 的滚动条样式） */
+  @supports not selector(::-webkit-scrollbar) {
+    .popup {
+      max-width: 100%;
+    }
+  }
 
-/* 右侧是图标按钮：内边距小一些，图标与下方开关的右缘对齐 */
-.popup-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 48px;
-  padding: 8px 10px 8px 16px;
-  background: var(--gcn-bg-muted);
-  border-bottom: 1px solid var(--gcn-border);
-}
+  /* 设置读取前显示的是默认值，避免开关从默认状态动画切换 */
+  .popup.is-loading :deep(*) {
+    transition: none !important;
+  }
 
-/* 图标自带深色底：描一圈细边，深色背景上也能看出轮廓 */
-.popup-logo {
-  flex: none;
-  border-radius: 5px;
-  box-shadow: 0 0 0 1px var(--gcn-border-muted);
-}
+  /* 右侧是图标按钮：内边距小一些，图标与下方开关的右缘对齐 */
+  .popup-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 8px 10px 8px 16px;
+    background: var(--gcn-bg-muted);
+    border-bottom: 1px solid var(--gcn-border);
+  }
 
-/* 名称与版本号按文字基线对齐；放不下时「新版本」换到下一行（英文界面、版本号较长） */
-.popup-brand {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 6px;
-  min-width: 0;
-}
+  /* 图标自带深色底：描一圈细边，深色背景上也能看出轮廓 */
+  .popup-logo {
+    flex: none;
+    border-radius: 5px;
+    box-shadow: 0 0 0 1px var(--gcn-border-muted);
+  }
 
-.popup-title {
-  font-size: 14px;
-  font-weight: 600;
-}
+  /* 名称与版本号按文字基线对齐；放不下时「新版本」换到下一行（英文界面、版本号较长） */
+  .popup-brand {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px;
+    min-width: 0;
+  }
 
-.popup-version {
-  font-size: 12px;
-  font-variant-numeric: tabular-nums;
-  color: var(--gcn-fg-muted);
-  white-space: nowrap;
-}
+  .popup-title {
+    font-size: 14px;
+    font-weight: 600;
+  }
 
-/* 排在一行的末尾（顶部的外观按钮、底部的存储库链接） */
-.popup-end {
-  margin-left: auto;
-}
+  .popup-version {
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    color: var(--gcn-fg-muted);
+    white-space: nowrap;
+  }
 
-.popup-icon {
-  display: block;
-}
+  /* 排在一行的末尾（顶部的外观按钮、底部的存储库链接） */
+  .popup-end {
+    margin-left: auto;
+  }
 
-/* 也用于常规、语言两个分区组件的根元素（模板中以 class 传入） */
-.popup-section {
-  display: grid;
-  gap: 4px;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--gcn-border);
-}
+  .popup-icon {
+    display: block;
+  }
 
-/* 总开关与当前页状态：同属当前页，放在一个分区 */
-.popup-status {
-  gap: 6px;
-}
+  /* 也用于常规、语言两个分区组件的根元素（模板中以 class 传入） */
+  .popup-section {
+    display: grid;
+    gap: 4px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gcn-border);
+  }
 
-.popup-enable {
-  font-weight: 600;
-}
+  /* 总开关与当前页状态：同属当前页，放在一个分区 */
+  .popup-status {
+    gap: 6px;
+  }
 
-/* 状态：标签在左，状态与操作在右，与上方开关右缘对齐 */
-.popup-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  min-height: var(--gcn-control-sm);
-}
+  .popup-enable {
+    font-weight: 600;
+  }
 
-.popup-row-end {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
+  /* 状态：标签在左，状态与操作在右，与上方开关右缘对齐 */
+  .popup-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-height: var(--gcn-control-sm);
+  }
 
-.state {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 2px 10px;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 18px;
-  white-space: nowrap;
-  color: var(--gcn-fg-muted);
-  background: var(--gcn-neutral-bg);
-  border-radius: 999px;
-}
+  .popup-row-end {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
 
-.state-dot {
-  width: 6px;
-  height: 6px;
-  background: currentColor;
-  border-radius: 50%;
-}
+  .state {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    white-space: nowrap;
+    color: var(--gcn-fg-muted);
+    background: var(--gcn-neutral-bg);
+    border-radius: 999px;
+  }
 
-.state-translated {
-  color: var(--gcn-success-fg);
-  background: var(--gcn-success-bg);
-}
+  .state-dot {
+    width: 6px;
+    height: 6px;
+    background: currentColor;
+    border-radius: 50%;
+  }
 
-.state-not-ready {
-  color: var(--gcn-attention-fg);
-  background: var(--gcn-attention-bg);
-}
+  .state-translated {
+    color: var(--gcn-success-fg);
+    background: var(--gcn-success-bg);
+  }
 
-.state-unauthorized {
-  color: var(--gcn-danger-fg);
-  background: var(--gcn-danger-bg);
-}
+  .state-not-ready {
+    color: var(--gcn-attention-fg);
+    background: var(--gcn-attention-bg);
+  }
 
-/* 右侧同顶部：图标与上方开关的右缘对齐 */
-.popup-footer {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 10px 12px 16px;
-  background: var(--gcn-bg-muted);
-}
+  .state-unauthorized {
+    color: var(--gcn-danger-fg);
+    background: var(--gcn-danger-bg);
+  }
+
+  /* 右侧同顶部：图标与上方开关的右缘对齐 */
+  .popup-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 10px 12px 16px;
+    background: var(--gcn-bg-muted);
+  }
 </style>

@@ -58,8 +58,7 @@ export default {
 
     // 电子邮件订阅页
     'Explore email newsletter': '探索電子報',
-    'Get email updates about what GitHub finds for you based on your interests':
-      '透過電子郵件接收 GitHub 根據你的興趣找到的內容',
+    'Get email updates about what GitHub finds for you based on your interests': '透過電子郵件接收 GitHub 根據你的興趣找到的內容',
     'Email isn’t for everyone. Or maybe you’ve just made github.com/explore your homepage. We won’t send you any emails.':
       '電子郵件不見得適合每個人。又或許你已經把 github.com/explore 設為首頁。我們不會寄送任何電子郵件給你。',
     'Start your day with a delicious cup of coffee (or perhaps an artisan matcha latte) and interesting repositories every day.':
@@ -67,7 +66,7 @@ export default {
     'The perfect way to keep on top of everything GitHub. Every Tuesday, we’ll send you an email with everything we found for you in the past week based on your interests.':
       '隨時掌握 GitHub 大小事的最佳方式。每週二，我們會寄一封電子郵件給你，內含過去一週根據你的興趣為你找到的所有內容。',
     'The best option for lurkers who want to keep up with major happenings in the open source world.':
-      '最適合只想默默掌握開源世界大事的人。',
+      '最適合只想默默掌握開源世界大事的人。'
   },
   scoped: {
     // 子导航右侧的订阅入口（与 sponsors 探索页同译）
@@ -80,7 +79,7 @@ export default {
     Weekly: '每週',
     Monthly: '每月',
     'Subscribed!': '已訂閱！',
-    'Unsubscribed!': '已取消訂閱！',
+    'Unsubscribed!': '已取消訂閱！'
   },
   regexp: [
     // 储存库卡片：储存库分页导航
@@ -90,6 +89,6 @@ export default {
     // 侧栏：已加星号的主题与储存库
     [/^([\d,]+) starred topics?$/, '$1 個已加星號的主題'],
     [/^([\d,]+) starred repositor(?:y|ies)$/, '$1 個已加星號的儲存庫'],
-    [/^([\d,]+) more$/, '還有 $1 個'],
-  ],
+    [/^([\d,]+) more$/, '還有 $1 個']
+  ]
 } satisfies PageDictionary

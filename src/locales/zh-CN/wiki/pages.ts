@@ -8,10 +8,7 @@ const regexp: readonly RegExpRule[] = [
   // 页面头部：<用户> edited this page <时间> · 14 revisions
   [/^(.+) edited this page$/, '$1 编辑于'],
   [/^(\d[\d,]*) revisions?$/, '$1 次修订'],
-  [
-    new RegExp(`^Last edited by (.+?),? (${TIME_SOURCE})$`),
-    (_, user, time) => `${user} ${joinCjk('最后编辑于', translateTime(time))}`,
-  ],
+  [new RegExp(`^Last edited by (.+?),? (${TIME_SOURCE})$`), (_, user, time) => `${user} ${joinCjk('最后编辑于', translateTime(time))}`],
   // 侧栏（页面名原文不带引号，译文也不加）
   [/^Show (\d[\d,]*) more pages?(…|\.\.\.)$/, '再显示 $1 个页面$2'],
   [/^Structure for (.+)$/, (_, name: string) => joinCjk(name, '的结构')],
@@ -24,7 +21,7 @@ const regexp: readonly RegExpRule[] = [
   [/^(\d[\d,]*) changes?: (\d[\d,]*) additions? & (\d[\d,]*) deletions?$/, '$1 处更改：新增 $2 行和删除 $3 行'],
   [/^(\d[\d,]*) changed files?$/, '$1 个已更改的文件'],
   [/^(\d[\d,]*) additions?$/, '新增 $1 行'],
-  [/^(\d[\d,]*) deletions?$/, '删除 $1 行'],
+  [/^(\d[\d,]*) deletions?$/, '删除 $1 行']
 ]
 
 /**
@@ -73,7 +70,7 @@ export default {
       '在你编辑期间有人修改了此 Wiki。请重新加载此页面并重新应用你的更改。',
     'Edit mode': '编辑模式',
     'Edit mode:': '编辑模式：',
-    'Write a small message here explaining this change. (Optional)': '简要说明此次更改。（可选）',
+    'Write a small message here explaining this change. (Optional)': '简要说明此次更改。（可选）'
   },
   scoped: {
     // 页面查看与侧栏（Last edited by 由 common-ui 翻译）
@@ -120,7 +117,7 @@ export default {
     // 编辑页标题：Editing <页面名>（与正则“Editing X”译法一致）
     Editing: '编辑',
     'Edit message': '编辑说明',
-    'Page content': '页面内容',
+    'Page content': '页面内容'
   },
   regexp,
   ignore: [
@@ -136,6 +133,6 @@ export default {
     // 历史：修订说明、作者名、勾选框（aria-label 含修订说明）
     '.js-wiki-history-revision p',
     '.js-wiki-history-revision .text-bold',
-    '.js-wiki-history-checkbox',
-  ],
+    '.js-wiki-history-checkbox'
+  ]
 } satisfies PageDictionary

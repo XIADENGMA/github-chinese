@@ -25,17 +25,17 @@ export const TEST_BUNDLE: LocaleBundle = [
         Star: '星标',
         Newest: '最新',
         'Are you sure?': '确定吗？',
-        'Saving…': '保存中…',
+        'Saving…': '保存中…'
       },
       regexp: [
         [/^Updated (\d+) days? ago$/, '$1天前更新'],
         [/^(\d+) comments?$/, '$1 条评论'],
-        [/^Opened by (.+)$/, (_, user) => `由 ${user} 打开`],
-      ],
-    },
+        [/^Opened by (.+)$/, (_, user) => `由 ${user} 打开`]
+      ]
+    }
   ],
   ['issues', { scoped: { Open: '未解决' }, ignore: ['.issue-user-content'] }],
-  ['pulls', { scoped: { Open: '开启中' } }],
+  ['pulls', { scoped: { Open: '开启中' } }]
 ]
 
 export function testMatcher(options?: MatcherOptions, bundle: LocaleBundle = TEST_BUNDLE): Matcher {
@@ -52,23 +52,23 @@ export const PAGE_IGNORES = {
     'header.GlobalNav [data-component="Breadcrumbs.Item"]',
     '.AppHeader-context-item-label',
     '.AppHeader-context-compact-parentItem',
-    '.AppHeader-context-compact-mainItem',
+    '.AppHeader-context-compact-mainItem'
   ],
   actions: [
     '[data-target~="streaming-graph-job.name"]',
     '[data-target~="streaming-graph-job.name"] ~ .css-truncate',
-    '.Overlay-titleWrap:has(.markdown-title) > .Overlay-title',
-  ],
+    '.Overlay-titleWrap:has(.markdown-title) > .Overlay-title'
+  ]
 } as const satisfies Partial<Record<PageKey, readonly string[]>>
 
 /** 等待微任务与变动回调全部完成 */
 export function settle(): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, 0))
+  return new Promise(resolve => setTimeout(resolve, 0))
 }
 
 /** 元素的直接子文本节点内容 */
 export function texts(element: Element): string[] {
-  return [...element.childNodes].filter((node) => node.nodeType === 3).map((node) => (node as Text).data)
+  return [...element.childNodes].filter(node => node.nodeType === 3).map(node => (node as Text).data)
 }
 
 export function $(selector: string): Element {

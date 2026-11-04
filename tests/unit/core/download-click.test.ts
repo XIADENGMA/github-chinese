@@ -32,7 +32,7 @@ function click(target: Element, init: MouseEventInit = {}): boolean {
 
 /** 等待异步回调执行 */
 async function flushTasks(): Promise<void> {
-  await new Promise((done) => setTimeout(done, 0))
+  await new Promise(done => setTimeout(done, 0))
 }
 
 function setVisibility(isPublic: boolean): void {
@@ -62,10 +62,7 @@ describe('createDownloadClickHandler', () => {
 
   it('相对地址按页面解析', () => {
     expect(click(addLink('/vuejs/core/archive/refs/tags/v3.5.0.zip'))).toBe(true)
-    expect(open).toHaveBeenCalledWith(
-      'https://ghfast.top/https://github.com/vuejs/core/archive/refs/tags/v3.5.0.zip',
-      false,
-    )
+    expect(open).toHaveBeenCalledWith('https://ghfast.top/https://github.com/vuejs/core/archive/refs/tags/v3.5.0.zip', false)
   })
 
   it('原链接在新标签页打开（target="_blank"）：同样开新标签页', () => {
@@ -76,7 +73,7 @@ describe('createDownloadClickHandler', () => {
   it.each([
     ['未开启下载加速', { accelerate: false }],
     ['总开关关闭', { enabled: false }],
-    ['没有加速源', { removedSources: BUILTIN_SOURCES.map((source) => source.id) }],
+    ['没有加速源', { removedSources: BUILTIN_SOURCES.map(source => source.id) }]
   ] as const)('%s：不处理', (_name, overrides) => {
     settings = { ...settings, ...overrides }
     expect(click(addLink(RELEASE))).toBe(false)
@@ -88,7 +85,7 @@ describe('createDownloadClickHandler', () => {
     ['Ctrl', { ctrlKey: true }],
     ['Meta', { metaKey: true }],
     ['Shift', { shiftKey: true }],
-    ['Alt', { altKey: true }],
+    ['Alt', { altKey: true }]
   ] as const)('%s 点击：不处理', (_name, init) => {
     expect(click(addLink(RELEASE), init)).toBe(false)
     expect(open).not.toHaveBeenCalled()
@@ -137,10 +134,7 @@ describe('createDownloadClickHandler', () => {
 
   it('codeload 链接：换成 github.com 的 archive 再加速', () => {
     click(addLink('https://codeload.github.com/vuejs/core/zip/refs/heads/main'))
-    expect(open).toHaveBeenCalledWith(
-      'https://ghfast.top/https://github.com/vuejs/core/archive/refs/heads/main.zip',
-      false,
-    )
+    expect(open).toHaveBeenCalledWith('https://ghfast.top/https://github.com/vuejs/core/archive/refs/heads/main.zip', false)
   })
 
   it('首选加速源不支持的链接（gh-proxy.org 与 Gist 压缩包）：改用列表中第一个支持的', () => {
@@ -153,15 +147,12 @@ describe('createDownloadClickHandler', () => {
   it('没有加速源支持的链接（只剩用 {path} 的自定义源，Gist 不在 github.com 上）：不处理', () => {
     settings = {
       ...settings,
-      removedSources: BUILTIN_SOURCES.map((source) => source.id),
-      customSources: [{ id: 'custom-1', name: 'Mirror', template: 'https://mirror.example/{path}' }],
+      removedSources: BUILTIN_SOURCES.map(source => source.id),
+      customSources: [{ id: 'custom-1', name: 'Mirror', template: 'https://mirror.example/{path}' }]
     }
     expect(click(addLink('https://gist.github.com/octocat/0831f3fbd83ac4d46451/archive/c197afe.zip'))).toBe(false)
     expect(click(addLink(RELEASE))).toBe(true)
-    expect(open).toHaveBeenCalledExactlyOnceWith(
-      `https://mirror.example/vuejs/core/releases/download/v3.5.0/vue.global.js`,
-      false,
-    )
+    expect(open).toHaveBeenCalledExactlyOnceWith(`https://mirror.example/vuejs/core/releases/download/v3.5.0/vue.global.js`, false)
   })
 
   describe('故障转移开启', () => {

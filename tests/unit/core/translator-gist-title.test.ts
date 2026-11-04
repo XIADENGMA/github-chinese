@@ -5,10 +5,7 @@ import type { LocaleBundle } from '../../../src/core/types'
 import { TEST_BUNDLE, testMatcher } from './helpers'
 
 /** 测试词典加上 gist 页的子页名与列表页标题 */
-const BUNDLE: LocaleBundle = [
-  ...TEST_BUNDLE,
-  ['gist', { scoped: { Forks: '复刻' }, regexp: [[/^([\w-]+)[’']s gists$/, '$1 的 Gist']] }],
-]
+const BUNDLE: LocaleBundle = [...TEST_BUNDLE, ['gist', { scoped: { Forks: '复刻' }, regexp: [[/^([\w-]+)[’']s gists$/, '$1 的 Gist']] }]]
 
 let translator: Translator | undefined
 

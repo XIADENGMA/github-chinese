@@ -26,5 +26,5 @@ export default mergeDictionaries(
   comments,
   hovercards,
   validation,
-  labels,
+  labels
 ) satisfies PageDictionary

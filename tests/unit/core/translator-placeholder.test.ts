@@ -18,10 +18,10 @@ const BUNDLE: LocaleBundle = [
         'Loading preview…': '正在加载预览…',
         'Error rendering preview': '渲染预览时出错',
         Preview: '预览',
-        Issues: '议题',
-      },
-    },
-  ],
+        Issues: '议题'
+      }
+    }
+  ]
 ]
 
 /** Markdown 编辑器预览窗格：预览为空时 .markdown-body 里只有占位文字 */
@@ -83,16 +83,14 @@ describe('忽略区域里的占位文字', () => {
   it('只认占位文字：只有文字的其他内容、外层也是忽略区域时都不翻译', () => {
     start(
       '<div class="markdown-body" id="other">Issues</div>' +
-        '<div class="comment-body" id="outer"><div class="markdown-body">Nothing to preview</div></div>',
+        '<div class="comment-body" id="outer"><div class="markdown-body">Nothing to preview</div></div>'
     )
     expect(text('#other')).toBe('Issues')
     expect(text('#outer')).toBe('Nothing to preview')
   })
 
   it('预览窗格带哈希类名、没有播报属性时同样翻译', () => {
-    start(
-      '<div class="previewViewerWrapper__ayPbFL"><div class="markdown-body" id="body">Nothing to preview</div></div>',
-    )
+    start('<div class="previewViewerWrapper__ayPbFL"><div class="markdown-body" id="body">Nothing to preview</div></div>')
     expect(text('#body')).toBe('没有可预览的内容')
   })
 
@@ -104,7 +102,7 @@ describe('忽略区域里的占位文字', () => {
         'Nothing to preview</span></span>' +
         '<p class="commit-title" id="commit">Nothing to preview</p>' +
         '<div class="markdown-body" id="comment">Nothing to preview</div>' +
-        '<bdi class="markdown-title" id="later">Sample title</bdi>',
+        '<bdi class="markdown-title" id="later">Sample title</bdi>'
     )
     for (const id of ['#title', '#label', '#commit', '#comment']) expect(text(id)).toBe('Nothing to preview')
     expect(text('#description')).toBe('\n  Nothing to preview\n')
@@ -119,7 +117,7 @@ describe('忽略区域里的占位文字', () => {
       '<div aria-live="polite"><div class="markdown-body" translate="no" id="no">Nothing to preview</div></div>' +
         '<div aria-live="polite"><div class="markdown-body notranslate" id="notranslate">Nothing to preview</div></div>' +
         '<div aria-live="polite"><div class="markdown-body" data-gcn-ignore id="gcn">Nothing to preview</div></div>' +
-        '<div aria-live="polite"><div class="markdown-body" contenteditable="true" id="edit">Nothing to previe</div></div>',
+        '<div aria-live="polite"><div class="markdown-body" contenteditable="true" id="edit">Nothing to previe</div></div>'
     )
     for (const id of ['#no', '#notranslate', '#gcn']) expect(text(id)).toBe('Nothing to preview')
     ;($('#edit').firstChild as Text).data = 'Nothing to preview'
@@ -145,10 +143,7 @@ describe('忽略区域里的占位文字', () => {
     const t = start(PREVIEW.replace('Nothing to preview', 'Markdown preview unavailable'))
     expect(text('#body')).toBe('Markdown 预览不可用')
     $('#body').remove()
-    $('#pane').insertAdjacentHTML(
-      'beforeend',
-      '<div class="markdown-body" id="later">Markdown preview unavailable</div>',
-    )
+    $('#pane').insertAdjacentHTML('beforeend', '<div class="markdown-body" id="later">Markdown preview unavailable</div>')
     await settle()
     expect(text('#later')).toBe('Markdown 预览不可用')
     t.stop()
@@ -172,7 +167,7 @@ describe('经典评论框的预览区', () => {
       '<p>Loading preview&hellip;</p>',
       '<p>Nothing to preview</p>',
       '<p>Loading preview&hellip;</p>',
-      '<p>Error rendering preview</p>',
+      '<p>Error rendering preview</p>'
     ]) {
       $('#classic').innerHTML = html
       await settle()
@@ -190,7 +185,7 @@ describe('经典评论框的预览区', () => {
       '<p>Nothing to preview</p><p>Issues</p>',
       '<p>Nothing to preview <a href="/octocat">octocat</a></p>',
       'Issues<p>Nothing to preview</p>',
-      '<p>Issues</p>',
+      '<p>Issues</p>'
     ]
     const shown: string[] = []
     for (const html of contents) {
@@ -203,7 +198,7 @@ describe('经典评论框的预览区', () => {
       'Nothing to previewIssues',
       'Nothing to preview octocat',
       'IssuesNothing to preview',
-      'Issues',
+      'Issues'
     ])
   })
 
@@ -213,7 +208,7 @@ describe('经典评论框的预览区', () => {
         '<div class="markdown-body"><div class="comment-body js-preview-body" id="nested"><p>Nothing to preview</p></div></div>' +
         '<div class="comment-body markdown-body js-preview-body" translate="no" id="no"><p>Nothing to preview</p></div>' +
         '<div class="comment-body markdown-body js-preview-body notranslate" id="notranslate">' +
-        '<p>Error rendering preview</p></div>',
+        '<p>Error rendering preview</p></div>'
     )
     for (const id of ['#comment', '#nested', '#no']) expect(text(id)).toBe('Nothing to preview')
     expect(text('#notranslate')).toBe('Error rendering preview')
@@ -254,7 +249,7 @@ describe('经典评论框的预览区', () => {
 
 describe.each([
   ['zh-CN', zhCN],
-  ['zh-TW', zhTW],
+  ['zh-TW', zhTW]
 ])('正式词典（%s）', (_, bundle) => {
   it('占位文字在 common 作用域都有译文', () => {
     const matcher = createMatcher(bundle)
@@ -268,13 +263,13 @@ describe.each([
         CLASSIC('<p>Loading preview&hellip;</p>', 'loading') +
         CLASSIC('\n    <p>Nothing to preview</p>\n  ', 'empty') +
         CLASSIC('<p>Error rendering preview</p>', 'error'),
-      bundle,
+      bundle
     )
     const cases: [string, string][] = [
       ['#body', 'Markdown preview unavailable'],
       ['#loading', 'Loading preview…'],
       ['#empty', 'Nothing to preview'],
-      ['#error', 'Error rendering preview'],
+      ['#error', 'Error rendering preview']
     ]
     for (const [selector, source] of cases) {
       const translated = matcher.translate(source, ISSUES)

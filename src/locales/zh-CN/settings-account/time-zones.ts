@@ -160,7 +160,7 @@ export const TIME_ZONES: Readonly<Record<string, string>> = {
   'Nuku’alofa': '努库阿洛法',
   'Tokelau Is.': '托克劳群岛',
   'Chatham Is.': '查塔姆群岛',
-  Samoa: '萨摩亚',
+  Samoa: '萨摩亚'
 }
 
 function escapeRegExp(text: string): string {
@@ -181,7 +181,7 @@ export default {
   regexp: [
     [
       new RegExp(`^\\((GMT|UTC)([+-]\\d{2}:\\d{2})?\\) (${ZONE_SOURCE})$`),
-      (_, prefix: string, offset: string, zone: string) => `(${prefix}${offset}) ${TIME_ZONES[zone] ?? zone}`,
-    ],
-  ],
+      (_, prefix: string, offset: string, zone: string) => `(${prefix}${offset}) ${TIME_ZONES[zone] ?? zone}`
+    ]
+  ]
 } satisfies PageDictionary

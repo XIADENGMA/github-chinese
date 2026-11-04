@@ -7,13 +7,13 @@ import type { PageDictionary } from '../../../core/types'
 const SINCE: Readonly<Record<string, string>> = {
   today: '今日',
   'this week': '本周',
-  'this month': '本月',
+  'this month': '本月'
 }
 
 /** 趋势榜类型 */
 const KIND: Readonly<Record<string, string>> = {
   repositories: '存储库',
-  developers: '开发人员',
+  developers: '开发人员'
 }
 
 /** 语言名（变量）两侧补空格，与中文隔开 */
@@ -42,8 +42,7 @@ export default {
     'Filter spoken languages': '筛选自然语言',
     'Clear spoken language': '清除自然语言',
     'Filter by spoken language': '按自然语言筛选',
-    'Select your preferred spoken language in order to see matching trending results.':
-      '选择偏好的自然语言以查看匹配的趋势结果。',
+    'Select your preferred spoken language in order to see matching trending results.': '选择偏好的自然语言以查看匹配的趋势结果。',
     // 句子被链接拆成：This setting can be saved in your + profile settings + .
     'This setting can be saved in your': '此设置可保存到你的',
     'This setting can be updated in your': '此设置可更新于你的',
@@ -52,7 +51,7 @@ export default {
     'Type or choose a language': '输入或选择语言',
     'Adjust time span': '调整时间范围',
     'GitHub Sponsors participation': 'GitHub 赞助参与情况',
-    'Sponsorable developers': '可赞助的开发者',
+    'Sponsorable developers': '可赞助的开发者'
   },
   scoped: {
     'profile settings': '个人资料设置',
@@ -77,7 +76,7 @@ export default {
     'Built by': '构建者',
 
     // 开发人员条目
-    'Popular repo': '热门存储库',
+    'Popular repo': '热门存储库'
   },
   regexp: [
     // 存储库条目：675 stars today / 2,987 stars this week
@@ -88,12 +87,12 @@ export default {
     // 空状态：It looks like we don’t have any trending repositories for Zimpl.
     [
       /^It looks like we don[’']t have any trending (repositories|developers)(?: for (.+?))?\.$/,
-      (_, kind, language) => `暂无${spaced(language)}趋势${KIND[kind] ?? kind}。`,
+      (_, kind, language) => `暂无${spaced(language)}趋势${KIND[kind] ?? kind}。`
     ],
     // 标签页标题段：Trending TypeScript repositories on GitHub this week
     [
       /^Trending (?:(.+) )?(repositories|developers) on GitHub (today|this week|this month)$/,
-      (_, language, kind, since) => `${SINCE[since] ?? since} GitHub 上的${spaced(language)}趋势${KIND[kind] ?? kind}`,
-    ],
-  ],
+      (_, language, kind, since) => `${SINCE[since] ?? since} GitHub 上的${spaced(language)}趋势${KIND[kind] ?? kind}`
+    ]
+  ]
 } satisfies PageDictionary

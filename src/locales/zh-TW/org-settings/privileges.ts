@@ -9,7 +9,7 @@ const PERMISSION_NAMES: Readonly<Record<string, string>> = {
   None: '無',
   Read: '讀取',
   Write: '寫入',
-  Admin: '管理員',
+  Admin: '管理員'
 }
 
 const PERMISSION_SOURCE = '(No permission|No access|None|Read|Write|Admin)'
@@ -48,8 +48,7 @@ export default {
     'Members will be able to clone, pull, and push all repositories.': '成員可以複製、拉取並推送所有儲存庫。',
     'Members will be able to clone, pull, push, and add new collaborators to all repositories.':
       '成員可以複製、拉取、推送所有儲存庫，並為其新增協作者。',
-    'You are about to change the base repository permission for this organization.':
-      '你即將變更此組織的儲存庫基本權限。',
+    'You are about to change the base repository permission for this organization.': '你即將變更此組織的儲存庫基本權限。',
     'Base repository permission removed.': '已移除儲存庫基本權限。',
     // 「Update in progress」+「. Refresh to see if it’s done.」：句号随原文
     'Update in progress': '正在更新',
@@ -60,8 +59,7 @@ export default {
     'Repository creation': '儲存庫建立',
     'Members will be able to create only selected repository types. Outside collaborators can never create repositories.':
       '成員只能建立選取的儲存庫類型。外部協作者一律無法建立儲存庫。',
-    'Members will be able to create public repositories, visible to anyone.':
-      '成員可以建立公開儲存庫，所有人皆可查看。',
+    'Members will be able to create public repositories, visible to anyone.': '成員可以建立公開儲存庫，所有人皆可查看。',
     'Members will be able to create private repositories, visible to organization members with permission.':
       '成員可以建立私人儲存庫，僅具備權限的組織成員可以查看。',
     'Members will be able to create internal repositories, visible to all enterprise members.':
@@ -100,25 +98,21 @@ export default {
     'This won’t affect any existing projects.': '這不會影響任何現有專案。',
     'Members can see projects.': '成員可以查看專案。',
     'Members can see and make changes to projects.': '成員可以查看並變更專案。',
-    'Members can see, make changes to, and add new collaborators to projects.':
-      '成員可以查看、變更專案，並為專案新增協作者。',
+    'Members can see, make changes to, and add new collaborators to projects.': '成員可以查看、變更專案，並為專案新增協作者。',
     'Projects settings updated for this organization.': '已更新此組織的專案設定。',
 
     // 页面创建（产品名 Pages → 頁面，见 nav.ts 文件头）
     'Pages creation': '頁面建立',
-    'Members will be able to publish sites with only the selected access controls.':
-      '成員只能以選取的存取控制發布網站。',
+    'Members will be able to publish sites with only the selected access controls.': '成員只能以選取的存取控制發布網站。',
     'Members will be able to create public sites, visible to anyone.': '成員可以建立公開網站，所有人皆可查看。',
-    'Members will be able to create private sites, visible to anyone with permission.':
-      '成員可以建立私人網站，僅具備權限的人可以查看。',
+    'Members will be able to create private sites, visible to anyone with permission.': '成員可以建立私人網站，僅具備權限的人可以查看。',
 
     // 应用访问请求
     'App access requests': '應用程式存取請求',
     'Choose who can request GitHub or OAuth apps to use with resources in this organization':
       '選擇誰可以申請在此組織的資源中使用 GitHub 應用程式或 OAuth 應用程式',
     'Members and outside collaborators': '成員和外部協作者',
-    'Both members and outside collaborators can request apps for this organization.':
-      '成員和外部協作者都可以為此組織申請應用程式。',
+    'Both members and outside collaborators can request apps for this organization.': '成員和外部協作者都可以為此組織申請應用程式。',
     'Members only': '僅限成員',
     'Members can request apps, while outside collaborators cannot.': '成員可以申請應用程式，外部協作者則不行。',
     'Disable app access requests': '停用應用程式存取請求',
@@ -129,10 +123,8 @@ export default {
       '外部協作者將可以申請讓 GitHub 應用程式或 OAuth 應用程式存取此組織及其資源。',
     'Outside collaborators can no longer request third party access.': '外部協作者已無法申請第三方存取。',
     'Outside collaborators can now request third party access.': '外部協作者現在可以申請第三方存取。',
-    'Allow repository admins to install GitHub Apps for their repositories.':
-      '允許儲存庫管理員為其儲存庫安裝 GitHub 應用程式。',
-    'Allow repository admins to install GitHub Apps for their repositories':
-      '允許儲存庫管理員為其儲存庫安裝 GitHub 應用程式',
+    'Allow repository admins to install GitHub Apps for their repositories.': '允許儲存庫管理員為其儲存庫安裝 GitHub 應用程式。',
+    'Allow repository admins to install GitHub Apps for their repositories': '允許儲存庫管理員為其儲存庫安裝 GitHub 應用程式',
     "Repository admins will be able to install and configure GitHub Apps on their repositories without requesting first, if the app doesn't require organization or repository administration permissions.":
       '如果應用程式不需要組織或儲存庫管理權限，儲存庫管理員可以直接在其儲存庫上安裝並設定 GitHub 應用程式，無須事先申請。',
     'Repository admins will be able to install and configure GitHub Apps on their repositories without requesting first, if the app doesn’t require organization or repository administration permissions.':
@@ -163,8 +155,7 @@ export default {
     'Members can now delete issues.': '成員現在可以刪除議題。',
     'Members can no longer delete issues.': '成員已無法刪除議題。',
     'Branch renames': '分支重新命名',
-    'Allow repository administrators to rename branches protected by organization rules':
-      '允許儲存庫管理員重新命名受組織規則保護的分支',
+    'Allow repository administrators to rename branches protected by organization rules': '允許儲存庫管理員重新命名受組織規則保護的分支',
     'If enabled, members with admin permissions for the repository will be able to rename branches targeted by organization-level rulesets, provided the new name is still covered by those same rulesets or the repository admin has bypass permission. If disabled, only organization owners can rename such branches.':
       '啟用後，具有儲存庫管理員權限的成員可以重新命名組織層級規則集所針對的分支，前提是新名稱仍在相同規則集的涵蓋範圍內，或儲存庫管理員具有繞過權限。停用後，只有組織擁有者可以重新命名這類分支。',
 
@@ -178,14 +169,11 @@ export default {
     'Members can no longer create teams.': '成員已無法建立團隊。',
     'Member organization permissions': '成員組織權限',
     'Allow members to view dependency insights': '允許成員查看相依性洞察',
-    'If enabled, members will be able to view dependency insights for this organization.':
-      '啟用後，成員可以查看此組織的相依性洞察。',
+    'If enabled, members will be able to view dependency insights for this organization.': '啟用後，成員可以查看此組織的相依性洞察。',
     'Repository Comments': '儲存庫留言',
     'Repository comments': '儲存庫留言',
-    "Allow members to see comment author's profile name in private repositories":
-      '允許成員在私人儲存庫中查看留言作者的個人檔案名稱',
-    'Allow members to see comment author’s profile name in private repositories':
-      '允許成員在私人儲存庫中查看留言作者的個人檔案名稱',
+    "Allow members to see comment author's profile name in private repositories": '允許成員在私人儲存庫中查看留言作者的個人檔案名稱',
+    'Allow members to see comment author’s profile name in private repositories': '允許成員在私人儲存庫中查看留言作者的個人檔案名稱',
 
     // 团队讨论
     'Team discussions provide a place for a team to have conversations that span across projects or repositories and that don’t belong in an issue or a pull request.':
@@ -213,7 +201,7 @@ export default {
     'Organization rulesets won’t be enforced': '組織規則集不會強制執行',
     'until you upgrade this organization account to GitHub Team.': '，除非將此組織帳號升級到 GitHub 團隊版。',
     'New policy': '新增政策',
-    'Repository policy': '儲存庫政策',
+    'Repository policy': '儲存庫政策'
   },
   scoped: {
     'No permission': '無權限',
@@ -231,8 +219,7 @@ export default {
 
     // 存储库邀请
     'Repository invitations': '儲存庫邀請',
-    'Allow members to invite outside collaborators to repositories for this organization':
-      '允許成員邀請外部協作者加入此組織的儲存庫',
+    'Allow members to invite outside collaborators to repositories for this organization': '允許成員邀請外部協作者加入此組織的儲存庫',
     'If enabled, members with admin permissions for the repository will be able to invite outside collaborators. If disabled, only organization owners can invite outside collaborators.':
       '啟用後，具有儲存庫管理員權限的成員可以邀請外部協作者。停用後，只有組織擁有者可以邀請外部協作者。',
 
@@ -247,32 +234,30 @@ export default {
     'Changing this setting to disabled will result in existing deploy keys being disabled in all repositories in the organization.':
       '將此設定改為停用後，組織所有儲存庫中的現有部署金鑰都會停用。',
     'Scripts, apps, or workflows that create, use, or delete deploy keys will no longer work.':
-      '建立、使用或刪除部署金鑰的指令碼、應用程式或工作流程將無法再運作。',
+      '建立、使用或刪除部署金鑰的指令碼、應用程式或工作流程將無法再運作。'
   },
   regexp: [
     [
       new RegExp(`^Change (base|default) permissions? to ${OPEN_QUOTE}${PERMISSION_SOURCE}${CLOSE_QUOTE}$`),
       (_, kind: string, quote: string, permission: string) =>
-        `將${kind === 'base' ? '基本' : '預設'}權限變更為${quotedPermission(quote, permission)}`,
+        `將${kind === 'base' ? '基本' : '預設'}權限變更為${quotedPermission(quote, permission)}`
     ],
     [
       new RegExp(`^Base repository permission updated to ${OPEN_QUOTE}${PERMISSION_SOURCE}${CLOSE_QUOTE}\\.$`),
-      (_, quote: string, permission: string) => `儲存庫基本權限已更新為${quotedPermission(quote, permission)}。`,
+      (_, quote: string, permission: string) => `儲存庫基本權限已更新為${quotedPermission(quote, permission)}。`
     ],
     [
       new RegExp(`^Base permission updated to ${OPEN_QUOTE}${PERMISSION_SOURCE}${CLOSE_QUOTE} for projects\\.$`),
-      (_, quote: string, permission: string) => `專案基本權限已更新為${quotedPermission(quote, permission)}。`,
+      (_, quote: string, permission: string) => `專案基本權限已更新為${quotedPermission(quote, permission)}。`
     ],
     [
       /^This may change the permission that the organization[’']s (\d+) members? ha(?:s|ve) on its (\d+) repositor(?:y|ies)\.$/,
-      '這可能會變更組織 $1 位成員對其 $2 個儲存庫的權限。',
+      '這可能會變更組織 $1 位成員對其 $2 個儲存庫的權限。'
     ],
     [/^This will affect (\d+) projects?\.$/, '這將影響 $1 個專案。'],
     [
-      new RegExp(
-        `^If enabled, all users with read access can create and comment on discussions in ${ORG}[’']s repositories\\.$`,
-      ),
-      '啟用後，所有具有讀取權限的使用者都可以在 $1 的儲存庫中建立討論並留言。',
-    ],
-  ],
+      new RegExp(`^If enabled, all users with read access can create and comment on discussions in ${ORG}[’']s repositories\\.$`),
+      '啟用後，所有具有讀取權限的使用者都可以在 $1 的儲存庫中建立討論並留言。'
+    ]
+  ]
 } satisfies PageDictionary

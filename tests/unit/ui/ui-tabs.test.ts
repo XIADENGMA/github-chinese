@@ -10,14 +10,14 @@ enableAutoUnmount(afterEach)
 const TABS: readonly UiTab[] = [
   { value: 'excluded', label: '排除路径' },
   { value: 'entries', label: '自定义词条' },
-  { value: 'search', label: '屏蔽规则' },
+  { value: 'search', label: '屏蔽规则' }
 ]
 
 /** 各标签的位置与宽度（px）：测试环境不排版，按标签文字给出 */
 const BOXES: Record<string, { left: number; width: number }> = {
   排除路径: { left: 0, width: 72 },
   自定义词条: { left: 80, width: 86 },
-  屏蔽规则: { left: 174, width: 72 },
+  屏蔽规则: { left: 174, width: 72 }
 }
 
 function stubLayout(boxes = BOXES): void {
@@ -44,35 +44,35 @@ function mountPage(initial = 'excluded', tabs: readonly UiTab[] = TABS): VueWrap
             modelValue: value.value,
             'onUpdate:modelValue': (next: string) => (value.value = next),
             tabs,
-            label: '规则',
+            label: '规则'
           },
           {
             excluded: () => h('textarea', { 'aria-label': '排除路径' }),
             entries: () => h('input', { 'aria-label': '原文' }),
-            search: () => h('button', { type: 'button' }, '保存'),
-          },
+            search: () => h('button', { type: 'button' }, '保存')
+          }
         )
-    },
+    }
   })
   return mount(Page, { attachTo: document.body })
 }
 
 function tabs(wrapper: VueWrapper): HTMLElement[] {
-  return wrapper.findAll<HTMLElement>('[role="tab"]').map((item) => item.element)
+  return wrapper.findAll<HTMLElement>('[role="tab"]').map(item => item.element)
 }
 
 function selected(wrapper: VueWrapper): string[] {
   return tabs(wrapper)
-    .filter((tab) => tab.getAttribute('aria-selected') === 'true')
-    .map((tab) => tab.textContent?.trim() ?? '')
+    .filter(tab => tab.getAttribute('aria-selected') === 'true')
+    .map(tab => tab.textContent?.trim() ?? '')
 }
 
 /** 显示中的面板对应的标签文字 */
 function visiblePanels(wrapper: VueWrapper): string[] {
   return wrapper
     .findAll<HTMLElement>('[role="tabpanel"]')
-    .filter((panel) => panel.element.style.display !== 'none')
-    .map((panel) => document.getElementById(panel.attributes('aria-labelledby') ?? '')?.textContent?.trim() ?? '')
+    .filter(panel => panel.element.style.display !== 'none')
+    .map(panel => document.getElementById(panel.attributes('aria-labelledby') ?? '')?.textContent?.trim() ?? '')
 }
 
 function indicator(wrapper: VueWrapper): HTMLElement {
@@ -96,9 +96,9 @@ describe.skipIf(!UiTabs)('UiTabs', () => {
     const wrapper = mountPage('entries')
     const list = wrapper.get('[role="tablist"]')
     expect(list.attributes('aria-label')).toBe('规则')
-    expect(tabs(wrapper).map((tab) => tab.textContent?.trim())).toEqual(['排除路径', '自定义词条', '屏蔽规则'])
-    expect(tabs(wrapper).map((tab) => tab.getAttribute('aria-selected'))).toEqual(['false', 'true', 'false'])
-    expect(tabs(wrapper).map((tab) => tab.tabIndex)).toEqual([-1, 0, -1])
+    expect(tabs(wrapper).map(tab => tab.textContent?.trim())).toEqual(['排除路径', '自定义词条', '屏蔽规则'])
+    expect(tabs(wrapper).map(tab => tab.getAttribute('aria-selected'))).toEqual(['false', 'true', 'false'])
+    expect(tabs(wrapper).map(tab => tab.tabIndex)).toEqual([-1, 0, -1])
     for (const tab of tabs(wrapper)) {
       expect(tab.getAttribute('type')).toBe('button')
       const panel = document.getElementById(tab.getAttribute('aria-controls') ?? '')
@@ -130,11 +130,7 @@ describe.skipIf(!UiTabs)('UiTabs', () => {
     await wrapper.findAll('[role="tab"]')[1]!.trigger('click')
     await wrapper.findAll('[role="tab"]')[0]!.trigger('click')
     expect(wrapper.emitted('update:modelValue')).toEqual([['entries']])
-    expect(wrapper.findAll('[role="tab"]').map((tab) => tab.attributes('aria-selected'))).toEqual([
-      'true',
-      'false',
-      'false',
-    ])
+    expect(wrapper.findAll('[role="tab"]').map(tab => tab.attributes('aria-selected'))).toEqual(['true', 'false', 'false'])
   })
 
   it('键盘：→ ← 切换并聚焦（首尾循环），Home、End 到第一个、最后一个；其他键不处理', async () => {
@@ -173,7 +169,7 @@ describe.skipIf(!UiTabs)('UiTabs', () => {
     const wrapper = mountPage('unknown')
     expect(selected(wrapper)).toEqual([])
     expect(visiblePanels(wrapper)).toEqual([])
-    expect(tabs(wrapper).map((tab) => tab.tabIndex)).toEqual([0, -1, -1])
+    expect(tabs(wrapper).map(tab => tab.tabIndex)).toEqual([0, -1, -1])
   })
 
   it('指针在选中标签下、与其等宽；首次定位不过渡，切换后滑到新标签下', async () => {
@@ -204,7 +200,7 @@ describe.skipIf(!UiTabs)('UiTabs', () => {
           observed.push(target)
         }
         disconnect = disconnect
-      },
+      }
     )
     stubLayout()
     const wrapper = mountPage()
@@ -233,12 +229,9 @@ describe.skipIf(!UiTabs)('UiTabs', () => {
 
   it('同一页面内多个标签页的 id 不重复', () => {
     const component = required(UiTabs)
-    const ids = mount(() => [
-      h(component, { modelValue: 'excluded', tabs: TABS }),
-      h(component, { modelValue: 'excluded', tabs: TABS }),
-    ])
+    const ids = mount(() => [h(component, { modelValue: 'excluded', tabs: TABS }), h(component, { modelValue: 'excluded', tabs: TABS })])
       .findAll('[role="tab"], [role="tabpanel"]')
-      .map((item) => item.attributes('id'))
+      .map(item => item.attributes('id'))
     expect(ids).toHaveLength(12)
     expect(new Set(ids).size).toBe(12)
   })

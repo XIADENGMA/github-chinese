@@ -1,15 +1,10 @@
 import { afterEach, describe, expect, it } from 'vitest'
-import {
-  createInstanceId,
-  createInstanceMark,
-  INSTANCE_MARK_PREFIX,
-  type InstanceMark,
-} from '../../../src/core/instance-mark'
+import { createInstanceId, createInstanceMark, INSTANCE_MARK_PREFIX, type InstanceMark } from '../../../src/core/instance-mark'
 import { settle } from './helpers'
 
 /** <html> 上的实例标记 */
 function marks(): string[] {
-  return document.documentElement.getAttributeNames().filter((name) => name.startsWith(INSTANCE_MARK_PREFIX))
+  return document.documentElement.getAttributeNames().filter(name => name.startsWith(INSTANCE_MARK_PREFIX))
 }
 
 let created: InstanceMark[] = []
@@ -50,9 +45,7 @@ describe('createInstanceMark', () => {
     const records = observer.takeRecords()
     observer.disconnect()
     expect(records.length).toBeGreaterThan(0)
-    expect(records.every((record) => record.type === 'attributes' && record.target === document.documentElement)).toBe(
-      true,
-    )
+    expect(records.every(record => record.type === 'attributes' && record.target === document.documentElement)).toBe(true)
   })
 
   it('默认生成实例 id：各实例的属性名不同', () => {

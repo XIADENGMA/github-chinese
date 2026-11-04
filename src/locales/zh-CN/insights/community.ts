@@ -26,8 +26,7 @@ export default {
     Added: '已添加',
     'Not added yet': '尚未添加',
     // 检查清单各项的帮助链接
-    'Add a description to your repository so people understand the goals of your project.':
-      '为存储库添加描述以便大家了解项目的目标。',
+    'Add a description to your repository so people understand the goals of your project.': '为存储库添加描述以便大家了解项目的目标。',
     'Writing a README': '编写自述文件',
     'What is a code of conduct?': '什么是行为准则？',
     'Writing contributing guidelines': '编写贡献指南',
@@ -50,8 +49,7 @@ export default {
     'We tried our best, but the graph wouldn’t load. Try reloading the page.': '图表无法加载，请尝试重新加载页面。',
     "We tried our best, but the graph wouldn't load. Try reloading the page.": '图表无法加载，请尝试重新加载页面。',
     'Discussions page views': '讨论页面浏览量',
-    'Total page views to Discussions segmented by logged in vs anonymous users.':
-      '按已登录用户与匿名用户区分的讨论页面总浏览量。',
+    'Total page views to Discussions segmented by logged in vs anonymous users.': '按已登录用户与匿名用户区分的讨论页面总浏览量。',
     'Not enough data yet.': '数据尚不足。',
     'It usually takes about a week to populate this chart.': '通常需要约一周时间才能生成此图表。',
     'Read more about insights': '了解见解',
@@ -60,7 +58,7 @@ export default {
       '所选时间段内做出反应、投票、标记答案、评论或发帖的独立用户数。',
     'Discussions new contributors': '讨论新贡献者',
     'Count of unique new users to Discussions who have reacted, upvoted, marked an answer, commented, or posted in the selected period.':
-      '所选时间段内首次在讨论中做出反应、投票、标记答案、评论或发帖的独立用户数。',
+      '所选时间段内首次在讨论中做出反应、投票、标记答案、评论或发帖的独立用户数。'
   },
   scoped: {
     'Code of conduct': '行为准则',
@@ -74,6 +72,6 @@ export default {
     Quantity: '数量',
     Timeline: '时间线',
     'logged in': '已登录',
-    anonymous: '匿名',
-  },
+    anonymous: '匿名'
+  }
 } satisfies PageDictionary

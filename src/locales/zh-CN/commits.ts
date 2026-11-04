@@ -16,14 +16,4 @@ import { mergeDictionaries } from './helpers'
  * 正则按合并顺序匹配：列表与详情中更具体的规则排在差异视图的通用计数规则之前。
  * check-summary 只含检查汇总与耗时的正则，code.ts 也合并它（存储库首页最新提交的检查弹层）。
  */
-export default mergeDictionaries(
-  list,
-  checkSummary,
-  checks,
-  datePicker,
-  commit,
-  diff,
-  branches,
-  activity,
-  compare,
-) satisfies PageDictionary
+export default mergeDictionaries(list, checkSummary, checks, datePicker, commit, diff, branches, activity, compare) satisfies PageDictionary

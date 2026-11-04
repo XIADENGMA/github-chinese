@@ -13,7 +13,7 @@ import { useSettings } from './useSettings'
 export const THEME_MESSAGE: Readonly<Record<ThemePreference, MessageKey>> = {
   auto: 'themeAuto',
   light: 'themeLight',
-  dark: 'themeDark',
+  dark: 'themeDark'
 }
 
 /** 缓存的偏好：只用于首屏，以存储中的设置为准 */
@@ -37,7 +37,7 @@ function readCache(): CachedPreferences {
     const value = parsed as Record<string, unknown>
     return {
       uiLanguage: isUiLanguagePreference(value.uiLanguage) ? value.uiLanguage : 'auto',
-      theme: isThemePreference(value.theme) ? value.theme : 'auto',
+      theme: isThemePreference(value.theme) ? value.theme : 'auto'
     }
   } catch {
     // 无法读取（存储被禁用、内容损坏）按默认
@@ -94,7 +94,7 @@ export interface UseI18n {
 export function useI18n(): UseI18n {
   return {
     language,
-    t: (key, params) => translateMessage(language.value, key, params),
+    t: (key, params) => translateMessage(language.value, key, params)
   }
 }
 
@@ -112,6 +112,6 @@ export function useUiPreferencesSync(): void {
     ([value, ready]) => {
       if (ready) applyUiPreferences(value)
     },
-    { immediate: true },
+    { immediate: true }
   )
 }

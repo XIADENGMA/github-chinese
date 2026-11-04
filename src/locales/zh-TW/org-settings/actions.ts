@@ -24,12 +24,10 @@ export default {
     'Disable for all repositories': '為所有儲存庫停用',
 
     // 常规：存储库级自托管运行器
-    'Choose which repositories are allowed to create repository-level self-hosted runners.':
-      '選擇允許建立儲存庫層級自架執行器的儲存庫。',
+    'Choose which repositories are allowed to create repository-level self-hosted runners.': '選擇允許建立儲存庫層級自架執行器的儲存庫。',
     'Repo-level self-hosted runners can be used by any repository in the organization':
       '組織中的任何儲存庫都可以使用儲存庫層級的自架執行器',
-    'Repo-level self-hosted runners can be used by specifically selected repositories':
-      '指定的儲存庫可以使用儲存庫層級的自架執行器',
+    'Repo-level self-hosted runners can be used by specifically selected repositories': '指定的儲存庫可以使用儲存庫層級的自架執行器',
     'Select the organization repositories that may use repository-level self-hosted runners.':
       '選取可以使用儲存庫層級自架執行器的組織儲存庫。',
     'Repo-level self-hosted runners are disabled for all repositories in the organization':
@@ -41,8 +39,7 @@ export default {
     'Fork pull request workflows in private repositories': '私人儲存庫中的分叉拉取請求工作流程',
     'These settings apply to private repositories. Repository administrators will only be able to change the settings that are enabled here.':
       '這些設定適用於私人儲存庫。儲存庫管理員只能變更此處已啟用的設定。',
-    'Send secrets and variables to workflows from fork pull requests.':
-      '將機密和變數傳送給來自分叉拉取請求的工作流程。',
+    'Send secrets and variables to workflows from fork pull requests.': '將機密和變數傳送給來自分叉拉取請求的工作流程。',
     'This tells Actions to send repository secrets and variables to workflows from pull requests originating from repository forks.':
       '這會讓 GitHub 動作將儲存庫機密和變數傳送給來自儲存庫分叉之拉取請求的工作流程。',
     'Require approval for fork pull request workflows.': '分叉拉取請求工作流程需要核准。',
@@ -129,8 +126,7 @@ export default {
     'Learn more about network configurations.': '瞭解網路設定。',
     'Note: Network configurations are not supported for macOS runners. Any macOS runners assigned to runner groups with network configurations will fail to come online.':
       '注意：macOS 執行器不支援網路設定。指派到具有網路設定之執行器群組的 macOS 執行器將無法上線。',
-    'This group contains a macOS runner and cannot be assigned a network configuration.':
-      '此群組包含 macOS 執行器，無法指派網路設定。',
+    'This group contains a macOS runner and cannot be assigned a network configuration.': '此群組包含 macOS 執行器，無法指派網路設定。',
     'No configuration': '無設定',
     'Disabled configuration': '已停用的設定',
     'No network configuration found': '找不到網路設定',
@@ -151,7 +147,7 @@ export default {
       '此組織中的儲存庫所執行的工作流程尚未快取任何內容。',
     // 「Learn more about caching」+「dependencies and build outputs to improve workflow execution time.」（原文无逗号，译文不加）
     'Learn more about caching': '瞭解如何快取',
-    'dependencies and build outputs to improve workflow execution time.': '相依項目和建置輸出以縮短工作流程執行時間。',
+    'dependencies and build outputs to improve workflow execution time.': '相依項目和建置輸出以縮短工作流程執行時間。'
   },
   scoped: {
     // 「Applies to」+ <public> +「repositories only」：整句由 inline 收录（僅適用於公開儲存庫），这两条是片段后备；
@@ -231,32 +227,28 @@ export default {
       'macOS-arm64 執行器目前為發行前版本，可能會有所變更。',
     // 「Add `」+ 标签 +「` to your workflow's YAML to send jobs to …」（原文无逗号，译文不加）
     'Add `': '將 `',
-    "` to your workflow's YAML to send jobs to GitHub-hosted runners.":
-      '` 加入工作流程 YAML 以傳送作業至 GitHub 代管的執行器。',
-    '` to your workflow’s YAML to send jobs to GitHub-hosted runners.':
-      '` 加入工作流程 YAML 以傳送作業至 GitHub 代管的執行器。',
+    "` to your workflow's YAML to send jobs to GitHub-hosted runners.": '` 加入工作流程 YAML 以傳送作業至 GitHub 代管的執行器。',
+    '` to your workflow’s YAML to send jobs to GitHub-hosted runners.': '` 加入工作流程 YAML 以傳送作業至 GitHub 代管的執行器。',
     "` to your workflow's YAML to send jobs to this runner.": '` 加入工作流程 YAML 以傳送作業至此執行器。',
-    '` to your workflow’s YAML to send jobs to this runner.': '` 加入工作流程 YAML 以傳送作業至此執行器。',
+    '` to your workflow’s YAML to send jobs to this runner.': '` 加入工作流程 YAML 以傳送作業至此執行器。'
   },
   regexp: [
     [/^(\d+) selected repositor(?:y|ies)$/, '$1 個選取的儲存庫'],
     // 「Allow all actions and reusable workflows」由存储库设置的 static 收录，组织名排除 all
     [new RegExp(`^Allow (?!all )${ORG} actions and reusable workflows$`), '允許 $1 的動作和可重複使用的工作流程'],
     [
-      new RegExp(
-        `^Any action or reusable workflow defined in a repository within the ${ORG} organization can be used\\.$`,
-      ),
-      '可以使用 $1 組織內任何儲存庫中定義的動作或可重複使用的工作流程。',
+      new RegExp(`^Any action or reusable workflow defined in a repository within the ${ORG} organization can be used\\.$`),
+      '可以使用 $1 組織內任何儲存庫中定義的動作或可重複使用的工作流程。'
     ],
     [
       new RegExp(`^Allow ${ORG}, and select non-${ORG}, actions and reusable workflows$`),
-      '允許 $1 以及選定的非 $2 動作和可重複使用的工作流程',
+      '允許 $1 以及選定的非 $2 動作和可重複使用的工作流程'
     ],
     [
       new RegExp(
-        `^Any action or reusable workflow that matches the specified criteria, plus those defined in a repository within the ${ORG} organization, can be used\\.$`,
+        `^Any action or reusable workflow that matches the specified criteria, plus those defined in a repository within the ${ORG} organization, can be used\\.$`
       ),
-      '可以使用符合指定條件的動作或可重複使用的工作流程，以及 $1 組織內儲存庫中定義的動作或可重複使用的工作流程。',
+      '可以使用符合指定條件的動作或可重複使用的工作流程，以及 $1 組織內儲存庫中定義的動作或可重複使用的工作流程。'
     ],
     [/^(\d+) active jobs?$/, '$1 個作用中的作業'],
     [/^(\d+) caches?$/, '$1 個快取'],
@@ -268,9 +260,9 @@ export default {
     [
       /^Add `([^`]{1,100})` to your workflow[’']s YAML to send jobs to (this runner|GitHub-hosted runners)\.$/,
       (_, label: string, target: string) =>
-        `將 \`${label}\` 加入工作流程 YAML 以傳送作業至${target === 'this runner' ? '此執行器' : ' GitHub 代管的執行器'}。`,
-    ],
+        `將 \`${label}\` 加入工作流程 YAML 以傳送作業至${target === 'this runner' ? '此執行器' : ' GitHub 代管的執行器'}。`
+    ]
   ],
   // 策略说明：Applies to <strong>public</strong> repositories only，only 在片段里译不出来，整句收录
-  inline: [['Applies to {} repositories only', '僅適用於{}儲存庫']],
+  inline: [['Applies to {} repositories only', '僅適用於{}儲存庫']]
 } satisfies PageDictionary

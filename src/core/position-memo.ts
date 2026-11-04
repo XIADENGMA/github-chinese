@@ -66,6 +66,6 @@ export function createPositionMemo(compute: (element: Element) => boolean): Posi
 
     invalidate() {
       version++
-    },
+    }
   }
 }

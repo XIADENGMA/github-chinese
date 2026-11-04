@@ -13,11 +13,11 @@ describe('textRun', () => {
   it('收集同一父节点下只隔注释的连续文本', () => {
     const host = fragment('a<!-- -->b<!--x-->c<b>d</b>e<!-- -->')
     const [a, , b, , c, bold, e, comment] = [...host.childNodes]
-    expect(textRun(b!).map((node) => node.data)).toEqual(['a', 'b', 'c'])
+    expect(textRun(b!).map(node => node.data)).toEqual(['a', 'b', 'c'])
     expect(textRun(a!)).toEqual(textRun(c!))
-    expect(textRun(e!).map((node) => node.data)).toEqual(['e'])
-    expect(textRun(comment!).map((node) => node.data)).toEqual(['e'])
-    expect(textRun(bold!.firstChild!).map((node) => node.data)).toEqual(['d'])
+    expect(textRun(e!).map(node => node.data)).toEqual(['e'])
+    expect(textRun(comment!).map(node => node.data)).toEqual(['e'])
+    expect(textRun(bold!.firstChild!).map(node => node.data)).toEqual(['d'])
   })
 
   it('只有注释时为空', () => {
@@ -35,7 +35,7 @@ describe('textRun', () => {
 
   it('childTexts 只取直接子文本', () => {
     const host = fragment('a<b>x</b>c')
-    expect(childTexts(host).map((node) => node.data)).toEqual(['a', 'c'])
+    expect(childTexts(host).map(node => node.data)).toEqual(['a', 'c'])
   })
 })
 
@@ -84,7 +84,7 @@ describe('translateTitleText：用户内容段', () => {
     Stargazers: '标星者',
     Discussions: '讨论',
     Webhooks: 'Webhook',
-    Search: '搜索',
+    Search: '搜索'
   }
   const translate = (text: string): string | undefined =>
     dictionary[text] ?? /^(Issue|Pull Request|Discussion) #(\d+)$/.exec(text)?.[0].replace(/^Issue/, '议题')
@@ -123,12 +123,10 @@ describe('translateTitleText：用户内容段', () => {
 
   it('仓库首页的描述不翻译：可带「GitHub - 」前缀，不区分大小写；其他页照常', () => {
     expect(title('GitHub - o/r: Sample text · Documentation · Home · GitHub', '/o/r')).toBe(
-      'GitHub - o/r: Sample text · Documentation · Home · GitHub',
+      'GitHub - o/r: Sample text · Documentation · Home · GitHub'
     )
     expect(title('o/r: Sample text · Documentation · Home', '/o/r')).toBe('o/r: Sample text · Documentation · Home')
-    expect(title('GitHub - O/R: Sample text · Documentation · GitHub', '/o/r/')).toBe(
-      'GitHub - O/R: Sample text · Documentation · GitHub',
-    )
+    expect(title('GitHub - O/R: Sample text · Documentation · GitHub', '/o/r/')).toBe('GitHub - O/R: Sample text · Documentation · GitHub')
     expect(title('o/r: Sample text · Documentation', '/O/R')).toBe('o/r: Sample text · Documentation')
     // 不是仓库首页，或首段不以「owner/repo:」开头
     expect(title('o/r: Sample text · Documentation', '/o/r/issues')).toBe('o/r: Sample text · 文档')
@@ -136,9 +134,7 @@ describe('translateTitleText：用户内容段', () => {
     expect(title('o/r Sample text · Documentation', '/o/r')).toBe('o/r Sample text · 文档')
     expect(title('Documentation · GitHub', '/o/r')).toBe('文档 · GitHub')
     // 站点页面
-    expect(title('settings/profile: Sample text · Documentation', '/settings/profile')).toBe(
-      'settings/profile: Sample text · 文档',
-    )
+    expect(title('settings/profile: Sample text · Documentation', '/settings/profile')).toBe('settings/profile: Sample text · 文档')
   })
 
   it('与地址中账号同名的段（登录名）不翻译；站点页面照常', () => {
@@ -152,12 +148,8 @@ describe('translateTitleText：用户内容段', () => {
   })
 
   it('规则集页的仓库名段、主题页的主题名段不翻译', () => {
-    expect(title('Settings · Rulesets · documentation', '/o/documentation/settings/rules')).toBe(
-      '设置 · 规则集 · documentation',
-    )
-    expect(title('Settings · Ruleset · Documentation', '/o/Documentation/settings/rules/1')).toBe(
-      '设置 · 规则集 · Documentation',
-    )
+    expect(title('Settings · Rulesets · documentation', '/o/documentation/settings/rules')).toBe('设置 · 规则集 · documentation')
+    expect(title('Settings · Ruleset · Documentation', '/o/Documentation/settings/rules/1')).toBe('设置 · 规则集 · Documentation')
     expect(title('Rulesets · documentation · GitHub', '/o/documentation/rules')).toBe('规则集 · documentation · GitHub')
     expect(title('Rulesets · documentation', '/o/documentation/rules/1')).toBe('规则集 · documentation')
     expect(title('Rulesets · 文档 · GitHub', '/o/%E6%96%87%E6%A1%A3/rules')).toBe('规则集 · 文档 · GitHub')
@@ -166,28 +158,21 @@ describe('translateTitleText：用户内容段', () => {
     expect(title('Settings · Rulesets · rulesets', '/o/rulesets/settings/rules')).toBe('设置 · 规则集 · rulesets')
     // 其他仓库页：与仓库名同名的界面段照常翻译
     expect(title('Issues · o/issues', '/o/issues/issues')).toBe('议题 · o/issues')
-    expect(title('o/discussions · Discussions · GitHub', '/o/discussions/discussions')).toBe(
-      'o/discussions · 讨论 · GitHub',
-    )
+    expect(title('o/discussions · Discussions · GitHub', '/o/discussions/discussions')).toBe('o/discussions · 讨论 · GitHub')
     expect(title('Webhooks · Settings · o/settings', '/o/settings/settings/hooks')).toBe('Webhook · 设置 · o/settings')
-    expect(title('Documentation · GitHub Topics · GitHub', '/topics/documentation')).toBe(
-      'Documentation · GitHub 主题 · GitHub',
-    )
+    expect(title('Documentation · GitHub Topics · GitHub', '/topics/documentation')).toBe('Documentation · GitHub 主题 · GitHub')
     expect(title('GitHub Topics · GitHub', '/topics')).toBe('GitHub 主题 · GitHub')
     expect(title('Documentation · GitHub Topics · GitHub', '/topics/vue')).toBe('文档 · GitHub 主题 · GitHub')
   })
 
   it('单个 gist 页的 gist 名不翻译；子页名与站点名段照常', () => {
-    const gist = (text: string, pathname: string): string =>
-      translateTitleText(text, translate, pathname, 'gist.github.com')
+    const gist = (text: string, pathname: string): string => translateTitleText(text, translate, pathname, 'gist.github.com')
     const id = '0123456789abcdef0123'
     expect(gist('Documentation · GitHub', `/octocat/${id}`)).toBe('Documentation · GitHub')
     expect(gist('Documentation · GitHub', `/${id}`)).toBe('Documentation · GitHub')
     expect(gist('Forks · Documentation · GitHub', `/octocat/${id}/forks`)).toBe('复刻 · Documentation · GitHub')
     expect(gist('Forks · Documentation · GitHub', `/${id}/forks`)).toBe('复刻 · Documentation · GitHub')
-    expect(gist('Revisions · Settings · Home · GitHub', `/octocat/${id}/revisions`)).toBe(
-      '修订 · Settings · Home · GitHub',
-    )
+    expect(gist('Revisions · Settings · Home · GitHub', `/octocat/${id}/revisions`)).toBe('修订 · Settings · Home · GitHub')
     expect(gist('Stargazers · Settings · GitHub', `/octocat/${id}/stargazers`)).toBe('标星者 · Settings · GitHub')
     expect(gist('Settings · Home · GitHub', `/octocat/${id}`)).toBe('Settings · Home · GitHub')
     // 旧式数字编号
@@ -200,9 +185,7 @@ describe('translateTitleText：用户内容段', () => {
     expect(gist('Documentation · GitHub', `/1234567/${id}`)).toBe('Documentation · GitHub')
     expect(gist('Forks · Documentation · GitHub', `/1234567/${id}/forks`)).toBe('复刻 · Documentation · GitHub')
     expect(gist('Revisions · Documentation · GitHub', `/1234567/${id}/revisions`)).toBe('修订 · Documentation · GitHub')
-    expect(gist('Stargazers · Documentation · GitHub', `/1234567/${id}/stargazers`)).toBe(
-      '标星者 · Documentation · GitHub',
-    )
+    expect(gist('Stargazers · Documentation · GitHub', `/1234567/${id}/stargazers`)).toBe('标星者 · Documentation · GitHub')
     // 不是单个 gist 页照常翻译
     expect(gist('Settings · GitHub', '/discover')).toBe('设置 · GitHub')
     expect(gist('Settings · GitHub', '/octocat')).toBe('设置 · GitHub')

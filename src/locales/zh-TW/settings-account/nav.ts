@@ -42,7 +42,7 @@ export default {
     'Billing overview': '帳務總覽',
     'Billing Usage': '帳務使用量',
     'Billing usage': '帳務使用量',
-    'Payment Information': '付款資訊',
+    'Payment Information': '付款資訊'
   },
   scoped: {
     // 页头帐户名后的读屏文字：「Mona (octocat) settings」
@@ -87,6 +87,6 @@ export default {
     Applications: '應用程式',
     'Scheduled reminders': '排定的提醒',
     'Developer settings': '開發人員設定',
-    'Developer Settings': '開發人員設定',
-  },
+    'Developer Settings': '開發人員設定'
+  }
 } satisfies PageDictionary

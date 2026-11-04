@@ -31,7 +31,7 @@ type RegistrationListener = () => void
 /** 词典脚本的构建产物（与 entrypoints 下的文件名一致） */
 export const LOCALE_SCRIPT_FILES = {
   'zh-CN': '/locale-zh-cn.js',
-  'zh-TW': '/locale-zh-tw.js',
+  'zh-TW': '/locale-zh-tw.js'
 } as const satisfies Readonly<Record<PageLocale, string>>
 
 /** 页面时间元素（<relative-time> 等）渲染所用的 lang */
@@ -51,7 +51,7 @@ function registrationListeners(): Set<RegistrationListener> {
 
 /** 有当前构建的登记：注册的词典脚本已执行 */
 function hasCurrentRegistration(): boolean {
-  return Object.values(registry()).some((entry) => entry?.build === BUILD_ID)
+  return Object.values(registry()).some(entry => entry?.build === BUILD_ID)
 }
 
 /** 词典脚本调用：登记语言包并唤醒等待登记的内容脚本（build 只供测试模拟旧版本的登记） */
@@ -81,7 +81,7 @@ export function takeLocale(locale: PageLocale): LocaleBundle | undefined {
 export function waitForRegistration(doc: Document): Promise<void> {
   if (doc.readyState !== 'loading') return Promise.resolve()
   const listeners = registrationListeners()
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const done = (): void => {
       listeners.delete(done)
       doc.removeEventListener('DOMContentLoaded', done)
@@ -152,6 +152,6 @@ export function createLocaleLoader(deps: LocaleLoaderDeps): LocaleLoader {
       loaded.set(locale, task)
       task.catch(() => loaded.delete(locale))
       return task
-    },
+    }
   }
 }

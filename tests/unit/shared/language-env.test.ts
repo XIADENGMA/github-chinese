@@ -29,14 +29,14 @@ describe('pageLanguageEnvironment', () => {
     expect(await pageLanguageEnvironment()).toEqual({
       languages: ['en-US', 'zh-TW'],
       uiLanguage: 'en-US',
-      timeZone: languageEnvironment().timeZone,
+      timeZone: languageEnvironment().timeZone
     })
   })
 
   it.each<[string, () => Promise<unknown>]>([
     ['不支持', async () => Promise.reject(new Error('不支持'))],
     ['为空', async () => []],
-    ['格式不符', async () => 'zh-TW'],
+    ['格式不符', async () => 'zh-TW']
   ])('getAcceptLanguages %s：退回 navigator.languages', async (_name, implementation) => {
     vi.spyOn(fakeBrowser.i18n, 'getAcceptLanguages').mockImplementation(implementation as never)
     stubLanguages(['zh-HK'])
@@ -57,7 +57,7 @@ describe('pageLanguageEnvironment', () => {
 describe('后台注册的词典与内容脚本取用的语言一致', () => {
   const BUNDLES: Readonly<Record<PageLocale, LocaleBundle>> = {
     'zh-CN': [['common', { static: { Issues: '议题' } }]],
-    'zh-TW': [['common', { static: { Issues: '議題' } }]],
+    'zh-TW': [['common', { static: { Issues: '議題' } }]]
   }
 
   /** 内容脚本的运行上下文（只实现 content.ts 用到的部分） */
@@ -83,7 +83,7 @@ describe('后台注册的词典与内容脚本取用的语言一致', () => {
       invalidate() {
         invalid = true
         for (const cleanup of cleanups) cleanup()
-      },
+      }
     } as never
   }
 
@@ -95,16 +95,14 @@ describe('后台注册的词典与内容脚本取用的语言一致', () => {
 
   it.each<[string, string[] | undefined, readonly string[], PageLocale]>([
     ['隐身窗口（navigator.languages 被缩减）', ['en-US', 'zh-TW'], ['en-US', 'en'], 'zh-TW'],
-    ['读不到语言偏好：两边都按 navigator.languages', undefined, ['zh-HK', 'en'], 'zh-TW'],
+    ['读不到语言偏好：两边都按 navigator.languages', undefined, ['zh-HK', 'en'], 'zh-TW']
   ])('%s：内容脚本直接取用注册脚本登记的语言包，不动态导入', async (_name, accepted, languages, expected) => {
     const scripts = fakeContentScripts()
     if (accepted) vi.spyOn(fakeBrowser.i18n, 'getAcceptLanguages').mockResolvedValue(accepted as never)
     stubLanguages(languages)
     await syncLocaleScript(DEFAULT_SETTINGS)
     const [file] = scripts.registered[0]?.js ?? []
-    const locale = (Object.keys(LOCALE_SCRIPT_FILES) as PageLocale[]).find(
-      (key) => LOCALE_SCRIPT_FILES[key] === `/${file}`,
-    )
+    const locale = (Object.keys(LOCALE_SCRIPT_FILES) as PageLocale[]).find(key => LOCALE_SCRIPT_FILES[key] === `/${file}`)
     expect(locale).toBe(expected)
     // 注册的词典脚本在页面开始解析前执行，登记语言包
     registerLocale(locale!, BUNDLES[locale!])

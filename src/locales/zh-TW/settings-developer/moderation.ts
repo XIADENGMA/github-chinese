@@ -8,7 +8,7 @@ const DURATION_UNIT: Readonly<Record<string, string>> = {
   day: '天',
   week: '週',
   month: '個月',
-  year: '年',
+  year: '年'
 }
 
 const DURATION_QUALIFIER: Readonly<Record<string, string>> = { about: '約 ', almost: '將近 ', over: '超過 ' }
@@ -16,8 +16,7 @@ const DURATION_QUALIFIER: Readonly<Record<string, string>> = { about: '約 ', al
 const DURATION_RE = /^(?:(about|almost|over) )?(\d+|an?|one) (second|minute|hour|day|week|month|year)s?$/
 
 /** 剩余时长片段（不含捕获组）：less than a minute、about 23 hours、1 day 等 */
-const DURATION_SOURCE =
-  '(?:less than a minute|(?:(?:about|almost|over) )?(?:\\d+|an?|one) (?:second|minute|hour|day|week|month|year)s?)'
+const DURATION_SOURCE = '(?:less than a minute|(?:(?:about|almost|over) )?(?:\\d+|an?|one) (?:second|minute|hour|day|week|month|year)s?)'
 
 /** 剩余时长：“about 23 hours” → 約 23 小時；无法识别时原样返回 */
 export function translateDuration(text: string): string {
@@ -86,8 +85,7 @@ export default {
     'invite you as a collaborator to their repositories': '邀請你成為其儲存庫的協作者',
     'follow your account’s public activity': '追蹤你帳號的公開活動',
     "follow your account's public activity": '追蹤你帳號的公開活動',
-    'send you notifications by @mentioning your username in public repositories':
-      '在公開儲存庫中透過 @提及你的使用者名稱傳送通知給你',
+    'send you notifications by @mentioning your username in public repositories': '在公開儲存庫中透過 @提及你的使用者名稱傳送通知給你',
     'Warn me when a blocked user is a prior contributor to a repository': '被封鎖的使用者曾為儲存庫做出貢獻時警告我',
     'Warn me when blocked users have contributed to a repository': '被封鎖的使用者曾為儲存庫做出貢獻時警告我',
     'We will show this warning each time you visit a repository where someone you blocked has committed code, unless you own the repository or have also contributed a commit. This warning does not restrict your access.':
@@ -124,7 +122,7 @@ export default {
       '。只有已明確獲得這些儲存庫存取權的使用者才能送出「核准」或「要求變更」審查。所有能送出留言審查的使用者仍可繼續送出。',
     'for all repositories. All users are able to submit pull request reviews, including those that "approve" or "request changes". Limit reviews to only permit users who have explicitly been granted access to each repository to submit reviews that "approve" or "request changes".':
       '。所有使用者都能送出拉取請求審查，包括「核准」或「要求變更」審查。將審查限制為僅允許已明確獲得各儲存庫存取權的使用者送出「核准」或「要求變更」審查。',
-    'Code review limit settings saved.': '已儲存程式碼審查限制設定。',
+    'Code review limit settings saved.': '已儲存程式碼審查限制設定。'
   },
   scoped: {
     // 组织（Leave 由 common-ui 收录，Billing manager 由 org-settings 收录）
@@ -188,17 +186,17 @@ export default {
     // 代码审查限制
     enabled: '已啟用',
     disabled: '已停用',
-    Unset: '取消設定',
+    Unset: '取消設定'
   },
   regexp: [
     // 组织：退出确认、外部协作者身份
     [
       /^Are you positive you want to leave (\S+)\? You will lose access to all repositories and teams\.$/,
-      '確定要離開 $1 嗎？你將失去其所有儲存庫和團隊的存取權。',
+      '確定要離開 $1 嗎？你將失去其所有儲存庫和團隊的存取權。'
     ],
     [
       /^Are you positive you want to leave (\S+)\? You will lose access to all repositories\.$/,
-      '確定要離開 $1 嗎？你將失去其所有儲存庫的存取權。',
+      '確定要離開 $1 嗎？你將失去其所有儲存庫的存取權。'
     ],
     [/^You left (\S+)\. It may take a few minutes to process\.$/, '你已離開 $1。處理可能需要幾分鐘。'],
     [/^Outside collaborator on (\d+) repositor(?:y|ies)$/, '$1 個儲存庫的外部協作者'],
@@ -207,11 +205,11 @@ export default {
     [/^Turn (\S+) into an organization$/, '將 $1 轉換為組織'],
     [
       /^You will no longer be able to sign in to (\S+) \(all administrative privileges will be bestowed upon the owners you choose\)$/,
-      '你將無法再登入 $1（所有管理權限都將授予你選擇的擁有者）',
+      '你將無法再登入 $1（所有管理權限都將授予你選擇的擁有者）'
     ],
     [
       /^Any commits and comments credited to (\S+) will no longer be linked to this GitHub account$/,
-      '歸屬於 $1 的提交和留言將不再連結到此 GitHub 帳號',
+      '歸屬於 $1 的提交和留言將不再連結到此 GitHub 帳號'
     ],
     [/^Any GitHub Apps installed on (\S+) will be uninstalled$/, '安裝在 $1 上的所有 GitHub 應用程式都將被解除安裝'],
     [/^If you are using (\S+) as a personal account, you should$/, '如果你將 $1 當作個人帳號使用，應先'],
@@ -240,12 +238,12 @@ export default {
     // 交互限制：剩余时间（原文无逗号，译文不加；句号随原文）
     [
       new RegExp(`^Enabled with (${DURATION_SOURCE}) remaining(\\.?)$`),
-      (_, remaining: string, dot: string) => `${joinCjk('已啟用剩餘', translateDuration(remaining))}${dot ? '。' : ''}`,
-    ],
+      (_, remaining: string, dot: string) => `${joinCjk('已啟用剩餘', translateDuration(remaining))}${dot ? '。' : ''}`
+    ]
   ],
   ignore: [
     // 单一登录组织列表：组织登录名、显示名是用户内容
     '[data-testid^="sso-org-link-"]',
-    '[data-testid^="sso-org-row-"] [class*="profileName__"]',
-  ],
+    '[data-testid^="sso-org-row-"] [class*="profileName__"]'
+  ]
 } satisfies PageDictionary

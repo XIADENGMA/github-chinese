@@ -1,22 +1,10 @@
 import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
-import {
-  test as base,
-  chromium,
-  expect,
-  type BrowserContext,
-  type Locator,
-  type Page,
-  type Worker,
-} from '@playwright/test'
+import { test as base, chromium, expect, type BrowserContext, type Locator, type Page, type Worker } from '@playwright/test'
 import type { CustomEntries, Settings } from '../../src/shared/settings'
 
 /** 被测扩展目录：默认构建产物 .output/chrome-mv3（bun run build）；E2E_EXTENSION 可指向其他解压目录 */
-export const EXTENSION_PATH = resolve(
-  import.meta.dirname,
-  '../..',
-  process.env.E2E_EXTENSION?.trim() || '.output/chrome-mv3',
-)
+export const EXTENSION_PATH = resolve(import.meta.dirname, '../..', process.env.E2E_EXTENSION?.trim() || '.output/chrome-mv3')
 
 const FIXTURE_DIR = resolve(import.meta.dirname, 'fixtures')
 
@@ -34,14 +22,14 @@ const FIXTURE_ROUTES: Readonly<Record<string, FixtureFile>> = {
   '/octo-org/hello-world/pull/1': { file: 'pull.html', contentType: HTML },
   '/settings/apps/fixture-app/permissions': { file: 'app-permissions.html', contentType: HTML },
   '/__fixtures__/github-sim.js': { file: 'github-sim.js', contentType: 'text/javascript; charset=utf-8' },
-  '/__fixtures__/github-sim.css': { file: 'github-sim.css', contentType: 'text/css; charset=utf-8' },
+  '/__fixtures__/github-sim.css': { file: 'github-sim.css', contentType: 'text/css; charset=utf-8' }
 }
 
 export const FIXTURE_URL = {
   repo: 'https://github.com/octo-org/hello-world',
   issues: 'https://github.com/octo-org/hello-world/issues',
   pull: 'https://github.com/octo-org/hello-world/pull/1',
-  appPermissions: 'https://github.com/settings/apps/fixture-app/permissions',
+  appPermissions: 'https://github.com/settings/apps/fixture-app/permissions'
 } as const
 
 /** 与 src/shared/settings.ts 的 DEFAULT_SETTINGS 一致（该模块依赖扩展运行时，不能在 Node 中导入） */
@@ -64,7 +52,7 @@ export const DEFAULT_SETTINGS: Settings = {
   newTabPaths: [],
   accelerateSource: 'ghfast',
   customSources: [],
-  removedSources: [],
+  removedSources: []
 }
 
 /** 中日韩统一表意文字（含扩展 A 区） */
@@ -77,7 +65,7 @@ export function readFixture(file: string): Promise<string> {
 /** 夹具中 <script type="application/json"> 的原文 */
 export function extractJsonScripts(html: string): string[] {
   const pattern = /<script\b[^>]*\btype="application\/json"[^>]*>([\s\S]*?)<\/script>/g
-  return [...html.matchAll(pattern)].map((match) => match[1]!)
+  return [...html.matchAll(pattern)].map(match => match[1]!)
 }
 
 /** 夹具中 <title> 的文本（与 document.title 一样合并空白） */
@@ -97,7 +85,7 @@ export function fx(page: Page, name: string): Locator {
 
 /** 用本地夹具应答 github.com 请求；未登记的路径返回 404 */
 export async function serveFixtures(context: BrowserContext): Promise<void> {
-  await context.route('https://github.com/**', async (route) => {
+  await context.route('https://github.com/**', async route => {
     const { pathname } = new URL(route.request().url())
     const entry = FIXTURE_ROUTES[pathname.replace(/\/+$/, '')]
     if (!entry) {
@@ -173,7 +161,7 @@ function createControl(page: Page): ExtensionControl {
     const worker = page
       .context()
       .serviceWorkers()
-      .findLast((item) => item.url().startsWith(prefix))
+      .findLast(item => item.url().startsWith(prefix))
     if (!worker) throw new Error('未找到扩展的 Service Worker')
     return worker
   }
@@ -184,7 +172,7 @@ function createControl(page: Page): ExtensionControl {
         const { chrome } = globalThis as unknown as { chrome: ChromeLike }
         await chrome.storage[name].set(values)
       },
-      { name: area, values: items },
+      { name: area, values: items }
     )
 
   /** 后台是否在 runtime.getContexts 中：只列出活动的上下文，停止后不在其中 */
@@ -196,9 +184,9 @@ function createControl(page: Page): ExtensionControl {
 
   return {
     page,
-    setSettings: (patch) => write('sync', { settings: { ...DEFAULT_SETTINGS, ...patch } }),
-    setCustomEntries: (entries) =>
-      page.evaluate(async (values) => {
+    setSettings: patch => write('sync', { settings: { ...DEFAULT_SETTINGS, ...patch } }),
+    setCustomEntries: entries =>
+      page.evaluate(async values => {
         const { chrome } = globalThis as unknown as { chrome: ChromeLike }
         await chrome.storage.local.set({ customEntries: values })
         await chrome.runtime.sendMessage({ type: 'gcn:custom-entries-saved' })
@@ -208,8 +196,8 @@ function createControl(page: Page): ExtensionControl {
         const { chrome } = globalThis as unknown as { chrome: ChromeLike }
         return (await chrome.storage.sync.get('settings')).settings
       }),
-    status: (url) =>
-      page.evaluate(async (target) => {
+    status: url =>
+      page.evaluate(async target => {
         const { chrome } = globalThis as unknown as { chrome: ChromeLike }
         const [tab] = await chrome.tabs.query({ url: target })
         if (tab?.id === undefined) return undefined
@@ -226,7 +214,7 @@ function createControl(page: Page): ExtensionControl {
       /** 运行中的扩展 Service Worker 的 CDP 目标 ID；已停止的不在目标列表中 */
       const runningTargetId = async (): Promise<string | undefined> => {
         const { targetInfos } = await session.send('Target.getTargets')
-        return targetInfos.find((info) => info.type === 'service_worker' && info.url === url)?.targetId
+        return targetInfos.find(info => info.type === 'service_worker' && info.url === url)?.targetId
       }
       try {
         const targetId = await runningTargetId()
@@ -239,13 +227,13 @@ function createControl(page: Page): ExtensionControl {
         await expect
           .poll(async () => (await runningTargetId()) === undefined || (listed && !(await backgroundRunning())), {
             message: 'Service Worker 未停止',
-            timeout: SERVICE_WORKER_STOP_TIMEOUT_MS,
+            timeout: SERVICE_WORKER_STOP_TIMEOUT_MS
           })
           .toBe(true)
       } finally {
         await session.detach()
       }
-    },
+    }
   }
 }
 
@@ -265,7 +253,7 @@ export const test = base.extend<ExtensionFixtures>({
       locale: 'en-US',
       viewport: { width: 1440, height: 900 },
       // 浏览器界面语言用简体中文：扩展界面（自动识别）与页面翻译语言都按简体，断言的界面文字与之对应
-      args: [`--disable-extensions-except=${EXTENSION_PATH}`, `--load-extension=${EXTENSION_PATH}`, '--lang=zh-CN'],
+      args: [`--disable-extensions-except=${EXTENSION_PATH}`, `--load-extension=${EXTENSION_PATH}`, '--lang=zh-CN']
     })
     await use(context)
     await context.close()
@@ -278,7 +266,7 @@ export const test = base.extend<ExtensionFixtures>({
     const page = await context.newPage()
     await page.goto(`chrome-extension://${extensionId}/popup.html`)
     await use(createControl(page))
-  },
+  }
 })
 
 /** 离线夹具测试：github.com 请求全部由 tests/e2e/fixtures 应答 */
@@ -286,7 +274,7 @@ export const offlineTest = test.extend({
   context: async ({ context }, use) => {
     await serveFixtures(context)
     await use(context)
-  },
+  }
 })
 
 export { expect }

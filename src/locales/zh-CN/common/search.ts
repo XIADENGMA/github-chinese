@@ -46,11 +46,11 @@ const EXPLORE_TITLES: Readonly<Record<string, string>> = {
   'GitHub Changelog': 'GitHub 更新日志',
   'GitHub Shop': 'GitHub 商店',
   'GitHub Desktop': 'GitHub 桌面版',
-  'Why GitHub': '为什么选择 GitHub',
+  'Why GitHub': '为什么选择 GitHub'
 }
 
 const EXPLORE_TITLE_SOURCE = Object.keys(EXPLORE_TITLES)
-  .map((title) => title.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&'))
+  .map(title => title.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&'))
   .join('|')
 
 /** “探索”加标题译文：译文以拉丁字母或数字开头时中间加空格 */
@@ -61,14 +61,14 @@ function exploreLabel(title: string): string {
 const SEARCH_SCOPE: Readonly<Record<string, string>> = {
   Organization: '组织',
   Enterprise: '企业',
-  Owner: '所有者',
+  Owner: '所有者'
 }
 
 const SUGGESTION_KIND: Readonly<Record<string, string>> = {
   organization: '组织',
   repository: '存储库',
   owner: '所有者',
-  language: '语言',
+  language: '语言'
 }
 
 /** 全局搜索（快速搜索、已保存的搜索、反馈）与命令面板 */
@@ -113,16 +113,14 @@ export default {
     'Search code, repositories, users, issues, pull requests…': '搜索代码、存储库、用户、议题、拉取请求…',
 
     // 反馈对话框
-    'We read every piece of feedback, and take your input very seriously.':
-      '我们会阅读每一条反馈，并认真对待你的意见。',
+    'We read every piece of feedback, and take your input very seriously.': '我们会阅读每一条反馈，并认真对待你的意见。',
     Feedback: '反馈',
     'Include my email address so I can be contacted': '附上我的电子邮件地址以便联系我',
     'Send feedback': '发送反馈',
     'Sending feedback': '正在发送反馈',
     'Submit feedback': '提交反馈',
     'Could not submit your feedback. Please try again.': '无法提交反馈。请重试。',
-    'Could not submit your feedback. Please check your connection and try again.':
-      '无法提交反馈。请检查网络连接后重试。',
+    'Could not submit your feedback. Please check your connection and try again.': '无法提交反馈。请检查网络连接后重试。',
 
     // 已保存的搜索对话框（数量上限提示由正则整体匹配）
     'Saved searches': '已保存的搜索',
@@ -137,12 +135,10 @@ export default {
     documentation: '文档',
     "You don't have any saved searches yet.": '你还没有已保存的搜索。',
     'Saving saved search': '正在保存搜索',
-    'Could not save your search. Please check the name and query and try again.':
-      '无法保存搜索。请检查名称和查询后重试。',
+    'Could not save your search. Please check the name and query and try again.': '无法保存搜索。请检查名称和查询后重试。',
     'Could not save your search. Please check your connection and try again.': '无法保存搜索。请检查网络连接后重试。',
     'Could not delete this saved search. Please try again.': '无法删除此已保存的搜索。请重试。',
-    'Could not delete this saved search. Please check your connection and try again.':
-      '无法删除此已保存的搜索。请检查网络连接后重试。',
+    'Could not delete this saved search. Please check your connection and try again.': '无法删除此已保存的搜索。请检查网络连接后重试。',
 
     // 命令面板
     'Search GitHub': '搜索 GitHub',
@@ -233,10 +229,8 @@ export default {
     'Settings > Developer settings > GitHub Apps': '设置 > 开发人员设置 > GitHub 应用',
     'Settings > Developer settings > OAuth Apps': '设置 > 开发人员设置 > OAuth 应用',
     'Settings > Developer settings > Personal access tokens': '设置 > 开发人员设置 > 个人访问令牌',
-    'Settings > Developer settings > Personal access tokens > Fine-grained tokens':
-      '设置 > 开发人员设置 > 个人访问令牌 > 精细令牌',
-    'Settings > Developer settings > Personal access tokens > Tokens (classic)':
-      '设置 > 开发人员设置 > 个人访问令牌 > 令牌（经典）',
+    'Settings > Developer settings > Personal access tokens > Fine-grained tokens': '设置 > 开发人员设置 > 个人访问令牌 > 精细令牌',
+    'Settings > Developer settings > Personal access tokens > Tokens (classic)': '设置 > 开发人员设置 > 个人访问令牌 > 令牌（经典）',
 
     // 旧版命令面板（开启功能预览后出现）。服务端下发的原文含讨论、项目，新版面板改写为上面只含议题和拉取请求的写法
     'Clear Command Palette': '清除命令面板',
@@ -322,7 +316,7 @@ export default {
     'Default dark': '深色默认',
     'Default light': '浅色默认',
     'Switch theme to dark high contrast': '将主题切换为深色高对比度',
-    'Sync with system settings': '跟随系统设置',
+    'Sync with system settings': '跟随系统设置'
   },
   regexp: [
     // 快速搜索：“探索”建议
@@ -332,18 +326,15 @@ export default {
     [/^Search this directory for (.+)$/, '在此目录中搜索 $1'],
     [
       /^Search (Organization|Enterprise|Owner) ([\w.-]+) for (.+)$/,
-      (_, scope, name, query) => `在${SEARCH_SCOPE[scope] ?? scope} ${name} 中搜索 ${query}`,
+      (_, scope, name, query) => `在${SEARCH_SCOPE[scope] ?? scope} ${name} 中搜索 ${query}`
     ],
     [/^Search ([\w.-]+\/[\w.-]+) for (.+)$/, '在 $1 中搜索 $2'],
     [/^Recent search: (.+)$/, '最近搜索：$1'],
-    [
-      /^Jump to (.+), (organization|repository)$/,
-      (_, name, kind) => `跳转到 ${name}（${SUGGESTION_KIND[kind] ?? kind}）`,
-    ],
+    [/^Jump to (.+), (organization|repository)$/, (_, name, kind) => `跳转到 ${name}（${SUGGESTION_KIND[kind] ?? kind}）`],
     // 限定符值可含空格：language:"Objective C"、license:"MIT License"、saved:"my search"
     [
       /^Autocomplete (.+) scope, (organization|repository|owner|language)$/,
-      (_, value, kind) => `自动补全 ${value} 范围（${SUGGESTION_KIND[kind] ?? kind}）`,
+      (_, value, kind) => `自动补全 ${value} 范围（${SUGGESTION_KIND[kind] ?? kind}）`
     ],
     [/^Autocomplete (.+) qualifier value$/, '自动补全 $1 限定符值'],
     [/^(saved:.+), Autocomplete$/, '$1，自动补全'],
@@ -351,19 +342,16 @@ export default {
     // 已保存搜索数量上限（React 拆分的数字与文字拼接后）
     [
       /^Limit of (\d+) saved searches reached\. Please delete an existing saved search before creating a new one\.$/,
-      '已达到 $1 个已保存搜索的上限。请先删除现有的已保存搜索再创建新的。',
-    ],
+      '已达到 $1 个已保存搜索的上限。请先删除现有的已保存搜索再创建新的。'
+    ]
   ],
   inline: [
     // 旧版命令面板底部的搜索项：Search<strong> '查询' </strong>across all of GitHub（空格在 strong 内）；
     // 存储库、所有者范围内末段是 in owner/repo、in owner
     ['Search {} across all of GitHub', '在整个 GitHub 中搜索{}'],
-    [/^Search \{\} in ([\w.-]+(?:\/[\w.-]+)?)$/, '在 $1 中搜索{}'],
+    [/^Search \{\} in ([\w.-]+(?:\/[\w.-]+)?)$/, '在 $1 中搜索{}']
   ],
   // 旧版命令面板帮助项的标题：服务端模板 <command-palette-help> 的标题元素，以及据此渲染的列表项
   // （标题以 innerHTML 写入内层 span）。<strong> 拆开的标题整段合并后匹配
-  mergeText: [
-    '[data-target="command-palette-help.titleElement"]',
-    '[data-target="command-palette-item.titleElement"] > span',
-  ],
+  mergeText: ['[data-target="command-palette-help.titleElement"]', '[data-target="command-palette-item.titleElement"] > span']
 } satisfies PageDictionary

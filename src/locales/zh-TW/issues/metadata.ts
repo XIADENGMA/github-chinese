@@ -11,7 +11,7 @@ const PICKER_SUBJECT: Readonly<Record<string, string>> = {
   milestones: '里程碑',
   projects: '專案',
   'issue type': '議題類型',
-  'issue types': '議題類型',
+  'issue types': '議題類型'
 }
 
 /** 依赖关系上限提示中的关系名 */
@@ -28,7 +28,7 @@ const SECTION_NAME: Readonly<Record<string, string>> = {
   Relationships: '關係',
   Development: '開發',
   Fields: '欄位',
-  Participants: '參與者',
+  Participants: '參與者'
 }
 
 const SECTION_NAME_SOURCE = Object.keys(SECTION_NAME).join('|')
@@ -40,7 +40,7 @@ const SECTION_NAME_SOURCE = Object.keys(SECTION_NAME).join('|')
 const ISSUE_TYPE_NAMES: Readonly<Record<string, string>> = {
   Task: '任務',
   Bug: '錯誤',
-  Feature: '功能',
+  Feature: '功能'
 }
 
 /** 看板卡片存储库按钮中的存储库状态 */
@@ -48,7 +48,7 @@ const REPOSITORY_STATUS: Readonly<Record<string, string>> = {
   public: '公開',
   private: '私人',
   fork: '分叉',
-  archived: '已封存',
+  archived: '已封存'
 }
 
 /**
@@ -67,8 +67,7 @@ export default {
     'Hide project fields': '隱藏專案欄位',
     'Could not update projects': '無法更新專案',
     'Projects are currently unavailable': '專案目前無法使用',
-    'You may only link 10 pull requests to this issue across all repositories.':
-      '此議題在所有儲存庫中最多只能連結 10 個拉取請求。',
+    'You may only link 10 pull requests to this issue across all repositories.': '此議題在所有儲存庫中最多只能連結 10 個拉取請求。',
     'This project has reached the maximum of 50,000 items. To add more, please delete existing items from the project.':
       '此專案已達 50,000 個項目的上限。若要新增更多項目，請先從專案中刪除現有項目。',
     'Project items limit reached dialog': '專案項目上限對話方塊',
@@ -140,8 +139,7 @@ export default {
     'Edit the pull request description to unlink': '編輯拉取請求描述以取消連結',
     'Create a branch for this issue': '為此議題建立分支',
     'Shows branches and pull requests linked to this issue.': '顯示連結到此議題的分支和拉取請求。',
-    'When branches are created from issues, their pull requests are automatically linked.':
-      '從議題建立分支時，其拉取請求會自動連結。',
+    'When branches are created from issues, their pull requests are automatically linked.': '從議題建立分支時，其拉取請求會自動連結。',
     'Link a pull request from this repository': '連結此儲存庫中的拉取請求',
     'Search for branches or pull requests': '搜尋分支或拉取請求',
     // 产品名按用户要求译成中文（product-names.md）：codespace → 程式碼空間
@@ -175,13 +173,12 @@ export default {
       '父議題不能成為自身的子議題。若要將其新增為子議題，請先在樹狀結構中移除其父議題身分。',
     'Duplicate sub-issue': '重複的子議題',
     'A parent may not have duplicate sub-issues.': '父議題不能有重複的子議題。',
-    'A sub-issue must belong to the same organization or user as the parent.':
-      '子議題必須與父議題屬於同一個組織或使用者。',
+    'A sub-issue must belong to the same organization or user as the parent.': '子議題必須與父議題屬於同一個組織或使用者。',
     // 子议题列表（嵌套列表）的错误与管理对话框
     'An error occured while loading items': '載入項目時發生錯誤',
     'An error occurred while loading items': '載入項目時發生錯誤',
     'There was an issue loading Sub issues': '載入子議題時發生問題',
-    'Manage this item': '管理此項目',
+    'Manage this item': '管理此項目'
   },
   scoped: {
     // 分区标题与空状态
@@ -380,7 +377,7 @@ export default {
     Releases: '發行版本',
     Latest: '最新',
     'Pre-release': '發行前版本',
-    'No releases found': '找不到發行版本',
+    'No releases found': '找不到發行版本'
   },
   regexp: [
     // 分区标题旁的编辑按钮（读屏）：Edit Assignees
@@ -391,10 +388,7 @@ export default {
     [/^Removed label: (.+)\.$/, '已移除標籤：$1。'],
     // 删除按钮的提示文字（常态下按钮没有 aria-label，名称取自提示）：默认标签名与令牌同译，已存档的 Archived 译出，
     // 自定义标签名保持原文（见 issues/labels.ts 的 archivedLabelName）
-    [
-      /^Remove label: (?:(Archived) )?(.+)$/,
-      (_, archived: string, name: string) => `移除標籤：${archivedLabelName(archived, name)}`,
-    ],
+    [/^Remove label: (?:(Archived) )?(.+)$/, (_, archived: string, name: string) => `移除標籤：${archivedLabelName(archived, name)}`],
     // 项目分区展开（Show 5 more 由通用词典处理）
     [/^Show (\d+) closed projects?$/, '顯示 $1 個已關閉的專案'],
     [/^Show (\d+) more \((\d+) closed\)$/, '再顯示 $1 個（$2 個已關閉）'],
@@ -424,7 +418,7 @@ export default {
     [/^The branch (.+) already exists\.$/, '分支 $1 已存在。'],
     [
       /^Repository: ([\w.-]+\/[\w.-]+)(?: \((public|private|fork|archived)\))?$/,
-      (_, repo, status) => `儲存庫：${repo}${status ? `（${REPOSITORY_STATUS[status] ?? status}）` : ''}`,
+      (_, repo, status) => `儲存庫：${repo}${status ? `（${REPOSITORY_STATUS[status] ?? status}）` : ''}`
     ],
     [/^Change destination, current repository: ([\w.-]+\/[\w.-]+)$/, '變更目標，目前的儲存庫：$1'],
     // 开发
@@ -435,7 +429,7 @@ export default {
     [
       /^Issues have a limit of (\d+) (?:"(blocked by|blocking)" )?relationships\. To add more, an existing one must be removed\.$/,
       (_, limit, relation) =>
-        `每個議題最多可有 ${limit} 個${relation ? `「${RELATION_NAME[relation] ?? relation}」` : ''}關係。若要新增，必須先移除現有關係。`,
+        `每個議題最多可有 ${limit} 個${relation ? `「${RELATION_NAME[relation] ?? relation}」` : ''}關係。若要新增，必須先移除現有關係。`
     ],
     [/^Failed to save (\d+) issues?$/, '無法儲存 $1 個議題'],
     [/^Failed to save (\d+) alerts?$/, '無法儲存 $1 個警示'],
@@ -450,11 +444,11 @@ export default {
     [/^(.+), blocked$/, '$1，受阻擋'],
     [
       /^Parents have a limit of (\d+) sub-issues\. To add more, an existing one must be removed\.$/,
-      '每個父議題最多可有 $1 個子議題。若要新增，必須先移除現有子議題。',
+      '每個父議題最多可有 $1 個子議題。若要新增，必須先移除現有子議題。'
     ],
     [
       /^You can[’'`]t add more than (\d+) layers of sub-issues\. To add a sub-issue, remove a parent issue at any level\.$/,
-      '子議題最多只能有 $1 層。若要新增子議題，請移除任一層級的父議題。',
+      '子議題最多只能有 $1 層。若要新增子議題，請移除任一層級的父議題。'
     ],
     [/^You can[’'`]t add more than (\d+) layers of sub-issues$/, '子議題最多只能有 $1 層'],
     [/^(\d+) tasks?$/, '$1 項任務'],
@@ -464,11 +458,11 @@ export default {
     // 子议题列表项的无障碍名称（标题、状态等在前，以句号结尾）：Fix bug. Press Control, Shift, U for more actions.
     [
       /^(?:(.+)\. )?Press (Command|Control), Shift, U for more actions(\.?)$/,
-      (_, head, key, dot) => `${head ? `${head}。` : ''}按 ${key}、Shift、U 查看更多動作${dot ? '。' : ''}`,
+      (_, head, key, dot) => `${head ? `${head}。` : ''}按 ${key}、Shift、U 查看更多動作${dot ? '。' : ''}`
     ],
     // 正文任务清单项（清单文字是用户内容，原文无标点，译文不加冒号、引号）
     [/^Open (.+) task options$/, (_, title) => joinName(joinName('開啟', title), '的工作選項')],
-    [/^(.+) checklist item$/, (_, title) => joinName(title, '檢查清單項目')],
+    [/^(.+) checklist item$/, (_, title) => joinName(title, '檢查清單項目')]
   ],
-  issueTypes: ISSUE_TYPE_NAMES,
+  issueTypes: ISSUE_TYPE_NAMES
 } satisfies PageDictionary

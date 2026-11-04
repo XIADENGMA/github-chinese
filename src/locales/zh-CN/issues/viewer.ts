@@ -11,7 +11,7 @@ const SUGGESTION_FIELD: Readonly<Record<string, string>> = {
   label: '标签',
   close: '关闭',
   assignee: '受理人',
-  field: '字段',
+  field: '字段'
 }
 
 function suggestionField(name: string): string {
@@ -51,7 +51,7 @@ const STATUS_NAME: Readonly<Record<string, string>> = {
   Merged: '已合并',
   Draft: '草稿',
   Queued: '已排队',
-  Archived: '已存档',
+  Archived: '已存档'
 }
 
 function statusName(name: string): string {
@@ -69,7 +69,7 @@ const SESSION_GROUP: Readonly<Record<string, string>> = {
   running: '运行中',
   failed: '失败',
   complete: '已完成',
-  cancelled: '已取消',
+  cancelled: '已取消'
 }
 
 const SESSION_GROUP_SOURCE = Object.keys(SESSION_GROUP).join('|')
@@ -153,8 +153,7 @@ export default {
     'Consider using reactions instead': '可以考虑改用反应',
     'To help keep issues focused, consider reacting or adding more details to your comment.':
       '为保持议题聚焦，请考虑使用反应，或在评论中补充更多细节。',
-    'To help keep issues focused, consider adding more details to your comment.':
-      '为保持议题聚焦，请考虑在评论中补充更多细节。',
+    'To help keep issues focused, consider adding more details to your comment.': '为保持议题聚焦，请考虑在评论中补充更多细节。',
     'Like issue instead 👍': '改为给议题点赞 👍',
     'Added a 👍 to this issue.': '已为此议题点赞 👍。',
     'Added a 👍 to this issue and subscribed to updates.': '已为此议题点赞 👍，并订阅了更新。',
@@ -173,10 +172,8 @@ export default {
     'Could not pin issue': '无法置顶议题',
     'Could not unpin issue': '无法取消置顶议题',
     // 置顶 / 取消置顶的说明（公共存储库、专用存储库各一句）与结果提示
-    'Up to 3 issues can be pinned and they will appear publicly at the top of the issues page':
-      '最多可置顶 3 个议题并公开显示在议题页顶部',
-    'Up to 3 issues can be pinned and they will appear at the top of the issues page':
-      '最多可置顶 3 个议题并显示在议题页顶部',
+    'Up to 3 issues can be pinned and they will appear publicly at the top of the issues page': '最多可置顶 3 个议题并公开显示在议题页顶部',
+    'Up to 3 issues can be pinned and they will appear at the top of the issues page': '最多可置顶 3 个议题并显示在议题页顶部',
     'Up to 3 issues can be pinned to the top of the issues page': '最多可在议题页置顶 3 个议题',
     'This will unpin this issue from the top of the issues page': '这会在议题页取消置顶此议题',
     'The issue has been pinned.': '议题已置顶。',
@@ -185,8 +182,7 @@ export default {
     'Add issue type': '添加议题类型',
     'Change issue type': '更改议题类型',
     'Select issue type': '选择议题类型',
-    'Something went wrong, could not set the issue type. Please reload and try again.':
-      '出错了，无法设置议题类型。请重新加载后重试。',
+    'Something went wrong, could not set the issue type. Please reload and try again.': '出错了，无法设置议题类型。请重新加载后重试。',
     'Open in GitHub Copilot app': '在 GitHub Copilot 应用中打开',
 
     // 锁定对话
@@ -239,8 +235,7 @@ export default {
     'Deletion will remove the issue from search and previous references will point to a placeholder':
       '删除会将议题从搜索结果中移除并使原有引用指向占位页',
     'Could not delete the issue. Please try again.': '无法删除议题。请重试。',
-    'The issue was deleted, but the page could not be refreshed. Please reload the page.':
-      '议题已删除，但无法刷新页面。请重新加载页面。',
+    'The issue was deleted, but the page could not be refreshed. Please reload the page.': '议题已删除，但无法刷新页面。请重新加载页面。',
     'The issue was successfully deleted.': '议题已删除。',
     'This issue has been deleted.': '此议题已被删除。',
 
@@ -278,8 +273,7 @@ export default {
     'Nothing on this issue matches the selected filters.': '此议题中没有与所选筛选器匹配的内容。',
     '(give feedback on the issue timeline, opens in a new tab)': '（对议题时间线提供反馈，在新标签页中打开）',
     'Activity on this issue will appear here.': '此议题的活动将显示在这里。',
-    'Comment unavailable. This comment cannot be shown in the activity timeline.':
-      '评论不可用。此评论无法在活动时间线中显示。',
+    'Comment unavailable. This comment cannot be shown in the activity timeline.': '评论不可用。此评论无法在活动时间线中显示。',
     'This comment cannot be shown in the activity timeline.': '此评论无法在活动时间线中显示。',
 
     // 反馈
@@ -326,7 +320,7 @@ export default {
     'Write markdown...': '编写 Markdown...',
     'Unable to reorder artifact. Previous order restored.': '无法调整工件顺序。已恢复原顺序。',
     'Link could not be updated. Try again.': '无法更新链接。请重试。',
-    'Link could not be added. Try again.': '无法添加链接。请重试。',
+    'Link could not be added. Try again.': '无法添加链接。请重试。'
   },
   scoped: {
     // 头部与正文头部（“– with”“No description provided.”等评论通用文字由通用词典处理）
@@ -441,7 +435,7 @@ export default {
     // 时间线加载更多：<span>12</span><span> remaining <span>items</span></span>（整段由 timeline.ts 的 mergeText 合并翻译为“还有 12 项”；
     // 此为整段未命中时的片段，items 由通用词典处理）
     remaining: '剩余',
-    item: '项',
+    item: '项'
   },
   regexp: [
     // 标签页标题片段：Issue #123
@@ -461,11 +455,9 @@ export default {
     [/^Agents assigned by ([\w-]+(?:\[bot\])?)$/, '由 $1 分配的代理'],
     // 头部代理会话摘要（按钮文字与 aria-label）：2 sessions needs input, 1 failed
     [
-      new RegExp(
-        `^(Agent sessions: )?(\\d+) sessions? (${SESSION_GROUP_SOURCE})(?:, (\\d+) (${SESSION_GROUP_SOURCE}|others?))?$`,
-      ),
+      new RegExp(`^(Agent sessions: )?(\\d+) sessions? (${SESSION_GROUP_SOURCE})(?:, (\\d+) (${SESSION_GROUP_SOURCE}|others?))?$`),
       (_, prefix, count, group, restCount, restName) =>
-        `${prefix ? '代理会话：' : ''}${count} 个会话${sessionGroup(group)}${sessionRest(restCount, restName)}`,
+        `${prefix ? '代理会话：' : ''}${count} 个会话${sessionGroup(group)}${sessionRest(restCount, restName)}`
     ],
     // 关闭 / 状态
     [/^Close as duplicate of #(\d+)$/, '以 #$1 的重复项关闭'],
@@ -473,21 +465,17 @@ export default {
     // 评论框状态按钮：Mark as Done、Mark as Duplicate of #12 with comment（状态名两侧不加引号）
     [
       /^Mark as (.+?)(?: of #(\d+))?( with comment)?$/,
-      (_, status, number, comment) =>
-        `${number ? `标记为 #${number} 的重复项` : withStatus('标记为', status)}${comment ? '并评论' : ''}`,
+      (_, status, number, comment) => `${number ? `标记为 #${number} 的重复项` : withStatus('标记为', status)}${comment ? '并评论' : ''}`
     ],
     [
       /^Status set to (.+?)(?: of #(\d+))?$/,
-      (_, status, number) => (number ? `状态已设为 #${number} 的重复项` : withStatus('状态已设为', status)),
+      (_, status, number) => (number ? `状态已设为 #${number} 的重复项` : withStatus('状态已设为', status))
     ],
     [/^Could not set the status to (.+)$/, (_, status) => withStatus('无法将状态设为', status)],
     // 头部状态按钮：Status: Open（列表项图标的“Status: … .”带句号，由 list.ts 处理）
     [/^Status: ([^.]+)$/, (_, status) => `状态：${statusName(status)}`],
     // 置顶上限
-    [
-      /^(\d+)\/(\d+) issues already pinned\. Unpin an issue to pin this one\.$/,
-      '已置顶 $1/$2 个议题。请先取消置顶一个议题。',
-    ],
+    [/^(\d+)\/(\d+) issues already pinned\. Unpin an issue to pin this one\.$/, '已置顶 $1/$2 个议题。请先取消置顶一个议题。'],
     // 正文：清单项转议题
     [/^Create an issue with the title "(.+)"$/, '创建标题为“$1”的议题'],
     // 正文头部：Copilot 等非用户名作者的头像链接（@octocat's profile 与阻止、取消阻止 @用户由通用词典处理）
@@ -497,7 +485,7 @@ export default {
     // 活动排序按钮
     [
       /^Sort (comments|activity): (Oldest|Newest)$/,
-      (_, subject, order) => `${SORT_SUBJECT[subject] ?? subject}排序：${order === 'Oldest' ? '最早' : '最新'}`,
+      (_, subject, order) => `${SORT_SUBJECT[subject] ?? subject}排序：${order === 'Oldest' ? '最早' : '最新'}`
     ],
     // 代理建议
     [/^(High|Medium|Low) confidence$/, (_, level) => `置信度${CONFIDENCE[level] ?? level}`],
@@ -505,21 +493,19 @@ export default {
     [/^(\d+) suggestions rejected$/, '已拒绝 $1 条建议'],
     [
       /^Pending label suggestions: (.+?)(?:\. (High|Medium|Low) confidence)?\. View details$/,
-      (_, labels, level) => `待处理的标签建议：${labels}${confidenceText(level)}。查看详细信息`,
+      (_, labels, level) => `待处理的标签建议：${labels}${confidenceText(level)}。查看详细信息`
     ],
     [
       /^Pending (.+?) suggestion(?:: (.+?))?(?:\. (High|Medium|Low) confidence)?\. View details$/,
-      (_, field, value, level) =>
-        `${pendingSuggestion(field)}${value ? `：${value}` : ''}${confidenceText(level)}。查看详细信息`,
+      (_, field, value, level) => `${pendingSuggestion(field)}${value ? `：${value}` : ''}${confidenceText(level)}。查看详细信息`
     ],
     [
       /^Applied ([\w -]+?): (.+?)(\. View rationale)?$/,
-      (_, field, value, rationale) =>
-        `${joinCjk('已应用', suggestionField(field))}：${value}${rationale ? '。查看理由' : ''}`,
+      (_, field, value, rationale) => `${joinCjk('已应用', suggestionField(field))}：${value}${rationale ? '。查看理由' : ''}`
     ],
     [/^duplicate of ([\w.-]+\/[\w.-]+#\d+)$/, '重复于 $1'],
     // 工件
     [/^Edit artifact: (.+)$/, '编辑工件：$1'],
-    [/^More actions for (.+)$/, '$1 的更多操作'],
-  ],
+    [/^More actions for (.+)$/, '$1 的更多操作']
+  ]
 } satisfies PageDictionary

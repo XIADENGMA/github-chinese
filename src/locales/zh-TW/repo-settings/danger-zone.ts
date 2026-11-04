@@ -7,7 +7,7 @@ const COUNT = '(\\d[\\d,]*)'
 const VISIBILITY: Readonly<Record<string, string>> = {
   private: '私人',
   public: '公開',
-  internal: '內部',
+  internal: '內部'
 }
 
 /**
@@ -35,8 +35,7 @@ export default {
     'I want to make this repository public': '我要將此儲存庫設為公開',
     'I want to make this repository private': '我要將此儲存庫設為私人',
     'I want to make this repository internal': '我要將此儲存庫設為內部',
-    'The code will be visible to everyone who can visit https://github.com':
-      '所有能造訪 https://github.com 的人都能看到程式碼',
+    'The code will be visible to everyone who can visit https://github.com': '所有能造訪 https://github.com 的人都能看到程式碼',
     "Attachments uploaded to this repository's issues and pull requests will not be accessible unless it is made private again.":
       '除非重新設為私人，否則將無法存取上傳到此儲存庫議題和拉取請求的附件。',
     'Attachments uploaded to this repository’s issues and pull requests will not be accessible unless it is made private again.':
@@ -62,17 +61,14 @@ export default {
     'Any custom Dependabot alert rules will be disabled unless GitHub Advanced Security is enabled for this repository.':
       '除非此儲存庫已啟用 GitHub 進階安全性，否則所有自訂 Dependabot 警示規則都將停用。',
     'Code scanning will become unavailable.': '程式碼掃描將無法使用。',
-    'Current forks will remain public and will be detached from this repository.':
-      '現有分叉將維持公開，並與此儲存庫分離。',
+    'Current forks will remain public and will be detached from this repository.': '現有分叉將維持公開，並與此儲存庫分離。',
     'Advanced Security will be disabled.': '進階安全性將停用。',
     'I have read and understand these effects': '我已閱讀並瞭解這些影響',
     'Warning: this is a destructive action': '警告：這是破壞性動作',
     'Warning: this is a destructive action.': '警告：這是破壞性動作。',
     'Warning: this is a potentially destructive action.': '警告：這可能是破壞性動作。',
-    'To confirm, type the number of stars on this repository in the box below':
-      '若要確認，請在下方方塊中輸入此儲存庫的星號數',
-    'To confirm, type the number of stars on this repository in the box below.':
-      '若要確認，請在下方方塊中輸入此儲存庫的星號數。',
+    'To confirm, type the number of stars on this repository in the box below': '若要確認，請在下方方塊中輸入此儲存庫的星號數',
+    'To confirm, type the number of stars on this repository in the box below.': '若要確認，請在下方方塊中輸入此儲存庫的星號數。',
 
     // 禁用 / 重新启用分支保护规则
     'Disable branch protection rules': '停用分支保護規則',
@@ -102,12 +98,10 @@ export default {
     'Can’t leave the fork network because this fork has child forks.': '此分叉有子分叉，因此無法離開分叉網路。',
     "Can't detach forks larger than 1 GB.": '無法分離大於 1 GB 的分叉。',
     'Can’t detach forks larger than 1 GB.': '無法分離大於 1 GB 的分叉。',
-    'Unlink this repository from the fork network and make it standalone.':
-      '取消此儲存庫與分叉網路的連結，使其成為獨立儲存庫。',
+    'Unlink this repository from the fork network and make it standalone.': '取消此儲存庫與分叉網路的連結，使其成為獨立儲存庫。',
     'Detach is in progress.': '正在分離。',
     'Detaching this repository.': '正在分離此儲存庫。',
-    'This will permanently remove the fork relationship to the upstream repository':
-      '這將永久移除與上游儲存庫的分叉關係',
+    'This will permanently remove the fork relationship to the upstream repository': '這將永久移除與上游儲存庫的分叉關係',
     // 原文无标点，译文不加
     'will become a standalone repository and will no longer be able to fetch upstream updates or propose changes to the upstream repository':
       '將成為獨立儲存庫且無法再擷取上游更新或向上游儲存庫提議變更',
@@ -139,8 +133,7 @@ export default {
     // 删除
     'Delete this repository': '刪除此儲存庫',
     'Effects of deleting this repository': '刪除此儲存庫的影響',
-    'Once you delete a repository, there is no going back. Please be certain.':
-      '儲存庫一經刪除便無法復原。請務必確定。',
+    'Once you delete a repository, there is no going back. Please be certain.': '儲存庫一經刪除便無法復原。請務必確定。',
     'Organization members cannot delete repositories.': '組織成員無法刪除儲存庫。',
     'Organization members cannot delete repositories': '組織成員無法刪除儲存庫',
     'I want to delete this repository': '我要刪除此儲存庫',
@@ -152,7 +145,7 @@ export default {
     'repository, wiki, issues, comments, packages, secrets, workflow runs, and remove all team associations.':
       '儲存庫及其 Wiki、議題、留言、套件、機密和工作流程執行，並移除所有團隊關聯。',
     'This will not change your billing plan. If you want to downgrade, you can do so in your Billing Settings.':
-      '這不會變更你的計費方案。如需降級，可以在帳務設定中變更。',
+      '這不會變更你的計費方案。如需降級，可以在帳務設定中變更。'
   },
   scoped: {
     'Danger Zone': '危險區域',
@@ -173,20 +166,19 @@ export default {
     'Please type': '請輸入',
     'to confirm.': '以確認。',
     'This will make': '這將使',
-    'read-write.': '變為可讀寫。',
+    'read-write.': '變為可讀寫。'
   },
   regexp: [
     // 可见性对话框
     [
       new RegExp(`^Make ${REPO} (private|public|internal)$`),
-      (_, repo: string, visibility: string) => `將 ${repo} 設為${VISIBILITY[visibility] ?? visibility}`,
+      (_, repo: string, visibility: string) => `將 ${repo} 設為${VISIBILITY[visibility] ?? visibility}`
     ],
     [new RegExp(`^${COUNT} stars?$`), '$1 顆星'],
     [new RegExp(`^${COUNT} watchers?$`), '$1 位關注者'],
     [
       /^To confirm, type (?:"([^"]{1,200})"|“([^”]{1,200})”) in the box below(:?)$/,
-      (_, straight: string, curly: string, colon: string) =>
-        `若要確認，請在下方方塊中輸入「${straight || curly}」${colon ? '：' : ''}`,
+      (_, straight: string, curly: string, colon: string) => `若要確認，請在下方方塊中輸入「${straight || curly}」${colon ? '：' : ''}`
     ],
     // 禁用 / 重新启用分支保护规则（规则量词作「個」，与 commits/branches.ts、org-settings/security.ts 一致）
     [/^(\d+) branch protection rules?$/, '$1 個分支保護規則'],
@@ -199,10 +191,10 @@ export default {
     [/^Delete ([\w.-]+\/[\w.-]+)$/, '刪除 $1'],
     [
       new RegExp(
-        `^This will permanently delete the ${REPO} repository, wiki, issues, comments, packages, secrets, workflow runs, and remove all (collaborator|team) associations\\.$`,
+        `^This will permanently delete the ${REPO} repository, wiki, issues, comments, packages, secrets, workflow runs, and remove all (collaborator|team) associations\\.$`
       ),
       (_, repo: string, kind: string) =>
-        `這將永久刪除 ${repo} 儲存庫及其 Wiki、議題、留言、套件、機密和工作流程執行，並移除所有${kind === 'team' ? '團隊' : '協作者'}關聯。`,
-    ],
-  ],
+        `這將永久刪除 ${repo} 儲存庫及其 Wiki、議題、留言、套件、機密和工作流程執行，並移除所有${kind === 'team' ? '團隊' : '協作者'}關聯。`
+    ]
+  ]
 } satisfies PageDictionary

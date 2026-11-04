@@ -16,7 +16,7 @@ const WEEKDAYS: Readonly<Record<string, string>> = {
   Thu: '周四',
   Fri: '周五',
   Sat: '周六',
-  Sun: '周日',
+  Sun: '周日'
 }
 
 /** 路线图日期片段（不含捕获组）：Mon, Oct 26 或 Fri, Jan 8 2027 */
@@ -44,7 +44,7 @@ export function translateWeekdayDate(text: string): string {
 function translateSpanNote(note: string): string {
   return note
     .split(' - ')
-    .map((part) => {
+    .map(part => {
       if (SHORT_DATE_RE.test(part)) return translateDate(part) ?? part
       const edge = /^(.+) (start|end)$/.exec(part)
       return edge ? `${edge[1]} ${edge[2] === 'start' ? '开始' : '结束'}` : part
@@ -59,7 +59,7 @@ export function translateRoadmapSpan(text: string): string {
   const [, range = '', note] = match
   const dates = range
     .split(' - ')
-    .map((part) => translateWeekdayDate(part))
+    .map(part => translateWeekdayDate(part))
     .join(' - ')
   return note ? `${dates} [${translateSpanNote(note)}]` : dates
 }
@@ -68,7 +68,7 @@ export function translateRoadmapSpan(text: string): string {
 export function translateIterationRange(text: string): string {
   return text
     .split(' - ')
-    .map((part) => translateDate(part) ?? part)
+    .map(part => translateDate(part) ?? part)
     .join(' - ')
 }
 
@@ -87,25 +87,25 @@ function sortDirection(direction: string): string {
 const ZOOM_LEVELS: Readonly<Record<string, string>> = {
   month: '月',
   quarter: '季度',
-  year: '年',
+  year: '年'
 }
 
 const DURATION_UNITS: Readonly<Record<string, string>> = {
   day: '天',
   week: '周',
-  month: '个月',
+  month: '个月'
 }
 
 const MACRO_PREFIXES: Readonly<Record<string, string>> = {
   Current: '当前',
   Next: '下一个',
-  Previous: '上一个',
+  Previous: '上一个'
 }
 
 const MACRO_OPERATORS: Readonly<Record<string, string>> = {
   'starts with': '开头为',
   'ends with': '结尾为',
-  contains: '包含',
+  contains: '包含'
 }
 
 /**
@@ -134,13 +134,13 @@ const FILTER_KEY_NAMES: Readonly<Record<string, string>> = {
   'Last updated': '最后更新',
   'Blocked by': '被阻止',
   Blocking: '阻止',
-  'Relates to': '相关',
+  'Relates to': '相关'
 }
 
 /** 筛选建议组合 aria-label 中的筛选器名（不含捕获组），长名在前 */
 const FILTER_PROVIDER_SOURCE = [...Object.keys(FIELD_NAMES), ...Object.keys(FILTER_KEY_NAMES)]
   .sort((a, b) => b.length - a.length)
-  .map((name) => name.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&'))
+  .map(name => name.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&'))
   .join('|')
 
 function filterKeyName(name: string): string {
@@ -149,9 +149,9 @@ function filterKeyName(name: string): string {
 
 /** 卡片标签提示中的字段名（不含捕获组）：子议题进度另有规则 */
 const CARD_FIELD_SOURCE = Object.keys(FIELD_NAMES)
-  .filter((name) => name !== 'Sub-issues progress')
+  .filter(name => name !== 'Sub-issues progress')
   .sort((a, b) => b.length - a.length)
-  .map((name) => name.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&'))
+  .map(name => name.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&'))
   .join('|')
 
 /** 视图配置中的字段列表（joinOxford，仅含系统 / 模板字段时匹配）：Title, Assignees, and Status */
@@ -159,7 +159,7 @@ const FIELD_LIST_SOURCE = `(?:${FIELD_NAME_SOURCE})(?:, (?:${FIELD_NAME_SOURCE})
 
 /** Title, Assignees, and Status → 标题、受理人和状态 */
 function translateFieldList(list: string): string {
-  const names = list.split(/, and |, | and /).map((name) => translateFieldName(name))
+  const names = list.split(/, and |, | and /).map(name => translateFieldName(name))
   const last = names.pop() ?? ''
   return `${names.join('、')}和${last}`
 }
@@ -201,12 +201,10 @@ const STATIC: Readonly<Record<string, string>> = {
   'Set as the default for everyone?': '设为所有人的默认设置？',
   'Publishing this configuration will make it the default for everyone viewing the project.':
     '发布此配置会使其成为所有查看此项目的人的默认设置。',
-  'Saving these filters will make it the default for everyone in this view.':
-    '保存这些筛选器会使其成为此视图中所有人的默认设置。',
+  'Saving these filters will make it the default for everyone in this view.': '保存这些筛选器会使其成为此视图中所有人的默认设置。',
   'Saving these display options will make it the default for everyone in this view.':
     '保存这些显示选项会使其成为此视图中所有人的默认设置。',
-  'Saving these options will make it the default for everyone in this view.':
-    '保存这些选项会使其成为此视图中所有人的默认设置。',
+  'Saving these options will make it the default for everyone in this view.': '保存这些选项会使其成为此视图中所有人的默认设置。',
 
   // 筛选栏
   'Filter by keyword or by field': '按关键字或字段筛选',
@@ -305,7 +303,7 @@ const STATIC: Readonly<Record<string, string>> = {
   'Resize the item by dragging the later date': '拖动较晚的日期以调整项',
   'Skip to start of markers': '跳到标记开头',
   'Skip to end of markers': '跳到标记末尾',
-  'Show date fields': '显示日期字段',
+  'Show date fields': '显示日期字段'
 }
 
 const SCOPED: Readonly<Record<string, string>> = {
@@ -352,8 +350,7 @@ const SCOPED: Readonly<Record<string, string>> = {
   'Descending order: last to first': '降序：从末项到首项',
   'Ascending order: A to Z': '升序：A 到 Z',
   'Descending order: Z to A': '降序：Z 到 A',
-  'Press enter/space to resize pane with arrow keys. Press escape to exit.':
-    '按 Enter 或空格后用方向键调整面板大小。按 Esc 退出。',
+  'Press enter/space to resize pane with arrow keys. Press escape to exit.': '按 Enter 或空格后用方向键调整面板大小。按 Esc 退出。',
   'Filter values...': '筛选值...',
   'Filter values': '筛选值',
   'Filter mode': '筛选模式',
@@ -497,7 +494,7 @@ const SCOPED: Readonly<Record<string, string>> = {
   Year: '年',
   Break: '间隔',
   milestones: '个里程碑',
-  'Got it!': '知道了！',
+  'Got it!': '知道了！'
 }
 
 /** 筛选建议组合 aria-label 中的值：先查本文件页面词条，再查宏、模板选项名、字段名 */
@@ -525,21 +522,15 @@ export default {
     [/^View options for (.+)$/, (_, name: string) => joinCjk(name, '的视图选项')],
     [/^Save display options for (.+)\?$/, (_, name: string) => `${joinCjk(joinCjk('保存', name), '的显示选项')}？`],
     [/^Save filters for (.+)\?$/, (_, name: string) => `${joinCjk(joinCjk('保存', name), '的筛选器')}？`],
-    [
-      /^Save filters and display options for (.+)\?$/,
-      (_, name: string) => `${joinCjk(joinCjk('保存', name), '的筛选器和显示选项')}？`,
-    ],
+    [/^Save filters and display options for (.+)\?$/, (_, name: string) => `${joinCjk(joinCjk('保存', name), '的筛选器和显示选项')}？`],
 
     // 分组、列与卡片
     [
       /^Actions for (column|group): (.+)$/,
-      (_, kind: string, name: string) => joinCjk(joinCjk(kind === 'column' ? '列' : '分组', name), '的操作'),
+      (_, kind: string, name: string) => joinCjk(joinCjk(kind === 'column' ? '列' : '分组', name), '的操作')
     ],
     [/^Actions for (.+)$/, (_, name: string) => joinCjk(name, '的操作')],
-    [
-      /^(Collapse|Expand) group (.+)$/,
-      (_, action: string, name: string) => joinCjk(action === 'Collapse' ? '折叠分组' : '展开分组', name),
-    ],
+    [/^(Collapse|Expand) group (.+)$/, (_, action: string, name: string) => joinCjk(action === 'Collapse' ? '折叠分组' : '展开分组', name)],
     [new RegExp(`^No (${FIELD_NAME_SOURCE})$`), (_, name: string) => `无${translateFieldName(name)}`],
     [/^No ([A-Z][\w-]*(?: [\w-]+)?)$/, (_, name: string) => pangu(`无${name}`)],
     [/^(\d+) cards?$/, '$1 张卡片'],
@@ -556,46 +547,42 @@ export default {
     [/^Label: (.+)$/, '标签：$1'],
     [
       new RegExp(`^([^:]+): (.+) \\((${ITERATION_RANGE_SOURCE})\\)$`),
-      (_, field: string, title: string, range: string) =>
-        `${translateFieldName(field)}：${title}（${translateIterationRange(range)}）`,
+      (_, field: string, title: string, range: string) => `${translateFieldName(field)}：${title}（${translateIterationRange(range)}）`
     ],
     [
       new RegExp(`^(${CARD_FIELD_SOURCE}): (.+)$`),
-      (_, field: string, value: string) => `${translateFieldName(field)}：${cardFieldValue(value)}`,
+      (_, field: string, value: string) => `${translateFieldName(field)}：${cardFieldValue(value)}`
     ],
 
     // 表格表头与视图配置
     [/^(.+) column options$/, (_, name: string) => joinCjk(translateFieldName(name), '列选项')],
     [
       /^Change (?:(primary|secondary|no\. \d+) )?sort direction to (ascending|descending)$/,
-      (_, rank: string | undefined, direction: string) => `将${sortRank(rank)}排序方向改为${sortDirection(direction)}`,
+      (_, rank: string | undefined, direction: string) => `将${sortRank(rank)}排序方向改为${sortDirection(direction)}`
     ],
     [
       /^\((?:(primary|secondary|no\. \d+) )?sort: (ascending|descending)\)$/,
-      (_, rank: string | undefined, direction: string) => `（${sortRank(rank)}排序：${sortDirection(direction)}）`,
+      (_, rank: string | undefined, direction: string) => `（${sortRank(rank)}排序：${sortDirection(direction)}）`
     ],
     [
       /^Sorted by: (.+)$/,
       (_, list: string) =>
         `排序依据：${list
           .split(', ')
-          .map((part) => {
+          .map(part => {
             const sort = /^(.+) (ascending|descending)$/.exec(part)
             return sort ? pangu(`${translateFieldName(sort[1] ?? '')}${sortDirection(sort[2] ?? '')}`) : part
           })
-          .join('，')}`,
+          .join('，')}`
     ],
     [
       /^Count, (.+) and (\d+) more$/,
-      (_, name: string, count: string) => pangu(`计数，${translateFieldName(name)}等 ${Number(count) + 1} 项`),
+      (_, name: string, count: string) => pangu(`计数，${translateFieldName(name)}等 ${Number(count) + 1} 项`)
     ],
     [/^Count, (.+)$/, (_, name: string) => `计数，${translateFieldName(name)}`],
     [new RegExp(`^(${FIELD_LIST_SOURCE})$`), (_, list: string) => translateFieldList(list)],
     // 字段求和只列一个字段名；逗号分隔的名单（反应者：alice, bob and 3 more）不匹配，避免总数算错
-    [
-      /^([^,]+) and (\d+) more$/,
-      (_, name: string, count: string) => pangu(`${translateFieldName(name)}等 ${Number(count) + 1} 项`),
-    ],
+    [/^([^,]+) and (\d+) more$/, (_, name: string, count: string) => pangu(`${translateFieldName(name)}等 ${Number(count) + 1} 项`)],
 
     // 筛选建议
     [MACRO_RE, (_, which: string, name: string) => translateMacro(which, name)],
@@ -604,70 +591,60 @@ export default {
     // 字段名首字母大写；小写的 Filter by user / author 等来自侧边面板的共享选择器，不按字段名处理
     [/^Filter by ([A-Z][\w-]*(?: [\w-]+){0,3})$/, (_, name: string) => pangu(`按${translateFieldName(name)}筛选`)],
     [/^Has ([a-z][\w -]*)$/, (_, name: string) => pangu(`有${translateFieldName(name)}`)],
-    [
-      /^(\d+) (days?|weeks?|months?)$/,
-      (_, count: string, unit: string) => `${count} ${DURATION_UNITS[unit.replace(/s$/, '')] ?? unit}`,
-    ],
+    [/^(\d+) (days?|weeks?|months?)$/, (_, count: string, unit: string) => `${count} ${DURATION_UNITS[unit.replace(/s$/, '')] ?? unit}`],
     // 筛选建议的组合 aria-label：Has Assignees, Assignees / term*, iteration starts with / Status, Filter / Todo, Status
     [
       /^(Has|No) (.+), \2$/,
-      (_, prefix: string, name: string) =>
-        `${pangu(`${prefix === 'Has' ? '有' : '无'}${filterKeyName(name)}`)}，${filterKeyName(name)}`,
+      (_, prefix: string, name: string) => `${pangu(`${prefix === 'Has' ? '有' : '无'}${filterKeyName(name)}`)}，${filterKeyName(name)}`
     ],
     [
       /^(\*?term\*?), ([a-z][\w -]*) (starts with|ends with|contains)$/,
       (_, term: string, name: string, operator: string) =>
-        `${term}，${pangu(`${translateFieldName(name)}${MACRO_OPERATORS[operator] ?? operator}`)}`,
+        `${term}，${pangu(`${translateFieldName(name)}${MACRO_OPERATORS[operator] ?? operator}`)}`
     ],
     [
       /^(.+), Filter(?:, (.+))?$/,
       (_, name: string, description: string) =>
-        `${filterKeyName(name)}，筛选器${description ? `，${STATIC[description] ?? SCOPED[description] ?? description}` : ''}`,
+        `${filterKeyName(name)}，筛选器${description ? `，${STATIC[description] ?? SCOPED[description] ?? description}` : ''}`
     ],
     [
       new RegExp(`^(.+), (${FILTER_PROVIDER_SOURCE})$`),
-      (_, value: string, provider: string) => `${filterValueName(value)}，${filterKeyName(provider)}`,
+      (_, value: string, provider: string) => `${filterValueName(value)}，${filterKeyName(provider)}`
     ],
 
     // 路线图
     [/^Zoom level: (month|quarter|year)\.$/, (_, level: string) => `缩放级别：${ZOOM_LEVELS[level] ?? level}。`],
     [
       /^Select zoom level\. The current zoom level is (month|quarter|year)\.$/,
-      (_, level: string) => `选择缩放级别。当前缩放级别为${ZOOM_LEVELS[level] ?? level}。`,
+      (_, level: string) => `选择缩放级别。当前缩放级别为${ZOOM_LEVELS[level] ?? level}。`
     ],
     [new RegExp(`^Today: (${ROADMAP_SPAN_SOURCE})$`), (_, span: string) => `今天：${translateRoadmapSpan(span)}`],
     [new RegExp(`^Scroll to: (${WEEKDAY_DATE_SOURCE})$`), (_, date: string) => `滚动到：${translateWeekdayDate(date)}`],
     // 原文没有冒号：添加到今天 10 月 26 日周一
-    [
-      new RegExp(`^Add to today at (${ROADMAP_SPAN_SOURCE})$`),
-      (_, span: string) => joinCjk('添加到今天', translateRoadmapSpan(span)),
-    ],
-    [
-      new RegExp(`^Add to (${ROADMAP_SPAN_SOURCE})$`),
-      (_, span: string) => joinCjk('添加到', translateRoadmapSpan(span)),
-    ],
+    [new RegExp(`^Add to today at (${ROADMAP_SPAN_SOURCE})$`), (_, span: string) => joinCjk('添加到今天', translateRoadmapSpan(span))],
+    [new RegExp(`^Add to (${ROADMAP_SPAN_SOURCE})$`), (_, span: string) => joinCjk('添加到', translateRoadmapSpan(span))],
     [
       new RegExp(`^Create an iteration containing (${WEEKDAY_DATE_SOURCE}) to add items here$`),
-      (_, date: string) => joinCjk('创建包含', `${translateWeekdayDate(date)}的迭代后才能在此添加项`),
+      (_, date: string) => joinCjk('创建包含', `${translateWeekdayDate(date)}的迭代后才能在此添加项`)
     ],
     [new RegExp(`^(${ROADMAP_SPAN_SOURCE})$`), (_, span: string) => translateRoadmapSpan(span)],
     [new RegExp(`^(${ITERATION_RANGE_SOURCE})$`), (_, range: string) => translateIterationRange(range)],
     [
       /^We've selected an existing (date|iteration) field in your project to get started\. You can change the fields used here\.$/,
-      (_, kind: string) => `已选择项目中现有的${kind === 'date' ? '日期' : '迭代'}字段。可在此更改所用字段。`,
+      (_, kind: string) => `已选择项目中现有的${kind === 'date' ? '日期' : '迭代'}字段。可在此更改所用字段。`
     ],
     [/^(\d+) milestones$/, '$1 个里程碑'],
     [/^(\d+) iterations$/, '$1 个迭代'],
     [
       /^([A-Z]\S*(?: \S+)?) (start|end)$/,
-      (_, name: string, edge: string) => pangu(`${translateFieldName(name)}${edge === 'start' ? '开始' : '结束'}`),
-    ],
+      (_, name: string, edge: string) => pangu(`${translateFieldName(name)}${edge === 'start' ? '开始' : '结束'}`)
+    ]
   ],
   inline: [
     // 路线图表头里程碑 / 迭代标记的读屏文本（roadmap-header.tsx）：<span class="sr-only">(Starting on <time>Oct 26, 2026</time>)</span>
     // 右括号是独立文本节点；整句译出后用全角括号，日期由 <time> 内的文字照常翻译
     ['(Starting on {})', '（开始于 {}）'],
-    ['(Due on {})', '（截止于 {}）'],
+    ['(Due on {})', '（截止于 {}）']
   ],
   ignore: [
     // 项目标题（用户内容）。顶栏的项目标题是 SanitizedHtml 渲染的 h1（memex-title.tsx）；项目设置、工作流、见解、
@@ -691,6 +668,6 @@ export default {
     // 议题标签名（prc-Token-IssueLabel- 内的 TokenTextContainer）由全局忽略规则处理，不重复收录
     // 筛选框中 aria-hidden 的高亮层与光标定位镜像（输入文本副本）；输入框本身（placeholder）不在其内。
     // 比全局规则（.styled-input-container > div > [aria-hidden="true"]）宽：镜像层嵌套更深时也能命中
-    '.styled-input-container [aria-hidden="true"]',
-  ],
+    '.styled-input-container [aria-hidden="true"]'
+  ]
 } satisfies PageDictionary

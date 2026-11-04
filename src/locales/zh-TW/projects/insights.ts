@@ -13,7 +13,7 @@ const OPERATIONS: Readonly<Record<string, string>> = {
   Sum: '總和',
   Average: '平均值',
   Minimum: '最小值',
-  Maximum: '最大值',
+  Maximum: '最大值'
 }
 
 /**
@@ -29,13 +29,13 @@ const PERIODS: Readonly<Record<string, string>> = {
   '2 weeks': '2 週',
   '1 month': '1 個月',
   '3 months': '3 個月',
-  Max: '全部',
+  Max: '全部'
 }
 
 /** 默认图表名称（可被用户改名） */
 const CHART_TITLES: Readonly<Record<string, string>> = {
   'Burn up': '燃起圖',
-  'Status chart': '狀態圖表',
+  'Status chart': '狀態圖表'
 }
 
 function chartTitle(title: string): string {
@@ -48,7 +48,7 @@ const CHART_TYPES: Readonly<Record<string, string>> = {
   'Line chart': '折線圖',
   'Bar chart': '長條圖',
   'Pie chart': '圓餅圖',
-  Chart: '圖表',
+  Chart: '圖表'
 }
 
 /** Highcharts 无障碍描述：计数单位 */
@@ -63,14 +63,14 @@ const CHART_UNITS: Readonly<Record<string, string>> = {
   slice: '個扇形',
   slices: '個扇形',
   pie: '個圓餅',
-  pies: '個圓餅',
+  pies: '個圓餅'
 }
 
 const RANGE_UNITS: Readonly<Record<string, string>> = {
   days: '天',
   hours: '小時',
   minutes: '分鐘',
-  seconds: '秒',
+  seconds: '秒'
 }
 
 /**
@@ -81,7 +81,7 @@ const AXIS_NAMES: Readonly<Record<string, string>> = {
   Date: '日期',
   items: '項目',
   Count: '計數',
-  categories: '類別',
+  categories: '類別'
 }
 
 /** 坐标轴名：默认名、聚合标签（Count of items）、字段名 */
@@ -108,8 +108,7 @@ export default {
     'The Burn up chart shows the progress of your project items over time, showing how much work has been completed and how much is left to do. Use this chart to view progress, spot trends, and identify bottlenecks to help move the project forward.':
       '燃起圖顯示專案項目隨時間的進度，呈現已完成和剩餘的工作量。可用此圖表查看進度、發現趨勢和找出瓶頸以推動專案進展。',
     'Status chart': '狀態圖表',
-    'This chart shows the current status for the total number of items in your project.':
-      '此圖表顯示專案中所有項目的目前狀態。',
+    'This chart shows the current status for the total number of items in your project.': '此圖表顯示專案中所有項目的目前狀態。',
     'Missing field': '缺少欄位',
     'The selected field no longer exists': '所選欄位已不存在',
 
@@ -140,12 +139,11 @@ export default {
     'This chart configuration is no longer valid': '此圖表設定已失效',
     'A required field may have been deleted. You will need to delete and re-create this chart.':
       '必要欄位可能已被刪除。你必須刪除並重新建立此圖表。',
-    'A required field may have been deleted. Update the configuration or delete the chart.':
-      '必要欄位可能已被刪除。請更新設定或刪除圖表。',
+    'A required field may have been deleted. Update the configuration or delete the chart.': '必要欄位可能已被刪除。請更新設定或刪除圖表。',
     'This insight chart no longer exists': '此洞察圖表已不存在',
     'Select another chart to view insights': '選擇其他圖表以查看洞察',
     'You do not have access to all project items. Your chart visualization might differ from others.':
-      '你沒有存取所有專案項目的權限。你看到的圖表可能與其他人不同。',
+      '你沒有存取所有專案項目的權限。你看到的圖表可能與其他人不同。'
   },
   scoped: {
     // 通用文本（仅项目页生效）
@@ -192,17 +190,14 @@ export default {
     'Interactive chart.': '互動式圖表。',
     // 历史图表的状态分组
     'Closed pull requests': '已關閉的拉取請求',
-    ...PERIODS,
+    ...PERIODS
   },
   regexp: [
     // 字段名不以数字开头：避开 Maximum of 5 pins reached… 之类的数量上限提示
-    [
-      /^(Count|Sum|Average|Minimum|Maximum) of (?!\d)(.+)$/,
-      (_, operation: string, field: string) => aggregateLabel(operation, field),
-    ],
+    [/^(Count|Sum|Average|Minimum|Maximum) of (?!\d)(.+)$/, (_, operation: string, field: string) => aggregateLabel(operation, field)],
     [
       /^Private projects are limited to (\d+) custom charts\. Make your project public or upgrade your plan to add more charts\.$/,
-      '私人專案最多只能有 $1 個自訂圖表。將專案設為公開或升級方案以新增更多圖表。',
+      '私人專案最多只能有 $1 個自訂圖表。將專案設為公開或升級方案以新增更多圖表。'
     ],
     [
       /^Displaying results for (.+)$/,
@@ -211,7 +206,7 @@ export default {
         // 全部 → 顯示全部結果；时长与未知时间段 → 顯示 2 週的結果、顯示 Q3 2026 的結果
         if (translated && !/^\d/.test(translated)) return `顯示${translated}結果`
         return joinCjk(joinCjk('顯示', translated ?? period), '的結果')
-      },
+      }
     ],
     [/^Are you sure you want to delete "(.+)"\?$/, '確定要刪除「$1」嗎？'],
     [/^(.+)\. Interactive chart\.$/, (_, title: string) => `${chartTitle(title)}。互動式圖表。`],
@@ -220,22 +215,20 @@ export default {
     // Highcharts 无障碍描述（读屏文本）：原文没有逗号、冒号的不加，改语序代替标点
     [
       /^(Combination chart|Line chart|Bar chart|Pie chart|Chart) with ([\d,]+) (data series|data points?|lines?|bars?|slices?|pies?)\.$/,
-      (_, type: string, count: string, unit: string) =>
-        `包含 ${count} ${CHART_UNITS[unit] ?? unit}的${CHART_TYPES[type] ?? type}。`,
+      (_, type: string, count: string, unit: string) => `包含 ${count} ${CHART_UNITS[unit] ?? unit}的${CHART_TYPES[type] ?? type}。`
     ],
     [
       new RegExp(
-        `^The chart has 1 (X|Y) axis displaying ([^.]+)\\.(?: Data ranges from ${AXIS_VALUE} to ${AXIS_VALUE}\\.| Data range: ([\\d,.]+) (categories|days|hours|minutes|seconds)\\.)?$`,
+        `^The chart has 1 (X|Y) axis displaying ([^.]+)\\.(?: Data ranges from ${AXIS_VALUE} to ${AXIS_VALUE}\\.| Data range: ([\\d,.]+) (categories|days|hours|minutes|seconds)\\.)?$`
       ),
       (_, axis: string, name: string, from: string, to: string, amount: string, unit: string) => {
         let range = ''
         if (from) range = `資料範圍從 ${from} 到 ${to}。`
-        else if (amount)
-          range = `資料範圍：${unit === 'categories' ? `${amount} 個類別` : `${amount} ${RANGE_UNITS[unit] ?? unit}`}。`
+        else if (amount) range = `資料範圍：${unit === 'categories' ? `${amount} 個類別` : `${amount} ${RANGE_UNITS[unit] ?? unit}`}。`
         return `圖表有 1 條${joinCjk(displaying(name), `的 ${axis} 軸`)}。${range}`
-      },
+      }
     ],
     [/^View as data table, (.+)$/, (_, title: string) => `以資料表查看，${chartTitle(title)}`],
-    [/^Toggle series visibility, (.+)$/, (_, title: string) => `切換數列顯示，${chartTitle(title)}`],
-  ],
+    [/^Toggle series visibility, (.+)$/, (_, title: string) => `切換數列顯示，${chartTitle(title)}`]
+  ]
 } satisfies PageDictionary

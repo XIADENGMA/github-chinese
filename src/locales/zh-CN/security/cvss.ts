@@ -46,8 +46,7 @@ export default {
       '数据机密性损失越大则严重性越高，衡量的是未授权用户可访问数据的程度。',
     'More severe when loss of data integrity is the highest, measuring the consequence of data modification possible by an unauthorized user.':
       '数据完整性损失越大则严重性越高，衡量的是未授权用户修改数据可能造成的后果。',
-    'More severe when the loss of impacted component availability is highest.':
-      '受影响组件的可用性损失越大则严重性越高。',
+    'More severe when the loss of impacted component availability is highest.': '受影响组件的可用性损失越大则严重性越高。',
 
     // CVSS v4 基本指标
     'Exploitability Metrics': '可利用性指标',
@@ -99,7 +98,7 @@ export default {
     Calculator: '计算器',
     'Assess severity using CVSS': '使用 CVSS 评估严重性',
     'Select severity': '选择严重性',
-    'Severity score': '严重性评分',
+    'Severity score': '严重性评分'
   },
   scoped: {
     // 其他区域也出现的同形文字，本区域内单独生效
@@ -113,10 +112,10 @@ export default {
     Changed: '已改变',
     Unchanged: '未改变',
     Present: '存在',
-    Passive: '被动',
+    Passive: '被动'
   },
   regexp: [
     // EPSS 百分位：(5th percentile)
-    [/^\((\d+)(?:st|nd|rd|th) percentile\)$/, '（第 $1 百分位）'],
-  ],
+    [/^\((\d+)(?:st|nd|rd|th) percentile\)$/, '（第 $1 百分位）']
+  ]
 } satisfies PageDictionary

@@ -40,7 +40,7 @@ export const FILTER_KEY: Readonly<Record<string, string>> = {
   'Total good-first issues': '適合新手的議題總數',
   'Total forks': '分叉總數',
   'Size (Kb)': '大小 (Kb)',
-  'Total topics': '主題總數',
+  'Total topics': '主題總數'
 }
 
 /** 筛选键说明（pulls/dashboard.ts 同样取用） */
@@ -50,7 +50,7 @@ export const FILTER_DESCRIPTION: Readonly<Record<string, string>> = {
   'Filter by custom properties': '依自訂屬性篩選',
   'Programming language': '程式語言',
   'Creation date': '建立日期',
-  'Last updated date': '上次更新日期',
+  'Last updated date': '上次更新日期'
 }
 
 /** 筛选取值（pulls/dashboard.ts 同样取用） */
@@ -83,7 +83,7 @@ export const FILTER_VALUE: Readonly<Record<string, string>> = {
   'Critical resource': '關鍵資源',
   'Internet exposed': '暴露於網際網路',
   'Lateral movement': '橫向移動',
-  'Sensitive data': '敏感資料',
+  'Sensitive data': '敏感資料'
 }
 
 /** 高级筛选对话框的运算符（同 issues/filter.ts）；比较运算符的 scoped 由 pages.ts 收录 */
@@ -101,7 +101,7 @@ const OPERATOR: Readonly<Record<string, string>> = {
   after: '晚於',
   'before and including': '早於或等於',
   'after and including': '晚於或等於',
-  between: '介於',
+  between: '介於'
 }
 
 /** 高级筛选对话框取值框占位文字 Enter a <类型> 中的类型（同 issues/filter.ts）；未收录的作“值” */
@@ -131,7 +131,7 @@ const EXCLUDE_KEY: Readonly<Record<string, string>> = {
   'runtime-risk': '執行階段風險',
   created: '建立日期',
   pushed: '上次更新',
-  language: '語言',
+  language: '語言'
 }
 
 /** 自定义属性子键的取值：true_false 类型是 True / False，其余是组织自定义的 */
@@ -141,7 +141,7 @@ const PROPERTY_VALUE: Readonly<Record<string, string>> = { True: '是', False: '
 const PROPERTY_PREFIX = 'Property: '
 
 const FILTER_KEY_SOURCE = Object.keys(FILTER_KEY)
-  .map((key) => key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+  .map(key => key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
   .sort((a, b) => b.length - a.length)
   .join('|')
 
@@ -190,15 +190,15 @@ export const SORT_VALUE: Readonly<Record<string, string>> = Object.fromEntries(
     'Total stars (ascending)',
     'Total forks (ascending)',
     'Help-wanted issues (ascending)',
-    'Help-wanted issues (descending)',
-  ].map((value) => [value, valueName(value)]),
+    'Help-wanted issues (descending)'
+  ].map(value => [value, valueName(value)])
 )
 
 export default {
   static: {
     // is: 筛选器的弃用提示（校验横幅）
     'Filter "is:" is deprecated, use "visibility:" or "sponsorable:" instead':
-      '篩選器「is:」已淘汰，請改用「visibility:」或「sponsorable:」',
+      '篩選器「is:」已淘汰，請改用「visibility:」或「sponsorable:」'
   },
   scoped: {
     // 筛选键（Archived、Fork、License 等由通用词典收录）
@@ -265,7 +265,7 @@ export default {
     'Unbalanced parentheses': '括號不成對',
     'Empty value for': '下列篩選器的值為空',
     'Only one value allowed for': '下列篩選器只允許一個值',
-    'Filter values are not supported for': '下列篩選器不支援篩選值',
+    'Filter values are not supported for': '下列篩選器不支援篩選值'
   },
   regexp: [
     // 高级筛选对话框：按钮与各行的读屏标题、aria-label（同 issues/filter.ts）；
@@ -274,10 +274,7 @@ export default {
     [/^Row (\d+)$/, '第 $1 列'],
     [/^Delete filter (\d+): (.+)$/, '刪除篩選器 $1：$2'],
     [/^(?:(.+), )?Qualifier (\d+)$/, (_, title, index) => `${title ? `${keyName(title)}，` : ''}限定詞 ${index}`],
-    [
-      /^(?:(.+), )?Operator (\d+)$/,
-      (_, title, index) => `${title ? `${pick(OPERATOR, title) ?? title}，` : ''}運算子 ${index}`,
-    ],
+    [/^(?:(.+), )?Operator (\d+)$/, (_, title, index) => `${title ? `${pick(OPERATOR, title) ?? title}，` : ''}運算子 ${index}`],
     // 介于运算符的两个输入框：Value 1 From / Value 1 To（原文无标点，译文不加括号）
     [/^Value (\d+) (From|To)$/, (_, index, edge) => `值 ${index} ${edge === 'From' ? '起始' : '結束'}`],
     [/^(?:(.+), )?Value (\d+)$/, (_, value, index) => `${value ? `${valueName(value)}，` : ''}值 ${index}`],
@@ -289,7 +286,7 @@ export default {
     [
       /^(.+), Filter(?:, (.+))?$/,
       (_, name, description?: string) =>
-        `${keyName(name)}，篩選器${description ? `，${pick(FILTER_DESCRIPTION, description) ?? description}` : ''}`,
+        `${keyName(name)}，篩選器${description ? `，${pick(FILTER_DESCRIPTION, description) ?? description}` : ''}`
     ],
     // 筛选取值的 aria-label：<值>, <键>，键限于本列表的筛选键；
     // 须排在 Property: 规则之前，否则「Property: team, Custom properties」会被整个当成属性名
@@ -298,8 +295,7 @@ export default {
     // 须排在「<值>, Property: <属性名>」规则之前
     [
       /^(Has|No) [Pp]roperty: (.+?)(?:, (Property: \2))?$/,
-      (_, kind, name, suffix?: string) =>
-        `${kind === 'Has' ? '有' : '無'}屬性：${name}${suffix ? `，屬性：${name}` : ''}`,
+      (_, kind, name, suffix?: string) => `${kind === 'Has' ? '有' : '無'}屬性：${name}${suffix ? `，屬性：${name}` : ''}`
     ],
     // 自定义属性子键取值的 aria-label：<值>, Property: <属性名>
     [/^(.+), Property: (.+)$/, (_, value, name) => `${propertyValueName(value)}，屬性：${name}`],
@@ -309,10 +305,10 @@ export default {
     [/^Exclude props\.(.+)$/, '排除屬性：$1'],
     [/^Exclude ([a-z][\w-]*)$/, (_, key) => joinCjk('排除', pick(EXCLUDE_KEY, key) ?? key)],
     // 校验横幅标题（与 issues/filter.ts 同句同译）
-    [/^Filter contains (\d+) issues?:$/, '篩選器有 $1 處錯誤：'],
+    [/^Filter contains (\d+) issues?:$/, '篩選器有 $1 處錯誤：']
   ],
   inline: [
     // 校验横幅条目：<code> 是槽位，槽位顺序不变（与 issues/filter.ts 同句同译）
-    ['Invalid value {} for {}', '{} 不是篩選器 {} 的有效值'],
-  ],
+    ['Invalid value {} for {}', '{} 不是篩選器 {} 的有效值']
+  ]
 } satisfies PageDictionary

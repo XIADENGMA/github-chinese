@@ -35,56 +35,56 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       [
         'This repo was archived by the owner on Sep 3, 2024. It is now read-only.',
-        '此存储库已由所有者于 2024 年 9 月 3 日存档。现为只读。',
+        '此存储库已由所有者于 2024 年 9 月 3 日存档。现为只读。'
       ],
       [
         'This repository was archived by the owner on Mar 3, 2023. It is now read-only.',
-        '此存储库已由所有者于 2023 年 3 月 3 日存档。现为只读。',
-      ],
+        '此存储库已由所有者于 2023 年 3 月 3 日存档。现为只读。'
+      ]
     ],
     misses: [
       'This repository was archived by the owner. It is now read-only.',
-      'This repos was archived by the owner on Sep 3, 2024. It is now read-only.',
-    ],
+      'This repos was archived by the owner on Sep 3, 2024. It is now read-only.'
+    ]
   },
   // 关注按钮的无障碍名称
   {
     hits: [
       [
         `Watch: Participating in octocat/hello-world. 12 users are watching this repository. ${WATCH_TAIL}`,
-        '关注：octocat/hello-world（参与）。12 个用户正在关注此存储库。单击可更改订阅设置。',
+        '关注：octocat/hello-world（参与）。12 个用户正在关注此存储库。单击可更改订阅设置。'
       ],
       [
         `Unwatch: All Activity in octocat/Spoon-Knife. 1 user is watching this repository. ${WATCH_TAIL}`,
-        '取消关注：octocat/Spoon-Knife（所有活动）。1 个用户正在关注此存储库。单击可更改订阅设置。',
+        '取消关注：octocat/Spoon-Knife（所有活动）。1 个用户正在关注此存储库。单击可更改订阅设置。'
       ],
       [
         `Unwatch: Custom in a.b/c-d. 1,024 users are watching this repository. ${WATCH_TAIL}`,
-        '取消关注：a.b/c-d（自定义）。1,024 个用户正在关注此存储库。单击可更改订阅设置。',
-      ],
+        '取消关注：a.b/c-d（自定义）。1,024 个用户正在关注此存储库。单击可更改订阅设置。'
+      ]
     ],
-    misses: ['Watch: Participating. 12 users are watching this repository.'],
+    misses: ['Watch: Participating. 12 users are watching this repository.']
   },
   {
     hits: [
       [
         `Stop ignoring in octocat/hello-world. 3 users are watching this repository. ${WATCH_TAIL}`,
-        '停止忽略 octocat/hello-world。3 个用户正在关注此存储库。单击可更改订阅设置。',
-      ],
+        '停止忽略 octocat/hello-world。3 个用户正在关注此存储库。单击可更改订阅设置。'
+      ]
     ],
-    misses: [`Stop ignoring in octocat. 3 users are watching this repository. ${WATCH_TAIL}`],
+    misses: [`Stop ignoring in octocat. 3 users are watching this repository. ${WATCH_TAIL}`]
   },
   // 自定义订阅对话框
   {
     hits: [['Subscribe to events for octocat/hello-world', '订阅 octocat/hello-world 的事件']],
-    misses: ['Subscribe to events for'],
+    misses: ['Subscribe to events for']
   },
   {
     hits: [
       ['Discussions are not enabled for this repository', '此存储库未启用讨论'],
-      ['Pull requests are not enabled for this repository', '此存储库未启用拉取请求'],
+      ['Pull requests are not enabled for this repository', '此存储库未启用拉取请求']
     ],
-    misses: ['Wikis are not enabled for this repository'],
+    misses: ['Wikis are not enabled for this repository']
   },
   // 复刻按钮
   {
@@ -92,84 +92,79 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Cannot fork because octocat/hello-world has forking disabled', 'octocat/hello-world 已禁用复刻'],
       ['Cannot fork because a/b is unavailable due to a DMCA takedown', '无法复刻已被 DMCA 下架的 a/b'],
       ['Cannot fork because a/b is empty', '无法复刻空存储库 a/b'],
-      ['Cannot fork because a.b/c-d is locked', '无法复刻已锁定的 a.b/c-d'],
+      ['Cannot fork because a.b/c-d is locked', '无法复刻已锁定的 a.b/c-d']
     ],
-    misses: ['Cannot fork because octocat/hello-world is archived', 'Cannot fork because repository is archived'],
+    misses: ['Cannot fork because octocat/hello-world is archived', 'Cannot fork because repository is archived']
   },
   {
-    hits: [
-      [
-        'You own octocat/hello-world and are not a member of any organizations',
-        '你拥有 octocat/hello-world 且未加入任何组织',
-      ],
-    ],
-    misses: ['You own this repository and are not a member of any organizations'],
+    hits: [['You own octocat/hello-world and are not a member of any organizations', '你拥有 octocat/hello-world 且未加入任何组织']],
+    misses: ['You own this repository and are not a member of any organizations']
   },
   {
     hits: [['Cannot fork octocat/hello-world', '无法复刻 octocat/hello-world']],
-    misses: ['Cannot fork this repository'],
+    misses: ['Cannot fork this repository']
   },
   {
     hits: [['Fork your own copy of octocat/hello-world', '创建 octocat/hello-world 的复刻']],
-    misses: ['Fork your own copy of this repository'],
+    misses: ['Fork your own copy of this repository']
   },
   // 星标按钮
   {
     hits: [['Star octocat/hello-world', '为 octocat/hello-world 加星标']],
-    misses: ['Star octocat'],
+    misses: ['Star octocat']
   },
   {
     hits: [['Unstar octocat/hello-world', '取消 octocat/hello-world 的星标']],
-    misses: ['Unstar octocat'],
+    misses: ['Unstar octocat']
   },
   {
     hits: [
       ["You can't star octocat/hello-world", '无法为 octocat/hello-world 加星标'],
-      ['You can’t star a/b', '无法为 a/b 加星标'],
+      ['You can’t star a/b', '无法为 a/b 加星标']
     ],
-    misses: ["You can't star"],
+    misses: ["You can't star"]
   },
   {
     hits: [
       [
         "This will remove octocat/hello-world from the 2 lists that it's been added to.",
-        '此操作会将 octocat/hello-world 从其所在的 2 个列表中删除。',
+        '此操作会将 octocat/hello-world 从其所在的 2 个列表中删除。'
       ],
-      ['This will remove a/b from the 1 list that it’s been added to.', '此操作会将 a/b 从其所在的 1 个列表中删除。'],
+      ['This will remove a/b from the 1 list that it’s been added to.', '此操作会将 a/b 从其所在的 1 个列表中删除。']
     ],
-    misses: ["This will remove octocat/hello-world from the lists that it's been added to."],
+    misses: ["This will remove octocat/hello-world from the lists that it's been added to."]
   },
   // 置顶按钮
   {
     hits: [['Pin octocat/hello-world to your profile', '在个人资料中置顶 octocat/hello-world']],
-    misses: ['Pin octocat to your profile'],
+    misses: ['Pin octocat to your profile']
   },
   {
     hits: [['Unpin octocat/hello-world from your profile', '在个人资料中取消置顶 octocat/hello-world']],
-    misses: ['Unpin octocat from your profile'],
+    misses: ['Unpin octocat from your profile']
   },
   {
     hits: [
       ['Failed to pin repository', '置顶存储库失败'],
-      ['Failed to unpin repository', '取消置顶存储库失败'],
+      ['Failed to unpin repository', '取消置顶存储库失败']
     ],
-    misses: ['Failed to star repository'],
+    misses: ['Failed to star repository']
   },
   // 赞助按钮
   {
     hits: [
       ['Sponsor octocat/hello-world', '赞助 octocat/hello-world'],
-      ['Sponsoring a/b', '正在赞助 a/b'],
+      ['Sponsoring a/b', '正在赞助 a/b']
     ],
-    misses: ['Sponsor octocat'],
+    misses: ['Sponsor octocat']
   },
   // 置顶按钮的无障碍名称
   {
     hits: [
       ['Pin octo-org/hello-world', '置顶 octo-org/hello-world'],
-      ['Unpin a.b/c-d', '取消置顶 a.b/c-d'],
+      ['Unpin a.b/c-d', '取消置顶 a.b/c-d']
     ],
-    misses: ['Pin octocat', 'Pin this repository'],
+    misses: ['Pin octocat', 'Pin this repository']
   },
   // 存储库类型说明
   {
@@ -179,27 +174,27 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Public archive repository', '公共存档存储库'],
       ['Public archive repository · Forked from', '公共存档存储库 · 复刻自'],
       ['Private template repository · Mirrored from', '专用模板存储库 · 镜像自'],
-      ['Internal mirror repository', '内部镜像存储库'],
+      ['Internal mirror repository', '内部镜像存储库']
     ],
-    misses: ['Public repository · Forked from octocat/hello-world', 'Secret repository'],
+    misses: ['Public repository · Forked from octocat/hello-world', 'Secret repository']
   },
   // 自定义订阅对话框：已选标签摘要
   {
     hits: [
       ['bug, docs, help wanted +2 more', 'bug, docs, help wanted 及另外 2 个'],
       ['bug, documentation, enhanceme... +3 more', 'bug, documentation, enhanceme... 及另外 3 个'],
-      ['good first issue... +1 more', 'good first issue... 及另外 1 个'],
+      ['good first issue... +1 more', 'good first issue... 及另外 1 个']
     ],
-    misses: ['+2 more', 'bug +more', 'bug, docs and 2 more'],
+    misses: ['+2 more', 'bug +more', 'bug, docs and 2 more']
   },
   // 旧版页头（窄屏）：上下文按钮的无障碍名称
   {
     hits: [
       ['Page context: octo-org / hello-world', '页面上下文：octo-org / hello-world'],
-      ['Page context: octocat / Spoon-Knife', '页面上下文：octocat / Spoon-Knife'],
+      ['Page context: octocat / Spoon-Knife', '页面上下文：octocat / Spoon-Knife']
     ],
     // 只收录「所有者 / 存储库」两级
-    misses: ['Page context', 'Page context: octocat', 'Page context: octocat/hello-world'],
+    misses: ['Page context', 'Page context: octocat', 'Page context: octocat/hello-world']
   },
 
   // —— 首页代码区 ——
@@ -208,7 +203,7 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['main branch', 'main 分支'],
       ['v1.0.0 tag', 'v1.0.0 标签'],
-      ['feature/login-page branch', 'feature/login-page 分支'],
+      ['feature/login-page branch', 'feature/login-page 分支']
     ],
     misses: [
       'Default branch',
@@ -222,15 +217,15 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       'Choose branch',
       // 计数交给通用词典
       '1 tag',
-      '1,024 branch',
-    ],
+      '1,024 branch'
+    ]
   },
   {
     hits: [
       ['3 branches found', '找到 3 个分支'],
-      ['1 tag found', '找到 1 个标签'],
+      ['1 tag found', '找到 1 个标签']
     ],
-    misses: ['branches found'],
+    misses: ['branches found']
   },
   // 最新提交行
   {
@@ -238,191 +233,183 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['978 Commits', '978 个提交'],
       ['1 Commit', '1 个提交'],
       ['5,166 Commits', '5,166 个提交'],
-      ['2 commits', '2 个提交'],
+      ['2 commits', '2 个提交']
     ],
-    misses: ['Commits'],
+    misses: ['Commits']
   },
   {
     hits: [['Commit 57b9acc', '提交 57b9acc']],
-    misses: ['Commit changes'],
+    misses: ['Commit changes']
   },
   {
     hits: [
       ['commits by monalisa', 'monalisa 的提交'],
-      ['commits by octocat and hubot', 'octocat 和 hubot 的提交'],
+      ['commits by octocat and hubot', 'octocat 和 hubot 的提交']
     ],
-    misses: ['commits by'],
+    misses: ['commits by']
   },
   // 多个作者
   {
     hits: [['Show 3 authors', '显示 3 个作者']],
-    misses: ['Show authors'],
+    misses: ['Show authors']
   },
   {
     hits: [['12 authors', '12 个作者']],
-    misses: ['authors', '1 author'],
+    misses: ['authors', '1 author']
   },
   {
     hits: [
       ["octo-org's org home page", 'octo-org 的组织主页'],
-      ['my-org’s org home page', 'my-org 的组织主页'],
+      ['my-org’s org home page', 'my-org 的组织主页']
     ],
-    misses: ["org's home page"],
+    misses: ["org's home page"]
   },
   {
     hits: [
       ['Status checks: failure', '状态检查：失败'],
       ['Status checks: pending', '状态检查：挂起'],
-      ['Status checks: error', '状态检查：出错'],
+      ['Status checks: error', '状态检查：出错']
     ],
-    misses: ['Status checks: unknown'],
+    misses: ['Status checks: unknown']
   },
   {
     hits: [
       ['3 / 5 checks OK', '3/5 个检查正常'],
-      ['12/12 checks OK', '12/12 个检查正常'],
+      ['12/12 checks OK', '12/12 个检查正常']
     ],
-    misses: ['checks OK', '3 of 5 checks OK'],
+    misses: ['checks OK', '3 of 5 checks OK']
   },
   // 转到文件
   {
     hits: [['First 50 files shown.', '仅显示前 50 个文件。']],
-    misses: ['First files shown.'],
+    misses: ['First files shown.']
   },
   {
     hits: [
       ['Showing 12 files.', '显示 12 个文件。'],
-      ['Showing 1 file.', '显示 1 个文件。'],
+      ['Showing 1 file.', '显示 1 个文件。']
     ],
-    misses: ['Showing files.'],
+    misses: ['Showing files.']
   },
   // 文件列表
   {
     hits: [
       ['.devcontainer, (Directory)', '.devcontainer（目录）'],
       ['README.md, (File)', 'README.md（文件）'],
-      ['vendor/grammars, (Submodule)', 'vendor/grammars（子模块）'],
+      ['vendor/grammars, (Submodule)', 'vendor/grammars（子模块）']
     ],
-    misses: ['README.md, (Unknown)'],
+    misses: ['README.md, (Unknown)']
   },
   {
     hits: [
       [
         'Sorry, we had to truncate this directory to 1,000 files. 1,234 entries were omitted from the list.',
-        '此目录已截断为 1,000 个文件，另有 1,234 个条目未列出。',
+        '此目录已截断为 1,000 个文件，另有 1,234 个条目未列出。'
       ],
       [
         'Sorry, we had to truncate this directory to 1,000 files. 1 entry was omitted from the list.',
-        '此目录已截断为 1,000 个文件，另有 1 个条目未列出。',
-      ],
+        '此目录已截断为 1,000 个文件，另有 1 个条目未列出。'
+      ]
     ],
     misses: [
       'Sorry, we had to truncate this directory to 1,000 files.',
       // 带「Latest commit info may be omitted.」的版本由 code 词典处理
-      'Sorry, we had to truncate this directory to 1,000 files. 1,234 entries were omitted from the list. Latest commit info may be omitted.',
-    ],
+      'Sorry, we had to truncate this directory to 1,000 files. 1,234 entries were omitted from the list. Latest commit info may be omitted.'
+    ]
   },
   {
     hits: [['1 entry was omitted from the list.', '另有 1 个条目未列出。']],
-    misses: ['entries were omitted from the list.'],
+    misses: ['entries were omitted from the list.']
   },
   // 许可证
   {
     hits: [
       ['MIT license', 'MIT 许可证'],
       ['Apache-2.0 license', 'Apache-2.0 许可证'],
-      ['BSD-3-Clause license', 'BSD-3-Clause 许可证'],
+      ['BSD-3-Clause license', 'BSD-3-Clause 许可证']
     ],
     // Exclude license 是存储库筛选框的排除建议项，不当作许可证名
-    misses: [
-      'Other license',
-      'No license',
-      'Add license',
-      'Choose license',
-      'other license',
-      'a license',
-      'Exclude license',
-    ],
+    misses: ['Other license', 'No license', 'Add license', 'Choose license', 'other license', 'a license', 'Exclude license']
   },
   {
     hits: [
       ['MIT and 2 other licenses found', '找到 MIT 及另外 2 个许可证'],
       ['Apache-2.0 and 1 other license found', '找到 Apache-2.0 及另外 1 个许可证'],
-      ['Unknown and 1 other license found', '找到未知许可证及另外 1 个许可证'],
+      ['Unknown and 1 other license found', '找到未知许可证及另外 1 个许可证']
     ],
-    misses: ['MIT and 2 other licences found'],
+    misses: ['MIT and 2 other licences found']
   },
   {
     hits: [['MIT, Apache-2.0 licenses found', '找到 MIT、Apache-2.0 许可证']],
-    misses: ['licenses found', 'MIT licenses found', 'MIT, Apache-2.0, GPL-3.0 licenses found'],
+    misses: ['licenses found', 'MIT licenses found', 'MIT, Apache-2.0, GPL-3.0 licenses found']
   },
   // Code 下拉：客户端名 GitHub Desktop 译出，第三方应用名原样保留
   {
     hits: [
       ['Launching GitHub Desktop', '正在启动 GitHub 桌面版'],
       ['Launching Xcode', '正在启动 Xcode'],
-      ['Launching Visual Studio', '正在启动 Visual Studio'],
+      ['Launching Visual Studio', '正在启动 Visual Studio']
     ],
-    misses: ['Launching Atom'],
+    misses: ['Launching Atom']
   },
   {
     hits: [
       ['download GitHub Desktop', '下载 GitHub 桌面版'],
-      ['download Xcode', '下载 Xcode'],
+      ['download Xcode', '下载 Xcode']
     ],
-    misses: ['download Atom'],
+    misses: ['download Atom']
   },
   {
     hits: [
       ['must have their Codespaces usage paid for by their enterprise.', '的代码空间使用量必须由其企业支付。'],
-      ['must have their Codespaces usage paid for by Acme Corp.', '的代码空间使用量必须由 Acme Corp 支付。'],
+      ['must have their Codespaces usage paid for by Acme Corp.', '的代码空间使用量必须由 Acme Corp 支付。']
     ],
-    misses: ['must have their Codespaces usage paid for by their enterprise'],
+    misses: ['must have their Codespaces usage paid for by their enterprise']
   },
 
   // —— 横幅与复刻信息条 ——
   {
     hits: [
       ['2 commits ahead of', '领先 2 个提交'],
-      ['1 commit ahead of', '领先 1 个提交'],
+      ['1 commit ahead of', '领先 1 个提交']
     ],
-    misses: ['commits ahead of'],
+    misses: ['commits ahead of']
   },
   {
     hits: [['1,812 commits behind', '落后 1,812 个提交']],
-    misses: ['many commits behind'],
+    misses: ['many commits behind']
   },
   {
     hits: [
       [
         'Update branch to keep this branch up-to-date by syncing 12 commits from the upstream repository.',
-        '更新分支以同步上游存储库的 12 个提交并使此分支保持最新。',
-      ],
+        '更新分支以同步上游存储库的 12 个提交并使此分支保持最新。'
+      ]
     ],
-    misses: ['Update branch to keep this branch up-to-date by syncing commits from the upstream repository.'],
+    misses: ['Update branch to keep this branch up-to-date by syncing commits from the upstream repository.']
   },
   {
     hits: [
       [
         'Discard 2 commits to make this branch match the upstream repository. 2 commits will be removed from this branch.',
-        '放弃 2 个提交以使此分支与上游存储库一致。2 个提交将从此分支中删除。',
-      ],
+        '放弃 2 个提交以使此分支与上游存储库一致。2 个提交将从此分支中删除。'
+      ]
     ],
-    misses: ['Discard commits to make this branch match the upstream repository.'],
+    misses: ['Discard commits to make this branch match the upstream repository.']
   },
   {
     hits: [
       ['Discard 3 commits', '放弃 3 个提交'],
-      ['Discard 1 commit', '放弃 1 个提交'],
+      ['Discard 1 commit', '放弃 1 个提交']
     ],
-    misses: ['Discard changes'],
+    misses: ['Discard changes']
   },
   {
     hits: [
       ["Your main branch isn't protected", '你的 main 分支未受保护'],
-      ['Your develop branch isn’t protected', '你的 develop 分支未受保护'],
+      ['Your develop branch isn’t protected', '你的 develop 分支未受保护']
     ],
-    misses: ["Your branch isn't protected"],
+    misses: ["Your branch isn't protected"]
   },
   {
     hits: [
@@ -431,18 +418,13 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       // 未收录的框架名原样保留，与两侧中文之间补空格
       ['Deploy your Hugo site to GitHub Pages', '将你的 Hugo site 部署到 GitHub 页面'],
       // 原型链上的键不当作框架名
-      ['Deploy your constructor to GitHub Pages', '将你的 constructor 部署到 GitHub 页面'],
+      ['Deploy your constructor to GitHub Pages', '将你的 constructor 部署到 GitHub 页面']
     ],
-    misses: ['Deploy to GitHub Pages'],
+    misses: ['Deploy to GitHub Pages']
   },
   {
-    hits: [
-      [
-        'Deploy your Next.js app to GitHub Pages in a matter of minutes',
-        '几分钟内即可将你的 Next.js 应用部署到 GitHub 页面',
-      ],
-    ],
-    misses: ['Deploy to GitHub Pages in a matter of minutes'],
+    hits: [['Deploy your Next.js app to GitHub Pages in a matter of minutes', '几分钟内即可将你的 Next.js 应用部署到 GitHub 页面']],
+    misses: ['Deploy to GitHub Pages in a matter of minutes']
   },
   {
     hits: [
@@ -452,9 +434,9 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['had recent pushes less than a minute ago', '刚刚有新推送'],
       // 超过一个月的日期由浏览器按本地语言格式化，中文与数字之间补空格
       ['had recent pushes on 10月26日', '10 月 26 日有新推送'],
-      ['had recent pushes on 2023年10月26日', '2023 年 10 月 26 日有新推送'],
+      ['had recent pushes on 2023年10月26日', '2023 年 10 月 26 日有新推送']
     ],
-    misses: ['had recent pushes'],
+    misses: ['had recent pushes']
   },
   {
     hits: [
@@ -463,46 +445,41 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['about 1 month remaining', '剩余约 1 个月'],
       ['almost 2 weeks remaining', '剩余将近 2 周'],
       ['less than a minute remaining', '剩余不到 1 分钟'],
-      ['an hour remaining', '剩余 1 小时'],
+      ['an hour remaining', '剩余 1 小时']
     ],
-    misses: ['a few hours remaining', '23 hours'],
+    misses: ['a few hours remaining', '23 hours']
   },
   {
     hits: [
       [
         'to the main branch of this repository will be unable to interact with the repository.',
-        '此存储库 main 分支的用户将无法与此存储库交互。',
-      ],
+        '此存储库 main 分支的用户将无法与此存储库交互。'
+      ]
     ],
-    misses: ['to the branch of this repository will be unable to interact with the repository.'],
+    misses: ['to the branch of this repository will be unable to interact with the repository.']
   },
   {
-    hits: [
-      [
-        '3 users you’ve blocked have previously contributed to this repository.',
-        '你阻止的 3 个用户曾为此存储库做过贡献。',
-      ],
-    ],
-    misses: ['users you’ve blocked have previously contributed to this repository.'],
+    hits: [['3 users you’ve blocked have previously contributed to this repository.', '你阻止的 3 个用户曾为此存储库做过贡献。']],
+    misses: ['users you’ve blocked have previously contributed to this repository.']
   },
   {
     hits: [['This repository is missing 2 required custom property values', '此存储库缺少 2 个必填的自定义属性值']],
-    misses: ['This repository is missing required custom property values'],
+    misses: ['This repository is missing required custom property values']
   },
   // 不可变 Action 迁移对话框
   {
     hits: [
       ['3 out of 10 tags', '10 个标签中的 3 个'],
-      ['1 out of 1 tag', '1 个标签中的 1 个'],
+      ['1 out of 1 tag', '1 个标签中的 1 个']
     ],
-    misses: ['out of 10 tags', '3 out of 10 releases'],
+    misses: ['out of 10 tags', '3 out of 10 releases']
   },
   {
     hits: [
       ['5 versions', '5 个版本'],
-      ['1 version', '1 个版本'],
+      ['1 version', '1 个版本']
     ],
-    misses: ['versions', 'v1 version'],
+    misses: ['versions', 'v1 version']
   },
   // 同步复刻后的提示
   {
@@ -511,15 +488,15 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Successfully fetched and merged from upstream octocat:main', '已成功从上游 octocat:main 获取并合并'],
       [
         'Successfully discarded changes and synchronized branch to match upstream octocat:master.',
-        '已成功放弃更改并将分支同步为与上游 octocat:master 一致。',
+        '已成功放弃更改并将分支同步为与上游 octocat:master 一致。'
       ],
       // 原文无标点时译文也不带标点
       [
         'Successfully discarded changes and synchronized branch to match upstream octocat:main',
-        '已成功放弃更改并将分支同步为与上游 octocat:main 一致',
-      ],
+        '已成功放弃更改并将分支同步为与上游 octocat:main 一致'
+      ]
     ],
-    misses: ['Successfully fetched from upstream octocat:main.', 'Successfully fetched and merged from upstream'],
+    misses: ['Successfully fetched from upstream octocat:main.', 'Successfully fetched and merged from upstream']
   },
 
   // —— 空存储库 ——
@@ -527,10 +504,10 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       [
         'This page will automatically refresh in 10 seconds to check if the repository is ready.',
-        '此页面将在 10 秒后自动刷新以检查存储库是否就绪。',
-      ],
+        '此页面将在 10 秒后自动刷新以检查存储库是否就绪。'
+      ]
     ],
-    misses: ['This page will automatically refresh to check if the repository is ready.'],
+    misses: ['This page will automatically refresh to check if the repository is ready.']
   },
   // 功能名：产品名译出（Codespaces → 代码空间），Copilot 等品牌词原样保留，英文名与两侧中文之间补空格
   {
@@ -538,40 +515,40 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Request for Copilot submitted successfully', '已提交 Copilot 的申请'],
       ['Request for Codespaces submitted successfully', '已提交代码空间的申请'],
       // 原型链上的键不当作功能名
-      ['Request for constructor submitted successfully', '已提交 constructor 的申请'],
+      ['Request for constructor submitted successfully', '已提交 constructor 的申请']
     ],
-    misses: ['Request submitted successfully'],
+    misses: ['Request submitted successfully']
   },
   {
     hits: [
       ['Request for Codespaces failed, please try again', '代码空间的申请提交失败，请重试'],
       ['Request for GitHub Codespaces failed, please try again', 'GitHub 代码空间的申请提交失败，请重试'],
-      ['Request for GitHub Copilot failed, please try again', 'GitHub Copilot 的申请提交失败，请重试'],
+      ['Request for GitHub Copilot failed, please try again', 'GitHub Copilot 的申请提交失败，请重试']
     ],
-    misses: ['Request failed, please try again'],
+    misses: ['Request failed, please try again']
   },
   {
     hits: [
       ['Request for Copilot removed', '已撤回 Copilot 的申请'],
-      ['Request for Codespaces removed', '已撤回代码空间的申请'],
+      ['Request for Codespaces removed', '已撤回代码空间的申请']
     ],
-    misses: ['Request removed'],
+    misses: ['Request removed']
   },
   {
     hits: [
       ['Removing request for Copilot failed, please try again', '撤回 Copilot 的申请失败，请重试'],
-      ['Removing request for Codespaces failed, please try again', '撤回代码空间的申请失败，请重试'],
+      ['Removing request for Codespaces failed, please try again', '撤回代码空间的申请失败，请重试']
     ],
-    misses: ['Removing request failed, please try again'],
+    misses: ['Removing request failed, please try again']
   },
 
   // —— 侧栏 ——
   {
     hits: [
       ['350 characters remaining', '还剩 350 个字符'],
-      ['1 character remaining', '还剩 1 个字符'],
+      ['1 character remaining', '还剩 1 个字符']
     ],
-    misses: ['characters remaining'],
+    misses: ['characters remaining']
   },
   {
     hits: [
@@ -579,58 +556,58 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['+ 1 release', '+ 1 个发行版'],
       ['+ 3 deployments', '+ 3 个部署'],
       ['+ 2 packages', '+ 2 个软件包'],
-      ['+ 4 environments', '+ 4 个环境'],
+      ['+ 4 environments', '+ 4 个环境']
     ],
-    misses: ['+ 62 stargazers'],
+    misses: ['+ 62 stargazers']
   },
   {
     hits: [['+ 5 more', '还有 5 个']],
-    misses: ['+ more'],
+    misses: ['+ more']
   },
   {
     hits: [
       ['Other: 1.2%', '其他：1.2%'],
-      ['Other: 3%', '其他：3%'],
+      ['Other: 3%', '其他：3%']
     ],
-    misses: ['Other: n/a'],
+    misses: ['Other: n/a']
   },
   {
     hits: [['APA citation copied to clipboard', 'APA 引用已复制到剪贴板']],
-    misses: ['MLA citation copied to clipboard'],
+    misses: ['MLA citation copied to clipboard']
   },
   {
     hits: [
       ['Copy APA citation', '复制 APA 引用'],
-      ['Copy BibTeX citation', '复制 BibTeX 引用'],
+      ['Copy BibTeX citation', '复制 BibTeX 引用']
     ],
-    misses: ['Copy MLA citation', 'Copy citation'],
+    misses: ['Copy MLA citation', 'Copy citation']
   },
   {
     hits: [
       [
         'You can display README.md from this repository on your public GitHub profile.',
-        '你可以在 GitHub 公开个人资料中显示此存储库的 README.md。',
-      ],
+        '你可以在 GitHub 公开个人资料中显示此存储库的 README.md。'
+      ]
     ],
-    misses: ['You can display from this repository on your public GitHub profile.'],
+    misses: ['You can display from this repository on your public GitHub profile.']
   },
   {
     hits: [
       [
         'will appear on the organization’s member profile, visible only to organization members.',
-        '将显示在组织的成员个人资料中，仅组织成员可见。',
+        '将显示在组织的成员个人资料中，仅组织成员可见。'
       ],
       // 创建 <README.md> 后它将显示在…（and it 原文无逗号，译文不加）
       [
         "and it will appear on the organization's member profile, visible only to organization members.",
-        '后它将显示在组织的成员个人资料中，仅组织成员可见。',
+        '后它将显示在组织的成员个人资料中，仅组织成员可见。'
       ],
       [
         "will appear on GitHub's member profile, visible only to organization members.",
-        '将显示在 GitHub 的成员个人资料中，仅组织成员可见。',
-      ],
+        '将显示在 GitHub 的成员个人资料中，仅组织成员可见。'
+      ]
     ],
-    misses: ['will appear on your member profile.'],
+    misses: ['will appear on your member profile.']
   },
 
   // —— 存储库级整页 ——
@@ -638,14 +615,14 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Contribute to octo-org/hello-world', '参与贡献 octo-org/hello-world'],
-      ['Contribute to octocat/Spoon-Knife', '参与贡献 octocat/Spoon-Knife'],
+      ['Contribute to octocat/Spoon-Knife', '参与贡献 octocat/Spoon-Knife']
     ],
-    misses: ['Contribute to this repository', 'Contribute to octocat'],
-  },
+    misses: ['Contribute to this repository', 'Contribute to octocat']
+  }
 ]
 
-const HITS = REGEXP_CASES.flatMap((item) => item.hits)
-const MISSES = REGEXP_CASES.flatMap((item) => item.misses)
+const HITS = REGEXP_CASES.flatMap(item => item.hits)
+const MISSES = REGEXP_CASES.flatMap(item => item.misses)
 const RULES = dict.regexp ?? []
 const MERGED_RULES = codespacesRepoRules.regexp
 /** 本词典自有的正则（codespaces 的存储库规则合并在末尾） */
@@ -662,14 +639,14 @@ describe('repository 正则词条', () => {
     expect(translate(input)).toBe(expected)
   })
 
-  it.each(MISSES)('不命中：%s', (input) => {
+  it.each(MISSES)('不命中：%s', input => {
     expect(translate(input)).toBeUndefined()
   })
 
   it('用例与自有正则一一对应，正例首个命中对应的正则', () => {
     expect(REGEXP_CASES).toHaveLength(OWN_RULES.length)
     const mismatched = REGEXP_CASES.flatMap((item, index) =>
-      item.hits.filter(([input]) => firstRule(input) !== index).map(([input]) => `#${index} ${input}`),
+      item.hits.filter(([input]) => firstRule(input) !== index).map(([input]) => `#${index} ${input}`)
     )
     expect(mismatched).toEqual([])
   })
@@ -753,7 +730,7 @@ describe('repository 静态词条', () => {
     // 原文无逗号的整句，译文改语序不加逗号；原文两句的译文也分两句
     [
       'Cannot fork because you own this repository and are not a member of any organizations.',
-      '因你拥有此存储库且未加入任何组织而无法复刻。',
+      '因你拥有此存储库且未加入任何组织而无法复刻。'
     ],
     ['Error. Please try again.', '出错了。请重试。'],
     ['Unable to pin repository. Please try again.', '无法置顶存储库。请重试。'],
@@ -762,11 +739,11 @@ describe('repository 静态词条', () => {
     ["and it will appear on the organization's profile.", '后它将显示在组织的个人资料中。'],
     [
       'You can see this message because you have been granted access to Dependabot alerts for this repository.',
-      '你能看到此消息是因为你有权访问此存储库的 Dependabot 警报。',
+      '你能看到此消息是因为你有权访问此存储库的 Dependabot 警报。'
     ],
     [
       'Make your first contribution to this repository by tackling one of the issues listed below.',
-      '通过解决下方列出的任一议题完成你对此存储库的首次贡献。',
+      '通过解决下方列出的任一议题完成你对此存储库的首次贡献。'
     ],
     ['No existing forks', '暂无复刻'],
     ['No pin slots remaining in your profile', '个人资料置顶项已满'],
@@ -778,11 +755,11 @@ describe('repository 静态词条', () => {
     // 原文的逗号都在并列项之间（译作顿号），译文不另加逗号
     [
       'Add a README file and start coding in a secure, configurable, and dedicated development environment.',
-      '添加自述文件并在安全、可配置的专用开发环境中开始编码。',
+      '添加自述文件并在安全、可配置的专用开发环境中开始编码。'
     ],
     [
       'This repository contains malicious content that may cause technical harms. We have decided to preserve this content for security research purposes. Please exercise CAUTION when clicking links, downloading releases, or otherwise interacting with this repository.',
-      '此存储库包含可能造成技术危害的恶意内容。我们决定保留这些内容以供安全研究。请在单击链接、下载发行版或以其他方式与此存储库交互时务必谨慎。',
+      '此存储库包含可能造成技术危害的恶意内容。我们决定保留这些内容以供安全研究。请在单击链接、下载发行版或以其他方式与此存储库交互时务必谨慎。'
     ],
     ['Code 55% faster with AI pair programming.', '借助 AI 结对编程将编码速度提升 55%。'],
     ['Use the URL for this page when adding GitHub as a remote.', '添加 GitHub 远程存储库时使用此页面的 URL。'],
@@ -792,7 +769,7 @@ describe('repository 静态词条', () => {
     ["Couldn't load subscription status.", '无法加载订阅状态。'],
     [
       "This repository doesn't have a README yet. Ask Copilot to learn how this project works.",
-      '此存储库还没有自述文件。向 Copilot 提问以了解此项目的工作原理。',
+      '此存储库还没有自述文件。向 Copilot 提问以了解此项目的工作原理。'
     ],
     ['Only the first 100 invalid tags are listed.', '仅列出前 100 个无效标签。'],
     ['Make your GitHub Action Immutable', '将你的 GitHub 操作设为不可变'],
@@ -809,23 +786,23 @@ describe('repository 静态词条', () => {
     ['to use Codespaces.', '后使用代码空间。'],
     [
       'Your enterprise has disabled Codespaces at this time. Please contact your enterprise administrator for more information.',
-      '你的企业目前已禁用代码空间。请联系企业管理员了解详情。',
+      '你的企业目前已禁用代码空间。请联系企业管理员了解详情。'
     ],
     [
       'Your organization has disabled Codespaces on this repository. Please contact your organization administrator for more information.',
-      '你的组织已在此存储库禁用代码空间。请联系组织管理员了解详情。',
+      '你的组织已在此存储库禁用代码空间。请联系组织管理员了解详情。'
     ],
     ['Use your GitHub Pages website', '使用你的 GitHub 页面网站'],
     ['Deploy to Pages', '部署到页面'],
     [
       'Upgrade to a newer, more secure, and more reliable way of releasing and referencing GitHub Actions by recreating your existing tags as immutable package versions.',
-      '通过将现有标签重新创建为不可变软件包版本来升级到更新、更安全、更可靠的 GitHub 操作发布与引用方式。',
+      '通过将现有标签重新创建为不可变软件包版本来升级到更新、更安全、更可靠的 GitHub 操作发布与引用方式。'
     ],
     ['Learn more about GitHub Sponsors', '了解 GitHub 赞助'],
     // 交互限制（与组织、个人设置的同类句子一致）
     [
       'Users that have recently created their account will be unable to interact with the repository.',
-      '最近创建帐户的用户将无法与此存储库交互。',
+      '最近创建帐户的用户将无法与此存储库交互。'
     ],
     ['See Dependabot alerts', '查看 Dependabot 警报'],
     ["A user you've blocked has previously contributed to this repository.", '你阻止的一个用户曾为此存储库做过贡献。'],
@@ -836,7 +813,7 @@ describe('repository 静态词条', () => {
     ['Contribute to', '参与贡献'],
     ["This repo doesn't have any good first issues, yet", '此存储库暂时还没有适合新手的议题'],
     ['Additional resources', '其他资源'],
-    ['Discover other projects on GitHub', '发现 GitHub 上的其他项目'],
+    ['Discover other projects on GitHub', '发现 GitHub 上的其他项目']
   ])('%s → %s', (input, expected) => {
     expect(dict.static?.[input]).toBe(expected)
     expect(translate(input)).toBe(expected)
@@ -888,8 +865,8 @@ describe('repository 页面词条', () => {
     ['Open a pull request to contribute your changes upstream.', '创建拉取请求以将你的更改贡献到上游。'],
     [
       'Update branch to merge the latest changes from the upstream repository into this branch.',
-      '更新分支以将上游存储库的最新更改合并到此分支。',
-    ],
+      '更新分支以将上游存储库的最新更改合并到此分支。'
+    ]
   ])('%s → %s', (input, expected) => {
     expect(dict.scoped?.[input]).toBe(expected)
     expect(translate(input)).toBe(expected)
@@ -919,7 +896,7 @@ describe('repository 繁体词条（zh-TW）', () => {
   it.each([
     ['Search for a tag', '搜尋標記'],
     ['Additional resources', '其他資源'],
-    ['Discover other projects on GitHub', '探索 GitHub 上的其他專案'],
+    ['Discover other projects on GitHub', '探索 GitHub 上的其他專案']
   ])('静态：%s → %s', (input, expected) => {
     expect(twDict.static?.[input]).toBe(expected)
     expect(twMatcher.translate(input, HOME)).toBe(expected)
@@ -932,16 +909,16 @@ describe('repository 繁体词条（zh-TW）', () => {
 
   it('存档横幅：原文有 repository、repo 两种写法', () => {
     expect(twMatcher.translate('This repo was archived by the owner on Sep 3, 2024. It is now read-only.', HOME)).toBe(
-      '此儲存庫已由擁有者於 2024 年 9 月 3 日封存。目前為唯讀。',
+      '此儲存庫已由擁有者於 2024 年 9 月 3 日封存。目前為唯讀。'
     )
-    expect(
-      twMatcher.translate('This repository was archived by the owner on Mar 3, 2023. It is now read-only.', HOME),
-    ).toBe('此儲存庫已由擁有者於 2023 年 3 月 3 日封存。目前為唯讀。')
+    expect(twMatcher.translate('This repository was archived by the owner on Mar 3, 2023. It is now read-only.', HOME)).toBe(
+      '此儲存庫已由擁有者於 2023 年 3 月 3 日封存。目前為唯讀。'
+    )
   })
 })
 
 describe('repository 忽略选择器', () => {
-  it.each(dict.ignore ?? [])('%s 是合法选择器', (selector) => {
+  it.each(dict.ignore ?? [])('%s 是合法选择器', selector => {
     expect(() => document.createElement('div').querySelector(selector)).not.toThrow()
   })
 
@@ -956,10 +933,9 @@ describe('repository 忽略选择器', () => {
     /** 文字等于 text 的最内层元素（同一名称可能出现多次） */
     const owners = (text: string): Element[] =>
       [...document.querySelectorAll('*')].filter(
-        (node) =>
-          node.textContent?.trim() === text && ![...node.children].some((child) => child.textContent?.trim() === text),
+        node => node.textContent?.trim() === text && ![...node.children].some(child => child.textContent?.trim() === text)
       )
-    const ignored = (text: string): boolean[] => owners(text).map((node) => node.closest(selector()) !== null)
+    const ignored = (text: string): boolean[] => owners(text).map(node => node.closest(selector()) !== null)
 
     it('新版页头：所有者名、存储库名保持原文，切换存储库按钮、提示与导航标题不被忽略', () => {
       // 登录后存储库名换成存储库选择器：切换按钮与面包屑项同带 contextCrumb__ 类
@@ -1059,7 +1035,7 @@ describe('repository 忽略选择器', () => {
 
     const selector = (dict.ignore ?? []).join(', ')
     const ignored = (text: string): boolean => {
-      const element = [...document.querySelectorAll('*')].reverse().find((node) => node.textContent?.trim() === text)
+      const element = [...document.querySelectorAll('*')].reverse().find(node => node.textContent?.trim() === text)
       return Boolean(element?.closest(selector))
     }
     expect(ignored('Release')).toBe(true)
@@ -1090,7 +1066,7 @@ describe('repository 忽略选择器', () => {
 
     const selector = (dict.ignore ?? []).join(', ')
     const ignored = (text: string): boolean => {
-      const element = [...document.querySelectorAll('*')].reverse().find((node) => node.textContent?.trim() === text)
+      const element = [...document.querySelectorAll('*')].reverse().find(node => node.textContent?.trim() === text)
       return Boolean(element?.closest(selector))
     }
     expect(ignored('Release')).toBe(true)
@@ -1115,7 +1091,7 @@ describe('repository 忽略选择器', () => {
 
     const selector = (dict.ignore ?? []).join(', ')
     const ignored = (text: string): boolean => {
-      const element = [...document.querySelectorAll('*')].reverse().find((node) => node.textContent?.trim() === text)
+      const element = [...document.querySelectorAll('*')].reverse().find(node => node.textContent?.trim() === text)
       return Boolean(element?.closest(selector))
     }
     expect(ignored('Preview')).toBe(true)
@@ -1171,7 +1147,7 @@ describe('repository 忽略选择器', () => {
 
     const selector = (dict.ignore ?? []).join(', ')
     const ignored = (text: string): boolean => {
-      const element = [...document.querySelectorAll('*')].reverse().find((node) => node.textContent?.trim() === text)
+      const element = [...document.querySelectorAll('*')].reverse().find(node => node.textContent?.trim() === text)
       return Boolean(element?.closest(selector))
     }
     expect(ignored('Release')).toBe(true)
@@ -1234,9 +1210,7 @@ describe('repository 旧版页头（窄屏）上下文按钮与对话框', () =>
     // 存储库名与侧栏词条 Latest 同形，仍保持原文
     expect(trigger.querySelector('.AppHeader-context-compact-mainItem')?.textContent).toBe('Latest')
     expect(document.getElementById('context-region-dialog-title')?.textContent?.trim()).toBe('返回到')
-    const names = [...document.querySelectorAll('dialog .AppHeader-context-item-label')].map((node) =>
-      node.textContent?.trim(),
-    )
+    const names = [...document.querySelectorAll('dialog .AppHeader-context-item-label')].map(node => node.textContent?.trim())
     expect(names).toEqual(['octo-org', 'Latest'])
   })
 })
@@ -1263,10 +1237,10 @@ const LINK_SENTENCES: readonly SentenceCase[] = [
       'You can',
       ' ',
       ['a', 'add a new public key'],
-      ', or try cloning this repository via HTTPS.',
+      ', or try cloning this repository via HTTPS.'
     ],
     expected: '你的 GitHub 帐户中没有 SSH 公钥。你可以添加新公钥，或尝试通过 HTTPS 克隆此存储库。',
-    slots: ['添加新公钥'],
+    slots: ['添加新公钥']
   },
   {
     name: 'Code 下拉 LocalTab：没有 SSH 公钥（弯撇号）',
@@ -1276,31 +1250,31 @@ const LINK_SENTENCES: readonly SentenceCase[] = [
       'You can',
       ' ',
       ['a', 'add a new public key'],
-      ', or try cloning this repository via HTTPS.',
+      ', or try cloning this repository via HTTPS.'
     ],
     expected: '你的 GitHub 帐户中没有 SSH 公钥。你可以添加新公钥，或尝试通过 HTTPS 克隆此存储库。',
-    slots: ['添加新公钥'],
+    slots: ['添加新公钥']
   },
   {
     name: 'Code 下拉 LocalTab：启动 GitHub 桌面版后的提示（链接移到句末）',
     host: 'p',
     parts: ['If nothing happens, ', ['a', 'download GitHub Desktop'], ' and try again.'],
     expected: '如果没有反应，请在重试前下载 GitHub 桌面版。',
-    slots: ['下载 GitHub 桌面版'],
+    slots: ['下载 GitHub 桌面版']
   },
   {
     name: 'Code 下拉 LocalTab：启动 Xcode 后的提示（应用名原样保留）',
     host: 'p',
     parts: ['If nothing happens, ', ['a', 'download Xcode'], ' and try again.'],
     expected: '如果没有反应，请在重试前下载 Xcode。',
-    slots: ['下载 Xcode'],
+    slots: ['下载 Xcode']
   },
   {
     name: 'Codespaces 标签页 CodespacesTab：需要登录',
     host: 'span',
     parts: ['Please', ' ', ['a', 'sign in'], ' ', 'to use Codespaces.'],
     expected: '请登录后使用代码空间。',
-    slots: ['登录'],
+    slots: ['登录']
   },
   {
     name: 'Codespaces 标签页 CodespacesTab：IP 允许列表（链接移到句末）',
@@ -1310,71 +1284,60 @@ const LINK_SENTENCES: readonly SentenceCase[] = [
       ' ',
       ['a', 'IP allow lists'],
       ' ',
-      'which are unsupported by Codespaces at this time.',
+      'which are unsupported by Codespaces at this time.'
     ],
     expected: '你的组织或企业强制实施了代码空间目前不支持的 IP 允许列表。',
-    slots: ['IP 允许列表'],
+    slots: ['IP 允许列表']
   },
   {
     name: 'Codespaces 标签页 CodespacesTab：意外错误',
     host: 'span',
     parts: ['An unexpected error occurred. Please', ' ', ['a', 'contact support'], ' ', 'for more information.'],
     expected: '发生意外错误。请联系支持了解详情。',
-    slots: ['联系支持'],
+    slots: ['联系支持']
   },
   {
     name: 'Codespaces 标签页 CodespacesTab：企业托管用户（句首为链接，付费方为默认文字）',
     host: 'span',
     parts: [['a', 'Enterprise-managed users'], ' must have their Codespaces usage paid for by their enterprise.'],
     expected: '企业托管用户的代码空间使用量必须由其企业支付。',
-    slots: ['企业托管用户'],
+    slots: ['企业托管用户']
   },
   {
     name: 'Codespaces 标签页 CodespacesTab：企业托管用户（付费方为企业名）',
     host: 'span',
     parts: [['a', 'Enterprise-managed users'], ' must have their Codespaces usage paid for by Octo Corp.'],
     expected: '企业托管用户的代码空间使用量必须由 Octo Corp 支付。',
-    slots: ['企业托管用户'],
+    slots: ['企业托管用户']
   },
   {
     name: '关注菜单 NotificationsSubscriptionsMenu：关注数量达到上限',
     host: 'div',
-    parts: [
-      'You have reached the limit of 10,000 watched repositories. Update your',
-      ' ',
-      ['a', 'watch settings'],
-      ' to continue.',
-    ],
+    parts: ['You have reached the limit of 10,000 watched repositories. Update your', ' ', ['a', 'watch settings'], ' to continue.'],
     expected: '你关注的存储库数量已达 10,000 个上限。请更新你的关注设置后继续。',
-    slots: ['关注设置'],
+    slots: ['关注设置']
   },
   {
     name: '父存储库默认分支改名弹层 ParentBranchRenamePopover（链接在句末）',
     host: 'p',
     parts: ["You can rename this fork's default branch to match in", ' ', ['a', 'branch settings']],
     expected: '如需重命名此复刻的默认分支以保持一致可前往分支设置',
-    slots: ['分支设置'],
+    slots: ['分支设置']
   },
   {
     name: '父存储库默认分支改名弹层 ParentBranchRenamePopover（弯撇号）',
     host: 'p',
     parts: ['You can rename this fork’s default branch to match in', ' ', ['a', 'branch settings']],
     expected: '如需重命名此复刻的默认分支以保持一致可前往分支设置',
-    slots: ['分支设置'],
+    slots: ['分支设置']
   },
   {
     name: '侧栏特殊存储库提示 SidebarConfigCallToAction：专用存储库',
     host: 'p',
-    parts: [
-      'If you ',
-      ['strong', 'make this a public repository'],
-      ', its ',
-      ['code', 'README.md'],
-      ' will appear on your profile.',
-    ],
+    parts: ['If you ', ['strong', 'make this a public repository'], ', its ', ['code', 'README.md'], ' will appear on your profile.'],
     expected: '如果你将此存储库设为公共，其 README.md 将显示在你的个人资料中。',
-    slots: ['将此存储库设为公共', 'README.md'],
-  },
+    slots: ['将此存储库设为公共', 'README.md']
+  }
 ]
 
 describe('repository 被链接拆开的整句', () => {
@@ -1411,7 +1374,7 @@ describe('repository 被链接拆开的整句', () => {
     translator.start()
     // 整句命中：语序按译文，中文与元素文字之间不留原文的空白
     expect(host.textContent).toBe(expected)
-    expect([...host.children].map((element) => element.textContent)).toEqual(slots)
+    expect([...host.children].map(element => element.textContent)).toEqual(slots)
     translator.stop()
     translator = undefined
     expect(host.textContent).toBe(original)
@@ -1425,13 +1388,11 @@ describe('repository 被链接拆开的整句', () => {
     expect(
       createMatcher([
         ['common', common],
-        ['repository', repository],
-      ]).translate('Please', HOME),
+        ['repository', repository]
+      ]).translate('Please', HOME)
     ).toBe('请')
     expect(translate('to use Codespaces.')).toBe('后使用代码空间。')
-    expect(translate('must have their Codespaces usage paid for by their enterprise.')).toBe(
-      '的代码空间使用量必须由其企业支付。',
-    )
+    expect(translate('must have their Codespaces usage paid for by their enterprise.')).toBe('的代码空间使用量必须由其企业支付。')
     expect(translate('to continue.')).toBe('后继续。')
     expect(translate('If you')).toBe('如果你')
     expect(translate(', its')).toBe('，其')

@@ -24,9 +24,7 @@ let localeScriptSync: Promise<void> = Promise.resolve()
 
 /** 按设置同步词典脚本的注册（见 shared/locale-script）；不传设置时读存储 */
 function scheduleLocaleScriptSync(settings?: Settings): void {
-  localeScriptSync = localeScriptSync
-    .then(async () => syncLocaleScript(settings ?? (await getSettings())))
-    .catch(reportError)
+  localeScriptSync = localeScriptSync.then(async () => syncLocaleScript(settings ?? (await getSettings()))).catch(reportError)
 }
 
 /** 按存储中的设置刷新徽标 */
@@ -48,9 +46,9 @@ function fromExtensionPage(sender: MessageSender): boolean {
 async function notifyGitHubTabs(message: ContentMessage): Promise<void> {
   // 有主机权限的页面才带 url。url 不可见的也发：撤销站点权限后，已注入的内容脚本仍在运行到刷新
   const tabs = (await browser.tabs.query({})).filter(
-    (tab) => tab.id !== undefined && (tab.url === undefined || parseGitHubUrl(tab.url) !== undefined),
+    tab => tab.id !== undefined && (tab.url === undefined || parseGitHubUrl(tab.url) !== undefined)
   )
-  await Promise.all(tabs.map((tab) => browser.tabs.sendMessage(tab.id!, message).catch(() => undefined)))
+  await Promise.all(tabs.map(tab => browser.tabs.sendMessage(tab.id!, message).catch(() => undefined)))
 }
 
 /** 内容脚本与主世界桥接的构建产物：路径类型由 WXT 按实际产物生成，改名时类型检查报错 */
@@ -79,9 +77,7 @@ async function injectIntoTab(tabId: number): Promise<void> {
   await browser.scripting
     .executeScript({ target, files: BRIDGE_SCRIPT_FILES, world: 'MAIN', injectImmediately: true })
     .catch(() => undefined)
-  await browser.scripting
-    .executeScript({ target, files: CONTENT_SCRIPT_FILES, injectImmediately: true })
-    .catch(() => undefined)
+  await browser.scripting.executeScript({ target, files: CONTENT_SCRIPT_FILES, injectImmediately: true }).catch(() => undefined)
 }
 
 /**
@@ -103,10 +99,8 @@ async function injectLocale(tabId: number, frameId: number, locale: PageLocale):
 async function injectIntoOpenTabs(): Promise<void> {
   if (isFirefoxBuild() || typeof browser.scripting?.executeScript !== 'function') return
   // 休眠的标签页不注入：恢复时重新加载，自动注入
-  const tabs = (await browser.tabs.query({})).filter(
-    (tab) => tab.id !== undefined && !tab.discarded && parseGitHubUrl(tab.url) !== undefined,
-  )
-  await Promise.all(tabs.map((tab) => injectIntoTab(tab.id!)))
+  const tabs = (await browser.tabs.query({})).filter(tab => tab.id !== undefined && !tab.discarded && parseGitHubUrl(tab.url) !== undefined)
+  await Promise.all(tabs.map(tab => injectIntoTab(tab.id!)))
 }
 
 export default defineBackground(() => {
@@ -131,36 +125,36 @@ export default defineBackground(() => {
         const tabId = sender.tab?.id
         if (!fromGitHubTab(sender) || tabId === undefined) return undefined
         injectLocale(tabId, sender.frameId ?? 0, message.locale).then(
-          (ok) => sendResponse({ ok }),
+          ok => sendResponse({ ok }),
           (error: unknown) => {
             reportError(error)
             sendResponse({ ok: false })
-          },
+          }
         )
         return true
       }
       case 'gcn:resolve-download':
         if (!fromGitHubTab(sender)) return undefined
         getSettings()
-          .then((settings) => downloads.resolve(message.url, settings))
+          .then(settings => downloads.resolve(message.url, settings))
           .then(
-            (url) => sendResponse({ ok: true, url }),
+            url => sendResponse({ ok: true, url }),
             (error: unknown) => {
               reportError(error)
               sendResponse({ ok: false })
-            },
+            }
           )
         return true
       case 'gcn:fetch-image':
         if (!fromGitHubTab(sender)) return undefined
         getSettings()
-          .then((settings) => fetchImage(message.url, settings, { ...IMAGE_FETCH_DEPS, rank: downloads.rank }))
+          .then(settings => fetchImage(message.url, settings, { ...IMAGE_FETCH_DEPS, rank: downloads.rank }))
           .then(
-            (url) => sendResponse(url ? { ok: true, url } : { ok: false }),
+            url => sendResponse(url ? { ok: true, url } : { ok: false }),
             (error: unknown) => {
               reportError(error)
               sendResponse({ ok: false })
-            },
+            }
           )
         return true
     }
@@ -181,7 +175,7 @@ export default defineBackground(() => {
       applyLegacySettingValues().catch(reportError)
     }
   })
-  watchSettings((settings) => {
+  watchSettings(settings => {
     syncBadge(settings).catch(reportError)
     scheduleLocaleScriptSync(settings)
   })

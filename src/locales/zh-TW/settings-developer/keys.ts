@@ -57,8 +57,7 @@ export default {
     'common SSH problems': '常見的 SSH 問題',
     'Check out our guide to connecting to GitHub using SSH keys or troubleshoot common SSH problems.':
       '請參閱使用 SSH 金鑰連線到 GitHub 的指南或排解常見的 SSH 問題。',
-    'Check out our guide to generating SSH keys or troubleshoot common SSH problems.':
-      '請參閱產生 SSH 金鑰的指南或排解常見的 SSH 問題。',
+    'Check out our guide to generating SSH keys or troubleshoot common SSH problems.': '請參閱產生 SSH 金鑰的指南或排解常見的 SSH 問題。',
     'Read/write': '讀寫',
     'SSH key fingerprint': 'SSH 金鑰指紋',
     'This key has not been used in over a year': '此金鑰已超過一年未使用',
@@ -91,10 +90,8 @@ export default {
     // 原文的单引号单独出现，转成「」
     "Begins with 'ssh-rsa', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', 'ecdsa-sha2-nistp521', 'ssh-ed25519', 'sk-ecdsa-sha2-nistp256@openssh.com', or 'sk-ssh-ed25519@openssh.com'":
       '以「ssh-rsa」、「ecdsa-sha2-nistp256」、「ecdsa-sha2-nistp384」、「ecdsa-sha2-nistp521」、「ssh-ed25519」、「sk-ecdsa-sha2-nistp256@openssh.com」或「sk-ssh-ed25519@openssh.com」開頭',
-    'Key is invalid. You must supply a key in OpenSSH public key format':
-      '金鑰無效。必須提供 OpenSSH 公開金鑰格式的金鑰',
-    'Key is invalid. You must supply a key in OpenSSH public key format.':
-      '金鑰無效。必須提供 OpenSSH 公開金鑰格式的金鑰。',
+    'Key is invalid. You must supply a key in OpenSSH public key format': '金鑰無效。必須提供 OpenSSH 公開金鑰格式的金鑰',
+    'Key is invalid. You must supply a key in OpenSSH public key format.': '金鑰無效。必須提供 OpenSSH 公開金鑰格式的金鑰。',
     'Key is already in use': '金鑰已在使用中',
     'Key is already in use.': '金鑰已在使用中。',
     "Key can't be blank": '金鑰不能空白',
@@ -127,8 +124,7 @@ export default {
       '此動作無法復原。這將永久刪除此 GPG 金鑰，日後如需使用，必須重新上傳。',
     'Any commits you signed with this key will become unverified after removing it.':
       '你用此金鑰簽署的所有提交在移除金鑰後都將變成未驗證。',
-    'Commits you signed with this key may become unverified after removing it.':
-      '你用此金鑰簽署的提交在移除金鑰後可能會變成未驗證。',
+    'Commits you signed with this key may become unverified after removing it.': '你用此金鑰簽署的提交在移除金鑰後可能會變成未驗證。',
     'Learn more about persistent commit signature verification.': '瞭解持續性提交簽章驗證。',
     'I understand, delete this GPG key': '我瞭解，刪除此 GPG 金鑰',
     'Delete GPG key': '刪除 GPG 金鑰',
@@ -164,7 +160,7 @@ export default {
     'GitHub App and OAuth app user access tokens': 'GitHub 應用程式和 OAuth 應用程式的使用者存取權杖',
     'User SSH keys': '使用者 SSH 金鑰',
     'Credential type': '認證資訊類型',
-    'All credential types': '所有認證資訊類型',
+    'All credential types': '所有認證資訊類型'
   },
   scoped: {
     Key: '金鑰',
@@ -180,7 +176,7 @@ export default {
     CANNOT: '無法',
     cannot: '無法',
     "Title can't be blank": '標題不能空白',
-    'Title can’t be blank': '標題不能空白',
+    'Title can’t be blank': '標題不能空白'
   },
   regexp: [
     [new RegExp(`^Added on (${DATE_SOURCE})$`), (_, date: string) => joinCjk('新增於', translateTime(date))],
@@ -189,13 +185,13 @@ export default {
     [/^— (Read\/write|Read-only)$/, (_, access: string) => `— ${KEY_ACCESS[access] ?? access}`],
     [
       /^You have successfully added the key ['‘"“](.+)['’"”](\.?)$/,
-      (_, title: string, dot: string) => `已成功新增金鑰「${title}」${dot ? '。' : ''}`,
+      (_, title: string, dot: string) => `已成功新增金鑰「${title}」${dot ? '。' : ''}`
     ],
     // 凭据汇总：各类凭据数量
     [/^(\d+) tokens?$/, '$1 個權杖'],
     [/^(\d+) OAuth apps?$/i, '$1 個 OAuth 應用程式'],
     [/^(\d+) GitHub Apps?$/, '$1 個 GitHub 應用程式'],
     [/^(\d+) SSH keys?$/, '$1 個 SSH 金鑰'],
-    [/^(\d+) keys?$/, '$1 個金鑰'],
-  ],
+    [/^(\d+) keys?$/, '$1 個金鑰']
+  ]
 } satisfies PageDictionary

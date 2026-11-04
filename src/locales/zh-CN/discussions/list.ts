@@ -11,7 +11,7 @@ const FILTER_STATES: ReadonlyMap<string, string> = new Map([
   ['Answered', '已回答'],
   ['Unanswered', '未回答'],
   ['Verified', '已验证'],
-  ['All', '全部'],
+  ['All', '全部']
 ])
 
 const FILTER_STATE_SOURCE = `(?:${[...FILTER_STATES.keys()].join('|')})`
@@ -20,7 +20,7 @@ const FILTER_STATE_SOURCE = `(?:${[...FILTER_STATES.keys()].join('|')})`
 function filterStates(states: string): string {
   return states
     .split(', ')
-    .map((state) => FILTER_STATES.get(state) ?? state)
+    .map(state => FILTER_STATES.get(state) ?? state)
     .join('、')
 }
 
@@ -48,20 +48,14 @@ const regexp: readonly RegExpRule[] = [
   [new RegExp(`^${NOT_OWNER}([\\w.-]+) ${NOT_REPO}([\\w.-]+) Discussions$`), '$1/$2 的讨论'],
   [
     new RegExp(`^${NOT_OWNER}([\\w.-]+) ${NOT_REPO}([\\w.-]+) (.+) Discussions$`),
-    (_, owner, repo, category) => `${owner}/${repo} ${withCategory('的', category, '讨论')}`,
+    (_, owner, repo, category) => `${owner}/${repo} ${withCategory('的', category, '讨论')}`
   ],
   // 类别页的页面标题段：octo-org/hello-world Polls（只有默认类别名需要翻译）
-  [
-    new RegExp(`^([\\w.-]+/[\\w.-]+) (${DEFAULT_CATEGORY_SOURCE})$`),
-    (_, repo, category) => `${repo} ${categoryName(category)}`,
-  ],
+  [new RegExp(`^([\\w.-]+/[\\w.-]+) (${DEFAULT_CATEGORY_SOURCE})$`), (_, repo, category) => `${repo} ${categoryName(category)}`],
   // 类别页的置顶讨论标题：Pinned to Announcements
   [/^Pinned to (.+)$/, (_, name) => withCategory('置顶于', name)],
   // 列表筛选：Filter: Open / Filter: Open, Answered
-  [
-    new RegExp(`^Filter: (${FILTER_STATE_SOURCE}(?:, ${FILTER_STATE_SOURCE})*)$`),
-    (_, states) => `筛选器：${filterStates(states)}`,
-  ],
+  [new RegExp(`^Filter: (${FILTER_STATE_SOURCE}(?:, ${FILTER_STATE_SOURCE})*)$`), (_, states) => `筛选器：${filterStates(states)}`],
   // 列表项无障碍名称（类别、作者链接由全局 ignore 排除；参与者头像是 <img>）
   [/^(.+) \(category\)$/, (_, name) => `${categoryName(name)}（类别）`],
   [/^([^\s()]+) \(author\)$/, '$1（作者）'],
@@ -71,18 +65,18 @@ const regexp: readonly RegExpRule[] = [
   [
     new RegExp(`^(.+) · #(\\d+) was created by ([^\\s]+) on (${DATE_SOURCE}) (\\d{1,2}:\\d{2})$`),
     (_, category, number, user, date, clock) =>
-      `${categoryName(category)} · #${number} 由 ${user} ${joinCjk('于', translateTime(date))} ${clock} 创建`,
+      `${categoryName(category)} · #${number} 由 ${user} ${joinCjk('于', translateTime(date))} ${clock} 创建`
   ],
   // 评论数链接：12 comments: octocat, 11:34PM on September 06
   [
     new RegExp(`^(\\d[\\d,]*) comments?: ([^\\s,]+), (${COMMENT_TIME_SOURCE})$`),
-    (_, count, user, time) => `${count} 条评论：${user}，${commentTime(time)}`,
+    (_, count, user, time) => `${count} 条评论：${user}，${commentTime(time)}`
   ],
   // 计数（N comments、N replies、N participants 由 common-ui 的通用计数翻译）
   [/^(\d[\d,]*) new comments?$/, '$1 条新评论'],
   [/^(\d[\d,]*) upvotes?$/, '$1 票赞成'],
   [/^(\d[\d,]*) answers?$/, '$1 个回答'],
-  [/^(\d[\d,]*) (new )?suggested answers?$/, (_, count, isNew) => `${count} 个${isNew ? '新的' : ''}建议答案`],
+  [/^(\d[\d,]*) (new )?suggested answers?$/, (_, count, isNew) => `${count} 个${isNew ? '新的' : ''}建议答案`]
 ]
 
 /**
@@ -104,10 +98,8 @@ export default {
     'Mark the most helpful answer': '标记最有帮助的回答',
     'Highlight quality responses and make the best answer super discoverable.': '突出优质回复并让最佳答案一目了然。',
     'Pin big announcements': '置顶重要公告',
-    'Direct the community’s attention to important announcements or popular discussions.':
-      '引导社区关注重要公告或热门讨论。',
-    "Direct the community's attention to important announcements or popular discussions.":
-      '引导社区关注重要公告或热门讨论。',
+    'Direct the community’s attention to important announcements or popular discussions.': '引导社区关注重要公告或热门讨论。',
+    "Direct the community's attention to important announcements or popular discussions.": '引导社区关注重要公告或热门讨论。',
     'Label your discussions': '为讨论添加标签',
     'Organize and triage discussions to keep your space tidy and help contributors filter to areas of interest.':
       '整理和分类讨论来保持空间整洁并帮助贡献者筛选出感兴趣的领域。',
@@ -117,8 +109,7 @@ export default {
     'Integrate with your existing workflows and GitHub Actions via the GraphQL API and webhooks.':
       '通过 GraphQL API 和 Web 钩子与现有工作流及 GitHub 操作集成。',
     'Thread your conversations': '用嵌套回复组织对话',
-    'Keep conversations on track and encourage collaboration with threaded comments.':
-      '通过嵌套评论让对话不偏题并促进协作。',
+    'Keep conversations on track and encourage collaboration with threaded comments.': '通过嵌套评论让对话不偏题并促进协作。',
     'Monitor community insights': '监控社区见解',
     'Track the health and growth of your community with a dashboard full of actionable data.':
       '通过满是可操作数据的仪表板跟踪社区的健康与成长。',
@@ -152,10 +143,8 @@ export default {
       '组织讨论可用于发布消息、在社区中发起对话、解答问题和分享想法。首先，你可以',
     'create a new discussion.': '创建新讨论。',
     // 组织讨论源存储库：This is a ✨special✨ repository containing … for <a>org</a>. Everything posted here …
-    'This is a ✨special✨ repository containing the organization level discussions for':
-      '这个✨特殊✨存储库包含以下组织的组织级讨论',
-    '. Everything posted here will also be visible at the organization level.':
-      '。在此发布的所有内容也会在组织级别显示。',
+    'This is a ✨special✨ repository containing the organization level discussions for': '这个✨特殊✨存储库包含以下组织的组织级讨论',
+    '. Everything posted here will also be visible at the organization level.': '。在此发布的所有内容也会在组织级别显示。',
     'View organization discussions': '查看组织讨论',
 
     // 列表
@@ -189,7 +178,7 @@ export default {
 
     // 全局讨论页（/discussions）
     'No discussions match the selected filters.': '没有符合所选筛选器的讨论。',
-    'Discussions are used to ask questions and have open-ended conversations.': '讨论用于提问和进行开放式对话。',
+    'Discussions are used to ask questions and have open-ended conversations.': '讨论用于提问和进行开放式对话。'
   },
   scoped: {
     // 介绍页按钮
@@ -255,7 +244,7 @@ export default {
 
     // 全局讨论页（/discussions）的筛选标签页，与 /pulls 一致
     Created: '已创建',
-    Commented: '已评论',
+    Commented: '已评论'
   },
-  regexp,
+  regexp
 } satisfies PageDictionary

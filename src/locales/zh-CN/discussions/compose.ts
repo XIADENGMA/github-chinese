@@ -5,7 +5,7 @@ const regexp: readonly RegExpRule[] = [
   // 选择类别页的按钮名称：Get started with Q&A category
   [/^Get started with (.+) category$/, (_, name) => withCategory('开始使用', name, '类别')],
   // 投票选项输入框：Option 3
-  [/^Option (\d+)$/, '选项 $1'],
+  [/^Option (\d+)$/, '选项 $1']
 ]
 
 /**
@@ -17,10 +17,8 @@ export default {
     // 选择类别
     'Start a new discussion': '开始新讨论',
     'Select a discussion category': '选择讨论类别',
-    'It looks like this is your first time starting a discussion in this repository!':
-      '看起来这是你第一次在此存储库中开始讨论！',
-    'This is a community we build together. Please be welcoming and open minded.':
-      '这是我们共同建设的社区。请保持友善和开放的心态。',
+    'It looks like this is your first time starting a discussion in this repository!': '看起来这是你第一次在此存储库中开始讨论！',
+    'This is a community we build together. Please be welcoming and open minded.': '这是我们共同建设的社区。请保持友善和开放的心态。',
 
     // 讨论表单
     'Discussion title': '讨论标题',
@@ -48,7 +46,7 @@ export default {
     'Add an option': '添加选项',
 
     // 页面标题段：New Discussion · owner/repo · Category selection
-    'Category selection': '选择类别',
+    'Category selection': '选择类别'
   },
   scoped: {
     'Get started': '开始使用',
@@ -62,7 +60,7 @@ export default {
     'Helpful resources': '实用资源',
     'GitHub Community Guidelines': 'GitHub 社区准则',
     'Security policy': '安全策略',
-    Contributing: '贡献指南',
+    Contributing: '贡献指南'
   },
-  regexp,
+  regexp
 } satisfies PageDictionary

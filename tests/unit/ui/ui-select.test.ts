@@ -10,7 +10,7 @@ enableAutoUnmount(afterEach)
 const OPTIONS: readonly UiSelectOption[] = [
   { value: 'auto', label: '自动（简体中文）' },
   { value: 'zh-CN', label: '简体中文', lang: 'zh-CN' },
-  { value: 'en', label: 'English', lang: 'en' },
+  { value: 'en', label: 'English', lang: 'en' }
 ]
 
 /** 输入字母跳转用：两项以 B 开头 */
@@ -18,7 +18,7 @@ const LETTERS: readonly UiSelectOption[] = [
   { value: 'alpha', label: 'Alpha' },
   { value: 'beta', label: 'Beta' },
   { value: 'bravo', label: 'Bravo' },
-  { value: 'charlie', label: 'Charlie' },
+  { value: 'charlie', label: 'Charlie' }
 ]
 
 interface Props {
@@ -31,7 +31,7 @@ function render(props: Props = {}, attrs: Record<string, unknown> = {}): VueWrap
   return mount(required(UiSelect), {
     props: { modelValue: 'auto', options: OPTIONS, ...props },
     attrs,
-    attachTo: document.body,
+    attachTo: document.body
   })
 }
 
@@ -102,16 +102,16 @@ describe.skipIf(!UiSelect)('UiSelect', () => {
     expect(listbox(wrapper).attributes('role')).toBe('listbox')
     expect(listbox(wrapper).attributes('aria-labelledby')).toBe(button.attributes('id'))
     expect(isOpen(wrapper)).toBe(false)
-    expect(options(wrapper).map((item) => item.text())).toEqual(['自动（简体中文）', '简体中文', 'English'])
-    expect(options(wrapper).map((item) => item.attributes('lang'))).toEqual([undefined, 'zh-CN', 'en'])
-    expect(options(wrapper).map((item) => item.attributes('aria-selected'))).toEqual(['false', 'true', 'false'])
+    expect(options(wrapper).map(item => item.text())).toEqual(['自动（简体中文）', '简体中文', 'English'])
+    expect(options(wrapper).map(item => item.attributes('lang'))).toEqual([undefined, 'zh-CN', 'en'])
+    expect(options(wrapper).map(item => item.attributes('aria-selected'))).toEqual(['false', 'true', 'false'])
     expect(shown(wrapper)).toEqual({ text: '简体中文', lang: 'zh-CN' })
   })
 
   it('按钮里叠放全部选项撑开宽度（与原生下拉一样取最长项），对读屏隐藏', () => {
     const sizers = trigger(render()).findAll('span[aria-hidden="true"]')
-    expect(sizers.map((sizer) => sizer.text())).toEqual(OPTIONS.map((item) => item.label))
-    expect(sizers.map((sizer) => sizer.attributes('lang'))).toEqual([undefined, 'zh-CN', 'en'])
+    expect(sizers.map(sizer => sizer.text())).toEqual(OPTIONS.map(item => item.label))
+    expect(sizers.map(sizer => sizer.attributes('lang'))).toEqual([undefined, 'zh-CN', 'en'])
   })
 
   it('点击打开并高亮当前值；点选项发出 update:modelValue 并关闭；父组件不采纳时仍显示原值', async () => {
@@ -163,7 +163,7 @@ describe.skipIf(!UiSelect)('UiSelect', () => {
   })
 
   describe('键盘', () => {
-    it.each(['ArrowDown', 'ArrowUp', 'Enter', ' '])('%j 打开列表并高亮当前值', async (key) => {
+    it.each(['ArrowDown', 'ArrowUp', 'Enter', ' '])('%j 打开列表并高亮当前值', async key => {
       const wrapper = render({ modelValue: 'zh-CN' })
       expect((await press(wrapper, key)).defaultPrevented).toBe(true)
       expect(isOpen(wrapper)).toBe(true)
@@ -172,7 +172,7 @@ describe.skipIf(!UiSelect)('UiSelect', () => {
 
     it.each([
       ['Home', '自动（简体中文）'],
-      ['End', 'English'],
+      ['End', 'English']
     ])('%s 打开列表并高亮首项或末项', async (key, expected) => {
       const wrapper = render({ modelValue: 'zh-CN' })
       await press(wrapper, key)
@@ -181,8 +181,7 @@ describe.skipIf(!UiSelect)('UiSelect', () => {
 
     it('列表关闭时 Tab、Esc 等按键不打开，也不阻止默认行为', async () => {
       const wrapper = render()
-      for (const key of ['Tab', 'Escape', 'Shift', 'F5'])
-        expect((await press(wrapper, key)).defaultPrevented).toBe(false)
+      for (const key of ['Tab', 'Escape', 'Shift', 'F5']) expect((await press(wrapper, key)).defaultPrevented).toBe(false)
       expect((await press(wrapper, 'e', { ctrlKey: true })).defaultPrevented).toBe(false)
       expect(isOpen(wrapper)).toBe(false)
     })
@@ -197,7 +196,7 @@ describe.skipIf(!UiSelect)('UiSelect', () => {
         ['ArrowUp', '自动（简体中文）'],
         ['End', 'English'],
         ['PageUp', '自动（简体中文）'],
-        ['PageDown', 'English'],
+        ['PageDown', 'English']
       ]
       for (const [key, expected] of steps) {
         expect((await press(wrapper, key)).defaultPrevented).toBe(true)
@@ -301,8 +300,8 @@ describe.skipIf(!UiSelect)('UiSelect', () => {
         h('div', [
           h('label', { for: 'ui-language' }, '界面语言'),
           h(select, { id: 'ui-language', modelValue: 'auto', options: OPTIONS }),
-          h('p', 'Sample text'),
-        ]),
+          h('p', 'Sample text')
+        ])
     }
     const wrapper = mount(Parent, { attachTo: document.body })
     await trigger(wrapper).trigger('click')
@@ -353,8 +352,8 @@ describe.skipIf(!UiSelect)('UiSelect', () => {
         style: 'min-width: 180px',
         id: 'ui-language',
         'data-test': 'ui-language',
-        'aria-describedby': 'hint',
-      },
+        'aria-describedby': 'hint'
+      }
     )
     expect(wrapper.element.tagName).toBe('SPAN')
     expect(wrapper.classes()).toEqual(expect.arrayContaining(['ui-select', 'select']))
@@ -363,7 +362,7 @@ describe.skipIf(!UiSelect)('UiSelect', () => {
     expect(button.attributes()).toMatchObject({
       id: 'ui-language',
       'data-test': 'ui-language',
-      'aria-describedby': 'hint',
+      'aria-describedby': 'hint'
     })
     expect(button.classes()).not.toContain('select')
     expect(button.attributes('style')).toBeUndefined()
@@ -377,8 +376,8 @@ describe.skipIf(!UiSelect)('UiSelect', () => {
       setup: () => () =>
         h('div', [
           h('label', { for: 'page-language' }, '翻译语言'),
-          h(select, { id: 'page-language', modelValue: 'auto', options: OPTIONS }),
-        ]),
+          h(select, { id: 'page-language', modelValue: 'auto', options: OPTIONS })
+        ])
     }
     const labelled = mount(Parent, { attachTo: document.body })
     await trigger(labelled).trigger('click')
@@ -416,7 +415,7 @@ describe.skipIf(!UiSelect)('UiSelect', () => {
       const list = await openWith({
         rect: new DOMRect(16, 100, 180, 32),
         list: { height: 110, width: 180 },
-        viewport: { width: 300, height: 430 },
+        viewport: { width: 300, height: 430 }
       })
       expect(list.classes()).not.toContain('is-above')
       expect(list.classes()).not.toContain('is-end')
@@ -428,7 +427,7 @@ describe.skipIf(!UiSelect)('UiSelect', () => {
       const list = await openWith({
         rect: new DOMRect(104, 330, 180, 32),
         list: { height: 110, width: 200 },
-        viewport: { width: 300, height: 430 },
+        viewport: { width: 300, height: 430 }
       })
       expect(list.classes()).toEqual(expect.arrayContaining(['is-above', 'is-end']))
       // 330（按钮顶边）- 4 - 8
@@ -439,7 +438,7 @@ describe.skipIf(!UiSelect)('UiSelect', () => {
       const list = await openWith({
         rect: new DOMRect(16, 40, 180, 32),
         list: { height: 110, width: 180 },
-        viewport: { width: 300, height: 100 },
+        viewport: { width: 300, height: 100 }
       })
       expect(list.classes()).toContain('is-above')
       expect(list.element.style.maxHeight).toBe('80px')

@@ -28,7 +28,7 @@ const COMPONENTS: Readonly<Record<string, string>> = {
   Pages: '页面',
   Codespaces: '代码空间',
   Copilot: 'Copilot',
-  'Copilot AI Model Providers': 'Copilot AI 模型提供商',
+  'Copilot AI Model Providers': 'Copilot AI 模型提供商'
 }
 const COMPONENT_NAMES: ReadonlyMap<string, string> = new Map(Object.entries(COMPONENTS))
 
@@ -47,24 +47,21 @@ const PHONE_REGIONS: Readonly<Record<string, string>> = {
   'St Kitts and Nevis': '圣基茨和尼维斯',
   'St Lucia': '圣卢西亚',
   'St Vincent Grenadines': '圣文森特和格林纳丁斯',
-  Turkey: '土耳其',
+  Turkey: '土耳其'
 }
-const PHONE_NAMES: ReadonlyMap<string, string> = new Map([
-  ...tableEntries(regions.static),
-  ...Object.entries(PHONE_REGIONS),
-])
+const PHONE_NAMES: ReadonlyMap<string, string> = new Map([...tableEntries(regions.static), ...Object.entries(PHONE_REGIONS)])
 
 /** 固定的事件标题：GitHub 未定位到组件时的默认标题、计划维护标题 */
 const INCIDENT_TITLES: Readonly<Record<string, string>> = {
   'Disruption with some GitHub services': '部分 GitHub 服务中断',
-  'Codespaces Scheduled Maintenance': '代码空间计划维护',
+  'Codespaces Scheduled Maintenance': '代码空间计划维护'
 }
 const INCIDENT_TITLE_NAMES: ReadonlyMap<string, string> = new Map(Object.entries(INCIDENT_TITLES))
 
 /** 标签页标题「GitHub Status - <页面>」中的页面名 */
 const PAGE_TITLES: ReadonlyMap<string, string> = new Map([
   ['Incident History', '事件历史记录'],
-  ['Uptime History', '正常运行时间历史记录'],
+  ['Uptime History', '正常运行时间历史记录']
 ])
 
 const MONTH_NAMES = [
@@ -79,9 +76,9 @@ const MONTH_NAMES = [
   'September',
   'October',
   'November',
-  'December',
+  'December'
 ] as const
-const MONTH_ABBRS = MONTH_NAMES.map((name) => name.slice(0, 3))
+const MONTH_ABBRS = MONTH_NAMES.map(name => name.slice(0, 3))
 /** Statuspage 时间戳里的月份缩写 */
 const MONTH_SOURCE = `(${MONTH_ABBRS.join('|')})`
 
@@ -91,7 +88,7 @@ const AGO_UNITS: ReadonlyMap<string, string> = new Map([
   ['hour', '小时'],
   ['day', '天'],
   ['month', '个月'],
-  ['year', '年'],
+  ['year', '年']
 ])
 
 /** 转义正则元字符：组件名、国家/地区名含括号、点号 */
@@ -125,7 +122,7 @@ function joinList(items: readonly string[]): string {
 
 /** 英文列表按分隔符拆开，逐项查名称表（查不到的保持原文），拼成中文列表 */
 function translateList(list: string, names?: ReadonlyMap<string, string>): string {
-  return joinList(list.split(LIST_SEPARATOR_RE).map((name) => names?.get(name) ?? name))
+  return joinList(list.split(LIST_SEPARATOR_RE).map(name => names?.get(name) ?? name))
 }
 
 /** 事件标题：固定标题、Incident with <组件列表>、Degradation with <组件列表>；其余返回 undefined */
@@ -154,41 +151,37 @@ const TIMESTAMP_RULES: readonly InlineRule[] = [
   // 日期标题：Oct <var>28</var>, <var>2026</var>（年份后没有文字，不能补「年」）
   [new RegExp(`^${MONTH_SOURCE} \\{#\\}, \\{#\\}$`), (_, month: string) => `${monthLabel(month)} {#} 日，{#}`],
   // 更新时间：Oct <var>27</var>, <var>08:00</var> UTC
-  [
-    new RegExp(`^${MONTH_SOURCE} \\{#\\}, \\{\\} UTC$`),
-    (_, month: string) => `${monthLabel(month)} {#} 日 {}${utcSuffix(month)}`,
-  ],
+  [new RegExp(`^${MONTH_SOURCE} \\{#\\}, \\{\\} UTC$`), (_, month: string) => `${monthLabel(month)} {#} 日 {}${utcSuffix(month)}`],
   // 发布时间：Posted <span.ago>…</span>Oct <var>27</var>, <var>2026</var> - <var>08:00</var> UTC；
   // 未解决事件只有 span.ago，计划维护前有 <var>Posted on</var>。排在「事件起止」之前：{} 也匹配年份
   [
     new RegExp(`^(Posted)?((?:\\{\\}){1,2})${MONTH_SOURCE} \\{#\\}, \\{#\\} - \\{\\} UTC$`),
     (_, posted: string, slots: string, month: string) =>
-      `${posted ? '发布于 ' : ''}${slots} ${monthLabel(month)} {#} 日，{#} 年 {}${utcSuffix(month)}`,
+      `${posted ? '发布于 ' : ''}${slots} ${monthLabel(month)} {#} 日，{#} 年 {}${utcSuffix(month)}`
   ],
   // 事件起止（历史页）；计划维护页副标题前有 <var>Scheduled for</var>
   [
     new RegExp(`^(\\{\\})?${MONTH_SOURCE} \\{#\\}, \\{\\} - \\{\\} UTC$`),
-    (_, lead: string, month: string) => `${lead} ${monthLabel(month)} {#} 日 {} - {}${utcSuffix(month)}`,
+    (_, lead: string, month: string) => `${lead} ${monthLabel(month)} {#} 日 {} - {}${utcSuffix(month)}`
   ],
   // 跨日的事件起止
   [
     new RegExp(`^(\\{\\})?${MONTH_SOURCE} \\{#\\}, \\{\\} - ${MONTH_SOURCE} \\{#\\}, \\{\\} UTC$`),
     (_, lead: string, start: string, end: string) =>
-      `${lead} ${monthLabel(start)} {#} 日 {} - ${monthLabel(end)} {#} 日 {}${utcSuffix(end)}`,
+      `${lead} ${monthLabel(start)} {#} 日 {} - ${monthLabel(end)} {#} 日 {}${utcSuffix(end)}`
   ],
   // 计划维护时段：Oct <var>28</var>, <var>2026</var> <var>04:00</var>-<var>06:00</var> UTC
   [
     new RegExp(`^${MONTH_SOURCE} \\{#\\}, \\{#\\} \\{\\}-\\{\\} UTC$`),
-    (_, month: string) => `${monthLabel(month)} {#} 日，{#} 年 {}-{}${utcSuffix(month)}`,
+    (_, month: string) => `${monthLabel(month)} {#} 日，{#} 年 {}-{}${utcSuffix(month)}`
   ],
   // 跨日的计划维护时段：Oct <var>28</var>, <var>2026</var> <var>23:00</var> - Oct <var>29</var>, …
   [
     new RegExp(`^${MONTH_SOURCE} \\{#\\}, \\{#\\} \\{\\} - ${MONTH_SOURCE} \\{#\\}, \\{#\\} \\{\\} UTC$`),
-    (_, start: string, end: string) =>
-      `${monthLabel(start)} {#} 日，{#} 年 {} - ${monthLabel(end)} {#} 日，{#} 年 {}${utcSuffix(end)}`,
+    (_, start: string, end: string) => `${monthLabel(start)} {#} 日，{#} 年 {} - ${monthLabel(end)} {#} 日，{#} 年 {}${utcSuffix(end)}`
   ],
   // span.ago：<var>21</var> hours ago.
-  [/^\{#\} (minute|hour|day|month|year)s? ago\.$/, (_, unit: string) => `{#} ${AGO_UNITS.get(unit) ?? unit}前。`],
+  [/^\{#\} (minute|hour|day|month|year)s? ago\.$/, (_, unit: string) => `{#} ${AGO_UNITS.get(unit) ?? unit}前。`]
 ]
 
 export default {
@@ -332,18 +325,15 @@ export default {
     ...INCIDENT_TITLES,
 
     // 更新正文的模板句（多句的段落逐句匹配）
-    'We are investigating reports of impacted performance for some GitHub services.':
-      '我们正在调查有关部分 GitHub 服务性能受影响的报告。',
+    'We are investigating reports of impacted performance for some GitHub services.': '我们正在调查有关部分 GitHub 服务性能受影响的报告。',
     'We are investigating reports of degraded performance.': '我们正在调查有关性能降低的报告。',
     'We are continuing to investigate.': '我们正在继续调查。',
     'The degradation has been mitigated.': '降级问题已缓解。',
     'We are monitoring to ensure stability.': '我们正在监控以确保稳定。',
-    'We will continue monitoring to ensure stability, but mitigation is complete.':
-      '缓解措施已完成，但我们将继续监控以确保稳定。',
+    'We will continue monitoring to ensure stability, but mitigation is complete.': '缓解措施已完成，但我们将继续监控以确保稳定。',
     'We will continue to keep users updated on progress towards mitigation.': '我们将持续向用户通报缓解进展。',
     'This incident has been resolved.': '此事件已解决。',
-    'Thank you for your patience and understanding as we addressed this issue.':
-      '感谢你在我们处理此问题期间的耐心与理解。',
+    'Thank you for your patience and understanding as we addressed this issue.': '感谢你在我们处理此问题期间的耐心与理解。',
     'A detailed root cause analysis will be shared as soon as it is available.': '详细的根本原因分析完成后将尽快分享。',
     // Copilot 模型提供商故障的模板句
     'This is due to an issue with an upstream model provider.': '这是由于上游模型提供商出现问题。',
@@ -351,22 +341,17 @@ export default {
       '在我们与其合作解决问题期间，建议选择其他模型或选择“自动”以继续使用 Copilot。',
     "We recommend choosing another model or selecting 'Auto' to continue using Copilot.":
       '建议选择其他模型或选择“自动”以继续使用 Copilot。',
-    'The provider is working to mitigate the problem and we are monitoring recovery.':
-      '提供商正在缓解问题，我们正在监控恢复情况。',
-    'The issue was resolved by a mitigation put in place by our provider.':
-      '该问题已通过我们的提供商实施的缓解措施得到解决。',
+    'The provider is working to mitigate the problem and we are monitoring recovery.': '提供商正在缓解问题，我们正在监控恢复情况。',
+    'The issue was resolved by a mitigation put in place by our provider.': '该问题已通过我们的提供商实施的缓解措施得到解决。',
     'GitHub is working with our provider to further improve the resiliency of the service to prevent similar incidents in the future.':
       'GitHub 正在与我们的提供商合作，进一步提高服务的弹性，以防今后再发生类似事件。',
 
     // 历史页分页、月份标题（年份在 <var> 里，显示为「10 月 2026」）
-    ...Object.fromEntries(MONTH_NAMES.map((name, i) => [name, formatDate(undefined, i + 1, undefined)])),
+    ...Object.fromEntries(MONTH_NAMES.map((name, i) => [name, formatDate(undefined, i + 1, undefined)]))
   },
   regexp: [
     // 标签页标题：GitHub Status - Incident History / Uptime History / <事件标题>（译不了的事件标题保持原文）
-    [
-      /^GitHub Status - (.+)$/,
-      (_, page: string) => `GitHub 状态 - ${PAGE_TITLES.get(page) ?? translateIncidentTitle(page) ?? page}`,
-    ],
+    [/^GitHub Status - (.+)$/, (_, page: string) => `GitHub 状态 - ${PAGE_TITLES.get(page) ?? translateIncidentTitle(page) ?? page}`],
     // 事件标题：Incident with Actions, Issues and Pull Requests → 操作、议题和拉取请求故障
     [INCIDENT_WITH_RE, (_, list: string) => joinCjk(translateList(list, COMPONENT_NAMES), '故障')],
     [DEGRADATION_WITH_RE, (_, list: string) => joinCjk(translateList(list, COMPONENT_NAMES), '降级')],
@@ -374,13 +359,10 @@ export default {
     [
       new RegExp(`^This (incident|scheduled maintenance) (affected|affects): (${LIST_SOURCE})\\.$`),
       (_, subject: string, tense: string, list: string) =>
-        `${subject === 'incident' ? '此事件' : '此次计划维护'}${tense === 'affected' ? '影响了' : '影响'}：${translateList(list, COMPONENT_NAMES)}。`,
+        `${subject === 'incident' ? '此事件' : '此次计划维护'}${tense === 'affected' ? '影响了' : '影响'}：${translateList(list, COMPONENT_NAMES)}。`
     ],
     // 组件说明按钮的 aria-label：More information about Git Operations（同 auth/two-factor.ts 的同句型）
-    [
-      /^More information about (.+)$/,
-      (_, name: string) => joinCjk(joinCjk('关于', COMPONENT_NAMES.get(name) ?? name), '的更多信息'),
-    ],
+    [/^More information about (.+)$/, (_, name: string) => joinCjk(joinCjk('关于', COMPONENT_NAMES.get(name) ?? name), '的更多信息')],
     // 组件组提示框：2 components had a major outage. 中的计数
     [/^(\d+) components?$/, '$1 个组件'],
     // 提示框中的停机时长：1 hrs、5 mins（Statuspage 不分单复数）
@@ -391,8 +373,8 @@ export default {
       (_, names: string, code: string) =>
         `${names
           .split('/')
-          .map((name) => PHONE_NAMES.get(name) ?? name)
-          .join('/')} (+${code})`,
+          .map(name => PHONE_NAMES.get(name) ?? name)
+          .join('/')} (+${code})`
     ],
     // 更新正文的模板句：组件列表
     [
@@ -400,77 +382,65 @@ export default {
       (_, kind: string, list: string) =>
         joinCjk(
           joinCjk('我们正在调查有关', translateList(list, COMPONENT_NAMES)),
-          `${kind === 'performance' ? '性能' : '可用性'}降低的报告`,
-        ),
+          `${kind === 'performance' ? '性能' : '可用性'}降低的报告`
+        )
     ],
     [
       new RegExp(`^(${LIST_SOURCE}) (?:is|are) experiencing degraded (performance|availability)\\.$`),
       (_, list: string, kind: string) =>
-        joinCjk(translateList(list, COMPONENT_NAMES), `出现${kind === 'performance' ? '性能' : '可用性'}降低。`),
+        joinCjk(translateList(list, COMPONENT_NAMES), `出现${kind === 'performance' ? '性能' : '可用性'}降低。`)
     ],
     [
       new RegExp(`^(${LIST_SOURCE}) (?:is|are) operating normally\\.$`),
-      (_, list: string) => joinCjk(translateList(list, COMPONENT_NAMES), '运行正常。'),
+      (_, list: string) => joinCjk(translateList(list, COMPONENT_NAMES), '运行正常。')
     ],
     [
       new RegExp(`^The degradation affecting (${LIST_SOURCE}) has been mitigated\\.$`),
-      (_, list: string) => joinCjk(joinCjk('影响', translateList(list, COMPONENT_NAMES)), '的降级问题已缓解。'),
+      (_, list: string) => joinCjk(joinCjk('影响', translateList(list, COMPONENT_NAMES)), '的降级问题已缓解。')
     ],
     // We are investigating reports of issues with service(s): Spark.（服务名不是组件时保持原文；名称中不含句末「. 」，
     // 后接其他句子时由逐句匹配处理）
     [
       /^We are investigating reports of issues with service\(s\): ((?:(?!\. ).)+)\.$/,
-      (_, services: string) => `我们正在调查有关以下服务问题的报告：${translateList(services, COMPONENT_NAMES)}。`,
+      (_, services: string) => `我们正在调查有关以下服务问题的报告：${translateList(services, COMPONENT_NAMES)}。`
     ],
     // 合并到其他事件：链接保持原文
-    [
-      /^Please refer to the combined summary in this related incident: (https:\/\/\S+)$/,
-      '请参阅此相关事件中的综合摘要：$1',
-    ],
+    [/^Please refer to the combined summary in this related incident: (https:\/\/\S+)$/, '请参阅此相关事件中的综合摘要：$1'],
     // Copilot 模型可用性：模型名保持原文，列表连接词译出
     [
       /^We are experiencing degraded availability for (?:the )?((?:(?!\. ).)+?)(?: models?)? in Copilot products and IDE surfaces\.$/,
-      (_, models: string) => joinCjk(joinCjk('Copilot 产品和 IDE 中的', translateList(models)), '模型可用性降低。'),
+      (_, models: string) => joinCjk(joinCjk('Copilot 产品和 IDE 中的', translateList(models)), '模型可用性降低。')
     ],
     [
       /^The issues with our upstream model provider have been (resolved|mitigated), and ((?:(?!\. ).)+?) (?:is|are) once again available in Copilot products and IDE surfaces\.$/,
       (_, state: string, models: string) =>
         joinCjk(
           joinCjk(`上游模型提供商的问题已${state === 'resolved' ? '解决' : '缓解'}，`, translateList(models)),
-          '已在 Copilot 产品和 IDE 中恢复可用。',
-        ),
-    ],
+          '已在 Copilot 产品和 IDE 中恢复可用。'
+        )
+    ]
   ],
   inline: [
     // 订阅下拉框：方式说明（加粗动词由 scoped 翻译）
-    [
-      'Get email notifications whenever GitHub {}, {} or {} an incident.',
-      '每当 GitHub {}、{}或{}事件时，接收电子邮件通知。',
-    ],
-    [
-      'Get text message notifications whenever GitHub {} or {} an incident.',
-      '每当 GitHub {}或{}事件时，接收短信通知。',
-    ],
+    ['Get email notifications whenever GitHub {}, {} or {} an incident.', '每当 GitHub {}、{}或{}事件时，接收电子邮件通知。'],
+    ['Get text message notifications whenever GitHub {} or {} an incident.', '每当 GitHub {}或{}事件时，接收短信通知。'],
     [
       'Get webhook notifications whenever GitHub {} an incident, {} an incident, {} an incident or {} a component status.',
-      '每当 GitHub {}事件、{}事件、{}事件或{}组件状态时，接收 Web 钩子通知。',
+      '每当 GitHub {}事件、{}事件、{}事件或{}组件状态时，接收 Web 钩子通知。'
     ],
     // 验证码倒计时：Resend OTP in: <span>30</span> seconds；事件订阅弹窗中跟在置灰的「重新发送验证码」链接后
     ['Resend OTP in: {} seconds', '{} 秒后可重新发送验证码'],
     ['in {} seconds', '{} 秒后可用'],
     // 条款与隐私
     ['By subscribing you agree to our {}.', '订阅即表示你同意我们的{}。'],
-    [
-      '{} This site is protected by reCAPTCHA and the Google {} and {} apply.',
-      '{}本网站受 reCAPTCHA 保护，并适用 Google {}和{}。',
-    ],
+    ['{} This site is protected by reCAPTCHA and the Google {} and {} apply.', '{}本网站受 reCAPTCHA 保护，并适用 Google {}和{}。'],
     [
       'Message and data rates may apply. By subscribing you agree to our {}, the Atlassian {}, and the Atlassian {}. This site is protected by reCAPTCHA and the Google {} and {} apply.',
-      '可能会产生短信和数据流量费用。订阅即表示你同意我们的{}、Atlassian {}和 Atlassian {}。本网站受 reCAPTCHA 保护，并适用 Google {}和{}。',
+      '可能会产生短信和数据流量费用。订阅即表示你同意我们的{}、Atlassian {}和 Atlassian {}。本网站受 reCAPTCHA 保护，并适用 Google {}和{}。'
     ],
     [
       "By subscribing you acknowledge our {}. In addition, you agree to the Atlassian {} and acknowledge Atlassian's {}.",
-      '订阅即表示你已知悉我们的{}。此外，你同意 Atlassian {}，并已知悉 Atlassian 的{}。',
+      '订阅即表示你已知悉我们的{}。此外，你同意 Atlassian {}，并已知悉 Atlassian 的{}。'
     ],
     ['Visit our {}.', '访问我们的{}。'],
     ['Get the {} or {}.', '获取 {}或 {}。'],
@@ -484,13 +454,13 @@ export default {
     // 事件订阅弹窗说明（事件标题在 <strong> 里，可能已译成中文：加引号，槽位两侧不留空格）
     [
       "Subscribe to updates for {} via email and/or text message. You'll receive email notifications when incidents are updated, and text message notifications whenever GitHub {} or {} an incident.",
-      '通过电子邮件和/或短信订阅“{}”的更新。事件更新时你会收到电子邮件通知，GitHub {}或{}事件时你会收到短信通知。',
+      '通过电子邮件和/或短信订阅“{}”的更新。事件更新时你会收到电子邮件通知，GitHub {}或{}事件时你会收到短信通知。'
     ],
     // 事件页副标题：Incident Report for <a>GitHub</a>
     ['Incident Report for {}', '{} 事件报告'],
     ['Scheduled Maintenance Report for {}', '{} 计划维护报告'],
     // 历史页、正常运行时间页分页：<span>August</span><var> 2026</var> to <span>October</span><var> 2026</var>
     ['{} {#} to {} {#}', '{} {#} 至 {} {#}'],
-    ...TIMESTAMP_RULES,
-  ],
+    ...TIMESTAMP_RULES
+  ]
 } satisfies PageDictionary

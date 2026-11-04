@@ -29,7 +29,7 @@ describe('headSet', () => {
     // 未闭合的 {0 是普通字符，不是量词
     [new RegExp('^a{0b$'), ['a']],
     // 字符类里的括号不算分组
-    [/^([)(]|x)y$/, ['(', ')', 'x']],
+    [/^([)(]|x)y$/, ['(', ')', 'x']]
   ])('%s → 首字符集合', (pattern, expected) => {
     expect(sorted(headSet(pattern))).toEqual([...expected].sort())
   })
@@ -71,18 +71,18 @@ describe('headSet', () => {
     /^x/u,
     /^é/i,
     /Open$/,
-    /^$/,
-  ])('%s → 推不出（wild）', (pattern) => {
+    /^$/
+  ])('%s → 推不出（wild）', pattern => {
     expect(headSet(pattern)).toBeUndefined()
   })
 })
 
 describe('hasTopLevelAlternative', () => {
-  it.each([/[|]/, /\|/, /[\]|]/, /(?<=a|b)c/, /[)](a|b)/, /(a|b)/])('%s → 无顶层 |', (pattern) => {
+  it.each([/[|]/, /\|/, /[\]|]/, /(?<=a|b)c/, /[)](a|b)/, /(a|b)/])('%s → 无顶层 |', pattern => {
     expect(hasTopLevelAlternative(pattern)).toBe(false)
   })
 
-  it.each([new RegExp('[]|a'), /[^]|a/, /\\|a/, /\[|\]/, /[(]a|b/, /^a|b$/])('%s → 有顶层 |', (pattern) => {
+  it.each([new RegExp('[]|a'), /[^]|a/, /\\|a/, /\[|\]/, /[(]a|b/, /^a|b$/])('%s → 有顶层 |', pattern => {
     expect(hasTopLevelAlternative(pattern)).toBe(true)
   })
 })
@@ -99,7 +99,7 @@ describe('literalPrefix', () => {
     [/^\d+$/, ''],
     [/^Open$/i, ''],
     [/^Foo|^Bar/, ''],
-    [/Open$/, ''],
+    [/Open$/, '']
   ])('%s → %j', (pattern, expected) => {
     expect(literalPrefix(pattern)).toBe(expected)
   })
@@ -111,7 +111,7 @@ describe('createRegExpIndex', () => {
     [/^Open (.+)$/, 'B'],
     [/^\w+ wild two$/, 'C'],
     [/^Closed (.+)$/, 'D'],
-    [/^Order (.+)$/, 'E'],
+    [/^Order (.+)$/, 'E']
   ]
   const names = (text: string): string[] =>
     createRegExpIndex(rules)
@@ -159,10 +159,10 @@ describe('匹配器使用索引', () => {
             [wild, (_, what) => `${what} 项`],
             [open, (_, count) => `${count} 个打开`],
             [opened, (_, user) => `由 ${user} 打开`],
-            [closed, (_, count) => `${count} 个关闭`],
-          ],
-        },
-      ],
+            [closed, (_, count) => `${count} 个关闭`]
+          ]
+        }
+      ]
     ])
     expect(matcher.translate('Open 3', ['common'])).toBe('3 个打开')
     expect(matcher.translate('Opened by octocat', ['common'])).toBe('由 octocat 打开')
@@ -180,7 +180,7 @@ describe('匹配器使用索引', () => {
     const matcher = createMatcher([
       ['common', { regexp: [[/^Open (\d+)$/, '通用 $1']] }],
       ['issues', { regexp: [[/^Open (\d+)$/, '议题 $1']] }],
-      ['issues', { regexp: [[/^Closed (\d+)$/, '已关闭 $1']] }],
+      ['issues', { regexp: [[/^Closed (\d+)$/, '已关闭 $1']] }]
     ])
     expect(matcher.translate('Open 1', ['common', 'issues'])).toBe('议题 1')
     expect(matcher.translate('Closed 2', ['common', 'issues'])).toBe('已关闭 2')
@@ -194,10 +194,10 @@ describe('匹配器使用索引', () => {
         {
           regexp: [
             [/^(?:New ){00}Open (\d+)$/, '打开 $1'],
-            [/^(.+) (\d+)$/, '其他 $2'],
-          ],
-        },
-      ],
+            [/^(.+) (\d+)$/, '其他 $2']
+          ]
+        }
+      ]
     ])
     expect(matcher.translate('Open 3', ['common'])).toBe('打开 3')
   })
@@ -205,7 +205,7 @@ describe('匹配器使用索引', () => {
   it('首原子可省略（{00}）时不按首字符跳过，不由更通用作用域的规则误译', () => {
     const matcher = createMatcher([
       ['common', { regexp: [[/^Open (\d+)$/, '通用 $1']] }],
-      ['issues', { regexp: [[/^(?:New ){00}Open (\d+)$/, '甲 $1']] }],
+      ['issues', { regexp: [[/^(?:New ){00}Open (\d+)$/, '甲 $1']] }]
     ])
     expect(matcher.translate('Open 3', ['common', 'issues'])).toBe('甲 3')
   })

@@ -52,9 +52,7 @@ export function crxIdOf(publicKey: Uint8Array): Buffer {
 
 /** crx_id 对应的扩展 ID：十六进制的 0-f 换成 a-p */
 export function extensionIdOf(crxId: Uint8Array): string {
-  return Array.from(Buffer.from(crxId).toString('hex'), (digit) =>
-    String.fromCharCode(0x61 + Number.parseInt(digit, 16)),
-  ).join('')
+  return Array.from(Buffer.from(crxId).toString('hex'), digit => String.fromCharCode(0x61 + Number.parseInt(digit, 16))).join('')
 }
 
 export interface Crx {
@@ -77,16 +75,10 @@ export function packCrx(zip: Uint8Array, privateKey: KeyObject): Crx {
     .update(signedData)
     .update(zip)
     .sign(privateKey)
-  const proof = Buffer.concat([
-    lengthDelimited(PROOF_PUBLIC_KEY, publicKey),
-    lengthDelimited(PROOF_SIGNATURE, signature),
-  ])
-  const header = Buffer.concat([
-    lengthDelimited(HEADER_SHA256_WITH_RSA, proof),
-    lengthDelimited(HEADER_SIGNED_HEADER_DATA, signedData),
-  ])
+  const proof = Buffer.concat([lengthDelimited(PROOF_PUBLIC_KEY, publicKey), lengthDelimited(PROOF_SIGNATURE, signature)])
+  const header = Buffer.concat([lengthDelimited(HEADER_SHA256_WITH_RSA, proof), lengthDelimited(HEADER_SIGNED_HEADER_DATA, signedData)])
   return {
     bytes: Buffer.concat([MAGIC, uint32LE(FORMAT_VERSION), uint32LE(header.length), header, zip]),
-    id: extensionIdOf(crxId),
+    id: extensionIdOf(crxId)
   }
 }

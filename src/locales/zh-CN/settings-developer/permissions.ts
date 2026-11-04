@@ -133,7 +133,7 @@ export const PERMISSION_TITLES: Readonly<Record<string, string>> = {
   'Enterprise single sign-on': '企业单一登录',
   'Enterprise teams': '企业团队',
   'Enterprise two-factor authentication': '企业双因素身份验证',
-  'Enterprise verifiable domains': '企业可验证域',
+  'Enterprise verifiable domains': '企业可验证域'
 }
 
 /** 已安装应用页“Read access to …”列表中的小写资源名 */
@@ -200,7 +200,7 @@ const RESOURCE_NAMES: Readonly<Record<string, string>> = {
   models: '模型',
   'knowledge bases': '知识库',
   'copilot chat': 'Copilot 聊天',
-  'copilot editor context': 'Copilot 编辑器上下文',
+  'copilot editor context': 'Copilot 编辑器上下文'
 }
 
 const LIST_SEPARATOR_RE = /, and |, | and /
@@ -224,7 +224,7 @@ export const RESOURCE_LIST_SOURCE = `(?:${RESOURCE_SOURCE})(?:(?:, and |, | and 
 
 /** “code, issues, and pull requests” → 代码、议题和拉取请求（未知资源名保留英文） */
 export function translatePermissionList(list: string): string {
-  const items = list.split(LIST_SEPARATOR_RE).map((item) => RESOURCE_NAMES[item] ?? item)
+  const items = list.split(LIST_SEPARATOR_RE).map(item => RESOURCE_NAMES[item] ?? item)
   if (items.length === 1) return items[0]!
   const head = items.slice(0, -1).reduce((acc, item) => joinCjk(joinCjk(acc, '、'), item))
   return joinCjk(joinCjk(head, '和'), items[items.length - 1]!)
@@ -233,14 +233,14 @@ export function translatePermissionList(list: string): string {
 const ACCESS_VERB: Readonly<Record<string, string>> = {
   'Read and write': '读写',
   Read: '读取',
-  Admin: '管理',
+  Admin: '管理'
 }
 
 export const ACCESS_LEVEL: Readonly<Record<string, string>> = {
   'No access': '无权限',
   'Read-only': '只读',
   'Read and write': '读写',
-  Admin: '管理员',
+  Admin: '管理员'
 }
 
 /** 权限标题的正则片段 */
@@ -281,12 +281,12 @@ export const PROVIDED_TITLES: ReadonlySet<string> = new Set([
   'Enterprise settings',
   'Pages',
   'Actions',
-  'Codespaces',
+  'Codespaces'
 ])
 
 /** 只收译文与原文不同的标题 */
 const TITLE_ENTRIES = Object.fromEntries(
-  Object.entries(PERMISSION_TITLES).filter(([key, value]) => key !== value && !PROVIDED_TITLES.has(key)),
+  Object.entries(PERMISSION_TITLES).filter(([key, value]) => key !== value && !PROVIDED_TITLES.has(key))
 )
 
 /**
@@ -369,7 +369,7 @@ export const EVENT_TITLES: Readonly<Record<string, string>> = {
   Watch: '关注',
   'Workflow dispatch': '工作流调度',
   'Workflow job': '工作流作业',
-  'Workflow run': '工作流运行',
+  'Workflow run': '工作流运行'
 }
 
 /** 已由全站 static（或本词典其他词条，如阻止用户表格的 Label）收录且译文相同的事件名，不再放进 scoped */
@@ -399,12 +399,10 @@ export const PROVIDED_EVENTS: ReadonlySet<string> = new Set([
   'Watch',
   'Workflow dispatch',
   'Workflow job',
-  'Workflow run',
+  'Workflow run'
 ])
 
-const EVENT_ENTRIES = Object.fromEntries(
-  Object.entries(EVENT_TITLES).filter(([key, value]) => key !== value && !PROVIDED_EVENTS.has(key)),
-)
+const EVENT_ENTRIES = Object.fromEntries(Object.entries(EVENT_TITLES).filter(([key, value]) => key !== value && !PROVIDED_EVENTS.has(key)))
 
 const EVENT_TITLE_SOURCE = alternation(Object.keys(EVENT_TITLES))
 
@@ -413,7 +411,7 @@ const PERMISSION_SECTION: Readonly<Record<string, string>> = {
   repository: '存储库',
   organization: '组织',
   user: '帐户',
-  business: '企业',
+  business: '企业'
 }
 
 /**
@@ -432,13 +430,10 @@ export default {
     'View and manage code scanning alerts.': '查看和管理代码扫描警报。',
     'Create, edit, delete and list Codespaces.': '创建、编辑、删除和列出代码空间。',
     'Manage the lifecycle of Codespaces, including starting and stopping.': '管理代码空间的生命周期，包括启动和停止。',
-    'Access Codespaces metadata including the devcontainers and machine type.':
-      '访问包括开发容器和计算机类型在内的代码空间元数据。',
-    'Restrict Codespaces user secrets modifications to specific repositories.':
-      '将代码空间用户机密的修改限制在特定存储库。',
+    'Access Codespaces metadata including the devcontainers and machine type.': '访问包括开发容器和计算机类型在内的代码空间元数据。',
+    'Restrict Codespaces user secrets modifications to specific repositories.': '将代码空间用户机密的修改限制在特定存储库。',
     'Commit statuses.': '提交状态。',
-    'Repository contents, commits, branches, downloads, releases, and merges.':
-      '存储库内容、提交、分支、下载、发行版和合并。',
+    'Repository contents, commits, branches, downloads, releases, and merges.': '存储库内容、提交、分支、下载、发行版和合并。',
     'Read and write repository custom properties values at the repository level, when allowed by the property.':
       '在属性允许时，于存储库级别读写存储库自定义属性值。',
     "View and set values for a repository's custom properties, when allowed by the property.":
@@ -453,19 +448,15 @@ export default {
     'Issues and related comments, assignees, labels, and milestones.': '议题及相关评论、受理人、标签和里程碑。',
     "Manage a repository's merge queues": '管理存储库的合并队列',
     'Manage a repository’s merge queues': '管理存储库的合并队列',
-    'Search repositories, list collaborators, and access repository metadata.':
-      '搜索存储库、列出协作者并访问存储库元数据。',
+    'Search repositories, list collaborators, and access repository metadata.': '搜索存储库、列出协作者并访问存储库元数据。',
     'Packages published to the GitHub Package Platform.': '发布到 GitHub 软件包平台的软件包。',
-    'Retrieve Pages statuses, configuration, and builds, as well as create new builds.':
-      '检索页面状态、配置和构建，以及创建新构建。',
+    'Retrieve Pages statuses, configuration, and builds, as well as create new builds.': '检索页面状态、配置和构建，以及创建新构建。',
     'Manage classic projects within a repository.': '管理存储库中的经典项目。',
-    'Pull requests and related comments, assignees, labels, milestones, and merges.':
-      '拉取请求及相关评论、受理人、标签、里程碑和合并。',
+    'Pull requests and related comments, assignees, labels, milestones, and merges.': '拉取请求及相关评论、受理人、标签、里程碑和合并。',
     'View and manage repository security advisories.': '查看和管理存储库安全公告。',
     'View and manage secret scanning alert dismissal requests': '查看和管理机密扫描警报消除请求',
     'View and manage secret scanning alerts.': '查看和管理机密扫描警报。',
-    'Review and manage repository secret scanning push protection bypass requests.':
-      '审查和管理存储库的机密扫描推送保护绕过请求。',
+    'Review and manage repository secret scanning push protection bypass requests.': '审查和管理存储库的机密扫描推送保护绕过请求。',
     'Manage Actions repository secrets.': '管理操作存储库机密。',
     'Manage just a single file.': '仅管理单个文件。',
     'The content paths to single files your app can access.': '你的应用可以访问的单个文件内容路径。',
@@ -529,22 +520,19 @@ export default {
       '创建、编辑、删除和列出自定义组织角色。查看系统组织角色。',
     'Read and write repository custom properties values and administer definitions at the organization level.':
       '在组织级别读写存储库自定义属性值并管理属性定义。',
-    'View custom properties, write repository values, and administer definitions.':
-      '查看自定义属性、写入存储库值并管理属性定义。',
+    'View custom properties, write repository values, and administer definitions.': '查看自定义属性、写入存储库值并管理属性定义。',
     'Read and write organization custom properties values at the organization level, when allowed by the property.':
       '在属性允许时，于组织级别读写组织自定义属性值。',
     'Create, edit, delete and list custom repository roles.': '创建、编辑、删除和列出自定义存储库角色。',
     'View events triggered by an activity in an organization.': '查看组织中的活动触发的事件。',
     'Manage Copilot Business seats and settings': '管理 Copilot 商业版席位和设置',
-    'View and manage hosted runner custom images available to an organization.':
-      '查看和管理组织可用的托管运行器自定义映像。',
+    'View and manage hosted runner custom images available to an organization.': '查看和管理组织可用的托管运行器自定义映像。',
     'Manage issue fields for an organization.': '管理组织的议题字段。',
     'Manage issue types for an organization.': '管理组织的议题类型。',
     'View and manage knowledge bases for an organization.': '查看和管理组织的知识库。',
     'Organization members and teams.': '组织成员和团队。',
     'Manage model access for an organization.': '管理组织的模型访问。',
-    'View and manage hosted compute network configurations available to an organization.':
-      '查看和管理组织可用的托管计算网络配置。',
+    'View and manage hosted compute network configurations available to an organization.': '查看和管理组织可用的托管计算网络配置。',
     'View and modify announcement banners for an organization.': '查看和修改组织的公告横幅。',
     'Review and manage secret scanning push protection bypass requests.': '审查和管理机密扫描推送保护绕过请求。',
     'Manage Codespaces for an organization.': '管理组织的代码空间。',
@@ -561,8 +549,7 @@ export default {
     'Manage projects for an organization.': '管理组织的项目。',
     'Review and manage secret scanning alert dismissal requests': '审查和管理机密扫描警报消除请求',
     'Manage Actions organization secrets.': '管理操作组织机密。',
-    'View and manage Actions self-hosted runners available to an organization.':
-      '查看和管理组织可用的操作自托管运行器。',
+    'View and manage Actions self-hosted runners available to an organization.': '查看和管理组织可用的操作自托管运行器。',
     'Manage team discussions and related comments.': '管理团队讨论及相关评论。',
     'Manage Actions organization variables.': '管理操作组织变量。',
     'Manage the post-receive hooks for an organization.': '管理组织的 Web 钩子。',
@@ -594,11 +581,9 @@ export default {
     'Allows GitHub Apps to manage enterprise policies governing repository and organization actions like creation, permissions, deploy keys, etc.':
       '允许 GitHub 应用管理约束创建、权限、部署密钥等存储库和组织操作的企业策略。',
     'View and manage rules for enterprise repositories': '查看和管理企业存储库的规则',
-    'View and manage enterprise SCIM configuration in an Enterprise Managed User enterprise.':
-      '查看和管理企业托管用户企业中的 SCIM 配置。',
+    'View and manage enterprise SCIM configuration in an Enterprise Managed User enterprise.': '查看和管理企业托管用户企业中的 SCIM 配置。',
     'Manage enterprise access restrictions': '管理企业访问限制',
-    'Access usage, budgets, cost centers, and payment information for the enterprise':
-      '访问企业的使用情况、预算、成本中心和付款信息',
+    'Access usage, budgets, cost centers, and payment information for the enterprise': '访问企业的使用情况、预算、成本中心和付款信息',
     'View delegated bypass requests for enterprise rulesets': '查看企业规则集的委托绕过请求',
     'View and manage enterprise credentials': '查看和管理企业凭据',
     'Create, edit, delete and list custom organization roles at the enterprise level. View system organization roles.':
@@ -632,16 +617,13 @@ export default {
     'Changes to permissions will be applied to all future installations. Current users will be prompted to accept any changes and enable the new permissions on their installation.':
       '权限更改将应用于今后的所有安装。系统会提示现有用户接受更改并在其安装中启用新权限。',
     'No account permissions added yet': '尚未添加帐户权限',
-    'User permissions permit access to resources under your personal GitHub account.':
-      '用户权限允许访问你个人 GitHub 帐户下的资源。',
+    'User permissions permit access to resources under your personal GitHub account.': '用户权限允许访问你个人 GitHub 帐户下的资源。',
     'No repository permissions added yet': '尚未添加存储库权限',
-    'Repository permissions permit access to repositories and related resources.':
-      '存储库权限允许访问存储库和相关资源。',
+    'Repository permissions permit access to repositories and related resources.': '存储库权限允许访问存储库和相关资源。',
     'No organization permissions added yet': '尚未添加组织权限',
     'Organization permissions permit access to organization related resources.': '组织权限允许访问组织相关资源。',
     'No enterprise permissions added yet': '尚未添加企业权限',
-    'Enterprise permissions permit access to business related features and data.':
-      '企业权限允许访问企业相关功能和数据。',
+    'Enterprise permissions permit access to business related features and data.': '企业权限允许访问企业相关功能和数据。',
     'Read access required to use other repository permissions.': '使用其他存储库权限需要读取访问权限。',
     'Read access required to use other repository permissions': '使用其他存储库权限需要读取访问权限',
     'Add permissions': '添加权限',
@@ -659,10 +641,8 @@ export default {
 
     // Web 钩子事件订阅（GitHub 应用）
     'Subscribe to events': '订阅事件',
-    'Based on the permissions you’ve selected, what events would you like to subscribe to?':
-      '根据你选择的权限，你想订阅哪些事件？',
-    "Based on the permissions you've selected, what events would you like to subscribe to?":
-      '根据你选择的权限，你想订阅哪些事件？',
+    'Based on the permissions you’ve selected, what events would you like to subscribe to?': '根据你选择的权限，你想订阅哪些事件？',
+    "Based on the permissions you've selected, what events would you like to subscribe to?": '根据你选择的权限，你想订阅哪些事件？'
   },
   scoped: {
     ...TITLE_ENTRIES,
@@ -714,43 +694,35 @@ export default {
     'Issue opened, edited, deleted, transferred, pinned, unpinned, closed, reopened, assigned, unassigned, labeled, unlabeled, milestoned, demilestoned, locked, unlocked, typed, or untyped.':
       '议题被打开、编辑、删除、转移、置顶、取消置顶、关闭、重新打开、分配、取消分配、添加标签、移除标签、设置里程碑、移除里程碑、锁定、解锁、设置类型或移除类型。',
     'Merge Queue entry added': '添加了合并队列条目',
-    'Personal access token request created, approved, denied, or cancelled.':
-      '个人访问令牌请求被创建、批准、拒绝或取消。',
+    'Personal access token request created, approved, denied, or cancelled.': '个人访问令牌请求被创建、批准、拒绝或取消。',
     'Project item created, edited, deleted, archived, restored, converted, or reordered.':
       '项目中的项被创建、编辑、删除、存档、恢复、转换或重新排序。',
     'Project created, updated, deleted, closed, or reopened.': '项目被创建、更新、删除、关闭或重新打开。',
     'Project status updates created, updated, or deleted.': '项目状态更新被创建、更新或删除。',
     'When a message is dispatched from a repository.': '存储库发出调度消息时。',
-    'A manual workflow run is requested.': '请求手动运行工作流。',
+    'A manual workflow run is requested.': '请求手动运行工作流。'
   },
   regexp: [
     // 权限行：访问级别按钮、删除按钮
-    [
-      /^Access: (No access|Read-only|Read and write|Admin)$/,
-      (_, level: string) => `访问权限：${ACCESS_LEVEL[level] ?? level}`,
-    ],
-    [
-      new RegExp(`^Remove (${PERMISSION_TITLE_SOURCE})$`),
-      (_, title: string) => joinCjk('删除', PERMISSION_TITLES[title] ?? title),
-    ],
+    [/^Access: (No access|Read-only|Read and write|Admin)$/, (_, level: string) => `访问权限：${ACCESS_LEVEL[level] ?? level}`],
+    [new RegExp(`^Remove (${PERMISSION_TITLE_SOURCE})$`), (_, title: string) => joinCjk('删除', PERMISSION_TITLES[title] ?? title)],
     // 已安装应用、令牌详情：权限摘要。整句未拆开时“Read access to metadata”；
     // 访问级别加粗时拆成“Read”“and”“write”“access to metadata”几段
     [
       new RegExp(`^(Read and [Ww]rite|Read|Admin) access to (${RESOURCE_LIST_SOURCE})$`),
-      (_, level: string, list: string) =>
-        joinCjk(ACCESS_VERB[level.replace('Write', 'write')] ?? level, translatePermissionList(list)),
+      (_, level: string, list: string) => joinCjk(ACCESS_VERB[level.replace('Write', 'write')] ?? level, translatePermissionList(list))
     ],
     [new RegExp(`^access to (${RESOURCE_LIST_SOURCE})$`), (_, list: string) => translatePermissionList(list)],
     // 权限选择器分区标题旁计数的无障碍标签
     [
       /^(Label: )?(repository|organization|user|business) (mandatory )?permission count$/,
       (_, label: string, section: string, mandatory: string) =>
-        `${label ? '标签：' : ''}${PERMISSION_SECTION[section] ?? section}${mandatory ? '必选' : ''}权限数`,
+        `${label ? '标签：' : ''}${PERMISSION_SECTION[section] ?? section}${mandatory ? '必选' : ''}权限数`
     ],
     // 可订阅事件旁的帮助链接
     [
       new RegExp(`^Learn more about the (${EVENT_TITLE_SOURCE}) event$`),
-      (_, title: string) => joinCjk(joinCjk('了解', EVENT_TITLES[title] ?? title), '事件'),
-    ],
-  ],
+      (_, title: string) => joinCjk(joinCjk('了解', EVENT_TITLES[title] ?? title), '事件')
+    ]
+  ]
 } satisfies PageDictionary

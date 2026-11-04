@@ -68,7 +68,7 @@ const FILTER_KEY: Readonly<Record<string, string>> = {
   Type: '类型',
   'Update date': '更新日期',
   User: '用户',
-  'User review requested': '请求用户审查',
+  'User review requested': '请求用户审查'
 }
 
 /** 筛选器说明（item 指议题、拉取请求或项目项，与 projects 词典同译“项”） */
@@ -86,8 +86,7 @@ const FILTER_DESCRIPTION: Readonly<Record<string, string>> = {
   'Interaction count': '交互数',
   'Search for text only inside the title of an item': '仅在项的标题中搜索文本',
   'Filter only "issues", "pulls", "open", "closed", or "draft"': '仅筛选“issues”“pulls”“open”“closed”或“draft”',
-  'Limit text search to the title, body, or comments of an item or a combination of them':
-    '将文本搜索限定在项的标题、正文、评论或其组合中',
+  'Limit text search to the title, body, or comments of an item or a combination of them': '将文本搜索限定在项的标题、正文、评论或其组合中',
   Language: '语言',
   'Items linked to an issue or pull request': '链接了议题或拉取请求的项',
   'Look for open, closed, or draft issues': '查找打开、已关闭或草稿议题',
@@ -125,7 +124,7 @@ const FILTER_DESCRIPTION: Readonly<Record<string, string>> = {
   'Items in repositories owned by the user': '该用户拥有的存储库中的项',
   'Items with review requested for the user explicitly': '明确请求该用户审查的项',
   'Filter by issue fields': '按议题字段筛选',
-  'Specify the type of issue to search for': '指定要搜索的议题类型',
+  'Specify the type of issue to search for': '指定要搜索的议题类型'
 }
 
 /** 筛选值（建议列表） */
@@ -175,7 +174,7 @@ const FILTER_VALUE: Readonly<Record<string, string>> = {
   'Between 10 and 100': '10 到 100 之间',
   'Signed-in user': '已登录用户',
   'Your AI pair programmer': '你的 AI 结对程序员',
-  Me: '我',
+  Me: '我'
 }
 
 /** 高级筛选中的运算符 */
@@ -193,7 +192,7 @@ const OPERATOR: Readonly<Record<string, string>> = {
   after: '晚于',
   'before and including': '早于或等于',
   'after and including': '晚于或等于',
-  between: '介于',
+  between: '介于'
 }
 
 /** 选择器条目名（复数） */
@@ -211,7 +210,7 @@ const PICKER_ITEMS: Readonly<Record<string, string>> = {
   'issue types': '议题类型',
   items: '条目',
   values: '值',
-  results: '结果',
+  results: '结果'
 }
 
 const PICKER_ITEMS_SOURCE = Object.keys(PICKER_ITEMS)
@@ -232,7 +231,7 @@ const PICKER_ITEM: Readonly<Record<string, string>> = {
   type: '类型',
   'issue type': '议题类型',
   item: '条目',
-  value: '值',
+  value: '值'
 }
 
 const PICKER_ITEM_SOURCE = Object.keys(PICKER_ITEM)
@@ -282,7 +281,7 @@ const SHARED: ReadonlySet<string> = new Set([
   'Parent issue',
   'Blocked by',
   'Relates to',
-  'Comments',
+  'Comments'
 ])
 
 /** 去掉 SHARED 中的词条 */
@@ -300,9 +299,7 @@ function looseKey(name: string): string {
 }
 
 /** 小写的筛选器名称（建议列表的 Has label、No assignee、Exclude parent-issue） */
-const LOOSE_KEY: ReadonlyMap<string, string> = new Map(
-  Object.entries(FILTER_KEY).map(([key, value]) => [looseKey(key), value]),
-)
+const LOOSE_KEY: ReadonlyMap<string, string> = new Map(Object.entries(FILTER_KEY).map(([key, value]) => [looseKey(key), value]))
 
 /**
  * Exclude <key> 中的 key 是限定符（小写），与筛选器名称不同的按名称查表：created → Creation date。
@@ -317,13 +314,13 @@ const KEY_NAME: ReadonlyMap<string, string> = new Map([
   ['repo', 'Repository'],
   ['reason', 'Closed reason'],
   ['review', 'Review state'],
-  ['sha', 'Commit SHA'],
+  ['sha', 'Commit SHA']
 ])
 
 /** 建议列表“No 筛选器名”中可出现的筛选器（排除 has / no / is / in 这类关键字本身） */
 const LOWER_KEY_SOURCE = Object.keys(FILTER_KEY)
-  .map((key) => key.toLowerCase())
-  .filter((key) => !['has', 'no', 'is', 'in'].includes(key))
+  .map(key => key.toLowerCase())
+  .filter(key => !['has', 'no', 'is', 'in'].includes(key))
   .sort((a, b) => b.length - a.length)
   .join('|')
 
@@ -378,17 +375,14 @@ export const FILTER_BAR_SCOPED: Readonly<Record<string, string>> = {
   'Only one value allowed for': '以下筛选器只允许一个值',
   'Filter values are not supported for': '以下筛选器不支持筛选值',
   'cannot be used within groups': '不能在分组中使用',
-  'is not supported.': '不受支持。',
+  'is not supported.': '不受支持。'
   // 关闭高级筛选时的确认（Discard changes? 等）由通用词典处理
 }
 
 /** 筛选框组件的正则：建议列表的组合文字、高级筛选、校验提示（pulls/list.ts 同样取用） */
 export const FILTER_BAR_RULES: readonly RegExpRule[] = [
   // 建议列表的组合 aria-label：Author, Filter, The author of the item
-  [
-    /^(.+), Filter(?:, (.+))?$/,
-    (_, name, description) => `${keyName(name)}，筛选器${description ? `，${describe(description)}` : ''}`,
-  ],
+  [/^(.+), Filter(?:, (.+))?$/, (_, name, description) => `${keyName(name)}，筛选器${description ? `，${describe(description)}` : ''}`],
   [/^(@me|@copilot), (Signed-in user|Your AI pair programmer)$/, (_, value, text) => `${value}，${valueName(text)}`],
   [/^Has (.+), \1$/, (_, name) => `${joinCjk('有', keyName(name))}，${keyName(name)}`],
   [/^No (.+), \1$/, (_, name) => `${joinCjk('无', keyName(name))}，${keyName(name)}`],
@@ -396,24 +390,15 @@ export const FILTER_BAR_RULES: readonly RegExpRule[] = [
   [/^Exclude ([a-z][\w -]*)$/, (_, key) => withKey('排除', KEY_NAME.get(key) ?? key)],
   [new RegExp(`^No (${LOWER_KEY_SOURCE})$`), (_, name) => withKey('无', name)],
   // 高级筛选
-  [
-    /^Advanced filter dialog(?:: (\d+) valid filters?)?$/,
-    (_, count) => `高级筛选器对话框${count ? `：${count} 个有效筛选器` : ''}`,
-  ],
+  [/^Advanced filter dialog(?:: (\d+) valid filters?)?$/, (_, count) => `高级筛选器对话框${count ? `：${count} 个有效筛选器` : ''}`],
   [/^Row (\d+)$/, '第 $1 行'],
   [/^Delete filter (\d+): (.+)$/, '删除筛选器 $1：$2'],
   [/^(?:(.+), )?Qualifier (\d+)$/, (_, title, index) => `${title ? `${keyName(title)}，` : ''}限定符 ${index}`],
-  [
-    /^(?:(.+), )?Operator (\d+)$/,
-    (_, title, index) => `${title ? `${OPERATOR[title] ?? keyName(title)}，` : ''}运算符 ${index}`,
-  ],
+  [/^(?:(.+), )?Operator (\d+)$/, (_, title, index) => `${title ? `${OPERATOR[title] ?? keyName(title)}，` : ''}运算符 ${index}`],
   // 介于运算符的两个输入框：Value 1 From / Value 1 To（原文无标点，译文不加括号）
   [/^Value (\d+) (From|To)$/, (_, index, edge) => `值 ${index} ${edge === 'From' ? '起始' : '结束'}`],
   [/^(?:(.+), )?Value (\d+)$/, (_, value, index) => `${value ? `${valueName(value)}，` : ''}值 ${index}`],
-  [
-    /^Enter a (text|number|date|value)$/,
-    (_, type) => `输入${{ text: '文本', number: '数字', date: '日期' }[type] ?? '值'}`,
-  ],
+  [/^Enter a (text|number|date|value)$/, (_, type) => `输入${{ text: '文本', number: '数字', date: '日期' }[type] ?? '值'}`],
   // 校验提示（issues 指查询中的错误，用“处”与议题计数区分）
   [/^Filter contains (\d+) issues?:$/, '筛选器有 $1 处错误：'],
   [/^Filter '(.+)' not supported$/, '不支持筛选器“$1”'],
@@ -423,13 +408,13 @@ export const FILTER_BAR_RULES: readonly RegExpRule[] = [
   [/^Authenticate with (.+) to access$/, '使用 $1 进行身份验证以访问'],
   [/^SSO required for (.+)$/, '$1 需要 SSO'],
   // 表单校验句（Title is invalid）与多句文本不在此翻译，交给 common 的校验规则与按句翻译
-  [new RegExp(`^(?!(?:${VALIDATION_FIELD_SOURCE}) is invalid$)(?!.*[.!?] [A-Z])(.+) is invalid$`), '$1 无效'],
+  [new RegExp(`^(?!(?:${VALIDATION_FIELD_SOURCE}) is invalid$)(?!.*[.!?] [A-Z])(.+) is invalid$`), '$1 无效']
 ]
 
 /** 筛选框组件的行内句（pulls/list.ts 同样取用） */
 export const FILTER_BAR_INLINE: readonly InlineRule[] = [
   // 校验提示：<code> 是槽位，整句命中时连同中间的 for 一起译出；未命中时按上面的片段处理
-  ['Invalid value {} for {}', '无效值 {} 用于筛选器 {}'],
+  ['Invalid value {} for {}', '无效值 {} 用于筛选器 {}']
 ]
 
 /**
@@ -448,8 +433,7 @@ export default {
     'Add a filter': '添加筛选器',
     'Advanced filters': '高级筛选器',
     'Build complex filter queries': '构建复杂的筛选查询',
-    'To start building your query add your first filter using the button below.':
-      '使用下方按钮添加第一个筛选器，开始构建查询。',
+    'To start building your query add your first filter using the button below.': '使用下方按钮添加第一个筛选器，开始构建查询。',
     'Select a filter': '选择筛选器',
     'Make a selection': '请选择',
     'Enter search text': '输入搜索文本',
@@ -491,7 +475,7 @@ export default {
     'No filter added': '未添加筛选器',
     'Open filter dialog': '打开筛选器对话框',
     'Free text is not supported.': '不支持自由文本。',
-    'Error fetching search results': '获取搜索结果时出错',
+    'Error fetching search results': '获取搜索结果时出错'
   },
   scoped: {
     ...FILTER_BAR_SCOPED,
@@ -507,7 +491,7 @@ export default {
     'Filter by projects': '按项目筛选',
     'Filter by milestones': '按里程碑筛选',
     'Filter by user': '按用户筛选',
-    'No assignees': '无受理人',
+    'No assignees': '无受理人'
   },
   regexp: [
     ...FILTER_BAR_RULES,
@@ -517,21 +501,21 @@ export default {
     [new RegExp(`^Select an? (${PICKER_ITEM_SOURCE})$`), (_, name) => `选择${PICKER_ITEM[name] ?? name}`],
     [
       new RegExp(`^([\\d,]+) (${PICKER_ITEMS_SOURCE}|${PICKER_ITEM_SOURCE}) selected$`),
-      (_, count, name) => `已选择 ${count} 个${PICKER_ITEMS[name] ?? PICKER_ITEM[name] ?? name}`,
+      (_, count, name) => `已选择 ${count} 个${PICKER_ITEMS[name] ?? PICKER_ITEM[name] ?? name}`
     ],
     [new RegExp(`^Loading (${PICKER_ITEMS_SOURCE})\\.\\.\\.$`), (_, name) => `正在加载${items(name)}...`],
     [new RegExp(`^Error loading (${PICKER_ITEMS_SOURCE})\\.$`), (_, name) => `加载${items(name)}时出错。`],
     [new RegExp(`^No (${PICKER_ITEMS_SOURCE}) to show\\.$`), (_, name) => `没有可显示的${items(name)}。`],
     [
       new RegExp(`^Add a filter using the input to match (${PICKER_ITEMS_SOURCE})\\.$`),
-      (_, name) => `在输入框中添加筛选器以匹配${items(name)}。`,
+      (_, name) => `在输入框中添加筛选器以匹配${items(name)}。`
     ],
     // 计数可能是 human() 的缩写形式：1.2k
     [/^([\d.,]+[kmb]?) selected items hidden by search$/, '$1 个所选条目被搜索隐藏'],
     // 条目名逐词匹配（每个后续词以空格开头），避免嵌套量词回溯
     [/^([\d,]+) [a-z]+(?: [a-z]+)* matching, showing first (\d+)$/, '$1 个匹配项，显示前 $2 个'],
-    [/^([\d.,]+[kmb]?) [a-z]+(?: [a-z]+)* matching$/, '$1 个匹配项'],
+    [/^([\d.,]+[kmb]?) [a-z]+(?: [a-z]+)* matching$/, '$1 个匹配项']
   ],
   inline: FILTER_BAR_INLINE,
-  ignore: [LABEL_SUGGESTION_IGNORE],
+  ignore: [LABEL_SUGGESTION_IGNORE]
 } satisfies PageDictionary

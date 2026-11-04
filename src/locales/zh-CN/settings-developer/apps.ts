@@ -38,8 +38,7 @@ export default {
     'Expire user authorization tokens': '用户授权令牌自动过期',
     // 「This will provide a <code>refresh_token</code> which can be used to …」：原文无逗号，用“以便”接续
     'This will provide a': '这将提供',
-    'which can be used to request an updated access token when this access token expires.':
-      '以便在此访问令牌过期时请求新的访问令牌。',
+    'which can be used to request an updated access token when this access token expires.': '以便在此访问令牌过期时请求新的访问令牌。',
     'Request user authorization (OAuth) during installation': '安装期间请求用户授权 (OAuth)',
     'Requests that the installing user grants access to their identity during installation of your App':
       '安装应用时请求安装者授权访问其身份',
@@ -86,8 +85,7 @@ export default {
     'in order to install your GitHub App.': '才能安装你的 GitHub 应用。',
     'Got it. Your GitHub App has been updated.': '已更新你的 GitHub 应用。',
     'The GitHub App is now public. Anyone is free to install it.': '此 GitHub 应用现已设为公共。任何人都可以安装。',
-    'The GitHub App is now private. It can only be installed on this account.':
-      '此 GitHub 应用现已设为专用。只能安装在此帐户上。',
+    'The GitHub App is now private. It can only be installed on this account.': '此 GitHub 应用现已设为专用。只能安装在此帐户上。',
 
     // GitHub 应用设置：侧边栏、常规
     'Permissions & events': '权限和事件',
@@ -117,12 +115,9 @@ export default {
     'Client secrets': '客户端密钥',
     'Client secret': '客户端密钥',
     'Generate a new client secret': '生成新的客户端密钥',
-    'You need a client secret to authenticate as the application to the API.':
-      '你需要客户端密钥才能以应用身份向 API 进行身份验证。',
-    'Make sure to copy your new client secret now. You won’t be able to see it again.':
-      '请立即复制新的客户端密钥。之后将无法再次查看。',
-    "Make sure to copy your new client secret now. You won't be able to see it again.":
-      '请立即复制新的客户端密钥。之后将无法再次查看。',
+    'You need a client secret to authenticate as the application to the API.': '你需要客户端密钥才能以应用身份向 API 进行身份验证。',
+    'Make sure to copy your new client secret now. You won’t be able to see it again.': '请立即复制新的客户端密钥。之后将无法再次查看。',
+    "Make sure to copy your new client secret now. You won't be able to see it again.": '请立即复制新的客户端密钥。之后将无法再次查看。',
     'Basic information': '基本信息',
     'Display information': '显示信息',
     'Drag & drop': '拖放',
@@ -160,8 +155,7 @@ export default {
     // 权限更新
     'Add a note to users': '给用户添加备注',
     'This note will be displayed on the permissions update approval page.': '此备注将显示在权限更新审批页面上。',
-    'Add a note to your users explaining why you are requesting these changes.':
-      '给用户添加备注以说明请求这些更改的原因。',
+    'Add a note to your users explaining why you are requesting these changes.': '给用户添加备注以说明请求这些更改的原因。',
     'Are you sure you want to update permissions?': '确定要更新权限吗？',
     'Current users will be prompted to accept these changes and enable the new permissions on their installation.':
       '系统会提示现有用户接受这些更改并在其安装中启用新权限。',
@@ -198,8 +192,7 @@ export default {
     // Copilot 配置
     'A Copilot configuration allows your GitHub App to integrate with Copilot. Learn more about building GitHub Copilot Extensions in the':
       'Copilot 配置让你的 GitHub 应用可以与 Copilot 集成。有关构建 GitHub Copilot 扩展的更多信息请参阅',
-    'Accept the Marketplace Developer agreement to create your Copilot Extension':
-      '接受市场开发人员协议以创建 Copilot 扩展',
+    'Accept the Marketplace Developer agreement to create your Copilot Extension': '接受市场开发人员协议以创建 Copilot 扩展',
     // 「By clicking "Accept Terms" below, you agree to the <a>…Policy</a> and <a>Pre-release License terms</a>. …」
     'By clicking "Accept Terms" below, you agree to the': '单击下方的“接受条款”即表示你同意',
     'By clicking “Accept Terms” below, you agree to the': '单击下方的“接受条款”即表示你同意',
@@ -220,8 +213,7 @@ export default {
     'to find out more.': '了解更多。',
     'Register a new application': '注册新应用',
     'No OAuth apps': '暂无 OAuth 应用',
-    'OAuth apps are used to access the GitHub API. Read the docs to find out more.':
-      'OAuth 应用用于访问 GitHub API。阅读文档了解更多。',
+    'OAuth apps are used to access the GitHub API. Read the docs to find out more.': 'OAuth 应用用于访问 GitHub API。阅读文档了解更多。',
     'Developer applications': '开发人员应用',
     // 「These are applications you have registered to use the <a>GitHub API</a>.」
     'These are applications you have registered to use the': '你注册的这些应用可调用',
@@ -262,8 +254,7 @@ export default {
     'You can edit how': '你可以编辑',
     'is presented on': '在',
     ', including description, screenshots, and pricing information.': '上的展示方式，包括描述、截图和定价信息。',
-    'You cannot delete the only client secret. Generate a new client secret first.':
-      '无法删除唯一的客户端密钥。请先生成新的客户端密钥。',
+    'You cannot delete the only client secret. Generate a new client secret first.': '无法删除唯一的客户端密钥。请先生成新的客户端密钥。',
     'Label: Client secret': '标签：客户端密钥',
     'Redirect URIs': '重定向 URI',
     'Redirect URI': '重定向 URI',
@@ -279,15 +270,14 @@ export default {
       '访问令牌将在 8 小时后过期。届时会提供可用于请求新访问令牌的刷新令牌。现有令牌不受影响。',
     'Transfer this application': '转让此应用',
     'Type the name of the application to confirm': '输入应用名称以确认',
-    'Type in the name of the application to confirm that you want to transfer this repository.':
-      '输入应用名称以确认转让。',
+    'Type in the name of the application to confirm that you want to transfer this repository.': '输入应用名称以确认转让。',
     'Type in the username of the new owner.': '输入新所有者的用户名。',
     'Delete application?': '删除应用？',
     'Delete OAuth application': '删除 OAuth 应用',
     'Fewer than 10 users are currently using this application. It will not be able to be used after deletion.':
       '目前使用此应用的用户少于 10 个。删除后将无法再使用。',
     'Please note that deleting the OAuth application will invalidate any access tokens authorized by users.':
-      '请注意删除 OAuth 应用会使用户授权的所有访问令牌失效。',
+      '请注意删除 OAuth 应用会使用户授权的所有访问令牌失效。'
   },
   scoped: {
     // 列表（与组织开发人员设置共用；Developer settings 菜单项由 settings-account 收录）
@@ -327,8 +317,7 @@ export default {
       '输入 IP 地址以检查 IP 允许列表中已启用的条目是否允许它。',
     'Crop your new avatar': '裁剪新头像',
     'Set new avatar': '设置新头像',
-    'Your avatar has been updated. It may take a few minutes to update across the site.':
-      '头像已更新。全站同步可能需要几分钟。',
+    'Your avatar has been updated. It may take a few minutes to update across the site.': '头像已更新。全站同步可能需要几分钟。',
     'This avatar has been deleted.': '已删除此头像。',
     'Uploading...': '上传中...',
     'Uploading…': '上传中…',
@@ -337,39 +326,33 @@ export default {
     'This cannot be undone. Please be certain.': '此操作无法撤销。请谨慎操作。',
     'Opt-out': '退出',
     'Opt-in': '加入',
-    'Installed on': '安装在',
+    'Installed on': '安装在'
   },
   regexp: [
-    [
-      /^Only allow this GitHub App to be installed on the (@[\w-]+) account\.$/,
-      '仅允许将此 GitHub 应用安装在 $1 帐户上。',
-    ],
+    [/^Only allow this GitHub App to be installed on the (@[\w-]+) account\.$/, '仅允许将此 GitHub 应用安装在 $1 帐户上。'],
     [/^Choose an account to install (.+) on:$/, '选择要安装 $1 的帐户：'],
     [/^Install (.+) on this account\.$/, '将 $1 安装到此帐户。'],
     [/^(.+) is installed on this account\.$/, '$1 已安装在此帐户上。'],
     [/^Where should we transfer (.+)\?$/, '要将 $1 转让给谁？'],
     [
       /^Any user or organization will be able to install this GitHub App\. Are you sure you want to make (.+) public\?$/,
-      '任何用户或组织都可以安装此 GitHub 应用。确定要将 $1 设为公共吗？',
+      '任何用户或组织都可以安装此 GitHub 应用。确定要将 $1 设为公共吗？'
     ],
     [
       /^This GitHub [Aa]pp will only be installable on the (\S+) account\. Are you sure you want to make (.+) private\?$/,
-      '此 GitHub 应用将只能安装在 $1 帐户上。确定要将 $2 设为专用吗？',
+      '此 GitHub 应用将只能安装在 $1 帐户上。确定要将 $2 设为专用吗？'
     ],
     [/^(\d+) accounts?$/, '$1 个帐户'],
     [/^(\d+) users?$/, '$1 个用户'],
     // 客户端密钥：「Added 3 days ago by octocat」
     [
       new RegExp(`^Added (${TIME_SOURCE}) by ([\\w-]+)$`),
-      (_, time: string, user: string) => joinCjk(translateTime(time), `由 ${user} 添加`),
+      (_, time: string, user: string) => joinCjk(translateTime(time), `由 ${user} 添加`)
     ],
     [/^This will also uninstall the GitHub App from (\d+) accounts?\.$/, '这还会从 $1 个帐户中卸载此 GitHub 应用。'],
     [/^Activate optional features for (.+)$/, '为 $1 激活可选功能'],
     [/^Choose a feature to activate for (.+):$/, '选择要为 $1 激活的功能：'],
     // 最近交付：交付耗时（与存储库 Web 钩子一致）
-    [
-      /^Completed in ([\d.]+) seconds?(\.?)$/,
-      (_, seconds: string, dot: string) => `耗时 ${seconds} 秒${dot ? '。' : ''}`,
-    ],
-  ],
+    [/^Completed in ([\d.]+) seconds?(\.?)$/, (_, seconds: string, dot: string) => `耗时 ${seconds} 秒${dot ? '。' : ''}`]
+  ]
 } satisfies PageDictionary

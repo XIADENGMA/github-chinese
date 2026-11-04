@@ -11,8 +11,7 @@ export default {
       'GitHub 教育弭平程式設計教育和科技職涯之間的落差，全球每個人都能免費使用。',
 
     // 数据（数字见 regexp）
-    "Connect with millions of peers who've expanded their skills through GitHub Education.":
-      '與數百萬透過 GitHub 教育拓展技能的同儕交流。',
+    "Connect with millions of peers who've expanded their skills through GitHub Education.": '與數百萬透過 GitHub 教育拓展技能的同儕交流。',
     'Collaborate with educators around the world who enhance their lesson plans and workstreams with GitHub tools.':
       '與世界各地運用 GitHub 工具改善教案和工作流程的教育工作者協作。',
     'Join thousands of schools globally that incorporate GitHub into their tech curriculum.':
@@ -24,8 +23,7 @@ export default {
       'GitHub 教育致力於將科技和開源協作帶給全球的學生和教育工作者。',
     // <b>Join us today</b> and take the first step …（整句见 inline）
     'Join us today': '立即加入我們',
-    'and take the first step towards transforming your tech education experience.':
-      '，踏出改變你的科技教育體驗的第一步。',
+    'and take the first step towards transforming your tech education experience.': '，踏出改變你的科技教育體驗的第一步。',
     // 「加入 GitHub 教育」链接的 aria-label
     'Enable GitHub Education': '啟用 GitHub 教育',
 
@@ -44,19 +42,16 @@ export default {
     'Learn more about partners': '瞭解合作夥伴相關資訊',
 
     // 「更進一步」
-    'Go further': '更進一步',
+    'Go further': '更進一步'
   },
   regexp: [
     // 数据：5 million students / 200K verified educators / +2K educational institutions
     [/^(\d+) million students$/, (_, count) => joinCjk(millions(count!), '位學生')],
     [/^(\d+)K verified educators$/, (_, count) => joinCjk(thousands(count!), '位已驗證的教育工作者')],
-    [/^\+(\d+)K educational institutions$/, (_, count) => joinCjk(`超過 ${thousands(count!)}`, '所教育機構')],
+    [/^\+(\d+)K educational institutions$/, (_, count) => joinCjk(`超過 ${thousands(count!)}`, '所教育機構')]
   ],
   inline: [
     // <b>Join us today</b> and take the first step towards transforming your tech education experience.
-    [
-      '{} and take the first step towards transforming your tech education experience.',
-      '{}，踏出改變你的科技教育體驗的第一步。',
-    ],
-  ],
+    ['{} and take the first step towards transforming your tech education experience.', '{}，踏出改變你的科技教育體驗的第一步。']
+  ]
 } satisfies PageDictionary

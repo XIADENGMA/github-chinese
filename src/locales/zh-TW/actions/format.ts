@@ -34,7 +34,7 @@ export const RUN_STATUS: Readonly<Record<string, string>> = {
   Neutral: '中性',
   'Timed out': '已逾時',
   'Startup failure': '啟動失敗',
-  Stale: '過時',
+  Stale: '過時'
 }
 
 /** 运行列表状态图标的无障碍前缀（带冒号） */
@@ -53,12 +53,12 @@ export const RUN_STATUS_LABELS: Readonly<Record<string, string>> = {
   'waiting for another serialized run to finish:': '正在等待另一個序列化執行完成：',
   'waiting:': '等待中：',
   'queued:': '已排入佇列：',
-  'currently running:': '正在執行：',
+  'currently running:': '正在執行：'
 }
 
 /** 状态前缀的正则片段（不含冒号与捕获组），长者在前 */
 export const RUN_STATUS_LABEL_SOURCE = Object.keys(RUN_STATUS_LABELS)
-  .map((label) => label.slice(0, -1))
+  .map(label => label.slice(0, -1))
   .sort((a, b) => b.length - a.length)
   .join('|')
 
@@ -99,7 +99,7 @@ export const TRIGGER_EVENTS: Readonly<Record<string, string>> = {
   'page build': '頁面建置',
   dynamic: '動態工作流程',
   // 产品名（Pages 建置部署的执行）：GitHub Pages → GitHub 頁面
-  'GitHub Pages': 'GitHub 頁面',
+  'GitHub Pages': 'GitHub 頁面'
 }
 
 /** 部署状态（Status: Deployed (completed).） */
@@ -118,7 +118,7 @@ export const DEPLOYMENT_STATES: Readonly<Record<string, string>> = {
   Abandoned: '已放棄',
   Destroyed: '已銷毀',
   Success: '成功',
-  Active: '作用中',
+  Active: '作用中'
 }
 
 /** 部署进度（括号内） */
@@ -129,7 +129,7 @@ export const DEPLOYMENT_PHASES: Readonly<Record<string, string>> = {
   queued: '已排入佇列',
   pending: '擱置中',
   waiting: '等待中',
-  inactive: '非作用中',
+  inactive: '非作用中'
 }
 
 /** 狀態：已部署（已完成）。未知取值保留原文，进度为英文时用半角括号：狀態：已部署 (done) */

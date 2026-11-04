@@ -9,7 +9,7 @@ export const DEFAULT_CATEGORIES: ReadonlyMap<string, string> = new Map([
   ['Polls', '投票'],
   ['Q&A', '問與答'],
   ['Show and tell', '成果分享'],
-  ['Help', '求助'],
+  ['Help', '求助']
 ])
 
 /** 默认类别名的正则片段（不含捕获组；类别名中没有正则元字符） */
@@ -44,13 +44,13 @@ function categoryQuery(name: string): string {
 /** 链接指向默认类别页：…/discussions/categories/<标识>，可带查询串 */
 const DEFAULT_CATEGORY_PATH = `:is(${[...DEFAULT_CATEGORIES.keys()]
   .map(categorySlug)
-  .flatMap((slug) => [`[href$="/categories/${slug}"]`, `[href*="/categories/${slug}?"]`])
+  .flatMap(slug => [`[href$="/categories/${slug}"]`, `[href*="/categories/${slug}?"]`])
   .join(', ')})`
 
 /** 链接按默认类别筛选：discussions_q=category:<名称> 或 category:"<名称>" */
 const DEFAULT_CATEGORY_QUERY = `:is(${[...DEFAULT_CATEGORIES.keys()]
   .map(categoryQuery)
-  .flatMap((query) => [`[href$="category%3A${query}"]`, `[href*="category%3A%22${query}%22"]`])
+  .flatMap(query => [`[href$="category%3A${query}"]`, `[href*="category%3A%22${query}%22"]`])
   .join(', ')})`
 
 /** 指向自定义类别页的链接 */
@@ -71,13 +71,13 @@ export const CUSTOM_CATEGORY_IGNORE: readonly string[] = [
   `a.color-fg-inherit${CUSTOM_CATEGORY_LINK}`,
   `a.Link--onHover${CUSTOM_CATEGORY_LINK}`,
   // 自定义类别页的标题与说明
-  `body:has(a.ActionList-content[aria-current="page"]${CUSTOM_CATEGORY_LINK}) :is(#discussions-list, .Subhead-description)`,
+  `body:has(a.ActionList-content[aria-current="page"]${CUSTOM_CATEGORY_LINK}) :is(#discussions-list, .Subhead-description)`
 ]
 
 const ACTIONS: ReadonlyMap<string, string> = new Map([
   ['created', '建立'],
   ['updated', '更新'],
-  ['deleted', '刪除'],
+  ['deleted', '刪除']
 ])
 
 function action(verb: string): string {
@@ -88,12 +88,7 @@ function action(verb: string): string {
  * 提示条中的名称：原文带引号的译文用「」括起，否则与后面的中文按需补空格（未参与匹配的捕获组由引擎传入空串）。
  * Category "Ideas" has been created. → 「想法」類別已建立。；Category RFC has been deleted. → RFC 類別已刪除。
  */
-function noticeSubject(
-  quotedName: string,
-  name: string,
-  noun: string,
-  rename: (value: string) => string = (value) => value,
-): string {
+function noticeSubject(quotedName: string, name: string, noun: string, rename: (value: string) => string = value => value): string {
   if (quotedName) return `「${rename(quotedName)}」${noun}`
   return joinCjk(rename(name), noun)
 }
@@ -109,14 +104,12 @@ const regexp: readonly RegExpRule[] = [
   // 提示条：Category "Ideas" has been created. / Category RFC has been deleted.
   [
     /^Category (?:"(.+)"|(.+?)) has been (created|updated|deleted)\.$/,
-    (_, quotedName: string, name: string, verb: string) =>
-      `${noticeSubject(quotedName, name, '類別', categoryName)}已${action(verb)}。`,
+    (_, quotedName: string, name: string, verb: string) => `${noticeSubject(quotedName, name, '類別', categoryName)}已${action(verb)}。`
   ],
   [
     /^Section (?:"(.+)"|(.+?)) has been (created|updated|deleted)\.$/,
-    (_, quotedName: string, name: string, verb: string) =>
-      `${noticeSubject(quotedName, name, '區段')}已${action(verb)}。`,
-  ],
+    (_, quotedName: string, name: string, verb: string) => `${noticeSubject(quotedName, name, '區段')}已${action(verb)}。`
+  ]
 ]
 
 /**
@@ -147,8 +140,7 @@ export default {
     'Delete category': '刪除類別',
     'Edit section': '編輯區段',
     'Delete section': '刪除區段',
-    'If this category has discussions associated, where would you like to reassign them?':
-      '如果此類別中有討論，要將它們重新分配到哪裡？',
+    'If this category has discussions associated, where would you like to reassign them?': '如果此類別中有討論，要將它們重新分配到哪裡？',
     'Delete and move': '刪除並移動',
     'Delete & Move': '刪除並移動',
     'Delete & move': '刪除並移動',
@@ -180,15 +172,15 @@ export default {
     'Create section': '建立區段',
     'Section name': '區段名稱',
     'Add categories to this section': '將類別加入此區段',
-    'A category can only belong to one section at a time.': '一個類別同時只能屬於一個區段。',
+    'A category can only belong to one section at a time.': '一個類別同時只能屬於一個區段。'
   },
   scoped: {
     // 默认类别名（Help 覆盖 common-ui 全局的「說明」）
     ...Object.fromEntries(DEFAULT_CATEGORIES),
     // 讨论格式
     Poll: '投票',
-    'Add a description (optional)': '新增描述（選填）',
+    'Add a description (optional)': '新增描述（選填）'
   },
   regexp,
-  ignore: CUSTOM_CATEGORY_IGNORE,
+  ignore: CUSTOM_CATEGORY_IGNORE
 } satisfies PageDictionary

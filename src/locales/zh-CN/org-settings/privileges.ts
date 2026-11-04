@@ -9,7 +9,7 @@ const PERMISSION_NAMES: Readonly<Record<string, string>> = {
   None: '无',
   Read: '读取',
   Write: '写入',
-  Admin: '管理员',
+  Admin: '管理员'
 }
 
 const PERMISSION_SOURCE = '(No permission|No access|None|Read|Write|Admin)'
@@ -47,8 +47,7 @@ export default {
     'Members will be able to clone, pull, and push all repositories.': '成员可以克隆、拉取和推送所有存储库。',
     'Members will be able to clone, pull, push, and add new collaborators to all repositories.':
       '成员可以克隆、拉取、推送所有存储库，并为其添加新的协作者。',
-    'You are about to change the base repository permission for this organization.':
-      '你即将更改此组织的存储库基本权限。',
+    'You are about to change the base repository permission for this organization.': '你即将更改此组织的存储库基本权限。',
     'Base repository permission removed.': '已删除存储库基本权限。',
     // 「Update in progress」+「. Refresh to see if it’s done.」：句号随原文
     'Update in progress': '正在更新',
@@ -84,8 +83,7 @@ export default {
     'Allow users with read access to create discussions': '允许拥有读取访问权限的用户创建讨论',
     'If disabled, discussion creation is limited to users with at least triage permission. Users with read access can still comment on discussions.':
       '禁用后，只有至少拥有分类权限的用户才能创建讨论。拥有读取访问权限的用户仍可在讨论中发表评论。',
-    'Users with read access to repositories can create new discussions.':
-      '拥有存储库读取访问权限的用户可以创建新讨论。',
+    'Users with read access to repositories can create new discussions.': '拥有存储库读取访问权限的用户可以创建新讨论。',
     'Only users with at least triage access to repositories can create new discussions.':
       '只有至少拥有存储库分类权限的用户才能创建新讨论。',
 
@@ -99,25 +97,21 @@ export default {
     'This won’t affect any existing projects.': '这不会影响任何现有项目。',
     'Members can see projects.': '成员可以查看项目。',
     'Members can see and make changes to projects.': '成员可以查看和更改项目。',
-    'Members can see, make changes to, and add new collaborators to projects.':
-      '成员可以查看、更改项目，并为项目添加新的协作者。',
+    'Members can see, make changes to, and add new collaborators to projects.': '成员可以查看、更改项目，并为项目添加新的协作者。',
     'Projects settings updated for this organization.': '已更新此组织的项目设置。',
 
     // 页面创建（产品名 Pages → 页面，见 nav.ts 文件头）
     'Pages creation': '页面创建',
-    'Members will be able to publish sites with only the selected access controls.':
-      '成员只能以所选的访问控制发布站点。',
+    'Members will be able to publish sites with only the selected access controls.': '成员只能以所选的访问控制发布站点。',
     'Members will be able to create public sites, visible to anyone.': '成员可以创建对所有人可见的公共站点。',
-    'Members will be able to create private sites, visible to anyone with permission.':
-      '成员可以创建专用站点，仅对有权限的人可见。',
+    'Members will be able to create private sites, visible to anyone with permission.': '成员可以创建专用站点，仅对有权限的人可见。',
 
     // 应用访问请求
     'App access requests': '应用访问请求',
     'Choose who can request GitHub or OAuth apps to use with resources in this organization':
       '选择谁可以申请在此组织的资源中使用 GitHub 应用或 OAuth 应用',
     'Members and outside collaborators': '成员和外部协作者',
-    'Both members and outside collaborators can request apps for this organization.':
-      '成员和外部协作者都可以为此组织申请应用。',
+    'Both members and outside collaborators can request apps for this organization.': '成员和外部协作者都可以为此组织申请应用。',
     'Members only': '仅成员',
     'Members can request apps, while outside collaborators cannot.': '成员可以申请应用，外部协作者不可以。',
     'Disable app access requests': '禁用应用访问请求',
@@ -128,10 +122,8 @@ export default {
       '外部协作者将能够申请让 GitHub 应用或 OAuth 应用访问此组织及其资源。',
     'Outside collaborators can no longer request third party access.': '外部协作者已无法申请第三方访问。',
     'Outside collaborators can now request third party access.': '外部协作者现在可以申请第三方访问。',
-    'Allow repository admins to install GitHub Apps for their repositories.':
-      '允许存储库管理员为其存储库安装 GitHub 应用。',
-    'Allow repository admins to install GitHub Apps for their repositories':
-      '允许存储库管理员为其存储库安装 GitHub 应用',
+    'Allow repository admins to install GitHub Apps for their repositories.': '允许存储库管理员为其存储库安装 GitHub 应用。',
+    'Allow repository admins to install GitHub Apps for their repositories': '允许存储库管理员为其存储库安装 GitHub 应用',
     "Repository admins will be able to install and configure GitHub Apps on their repositories without requesting first, if the app doesn't require organization or repository administration permissions.":
       '如果应用不需要组织或存储库管理权限，存储库管理员无需申请即可在其存储库上安装和配置 GitHub 应用。',
     'Repository admins will be able to install and configure GitHub Apps on their repositories without requesting first, if the app doesn’t require organization or repository administration permissions.':
@@ -162,8 +154,7 @@ export default {
     'Members can now delete issues.': '成员现在可以删除议题。',
     'Members can no longer delete issues.': '成员已无法删除议题。',
     'Branch renames': '分支重命名',
-    'Allow repository administrators to rename branches protected by organization rules':
-      '允许存储库管理员重命名受组织规则保护的分支',
+    'Allow repository administrators to rename branches protected by organization rules': '允许存储库管理员重命名受组织规则保护的分支',
     'If enabled, members with admin permissions for the repository will be able to rename branches targeted by organization-level rulesets, provided the new name is still covered by those same rulesets or the repository admin has bypass permission. If disabled, only organization owners can rename such branches.':
       '启用后，拥有存储库管理员权限的成员可以重命名组织级规则集所针对的分支，前提是新名称仍在相同规则集的范围内，或存储库管理员拥有绕过权限。禁用后，只有组织所有者可以重命名此类分支。',
 
@@ -177,14 +168,11 @@ export default {
     'Members can no longer create teams.': '成员已无法创建团队。',
     'Member organization permissions': '成员组织权限',
     'Allow members to view dependency insights': '允许成员查看依赖项见解',
-    'If enabled, members will be able to view dependency insights for this organization.':
-      '启用后，成员可以查看此组织的依赖项见解。',
+    'If enabled, members will be able to view dependency insights for this organization.': '启用后，成员可以查看此组织的依赖项见解。',
     'Repository Comments': '存储库评论',
     'Repository comments': '存储库评论',
-    "Allow members to see comment author's profile name in private repositories":
-      '允许成员在专用存储库中查看评论作者的个人资料名称',
-    'Allow members to see comment author’s profile name in private repositories':
-      '允许成员在专用存储库中查看评论作者的个人资料名称',
+    "Allow members to see comment author's profile name in private repositories": '允许成员在专用存储库中查看评论作者的个人资料名称',
+    'Allow members to see comment author’s profile name in private repositories': '允许成员在专用存储库中查看评论作者的个人资料名称',
 
     // 团队讨论
     'Team discussions provide a place for a team to have conversations that span across projects or repositories and that don’t belong in an issue or a pull request.':
@@ -210,7 +198,7 @@ export default {
     'Organization rulesets won’t be enforced': '组织规则集不会强制实施',
     'until you upgrade this organization account to GitHub Team.': '，除非将此组织帐户升级到 GitHub 团队版。',
     'New policy': '新建策略',
-    'Repository policy': '存储库策略',
+    'Repository policy': '存储库策略'
   },
   scoped: {
     'No permission': '无权限',
@@ -228,8 +216,7 @@ export default {
 
     // 存储库邀请
     'Repository invitations': '存储库邀请',
-    'Allow members to invite outside collaborators to repositories for this organization':
-      '允许成员邀请外部协作者加入此组织的存储库',
+    'Allow members to invite outside collaborators to repositories for this organization': '允许成员邀请外部协作者加入此组织的存储库',
     'If enabled, members with admin permissions for the repository will be able to invite outside collaborators. If disabled, only organization owners can invite outside collaborators.':
       '启用后，拥有存储库管理员权限的成员可以邀请外部协作者。禁用后，只有组织所有者可以邀请外部协作者。',
 
@@ -244,32 +231,30 @@ export default {
     'Changing this setting to disabled will result in existing deploy keys being disabled in all repositories in the organization.':
       '将此设置改为禁用后，组织所有存储库中的现有部署密钥都将被禁用。',
     'Scripts, apps, or workflows that create, use, or delete deploy keys will no longer work.':
-      '创建、使用或删除部署密钥的脚本、应用或工作流将无法继续运行。',
+      '创建、使用或删除部署密钥的脚本、应用或工作流将无法继续运行。'
   },
   regexp: [
     [
       new RegExp(`^Change (base|default) permissions? to ${OPEN_QUOTE}${PERMISSION_SOURCE}${CLOSE_QUOTE}$`),
       (_, kind: string, quote: string, permission: string) =>
-        `将${kind === 'base' ? '基本' : '默认'}权限更改为${quotedPermission(quote, permission)}`,
+        `将${kind === 'base' ? '基本' : '默认'}权限更改为${quotedPermission(quote, permission)}`
     ],
     [
       new RegExp(`^Base repository permission updated to ${OPEN_QUOTE}${PERMISSION_SOURCE}${CLOSE_QUOTE}\\.$`),
-      (_, quote: string, permission: string) => `存储库基本权限已更新为${quotedPermission(quote, permission)}。`,
+      (_, quote: string, permission: string) => `存储库基本权限已更新为${quotedPermission(quote, permission)}。`
     ],
     [
       new RegExp(`^Base permission updated to ${OPEN_QUOTE}${PERMISSION_SOURCE}${CLOSE_QUOTE} for projects\\.$`),
-      (_, quote: string, permission: string) => `项目基本权限已更新为${quotedPermission(quote, permission)}。`,
+      (_, quote: string, permission: string) => `项目基本权限已更新为${quotedPermission(quote, permission)}。`
     ],
     [
       /^This may change the permission that the organization[’']s (\d+) members? ha(?:s|ve) on its (\d+) repositor(?:y|ies)\.$/,
-      '这可能会改变组织 $1 个成员对其 $2 个存储库的权限。',
+      '这可能会改变组织 $1 个成员对其 $2 个存储库的权限。'
     ],
     [/^This will affect (\d+) projects?\.$/, '这将影响 $1 个项目。'],
     [
-      new RegExp(
-        `^If enabled, all users with read access can create and comment on discussions in ${ORG}[’']s repositories\\.$`,
-      ),
-      '启用后，所有拥有读取访问权限的用户都可以在 $1 的存储库中创建讨论并发表评论。',
-    ],
-  ],
+      new RegExp(`^If enabled, all users with read access can create and comment on discussions in ${ORG}[’']s repositories\\.$`),
+      '启用后，所有拥有读取访问权限的用户都可以在 $1 的存储库中创建讨论并发表评论。'
+    ]
+  ]
 } satisfies PageDictionary

@@ -6,7 +6,7 @@ import {
   isPageLocalePreference,
   isUiLanguagePreference,
   resolvePageLocale,
-  resolveUiLanguage,
+  resolveUiLanguage
 } from '../../../src/shared/locale'
 
 describe('chineseScript', () => {
@@ -34,12 +34,12 @@ describe('chineseScript', () => {
     ['zh-x-tw', 'zh-CN'],
     ['zh-Hans-t-zh-hant', 'zh-CN'],
     ['zh-TW-t-zh-hans', 'zh-TW'],
-    ['zh-cmn-Hant', 'zh-TW'],
+    ['zh-cmn-Hant', 'zh-TW']
   ] as const)('%s → %s', (tag, script) => {
     expect(chineseScript(tag)).toBe(script)
   })
 
-  it.each(['en-US', 'ja', 'ko-KR', 'zhx', '', 'hant'])('%j 不是中文', (tag) => {
+  it.each(['en-US', 'ja', 'ko-KR', 'zhx', '', 'hant'])('%j 不是中文', tag => {
     expect(chineseScript(tag)).toBeUndefined()
   })
 })
@@ -71,7 +71,7 @@ describe('detectUiLanguage', () => {
     ['zh-HK', 'zh-TW'],
     ['en-US', 'en'],
     ['ja', 'en'],
-    [undefined, 'en'],
+    [undefined, 'en']
   ] as const)('%s → %s', (language, ui) => {
     expect(detectUiLanguage(language)).toBe(ui)
   })

@@ -19,7 +19,7 @@ const REASONS: Readonly<Record<string, string>> = {
   'security advisory credit': '安全性公告致謝',
   invitation: '邀請',
   'member feature requested': '成員功能請求',
-  'your activity': '你的活動',
+  'your activity': '你的活動'
 }
 
 /**
@@ -36,7 +36,7 @@ const WATCH_MENU: Readonly<Record<string, string>> = {
   'Failed to update': '無法更新',
   'Discussions are not enabled for this repo': '此儲存庫未啟用討論',
   // 关注数量上限提示句尾：請更新你的 <關注設定> 以繼續。
-  'to continue.': '以繼續。',
+  'to continue.': '以繼續。'
 }
 
 /** 订阅页 /notifications/subscriptions 的原因筛选（首字母大写；Reason、Author、Comment、Mention 由 common 收录） */
@@ -45,7 +45,7 @@ const SUBSCRIPTION_REASONS: Readonly<Record<string, string>> = {
   Manual: '手動訂閱',
   'Review Requested': '審查請求',
   'State Change': '狀態變更',
-  'Team Mention': '團隊提及',
+  'Team Mention': '團隊提及'
 }
 
 /** 存储库所有者名：GitHub 登录名 */
@@ -57,7 +57,7 @@ const COUNT = '(\\d[\\d,]*)'
 /** 关注按钮无障碍名称：按钮文字 */
 const WATCH_BUTTON: Readonly<Record<string, string>> = {
   Watch: '關注',
-  Unwatch: '取消關注',
+  Unwatch: '取消關注'
 }
 
 /** 关注按钮无障碍名称：当前订阅方式（Participating 是屏幕阅读器用的简称） */
@@ -65,7 +65,7 @@ const WATCH_SELECTION: Readonly<Record<string, string>> = {
   Participating: '參與',
   'All Activity': '所有活動',
   Ignore: '忽略',
-  Custom: '自訂',
+  Custom: '自訂'
 }
 
 /** 自定义订阅对话框中未启用的事件类型 */
@@ -74,7 +74,7 @@ const THREAD_TYPES: Readonly<Record<string, string>> = {
   'Pull requests': '拉取請求',
   Releases: '發行版本',
   Discussions: '討論',
-  'Security alerts': '安全性警示',
+  'Security alerts': '安全性警示'
 }
 
 /** 搜索框限定符说明（is: 按状态或讨论类型，即 issue-or-pull-request、release 等；filter by → 「依…篩選」） */
@@ -83,14 +83,14 @@ const QUALIFIER_HINTS: Readonly<Record<string, string>> = {
   'filter by status or discussion type': '依狀態或討論類型篩選',
   'filter by notification reason': '依通知原因篩選',
   'filter by notification author': '依通知作者篩選',
-  'filter by organization': '依組織篩選',
+  'filter by organization': '依組織篩選'
 }
 
 /** ProTip「…press <kbd>e</kbd> to mark it as Done.」的目标状态（与侧栏、批量操作的译法一致；Done 按术语表作「完成」） */
 const MARK_STATES: Readonly<Record<string, string>> = {
   Done: '完成',
   Unread: '未讀',
-  Read: '已讀',
+  Read: '已讀'
 }
 
 /**
@@ -102,7 +102,7 @@ const DEFAULT_FILTERS: Readonly<Record<string, string>> = {
   Participating: '參與',
   Mentioned: '提及我的',
   'Team mentioned': '提及我的團隊',
-  'Review requested': '審查請求',
+  'Review requested': '審查請求'
 }
 
 /**
@@ -221,10 +221,8 @@ export default {
     'Unwatch all': '全部取消關注',
     'change notification settings': '變更通知設定',
     'Change notification settings': '變更通知設定',
-    'you can change how you receive notifications from your account settings.':
-      '你可以在帳號設定中變更接收通知的方式。',
-    'You can change how you receive notifications from your account settings.':
-      '你可以在帳號設定中變更接收通知的方式。',
+    'you can change how you receive notifications from your account settings.': '你可以在帳號設定中變更接收通知的方式。',
+    'You can change how you receive notifications from your account settings.': '你可以在帳號設定中變更接收通知的方式。',
 
     // ProTip（「Filter by is:unread」后半句的片段依赖上下文，放 scoped；被 kbd 拆开的句子整句见 regexp）
     // Triage notifications on the go with GitHub Mobile for iOS or Android.（产品名译中文：GitHub Mobile → GitHub 行動版；
@@ -235,8 +233,7 @@ export default {
     'to mark it as Unread.': '可將其標示為未讀。',
     'to mark it as Read.': '可將其標示為已讀。',
     // access 指查看通知，不是权限义的「存取」
-    'Create custom filters to quickly access your most important notifications.':
-      '建立自訂篩選器以快速查看最重要的通知。',
+    'Create custom filters to quickly access your most important notifications.': '建立自訂篩選器以快速查看最重要的通知。',
     'to clean up your inbox.': '以清理收件匣。',
 
     // 已关注的存储库 /watching
@@ -246,8 +243,7 @@ export default {
     'Stop ignoring': '停止忽略',
     'Sorted by most recently watched.': '依最近關注時間排序。',
     'Confirm unwatching all repositories': '確認取消關注所有儲存庫',
-    'You will stop receiving notifications for all repositories that you are watching.':
-      '你將不再收到所有已關注儲存庫的通知。',
+    'You will stop receiving notifications for all repositories that you are watching.': '你將不再收到所有已關注儲存庫的通知。',
 
     // 订阅 /notifications/subscriptions（thread 按术语表统一作「討論串」；少用「被」字句）
     'Subscription list': '訂閱清單',
@@ -271,7 +267,7 @@ export default {
     // 按钮，同术语表 Clear filters → 清除篩選器
     'Clear current filters': '清除目前篩選器',
     '• subscribed': '• 訂閱於',
-    '• updated': '• 更新於',
+    '• updated': '• 更新於'
   },
   scoped: {
     ...REASONS,
@@ -320,7 +316,7 @@ export default {
     // 订阅页条目：#123 opened 3 days ago by octocat • subscribed … • updated …（opened 由 common 收录）
     by: '由',
     // 关注页列表的无障碍标题
-    'Repository list': '儲存庫清單',
+    'Repository list': '儲存庫清單'
   },
   regexp: [
     // 计数（通知的量词作「則」）
@@ -339,64 +335,62 @@ export default {
     // 末尾的 filter 是条目类型，名词作「篩選器」，同 issues、actions 建议列表的「<名称>, Filter, <说明>」）
     [
       new RegExp(`^([\\w-]+), (${Object.keys(QUALIFIER_HINTS).join('|')}), filter$`),
-      (_, qualifier: string, hint: string) => `${qualifier}，${QUALIFIER_HINTS[hint] ?? hint}，篩選器`,
+      (_, qualifier: string, hint: string) => `${qualifier}，${QUALIFIER_HINTS[hint] ?? hint}，篩選器`
     ],
 
     // 已关注的存储库：按所有者取消关注
     [new RegExp(`^${OWNER}['’]s repositories$`), '$1 的儲存庫'],
     [new RegExp(`^Confirm unwatching ${OWNER}['’]s repositories$`), '確認取消關注 $1 的儲存庫'],
     [
-      new RegExp(
-        `^You will stop receiving notifications for all repositories owned by ${OWNER} that you are watching\\.$`,
-      ),
-      '你將不再收到 $1 名下所有已關注儲存庫的通知。',
+      new RegExp(`^You will stop receiving notifications for all repositories owned by ${OWNER} that you are watching\\.$`),
+      '你將不再收到 $1 名下所有已關注儲存庫的通知。'
     ],
     // 已关注的存储库：全部取消关注
     [new RegExp(`^Unwatch ${COUNT} repositor(?:y|ies)$`), '取消關注 $1 個儲存庫'],
     [
       new RegExp(`^You will stop receiving notifications for the ${COUNT} repositor(?:y|ies) you are watching\\.$`),
-      '你將不再收到已關注的 $1 個儲存庫的通知。',
+      '你將不再收到已關注的 $1 個儲存庫的通知。'
     ],
     [
       new RegExp(
-        `^By unwatching these ${COUNT} repositor(?:y|ies), you will only receive notifications when participating or @mentioned\\.$`,
+        `^By unwatching these ${COUNT} repositor(?:y|ies), you will only receive notifications when participating or @mentioned\\.$`
       ),
-      '取消關注這 $1 個儲存庫後，只有在參與或被 @提及時才會收到通知。',
+      '取消關注這 $1 個儲存庫後，只有在參與或被 @提及時才會收到通知。'
     ],
     // 已关注的存储库：每个存储库的关注按钮无障碍名称（译法同存储库头部；人数量词作「位」）
     [
       new RegExp(
-        `^(Watch|Unwatch): (Participating|All Activity|Ignore|Custom) in ${REPO}\\. ${COUNT} users? (?:is|are) watching this repository\\. Click to change subscription settings\\.$`,
+        `^(Watch|Unwatch): (Participating|All Activity|Ignore|Custom) in ${REPO}\\. ${COUNT} users? (?:is|are) watching this repository\\. Click to change subscription settings\\.$`
       ),
       (_, button: string, selection: string, repo: string, count: string) =>
-        `${WATCH_BUTTON[button] ?? button}：${repo}（${WATCH_SELECTION[selection] ?? selection}）。${count} 位使用者正在關注此儲存庫。按一下可變更訂閱設定。`,
+        `${WATCH_BUTTON[button] ?? button}：${repo}（${WATCH_SELECTION[selection] ?? selection}）。${count} 位使用者正在關注此儲存庫。按一下可變更訂閱設定。`
     ],
     [
       new RegExp(
-        `^Stop ignoring in ${REPO}\\. ${COUNT} users? (?:is|are) watching this repository\\. Click to change subscription settings\\.$`,
+        `^Stop ignoring in ${REPO}\\. ${COUNT} users? (?:is|are) watching this repository\\. Click to change subscription settings\\.$`
       ),
       // 原文 Stop ignoring 后没有冒号，译文不加（同存储库头部）
-      '停止忽略 $1。$2 位使用者正在關注此儲存庫。按一下可變更訂閱設定。',
+      '停止忽略 $1。$2 位使用者正在關注此儲存庫。按一下可變更訂閱設定。'
     ],
     // 自定义订阅对话框
     [new RegExp(`^Subscribe to events for ${REPO}$`), '訂閱 $1 的事件'],
     [
       new RegExp(`^(${Object.keys(THREAD_TYPES).join('|')}) are not enabled for this repository$`),
-      (_, thread: string) => `此儲存庫未啟用${THREAD_TYPES[thread] ?? thread}`,
+      (_, thread: string) => `此儲存庫未啟用${THREAD_TYPES[thread] ?? thread}`
     ],
     // ProTip：When viewing a notification, press <kbd>e</kbd> to mark it as Done.
     // 引擎按 kbd 整句匹配，译文按快捷键文字切分写回；整句未命中时用 static 中的片段
     [
       new RegExp(`^When viewing a notification, press (.+?) to mark it as (${Object.keys(MARK_STATES).join('|')})\\.$`),
-      (_, key: string, state: string) => `查看通知時，按 ${key} 可將其標示為${MARK_STATES[state] ?? state}。`,
-    ],
+      (_, key: string, state: string) => `查看通知時，按 ${key} 可將其標示為${MARK_STATES[state] ?? state}。`
+    ]
   ],
   ignore: [
     // 侧栏「Repositories」列表与按存储库分组的链接：存储库名
     'a[href^="/notifications?query=repo%3A"]',
     'a[href^="/notifications?query=repo:"]',
     // 搜索建议中的限定符取值（is:unread、reason:assign 的 unread、assign，及存储库名、用户名）
-    '[data-type="filter-item"] .ActionListItem-label',
+    '[data-type="filter-item"] .ActionListItem-label'
   ],
   attributeRules: [
     // 自定义筛选器对话框：默认筛选器名称（🎯 Assigned 等）显示在禁用的输入框里；查询（reason:assign 等）不匹配
@@ -404,7 +398,7 @@ export default {
       '.js-custom-inbox-dialog-content input[disabled]',
       'value',
       new RegExp(`^(\\S+) (${Object.keys(DEFAULT_FILTERS).join('|')})$`),
-      (_, icon: string, name: string) => `${icon} ${DEFAULT_FILTERS[name] ?? name}`,
-    ],
-  ],
+      (_, icon: string, name: string) => `${icon} ${DEFAULT_FILTERS[name] ?? name}`
+    ]
+  ]
 } satisfies PageDictionary

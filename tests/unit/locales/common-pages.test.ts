@@ -15,12 +15,12 @@ const pages: PageDictionary = pagesDictionary
 const regions: PageDictionary = regionsDictionary
 const matcher = createMatcher([
   ['common', pages],
-  ['common', regions],
+  ['common', regions]
 ])
 const twPages: PageDictionary = twPagesDictionary
 const twMatcher = createMatcher([
   ['common', twPages],
-  ['common', twRegionsDictionary],
+  ['common', twRegionsDictionary]
 ])
 /** 正式语言包：检查与其他文件词条、其他页面类型正则的配合 */
 const cnFull = createMatcher(zhCN)
@@ -44,53 +44,53 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Select country for phone number. Currently selected: US +1', '选择电话号码所属国家/地区。当前选择：US +1'],
-      ['Select country for phone number. Currently selected: CN +86', '选择电话号码所属国家/地区。当前选择：CN +86'],
+      ['Select country for phone number. Currently selected: CN +86', '选择电话号码所属国家/地区。当前选择：CN +86']
     ],
-    misses: ['Select country for phone number', 'Select country for phone number. Currently selected:'],
+    misses: ['Select country for phone number', 'Select country for phone number. Currently selected:']
   },
   {
     hits: [
       ['Payment due Nov 11, 2026', '应付款日期 2026 年 11 月 11 日'],
-      ['Payment due January 3, 2027', '应付款日期 2027 年 1 月 3 日'],
+      ['Payment due January 3, 2027', '应付款日期 2027 年 1 月 3 日']
     ],
-    misses: ['Payment due', 'Payment due soon', 'Next payment due Nov 11, 2026'],
+    misses: ['Payment due', 'Payment due soon', 'Next payment due Nov 11, 2026']
   },
   {
     hits: [
       ['By clicking “Upgrade to GitHub Pro”, you agree to our', '单击“升级到 GitHub 专业版”即表示你同意我们的'],
       ['By clicking "Sign up for GitHub", you agree to our', '单击“注册 GitHub”即表示你同意我们的'],
       ['By clicking “Purchase Copilot Pro”, you agree to our', '单击“Purchase Copilot Pro”即表示你同意我们的'],
-      ['By clicking “constructor”, you agree to our', '单击“constructor”即表示你同意我们的'],
+      ['By clicking “constructor”, you agree to our', '单击“constructor”即表示你同意我们的']
     ],
     misses: [
       'By clicking “Purchase”, you agree to our terms',
       'By clicking “”, you agree to our',
       'By clicking “Purchase”, you agree to the',
-      'By clicking Purchase, you agree to our',
-    ],
+      'By clicking Purchase, you agree to our'
+    ]
   },
   {
     // 营销同意复选框的第二句：示例字段列表由 Intl.ListFormat 按浏览器语言拼接（en-US、en-GB、zh、zh-HK）
     hits: [
       [
         'The information used includes, but is not limited to, name, email address, and country.',
-        '所使用的信息包括但不限于姓名、电子邮件地址和国家/地区。',
+        '所使用的信息包括但不限于姓名、电子邮件地址和国家/地区。'
       ],
       [
         'The information used includes, but is not limited to, name, email address and country.',
-        '所使用的信息包括但不限于姓名、电子邮件地址和国家/地区。',
+        '所使用的信息包括但不限于姓名、电子邮件地址和国家/地区。'
       ],
       [
         'The information used includes, but is not limited to, name、email address和country.',
-        '所使用的信息包括但不限于姓名、电子邮件地址和国家/地区。',
+        '所使用的信息包括但不限于姓名、电子邮件地址和国家/地区。'
       ],
       [
         'The information used includes, but is not limited to, name、email address及country.',
-        '所使用的信息包括但不限于姓名、电子邮件地址和国家/地区。',
-      ],
+        '所使用的信息包括但不限于姓名、电子邮件地址和国家/地区。'
+      ]
     ],
-    misses: ['The information used includes, but is not limited to', 'The information used includes name.'],
-  },
+    misses: ['The information used includes, but is not limited to', 'The information used includes name.']
+  }
 ]
 
 describe('common/pages 正则', () => {
@@ -104,11 +104,11 @@ describe('common/pages 正则', () => {
     }
   })
 
-  it.each(REGEXP_CASES.flatMap((item) => item.hits))('%s → %s', (source, expected) => {
+  it.each(REGEXP_CASES.flatMap(item => item.hits))('%s → %s', (source, expected) => {
     expect(translate(source)).toBe(expected)
   })
 
-  it.each(REGEXP_CASES.flatMap((item) => item.misses))('不命中：%s', (source) => {
+  it.each(REGEXP_CASES.flatMap(item => item.misses))('不命中：%s', source => {
     expect(translate(source)).toBeUndefined()
   })
 
@@ -140,13 +140,13 @@ describe('common/regions 国家/地区与州/省', () => {
     ['California', '加利福尼亚州'],
     ['Washington DC', '华盛顿哥伦比亚特区'],
     ['British Columbia', '不列颠哥伦比亚省'],
-    ['Choose your country/region', '选择你的国家/地区'],
+    ['Choose your country/region', '选择你的国家/地区']
   ])('%s → %s', (source, expected) => {
     expect(translate(source)).toBe(expected)
     expect(translate(source, SETTINGS)).toBe(expected)
   })
 
-  it.each(['Georgia', 'Chad', 'Jordan'])('有歧义或与人名同形的地名不收录：%s', (source) => {
+  it.each(['Georgia', 'Chad', 'Jordan'])('有歧义或与人名同形的地名不收录：%s', source => {
     expect(translate(source)).toBeUndefined()
   })
 })
@@ -192,10 +192,7 @@ describe('common/pages 代表性静态词条', () => {
     // email 义作“电子邮件”
     ['This email should send and receive emails.', '此电子邮件地址应能收发电子邮件。'],
     ['GHEC/GHES dual use + GHAS', 'GHEC/GHES 同时使用 + GHAS'],
-    [
-      'Prepaid debit and credit cards are not accepted as a valid form of payment.',
-      '不接受预付借记卡和预付信用卡作为有效的付款方式。',
-    ],
+    ['Prepaid debit and credit cards are not accepted as a valid form of payment.', '不接受预付借记卡和预付信用卡作为有效的付款方式。']
   ])('%s → %s', (source, expected) => {
     expect(translate(source)).toBe(expected)
   })
@@ -209,23 +206,14 @@ describe('common/pages 代表性静态词条', () => {
     expect(twMatcher.translate('Support via online ticket submission', COMMON)).toBe('透過線上送出工單取得支援')
   })
 
-  it.each([
-    'Free',
-    'Team',
-    'Enterprise',
-    'Business',
-    'Required',
-    'Premium',
-    'Standard',
-    'Theme',
-    'At',
-    'With',
-    'Checkout',
-  ])('易冲突的短词与 Actions 步骤名同形词不在 pages 收录：%s', (source) => {
-    expect(translate(source)).toBeUndefined()
-  })
+  it.each(['Free', 'Team', 'Enterprise', 'Business', 'Required', 'Premium', 'Standard', 'Theme', 'At', 'With', 'Checkout'])(
+    '易冲突的短词与 Actions 步骤名同形词不在 pages 收录：%s',
+    source => {
+      expect(translate(source)).toBeUndefined()
+    }
+  )
 
-  it.each(['Message'])('common-ui 已收录的通用词不重复收录：%s', (source) => {
+  it.each(['Message'])('common-ui 已收录的通用词不重复收录：%s', source => {
     expect(pages.static?.[source]).toBeUndefined()
   })
 })
@@ -236,7 +224,7 @@ describe('common/pages 行内句', () => {
   const planMatcher = createMatcher([
     ['common', pages],
     ['common', regions],
-    ['new', planNames],
+    ['new', planNames]
   ])
   const NEW: readonly PageKey[] = ['common', 'new']
   let translator: Translator | undefined
@@ -280,8 +268,8 @@ describe('common/pages 营销页、开发人员计划注册页与 Spark', () => 
     'https://github.com/features',
     'https://github.com/sitemap',
     'https://github.com/developer/register',
-    'https://github.com/spark',
-  ])('%s 只有 common 作用域，词条收 static', (url) => {
+    'https://github.com/spark'
+  ])('%s 只有 common 作用域，词条收 static', url => {
     expect(detectPages(new URL(url))).toEqual(COMMON)
   })
 
@@ -294,22 +282,18 @@ describe('common/pages 营销页、开发人员计划注册页与 Spark', () => 
     [
       'Leverage tooling to detect, review, and fix vulnerabilities before they reach production.',
       '利用工具在漏洞进入生产环境前完成检测、审查和修复。',
-      '運用工具，在漏洞進入正式環境前加以偵測、審查並修正。',
+      '運用工具，在漏洞進入正式環境前加以偵測、審查並修正。'
     ],
     ['Your AI partner everywhere.', '你的 AI 伙伴，无处不在。', '你的 AI 夥伴，無所不在。'],
     [
       '2025 Gartner® Magic Quadrant™ for AI Code Assistants',
       '2025 年 Gartner® AI 代码助手魔力象限™',
-      '2025 年 Gartner® AI 程式碼助理魔力象限™',
+      '2025 年 Gartner® AI 程式碼助理魔力象限™'
     ],
     // 首页：自动化与安全分区（产品名译成中文；统计数字按“万”换算）
     ['Explore GitHub Codespaces', '探索 GitHub 代码空间', '探索 GitHub 程式碼空間'],
     ['Explore GitHub Marketplace', '探索 GitHub 市场', '探索 GitHub 市集'],
-    [
-      'Built-in application security where found means fixed',
-      '发现即修复的内置应用安全',
-      '找到即修正的內建應用程式安全性',
-    ],
+    ['Built-in application security where found means fixed', '发现即修复的内置应用安全', '找到即修正的內建應用程式安全性'],
     ['70% MTTR reduction', 'MTTR 缩短 70%', 'MTTR 縮短 70%'],
     ['8.3M secret leaks stopped', '阻止 830 万次机密泄露', '阻止 830 萬次機密外洩'],
     ['Learn about GitHub Secret Protection', '了解 GitHub 机密保护', '瞭解 GitHub 機密保護'],
@@ -321,7 +305,7 @@ describe('common/pages 营销页、开发人员计划注册页与 Spark', () => 
     [
       'Accenture customizes GitHub Copilot for its 12,000 developers',
       'Accenture 为其 12,000 个开发人员定制 GitHub Copilot',
-      'Accenture 為旗下 12,000 位開發人員自訂 GitHub Copilot',
+      'Accenture 為旗下 12,000 位開發人員自訂 GitHub Copilot'
     ],
     ['TELUS saves $16.9M with GitHub', 'TELUS 借助 GitHub 节省 1690 万美元', 'TELUS 透過 GitHub 節省 1690 萬美元'],
     ['GitHub internal customer data, 2025.', 'GitHub 内部客户数据，2025 年。', 'GitHub 內部客戶資料，2025 年。'],
@@ -339,36 +323,24 @@ describe('common/pages 营销页、开发人员计划注册页与 Spark', () => 
     [
       'By clicking “Register for the GitHub Developer Program” below, you agree to the',
       '单击下方的“注册 GitHub 开发人员计划”即表示你同意',
-      '按一下下方的「註冊 GitHub 開發人員計畫」即表示你同意',
+      '按一下下方的「註冊 GitHub 開發人員計畫」即表示你同意'
     ],
     ['and the', '和', '和'],
     // occasionally 作“不定期”
     [
       '. We’ll occasionally send you account related emails.',
       '。我们会不定期向你发送帐户相关电子邮件。',
-      '。我們會不定期傳送與帳號相關的電子郵件給你。',
+      '。我們會不定期傳送與帳號相關的電子郵件給你。'
     ],
-    [
-      'Eligibility for development licenses for GitHub products',
-      '获取 GitHub 产品开发许可证的资格',
-      '取得 GitHub 產品開發授權的資格',
-    ],
+    ['Eligibility for development licenses for GitHub products', '获取 GitHub 产品开发许可证的资格', '取得 GitHub 產品開發授權的資格'],
     // 组织升级与结账：账单信息与组织关联
-    [
-      'This organization is linked with your billing information:',
-      '此组织已链接到你的账单信息：',
-      '此組織已連結到你的帳單資訊：',
-    ],
-    [
-      'Confirm your details shown below. To make changes,',
-      '确认下方显示的详细信息。如需更改，请',
-      '確認下方顯示的詳細資料。如需變更，請',
-    ],
+    ['This organization is linked with your billing information:', '此组织已链接到你的账单信息：', '此組織已連結到你的帳單資訊：'],
+    ['Confirm your details shown below. To make changes,', '确认下方显示的详细信息。如需更改，请', '確認下方顯示的詳細資料。如需變更，請'],
     // Spark：首页、列表与编辑器
     [
       'Spark is currently only available to Copilot Pro+ and Enterprise users.',
       'Spark 目前仅向 Copilot 专业增强版和企业版用户开放。',
-      'Spark 目前僅開放給 Copilot 專業增強版和企業版使用者。',
+      'Spark 目前僅開放給 Copilot 專業增強版和企業版使用者。'
     ],
     ['Favorite this spark', '收藏此 Spark', '將此 Spark 加入我的最愛'],
     ['Nothing to see here… yet.', '暂无内容。', '尚無內容。'],
@@ -385,13 +357,13 @@ describe('common/pages 营销页、开发人员计划注册页与 Spark', () => 
     [
       'Add data storage by asking in the Iterate panel. View and edit the associated tables and data here.',
       '在迭代面板中提出要求以添加数据存储。在此查看和编辑关联的数据表和数据。',
-      '在迭代面板中提出要求以新增資料儲存。在此查看並編輯關聯的資料表和資料。',
+      '在迭代面板中提出要求以新增資料儲存。在此查看並編輯關聯的資料表和資料。'
     ],
     [
       'Add AI capabilities by asking in the Iterate panel. View and edit the prompts powering those features here.',
       '在迭代面板中提出要求以添加 AI 功能。在此查看和编辑驱动这些功能的提示。',
-      '在迭代面板中提出要求以新增 AI 功能。在此查看並編輯驅動這些功能的提示。',
-    ],
+      '在迭代面板中提出要求以新增 AI 功能。在此查看並編輯驅動這些功能的提示。'
+    ]
   ]
 
   it.each(STATIC_CASES)('%s → %s / %s', (source, cn, tw) => {
@@ -402,7 +374,7 @@ describe('common/pages 营销页、开发人员计划注册页与 Spark', () => 
   /** [本文件原文, 其他文件收录的同一句]：只差缩写或连字符，全站同译 */
   it.each([
     ['You don’t belong to any organizations.', 'You do not belong to any organizations.'],
-    ['. We’ll occasionally send you account related emails.', '. We’ll occasionally send you account-related emails.'],
+    ['. We’ll occasionally send you account related emails.', '. We’ll occasionally send you account-related emails.']
   ] as const)('与其他文件的同一句同译：%s', (source, other) => {
     for (const full of [cnFull, twFull]) {
       expect(full.translate(other, COMMON)).toBeDefined()
@@ -416,7 +388,7 @@ describe('common/pages 营销页、开发人员计划注册页与 Spark', () => 
     ['Experience AI with Copilot Chat', '借助 Copilot 聊天体验 AI', '透過 Copilot 聊天體驗 AI'],
     ['The latest GitHub previews', 'GitHub 最新功能预览', 'GitHub 最新功能預覽'],
     ['Collaborative Coding', '协作编码', '協作程式開發'],
-    ['GitHub Sitemap', 'GitHub 网站地图', 'GitHub 網站地圖'],
+    ['GitHub Sitemap', 'GitHub 网站地图', 'GitHub 網站地圖']
   ]
 
   it.each(REKEYED_CASES)('正式语言包：%s → %s / %s', (source, cn, tw) => {
@@ -426,20 +398,16 @@ describe('common/pages 营销页、开发人员计划注册页与 Spark', () => 
 
   it('正式语言包：网站地图标签页标题按段翻译', () => {
     const title = 'GitHub Sitemap · GitHub'
-    expect(translateTitleText(title, (text) => cnFull.translate(text, COMMON), '/sitemap')).toBe(
-      'GitHub 网站地图 · GitHub',
-    )
-    expect(translateTitleText(title, (text) => twFull.translate(text, COMMON), '/sitemap')).toBe(
-      'GitHub 網站地圖 · GitHub',
-    )
+    expect(translateTitleText(title, text => cnFull.translate(text, COMMON), '/sitemap')).toBe('GitHub 网站地图 · GitHub')
+    expect(translateTitleText(title, text => twFull.translate(text, COMMON), '/sitemap')).toBe('GitHub 網站地圖 · GitHub')
   })
 
   it.each(['Experience AI', 'The latest GitHub', 'Collaborative', 'The tools you need to build what you want.'])(
     '旧版拆分片段与带句号的写法不收录：%s',
-    (source) => {
+    source => {
       expect(pages.static?.[source]).toBeUndefined()
       expect(twPages.static?.[source]).toBeUndefined()
-    },
+    }
   )
 
   it('Spark 标签 Theme 不收录：项目自定义字段名 Theme 单独出现时保持原文', () => {
@@ -454,8 +422,7 @@ describe('common/pages 营销页、开发人员计划注册页与 Spark', () => 
   })
 
   it('移除账单信息的确认框：后句由 settings-account 的全局词条翻译，整段按句拼接', () => {
-    const source =
-      'You are about to remove the billing information for this organization. Are you sure you want to do this?'
+    const source = 'You are about to remove the billing information for this organization. Are you sure you want to do this?'
     expect(cnFull.translate(source, COMMON)).toBe('你即将删除此组织的账单信息。确定要执行此操作吗？')
     expect(twFull.translate(source, COMMON)).toBe('你即將移除此組織的帳單資訊。確定要這麼做嗎？')
   })
@@ -474,12 +441,12 @@ describe('common/pages 营销页、开发人员计划注册页与 Spark', () => 
       'Register for the GitHub Developer Program · GitHub',
       '/developer/register',
       '注册 GitHub 开发人员计划 · GitHub',
-      '註冊 GitHub 開發人員計畫 · GitHub',
+      '註冊 GitHub 開發人員計畫 · GitHub'
     ],
-    ['Signup to GitHub Copilot', '/github-copilot/signup', '注册 GitHub Copilot', '註冊 GitHub Copilot'],
+    ['Signup to GitHub Copilot', '/github-copilot/signup', '注册 GitHub Copilot', '註冊 GitHub Copilot']
   ])('标签页标题：%s', (title, path, cn, tw) => {
-    expect(translateTitleText(title, (text) => translate(text), path)).toBe(cn)
-    expect(translateTitleText(title, (text) => twMatcher.translate(text, COMMON), path)).toBe(tw)
+    expect(translateTitleText(title, text => translate(text), path)).toBe(cn)
+    expect(translateTitleText(title, text => twMatcher.translate(text, COMMON), path)).toBe(tw)
   })
 
   /**
@@ -495,11 +462,11 @@ describe('common/pages 营销页、开发人员计划注册页与 Spark', () => 
       'actions',
       'By clicking “Register for the GitHub Developer Program” below, you agree to the',
       '单击下方的“注册 GitHub 开发人员计划”即表示你同意',
-      '按一下下方的「註冊 GitHub 開發人員計畫」即表示你同意',
+      '按一下下方的「註冊 GitHub 開發人員計畫」即表示你同意'
     ],
     ['actions', 'Delete spark', '删除 Spark', '刪除 Spark'],
     ['issues', 'Expand prompt', '展开提示', '展開提示'],
-    ['issues', 'Collapse prompt', '折叠提示', '摺疊提示'],
+    ['issues', 'Collapse prompt', '折叠提示', '摺疊提示']
   ] as const)('%s 作用域：%s', (page, source, cn, tw) => {
     const scope: readonly PageKey[] = ['common', page]
     expect(cnFull.translate(source, scope)).toBe(cn)
@@ -517,20 +484,20 @@ describe('common/pages 企业版试用计划选择页', () => {
     [
       'Build and deploy to GitHub-hosted cloud environments, directly from your repositories.',
       '直接从存储库构建并部署到 GitHub 托管的云环境。',
-      '直接從儲存庫建置並部署到 GitHub 代管的雲端環境。',
+      '直接從儲存庫建置並部署到 GitHub 代管的雲端環境。'
     ],
     // 按参考词库原文收录（末尾 GC 疑为截断）；括号内有中文用全角
     [
       'Manage and deploy GitHub Enterprise on your own servers, including AWS, Azure, or GC',
       '在你自己的服务器（包括 AWS、Azure 或 GC）上管理并部署 GitHub 企业版',
-      '在你自己的伺服器（包括 AWS、Azure 或 GC）上管理並部署 GitHub 企業版',
+      '在你自己的伺服器（包括 AWS、Azure 或 GC）上管理並部署 GitHub 企業版'
     ],
     ['Why teams', '团队为何', '團隊為何'],
     [
       'it: Control where your code and data live in a private cloud.',
       '它：在私有云中掌控代码和数据的存放位置。',
-      '它：在私人雲端中掌控程式碼和資料的存放位置。',
-    ],
+      '它：在私人雲端中掌控程式碼和資料的存放位置。'
+    ]
   ]
 
   it.each(TRIAL_CASES)('%s → %s / %s', (source, cn, tw) => {
@@ -540,7 +507,7 @@ describe('common/pages 企业版试用计划选择页', () => {
 
   const PRODUCT_CASES: readonly PairCase[] = [
     ['Enterprise Cloud', '企业云', '企業雲端'],
-    ['Enterprise Server', '企业服务器', '企業伺服器'],
+    ['Enterprise Server', '企业服务器', '企業伺服器']
   ]
 
   it.each(PRODUCT_CASES)('产品名全站同译：%s → %s / %s（计划页 new 的 scoped 译法相同）', (source, cn, tw) => {
@@ -563,7 +530,7 @@ describe('common/pages 企业版试用计划选择页', () => {
 
     it.each([
       ['zh-CN', matcher, '团队为何 它：几分钟即可上手，基础设施交给我们。'],
-      ['zh-TW', twMatcher, '團隊為何 它：幾分鐘即可上手，基礎架構交給我們。'],
+      ['zh-TW', twMatcher, '團隊為何 它：幾分鐘即可上手，基礎架構交給我們。']
     ] as const)('%s：图标两侧的片段分别翻译，连读成句', (_, target, expected) => {
       document.body.innerHTML = CARD
       translator = createTranslator({ matcher: target, host: window, resolvePages: () => COMMON })
@@ -596,14 +563,12 @@ describe('common/pages 整段合并', () => {
 
   it.each([
     ['zh-CN', matcher, '围绕你的代码建立社区。'],
-    ['zh-TW', twMatcher, '圍繞你的程式碼打造社群。'],
+    ['zh-TW', twMatcher, '圍繞你的程式碼打造社群。']
   ] as const)('%s：<em> 拆开的时间线条目整段翻译', (_, target, expected) => {
     expect(run(TIMELINE, target)).toBe(expected)
   })
 
   it('类名不含 Timeline__item-text 时不合并，两段都没有词条，保持原文', () => {
-    expect(run(TIMELINE.replace('Timeline__item-text', 'Timeline__item'), matcher)).toBe(
-      'Build community around your code.',
-    )
+    expect(run(TIMELINE.replace('Timeline__item-text', 'Timeline__item'), matcher)).toBe('Build community around your code.')
   })
 })

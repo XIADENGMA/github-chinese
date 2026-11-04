@@ -27,17 +27,17 @@ function fitBundle({ tip = true, note = true }: FitOptions = {}): LocaleBundle {
           '(optional)': '（可选）',
           'Profile updated —': '个人资料已更新——',
           '— Use the app': '——使用应用',
-          'Suggested change': '建议的更改：',
-        },
-      },
-    ],
+          'Suggested change': '建议的更改：'
+        }
+      }
+    ]
   ]
 }
 
 /** 另有不会命中的行内句规则与合并选择器（正式语言包各页面类型都有） */
 const WITH_RULES: LocaleBundle = [
   ...fitBundle(),
-  ['common', { inline: [['Sample {} words', '{} 的示例文字']], mergeText: ['.sample-merge'] }],
+  ['common', { inline: [['Sample {} words', '{} 的示例文字']], mergeText: ['.sample-merge'] }]
 ]
 
 const ISSUES: readonly PageKey[] = ['common', 'repository', 'issues']
@@ -49,7 +49,7 @@ function start(html: string, bundle = fitBundle()): Translator {
   translator = createTranslator({
     matcher: testMatcher(undefined, bundle),
     host: window,
-    resolvePages: () => ISSUES,
+    resolvePages: () => ISSUES
   })
   translator.start()
   return translator
@@ -95,7 +95,7 @@ describe('全角标点两侧的空白', () => {
   it.each([
     ['译文不保留原文开头空白', '<p id="p"><a href="#x">Sample</a> — Use the app</p>', 'Sample——使用应用'],
     ['前面译文不留结尾空白', '<p id="p">Description <span>— Use the app</span></p>', '描述——使用应用'],
-    ['前面只有空白的文字置空', '<p id="p"><span>Sample</span> <span>— Use the app</span></p>', 'Sample——使用应用'],
+    ['前面只有空白的文字置空', '<p id="p"><span>Sample</span> <span>— Use the app</span></p>', 'Sample——使用应用']
   ])('译文以破折号「——」开头：%s', (_, html, shown) => {
     start(html)
     expect(text('#p')).toBe(shown)
@@ -106,7 +106,7 @@ describe('全角标点与前后文本之间隔着空白、注释、没有文字�
   it.each([
     ['包裹元素开头有空白', '<label id="l">Description <span> <b>(optional)</b></span></label>'],
     ['包裹元素开头有换行缩进', '<label id="l">Description <span>\n  <b>(optional)</b></span></label>'],
-    ['同一层隔着注释与空白', '<label id="l">Description <!-- --> <span>(optional)</span></label>'],
+    ['同一层隔着注释与空白', '<label id="l">Description <!-- --> <span>(optional)</span></label>']
   ])('%s：空白置空，前面译文不留结尾空白', (_, html) => {
     start(html)
     expect(text('#l')).toBe('描述（可选）')
@@ -179,7 +179,7 @@ describe('全角标点旁只有空白的文字', () => {
   it('忽略区域内的空白不处理（紧邻其中重新进入区域的译文）', () => {
     start(
       '<div class="markdown-body" id="body"><div class="js-suggested-changes-blob" id="blob">' +
-        '<div id="header"><span>Suggested change</span></div> <div class="blob-wrapper">Sample</div></div></div>',
+        '<div id="header"><span>Suggested change</span></div> <div class="blob-wrapper">Sample</div></div></div>'
     )
     expect(text('#header')).toBe('建议的更改：')
     expect(text('#blob')).toBe('建议的更改： Sample')
@@ -224,7 +224,7 @@ describe('两端有空白的译文先按当时的语境去掉空白：同一轮�
 
 describe.each([
   ['只有静态词条', fitBundle()],
-  ['另有行内句规则与合并选择器', WITH_RULES],
+  ['另有行内句规则与合并选择器', WITH_RULES]
 ])('页面变动后，只有空白的文字变为紧邻全角标点（%s）', (_, bundle) => {
   const rewriteToSpace = (): void => {
     ;($('#s').childNodes[1] as Text).data = ' '
@@ -235,38 +235,38 @@ describe.each([
       '移除夹在末尾为全角标点的元素与空白之间的元素',
       `<div id="s"><span>ProTip!</span><b id="x">Sample</b>${NBSP}<span>Use the app</span></div>`,
       () => $('#x').remove(),
-      '提示！使用应用',
+      '提示！使用应用'
     ],
     [
       '移除夹在空白与开头为全角标点的元素之间的元素',
       '<label id="s"><span>Description</span> <b id="x">Sample</b><span>(optional)</span></label>',
       () => $('#x').remove(),
-      '描述（可选）',
+      '描述（可选）'
     ],
     [
       '全角标点之后的文字被改写为只有空白',
       '<div id="s"><span>ProTip!</span>Sample<span>Use the app</span></div>',
       rewriteToSpace,
-      '提示！使用应用',
+      '提示！使用应用'
     ],
     [
       '全角标点之前的文字被改写为只有空白',
       '<label id="s"><span>Description</span>Sample<span>(optional)</span></label>',
       rewriteToSpace,
-      '描述（可选）',
+      '描述（可选）'
     ],
     [
       '末尾为全角标点的元素之后插入只有空白的文本节点',
       '<div id="s"><span>ProTip!</span><span>Use the app</span></div>',
       () => $('#s span').after(NBSP),
-      '提示！使用应用',
+      '提示！使用应用'
     ],
     [
       '开头为全角标点的元素之前插入只有空白的文本节点',
       '<label id="s"><span>Description</span><span>(optional)</span></label>',
       () => $('#s span:last-child').before(' '),
-      '描述（可选）',
-    ],
+      '描述（可选）'
+    ]
   ])('%s：置空，与全新翻译相同', async (_, html, change, shown) => {
     const t = start(html, bundle)
     change()

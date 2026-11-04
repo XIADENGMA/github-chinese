@@ -33,9 +33,9 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['October 18, 2026 – October 25, 2026', `${day(2026, 10, 18)} – ${day(2026, 10, 25)}`],
-      ['Oct 18, 2026 - Oct 25, 2026', `${day(2026, 10, 18)} – ${day(2026, 10, 25)}`],
+      ['Oct 18, 2026 - Oct 25, 2026', `${day(2026, 10, 18)} – ${day(2026, 10, 25)}`]
     ],
-    misses: ['October 18 – the end'],
+    misses: ['October 18 – the end']
   },
   {
     hits: [
@@ -45,23 +45,23 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['3 days', '3 天'],
       ['1 month', '1 个月'],
       ['6 months', '6 个月'],
-      ['2 years', '2 年'],
+      ['2 years', '2 年']
     ],
-    misses: ['1 decade'],
+    misses: ['1 decade']
   },
   {
     hits: [
       ['3 authors', '3 个作者'],
-      ['1 author', '1 个作者'],
+      ['1 author', '1 个作者']
     ],
-    misses: ['many authors'],
+    misses: ['many authors']
   },
   {
     hits: [
       ['128 files', '128 个文件'],
-      ['1 file', '1 个文件'],
+      ['1 file', '1 个文件']
     ],
-    misses: ['several files'],
+    misses: ['several files']
   },
   { hits: [['to main and', '到 main 以及']], misses: ['to all of them and'] },
   { hits: [['On main,', '在 main 上，']], misses: ['On main'] },
@@ -69,97 +69,94 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['12 commits authored by octocat', 'octocat 编写了 12 个提交'],
       ['1 commit authored by renovate[bot]', 'renovate[bot] 编写了 1 个提交'],
-      ['3 commits authored by Unknown user', 'Unknown user 编写了 3 个提交'],
+      ['3 commits authored by Unknown user', 'Unknown user 编写了 3 个提交']
     ],
-    misses: ['commits authored by octocat'],
+    misses: ['commits authored by octocat']
   },
   {
     hits: [
       ['• 3 new comments', '• 3 条新评论'],
-      ['• 1 new comment', '• 1 条新评论'],
+      ['• 1 new comment', '• 1 条新评论']
     ],
-    misses: ['• new comments'],
+    misses: ['• new comments']
   },
   {
     hits: [
       [
         "There hasn't been any commit activity on octo-org/hello-world over the last 1 week",
-        '过去 1 周内 octo-org/hello-world 没有任何提交活动',
+        '过去 1 周内 octo-org/hello-world 没有任何提交活动'
       ],
       [
         'There hasn’t been any commit activity on octo-org/hello-world over the last 24 hours',
-        '过去 24 小时内 octo-org/hello-world 没有任何提交活动',
-      ],
+        '过去 24 小时内 octo-org/hello-world 没有任何提交活动'
+      ]
     ],
-    misses: ["There hasn't been any commit activity on octo-org over the last week"],
+    misses: ["There hasn't been any commit activity on octo-org over the last week"]
   },
   {
     hits: [
       ['Committer data path is not available', '提交者数据路径不可用'],
-      ['Overview data path is not available', '概述数据路径不可用'],
+      ['Overview data path is not available', '概述数据路径不可用']
     ],
-    misses: ['Commit data path is not available'],
+    misses: ['Commit data path is not available']
   },
   // 侧栏、标题、贡献者
   { hits: [['Insights: octo-org/hello-world', '见解：octo-org/hello-world']], misses: ['Insights: octo-org'] },
   {
     hits: [['Contributors to octo-org/hello-world', 'octo-org/hello-world 的贡献者']],
-    misses: ['Contributors to octo-org'],
+    misses: ['Contributors to octo-org']
   },
   {
     hits: [
       ['Contributions per week to main, excluding merge commits', '每周对 main 的贡献，不含合并提交'],
-      ['Contributions per week to release/v1.2, excluding merge commits', '每周对 release/v1.2 的贡献，不含合并提交'],
+      ['Contributions per week to release/v1.2, excluding merge commits', '每周对 release/v1.2 的贡献，不含合并提交']
     ],
-    misses: ['Contributions per week to main'],
+    misses: ['Contributions per week to main']
   },
   {
     hits: [
       [
         'Contributions per week to main, line counts have been omitted because commit count exceeds 10,000.',
-        '每周对 main 的贡献，因提交数超过 10,000 而省略了行数统计。',
-      ],
+        '每周对 main 的贡献，因提交数超过 10,000 而省略了行数统计。'
+      ]
     ],
-    misses: ['Contributions per week to main, line counts have been omitted.'],
+    misses: ['Contributions per week to main, line counts have been omitted.']
   },
   // 拼接失败时的单节点兜底：分支名之后的句尾
   {
     hits: [
-      [
-        ', line counts have been omitted because commit count exceeds 10,000.',
-        '，因提交数超过 10,000 而省略了行数统计。',
-      ],
-      [', line counts have been omitted because commit count exceeds 500.', '，因提交数超过 500 而省略了行数统计。'],
+      [', line counts have been omitted because commit count exceeds 10,000.', '，因提交数超过 10,000 而省略了行数统计。'],
+      [', line counts have been omitted because commit count exceeds 500.', '，因提交数超过 500 而省略了行数统计。']
     ],
     misses: [
       ', line counts have been omitted.',
       'line counts have been omitted because commit count exceeds 10,000.',
-      ', line counts have been omitted because commit count exceeds many.',
-    ],
+      ', line counts have been omitted because commit count exceeds many.'
+    ]
   },
   {
     hits: [
       [': Last 3 months', '：最近 3 个月'],
       [': All', '：全部'],
       [': Last month', '：最近 1 个月'],
-      [': Custom range', '：自定义范围'],
+      [': Custom range', '：自定义范围']
     ],
-    misses: [': Last week'],
+    misses: [': Last week']
   },
   { hits: [['Last 12 months', '最近 12 个月']], misses: ['Last few months'] },
   {
     hits: [
       ['Commits over time', '提交趋势'],
-      ['Additions over time', '新增趋势'],
+      ['Additions over time', '新增趋势']
     ],
-    misses: ['Stars over time'],
+    misses: ['Stars over time']
   },
   {
     hits: [
       ["octocat's Commits", 'octocat 的提交'],
-      ["renovate[bot]'s Deletions", 'renovate[bot] 的删除'],
+      ["renovate[bot]'s Deletions", 'renovate[bot] 的删除']
     ],
-    misses: ["the team's Commits"],
+    misses: ["the team's Commits"]
   },
   {
     hits: [
@@ -168,17 +165,17 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Weekly from 25 Jul 2026 to 25 Oct 2026', WEEKLY],
       // 浏览器语言为中文时的本地格式（原生无空格），按 helpers 的日期格式输出
       ['Weekly from 2026年7月25日 to 2026年10月25日', WEEKLY],
-      ['Weekly from 2026 年 7 月 25 日 to 2026 年 10 月 25 日', WEEKLY],
+      ['Weekly from 2026 年 7 月 25 日 to 2026 年 10 月 25 日', WEEKLY]
     ],
-    misses: ['Weekly from yesterday to today'],
+    misses: ['Weekly from yesterday to today']
   },
   {
     hits: [
       ['12 commits', '12 个提交'],
       ['1 commit', '1 个提交'],
-      ['1,234 commits', '1,234 个提交'],
+      ['1,234 commits', '1,234 个提交']
     ],
-    misses: ['many commits'],
+    misses: ['many commits']
   },
   // 图表无障碍文字
   {
@@ -186,94 +183,79 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Commits over time. Interactive chart.', '提交趋势。交互式图表。'],
       ["octocat's Commits. Interactive chart.", 'octocat 的提交。交互式图表。'],
       ['Top committers. Interactive chart.', '主要提交者。交互式图表。'],
-      ['Velocity. Interactive chart.', 'Velocity。交互式图表。'],
+      ['Velocity. Interactive chart.', 'Velocity。交互式图表。']
     ],
-    misses: ['Interactive chart for commits'],
+    misses: ['Interactive chart for commits']
   },
   {
     hits: [
       ['Commits over time Axis zoom', '提交趋势的坐标轴缩放'],
-      ['Velocity Axis zoom', 'Velocity 的坐标轴缩放'],
+      ['Velocity Axis zoom', 'Velocity 的坐标轴缩放']
     ],
-    misses: ['Axis zoom'],
+    misses: ['Axis zoom']
   },
   {
     hits: [
       ['Show Additions', '显示新增'],
-      ['Show Deletions', '显示删除'],
+      ['Show Deletions', '显示删除']
     ],
-    misses: ['Show Stars'],
+    misses: ['Show Stars']
   },
   {
     hits: [
       ['Bar chart with 14 bars.', '包含 14 个柱的柱状图。'],
       ['Bar chart with 2 data series.', '包含 2 个数据系列的柱状图。'],
       ['Combination chart with 2 data series.', '包含 2 个数据系列的组合图。'],
-      ['Line chart with 1 data point.', '包含 1 个数据点的折线图。'],
+      ['Line chart with 1 data point.', '包含 1 个数据点的折线图。']
     ],
-    misses: ['Bar chart with many bars.'],
+    misses: ['Bar chart with many bars.']
   },
   {
     hits: [
       [
         'The chart has 1 X axis displaying Time. Data ranges from 2026-07-26 00:00:00 to 2026-10-25 00:00:00.',
-        '图表有 1 条显示时间的 X 轴。数据范围从 2026-07-26 00:00:00 到 2026-10-25 00:00:00。',
+        '图表有 1 条显示时间的 X 轴。数据范围从 2026-07-26 00:00:00 到 2026-10-25 00:00:00。'
       ],
       [
         'The chart has 1 Y axis displaying Frequency. Data ranges from -30722 to 60130.',
-        '图表有 1 条显示频率的 Y 轴。数据范围从 -30722 到 60130。',
+        '图表有 1 条显示频率的 Y 轴。数据范围从 -30722 到 60130。'
       ],
       ['The chart has 1 X axis displaying categories.', '图表有 1 条显示类别的 X 轴。'],
-      [
-        'The chart has 1 X axis displaying Values. Data range: 7 days.',
-        '图表有 1 条显示 Values 的 X 轴。数据范围：7 天。',
-      ],
-      [
-        'The chart has 1 X axis displaying categories. Data range: 15 categories.',
-        '图表有 1 条显示类别的 X 轴。数据范围：15 个类别。',
-      ],
+      ['The chart has 1 X axis displaying Values. Data range: 7 days.', '图表有 1 条显示 Values 的 X 轴。数据范围：7 天。'],
+      ['The chart has 1 X axis displaying categories. Data range: 15 categories.', '图表有 1 条显示类别的 X 轴。数据范围：15 个类别。']
     ],
-    misses: ['The chart has 1 Z axis displaying Time.'],
+    misses: ['The chart has 1 Z axis displaying Time.']
   },
   {
     hits: [
       ['The chart has 2 X axes displaying Time, and navigator-x-axis.', '图表的 2 条 X 轴分别显示时间、导航 X 轴。'],
-      [
-        'The chart has 2 Y axes displaying Contributions, and navigator-y-axis.',
-        '图表的 2 条 Y 轴分别显示贡献、导航 Y 轴。',
-      ],
-      [
-        'The chart has 3 X axes displaying Time, Values, and navigator-x-axis.',
-        '图表的 3 条 X 轴分别显示时间、Values、导航 X 轴。',
-      ],
+      ['The chart has 2 Y axes displaying Contributions, and navigator-y-axis.', '图表的 2 条 Y 轴分别显示贡献、导航 Y 轴。'],
+      ['The chart has 3 X axes displaying Time, Values, and navigator-x-axis.', '图表的 3 条 X 轴分别显示时间、Values、导航 X 轴。']
     ],
-    misses: ['The chart has many X axes displaying Time.'],
+    misses: ['The chart has many X axes displaying Time.']
   },
   // 依赖项关系图
   {
     hits: [
       ['· Detected automatically on Oct 18, 2026 · MIT', `· 自动检测于 ${day(2026, 10, 18)} · MIT`],
       ['· Detected automatically on Sep 16, 2026', `· 自动检测于 ${day(2026, 9, 16)}`],
-      [
-        '· Detected automatically on Aug 11, 2024 · Apache-2.0 OR MIT',
-        `· 自动检测于 ${day(2024, 8, 11)} · Apache-2.0 OR MIT`,
-      ],
+      ['· Detected automatically on Aug 11, 2024 · Apache-2.0 OR MIT', `· 自动检测于 ${day(2024, 8, 11)} · Apache-2.0 OR MIT`]
     ],
-    misses: ['· Detected automatically yesterday'],
+    misses: ['· Detected automatically yesterday']
   },
   {
     hits: [
       ['Paths for @pnpm/exe.android-arm64 12.11.2', '@pnpm/exe.android-arm64 12.11.2 的路径'],
-      ['Paths for vite catalog:', 'vite catalog: 的路径'],
+      ['Paths for vite catalog:', 'vite catalog: 的路径']
     ],
-    misses: ['Paths'],
+    misses: ['Paths']
   },
   {
     hits: [
       ['Showing 0 paths. Export SBOM to view all paths.', '显示 0 条路径。导出 SBOM 以查看所有路径。'],
-      ['Showing 1 path. Export SBOM to view all paths.', '显示 1 条路径。导出 SBOM 以查看所有路径。'],
+      ['Showing 1 path. Export SBOM to view all paths.', '显示 1 条路径。导出 SBOM 以查看所有路径。']
     ],
-    misses: ['Showing all paths. Export SBOM to view all paths.'],
+    misses: ['Showing all paths. Export SBOM to view all paths.']
   },
   { hits: [['80 Total', '共 80 个']], misses: ['80 total'] },
   {
@@ -281,9 +263,9 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['0 Repositories', '0 个存储库'],
       ['3 Packages', '3 个软件包'],
       ['1,907,154 Repositories', '1,907,154 个存储库'],
-      ['1 Package', '1 个软件包'],
+      ['1 Package', '1 个软件包']
     ],
-    misses: ['Many Repositories'],
+    misses: ['Many Repositories']
   },
   {
     hits: [
@@ -291,38 +273,38 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['@vue/shared packages', '依赖 @vue/shared 的软件包'],
       ['lodash repositories', '依赖 lodash 的存储库'],
       ['Newtonsoft.Json packages', '依赖 Newtonsoft.Json 的软件包'],
-      ['github.com/octo-org/hello-world repositories', '依赖 github.com/octo-org/hello-world 的存储库'],
+      ['github.com/octo-org/hello-world repositories', '依赖 github.com/octo-org/hello-world 的存储库']
     ],
-    misses: ['@vue/shared users', '12 repositories', '1,234 packages', 'Public repositories', 'Forked repositories'],
+    misses: ['@vue/shared users', '12 repositories', '1,234 packages', 'Public repositories', 'Forked repositories']
   },
   // 网络图与复刻
   {
     hits: [['The repository network shows the 50 most recently pushed forks.', '存储库网络显示最近推送的 50 个复刻。']],
-    misses: ['The repository network shows the most recently pushed forks.'],
+    misses: ['The repository network shows the most recently pushed forks.']
   },
   { hits: [['12 ahead, 3 behind', '领先 12，落后 3']], misses: ['12 ahead, many behind'] },
   {
     hits: [
       ['12 ahead', '领先 12'],
-      ['3 behind', '落后 3'],
+      ['3 behind', '落后 3']
     ],
-    misses: ['12 ahead of main'],
+    misses: ['12 ahead of main']
   },
   { hits: [['2 commits ahead of main', '领先 main 2 个提交']], misses: ['2 commits ahead'] },
   { hits: [['1 commit behind main', '落后 main 1 个提交']], misses: ['1 commit behind'] },
   {
     hits: [
       ['25 commits loaded.', '已加载 25 个提交。'],
-      ['1 commit loaded.', '已加载 1 个提交。'],
+      ['1 commit loaded.', '已加载 1 个提交。']
     ],
-    misses: ['commits loaded.'],
+    misses: ['commits loaded.']
   },
   {
     hits: [
       ['Active, Archived', '活跃、已存档'],
-      ['Inactive, Network, Starred', '不活跃、网络、已加星标'],
+      ['Inactive, Network, Starred', '不活跃、网络、已加星标']
     ],
-    misses: ['Active, Pending'],
+    misses: ['Active, Pending']
   },
   // 标星者 / 关注者
   { hits: [['Follow octocat', '关注 octocat']], misses: ['Follow the guide below'] },
@@ -330,9 +312,9 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Joined on Apr 13, 2014', `加入于 ${day(2014, 4, 13)}`],
-      ['Joined on Dec 28, 2010', `加入于 ${day(2010, 12, 28)}`],
+      ['Joined on Dec 28, 2010', `加入于 ${day(2010, 12, 28)}`]
     ],
-    misses: ['Joined on GitHub'],
+    misses: ['Joined on GitHub']
   },
   { hits: [['Works for @octo-org', '就职于 @octo-org']], misses: ['Works for the team'] },
   { hits: [['Is from San Francisco', '来自 San Francisco']], misses: ['Is from'] },
@@ -340,22 +322,22 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Clones in last 14 days', '过去 14 天的克隆数'],
-      ['Unique visitors in last 14 days', '过去 14 天的独立访问者'],
+      ['Unique visitors in last 14 days', '过去 14 天的独立访问者']
     ],
-    misses: ['Clones in last week'],
+    misses: ['Clones in last week']
   },
   {
     hits: [
       ['12 Clones', '12 次克隆'],
       ['1 Unique visitor', '1 个独立访问者'],
-      ['3,456 Views', '3,456 次浏览'],
+      ['3,456 Views', '3,456 次浏览']
     ],
-    misses: ['Many Clones'],
-  },
+    misses: ['Many Clones']
+  }
 ]
 
-const HITS = REGEXP_CASES.flatMap((item) => item.hits)
-const MISSES = REGEXP_CASES.flatMap((item) => item.misses)
+const HITS = REGEXP_CASES.flatMap(item => item.hits)
+const MISSES = REGEXP_CASES.flatMap(item => item.misses)
 
 describe('insights 正则词条', () => {
   it.each(HITS)('%s → %s', (input, expected) => {
@@ -364,7 +346,7 @@ describe('insights 正则词条', () => {
     expect(translate(input)).toBe(expected)
   })
 
-  it.each(MISSES)('不命中：%s', (input) => {
+  it.each(MISSES)('不命中：%s', input => {
     expect(translate(input)).toBeUndefined()
   })
 
@@ -377,9 +359,7 @@ describe('insights 正则词条', () => {
 
   it('React 拆分的相邻文本节点拼接后命中', () => {
     const joined = (parts: readonly string[]): string | undefined => translate(normalizeText(parts.join('')))
-    expect(joined(['Contributions per week to ', 'main', ', excluding merge commits'])).toBe(
-      '每周对 main 的贡献，不含合并提交',
-    )
+    expect(joined(['Contributions per week to ', 'main', ', excluding merge commits'])).toBe('每周对 main 的贡献，不含合并提交')
     expect(joined(['1,234', ' commit', 's'])).toBe('1,234 个提交')
     expect(joined(['3', ' ', 'authors'])).toBe('3 个作者')
     expect(joined([' to ', 'main', ' and '])).toBe('到 main 以及')
@@ -388,54 +368,31 @@ describe('insights 正则词条', () => {
     expect(joined([' • ', '3', ' ', 'new comments'])).toBe('• 3 条新评论')
     expect(joined(['Commits', ' over time'])).toBe('提交趋势')
     expect(joined(['Weekly from ', 'Jul 25, 2026', ' to ', 'Oct 25, 2026'])).toBe(WEEKLY)
-    expect(
-      joined([
-        "There hasn't been any commit activity on ",
-        'octo-org',
-        '/',
-        'hello-world',
-        ' over the last ',
-        '1 week',
-      ]),
-    ).toBe('过去 1 周内 octo-org/hello-world 没有任何提交活动')
+    expect(joined(["There hasn't been any commit activity on ", 'octo-org', '/', 'hello-world', ' over the last ', '1 week'])).toBe(
+      '过去 1 周内 octo-org/hello-world 没有任何提交活动'
+    )
   })
 
   it('脉搏摘要片段按顺序读通', () => {
-    const parts = [
-      'Excluding merges,',
-      '3 authors',
-      'have pushed',
-      '12 commits',
-      'to main and',
-      '40 commits',
-      'to all branches.',
-    ]
-    expect(parts.map((part) => translate(part) ?? part).join(' ')).toBe(
-      '不计合并提交， 3 个作者 推送了 12 个提交 到 main 以及 40 个提交 到所有分支。',
+    const parts = ['Excluding merges,', '3 authors', 'have pushed', '12 commits', 'to main and', '40 commits', 'to all branches.']
+    expect(parts.map(part => translate(part) ?? part).join(' ')).toBe(
+      '不计合并提交， 3 个作者 推送了 12 个提交 到 main 以及 40 个提交 到所有分支。'
     )
   })
 
   it('跨元素片段按顺序读通', () => {
-    const read = (parts: readonly string[]): string => parts.map((part) => translate(part) ?? part).join(' ')
-    expect(
-      read(['On main,', '5 files', 'have changed and there have been', '100', 'additions', 'and', '20', 'deletions']),
-    ).toBe('在 main 上， 5 个文件 发生了更改 共有 100 行新增 and 20 行删除')
-    expect(read(['Commits over the last year of', 'octo-org/hello-world'])).toBe(
-      '以下存储库过去一年的提交 octo-org/hello-world',
+    const read = (parts: readonly string[]): string => parts.map(part => translate(part) ?? part).join(' ')
+    expect(read(['On main,', '5 files', 'have changed and there have been', '100', 'additions', 'and', '20', 'deletions'])).toBe(
+      '在 main 上， 5 个文件 发生了更改 共有 100 行新增 and 20 行删除'
     )
+    expect(read(['Commits over the last year of', 'octo-org/hello-world'])).toBe('以下存储库过去一年的提交 octo-org/hello-world')
     expect(read(['Repositories that depend on', '@vue/shared'])).toBe('依赖以下软件包的存储库 @vue/shared')
     expect(read(['3', 'Active pull requests'])).toBe('3 个活跃拉取请求')
     expect(read(['12', 'commits authored by', 'octocat'])).toBe('12 个提交的作者为 octocat')
-    expect(read(['Contributions per week to', 'main', ', excluding merge commits'])).toBe(
-      '每周贡献到 main ，不含合并提交',
+    expect(read(['Contributions per week to', 'main', ', excluding merge commits'])).toBe('每周贡献到 main ，不含合并提交')
+    expect(read(['Contributions per week to', 'main', ', line counts have been omitted because commit count exceeds 10,000.'])).toBe(
+      '每周贡献到 main ，因提交数超过 10,000 而省略了行数统计。'
     )
-    expect(
-      read([
-        'Contributions per week to',
-        'main',
-        ', line counts have been omitted because commit count exceeds 10,000.',
-      ]),
-    ).toBe('每周贡献到 main ，因提交数超过 10,000 而省略了行数统计。')
   })
 
   it('保留首尾空白', () => {
@@ -443,7 +400,7 @@ describe('insights 正则词条', () => {
     expect(matcher.translateRaw(' to all branches.', PAGES)).toBe(' 到所有分支。')
     // 译文以全角逗号开头：开头的空白不保留
     expect(matcher.translateRaw(' , line counts have been omitted because commit count exceeds 10,000.', PAGES)).toBe(
-      '，因提交数超过 10,000 而省略了行数统计。',
+      '，因提交数超过 10,000 而省略了行数统计。'
     )
   })
 })
@@ -455,19 +412,17 @@ describe('insights 贡献者页说明（繁体）', () => {
     ['Contributions per week to main, excluding merge commits', '每週對 main 的貢獻，不含合併提交'],
     [
       'Contributions per week to main, line counts have been omitted because commit count exceeds 10,000.',
-      '每週對 main 的貢獻，因提交數超過 10,000 而省略行數統計。',
+      '每週對 main 的貢獻，因提交數超過 10,000 而省略行數統計。'
     ],
     // 拼接失败时的单节点兜底
     [', line counts have been omitted because commit count exceeds 10,000.', '，因提交數超過 10,000 而省略行數統計。'],
-    [', excluding merge commits', '，不含合併提交'],
+    [', excluding merge commits', '，不含合併提交']
   ])('%s → %s', (input, expected) => {
     expect(tw.translate(input, PAGES)).toBe(expected)
   })
 
   it('兜底规则不在其他页面生效', () => {
-    expect(
-      tw.translate(', line counts have been omitted because commit count exceeds 10,000.', ['common', 'repository']),
-    ).toBeUndefined()
+    expect(tw.translate(', line counts have been omitted because commit count exceeds 10,000.', ['common', 'repository'])).toBeUndefined()
     expect(tw.translate(', line counts have been omitted.', PAGES)).toBeUndefined()
   })
 })
@@ -480,17 +435,17 @@ describe('insights 静态词条', () => {
     ['Detect additional dependencies with GitHub Actions', '使用 GitHub 操作检测更多依赖项'],
     [
       'Upgrade to GitHub Pro or make this repository public to enable this feature.',
-      '升级到 GitHub 专业版或将此存储库设为公共以启用此功能。',
+      '升级到 GitHub 专业版或将此存储库设为公共以启用此功能。'
     ],
     [
       'Contact an administrator to upgrade to GitHub Team or make this repository public to enable this feature.',
-      '请联系管理员升级到 GitHub 团队版或将此存储库设为公共以启用此功能。',
+      '请联系管理员升级到 GitHub 团队版或将此存储库设为公共以启用此功能。'
     ],
     // 星标、反应按术语表（为此存储库加星标、做出反应）
     ['No one you follow has starred this repository yet.', '你关注的人中还没有人为此存储库加星标。'],
     [
       'Count of unique users who have reacted, upvoted, marked an answer, commented, or posted in the selected period.',
-      '所选时间段内做出反应、投票、标记答案、评论或发帖的独立用户数。',
+      '所选时间段内做出反应、投票、标记答案、评论或发帖的独立用户数。'
     ],
     // 原文没有的逗号不加
     ["We don't have enough data to generate this graph", '数据不足以生成此图表'],
@@ -533,7 +488,7 @@ describe('insights 静态词条', () => {
     ['Code generation', '代码生成'],
     ['Actions usage metrics', '操作使用情况指标'],
     ['Try changing your filters, or search for', '尝试更改筛选器，或搜索'],
-    ['Repository admins accept content reports', '存储库管理员接受内容报告'],
+    ['Repository admins accept content reports', '存储库管理员接受内容报告']
   ])('%s → %s', (input, expected) => {
     expect(translate(input)).toBe(expected)
   })
@@ -574,7 +529,7 @@ describe('insights 页面词条', () => {
     ['Total', '总计'],
     ['Allow access', '允许访问'],
     // 依赖项关系图的生态系统筛选项（与 npm 并列）；产品名按用户规定译出，同 security 公告的生态系统选项
-    ['GitHub Actions', 'GitHub 操作'],
+    ['GitHub Actions', 'GitHub 操作']
   ])('%s → %s', (input, expected) => {
     expect(translate(input)).toBe(expected)
   })
@@ -590,7 +545,7 @@ describe('insights 页面词条', () => {
       'Last month',
       'On',
       'Off',
-      'GitHub Actions',
+      'GitHub Actions'
     ]) {
       expect(matcher.translate(input, ['common', 'repository', 'issues'])).toBeUndefined()
     }
@@ -614,7 +569,7 @@ describe('insights 辅助函数', () => {
 })
 
 describe('insights 忽略选择器', () => {
-  it.each(insights.ignore ?? [])('%s 是合法选择器', (selector) => {
+  it.each(insights.ignore ?? [])('%s 是合法选择器', selector => {
     expect(() => document.createElement('div').querySelector(selector)).not.toThrow()
   })
 })
@@ -654,12 +609,12 @@ describe('insights 脉搏拆分的文本节点', () => {
       build('strong', [build('span', ['12', ' ', 'commits'])]),
       build('span', [' to ', 'main', ' and ']),
       build('strong', ['40', ' ', 'commits']),
-      build('span', [' to all branches.']),
+      build('span', [' to all branches.'])
     ])
     const files = build('p', [
       build('span', ['On ', 'main', ', ']),
       build('strong', ['5', ' ', 'files']),
-      build('span', [' ', 'have', ' changed and there have been ']),
+      build('span', [' ', 'have', ' changed and there have been '])
     ])
     run(summary, files)
     expect(text(summary)).toBe('不计合并提交，3 个作者 推送了 12 个提交 到 main 以及 40 个提交 到所有分支。')
@@ -679,17 +634,7 @@ describe('insights 脉搏拆分的文本节点', () => {
     // <span><Icon/> <strong>1</strong> {"release published"}{" by"} <strong>1</strong> {"person"}</span>
     const strong = (count: string): HTMLElement => build('strong', [count])
     const release = build('span', [' ', strong('1'), ' ', 'release published', ' by', ' ', strong('1'), ' ', 'person'])
-    const merged = build('span', [
-      ' ',
-      strong('3'),
-      ' ',
-      'pull requests merged',
-      ' by',
-      ' ',
-      strong('2'),
-      ' ',
-      'people',
-    ])
+    const merged = build('span', [' ', strong('3'), ' ', 'pull requests merged', ' by', ' ', strong('2'), ' ', 'people'])
     run(release, merged)
     expect(text(release)).toBe('1 个发行版已发布 来自 1 人')
     expect(text(merged)).toBe('3 个拉取请求已合并 来自 2 人')
@@ -697,17 +642,7 @@ describe('insights 脉搏拆分的文本节点', () => {
 
   it('区块标题：拉取请求的 opened 作“已创建”，问题的 opened 作“已打开”', () => {
     const strong = (count: string): HTMLElement => build('strong', [count])
-    const pulls = build('span', [
-      ' ',
-      strong('33'),
-      ' ',
-      'pull requests opened',
-      ' by',
-      ' ',
-      strong('18'),
-      ' ',
-      'people',
-    ])
+    const pulls = build('span', [' ', strong('33'), ' ', 'pull requests opened', ' by', ' ', strong('18'), ' ', 'people'])
     const issues = build('span', [' ', strong('8'), ' ', 'issues opened', ' by', ' ', strong('8'), ' ', 'people'])
     run(pulls, issues)
     expect(text(pulls)).toBe('33 个拉取请求已创建 来自 18 人')

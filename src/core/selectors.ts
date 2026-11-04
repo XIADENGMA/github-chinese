@@ -15,8 +15,7 @@ export interface AttributeCondition {
 
 /** 选择器特征 */
 export type SelectorKey =
-  | { readonly kind: 'class' | 'id' | 'tag'; readonly name: string }
-  | { readonly kind: 'attribute'; readonly condition: AttributeCondition }
+  { readonly kind: 'class' | 'id' | 'tag'; readonly name: string } | { readonly kind: 'attribute'; readonly condition: AttributeCondition }
 
 export interface IndexedSelector {
   readonly selector: string
@@ -52,10 +51,7 @@ const IDENT = '[\\w\\u0080-\\uFFFF-]+'
 const CLASS_RE = new RegExp(`\\.(${IDENT})`)
 const ID_RE = new RegExp(`#(${IDENT})`)
 const TAG_RE = /^([a-zA-Z][\w-]*)/
-const ATTRIBUTE_RE = new RegExp(
-  `^\\[\\s*(${IDENT})\\s*(?:([~|^$*]?=)\\s*(?:"([^"]*)"|'([^']*)'|(${IDENT}))\\s*(?:[is]\\s*)?)?\\]$`,
-  'i',
-)
+const ATTRIBUTE_RE = new RegExp(`^\\[\\s*(${IDENT})\\s*(?:([~|^$*]?=)\\s*(?:"([^"]*)"|'([^']*)'|(${IDENT}))\\s*(?:[is]\\s*)?)?\\]$`, 'i')
 const ANY_OF_RE = /:(?:is|where|matches|-webkit-any|-moz-any)$/i
 const PSEUDO_RE = /::?[\w-]+/g
 const WHITESPACE_RE = /\s/
@@ -94,7 +90,7 @@ export function splitSelectorList(selector: string): string[] {
     start = index + 1
   })
   parts.push(selector.slice(start))
-  return parts.map((part) => part.trim()).filter(Boolean)
+  return parts.map(part => part.trim()).filter(Boolean)
 }
 
 /** 最右复合选择器（最后一个顶层组合符之后的部分） */
@@ -300,8 +296,7 @@ export function attributeMatches(index: IgnoreIndex, element: Element, name: str
   const indexed = index.byAttribute.get(name)
   if (indexed) {
     for (const entry of indexed) {
-      if ((!entry.condition || conditionHolds(entry.condition, value)) && safeMatches(element, entry.selector))
-        return true
+      if ((!entry.condition || conditionHolds(entry.condition, value)) && safeMatches(element, entry.selector)) return true
     }
   }
   const byValue = index.byValue.get(name)

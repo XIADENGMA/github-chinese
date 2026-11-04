@@ -24,7 +24,7 @@ export const IGNORE_TAGS: ReadonlySet<string> = new Set([
   'MATH',
   'CANVAS',
   'IFRAME',
-  'OBJECT',
+  'OBJECT'
 ])
 
 /**
@@ -35,7 +35,7 @@ export const SKIP_TAG_RELEASE_SELECTORS: readonly string[] = [
   // 提交详情页头：1 parent <sha> commit <sha>（<pre> 只为保留 flex 子项间的空格）
   '[class*="commitBranchContainer__"] > pre',
   // 个人主页活动概览雷达图：标签是界面文字，脚本一次性绘制
-  'svg.js-activity-overview-graph',
+  'svg.js-activity-overview-graph'
 ]
 
 /** 通用退出标记：其内不翻译，重新进入区域也不越过 */
@@ -44,7 +44,7 @@ export const EXIT_SELECTORS: readonly string[] = [
   '.notranslate',
   '[contenteditable=""]',
   '[contenteditable="true"]',
-  '[data-gcn-ignore]',
+  '[data-gcn-ignore]'
 ]
 
 /**
@@ -62,7 +62,7 @@ export const CODE_CONTAINER_SELECTORS: readonly string[] = [
   '.react-code-lines',
   '.react-code-text',
   '.react-file-line',
-  '.js-file-line-container',
+  '.js-file-line-container'
 ]
 
 /**
@@ -79,7 +79,7 @@ export const LABEL_NAME_SELECTORS: readonly string[] = [
   // 标签页列表行的标签链接（其中是标签令牌；屏幕阅读器读的行标题由 React 读出文字拼行的无障碍名称，不收）
   '[class*="labelRowDescription__"] a[aria-label]',
   // 标签选择器（议题与拉取请求侧栏、新建议题、批量操作、关注设置）中的标签名
-  '[class*="labelNameText__"]',
+  '[class*="labelNameText__"]'
 ]
 
 /** 标签说明区域：经典标签的提示、React 侧栏标签链接的提示与屏幕阅读器说明、标签页列表行的说明 */
@@ -87,7 +87,7 @@ export const LABEL_DESCRIPTION_SELECTORS: readonly string[] = [
   'tool-tip[for^="label-"]',
   '[class*="labelDescriptionTooltip__"]',
   '[class*="labelLink__"] > .sr-only',
-  '[class*="labelRowDescriptionItemDescription__"]',
+  '[class*="labelRowDescriptionItemDescription__"]'
 ]
 
 /**
@@ -102,7 +102,7 @@ export const LIST_NAME_SELECTORS: readonly string[] = [
   '[data-target~="user-list-menu.listItems"] .ActionListItem-label',
   '.js-user-list-menu-item ~ .Truncate-text',
   '.js-user-list-menu-item ~ .Truncate > .Truncate-text',
-  '[role="option"][data-id^="list-"] [data-component="ActionList.Item.Label"]',
+  '[role="option"][data-id^="list-"] [data-component="ActionList.Item.Label"]'
 ]
 
 /**
@@ -112,7 +112,7 @@ export const LIST_NAME_SELECTORS: readonly string[] = [
  */
 export const ISSUE_TYPE_NAME_SELECTORS: readonly string[] = [
   '[class*="issueTypeTokenContainer__"] [class*="prc-Token-TokenTextContainer-"]',
-  '[class*="smallMetadataRow__"] > [class*="smallToken__"]',
+  '[class*="smallMetadataRow__"] > [class*="smallToken__"]'
 ]
 
 /**
@@ -122,7 +122,7 @@ export const LABEL_SELECTORS: readonly string[] = [
   ...LABEL_NAME_SELECTORS,
   ...LABEL_DESCRIPTION_SELECTORS,
   ...LIST_NAME_SELECTORS,
-  ...ISSUE_TYPE_NAME_SELECTORS,
+  ...ISSUE_TYPE_NAME_SELECTORS
 ]
 
 /** 全局忽略选择器：命中元素连同子树、属性都不处理 */
@@ -316,7 +316,7 @@ export const IGNORE_SELECTORS: readonly string[] = [
   '[class*="searchButton__"] [class*="placeholder__"]:not(:has(kbd))',
   // 评论框的自动补全建议（表情符号名、用户名、问题标题）：React 版建议项、经典版 text-expander 列表
   'li[role="option"][class*="suggestion__"]',
-  'text-expander [role="listbox"]',
+  'text-expander [role="listbox"]'
 ]
 
 /**
@@ -332,14 +332,13 @@ export const PLACEHOLDER_TEXTS: ReadonlySet<string> = new Set([
   'Nothing to preview',
   'Markdown preview unavailable',
   'Loading preview…',
-  'Error rendering preview',
+  'Error rendering preview'
 ])
 
 /** 占位文字所在的区域根：Markdown 编辑器的预览窗格（带哈希类名，或屏幕阅读器播报区域）下的 .markdown-body */
-export const PLACEHOLDER_SELECTOR = [
-  '[class*="previewViewerWrapper__"] > .markdown-body',
-  '[aria-live="polite"] > .markdown-body',
-].join(', ')
+export const PLACEHOLDER_SELECTOR = ['[class*="previewViewerWrapper__"] > .markdown-body', '[aria-live="polite"] > .markdown-body'].join(
+  ', '
+)
 
 /** 占位段落所在的区域根：经典评论框（.js-previewable-comment-form）的预览区 .comment-body.markdown-body.js-preview-body */
 export const CLASSIC_PREVIEW_SELECTOR = '.js-preview-body'
@@ -353,7 +352,7 @@ export const REENTRY_CONTAINER_CLASS = 'js-suggested-changes-blob'
  */
 export const REENTRY_SELECTORS: readonly string[] = [
   // 评论中的建议块：标题栏与按钮区（代码表格在 .blob-wrapper 内）
-  `.${REENTRY_CONTAINER_CLASS} > :not(.blob-wrapper)`,
+  `.${REENTRY_CONTAINER_CLASS} > :not(.blob-wrapper)`
 ]
 
 /** 需要翻译的属性 */
@@ -372,7 +371,7 @@ export const TRANSLATABLE_ATTRIBUTES: readonly string[] = [
   'data-confirm-cancel-text',
   'data-warn-unsaved-changes',
   // 表情回应建议：脚本复制到 data-reaction-suggestion-message 后由伪元素显示
-  'data-reaction-markup',
+  'data-reaction-markup'
 ]
 
 /**
@@ -386,7 +385,7 @@ export const MIRROR_SELECTOR = [
   '[data-component="text"][data-content]',
   '.UnderlineNav-item [data-content]',
   '.SegmentedControl-item .Button-label[data-content]',
-  '[class*="SegmentedControl-Text"][data-text]',
+  '[class*="SegmentedControl-Text"][data-text]'
 ].join(', ')
 
 /** value 属性仅在这些 input 类型上翻译 */

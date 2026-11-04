@@ -14,7 +14,7 @@ const EMPTY_HEADINGS: Readonly<Record<string, string>> = {
   wikis: '没有与搜索匹配的 Wiki',
   topics: '没有与搜索匹配的主题',
   // 产品名译中文（用户定）：Marketplace → 市场
-  marketplace: '没有与搜索匹配的市场应用',
+  marketplace: '没有与搜索匹配的市场应用'
 }
 
 /** 「However we found 3 repositories that matched…」中的类型 */
@@ -38,7 +38,7 @@ const FOUND_KINDS: Readonly<Record<string, string>> = {
   wiki: 'Wiki',
   wikis: 'Wiki',
   topic: '主题',
-  topics: '主题',
+  topics: '主题'
 }
 
 /** 3 + repositories → 3 个存储库；英文类型名前加空格：3 个 Wiki */
@@ -108,34 +108,28 @@ export default {
     'Sparse followed by index:': 'sparse 后接 index：',
     'Lines that end with return:': '以 return 结尾的行：',
     'File paths matching:': '匹配的文件路径：',
-    "Note that you'll have to escape any slashes in the regex. For more information, see our":
-      '正则表达式中的斜杠需要转义。详细信息请参阅',
-    'Note that you’ll have to escape any slashes in the regex. For more information, see our':
-      '正则表达式中的斜杠需要转义。详细信息请参阅',
+    "Note that you'll have to escape any slashes in the regex. For more information, see our": '正则表达式中的斜杠需要转义。详细信息请参阅',
+    'Note that you’ll have to escape any slashes in the regex. For more information, see our': '正则表达式中的斜杠需要转义。详细信息请参阅',
 
     // 提示：已保存的搜索
     'Always searching within the same organization or set of repositories? Try constructing a query and click the save button in the top right corner.':
-      '经常在同一组织或同一组存储库中搜索？可构建查询后单击右上角的保存按钮。',
+      '经常在同一组织或同一组存储库中搜索？可构建查询后单击右上角的保存按钮。'
   },
   scoped: {
     // 数量在单独元素中：3 + code results
     'code results': '个代码结果',
-    'code result': '个代码结果',
+    'code result': '个代码结果'
   },
   regexp: [
     // 「Your search did not match any 」「repositories」拼接（类型词不单独收录，避免误译路径、代码中的同名单词）
-    [
-      new RegExp(`^Your search did not match any (${Object.keys(EMPTY_HEADINGS).join('|')})$`),
-      (_, type) => EMPTY_HEADINGS[type] ?? type,
-    ],
+    [new RegExp(`^Your search did not match any (${Object.keys(EMPTY_HEADINGS).join('|')})$`), (_, type) => EMPTY_HEADINGS[type] ?? type],
     [
       new RegExp(
-        `^However we found (\\d[\\d.,]*[kKMB]?) (${Object.keys(FOUND_KINDS).join('|')}) that matched your search query\\. Alternatively try one of the tips below\\.$`,
+        `^However we found (\\d[\\d.,]*[kKMB]?) (${Object.keys(FOUND_KINDS).join('|')}) that matched your search query\\. Alternatively try one of the tips below\\.$`
       ),
-      (_, count, kind) =>
-        `${joinCjk(`不过找到了 ${count} 个与搜索查询匹配的`, FOUND_KINDS[kind] ?? kind)}。也可尝试以下提示。`,
+      (_, count, kind) => `${joinCjk(`不过找到了 ${count} 个与搜索查询匹配的`, FOUND_KINDS[kind] ?? kind)}。也可尝试以下提示。`
     ],
     // 句中类型为链接时：However we found <3 code results> that matched…
-    [new RegExp(`^(\\d[\\d.,]*[kKMB]?) (${FOUND_COUNT_KINDS})$`), (_, count, kind) => foundCount(count, kind)],
-  ],
+    [new RegExp(`^(\\d[\\d.,]*[kKMB]?) (${FOUND_COUNT_KINDS})$`), (_, count, kind) => foundCount(count, kind)]
+  ]
 } satisfies PageDictionary

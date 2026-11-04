@@ -6,7 +6,7 @@ const MORE_LINKS: Readonly<Record<string, string>> = {
   contributor: '个贡献者',
   deployment: '个部署',
   package: '个软件包',
-  environment: '个环境',
+  environment: '个环境'
 }
 
 /** 成员个人资料的所有者：the organization's → 组织的；GitHub's → GitHub 的 */
@@ -21,7 +21,7 @@ const regexp: readonly RegExpRule[] = [
   // 分节底部链接：+ 62 contributors、+ 3 releases、+ 1 more
   [
     /^\+ (\d[\d,]*) (release|contributor|deployment|package|environment)s?$/,
-    (_, count: string, type: string) => `+ ${count} ${MORE_LINKS[type] ?? type}`,
+    (_, count: string, type: string) => `+ ${count} ${MORE_LINKS[type] ?? type}`
   ],
   [/^\+ (\d[\d,]*) more$/, '还有 $1 个'],
   // 语言分布条的无障碍名称（具体语言名不翻译）
@@ -30,15 +30,11 @@ const regexp: readonly RegExpRule[] = [
   [/^(APA|BibTeX) citation copied to clipboard$/, '$1 引用已复制到剪贴板'],
   [/^Copy (APA|BibTeX) citation$/, '复制 $1 引用'],
   // 特殊存储库（个人资料自述文件）
-  [
-    /^You can display (\S+) from this repository on your public GitHub profile\.$/,
-    '你可以在 GitHub 公开个人资料中显示此存储库的 $1。',
-  ],
+  [/^You can display (\S+) from this repository on your public GitHub profile\.$/, '你可以在 GitHub 公开个人资料中显示此存储库的 $1。'],
   [
     /^(and it )?will appear on (.+?) member profile, visible only to organization members\.$/,
-    (_, created: string, owner: string) =>
-      `${created ? '后它' : ''}将显示在${profileOwner(owner)}成员个人资料中，仅组织成员可见。`,
-  ],
+    (_, created: string, owner: string) => `${created ? '后它' : ''}将显示在${profileOwner(owner)}成员个人资料中，仅组织成员可见。`
+  ]
 ]
 
 /**
@@ -122,7 +118,7 @@ export default {
     "and it will appear on the organization's profile.": '后它将显示在组织的个人资料中。',
     'Update now': '立即更新',
     'Share to Profile': '分享到个人资料',
-    'Visit profile': '访问个人资料',
+    'Visit profile': '访问个人资料'
   },
   scoped: {
     // About（Activity 由 common-ui 收录）
@@ -152,7 +148,7 @@ export default {
     Its: '其',
     The: '该',
     'Create a': '创建',
-    'Edit README': '编辑自述文件',
+    'Edit README': '编辑自述文件'
   },
   regexp,
   // 特殊存储库提示（SidebarConfigCallToAction）：如果你 <将此存储库设为公共>，其 <README.md> 将显示在你的个人资料中。
@@ -165,6 +161,6 @@ export default {
     '[class*="envItem__"] > a',
     // 语言分节：复刻存储库的语言条目不带链接，不在全局忽略范围，语言名会被当成界面文字（如 Reason、Move、Logos）；
     // 非复刻存储库只有 Other 不带链接，仍需翻译，所以按页头 meta 只在复刻存储库忽略
-    'head:has(> meta[name="octolytics-dimension-repository_is_fork"][content="true"]) ~ body [class*="languageItem__"] > [itemprop="keywords"]',
-  ],
+    'head:has(> meta[name="octolytics-dimension-repository_is_fork"][content="true"]) ~ body [class*="languageItem__"] > [itemprop="keywords"]'
+  ]
 } satisfies PageDictionary

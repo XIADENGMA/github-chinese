@@ -84,7 +84,7 @@ describe('setLocale', () => {
         matcher: testMatcher(undefined, TW_BUNDLE),
         host: window,
         timeLang: 'zh-TW',
-        translateTime,
+        translateTime
       })
       translator.start()
       return translator
@@ -118,9 +118,7 @@ describe('setLocale', () => {
     })
 
     it('克隆体带来补过空格的 zh-CN title、文字两种语言相同（昨天）：移除后按 zh-TW 重新生成', async () => {
-      startTw(
-        '<relative-time lang="zh-CN" datetime="2026-10-28T02:03:00Z" title="2026 年 10 月 28 日 GMT+8 10:03"></relative-time>',
-      )
+      startTw('<relative-time lang="zh-CN" datetime="2026-10-28T02:03:00Z" title="2026 年 10 月 28 日 GMT+8 10:03"></relative-time>')
       await settleTime()
       await settleTime()
       expect(time().renderedText).toBe('昨天')
@@ -195,8 +193,7 @@ describe('小时制', () => {
 
   it('lang 已是 zh-TW、只有小时制不同：补过空格的 24 小时制 title 被移除并按 12 小时制重新生成', async () => {
     document.documentElement.setAttribute('hour-cycle', 'h23')
-    document.body.innerHTML =
-      '<relative-time lang="zh-TW" prefix="" title="2026 年 10 月 26 日 10:03 [GMT+8]"></relative-time>'
+    document.body.innerHTML = '<relative-time lang="zh-TW" prefix="" title="2026 年 10 月 26 日 10:03 [GMT+8]"></relative-time>'
     await settleTime()
     translator = createTranslator({ matcher: testMatcher(undefined, TW_BUNDLE), host: window, timeLang: 'zh-TW' })
     translator.start()

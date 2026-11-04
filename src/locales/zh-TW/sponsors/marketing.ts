@@ -18,8 +18,7 @@ export default {
     'Regions supported globally': '全球支援的地區',
     'Organizations sponsoring': '參與贊助的組織',
     'GitHub Sponsors allows the developer community': 'GitHub 贊助讓開發人員社群',
-    'to financially support the open source projects they depend on, directly on GitHub':
-      '直接在 GitHub 上資助他們所仰賴的開源專案',
+    'to financially support the open source projects they depend on, directly on GitHub': '直接在 GitHub 上資助他們所仰賴的開源專案',
 
     // 给维护者 / 赞助者
     'For maintainers': '給維護者',
@@ -53,8 +52,7 @@ export default {
     'trending repositories': '熱門儲存庫',
     ', or': '或',
     collections: '精選集',
-    '. When a repository has the Sponsor graphic, you can sponsor them directly.':
-      '。儲存庫顯示贊助圖示時，你可以直接贊助。',
+    '. When a repository has the Sponsor graphic, you can sponsor them directly.': '。儲存庫顯示贊助圖示時，你可以直接贊助。',
     'How do I get paid for my contributions?': '如何因我的貢獻獲得報酬？',
     'You can become a sponsored developer by joining GitHub Sponsors, completing your sponsored developer profile, creating sponsorship tiers, submitting your bank and tax information, and enabling two-factor authentication for your account on GitHub.com.':
       '只要加入 GitHub 贊助、填妥受贊助開發人員個人檔案、建立贊助等級、送出銀行和稅務資訊，並為你的 GitHub.com 帳號啟用雙重驗證就能成為受贊助的開發人員。',
@@ -66,6 +64,6 @@ export default {
       '請注意我們會盡力協助你參與贊助計畫，但無法提供稅務指引。',
     "Note that we do our best to help you with the Sponsors program, but we're unable to provide tax guidance.":
       '請注意我們會盡力協助你參與贊助計畫，但無法提供稅務指引。',
-    'Learn more about tax information for GitHub Sponsors': '瞭解 GitHub 贊助的稅務資訊',
-  },
+    'Learn more about tax information for GitHub Sponsors': '瞭解 GitHub 贊助的稅務資訊'
+  }
 } satisfies PageDictionary

@@ -6,13 +6,13 @@ const AGENT_NAME: Readonly<Record<string, string>> = {
   'Cloud agent': '雲端代理',
   'Coding agent': '程式開發代理',
   'Copilot cloud agent': 'Copilot 雲端代理',
-  'Copilot coding agent': 'Copilot 程式開發代理',
+  'Copilot coding agent': 'Copilot 程式開發代理'
 }
 
 const USAGE_LABEL: Readonly<Record<string, string>> = {
   'Included credits': '包含的點數',
   'Additional usage': '額外使用量',
-  'Monthly limit': '每月上限',
+  'Monthly limit': '每月上限'
 }
 
 /** Copilot 模型策略名中的厂商前缀 */
@@ -27,7 +27,7 @@ const COPILOT_PLAN: Readonly<Record<string, string>> = {
   Free: '免費版',
   Pro: '專業版',
   'Pro+': '專業增強版',
-  Student: '學生版',
+  Student: '學生版'
 }
 
 function copilotPlan(plan: string): string {
@@ -40,12 +40,12 @@ const REVIEW_EFFORT_SOURCE = '(Auto|Lite|Balanced|Max)'
 const EFFORT_DEFAULT: Readonly<Record<string, string>> = {
   Default: '預設',
   'Organization default': '組織預設值',
-  'Enterprise default': '企業預設值',
+  'Enterprise default': '企業預設值'
 }
 const EFFORT_LIMIT: Readonly<Record<string, string>> = {
   Organization: '組織上限',
   Enterprise: '企業上限',
-  Inherited: '繼承的上限',
+  Inherited: '繼承的上限'
 }
 
 function reviewEffort(tier: string): string {
@@ -69,8 +69,7 @@ export default {
   static: {
     // 计划状态
     'You are using Copilot for free': '你正在免費使用 Copilot',
-    'Responses are limited to 2,000 code completions and 50 chat messages per month.':
-      '每月限 2,000 次程式碼自動完成和 50 則聊天訊息。',
+    'Responses are limited to 2,000 code completions and 50 chat messages per month.': '每月限 2,000 次程式碼自動完成和 50 則聊天訊息。',
     'Get unlimited usage with Copilot Pro': '透過 Copilot 專業版無限制使用',
     'Unlimited messages and interactions': '無限次訊息和互動',
     'Access to the latest models': '可使用最新模型',
@@ -96,8 +95,7 @@ export default {
     'Copilot in the CLI': '在 CLI 中使用 Copilot',
     'Chat in GitHub Mobile': '在 GitHub 行動版中聊天',
     'More features': '更多功能',
-    'It appears you are not eligible to sign up to GitHub Copilot for free':
-      '你似乎不符合免費註冊 GitHub Copilot 的資格',
+    'It appears you are not eligible to sign up to GitHub Copilot for free': '你似乎不符合免費註冊 GitHub Copilot 的資格',
     'Your GitHub Copilot setup is incomplete. Select your preferences below to start using GitHub Copilot.':
       '你的 GitHub Copilot 設定尚未完成。在下方選擇偏好設定以開始使用 GitHub Copilot。',
     'Plan upgrades are temporarily unavailable.': '暫時無法升級方案。',
@@ -124,12 +122,10 @@ export default {
     'Failed to update budget. Please try again.': '無法更新預算。請再試一次。',
     'View usage': '查看使用量',
     'Refresh for latest usage': '重新整理以取得最新使用量',
-    'You have no monthly limit on AI credits usage set by your organization.':
-      '你的組織未設定 AI 點數使用量的每月上限。',
+    'You have no monthly limit on AI credits usage set by your organization.': '你的組織未設定 AI 點數使用量的每月上限。',
     'Upgrade Copilot plan': '升級 Copilot 方案',
     'There was a problem loading your Copilot usage.': '載入 Copilot 使用量時發生問題。',
-    'Please note that there may be a delay in the displayed usage percentage.':
-      '請注意顯示的使用量百分比可能會有延遲。',
+    'Please note that there may be a delay in the displayed usage percentage.': '請注意顯示的使用量百分比可能會有延遲。',
     'Loading usage data...': '正在載入使用量資料...',
     'Loading usage data…': '正在載入使用量資料…',
 
@@ -171,10 +167,8 @@ export default {
     'GitHub Copilot won’t answer questions about new trends and give improved answers':
       'GitHub Copilot 不會回答有關新趨勢的問題或提供更好的答案',
     'Copilot can search the web using model native search': 'Copilot 可以使用模型原生搜尋功能搜尋網路',
-    "Copilot can answer questions using a model's built-in search capabilities.":
-      'Copilot 可以使用模型內建的搜尋功能回答問題。',
-    'Copilot can answer questions using a model’s built-in search capabilities.':
-      'Copilot 可以使用模型內建的搜尋功能回答問題。',
+    "Copilot can answer questions using a model's built-in search capabilities.": 'Copilot 可以使用模型內建的搜尋功能回答問題。',
+    'Copilot can answer questions using a model’s built-in search capabilities.': 'Copilot 可以使用模型內建的搜尋功能回答問題。',
     'You will have access to the feature': '你將可以使用此功能',
     "You won't have access to the feature": '你將無法使用此功能',
     'You won’t have access to the feature': '你將無法使用此功能',
@@ -194,17 +188,13 @@ export default {
     'Dashboard Entry Point': '儀表板入口',
     'Allows instant chatting when landing on GitHub.com': '進入 GitHub.com 時可立即聊天',
     'Automatically request Copilot code review': '自動請求 Copilot 程式碼審查',
-    "Use Copilot to automatically review all the pull requests you've created.":
-      '使用 Copilot 自動審查你建立的所有拉取請求。',
-    'Use Copilot to automatically review all the pull requests you’ve created.':
-      '使用 Copilot 自動審查你建立的所有拉取請求。',
+    "Use Copilot to automatically review all the pull requests you've created.": '使用 Copilot 自動審查你建立的所有拉取請求。',
+    'Use Copilot to automatically review all the pull requests you’ve created.': '使用 Copilot 自動審查你建立的所有拉取請求。',
     'Automatic Copilot code review': 'Copilot 自動程式碼審查',
     'Copilot will automatically review your pull requests.': 'Copilot 將自動審查你的拉取請求。',
     'Learn more about configuring automatic code reviews.': '瞭解如何設定自動程式碼審查。',
-    'Delegate tasks to Copilot coding agent in repositories where it is enabled':
-      '在已啟用 Copilot 程式開發代理的儲存庫中將任務委派給它',
-    'Delegate tasks to Copilot cloud agent in repositories where it is enabled':
-      '在已啟用 Copilot 雲端代理的儲存庫中將任務委派給它',
+    'Delegate tasks to Copilot coding agent in repositories where it is enabled': '在已啟用 Copilot 程式開發代理的儲存庫中將任務委派給它',
+    'Delegate tasks to Copilot cloud agent in repositories where it is enabled': '在已啟用 Copilot 雲端代理的儲存庫中將任務委派給它',
     // 产品名：功能区块标题，也是「You can use <a>Copilot Memory</a> to remember …」中的链接
     'Copilot Memory': 'Copilot 記憶',
     'to remember repository context across Copilot agent interactions.': '在 Copilot 代理互動之間記住儲存庫上下文。',
@@ -233,8 +223,7 @@ export default {
     // 公共代码匹配、数据使用、可见性（public code 指公开的代码，译「公開程式碼」）
     'Suggestions matching public code': '與公開程式碼相符的建議',
     'Suggestions matching public code (duplication detection filter)': '與公開程式碼相符的建議（重複偵測篩選器）',
-    'Copilot can allow or block suggestions matching public code. Learn more about':
-      'Copilot 可以允許或阻擋與公開程式碼相符的建議。瞭解',
+    'Copilot can allow or block suggestions matching public code. Learn more about': 'Copilot 可以允許或阻擋與公開程式碼相符的建議。瞭解',
     'code suggestions': '程式碼建議',
     'GitHub Copilot will show suggestions matching public code.': 'GitHub Copilot 將顯示與公開程式碼相符的建議。',
     "GitHub Copilot won't show suggestions matching public code.": 'GitHub Copilot 不會顯示與公開程式碼相符的建議。',
@@ -275,8 +264,7 @@ export default {
     'Matching a filter...': '與篩選器相符...',
     'Matching a filter…': '與篩選器相符…',
     'Matching a filter': '與篩選器相符',
-    'Applies to repositories that match specified filters, now and in the future':
-      '適用於現在和未來與指定篩選器相符的儲存庫',
+    'Applies to repositories that match specified filters, now and in the future': '適用於現在和未來與指定篩選器相符的儲存庫',
     'Use a query to select repositories': '使用查詢選取儲存庫',
     'Enter a query to start searching.': '輸入查詢以開始搜尋。',
     'Error fetching repositories': '擷取儲存庫時發生錯誤',
@@ -349,11 +337,9 @@ export default {
 
     // 入门清单（start building 指开发，不是 build 建置，与 copilot/plans.ts 一致）
     'Install Copilot in your editor': '在編輯器中安裝 Copilot',
-    'Ask about coding problems and get code completions while you work.':
-      '工作時詢問程式設計問題並取得程式碼自動完成。',
+    'Ask about coding problems and get code completions while you work.': '工作時詢問程式設計問題並取得程式碼自動完成。',
     'Chat with Copilot anywhere': '隨時隨地與 Copilot 聊天',
-    'Copilot chat in the navigation from anywhere on GitHub. Try asking':
-      '在 GitHub 任何頁面都能使用導覽列中的 Copilot 聊天。試著詢問',
+    'Copilot chat in the navigation from anywhere on GitHub. Try asking': '在 GitHub 任何頁面都能使用導覽列中的 Copilot 聊天。試著詢問',
     '“what can I do with Copilot?”': '「我可以用 Copilot 做什麼？」',
     'Start building with Copilot': '開始使用 Copilot 開發',
     'Learn how to build with Copilot in Visual Studio Code or Visual Studio.':
@@ -364,7 +350,7 @@ export default {
     'From researching a repository to reviewing and merging a pull request, Copilot works in a secure, isolated cloud environment. Delegate work to an agent, freeing you to focus on the creative, complex, and high-impact work that matters most.':
       '從研究儲存庫到審查並合併拉取請求，Copilot 都在安全、隔離的雲端環境中工作。將工作委派給代理，讓你專注於最重要的創意、複雜和高影響力工作。',
     'Choose which repositories Copilot in the cloud should be enabled in. Cloud will only be an environment option where it is enabled for the repository and in the Copilot license policies.':
-      '選擇要在哪些儲存庫中啟用雲端 Copilot。雲端只有在儲存庫已啟用且 Copilot 授權政策允許時才會作為環境選項出現。',
+      '選擇要在哪些儲存庫中啟用雲端 Copilot。雲端只有在儲存庫已啟用且 Copilot 授權政策允許時才會作為環境選項出現。'
   },
   scoped: {
     // 「You currently have an active <strong>Copilot Pro</strong> subscription.」
@@ -442,20 +428,19 @@ export default {
     'Preview features are not enabled for this organization.': '此組織未啟用預覽功能。',
     'Manage preview features': '管理預覽功能',
     'Contact an enterprise owner to enable them.': '聯絡企業擁有者以啟用這些功能。',
-    'Contact an organization owner to enable them.': '聯絡組織擁有者以啟用這些功能。',
+    'Contact an organization owner to enable them.': '聯絡組織擁有者以啟用這些功能。'
   },
   regexp: [
     // 计划状态
     [
       /^Upgrade for higher limits, premium models, AI reviews\. Free responses reset in (\d+) days?(\.?)$/,
-      (_, days: string, dot: string) =>
-        `升級以取得更高上限、進階模型和 AI 審查。免費回應次數將在 ${days} 天後重設${dot ? '。' : ''}`,
+      (_, days: string, dot: string) => `升級以取得更高上限、進階模型和 AI 審查。免費回應次數將在 ${days} 天後重設${dot ? '。' : ''}`
     ],
     [/^Free responses reset in (\d+) days?\.$/, '免費回應次數將在 $1 天後重設。'],
     // 方案名译成中文：Copilot 免費版 / 專業版 / 專業增強版 / 學生版
     [
       /^GitHub Copilot (Free|Pro\+?|Student) is active for your account$/,
-      (_, plan: string) => `你的帳號已啟用 GitHub Copilot ${copilotPlan(plan)}`,
+      (_, plan: string) => `你的帳號已啟用 GitHub Copilot ${copilotPlan(plan)}`
     ],
     [/^Copilot (Free|Pro\+?|Student) subscription$/, (_, plan: string) => `Copilot ${copilotPlan(plan)}訂閱`],
     [/^Your GitHub Copilot subscription will renew in (\d+) days?\.$/, '你的 GitHub Copilot 訂閱將在 $1 天後續訂。'],
@@ -467,7 +452,7 @@ export default {
     [/^(\$[\d,.]+) \/ (\$[\d,.]+) budget$/, '$1 / $2 預算'],
     [
       /^(Included credits|Additional usage|Monthly limit): (\d+(?:\.\d+)?)% used$/,
-      (_, label: string, percent: string) => `${USAGE_LABEL[label] ?? label}：已使用 ${percent}%`,
+      (_, label: string, percent: string) => `${USAGE_LABEL[label] ?? label}：已使用 ${percent}%`
     ],
     [/^(\d+(?:\.\d+)?)% used$/, '已使用 $1%'],
     [new RegExp(`^Resets (${TIME_SOURCE})$`), (_, time: string) => joinCjk(translateTime(time), '重設')],
@@ -475,7 +460,7 @@ export default {
     // 模型策略（原文无逗号，译文不加）
     [
       /^Learn more about how GitHub Copilot serves (.+?) and confirm compatibility with your IDE in our documentation\.$/,
-      '在說明文件中瞭解 GitHub Copilot 如何提供 $1 並確認與你的 IDE 的相容性。',
+      '在說明文件中瞭解 GitHub Copilot 如何提供 $1 並確認與你的 IDE 的相容性。'
     ],
     [/^Learn more about how GitHub Copilot serves (.+)\.$/, '瞭解 GitHub Copilot 如何提供 $1。'],
     [/^You can use the latest (.+) model\.$/, '你可以使用最新的 $1 模型。'],
@@ -489,7 +474,7 @@ export default {
         const name = agentName(agent)
         const choose = joinCjk(joinCjk('選擇要啟用', name), '的儲存庫。')
         return `${choose}${joinCjk(name, '只有在儲存庫已啟用且 Copilot 授權政策允許時才可使用。')}`
-      },
+      }
     ],
     // match → 相符（术语表）；item → 項目
     [/^Matching ([\d,.]+[kKmM]?) repositor(?:y|ies)$/, '$1 個相符的儲存庫'],
@@ -500,23 +485,23 @@ export default {
     // 代码审查力度：「Default (Balanced)」等选项标签、上限来源、受上限影响的提示
     [
       new RegExp(`^(Default|Organization default|Enterprise default) \\(${REVIEW_EFFORT_SOURCE}\\)$`),
-      (_, label: string, tier: string) => `${EFFORT_DEFAULT[label] ?? label}（${reviewEffort(tier)}）`,
+      (_, label: string, tier: string) => `${EFFORT_DEFAULT[label] ?? label}（${reviewEffort(tier)}）`
     ],
     [
       new RegExp(`^(Organization|Enterprise|Inherited) limit \\(${REVIEW_EFFORT_SOURCE}\\)$`),
-      (_, source: string, tier: string) => `${EFFORT_LIMIT[source] ?? source}（${reviewEffort(tier)}）`,
+      (_, source: string, tier: string) => `${EFFORT_LIMIT[source] ?? source}（${reviewEffort(tier)}）`
     ],
     [
       new RegExp(`^Reviews use ${REVIEW_EFFORT_SOURCE} because of the maximum review effort\\.$`),
-      (_, tier: string) => `審查因最高審查強度限制而使用${reviewEffort(tier)}強度。`,
+      (_, tier: string) => `審查因最高審查強度限制而使用${reviewEffort(tier)}強度。`
     ],
     [
       /^Inherit the review effort level set by (?:your enterprise|the (.+) enterprise)$/,
-      (_, name: string) => joinCjk('繼承', `${enterpriseOwner(name)}設定的審查強度`),
+      (_, name: string) => joinCjk('繼承', `${enterpriseOwner(name)}設定的審查強度`)
     ],
     [
       /^Use the maximum review effort set by (?:your enterprise|the (.+) enterprise)$/,
-      (_, name: string) => joinCjk('使用', `${enterpriseOwner(name)}設定的最高審查強度`),
-    ],
-  ],
+      (_, name: string) => joinCjk('使用', `${enterpriseOwner(name)}設定的最高審查強度`)
+    ]
+  ]
 } satisfies PageDictionary

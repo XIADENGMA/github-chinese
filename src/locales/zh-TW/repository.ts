@@ -16,12 +16,4 @@ import sidebar from './repository/sidebar'
  * 并合并 codespaces 词典中含变量的 Code 下拉规则（放在最后）。
  * 存储库标签导航（Code、Issues 等）位于全局导航，由 common 收录。
  */
-export default mergeDictionaries(
-  header,
-  overview,
-  banners,
-  empty,
-  sidebar,
-  pages,
-  codespacesRepoRules,
-) satisfies PageDictionary
+export default mergeDictionaries(header, overview, banners, empty, sidebar, pages, codespacesRepoRules) satisfies PageDictionary

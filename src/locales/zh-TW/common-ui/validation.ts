@@ -36,7 +36,7 @@ const FIELDS: Readonly<Record<string, string>> = {
   URL: 'URL',
   Username: '使用者名稱',
   Value: '值',
-  Website: '網站',
+  Website: '網站'
 }
 
 /** 错误：字段名之后的部分 */
@@ -56,33 +56,30 @@ const MESSAGES: Readonly<Record<string, string>> = {
   'is not a number': '不是數字',
   'is not included in the list': '不在可選範圍內',
   'must be accepted': '必須接受',
-  'contains invalid characters': '包含無效字元',
+  'contains invalid characters': '包含無效字元'
 }
 
 /** 带字符数的错误：is too long (maximum is 100 characters)；COUNTED_SOURCE 不含捕获组，拼进 VALIDATION_RE */
 const COUNTED_SOURCE = String.raw`is (?:too long|too short|the wrong length) \((?:maximum is|minimum is|should be) \d+ characters?\)`
-const COUNTED_RE =
-  /^is (too long|too short|the wrong length) \((?:maximum is|minimum is|should be) (\d+) characters?\)$/
+const COUNTED_RE = /^is (too long|too short|the wrong length) \((?:maximum is|minimum is|should be) (\d+) characters?\)$/
 const COUNTED: Readonly<Record<string, (count: string) => string>> = {
-  'too long': (count) => `過長（上限為 ${count} 個字元）`,
-  'too short': (count) => `太短（至少 ${count} 個字元）`,
-  'the wrong length': (count) => `長度不正確（應為 ${count} 個字元）`,
+  'too long': count => `過長（上限為 ${count} 個字元）`,
+  'too short': count => `太短（至少 ${count} 個字元）`,
+  'the wrong length': count => `長度不正確（應為 ${count} 個字元）`
 }
 
 /** 键拼成正则：长的在前（Callback URL 先于 URL），转义正则元字符 */
 function alternatives(keys: readonly string[]): string {
   return [...keys]
     .sort((a, b) => b.length - a.length || a.localeCompare(b))
-    .map((key) => key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+    .map(key => key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
     .join('|')
 }
 
 /** 字段名的正则片段（不含捕获组）：其他页面的「X is invalid」规则据此让出校验句 */
 export const VALIDATION_FIELD_SOURCE = alternatives(Object.keys(FIELDS))
 
-const VALIDATION_RE = new RegExp(
-  `^(${VALIDATION_FIELD_SOURCE}) (${alternatives(Object.keys(MESSAGES))}|${COUNTED_SOURCE})(\\.?)$`,
-)
+const VALIDATION_RE = new RegExp(`^(${VALIDATION_FIELD_SOURCE}) (${alternatives(Object.keys(MESSAGES))}|${COUNTED_SOURCE})(\\.?)$`)
 
 /** VALIDATION_RE 匹配到的错误一定在两张表之一 */
 function message(text: string): string {
@@ -95,9 +92,6 @@ function message(text: string): string {
 export default {
   regexp: [
     // Name can't be blank → 名稱不能為空白；Description is too long (maximum is 100 characters). → 描述過長（上限為 100 個字元）。
-    [
-      VALIDATION_RE,
-      (_, field: string, error: string, dot: string) => `${joinCjk(FIELDS[field]!, message(error))}${dot ? '。' : ''}`,
-    ],
-  ],
+    [VALIDATION_RE, (_, field: string, error: string, dot: string) => `${joinCjk(FIELDS[field]!, message(error))}${dot ? '。' : ''}`]
+  ]
 } satisfies PageDictionary

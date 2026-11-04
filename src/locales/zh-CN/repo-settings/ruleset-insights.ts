@@ -5,7 +5,7 @@ const RESULT: Readonly<Record<string, string>> = {
   passed: '通过',
   failed: '失败',
   bypassed: '被绕过',
-  skipped: '已跳过',
+  skipped: '已跳过'
 }
 
 /** 单项结果：2 rulesets passed */
@@ -18,7 +18,7 @@ const RESULT_PART = /^(\d+\+?) rulesets? (passed|failed|bypassed|skipped)$/
 function translateResults(match: string): string {
   return match
     .split(/, | and /)
-    .map((part) => {
+    .map(part => {
       const [, count = '', result = ''] = RESULT_PART.exec(part) ?? []
       return `${count} 个规则集${RESULT[result] ?? result}`
     })
@@ -52,8 +52,7 @@ export default {
     'Try expanding your search or creating a new ruleset in evaluate mode': '尝试扩大搜索范围或以评估模式新建规则集',
     'Rule insights search timed out': '规则见解搜索超时',
     "Rule insights couldn't be loaded": '无法加载规则见解',
-    'Something went wrong while loading rule evaluations. Try reloading in a few moments.':
-      '加载规则评估时出错。请稍后重新加载。',
+    'Something went wrong while loading rule evaluations. Try reloading in a few moments.': '加载规则评估时出错。请稍后重新加载。',
     "Rule insights couldn't be loaded. Something went wrong while loading rule evaluations. Try reloading in a few moments.":
       '无法加载规则见解。加载规则评估时出错。请稍后重新加载。',
     'Successes, failures, and bypasses over time': '成功、失败与绕过趋势',
@@ -79,8 +78,7 @@ export default {
     'Rules passed, but PR stack failed': '规则已通过，但 PR 堆栈失败',
     'All rules passed': '所有规则均已通过',
     'No rulesets ran': '没有运行任何规则集',
-    'Push rules blocked this update, preventing other rulesets from applying.':
-      '推送规则阻止了此更新，其他规则集未能应用。',
+    'Push rules blocked this update, preventing other rulesets from applying.': '推送规则阻止了此更新，其他规则集未能应用。',
     'Other updates in this push were blocked impacting this change.': '此推送中的其他更新被阻止，影响了此更改。',
     'This update was fast-forwarded. A new merge queue commit was not created and status checks were not re-evaluated during the merge queue.':
       '此更新已快进。合并队列中未创建新的合并队列提交，也未重新评估状态检查。',
@@ -113,7 +111,7 @@ export default {
     'Provider hooks': '提供程序钩子',
     'Rules had almost no time to run. The request used most of its time budget before rule evaluation started, so this is usually caused by upstream delays rather than by the rules themselves.':
       '规则几乎没有运行时间。请求在规则评估开始前已用掉大部分时间预算，这通常由上游延迟而非规则本身导致。',
-    'View warning': '查看警告',
+    'View warning': '查看警告'
   },
   scoped: {
     Bypass: '绕过',
@@ -142,37 +140,31 @@ export default {
     '(renamed from': '（重命名自',
     // 绕过请求：<a>Bypass request</a> approved by <user>
     'approved by': '批准者',
-    'rejected by': '拒绝者',
+    'rejected by': '拒绝者'
   },
   regexp: [
     // 详细信息对话框标题下的结果：2 rulesets passed and 1 ruleset failed
     [
       /^\d+\+? rulesets? (?:passed|failed|bypassed|skipped)(?:(?:, | and )\d+\+? rulesets? (?:passed|failed|bypassed|skipped)){0,3}$/,
-      translateResults,
+      translateResults
     ],
     // 规则集行：2 rules failed
-    [
-      /^(\d+\+?) rules? (failed|bypassed|skipped)$/,
-      (_, count: string, result: string) => `${count} 条规则${RESULT[result] ?? result}`,
-    ],
+    [/^(\d+\+?) rules? (failed|bypassed|skipped)$/, (_, count: string, result: string) => `${count} 条规则${RESULT[result] ?? result}`],
     // 合并组被阻止：Merge group of 3 pull requests blocked
     [/^Merge group of (\d+) pull requests blocked$/, '包含 $1 个拉取请求的合并组被阻止'],
     // 工作流运行：triggered a pull_request workflow run
     [/^triggered an? ([\w-]+) workflow run$/, '触发了 $1 工作流运行'],
     // 堆栈详细信息
     [/^Stack position: (\d+)$/, '堆栈位置：$1'],
-    [
-      /^Final merge failed: (.{1,200})$/,
-      (_, reason: string) => `最终合并失败：${reason === 'Unknown reason' ? '未知原因' : reason}`,
-    ],
+    [/^Final merge failed: (.{1,200})$/, (_, reason: string) => `最终合并失败：${reason === 'Unknown reason' ? '未知原因' : reason}`],
     // 绕过请求的其他处理人：and 2 others.
     [/^and (\d+) others\.$/, '及另外 $1 人。'],
     // 违规列表：Found 120 violations (showing first 100)
-    [/^Found (\d+) violations \(showing first (\d+)\)$/, '发现 $1 处违规（显示前 $2 处）'],
+    [/^Found (\d+) violations \(showing first (\d+)\)$/, '发现 $1 处违规（显示前 $2 处）']
   ],
   // 运行记录的分支重命名注记：<span> (renamed to <BranchName>新分支</BranchName>)</span>，右括号是单独的文本
   inline: [
     ['(renamed to {})', '（重命名为 {}）'],
-    ['(renamed from {})', '（重命名自 {}）'],
-  ],
+    ['(renamed from {})', '（重命名自 {}）']
+  ]
 } satisfies PageDictionary

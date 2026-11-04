@@ -55,10 +55,8 @@ export default {
     'Delete team': '删除团队',
 
     // 加入申请
-    'Membership requested. We’ll let you know once an administrator has reviewed your request.':
-      '已申请加入。管理员审查后会通知你。',
-    "Membership requested. We'll let you know once an administrator has reviewed your request.":
-      '已申请加入。管理员审查后会通知你。',
+    'Membership requested. We’ll let you know once an administrator has reviewed your request.': '已申请加入。管理员审查后会通知你。',
+    "Membership requested. We'll let you know once an administrator has reviewed your request.": '已申请加入。管理员审查后会通知你。',
     'Okay, we’ve cancelled your request to join this team.': '已取消加入此团队的申请。',
     "Okay, we've cancelled your request to join this team.": '已取消加入此团队的申请。',
     'Request to join': '申请加入',
@@ -82,8 +80,7 @@ export default {
     'Members of this organization can see and': '此组织的成员可以查看和',
     '@mention': '@提及',
     'this team.': '此团队。',
-    'A visible team can be seen and @mentioned by every member of this organization.':
-      '可见团队可以被此组织的所有成员查看和 @提及。',
+    'A visible team can be seen and @mentioned by every member of this organization.': '可见团队可以被此组织的所有成员查看和 @提及。',
     'A secret team can only be seen by its members and may not be nested.': '机密团队只有其成员可见，且不能嵌套。',
     'Team notifications': '团队通知',
     'Everyone will be notified when the team is @mentioned.': '团队被 @提及时，所有人都会收到通知。',
@@ -96,8 +93,7 @@ export default {
     'Danger zone': '危险区域',
     'Scheduled reminders': '预定提醒',
     'Changing the team name will break past @mentions.': '更改团队名称会使过去的 @提及失效。',
-    'You may also drag and drop an image from your computer. The image must be less than 1MB.':
-      '也可以从电脑拖放图片。图片须小于 1MB。',
+    'You may also drag and drop an image from your computer. The image must be less than 1MB.': '也可以从电脑拖放图片。图片须小于 1MB。',
     'Delete this team': '删除此团队',
     'Are you sure you want to delete this team?': '确定要删除此团队吗？',
     'Once deleted, it will be gone forever.': '删除后将无法恢复。',
@@ -147,6 +143,6 @@ export default {
     'Select a parent team': '选择父团队',
     'Confirm new parent team': '确认新父团队',
     'Clear selected value': '清除所选值',
-    'Add a team': '添加团队',
-  },
+    'Add a team': '添加团队'
+  }
 } satisfies PageDictionary

@@ -41,15 +41,15 @@ const LOCALES: readonly Locale[] = [
     index: 0,
     dict: cnSecurityPages,
     own: createMatcher([['common', cnSecurityPages]]),
-    full: createMatcher(zhCN),
+    full: createMatcher(zhCN)
   },
   {
     name: 'zh-TW',
     index: 1,
     dict: twSecurityPages,
     own: createMatcher([['common', twSecurityPages]]),
-    full: createMatcher(zhTW),
-  },
+    full: createMatcher(zhTW)
+  }
 ]
 
 /** 本词典的代表词条 */
@@ -62,22 +62,13 @@ const STATIC_CASES: readonly (readonly [string, Pair])[] = [
   ["Adopted by the world's leading organizations", ['全球领先组织纷纷采用', '全球領先組織紛紛採用']],
   ['Head of development services and tools at SAP', ['SAP 开发服务与工具负责人', 'SAP 開發服務和工具負責人']],
   ['Lead developer', ['首席开发人员', '首席開發人員']],
-  [
-    'community manager of security at Otto GmbH & Co. KGaA',
-    ['Otto GmbH & Co. KGaA 安全社区经理', 'Otto GmbH & Co. KGaA 安全性社群經理'],
-  ],
+  ['community manager of security at Otto GmbH & Co. KGaA', ['Otto GmbH & Co. KGaA 安全社区经理', 'Otto GmbH & Co. KGaA 安全性社群經理']],
   ['per active committer/month', ['每个活跃提交者/月', '每位活躍提交者/月']],
   ['Add-on', ['附加组件', '附加元件']],
   ['28 min', ['28 分钟', '28 分鐘']],
   ['3X', ['3 倍', '3 倍']],
-  [
-    'Of alert types include AI-powered code suggestions',
-    ['警报类型提供 AI 驱动的代码建议', '警示類型提供 AI 驅動的程式碼建議'],
-  ],
-  [
-    'Secrets prevented from leaking on GitHub in 2024',
-    ['2024 年在 GitHub 上阻止泄露的机密', '2024 年在 GitHub 上成功阻止外洩的機密'],
-  ],
+  ['Of alert types include AI-powered code suggestions', ['警报类型提供 AI 驱动的代码建议', '警示類型提供 AI 驅動的程式碼建議']],
+  ['Secrets prevented from leaking on GitHub in 2024', ['2024 年在 GitHub 上阻止泄露的机密', '2024 年在 GitHub 上成功阻止外洩的機密']],
   ['What is GitHub Advanced Security?', ['什么是 GitHub 高级安全？', '什麼是 GitHub 進階安全性？']],
   ['What is SLSA and SLSA level 3?', ['什么是 SLSA 和 SLSA 级别 3？', '什麼是 SLSA 和 SLSA 等級 3？']],
   ['GitHub Code Security', ['GitHub 代码安全', 'GitHub 程式碼安全性']],
@@ -90,65 +81,56 @@ const STATIC_CASES: readonly (readonly [string, Pair])[] = [
   ['Videos', ['视频', '影片']],
   [
     'Use AI to detect unstructured like passwords—without the noise.',
-    ['使用 AI 检测密码等非结构化机密——免受误报干扰。', '使用 AI 偵測密碼等非結構化機密——免受誤報干擾。'],
+    ['使用 AI 检测密码等非结构化机密——免受误报干扰。', '使用 AI 偵測密碼等非結構化機密——免受誤報干擾。']
   ],
   [
     'Play video. Thumbnail description: What is GitHub Secret Protection?',
-    ['播放视频。缩略图说明：什么是 GitHub 机密保护？', '播放影片。縮圖說明：什麼是 GitHub 機密保護？'],
+    ['播放视频。缩略图说明：什么是 GitHub 机密保护？', '播放影片。縮圖說明：什麼是 GitHub 機密保護？']
   ],
   ['Supply-chain Levels for Software Artifacts (SLSA)', ['软件工件供应链级别 (SLSA)', '軟體成品供應鏈等級 (SLSA)']],
   [
     'GitHub’s API stays secure with ISO, SOC 2, and GDPR.',
-    [
-      'GitHub 的 API 符合 ISO、SOC 2 和 GDPR 要求，始终安全。',
-      'GitHub 的 API 符合 ISO、SOC 2 和 GDPR 規範，安全無虞。',
-    ],
+    ['GitHub 的 API 符合 ISO、SOC 2 和 GDPR 要求，始终安全。', 'GitHub 的 API 符合 ISO、SOC 2 和 GDPR 規範，安全無虞。']
   ],
   [
     'Postmates uses GitHub Advanced Security to catch vulnerabilities',
-    ['Postmates 使用 GitHub 高级安全发现漏洞', 'Postmates 使用 GitHub 進階安全性揪出漏洞'],
+    ['Postmates 使用 GitHub 高级安全发现漏洞', 'Postmates 使用 GitHub 進階安全性揪出漏洞']
   ],
   [
     'Providers get real-time alerts when their tokens appear in public code, enabling them to notify, quarantine, or revoke secrets.',
     [
       '提供程序的令牌出现在公共代码中时，提供程序会实时收到警报，以便通知、隔离或撤销机密。',
-      '提供者的權杖出現在公開程式碼中時，提供者會即時收到警示，以便通知、隔離或撤銷機密。',
-    ],
+      '提供者的權杖出現在公開程式碼中時，提供者會即時收到警示，以便通知、隔離或撤銷機密。'
+    ]
   ],
   // DOM 切分的变体（结尾句点单独成节点）与片段兜底（逐个节点匹配）
   ['Learn more about GitHub security risk assessments', ['了解 GitHub 安全风险评估', '瞭解 GitHub 安全性風險評估']],
   [
     'GitHub Actions and Artifact Attestations greatly simplify the journey to SLSA Level 3',
-    [
-      'GitHub 操作和工件证明可大大简化达到 SLSA 级别 3 的过程',
-      'GitHub 動作和成品證明可大幅簡化達成 SLSA 等級 3 的過程',
-    ],
+    ['GitHub 操作和工件证明可大大简化达到 SLSA 级别 3 的过程', 'GitHub 動作和成品證明可大幅簡化達成 SLSA 等級 3 的過程']
   ],
   ['empowers our developers', ['为我们的开发人员提供有力支持', '為我們的開發人員提供強大助力']],
-  ['GitHub security risk assessments', ['GitHub 安全风险评估', 'GitHub 安全性風險評估']],
+  ['GitHub security risk assessments', ['GitHub 安全风险评估', 'GitHub 安全性風險評估']]
 ]
 
 /** 常见问题长段答案：只断言关键译法（revoke 作“撤销”，easier / as they go 不漏译） */
 const FAQ_PHRASE_CASES: readonly (readonly [string, Pair])[] = [
   [
     'GitHub Advanced Security (GHAS) encompasses GitHub’s application security products comprising GitHub Secret Protection and GitHub Code Security. GHAS adds cutting-edge tools for static analysis, software composition analysis, and secret scanning to the GitHub platform that developers already know and love. Unlike traditional application security packages that burden the software development toolchain with complex workflows that inhibit adoption, GHAS makes it easy for developers to find and fix vulnerabilities earlier in the software development life cycle.',
-    ['更早、更轻松地发现并修复漏洞。', '更早、更輕鬆地找出並修正漏洞。'],
+    ['更早、更轻松地发现并修复漏洞。', '更早、更輕鬆地找出並修正漏洞。']
   ],
   [
     'Unlike third-party security add-ons, GitHub Advanced Security operates entirely in the native GitHub workflows that developers already know and love. By making it easier for developers to remediate vulnerabilities as they go, GitHub Advanced Security frees time for security teams to focus on critical strategies that protect businesses, customers, and communities from application-based vulnerabilities.',
-    [
-      'GitHub 高级安全让开发人员能够更轻松地边开发边修复漏洞，',
-      'GitHub 進階安全性讓開發人員能更輕鬆地邊開發邊修復漏洞，',
-    ],
+    ['GitHub 高级安全让开发人员能够更轻松地边开发边修复漏洞，', 'GitHub 進階安全性讓開發人員能更輕鬆地邊開發邊修復漏洞，']
   ],
   [
     'Unlike third-party security add-ons, GitHub’s supply chain features operate entirely in the native GitHub workflows that developers already know and love. By making it easier for developers to remediate vulnerabilities as they go, GitHub frees time for security teams to focus on critical strategies that protect businesses, customers, and communities from application-based vulnerabilities.',
-    ['GitHub 让开发人员能够更轻松地边开发边修复漏洞，', 'GitHub 讓開發人員能更輕鬆地邊開發邊修復漏洞，'],
+    ['GitHub 让开发人员能够更轻松地边开发边修复漏洞，', 'GitHub 讓開發人員能更輕鬆地邊開發邊修復漏洞，']
   ],
   [
     'GitHub Secret Protection detects and prevents secret leaks continuously in real-time, proactively blocking sensitive credentials from being pushed to a repository with push protection. With a remarkably low false positive rate and approximately 150 service provider integrations, it enables rapid credential revocation and rotation, enhancing developer productivity.',
-    ['快速撤销和轮换凭据', '快速撤銷和輪替認證資訊'],
-  ],
+    ['快速撤销和轮换凭据', '快速撤銷和輪替認證資訊']
+  ]
 ]
 
 /** 其他文件已收录、这几页沿用的全局词条：本词典不重复收录 */
@@ -161,7 +143,7 @@ const EXISTING_CASES: readonly (readonly [string, Pair])[] = [
   ['Provider patterns', ['提供程序模式', '提供者模式']],
   ['Dependency graph', ['依赖项关系图', '相依性圖表']],
   ['See pricing', ['查看价格', '查看定價']],
-  ['documentation', ['文档', '說明文件']],
+  ['documentation', ['文档', '說明文件']]
 ]
 
 /** 不收录：营销横幅（归 marketing.ts）、可能与用户内容同形的单词、数字与货币代码、品牌词 */
@@ -172,7 +154,7 @@ const NOT_ADDED: readonly string[] = [
   'CodeQL',
   'DevSecOps',
   'Register virtually',
-  'Day 1: Opening Keynote begins in',
+  'Day 1: Opening Keynote begins in'
 ]
 
 /** 相邻文本节点拼成的整段（链接未渲染成元素）：按句查词条，句数 2～6 */
@@ -181,37 +163,37 @@ const JOINED_CASES: readonly (readonly [string, Pair])[] = [
     'GitHub offers a range of features to help you understand the dependencies and secure the dependencies in your environment, and to secure your GitHub accounts and build system.',
     [
       'GitHub 提供一系列功能，帮助你了解并保护环境中的依赖项，以及保护你的 GitHub 帐户和构建系统。',
-      'GitHub 提供一系列功能，協助你瞭解並保護環境中的相依項目，以及保護你的 GitHub 帳號和建置系統。',
-    ],
+      'GitHub 提供一系列功能，協助你瞭解並保護環境中的相依項目，以及保護你的 GitHub 帳號和建置系統。'
+    ]
   ],
   [
     'GitHub offers a range of features to help you understand the dependencies and secure the dependencies in your environment, and to secure your GitHub accounts and build system',
     [
       'GitHub 提供一系列功能，帮助你了解并保护环境中的依赖项，以及保护你的 GitHub 帐户和构建系统',
-      'GitHub 提供一系列功能，協助你瞭解並保護環境中的相依項目，以及保護你的 GitHub 帳號和建置系統',
-    ],
+      'GitHub 提供一系列功能，協助你瞭解並保護環境中的相依項目，以及保護你的 GitHub 帳號和建置系統'
+    ]
   ],
   [
     'You can export a software bill of materials or SBOM for your repository from the GitHub dependency graph. SBOMs allow transparency into your open source usage and help expose supply chain vulnerabilities, reducing supply chain risks.',
     [
       '你可以从 GitHub 依赖项关系图为存储库导出软件物料清单 (SBOM)。SBOM 让你清楚了解开源组件的使用情况，并帮助发现供应链漏洞，降低供应链风险。',
-      '你可以從 GitHub 相依性圖表為儲存庫匯出軟體物料清單 (SBOM)。SBOM 能讓你清楚掌握開源元件的使用情形，並協助揭露供應鏈漏洞，降低供應鏈風險。',
-    ],
+      '你可以從 GitHub 相依性圖表為儲存庫匯出軟體物料清單 (SBOM)。SBOM 能讓你清楚掌握開源元件的使用情形，並協助揭露供應鏈漏洞，降低供應鏈風險。'
+    ]
   ],
   [
     'Most of GitHub’s supply chain features are available for free to all users. A select few advanced features are available to private repos only in GitHub Code Security. See pricing.',
     [
       'GitHub 的大多数供应链功能对所有用户免费开放。少数高级功能仅在 GitHub 代码安全中面向专用存储库提供。查看价格。',
-      'GitHub 大部分的供應鏈功能都免費提供給所有使用者。少數進階功能僅在 GitHub 程式碼安全性中提供給私人儲存庫。查看定價。',
-    ],
+      'GitHub 大部分的供應鏈功能都免費提供給所有使用者。少數進階功能僅在 GitHub 程式碼安全性中提供給私人儲存庫。查看定價。'
+    ]
   ],
   [
     'The Code Security Risk Assessment is a free evaluation that analyzes repositories to identify potential code-level vulnerabilities and highlight areas where GitHub Code Security can help improve security posture. Learn more about GitHub security risk assessments.',
     [
       '代码安全风险评估是一项免费评估，它会分析存储库，找出潜在的代码级漏洞，并指出 GitHub 代码安全可以帮助改善安全态势的方面。了解 GitHub 安全风险评估。',
-      '程式碼安全性風險評估是一項免費評估，會分析儲存庫以找出潛在的程式碼層級漏洞，並指出 GitHub 程式碼安全性可協助改善安全態勢的地方。瞭解 GitHub 安全性風險評估。',
-    ],
-  ],
+      '程式碼安全性風險評估是一項免費評估，會分析儲存庫以找出潛在的程式碼層級漏洞，並指出 GitHub 程式碼安全性可協助改善安全態勢的地方。瞭解 GitHub 安全性風險評估。'
+    ]
+  ]
 ]
 
 /** 被链接拆开的字符串句型：{} 为元素槽位 */
@@ -219,22 +201,18 @@ const INLINE_CASES: readonly (readonly [string, Pair])[] = [
   ['{} empowers our developers', ['{}为我们的开发人员提供有力支持', '{}為我們的開發人員提供強大助力']],
   [
     'Yes. GitHub Advanced Security is available as an {} for Azure DevOps.',
-    ['是的。GitHub 高级安全可作为 Azure DevOps 的{}使用。', '是的。GitHub 進階安全性可作為 Azure DevOps 的{}使用。'],
+    ['是的。GitHub 高级安全可作为 Azure DevOps 的{}使用。', '是的。GitHub 進階安全性可作為 Azure DevOps 的{}使用。']
   ],
   [
     'Yes. As with all GitHub products, {} for GitHub Advanced Security is publicly available.',
-    [
-      '是的。与所有 GitHub 产品一样，GitHub 高级安全的{}也是公开的。',
-      '是的。與所有 GitHub 產品一樣，GitHub 進階安全性的{}也是公開的。',
-    ],
+    ['是的。与所有 GitHub 产品一样，GitHub 高级安全的{}也是公开的。', '是的。與所有 GitHub 產品一樣，GitHub 進階安全性的{}也是公開的。']
   ],
-  ['Yes! Please visit {} to learn more.', ['是的！请访问{}了解更多。', '是的！請造訪{}以瞭解詳情。']],
+  ['Yes! Please visit {} to learn more.', ['是的！请访问{}了解更多。', '是的！請造訪{}以瞭解詳情。']]
 ]
 
 /** 客户案例句型的开头与结尾：中间是客户名槽位 */
 const CUSTOMERS_HEAD = 'Read our {} to learn how customers like'
-const CUSTOMERS_TAIL =
-  'use GitHub Advanced Security to secure applications and accelerate the software development lifecycle.'
+const CUSTOMERS_TAIL = 'use GitHub Advanced Security to secure applications and accelerate the software development lifecycle.'
 
 /** 客户案例句型（正则）：客户名个数不定，and 前可有逗号 */
 const CUSTOMER_CASES: readonly (readonly [string, Pair])[] = [
@@ -242,37 +220,37 @@ const CUSTOMER_CASES: readonly (readonly [string, Pair])[] = [
     `${CUSTOMERS_HEAD} {} and {} ${CUSTOMERS_TAIL}`,
     [
       '阅读我们的{}，了解 {} 和 {} 等客户如何使用 GitHub 高级安全保护应用并加快软件开发生命周期。',
-      '閱讀我們的{}，瞭解 {} 和 {} 等客戶如何使用 GitHub 進階安全性保護應用程式並加速軟體開發生命週期。',
-    ],
+      '閱讀我們的{}，瞭解 {} 和 {} 等客戶如何使用 GitHub 進階安全性保護應用程式並加速軟體開發生命週期。'
+    ]
   ],
   [
     `${CUSTOMERS_HEAD} {}, {}, and {} ${CUSTOMERS_TAIL}`,
     [
       '阅读我们的{}，了解 {}、{} 和 {} 等客户如何使用 GitHub 高级安全保护应用并加快软件开发生命周期。',
-      '閱讀我們的{}，瞭解 {}、{} 和 {} 等客戶如何使用 GitHub 進階安全性保護應用程式並加速軟體開發生命週期。',
-    ],
+      '閱讀我們的{}，瞭解 {}、{} 和 {} 等客戶如何使用 GitHub 進階安全性保護應用程式並加速軟體開發生命週期。'
+    ]
   ],
   [
     `${CUSTOMERS_HEAD} {}, {} and {} ${CUSTOMERS_TAIL}`,
     [
       '阅读我们的{}，了解 {}、{} 和 {} 等客户如何使用 GitHub 高级安全保护应用并加快软件开发生命周期。',
-      '閱讀我們的{}，瞭解 {}、{} 和 {} 等客戶如何使用 GitHub 進階安全性保護應用程式並加速軟體開發生命週期。',
-    ],
+      '閱讀我們的{}，瞭解 {}、{} 和 {} 等客戶如何使用 GitHub 進階安全性保護應用程式並加速軟體開發生命週期。'
+    ]
   ],
   [
     `${CUSTOMERS_HEAD} {}, {}, {}, and {} ${CUSTOMERS_TAIL}`,
     [
       '阅读我们的{}，了解 {}、{}、{} 和 {} 等客户如何使用 GitHub 高级安全保护应用并加快软件开发生命周期。',
-      '閱讀我們的{}，瞭解 {}、{}、{} 和 {} 等客戶如何使用 GitHub 進階安全性保護應用程式並加速軟體開發生命週期。',
-    ],
-  ],
+      '閱讀我們的{}，瞭解 {}、{}、{} 和 {} 等客戶如何使用 GitHub 進階安全性保護應用程式並加速軟體開發生命週期。'
+    ]
+  ]
 ]
 
 const CUSTOMER_MISSES: readonly string[] = [
   `${CUSTOMERS_HEAD} {} ${CUSTOMERS_TAIL}`,
   `Read our customer stories to learn how customers like {} and {} ${CUSTOMERS_TAIL}`,
   `${CUSTOMERS_HEAD} {} and {} use GitHub Advanced Security.`,
-  `${CUSTOMERS_HEAD} {} or {} ${CUSTOMERS_TAIL}`,
+  `${CUSTOMERS_HEAD} {} or {} ${CUSTOMERS_TAIL}`
 ]
 
 /** 标签页标题：[标题, 路径, 期望] */
@@ -281,24 +259,20 @@ const TITLE_CASES: readonly (readonly [string, string, Pair])[] = [
   [
     'GitHub Advanced Security · Built-in protection for every repository',
     '/security/advanced-security',
-    ['GitHub 高级安全 · 为每个存储库提供内置保护', 'GitHub 進階安全性 · 為每個儲存庫提供內建保護'],
+    ['GitHub 高级安全 · 为每个存储库提供内置保护', 'GitHub 進階安全性 · 為每個儲存庫提供內建保護']
   ],
   [
     'GitHub Advanced Security · Built-in protection for every repository',
     '/security/plans',
-    ['GitHub 高级安全 · 为每个存储库提供内置保护', 'GitHub 進階安全性 · 為每個儲存庫提供內建保護'],
+    ['GitHub 高级安全 · 为每个存储库提供内置保护', 'GitHub 進階安全性 · 為每個儲存庫提供內建保護']
   ],
   ['GitHub Code Security', '/security/advanced-security/code-security', ['GitHub 代码安全', 'GitHub 程式碼安全性']],
   ['GitHub Secret Protection', '/security/advanced-security/secret-protection', ['GitHub 机密保护', 'GitHub 機密保護']],
-  [
-    'GitHub Supply Chain Security',
-    '/security/advanced-security/software-supply-chain',
-    ['GitHub 供应链安全', 'GitHub 供應鏈安全性'],
-  ],
+  ['GitHub Supply Chain Security', '/security/advanced-security/software-supply-chain', ['GitHub 供应链安全', 'GitHub 供應鏈安全性']]
 ]
 
 describe('安全产品介绍页作用域', () => {
-  it.each(URLS)('%s 只有 common', (url) => {
+  it.each(URLS)('%s 只有 common', url => {
     expect(detectPages(new URL(url))).toEqual(COMMON)
   })
 })
@@ -328,7 +302,7 @@ describe.each(LOCALES)('$name 安全产品介绍页词条', ({ index, dict, own,
     expect(full.translate(source, COMMON)).toBe(pair[index])
   })
 
-  it.each(NOT_ADDED)('不收录：%s', (source) => {
+  it.each(NOT_ADDED)('不收录：%s', source => {
     expect(own.translate(source, COMMON)).toBeUndefined()
   })
 
@@ -346,7 +320,7 @@ describe.each(LOCALES)('$name 安全产品介绍页词条', ({ index, dict, own,
     expect(full.translateInline(patternKey(source), COMMON)).toBe(pair[index])
   })
 
-  it.each(CUSTOMER_MISSES)('客户案例句型不匹配：%s', (source) => {
+  it.each(CUSTOMER_MISSES)('客户案例句型不匹配：%s', source => {
     expect(own.translateInline(patternKey(source), COMMON)).toBeUndefined()
   })
 
@@ -454,10 +428,10 @@ describe.each(LOCALES)('$name 安全产品介绍页', ({ index, full }) => {
 
   const securityQuote: Pair = [
     'GitHub 高级安全为我们的开发人员提供有力支持，让他们能够更早地发现并修复漏洞，从而加快产品上市速度，提升开发人员满意度。',
-    'GitHub 進階安全性為我們的開發人員提供強大助力，讓他們能更早找出並修正漏洞，加快產品上市速度，並提升開發人員滿意度。',
+    'GitHub 進階安全性為我們的開發人員提供強大助力，讓他們能更早找出並修正漏洞，加快產品上市速度，並提升開發人員滿意度。'
   ]
 
-  it.each([false, true])('/security 评价引言：<b> 内相邻文本节点（客户端渲染 %s）', (client) => {
+  it.each([false, true])('/security 评价引言：<b> 内相邻文本节点（客户端渲染 %s）', client => {
     translator = render(SECURITY_QUOTE_TEXT_HTML, full, SECURITY_URL, client)
     expect(shown('quote')).toBe(t(securityQuote))
     expect(shown('name')).toBe('Sample text')
@@ -474,28 +448,22 @@ describe.each(LOCALES)('$name 安全产品介绍页', ({ index, full }) => {
     expect(shown('quote')).toBe(t(securityQuote))
     expect(shown('role')).toBe(t(['首席开发人员', '首席開發人員']))
     expect(shown('q-azure')).toBe(
-      t([
-        '我可以将 GitHub 高级安全与 Microsoft Azure DevOps 一起使用吗？',
-        '我可以搭配 Microsoft Azure DevOps 使用 GitHub 進階安全性嗎？',
-      ]),
+      t(['我可以将 GitHub 高级安全与 Microsoft Azure DevOps 一起使用吗？', '我可以搭配 Microsoft Azure DevOps 使用 GitHub 進階安全性嗎？'])
     )
     expect(shown('a-azure')).toBe(
-      t([
-        '是的。GitHub 高级安全可作为 Azure DevOps 的附加组件使用。',
-        '是的。GitHub 進階安全性可作為 Azure DevOps 的附加元件使用。',
-      ]),
+      t(['是的。GitHub 高级安全可作为 Azure DevOps 的附加组件使用。', '是的。GitHub 進階安全性可作為 Azure DevOps 的附加元件使用。'])
     )
     expect(shown('a-customers')).toBe(
       t([
         '阅读我们的客户案例，了解 Octo Corp、Sample Labs 和 Hubot Inc 等客户如何使用 GitHub 高级安全保护应用并加快软件开发生命周期。',
-        '閱讀我們的客戶案例，瞭解 Octo Corp、Sample Labs 和 Hubot Inc 等客戶如何使用 GitHub 進階安全性保護應用程式並加速軟體開發生命週期。',
-      ]),
+        '閱讀我們的客戶案例，瞭解 Octo Corp、Sample Labs 和 Hubot Inc 等客戶如何使用 GitHub 進階安全性保護應用程式並加速軟體開發生命週期。'
+      ])
     )
     expect(shown('a-docs')).toBe(
       t([
         '是的。与所有 GitHub 产品一样，GitHub 高级安全的文档也是公开的。',
-        '是的。與所有 GitHub 產品一樣，GitHub 進階安全性的說明文件也是公開的。',
-      ]),
+        '是的。與所有 GitHub 產品一樣，GitHub 進階安全性的說明文件也是公開的。'
+      ])
     )
     expect(shown('a-services')).toBe(t(['是的！请访问专家服务了解更多。', '是的！請造訪專家服務以瞭解詳情。']))
     expect(shown('per')).toBe(t(['每个活跃提交者/月', '每位活躍提交者/月']))
@@ -503,30 +471,28 @@ describe.each(LOCALES)('$name 安全产品介绍页', ({ index, full }) => {
 
   it('/security/advanced-security/code-security：统计、评价引言、风险评估', () => {
     translator = render(CODE_HTML, full, CODE_URL)
-    expect(label('play')).toBe(
-      t(['播放视频。缩略图说明：什么是 GitHub 代码安全？', '播放影片。縮圖說明：什麼是 GitHub 程式碼安全性？']),
-    )
+    expect(label('play')).toBe(t(['播放视频。缩略图说明：什么是 GitHub 代码安全？', '播放影片。縮圖說明：什麼是 GitHub 程式碼安全性？']))
     expect(shown('video-title')).toBe(t(['什么是 GitHub 代码安全？', '什麼是 GitHub 程式碼安全性？']))
     expect([shown('stat-1'), shown('stat-1-text')]).toEqual([
       t(['28 分钟', '28 分鐘']),
-      t(['从发现漏洞到完成修复', '從偵測漏洞到完成修復']),
+      t(['从发现漏洞到完成修复', '從偵測漏洞到完成修復'])
     ])
     expect([shown('stat-2'), shown('stat-2-text')]).toEqual([
       '3 倍',
-      t(['Copilot 自动修复带来的平均修复提速', 'Copilot 自動修正帶來的平均修復加速']),
+      t(['Copilot 自动修复带来的平均修复提速', 'Copilot 自動修正帶來的平均修復加速'])
     ])
     expect(shown('quote')).toBe(
       t([
         'Copilot 自动修复简化了安全工作，它能即时标记漏洞并提出修复建议，在保障代码安全的同时，让团队腾出精力投入战略性工作。”',
-        'Copilot 自動修正簡化了安全性工作，它能即時標記漏洞並提出修正建議，在確保程式碼安全的同時，讓團隊騰出心力投入策略性工作。」',
-      ]),
+        'Copilot 自動修正簡化了安全性工作，它能即時標記漏洞並提出修正建議，在確保程式碼安全的同時，讓團隊騰出心力投入策略性工作。」'
+      ])
     )
     expect(shown('role')).toBe(t(['Otto GmbH & Co. KGaA 安全社区经理', 'Otto GmbH & Co. KGaA 安全性社群經理']))
     expect(label('modal')).toBe(
       t([
         '标题为“扫描组织”的对话框，显示已选择机密保护和代码安全的风险评估设置，以及“取消”和“继续”按钮。',
-        '標題為「掃描組織」的對話方塊，顯示已選取機密保護和程式碼安全性的風險評估設定，以及取消和繼續按鈕。',
-      ]),
+        '標題為「掃描組織」的對話方塊，顯示已選取機密保護和程式碼安全性的風險評估設定，以及取消和繼續按鈕。'
+      ])
     )
     expect(shown('q-risk')).toBe(t(['什么是代码安全风险评估？', '什麼是程式碼安全性風險評估？']))
     expect(shown('a-risk')).toBe(t(JOINED_CASES[4]![1]))
@@ -536,31 +502,28 @@ describe.each(LOCALES)('$name 安全产品介绍页', ({ index, full }) => {
     translator = render(SECRET_HTML, full, SECRET_URL)
     expect([shown('stat'), shown('stat-text')]).toEqual([
       '4.4M',
-      t(['2024 年在 GitHub 上阻止泄露的机密', '2024 年在 GitHub 上成功阻止外洩的機密']),
+      t(['2024 年在 GitHub 上阻止泄露的机密', '2024 年在 GitHub 上成功阻止外洩的機密'])
     ])
     expect(shown('a-risk')).toBe(
       t([
         '机密风险评估免费提供组织在其 GitHub 存储库中机密泄露情况的全面概览。它通过分析存储库中暴露的机密，帮助管理员和开发人员了解自身面临的潜在安全风险，并提供可付诸行动的修复见解。了解 GitHub 安全风险评估。',
-        '機密風險評估會免費提供組織在其 GitHub 儲存庫中機密外洩情況的全面總覽。它會分析儲存庫中暴露的機密，協助管理員和開發人員瞭解自身面臨的潛在安全性風險，並提供可據以修復的實用洞察。瞭解 GitHub 安全性風險評估。',
-      ]),
+        '機密風險評估會免費提供組織在其 GitHub 儲存庫中機密外洩情況的全面總覽。它會分析儲存庫中暴露的機密，協助管理員和開發人員瞭解自身面臨的潛在安全性風險，並提供可據以修復的實用洞察。瞭解 GitHub 安全性風險評估。'
+      ])
     )
   })
 
-  it.each([false, true])(
-    '/security/advanced-security/software-supply-chain：相邻文本节点的答案（客户端渲染 %s）',
-    (client) => {
-      translator = render(SUPPLY_HTML, full, SUPPLY_URL, client)
-      expect(shown('a-features')).toBe(t(JOINED_CASES[0]![1]))
-      expect(shown('a-slsa')).toBe(
-        t([
-          '软件工件供应链级别 (SLSA) 是一个框架，用于在软件工件的整个开发生命周期中提升其端到端完整性。它提供一套全面、循序渐进的方法，帮助你在软件供应链中建立完整性和来源保证。SLSA 级别 3 代表经过显著加固的软件供应链：构建高度隔离、源代码历史记录经过验证、来源受到严格控制，从而有力防范篡改，确保软件工件的完整性。GitHub 操作和工件证明可大大简化达到 SLSA 级别 3 的过程。',
-          '軟體成品供應鏈等級 (SLSA) 是一套架構，用於在軟體成品的整個開發生命週期中提升其端對端完整性。它提供一套全面且循序漸進的方法，協助你在軟體供應鏈中建立完整性和來源保證。SLSA 等級 3 代表經過大幅強化的軟體供應鏈：建置高度隔離、原始碼歷史記錄經過驗證、來源受到嚴格控管，能有效防範竄改，確保軟體成品的完整性。GitHub 動作和成品證明可大幅簡化達成 SLSA 等級 3 的過程。',
-        ]),
-      )
-      expect(shown('a-sbom')).toBe(t(JOINED_CASES[2]![1]))
-      expect(shown('a-pricing')).toBe(t(JOINED_CASES[3]![1]))
-    },
-  )
+  it.each([false, true])('/security/advanced-security/software-supply-chain：相邻文本节点的答案（客户端渲染 %s）', client => {
+    translator = render(SUPPLY_HTML, full, SUPPLY_URL, client)
+    expect(shown('a-features')).toBe(t(JOINED_CASES[0]![1]))
+    expect(shown('a-slsa')).toBe(
+      t([
+        '软件工件供应链级别 (SLSA) 是一个框架，用于在软件工件的整个开发生命周期中提升其端到端完整性。它提供一套全面、循序渐进的方法，帮助你在软件供应链中建立完整性和来源保证。SLSA 级别 3 代表经过显著加固的软件供应链：构建高度隔离、源代码历史记录经过验证、来源受到严格控制，从而有力防范篡改，确保软件工件的完整性。GitHub 操作和工件证明可大大简化达到 SLSA 级别 3 的过程。',
+        '軟體成品供應鏈等級 (SLSA) 是一套架構，用於在軟體成品的整個開發生命週期中提升其端對端完整性。它提供一套全面且循序漸進的方法，協助你在軟體供應鏈中建立完整性和來源保證。SLSA 等級 3 代表經過大幅強化的軟體供應鏈：建置高度隔離、原始碼歷史記錄經過驗證、來源受到嚴格控管，能有效防範竄改，確保軟體成品的完整性。GitHub 動作和成品證明可大幅簡化達成 SLSA 等級 3 的過程。'
+      ])
+    )
+    expect(shown('a-sbom')).toBe(t(JOINED_CASES[2]![1]))
+    expect(shown('a-pricing')).toBe(t(JOINED_CASES[3]![1]))
+  })
 
   it('/security/plans：计划卡片与功能对比表', () => {
     translator = render(PLANS_HTML, full, PLANS_URL)
@@ -569,12 +532,10 @@ describe.each(LOCALES)('$name 安全产品介绍页', ({ index, full }) => {
     expect([shown('col-free'), shown('col-team'), shown('col-enterprise')]).toEqual([
       t(['免费版', '免費版']),
       t(['团队', '團隊']),
-      t(['企业', '企業']),
+      t(['企业', '企業'])
     ])
     expect(shown('row-push')).toBe(t(['推送保护', '推送保護']))
-    expect(shown('row-push-text')).toBe(
-      t(['在机密进入代码前主动拦截，防止机密泄露。', '在機密進入程式碼前主動攔截，防止機密外洩。']),
-    )
+    expect(shown('row-push-text')).toBe(t(['在机密进入代码前主动拦截，防止机密泄露。', '在機密進入程式碼前主動攔截，防止機密外洩。']))
     expect([shown('cell-yes'), shown('cell-no')]).toEqual(['包含', '不包含'])
   })
 })

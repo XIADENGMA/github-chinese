@@ -41,7 +41,7 @@ const RESERVED_PATHS: ReadonlySet<string> = new Set([
   'site',
   'sponsors',
   'topics',
-  'trending',
+  'trending'
 ])
 
 /** 带所有者的一级路径：/orgs/<组织>/…、/users/<用户>/…（软件包等） */
@@ -88,9 +88,7 @@ export function parseRule(line: string): SearchBlockRule | undefined {
   if (url) {
     const path = ownerOfPath(url[1]!.replace(/\.git$/i, ''))
     if (!path) return undefined
-    return path.name === undefined
-      ? { kind: 'owner', owner: path.owner }
-      : { kind: 'repo', owner: path.owner, name: path.name }
+    return path.name === undefined ? { kind: 'owner', owner: path.owner } : { kind: 'repo', owner: path.owner, name: path.name }
   }
   const slash = text.indexOf('/')
   if (slash > 0) {
@@ -169,5 +167,5 @@ export function isBlockedResult(result: SearchResultInfo, list: SearchBlockList)
   if (result.repo !== undefined && list.repos.has(result.repo.toLowerCase())) return true
   if (list.keywords.length === 0) return false
   const text = result.text.toLowerCase()
-  return list.keywords.some((keyword) => text.includes(keyword))
+  return list.keywords.some(keyword => text.includes(keyword))
 }

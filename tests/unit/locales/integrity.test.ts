@@ -10,7 +10,7 @@ import {
   mergedFiles,
   overriddenKeys,
   placeOf,
-  registeredKeys,
+  registeredKeys
 } from '../../../scripts/locale-wiring'
 import { hasTopLevelAlternative } from '../../../src/core/regexp-index'
 import type { LocaleBundle, PageDictionary } from '../../../src/core/types'
@@ -33,18 +33,14 @@ async function loadLocale(locale: string, bundle: LocaleBundle): Promise<LocaleF
   const root = resolve('src/locales', locale)
   const modules = new Map(
     await Promise.all(
-      listDictionaryFiles(root).map(
-        async (file) => [file, (await import(pathToFileURL(file).href)) as Record<string, unknown>] as const,
-      ),
-    ),
+      listDictionaryFiles(root).map(async file => [file, (await import(pathToFileURL(file).href)) as Record<string, unknown>] as const)
+    )
   )
   const kinds = new Map([...modules].map(([file, module]) => [file, classifyModule(module, placeOf(file, root))]))
   const dicts = new Map(
-    [...modules].flatMap(([file, module]) =>
-      kinds.get(file) === 'dictionary' ? [[file, module.default as PageDictionary] as const] : [],
-    ),
+    [...modules].flatMap(([file, module]) => (kinds.get(file) === 'dictionary' ? [[file, module.default as PageDictionary] as const] : []))
   )
-  const top = [...dicts.keys()].filter((file) => placeOf(file, root) === 'top')
+  const top = [...dicts.keys()].filter(file => placeOf(file, root) === 'top')
   return {
     locale,
     bundle,
@@ -52,35 +48,33 @@ async function loadLocale(locale: string, bundle: LocaleBundle): Promise<LocaleF
     dicts,
     merged: mergedFiles(dicts, root),
     top,
-    sub: [...dicts.keys()].filter((file) => placeOf(file, root) === 'sub'),
-    registered: top.filter((file) => registeredKeys(dicts.get(file)!, bundle).length > 0),
+    sub: [...dicts.keys()].filter(file => placeOf(file, root) === 'sub'),
+    registered: top.filter(file => registeredKeys(dicts.get(file)!, bundle).length > 0)
   }
 }
 
 const LOCALES = [await loadLocale('zh-CN', zhCN), await loadLocale('zh-TW', zhTW)]
 
-describe.each(LOCALES.map((files) => [files.locale, files] as const))('%s 词典接线', (locale, files) => {
+describe.each(LOCALES.map(files => [files.locale, files] as const))('%s 词典接线', (locale, files) => {
   it('找到全部词典文件', () => {
     expect(files.top.map(displayPath)).toContain(`src/locales/${locale}/common.ts`)
     expect(files.sub.length).toBeGreaterThan(0)
   })
 
   it('每个词典文件都有默认导出（子目录里的共用工具模块除外）', () => {
-    expect(
-      [...files.kinds].filter(([, kind]) => kind === 'missing-default').map(([file]) => displayPath(file)),
-    ).toEqual([])
+    expect([...files.kinds].filter(([, kind]) => kind === 'missing-default').map(([file]) => displayPath(file))).toEqual([])
   })
 
-  it.each(files.top.map(displayPath))('%s 已在 index.ts 注册', (name) => {
-    const file = files.top.find((top) => displayPath(top) === name)!
+  it.each(files.top.map(displayPath))('%s 已在 index.ts 注册', name => {
+    const file = files.top.find(top => displayPath(top) === name)!
     expect(files.registered).toContain(file)
   })
 
-  it.each(files.sub.map(displayPath))('%s 已被注册的词典合并，且词条未被覆盖', (name) => {
-    const file = files.sub.find((sub) => displayPath(sub) === name)!
+  it.each(files.sub.map(displayPath))('%s 已被注册的词典合并，且词条未被覆盖', name => {
+    const file = files.sub.find(sub => displayPath(sub) === name)!
     const child = files.dicts.get(file)!
     if (isEmptyDictionary(child)) return
-    const parents = files.registered.filter((top) => files.merged.get(top)?.includes(file))
+    const parents = files.registered.filter(top => files.merged.get(top)?.includes(file))
     expect(parents.map(displayPath), '没有被任何已注册的词典合并').not.toEqual([])
     for (const parent of parents) {
       expect(isMerged(child, files.dicts.get(parent)!)).toBe(true)
@@ -97,14 +91,14 @@ function badRules(bundle: LocaleBundle): string[] {
   return bundle.flatMap(([key, dict]) =>
     [...(dict.regexp ?? []), ...(dict.labelRegexp ?? [])]
       .map(([pattern]) => pattern)
-      .filter((pattern) => /[muv]/.test(pattern.flags) || hasTopLevelAlternative(pattern))
-      .map((pattern) => `${key} ${String(pattern)}`),
+      .filter(pattern => /[muv]/.test(pattern.flags) || hasTopLevelAlternative(pattern))
+      .map(pattern => `${key} ${String(pattern)}`)
   )
 }
 
 describe.each([
   ['zh-CN', zhCN],
-  ['zh-TW', zhTW],
+  ['zh-TW', zhTW]
 ] as const)('%s 正则写法', (_, bundle) => {
   it('regexp、labelRegexp 不带 m / u / v 标志，顶层没有 |', () => {
     expect(badRules(bundle)).toEqual([])
@@ -119,10 +113,10 @@ it('正则写法检查含标签正则', () => {
         regexp: [[/^Sample$/, '示例']],
         labelRegexp: [
           [/^Sample$/m, '示例'],
-          [/^Sample$|^Text$/, '示例'],
-        ],
-      },
-    ],
+          [/^Sample$|^Text$/, '示例']
+        ]
+      }
+    ]
   ]
   expect(badRules(bundle)).toEqual(['issues /^Sample$/m', 'issues /^Sample$|^Text$/'])
 })

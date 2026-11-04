@@ -26,8 +26,7 @@ export default {
     // 新建 / 编辑
     '/ New prebuild configuration': '/ 新建预生成配置',
     '/ Edit configuration': '/ 编辑配置',
-    'Prebuilds consume storage space that will incur a billable charge. Learn more about':
-      '预生成会占用存储空间并产生费用。了解',
+    'Prebuilds consume storage space that will incur a billable charge. Learn more about': '预生成会占用存储空间并产生费用。了解',
     'prebuild configurations': '预生成配置',
     'Your prebuild will be built from the branch and configuration file selected below. Learn more about':
       '预生成将根据下方选择的分支和配置文件构建。了解',
@@ -76,7 +75,7 @@ export default {
     'Disable prebuild optimization': '禁用预生成优化',
     'This prevents codespaces from attempting to use an older image to speed up boot time. This could adversely affect performance.':
       '这会阻止代码空间尝试使用较旧的映像来加快启动，可能对性能产生不利影响。',
-    'Hide advanced options': '隐藏高级选项',
+    'Hide advanced options': '隐藏高级选项'
   },
   scoped: {
     Scheduled: '按计划',
@@ -92,10 +91,10 @@ export default {
     Saturday: '星期六',
     versions: '个版本',
     'Find a branch': '查找分支',
-    'Select branch': '选择分支',
+    'Select branch': '选择分支'
   },
   regexp: [
     // 模板历史记录：保留的版本数
-    [/^(\d+) versions?$/, '$1 个版本'],
-  ],
+    [/^(\d+) versions?$/, '$1 个版本']
+  ]
 } satisfies PageDictionary

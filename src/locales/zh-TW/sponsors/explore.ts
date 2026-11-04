@@ -17,7 +17,7 @@ const ORDERINGS: Readonly<Record<string, string>> = {
   'Fewest sponsors': '最少贊助者',
   'Newest Sponsors profile': '最新的贊助個人檔案',
   'Oldest Sponsors profile': '最舊的贊助個人檔案',
-  Unknown: '未知',
+  Unknown: '未知'
 }
 
 /** 生态系筛选按钮文字：All ecosystems / 2 ecosystems / npm */
@@ -44,20 +44,16 @@ export default {
 
     // 探索页：相依项目
     'None of your dependencies can be sponsored': '你的相依項目都無法贊助',
-    "You don't directly depend on any repositories whose maintainers can be sponsored.":
-      '你沒有直接相依於任何維護者可受贊助的儲存庫。',
-    'You don’t directly depend on any repositories whose maintainers can be sponsored.':
-      '你沒有直接相依於任何維護者可受贊助的儲存庫。',
+    "You don't directly depend on any repositories whose maintainers can be sponsored.": '你沒有直接相依於任何維護者可受贊助的儲存庫。',
+    'You don’t directly depend on any repositories whose maintainers can be sponsored.': '你沒有直接相依於任何維護者可受贊助的儲存庫。',
     'developers who maintain your dependencies': '位維護你相依項目的開發人員',
     'Explore people and projects': '探索人員和專案',
     'Bulk Sponsor': '批次贊助',
     'Sponsor multiple maintainers in one easy transaction.': '透過一筆交易輕鬆贊助多位維護者。',
     'owns or maintains.': '擁有或維護。',
     'owns or maintains': '擁有或維護',
-    "We check their maintainer status by seeing if they're listed in a repository's":
-      '我們藉由檢查對方是否列在儲存庫的',
-    'We check their maintainer status by seeing if they’re listed in a repository’s':
-      '我們藉由檢查對方是否列在儲存庫的',
+    "We check their maintainer status by seeing if they're listed in a repository's": '我們藉由檢查對方是否列在儲存庫的',
+    'We check their maintainer status by seeing if they’re listed in a repository’s': '我們藉由檢查對方是否列在儲存庫的',
     'Talk to your organization about GitHub Sponsors': '和你的組織討論 GitHub 贊助',
     'Share this discovery page with your team to start a conversation about investing in the people and projects you rely on.':
       '與團隊分享此探索頁面以開始討論如何投資你所仰賴的人員和專案。',
@@ -116,7 +112,7 @@ export default {
     'Your dependencies they maintain or own': '由他們維護或擁有的相依項目',
     'Export dependencies': '匯出相依項目',
     'There was a problem exporting your dependencies.': '匯出相依項目時發生問題。',
-    'Sponsorable dependencies': '可贊助的相依項目',
+    'Sponsorable dependencies': '可贊助的相依項目'
   },
   scoped: {
     Ecosystems: '生態系',
@@ -146,7 +142,7 @@ export default {
     'Get email updates': '接收電子郵件更新',
     'Change email updates': '變更電子郵件更新',
     // 产品名：探索页子导航分页、全局导航「Open Source」选单项与页面标题里的 GitHub Sponsors；common 没有全局词条
-    'GitHub Sponsors': 'GitHub 贊助',
+    'GitHub Sponsors': 'GitHub 贊助'
   },
   regexp: [
     [/^(\d[\d,]*) sponsored developers and organizations loaded\.$/, '已載入 $1 個受贊助的開發人員和組織。'],
@@ -156,7 +152,7 @@ export default {
     [/^Order by: (.+)$/, (_, label: string) => `排序依據：${ORDERINGS[label] ?? label}`],
     [
       /^(.+) does not directly depend on any repositories whose maintainers can be sponsored\.$/,
-      '$1 沒有直接相依於任何維護者可受贊助的儲存庫。',
+      '$1 沒有直接相依於任何維護者可受贊助的儲存庫。'
     ],
     [/^(\d[\d,]*) repositor(?:y|ies) they own or maintain$/, '他們擁有或維護的 $1 個儲存庫'],
     [/^others? sponsor, including (\d[\d,]*) organizations?$/, '位其他贊助者，包括 $1 個組織'],
@@ -169,10 +165,10 @@ export default {
     [/^(\d[\d,]*) members?$/, '$1 位成員'],
     [/^(\d[\d,]*) of your repositories depends? on this$/, '你有 $1 個儲存庫相依於此'],
     [/^\+(\d[\d,]*) more$/, '另有 $1 個'],
-    [/^Sponsor (\d[\d,]*) maintainers?$/, '贊助 $1 位維護者'],
+    [/^Sponsor (\d[\d,]*) maintainers?$/, '贊助 $1 位維護者']
   ],
   ignore: [
     // 探索页卡片：名称与简介
-    'article.Box-row .col-sm-9',
-  ],
+    'article.Box-row .col-sm-9'
+  ]
 } satisfies PageDictionary

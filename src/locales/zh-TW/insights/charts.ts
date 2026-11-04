@@ -5,14 +5,14 @@ import { joinCjk } from '../helpers'
 export const METRIC: Readonly<Record<string, string>> = {
   Commits: '提交',
   Additions: '新增',
-  Deletions: '刪除',
+  Deletions: '刪除'
 }
 
 /** 见解页 ChartCard 的固定标题 */
 const CHART_TITLE: Readonly<Record<string, string>> = {
   'Top committers': '主要提交者',
   'Code frequency': '程式碼頻率',
-  Commits: '提交',
+  Commits: '提交'
 }
 
 const OVER_TIME_RE = /^(Commits|Additions|Deletions) over time$/
@@ -38,7 +38,7 @@ const CHART_TYPE: Readonly<Record<string, string>> = {
   'Scatter chart': '散佈圖',
   'Bubble chart': '泡泡圖',
   Boxplot: '盒鬚圖',
-  Chart: '圖表',
+  Chart: '圖表'
 }
 
 /** Highcharts 无障碍描述：计数单位 */
@@ -59,7 +59,7 @@ const CHART_UNIT: Readonly<Record<string, string>> = {
   bubble: '個泡泡',
   bubbles: '個泡泡',
   box: '個盒形',
-  boxes: '個盒形',
+  boxes: '個盒形'
 }
 
 /** Highcharts 无障碍描述：坐标轴名 */
@@ -70,14 +70,14 @@ const AXIS_NAME: Readonly<Record<string, string>> = {
   Frequency: '頻率',
   categories: '類別',
   'navigator-x-axis': '導覽器 X 軸',
-  'navigator-y-axis': '導覽器 Y 軸',
+  'navigator-y-axis': '導覽器 Y 軸'
 }
 
 const RANGE_UNIT: Readonly<Record<string, string>> = {
   days: '天',
   hours: '小時',
   minutes: '分鐘',
-  seconds: '秒',
+  seconds: '秒'
 }
 
 function axisName(name: string): string {
@@ -132,7 +132,7 @@ export default {
     'View as data table, Chart': '以資料表查看，圖表',
     'Toggle series visibility, Chart': '切換數列顯示，圖表',
     'Start of selected range': '所選範圍起點',
-    'End of selected range': '所選範圍終點',
+    'End of selected range': '所選範圍終點'
   },
   scoped: {
     Category: '類別',
@@ -149,7 +149,7 @@ export default {
     'Data cannot contain null values': '資料不能包含空值',
     'Graph could not be drawn due to a network problem.': '因網路問題而無法繪製圖表。',
     Unlabeled: '無標籤',
-    'Y value': 'Y 值',
+    'Y value': 'Y 值'
   },
   regexp: [
     // 图表容器标签：Commits over time. Interactive chart.
@@ -161,25 +161,24 @@ export default {
     // 图表类型：Bar chart with 14 bars.（原文只有句号，译文不加逗号，改语序）
     [
       /^(Combination chart|Line chart|Bar chart|Pie chart|Scatter chart|Bubble chart|Boxplot|Chart) with ([\d,]+) (data series|data points?|lines?|bars?|slices?|pies?|points?|bubbles?|box(?:es)?)\.$/,
-      (_, type, count, unit) => `包含 ${count} ${CHART_UNIT[unit]}的${CHART_TYPE[type]}。`,
+      (_, type, count, unit) => `包含 ${count} ${CHART_UNIT[unit]}的${CHART_TYPE[type]}。`
     ],
     // 坐标轴：The chart has 1 X axis displaying Time. Data ranges from A to B.（原文无逗号、冒号，译文不加；Data range: 的冒号随原文）
     [
       new RegExp(
-        `^The chart has 1 (X|Y) axis displaying ([^.]+)\\.(?: Data ranges from ${AXIS_VALUE} to ${AXIS_VALUE}\\.| Data range: ([\\d,.]+) (categories|days|hours|minutes|seconds)\\.)?$`,
+        `^The chart has 1 (X|Y) axis displaying ([^.]+)\\.(?: Data ranges from ${AXIS_VALUE} to ${AXIS_VALUE}\\.| Data range: ([\\d,.]+) (categories|days|hours|minutes|seconds)\\.)?$`
       ),
       (_, axis, name, from, to, amount, unit) => {
         let range = ''
         if (from) range = `資料範圍從 ${from} 到 ${to}。`
-        else if (amount)
-          range = `資料範圍：${unit === 'categories' ? `${amount} 個類別` : `${amount} ${RANGE_UNIT[unit]}`}。`
+        else if (amount) range = `資料範圍：${unit === 'categories' ? `${amount} 個類別` : `${amount} ${RANGE_UNIT[unit]}`}。`
         return `圖表有 1 條${axisDisplaying(name, axis)}。${range}`
-      },
+      }
     ],
     // 多条坐标轴：The chart has 2 X axes displaying Time, and navigator-x-axis.（原文的逗号只在名称列表里，译作顿号；不另加逗号）
     [
       /^The chart has (\d+) (X|Y) axes displaying ([^.]+)\.$/,
-      (_, count, axis, names) => `圖表的 ${count} 條 ${axis} 軸分別${displaying(names.split(/, and |, | and /))}。`,
-    ],
-  ],
+      (_, count, axis, names) => `圖表的 ${count} 條 ${axis} 軸分別${displaying(names.split(/, and |, | and /))}。`
+    ]
+  ]
 } satisfies PageDictionary

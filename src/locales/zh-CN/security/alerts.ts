@@ -4,14 +4,14 @@ const ENTITY: Readonly<Record<string, string>> = {
   alert: '警报',
   alerts: '警报',
   finding: '发现',
-  findings: '发现',
+  findings: '发现'
 }
 
 const REASON: Readonly<Record<string, string>> = {
   'not valid': '无效',
   'not in production code': '不在生产代码中',
   'not relevant': '不相关',
-  'mitigated by a compensating control': '已由补偿性控制缓解',
+  'mitigated by a compensating control': '已由补偿性控制缓解'
 }
 
 /** 消除原因（小写形式出现在「requested to dismiss this as …」里） */
@@ -30,7 +30,7 @@ const RESOLUTION: Readonly<Record<string, string>> = {
   inaccurate: '不准确',
   'not used': '未使用',
   'fix started': '已开始修复',
-  'no bandwidth': '无暇修复',
+  'no bandwidth': '无暇修复'
 }
 
 const SEVERITY_LABEL: Readonly<Record<string, string>> = {
@@ -42,7 +42,7 @@ const SEVERITY_LABEL: Readonly<Record<string, string>> = {
   error: '错误',
   warning: '警告',
   note: '注意',
-  unknown: '未知',
+  unknown: '未知'
 }
 
 /** 警报状态（状态标签的 title） */
@@ -51,7 +51,7 @@ const ALERT_STATE: Readonly<Record<string, string>> = {
   Fixed: '已修复',
   Closed: '已关闭',
   Dismissed: '已消除',
-  'Auto-dismissed': '已自动消除',
+  'Auto-dismissed': '已自动消除'
 }
 
 function resolution(text: string): string {
@@ -131,15 +131,14 @@ export default {
     'Unable to complete the search for assignees. Try again later.': '无法完成受理人搜索。请稍后重试。',
     'Assignee search results': '受理人搜索结果',
     'Unable to save your selection due to server error. Try again later.': '因服务器出错无法保存所选内容。请稍后重试。',
-    'Unable to save your selection due to server error. Try a moment later.':
-      '因服务器出错无法保存所选内容。请稍后重试。',
+    'Unable to save your selection due to server error. Try a moment later.': '因服务器出错无法保存所选内容。请稍后重试。',
     'Learn more about alert assignees': '了解警报受理人',
 
     // 跟踪议题
     'Link an issue to this alert.': '将议题链接到此警报。',
     'Add existing GitHub issue': '添加现有 GitHub 议题',
     'Change or remove issue': '更改或删除议题',
-    Tracking: '跟踪',
+    Tracking: '跟踪'
   },
   scoped: {
     // 其他区域也出现的同形文字，本区域内单独生效
@@ -158,30 +157,27 @@ export default {
     Tags: '标签',
     Development: '开发',
     // 警报列表与详情的状态（Closed 由 common 译作「已关闭」）
-    Open: '未解决',
+    Open: '未解决'
   },
   regexp: [
     [/^Max ([\d,]+) characters$/, '最多 $1 个字符'],
     // 状态标签的 title：Status: Fixed、Status: Dismissed as false positive
     [/^Status: (Open|Fixed|Closed|Dismissed|Auto-dismissed)$/, (_, state: string) => `状态：${ALERT_STATE[state]!}`],
-    [
-      /^Status: (Closed|Dismissed) as (.+)$/,
-      (_, state: string, reason: string) => `状态：${ALERT_STATE[state]!}（${resolution(reason)}）`,
-    ],
+    [/^Status: (Closed|Dismissed) as (.+)$/, (_, state: string, reason: string) => `状态：${ALERT_STATE[state]!}（${resolution(reason)}）`],
     // 消除对话框（单复数、警报 / 发现）
     [/^Dismiss (alerts?|findings?)$/, (_, entity) => `消除${ENTITY[entity]}`],
     [
       /^Select a reason to dismiss (this|these) (alerts?|findings?)\.$/,
-      (_, which, entity) => `选择消除${which === 'this' ? '此' : '这些'}${ENTITY[entity]}的原因。`,
+      (_, which, entity) => `选择消除${which === 'this' ? '此' : '这些'}${ENTITY[entity]}的原因。`
     ],
     [/^Request to dismiss (alerts?|findings?)$/, (_, entity) => `请求消除${ENTITY[entity]}`],
     [
       /^(?:This (alert|finding) needs|These (alerts|findings) need) approval before (?:it|they) can be dismissed\. Requests are sent to all approvers\.$/,
-      (_, one, many) => `${one ? '此' : '这些'}${ENTITY[one || many]}需经批准才能消除。请求将发送给所有审批者。`,
+      (_, one, many) => `${one ? '此' : '这些'}${ENTITY[one || many]}需经批准才能消除。请求将发送给所有审批者。`
     ],
     [
       /^(This|These) (alerts?|findings?) (?:is|are) (not valid|not in production code|not relevant|mitigated by a compensating control)$/,
-      (_, which, entity, reason) => `${which === 'This' ? '此' : '这些'}${ENTITY[entity]}${REASON[reason]}`,
+      (_, which, entity, reason) => `${which === 'This' ? '此' : '这些'}${ENTITY[entity]}${REASON[reason]}`
     ],
     // 受理人
     [/^Assign up to (\d+) people to this alert$/, '最多可为此警报分配 $1 人'],
@@ -193,11 +189,11 @@ export default {
       (_, quote, level, period) => {
         const label = SEVERITY_LABEL[level]
         return `筛选严重性为${quote ? `“${label}”` : label}的警报${period ? '。' : ''}`
-      },
+      }
     ],
     [/^Error fetching details for CWE-(\d+)\.$/, '获取 CWE-$1 详细信息时出错。'],
     // 警报页头部的消除请求说明（React 拆分后拼接）
     [/^Dismissal requested as (.+)$/, (_, reason) => `已请求以${resolution(reason)}为由消除`],
-    [/^requested to dismiss this as (.+)$/, (_, reason) => `请求以${resolution(reason)}为由消除此警报`],
-  ],
+    [/^requested to dismiss this as (.+)$/, (_, reason) => `请求以${resolution(reason)}为由消除此警报`]
+  ]
 } satisfies PageDictionary

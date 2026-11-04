@@ -6,17 +6,15 @@ import { COMMENT_TIME_SOURCE, commentTime } from './list'
 /** 侧栏通知原因（弯引号原文）；直引号写法由 withStraightQuotes 补齐。原文无逗号，译文用「因…而…」，不加逗号 */
 const NOTIFICATION_REASONS: Readonly<Record<string, string>> = {
   'You’re receiving notifications because you’re watching this repository.': '你因正在關注此儲存庫而收到通知。',
-  'You’re receiving notifications because you are watching issues on this repository.':
-    '你因正在關注此儲存庫的議題而收到通知。',
-  'You’re receiving notifications because you are watching pull requests on this repository.':
-    '你因正在關注此儲存庫的拉取請求而收到通知。',
+  'You’re receiving notifications because you are watching issues on this repository.': '你因正在關注此儲存庫的議題而收到通知。',
+  'You’re receiving notifications because you are watching pull requests on this repository.': '你因正在關注此儲存庫的拉取請求而收到通知。',
   'You’re receiving notifications because you authored the thread.': '你因是此討論串的作者而收到通知。',
   'You’re receiving notifications because you’re subscribed to this thread.': '你因已訂閱此討論串而收到通知。',
   'You’re receiving notifications because you were mentioned.': '你因被提及而收到通知。',
   'You’re receiving notifications because you commented.': '你因留言而收到通知。',
   'You’re receiving notifications because you modified the open/close state.': '你因變更了開啟/關閉狀態而收到通知。',
   // 持续关系带宾语用「正在＋动词」，与拉取请求页同译
-  'You’re ignoring this repository.': '你正在忽略此儲存庫。',
+  'You’re ignoring this repository.': '你正在忽略此儲存庫。'
 }
 
 /** 同一原文的弯引号（’）与直引号（'）写法都收录 */
@@ -24,8 +22,8 @@ function withStraightQuotes(entries: Readonly<Record<string, string>>): Record<s
   return Object.fromEntries(
     Object.entries(entries).flatMap(([source, target]) => [
       [source, target],
-      [source.replaceAll('’', "'"), target],
-    ]),
+      [source.replaceAll('’', "'"), target]
+    ])
   )
 }
 
@@ -33,7 +31,7 @@ function withStraightQuotes(entries: Readonly<Record<string, string>>): Record<s
 const CLOSE_REASONS: ReadonlyMap<string, string> = new Map([
   ['resolved', '已解決'],
   ['outdated', '過時'],
-  ['duplicate', '重複'],
+  ['duplicate', '重複']
 ])
 
 const regexp: readonly RegExpRule[] = [
@@ -42,25 +40,22 @@ const regexp: readonly RegExpRule[] = [
   // 头部状态标签的 title：Status: Closed as resolved（Status: Open 等由 common-ui 翻译）
   [
     /^Status: Closed as (resolved|outdated|duplicate)$/,
-    (_, reason: string) => `狀態：已關閉並標示為${CLOSE_REASONS.get(reason) ?? reason}`,
+    (_, reason: string) => `狀態：已關閉並標示為${CLOSE_REASONS.get(reason) ?? reason}`
   ],
   // 原文没有括号：日期改放在句中（This discussion was converted from issue #12 on Jan 5, 2024.）；未匹配的日期为空串
   [
     new RegExp(`^This discussion was converted from issue #(\\d+)(?: on (${DATE_SOURCE}))?(\\.?)$`),
     (_, number: string, date: string, period: string) =>
-      `此討論${date ? joinCjk('於', translateTime(date)) : ''}由議題 #${number} 轉換而來${period ? '。' : ''}`,
+      `此討論${date ? joinCjk('於', translateTime(date)) : ''}由議題 #${number} 轉換而來${period ? '。' : ''}`
   ],
   [/^This user is sponsoring ([^\s()]+)\.$/, '此使用者正在贊助 $1。'],
   [/^Congratulations, you['’]ve created the first discussion in (.+)!$/, '恭喜，你已在 $1 中建立第一個討論！'],
   // 登录后评论的按钮名称：Upvote: (86): octocat, 09:00AM on May 12, 2022 / Write a reply: octocat, 01:16PM today
   [
     new RegExp(`^Upvote: \\((\\d[\\d,]*)\\): ([^\\s,]+), (${COMMENT_TIME_SOURCE})$`),
-    (_, count, user, time) => `贊成 (${count})：${user}，${commentTime(time)}`,
+    (_, count, user, time) => `贊成 (${count})：${user}，${commentTime(time)}`
   ],
-  [
-    new RegExp(`^Write a reply: ([^\\s,]+), (${COMMENT_TIME_SOURCE})$`),
-    (_, user, time) => `撰寫回覆：${user}，${commentTime(time)}`,
-  ],
+  [new RegExp(`^Write a reply: ([^\\s,]+), (${COMMENT_TIME_SOURCE})$`), (_, user, time) => `撰寫回覆：${user}，${commentTime(time)}`],
   // 投票：2 votes、2k votes
   [/^(\d[\d,.]*[kKmM]?) votes?$/, '$1 票'],
   // 回复
@@ -74,14 +69,11 @@ const regexp: readonly RegExpRule[] = [
   [/^Pin to (.+)$/, (_, name) => withCategory('釘選到', name)],
   [
     /^This will pin this discussion to the top of the (.+) category\.$/,
-    (_, name) => withCategory('這會將此討論釘選到', name, '類別的頂端。'),
+    (_, name) => withCategory('這會將此討論釘選到', name, '類別的頂端。')
   ],
-  [
-    /^Are you sure you want to unpin this discussion from (.+)\?$/,
-    (_, name) => withCategory('確定要從', name, '取消釘選此討論嗎？'),
-  ],
+  [/^Are you sure you want to unpin this discussion from (.+)\?$/, (_, name) => withCategory('確定要從', name, '取消釘選此討論嗎？')],
   // 页面标题段
-  [/^Discussion #(\d+)$/, '討論 #$1'],
+  [/^Discussion #(\d+)$/, '討論 #$1']
 ]
 
 /**
@@ -200,7 +192,7 @@ export default {
     // 由议题转换时的迁移提示
     'This discussion is being migrated': '正在移轉此討論',
     'The issue and any comments are still being copied to this discussion thread, please check back later.':
-      '議題和所有留言仍在複製到此討論串，請稍後再回來查看。',
+      '議題和所有留言仍在複製到此討論串，請稍後再回來查看。'
   },
   scoped: {
     // 头部状态：Answered by <用户>（Answered 是链接，by 是单独的 span；Answered 由 common-ui 翻译）
@@ -291,13 +283,13 @@ export default {
     Pattern: '圖案',
 
     // 从讨论创建议题、迁移提示
-    'OK, got it!': '好，我知道了！',
+    'OK, got it!': '好，我知道了！'
   },
   regexp,
   ignore: [
     // 投票：问题与选项
     '.poll-title',
     '.js-discussion-poll-options label',
-    '.js-discussion-poll-results .Box-row .flex-auto',
-  ],
+    '.js-discussion-poll-results .Box-row .flex-auto'
+  ]
 } satisfies PageDictionary

@@ -16,14 +16,12 @@ export default {
       '你的方案不支援私人儲存庫使用組織機密和變數。',
     'This secret may be used by public repositories in the organization. Paid GitHub plans include private repositories.':
       '組織中的公開儲存庫可以使用此機密。付費 GitHub 方案包含私人儲存庫。',
-    'Organization secrets cannot be used by private repositories with your plan.':
-      '你的方案不支援私人儲存庫使用組織機密。',
+    'Organization secrets cannot be used by private repositories with your plan.': '你的方案不支援私人儲存庫使用組織機密。',
     'This secret may only be used by specifically selected repositories.': '只有指定的儲存庫才能使用此機密。',
     'Secret repository access': '機密的儲存庫存取權',
     'Select the organization repositories that may use this secret.': '選取可以使用此機密的組織儲存庫。',
     'This secret may be used by any repository in the organization.': '組織中的任何儲存庫都可以使用此機密。',
-    'This secret may be used by any private repository in the organization.':
-      '組織中的任何私人儲存庫都可以使用此機密。',
+    'This secret may be used by any private repository in the organization.': '組織中的任何私人儲存庫都可以使用此機密。',
 
     // Actions 变量
     'New organization variable': '新增組織變數',
@@ -32,8 +30,7 @@ export default {
     'This organization has no variables.': '此組織沒有變數。',
     'This variable may be used by public repositories in the organization. Paid GitHub plans include private repositories.':
       '組織中的公開儲存庫可以使用此變數。付費 GitHub 方案包含私人儲存庫。',
-    'Organization variables cannot be used by private repositories with your plan.':
-      '你的方案不支援私人儲存庫使用組織變數。',
+    'Organization variables cannot be used by private repositories with your plan.': '你的方案不支援私人儲存庫使用組織變數。',
     'This variable may only be used by specifically selected repositories.': '只有指定的儲存庫才能使用此變數。',
     'Variable repository access': '變數的儲存庫存取權',
     'Select the organization repositories that may use this variable.': '選取可以使用此變數的組織儲存庫。',
@@ -50,7 +47,7 @@ export default {
     'New private registry': '新增私人登錄庫',
     'Select registry type': '選擇登錄庫類型',
     'Add Registry': '新增登錄庫',
-    'Edit private registry': '編輯私人登錄庫',
+    'Edit private registry': '編輯私人登錄庫'
   },
   scoped: {
     // 页头说明（与存储库设置共用，片段间原文无逗号，译文不加）
@@ -152,8 +149,7 @@ export default {
     // Dependabot 机密
     'Secrets are credentials that are': '機密是經過',
     '. Anyone with': '的認證資訊。對可存取各機密的儲存庫具有',
-    'access to the repositories with access to each secret can use it for Dependabot.':
-      '存取權的任何人都可以在 Dependabot 中使用它們。',
+    'access to the repositories with access to each secret can use it for Dependabot.': '存取權的任何人都可以在 Dependabot 中使用它們。',
     'Secrets are not passed to forks.': '機密不會傳遞給分叉。',
 
     // 专用注册表
@@ -182,6 +178,6 @@ export default {
     'Workload Identity Provider': '工作負載身分識別提供者',
     'Service Account': '服務帳號',
     'OIDC Provider Name': 'OIDC 提供者名稱',
-    'Identity Mapping Name': '身分對應名稱',
-  },
+    'Identity Mapping Name': '身分對應名稱'
+  }
 } satisfies PageDictionary

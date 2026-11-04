@@ -49,7 +49,7 @@ const NOT_REUSED: ReadonlySet<string> = new Set([
   // 保留组织设置页现有译法
   'Required',
   'Added',
-  'all',
+  'all'
 ])
 
 /** 个人开发人员设置的 scoped 词条去掉不复用的原文 */
@@ -77,18 +77,17 @@ export default {
     // 发布者验证
     'There must be 1 or more GitHub/OAuth App registered by the organization to request publisher verification':
       '組織至少須註冊 1 個 GitHub/OAuth 應用程式才能申請發行者驗證',
-    'You can request publisher verification for your organization. A':
-      '你可以為組織申請發行者驗證。驗證後，你在市集中發布的應用程式將加上',
+    'You can request publisher verification for your organization. A': '你可以為組織申請發行者驗證。驗證後，你在市集中發布的應用程式將加上',
     'badge will be added to your apps published in the marketplace, recognizing that apps and other published materials were created by you.':
       '徽章，表示這些應用程式和其他發布的內容是由你建立的。',
-    'Learn more about publisher verification.': '瞭解發行者驗證。',
+    'Learn more about publisher verification.': '瞭解發行者驗證。'
   },
   scoped: {
     ...reuse(tableEntries(apps.scoped)),
     ...reuse(tableEntries(permissions.scoped)),
     // 权限名 Watching：settings-developer 不放进 scoped（个人设置由 settings-account 收录），
     // 本区按权限名译「關注」，与权限名拼接（移除關注）一致
-    Watching: '關注',
+    Watching: '關注'
   },
-  regexp: [...appRules, ...(permissions.regexp ?? [])],
+  regexp: [...appRules, ...(permissions.regexp ?? [])]
 } satisfies PageDictionary

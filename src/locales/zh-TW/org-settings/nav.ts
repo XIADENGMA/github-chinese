@@ -65,7 +65,7 @@ export default {
     'Verified Domains': '已驗證的網域',
     'General Organization Settings': '一般組織設定',
     'Runner Groups': '執行器群組',
-    'GitHub Publisher Verification': 'GitHub 發行者驗證',
+    'GitHub Publisher Verification': 'GitHub 發行者驗證'
   },
   scoped: {
     // 组织页头标签（设置页也显示）
@@ -135,6 +135,6 @@ export default {
     'OAuth apps': 'OAuth 應用程式',
     'Publisher Verification': '發行者驗證',
     'Publisher verification': '發行者驗證',
-    'Account settings': '帳號設定',
-  },
+    'Account settings': '帳號設定'
+  }
 } satisfies PageDictionary

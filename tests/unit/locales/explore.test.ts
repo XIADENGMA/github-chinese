@@ -13,7 +13,7 @@ const matcher = createMatcher([['explore', explore]])
 const fullMatcher = createMatcher([
   ['common', common],
   ['common', commonUi],
-  ['explore', explore],
+  ['explore', explore]
 ])
 
 function translate(text: string): string | undefined {
@@ -38,23 +38,23 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['See the 17 items in this collection', '查看此集合中的 17 项'],
-      ['See the 1 item in this collection', '查看此集合中的 1 项'],
+      ['See the 1 item in this collection', '查看此集合中的 1 项']
     ],
-    misses: ['See the items in this collection'],
+    misses: ['See the items in this collection']
   },
   {
     hits: [
       ['3 starred topics', '3 个已加星标的主题'],
-      ['1 starred topic', '1 个已加星标的主题'],
+      ['1 starred topic', '1 个已加星标的主题']
     ],
-    misses: ['starred topics'],
+    misses: ['starred topics']
   },
   {
     hits: [
       ['12 starred repositories', '12 个已加星标的存储库'],
-      ['1 starred repository', '1 个已加星标的存储库'],
+      ['1 starred repository', '1 个已加星标的存储库']
     ],
-    misses: ['no starred repositories'],
+    misses: ['no starred repositories']
   },
   { hits: [['5 more', '另有 5 个']], misses: ['more'] },
 
@@ -63,72 +63,69 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['675 stars today', '今日 675 个星标'],
       ['2,987 stars this week', '本周 2,987 个星标'],
-      ['1 star this month', '本月 1 个星标'],
+      ['1 star this month', '本月 1 个星标']
     ],
-    misses: ['675 stars yesterday'],
+    misses: ['675 stars yesterday']
   },
   { hits: [['Works for @octo-org', '就职于 @octo-org']], misses: ['Worked for GitHub'] },
   { hits: [['Is from Sample City, CA', '来自 Sample City, CA']], misses: ['From Sample City, CA'] },
   {
     hits: [
       ['It looks like we don’t have any trending repositories for Zimpl.', '暂无 Zimpl 趋势存储库。'],
-      ["It looks like we don't have any trending developers.", '暂无趋势开发人员。'],
+      ["It looks like we don't have any trending developers.", '暂无趋势开发人员。']
     ],
-    misses: ['We don’t have any trending repositories.'],
+    misses: ['We don’t have any trending repositories.']
   },
   {
     hits: [
       ['Trending repositories on GitHub today', '今日 GitHub 上的趋势存储库'],
       ['Trending TypeScript repositories on GitHub this week', '本周 GitHub 上的 TypeScript 趋势存储库'],
-      ['Trending developers on GitHub this month', '本月 GitHub 上的趋势开发人员'],
+      ['Trending developers on GitHub this month', '本月 GitHub 上的趋势开发人员']
     ],
-    misses: ['Trending repositories on GitLab today'],
+    misses: ['Trending repositories on GitLab today']
   },
 
   // 主题与集合
   {
     hits: [
       ['Here are 67,180 public repositories matching this topic...', '共有 67,180 个公共存储库匹配此主题...'],
-      ['Here is 1 public repository matching this topic...', '共有 1 个公共存储库匹配此主题...'],
+      ['Here is 1 public repository matching this topic...', '共有 1 个公共存储库匹配此主题...']
     ],
-    misses: ['Here are some public repositories matching this topic...'],
+    misses: ['Here are some public repositories matching this topic...']
   },
   {
     hits: [
       ['There are 1,234 public repositories matching this topic', '共有 1,234 个公共存储库匹配此主题'],
       // 句号随原文
-      ['There is 1 public repository matching this topic.', '共有 1 个公共存储库匹配此主题。'],
+      ['There is 1 public repository matching this topic.', '共有 1 个公共存储库匹配此主题。']
     ],
-    misses: ['There are many public repositories matching this topic'],
+    misses: ['There are many public repositories matching this topic']
   },
   {
     hits: [
       ['February 11, 2014', '2014 年 2 月 11 日'],
       ['13 days ago', '13 天前'],
-      ['yesterday', '昨天'],
+      ['yesterday', '昨天']
     ],
-    misses: ['Octember 11, 2014'],
+    misses: ['Octember 11, 2014']
   },
   {
     hits: [['Collection: Getting started with machine learning', '集合：Getting started with machine learning']],
-    misses: ['Collections: Music'],
+    misses: ['Collections: Music']
   },
 
   // 活动
   { hits: [['Filters (2)', '筛选器 (2)']], misses: ['Filters (two)'] },
   {
     hits: [
-      [
-        'Upcoming GitHub events, webinars & developer conferences - Page 2',
-        '即将举行的 GitHub 活动、网络研讨会与开发人员大会 - 第 2 页',
-      ],
+      ['Upcoming GitHub events, webinars & developer conferences - Page 2', '即将举行的 GitHub 活动、网络研讨会与开发人员大会 - 第 2 页']
     ],
-    misses: ['Upcoming GitHub events, webinars & developer conferences - Page two'],
-  },
+    misses: ['Upcoming GitHub events, webinars & developer conferences - Page two']
+  }
 ]
 
-const HITS = REGEXP_CASES.flatMap((item) => item.hits)
-const MISSES = REGEXP_CASES.flatMap((item) => item.misses)
+const HITS = REGEXP_CASES.flatMap(item => item.hits)
+const MISSES = REGEXP_CASES.flatMap(item => item.misses)
 
 describe('explore 正则词条', () => {
   it.each(HITS)('%s → %s', (input, expected) => {
@@ -137,7 +134,7 @@ describe('explore 正则词条', () => {
     expect(translate(input)).toBe(expected)
   })
 
-  it.each(MISSES)('不命中：%s', (input) => {
+  it.each(MISSES)('不命中：%s', input => {
     expect(translate(input)).toBeUndefined()
   })
 
@@ -150,10 +147,10 @@ describe('explore 正则词条', () => {
 
   it('换行缩进的服务端文本规范化后命中', () => {
     expect(translate(normalizeText('\n      See what the GitHub community is most excited about today.\n    '))).toBe(
-      '看看 GitHub 社区今天最关注什么。',
+      '看看 GitHub 社区今天最关注什么。'
     )
     expect(translate(normalizeText('\n  Here are 1,065 public repositories matching this topic...\n'))).toBe(
-      '共有 1,065 个公共存储库匹配此主题...',
+      '共有 1,065 个公共存储库匹配此主题...'
     )
   })
 
@@ -162,12 +159,10 @@ describe('explore 正则词条', () => {
     expect(translate("topic hasn't been used on any public repositories, yet.")).toBe('尚未被任何公共存储库使用。')
     expect(translate('To associate your repository with the')).toBe('要将存储库关联到')
     // 原文句号在引号内（select "manage topics."），check:locale 不把引号算作结尾标点，译文结尾不加句号
-    expect(translate('topic, visit your repo\'s landing page and select "manage topics."')).toBe(
-      '主题，请在存储库首页选择“管理主题”',
-    )
+    expect(translate('topic, visit your repo\'s landing page and select "manage topics."')).toBe('主题，请在存储库首页选择“管理主题”')
     expect(translate('Add a description, image, and links to the')).toBe('为')
     expect(translate('topic page so that developers can more easily learn about it.')).toBe(
-      '主题页面添加描述、图片和链接，方便开发人员了解。',
+      '主题页面添加描述、图片和链接，方便开发人员了解。'
     )
   })
 
@@ -226,16 +221,13 @@ describe('explore 静态词条', () => {
     ['Daily', '每天'],
     [
       'The perfect way to keep on top of everything GitHub. Every Tuesday, we’ll send you an email with everything we found for you in the past week based on your interests.',
-      '紧跟 GitHub 动态的最佳方式。每周二，我们会根据你的兴趣，把过去一周为你找到的内容通过电子邮件发给你。',
+      '紧跟 GitHub 动态的最佳方式。每周二，我们会根据你的兴趣，把过去一周为你找到的内容通过电子邮件发给你。'
     ],
     // email → 电子邮件；email updates 与 sponsors 探索页同译“电子邮件动态”
     ['Get email updates', '获取电子邮件动态'],
     ['Change email updates', '更改电子邮件动态'],
     ['Explore email newsletter', '探索电子邮件简报'],
-    [
-      'Get email updates about what GitHub finds for you based on your interests',
-      '通过电子邮件接收 GitHub 根据你的兴趣找到的内容',
-    ],
+    ['Get email updates about what GitHub finds for you based on your interests', '通过电子邮件接收 GitHub 根据你的兴趣找到的内容'],
     ['Spoken Language:', '自然语言：'],
     ['Select a spoken language', '选择自然语言'],
     ['profile settings', '个人资料设置'],
@@ -251,10 +243,7 @@ describe('explore 静态词条', () => {
     ['All developers', '所有开发者'],
     ['GitHub Sponsors participation', 'GitHub 赞助参与情况'],
     ['Browse popular topics on GitHub.', '浏览 GitHub 上的热门主题。'],
-    [
-      'Curated lists and insight into burgeoning industries, topics, and communities.',
-      '精选列表，以及对新兴行业、主题和社区的见解。',
-    ],
+    ['Curated lists and insight into burgeoning industries, topics, and communities.', '精选列表，以及对新兴行业、主题和社区的见解。'],
     ['Sort:', '排序：'],
     ['Least recently updated', '最久未更新'],
     ['Latest release', '最新发行版'],
@@ -268,7 +257,7 @@ describe('explore 静态词条', () => {
     ['AMER', '美洲'],
     ['On demand', '点播'],
     // 名词 filters → 筛选器
-    ['No results found. Please clear your filters and try another search.', '未找到结果。请清除筛选器后重新搜索。'],
+    ['No results found. Please clear your filters and try another search.', '未找到结果。请清除筛选器后重新搜索。']
   ])('%s → %s', (input, expected) => {
     expect(translateFull(input)).toBe(expected)
   })
@@ -345,7 +334,7 @@ describe('explore 活动页筛选栏与页头搜索提示（DOM）', () => {
 })
 
 describe('explore 忽略规则', () => {
-  it.each(explore.ignore ?? [])('%s 是合法选择器', (selector) => {
+  it.each(explore.ignore ?? [])('%s 是合法选择器', selector => {
     expect(() => document.createElement('div').querySelector(selector)).not.toThrow()
   })
 
@@ -357,10 +346,7 @@ describe('explore 忽略规则', () => {
   }
 
   /** 页面实际生效的忽略规则：全局规则加本词典规则（编译时丢弃测试环境不支持的选择器） */
-  const pageIgnore = compileIgnoreIndex(
-    [...IGNORE_SELECTORS, ...(explore.ignore ?? [])],
-    document.createElement('div'),
-  ).selector
+  const pageIgnore = compileIgnoreIndex([...IGNORE_SELECTORS, ...(explore.ignore ?? [])], document.createElement('div')).selector
 
   /** 同 isIgnored，但按页面实际生效的规则判断 */
   function isIgnoredOnPage(root: Element, query: string): boolean {
@@ -379,7 +365,7 @@ describe('explore 忽略规则', () => {
       '</div><div class="col-md-4 col-lg-3"><div class="tmp-mb-6"><h2 class="h4">Add this topic to your repo</h2>',
       '<p class="color-fg-muted">To associate your repository with the <span class="text-bold">vite-plugin</span> topic</p>',
       '</div></div></div>',
-      '<div class="container-lg text-center"><h1 class="h1">Trending</h1></div>',
+      '<div class="container-lg text-center"><h1 class="h1">Trending</h1></div>'
     ].join('')
     expect(isIgnored(root, 'h1.h1')).toBe(true)
     expect(isIgnored(root, 'strong.h3')).toBe(true)
@@ -403,7 +389,7 @@ describe('explore 忽略规则', () => {
       '<p class="f3 lh-condensed mb-0 mt-1 Link--primary">Code quality</p>',
       '<p class="f5 color-fg-muted mb-0 mt-1">Automate your code review with style, quality, security, and test-coverage checks when you need them.</p></a>',
       '<div class="flex-grow-0"><a class="btn-sm btn" aria-label="You must be signed in to star a repository">',
-      '<span class="d-inline">Star</span></a></div></div>',
+      '<span class="d-inline">Star</span></a></div></div>'
     ].join('')
     expect(isIgnoredOnPage(root, '.topic-box p.f3')).toBe(true)
     expect(isIgnoredOnPage(root, '.topic-box p.f5')).toBe(true)
@@ -423,7 +409,7 @@ describe('explore 忽略规则', () => {
       '<h1 class="h1 lh-condensed tmp-mb-3">Music</h1>',
       '<div class="f3 color-fg-muted lh-condensed tmp-mb-3">Drop the code bass.</div></div></div>',
       '<div class="col-12 col-sm-6"><a class="exploregrid-item d-flex" href="/collections/learn-to-code">',
-      '<p class="f3 lh-condensed">Learn to Code</p><p class="f5 color-fg-muted">Resources to help people learn to code</p></a></div>',
+      '<p class="f3 lh-condensed">Learn to Code</p><p class="f5 color-fg-muted">Resources to help people learn to code</p></a></div>'
     ].join('')
     expect(isIgnored(root, 'h1.h1')).toBe(true)
     expect(isIgnored(root, 'h1 + .f3')).toBe(true)
@@ -439,7 +425,7 @@ describe('explore 忽略规则', () => {
       '<svg class="octicon octicon-globe"></svg><span class="triggerLabel__F6_qO9">English</span></span></button>',
       '<button><span class="triggerContent__V04-BC"><svg class="octicon octicon-filter"></svg>',
       '<span class="triggerLabel__F6_qO9">Type</span></span></button>',
-      '<ul role="menu"><li class="select-menu-item"><span class="select-menu-item-text">English</span></li></ul>',
+      '<ul role="menu"><li class="select-menu-item"><span class="select-menu-item-text">English</span></li></ul>'
     ].join('')
     expect(isIgnored(root, '.octicon-globe + [class*="triggerLabel__"]')).toBe(true)
     expect(isIgnored(root, '.octicon-filter + [class*="triggerLabel__"]')).toBe(false)

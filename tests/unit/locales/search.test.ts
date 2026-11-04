@@ -16,7 +16,7 @@ const matcher = createMatcher([['search', search]])
 const fullMatcher = createMatcher([
   ['common', common],
   ['common', commonUi],
-  ['search', search],
+  ['search', search]
 ])
 
 /** 页面上实际生效的忽略选择器：全局规则 + 本页规则 */
@@ -32,7 +32,7 @@ function translateFull(text: string): string | undefined {
 
 /** 等待变动回调处理完 */
 function settle(): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, 0))
+  return new Promise(resolve => setTimeout(resolve, 0))
 }
 
 interface RegExpCase {
@@ -49,17 +49,17 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['repositories Search Results · vue', '存储库搜索结果 · vue'],
       ['pullrequests Search Results · is:open label:bug', '拉取请求搜索结果 · is:open label:bug'],
-      ['wikis Search Results · readme', 'Wiki 搜索结果 · readme'],
+      ['wikis Search Results · readme', 'Wiki 搜索结果 · readme']
     ],
-    misses: ['projects Search Results · vue'],
+    misses: ['projects Search Results · vue']
   },
   // 类型为空、没有前缀的结果页标题
   {
     hits: [
       ['Search Results · vue is:public', '搜索结果 · vue is:public'],
-      ['Search Results · org:octo-org language:TypeScript', '搜索结果 · org:octo-org language:TypeScript'],
+      ['Search Results · org:octo-org language:TypeScript', '搜索结果 · org:octo-org language:TypeScript']
     ],
-    misses: ['Search Results', 'Search Results vue', 'My Search Results · vue'],
+    misses: ['Search Results', 'Search Results vue', 'My Search Results · vue']
   },
   // 结果数
   {
@@ -67,34 +67,34 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['1.1M results', '1.1M 个结果'],
       ['1 result', '1 个结果'],
       ['12,345 results', '12,345 个结果'],
-      ['1.2k files', '1.2k 个文件'],
+      ['1.2k files', '1.2k 个文件']
     ],
-    misses: ['many results'],
+    misses: ['many results']
   },
   {
     hits: [
       ['More than 1M results', '超过 1M 个结果'],
-      ['More than 100 files', '超过 100 个文件'],
+      ['More than 100 files', '超过 100 个文件']
     ],
-    misses: ['More than a few results'],
+    misses: ['More than a few results']
   },
   // 耗时（数字与单位之间加空格）
   {
     hits: [
       ['(178ms)', '（178 毫秒）'],
       ['(2s)', '（2 秒）'],
-      ['(1.5 s)', '（1.5 秒）'],
+      ['(1.5 s)', '（1.5 秒）']
     ],
-    misses: ['(178 msec)', '(fast)'],
+    misses: ['(178 msec)', '(fast)']
   },
   // 排序按钮
   {
     hits: [
       ['Sort by: Best match', '排序依据：最佳匹配'],
       ['Sort by: Most stars', '排序依据：星标最多'],
-      ['Sort by: Least recently committed', '排序依据：最早提交'],
+      ['Sort by: Least recently committed', '排序依据：最早提交']
     ],
-    misses: ['Sort by: Relevance'],
+    misses: ['Sort by: Relevance']
   },
   // 浏览器语言为中文时的本地格式日期（数字与年月日之间有无空格都匹配，输出带空格）
   {
@@ -103,24 +103,24 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['on 2017年4月7日', '2017 年 4 月 7 日'],
       ['on 1 月 23 日', '1 月 23 日'],
       ['on 2017 年 4 月 7 日', '2017 年 4 月 7 日'],
-      ['on 12月1日', '12 月 1 日'],
+      ['on 12月1日', '12 月 1 日']
     ],
-    misses: ['on Jan 23', 'on 1月23', 'on 2017年4月', 'on 1 月 23', 'on 2017 年 4 月'],
+    misses: ['on Jan 23', 'on 1月23', 'on 2017年4月', 'on 1 月 23', 'on 2017 年 4 月']
   },
   // 存储库结果
   {
     hits: [
       ['3 issues need help', '3 个议题需要帮助'],
-      ['1 issue needs help', '1 个议题需要帮助'],
+      ['1 issue needs help', '1 个议题需要帮助']
     ],
-    misses: ['issues need help'],
+    misses: ['issues need help']
   },
   {
     hits: [
       ['Sponsor octo-org/hello-world', '赞助 octo-org/hello-world'],
-      ['Sponsor @monalisa', '赞助 @monalisa'],
+      ['Sponsor @monalisa', '赞助 @monalisa']
     ],
-    misses: ['Sponsor this project'],
+    misses: ['Sponsor this project']
   },
   // 提交结果（检查计数用“个”，状态词与句式同 commits 的检查摘要；原文没有逗号时不加标点）
   {
@@ -129,52 +129,49 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['3 successful and 1 failing checks', '3 个检查成功和 1 个失败'],
       ['2 in progress, 1 queued checks', '2 个检查正在进行、1 个已排队'],
       ['1 pending, 1 expected and 1 timed out checks', '1 个检查挂起、1 个等待报告、1 个已超时'],
-      ['1 successful check', '1 个检查成功'],
+      ['1 successful check', '1 个检查成功']
     ],
-    misses: ['all checks passed', '20 successful checks passed'],
+    misses: ['all checks passed', '20 successful checks passed']
   },
   {
     hits: [['Copy full commit hash 06838a0', '复制完整提交哈希 06838a0']],
-    misses: ['Copy full commit hash main'],
+    misses: ['Copy full commit hash main']
   },
   // 提交签名对话框的 sr-only 标题
   {
     hits: [
       ['verified: 06838a0', '已验证：06838a0'],
-      [
-        'partially verified: 06838a06833d0264a78a7928f81a980a88b36230',
-        '部分验证：06838a06833d0264a78a7928f81a980a88b36230',
-      ],
-      ['unverified: ecde65d', '未验证：ecde65d'],
+      ['partially verified: 06838a06833d0264a78a7928f81a980a88b36230', '部分验证：06838a06833d0264a78a7928f81a980a88b36230'],
+      ['unverified: ecde65d', '未验证：ecde65d']
     ],
-    misses: ['verified: main', 'Verified: 06838a0'],
+    misses: ['verified: main', 'Verified: 06838a0']
   },
   // 包结果
   {
     hits: [
       ['npm type', 'npm 类型'],
-      ['container type', '容器类型'],
+      ['container type', '容器类型']
     ],
-    misses: ['pypi type'],
+    misses: ['pypi type']
   },
   // 代码结果
   {
     hits: [
       ['Show 3 more matches', '再显示 3 处匹配'],
-      ['Show 1 more match', '再显示 1 处匹配'],
+      ['Show 1 more match', '再显示 1 处匹配']
     ],
-    misses: ['Show more matches'],
+    misses: ['Show more matches']
   },
   {
     hits: [
       ['This file contains 12 more matches not shown.', '此文件另有 12 处匹配未显示。'],
-      ['This file contains 1 more match not shown.', '此文件另有 1 处匹配未显示。'],
+      ['This file contains 1 more match not shown.', '此文件另有 1 处匹配未显示。']
     ],
-    misses: ['This file contains more matches not shown.'],
+    misses: ['This file contains more matches not shown.']
   },
   {
     hits: [['See all 15 matches in the full file', '查看完整文件中的全部 15 处匹配']],
-    misses: ['See all matches in the full file'],
+    misses: ['See all matches in the full file']
   },
   // 搜索首页页脚
   { hits: [['GitHub, Inc. © 2026', 'GitHub, Inc. © 2026']], misses: ['GitHub, Inc. © 26'] },
@@ -186,28 +183,26 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Your search did not match any pull requests', '没有与搜索匹配的拉取请求'],
       ['Your search did not match any wikis', '没有与搜索匹配的 Wiki'],
       // 产品名译中文：Marketplace → 市场
-      ['Your search did not match any marketplace', '没有与搜索匹配的市场应用'],
+      ['Your search did not match any marketplace', '没有与搜索匹配的市场应用']
     ],
-    misses: ['Your search did not match any projects'],
+    misses: ['Your search did not match any projects']
   },
   {
     hits: [
       [
         'However we found 3 repositories that matched your search query. Alternatively try one of the tips below.',
-        '不过找到了 3 个与搜索查询匹配的存储库。也可尝试以下提示。',
+        '不过找到了 3 个与搜索查询匹配的存储库。也可尝试以下提示。'
       ],
       [
         'However we found 1.2k code results that matched your search query. Alternatively try one of the tips below.',
-        '不过找到了 1.2k 个与搜索查询匹配的代码结果。也可尝试以下提示。',
+        '不过找到了 1.2k 个与搜索查询匹配的代码结果。也可尝试以下提示。'
       ],
       [
         'However we found 1 wiki that matched your search query. Alternatively try one of the tips below.',
-        '不过找到了 1 个与搜索查询匹配的 Wiki。也可尝试以下提示。',
-      ],
+        '不过找到了 1 个与搜索查询匹配的 Wiki。也可尝试以下提示。'
+      ]
     ],
-    misses: [
-      'However we found some repositories that matched your search query. Alternatively try one of the tips below.',
-    ],
+    misses: ['However we found some repositories that matched your search query. Alternatively try one of the tips below.']
   },
   // 句中类型为链接时单独出现的「数量 + 类型」（存储库、问题等的计数由 common 收录）
   {
@@ -216,14 +211,14 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['1 code result', '1 个代码结果'],
       ['12 users', '12 个用户'],
       ['1 wiki', '1 个 Wiki'],
-      ['1.2k topics', '1.2k 个主题'],
+      ['1.2k topics', '1.2k 个主题']
     ],
-    misses: ['some code results', '3 repositories', 'code results 3'],
-  },
+    misses: ['some code results', '3 repositories', 'code results 3']
+  }
 ]
 
-const HITS = REGEXP_CASES.flatMap((item) => item.hits)
-const MISSES = REGEXP_CASES.flatMap((item) => item.misses)
+const HITS = REGEXP_CASES.flatMap(item => item.hits)
+const MISSES = REGEXP_CASES.flatMap(item => item.misses)
 
 describe('search 正则词条', () => {
   it.each(HITS)('%s → %s', (input, expected) => {
@@ -232,7 +227,7 @@ describe('search 正则词条', () => {
     expect(translate(input)).toBe(expected)
   })
 
-  it.each(MISSES)('不命中：%s', (input) => {
+  it.each(MISSES)('不命中：%s', input => {
     expect(translate(input)).toBeUndefined()
   })
 
@@ -247,22 +242,16 @@ describe('search 正则词条', () => {
     // 耗时：「\u00a0(」「210」「 」「ms」「)」
     expect(translate(normalizeText(['\u00a0(', '210', ' ', 'ms', ')'].join('')))).toBe('（210 毫秒）')
     expect(translate(normalizeText(['Sort by: ', 'Best match'].join('')))).toBe('排序依据：最佳匹配')
-    expect(translate(normalizeText(['Your search did not match any ', 'repositories'].join('')))).toBe(
-      '没有与搜索匹配的存储库',
-    )
+    expect(translate(normalizeText(['Your search did not match any ', 'repositories'].join('')))).toBe('没有与搜索匹配的存储库')
     expect(translate(normalizeText(['GitHub, Inc. © ', '2026'].join('')))).toBe('GitHub, Inc. © 2026')
     expect(
       translate(
         normalizeText(
-          [
-            'However we found ',
-            '3',
-            ' ',
-            'repositories',
-            ' that matched your search query. Alternatively try one of the tips below.',
-          ].join(''),
-        ),
-      ),
+          ['However we found ', '3', ' ', 'repositories', ' that matched your search query. Alternatively try one of the tips below.'].join(
+            ''
+          )
+        )
+      )
     ).toBe('不过找到了 3 个与搜索查询匹配的存储库。也可尝试以下提示。')
     // 句中类型为链接：链接内的「3」「 」「code results」拼接
     expect(translate(normalizeText(['3', ' ', 'code results'].join('')))).toBe('3 个代码结果')
@@ -272,9 +261,7 @@ describe('search 正则词条', () => {
     expect(translate('Your search did not match any')).toBe('没有与搜索匹配的')
     expect(translate('However we found')).toBe('不过找到了')
     expect(translate('code results')).toBe('个代码结果')
-    expect(translate('that matched your search query. Alternatively try one of the tips below.')).toBe(
-      '与搜索查询匹配。也可尝试以下提示。',
-    )
+    expect(translate('that matched your search query. Alternatively try one of the tips below.')).toBe('与搜索查询匹配。也可尝试以下提示。')
     // 排序按钮与结果数的片段由 common-ui 收录
     expect(translateFull('Sort by:')).toBe('排序依据：')
     expect(translateFull('results')).toBe('个结果')
@@ -294,7 +281,7 @@ describe('search 正则词条', () => {
       ['124 repositories', '124 个存储库'],
       ['20782 followers', '20782 个关注者'],
       ['25 comments', '25 条评论'],
-      ['0 downloads', '0 次下载'],
+      ['0 downloads', '0 次下载']
     ]
     for (const [input, expected] of cases) {
       expect(translate(input)).toBeUndefined()
@@ -326,22 +313,19 @@ describe('search 静态词条', () => {
     ['Copy full commit hash', '复制完整提交哈希'],
     ['Sign in to search code on GitHub', '登录 GitHub 以搜索代码'],
     // 原文没有逗号，改语序，不加逗号
-    [
-      'Before you can access our code search functionality please sign in or sign up.',
-      '请先登录或注册再使用代码搜索。',
-    ],
+    ['Before you can access our code search functionality please sign in or sign up.', '请先登录或注册再使用代码搜索。'],
     [
       'Before you can access our code search functionality please sign in or create a free account.',
-      '请先登录或创建免费帐户再使用代码搜索。',
+      '请先登录或创建免费帐户再使用代码搜索。'
     ],
     // 原文用逗号带出插入语，译文同样用逗号，不改成括号
     [
       'The path qualifier can search the entire file path, not just the extension, and supports regular expressions. For more information, see our',
-      'path 限定符可搜索完整文件路径，不只是扩展名，还支持正则表达式。详细信息请参阅',
+      'path 限定符可搜索完整文件路径，不只是扩展名，还支持正则表达式。详细信息请参阅'
     ],
     [
       'GitHub Packages is a platform for hosting and managing packages, including containers and other dependencies. Get started with publishing or installing packages yourself.',
-      'GitHub 软件包是托管和管理软件包的平台，包括容器和其他依赖项。立即开始发布或安装软件包。',
+      'GitHub 软件包是托管和管理软件包的平台，包括容器和其他依赖项。立即开始发布或安装软件包。'
     ],
     ['Restrict your search to the title by using the in:title qualifier.', '使用 in:title 限定符可只搜索标题。'],
     ["Why wasn't my code found?", '为什么找不到我的代码？'],
@@ -350,11 +334,11 @@ describe('search 静态词条', () => {
     // 原文没有冒号：Note that … 不译出“注意：”
     [
       'Note that we don’t currently support regular expressions in the repo or org qualifiers. For more information on search syntax, see our',
-      'repo 和 org 限定符目前不支持正则表达式。有关搜索语法的详细信息，请参阅',
+      'repo 和 org 限定符目前不支持正则表达式。有关搜索语法的详细信息，请参阅'
     ],
     [
       "Note that you'll have to escape any slashes in the regex. For more information, see our",
-      '正则表达式中的斜杠需要转义。详细信息请参阅',
+      '正则表达式中的斜杠需要转义。详细信息请参阅'
     ],
     ['Advanced options', '高级选项'],
     ['With this many stars', '星标数为'],
@@ -369,7 +353,7 @@ describe('search 静态词条', () => {
     ['Possible unrecognized qualifier, searching for this term literally', '可能是无法识别的限定符，将按字面搜索该词'],
     // 片段译文不带原文没有的标点
     ['matches in the full file', '处完整文件中的匹配'],
-    ['Repository size in KB', '以 KB 为单位的存储库大小'],
+    ['Repository size in KB', '以 KB 为单位的存储库大小']
   ])('%s → %s', (input, expected) => {
     expect(translate(input)).toBe(expected)
   })
@@ -397,7 +381,7 @@ describe('search 页面词条', () => {
     ['For an', '如需'],
     ['advanced search', '高级搜索'],
     [', use our', '，可使用'],
-    ['prefixes', '前缀'],
+    ['prefixes', '前缀']
   ])('%s → %s', (input, expected) => {
     expect(translate(input)).toBe(expected)
   })
@@ -417,7 +401,7 @@ describe('search 页面词条', () => {
     ['Popular', '热门'],
     ['not planned', '未计划'],
     // 全站标签页标题的标语段
-    ['Where software is built', '构建软件的地方'],
+    ['Where software is built', '构建软件的地方']
   ])('通用词 %s 由 common 收录，本页不重复', (input, expected) => {
     expect(dict.static?.[input]).toBeUndefined()
     expect(dict.scoped?.[input]).toBeUndefined()
@@ -473,7 +457,7 @@ describe('search 结果页 ProTip（快捷键是 span.hx_kbd，不是 <kbd>）',
       matcher: fullMatcher,
       host: window,
       resolvePages: () => ['common', 'search'],
-      collectUntranslated: true,
+      collectUntranslated: true
     })
     translator.start()
     // 「提示！」后页面自带的 &nbsp; 文本节点紧跟全角标点，引擎置空
@@ -516,7 +500,7 @@ describe('search 结果中的语言名（忽略区域根元素按属性规则改
       matcher: fullMatcher,
       host: window,
       resolvePages: () => ['common', 'search'],
-      collectUntranslated: true,
+      collectUntranslated: true
     })
     translator.start()
     expect(vue.textContent).toBe('Vue')
@@ -555,7 +539,7 @@ describe('search 结果中的语言名（忽略区域根元素按属性规则改
 })
 
 describe('search 忽略选择器', () => {
-  it.each(search.ignore ?? [])('%s 是合法选择器', (selector) => {
+  it.each(search.ignore ?? [])('%s 是合法选择器', selector => {
     expect(() => document.createElement('div').querySelector(selector)).not.toThrow()
   })
 
@@ -566,12 +550,12 @@ describe('search 忽略选择器', () => {
   })
 
   it('不重复全局忽略规则', () => {
-    expect((search.ignore ?? []).filter((selector) => IGNORE_SELECTORS.includes(selector))).toEqual([])
+    expect((search.ignore ?? []).filter(selector => IGNORE_SELECTORS.includes(selector))).toEqual([])
   })
 
   it('忽略选择器与属性规则选择器不依赖 aria-label 的取值', () => {
     const selectors = [...(search.ignore ?? []), ...(search.attributeRules ?? []).map(([selector]) => selector)]
-    expect(selectors.filter((selector) => /\[aria-label[~|^$*]?=/.test(selector))).toEqual([])
+    expect(selectors.filter(selector => /\[aria-label[~|^$*]?=/.test(selector))).toEqual([])
   })
 
   it('匹配器按页面返回忽略选择器', () => {
@@ -636,7 +620,7 @@ describe('search 忽略选择器', () => {
       </select>`
     const index = compileIgnoreIndex(search.ignore ?? [], document.createElement('div'))
     const ignored = (text: string): boolean => {
-      const element = [...document.querySelectorAll('*')].reverse().find((node) => node.textContent?.trim() === text)
+      const element = [...document.querySelectorAll('*')].reverse().find(node => node.textContent?.trim() === text)
       return Boolean(element?.closest(index.selector))
     }
     expect(ignored('Vue')).toBe(true)
@@ -665,9 +649,7 @@ describe('search 忽略选择器', () => {
     expect(ignored('Any language')).toBe(false)
     // 引擎的索引匹配与原生 matches 一致
     const elements = [...document.body.querySelectorAll('*')]
-    expect(elements.filter((element) => elementMatches(index, element))).toEqual(
-      elements.filter((element) => element.matches(index.selector)),
-    )
+    expect(elements.filter(element => elementMatches(index, element))).toEqual(elements.filter(element => element.matches(index.selector)))
   })
 
   it('头部搜索框的查询文字与建议取值被忽略，占位文字、限定符说明不被忽略', () => {
@@ -712,8 +694,6 @@ describe('search 忽略选择器', () => {
     expect(translate('code')).toBeUndefined()
     expect(translate('open')).toBe('打开')
     const elements = [...document.body.querySelectorAll('*')]
-    expect(elements.filter((element) => elementMatches(index, element))).toEqual(
-      elements.filter((element) => element.matches(index.selector)),
-    )
+    expect(elements.filter(element => elementMatches(index, element))).toEqual(elements.filter(element => element.matches(index.selector)))
   })
 })

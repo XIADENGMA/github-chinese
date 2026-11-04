@@ -15,12 +15,12 @@ const FILTER_BAR_SKIP: ReadonlySet<string> = new Set([
   'Cancelled',
   'Waiting',
   'Category',
-  'between',
+  'between'
 ])
 
 /** 筛选框的 scoped 词条：建议列表（筛选器名称、说明、取值）、高级筛选、校验提示，取自 issues/filter.ts */
 const FILTER_BAR: Readonly<Record<string, string>> = Object.fromEntries(
-  Object.entries(FILTER_BAR_SCOPED).filter(([key]) => !FILTER_BAR_SKIP.has(key)),
+  Object.entries(FILTER_BAR_SCOPED).filter(([key]) => !FILTER_BAR_SKIP.has(key))
 )
 
 const REVIEW_FILTER: Readonly<Record<string, string>> = {
@@ -32,7 +32,7 @@ const REVIEW_FILTER: Readonly<Record<string, string>> = {
   'Reviewed by you': '你已審查',
   'Not reviewed by you': '你未審查',
   'Awaiting review from you': '等待你審查',
-  'Awaiting review from you or your team': '等待你或你的團隊審查',
+  'Awaiting review from you or your team': '等待你或你的團隊審查'
 }
 
 const REVIEW_FILTER_SOURCE = Object.keys(REVIEW_FILTER).join('|')
@@ -47,7 +47,7 @@ const SORT_FIELD: Readonly<Record<string, string>> = {
   'Last updated': '上次更新',
   'Total comments': '留言總數',
   Reactions: '表情回應',
-  'Total reactions': '表情回應總數',
+  'Total reactions': '表情回應總數'
 }
 
 const SORT_FIELD_SOURCE = Object.keys(SORT_FIELD).join('|')
@@ -61,7 +61,7 @@ const REACTION_LABEL: Readonly<Record<string, string>> = {
   Confused: '😕 ',
   Rocket: '🚀 ',
   Eyes: '👀 ',
-  Heart: '❤️ ',
+  Heart: '❤️ '
 }
 
 const ITEM_STATUS: Readonly<Record<string, string>> = {
@@ -74,17 +74,17 @@ const ITEM_STATUS: Readonly<Record<string, string>> = {
   'Open (in progress)': '開放中（進行中）',
   'Closed (abandoned)': '已關閉（已放棄）',
   'Draft (not ready)': '草稿（未就緒）',
-  'Archived (abandoned)': '已封存（已放棄）',
+  'Archived (abandoned)': '已封存（已放棄）'
 }
 
 const ITEM_STATUS_SOURCE = Object.keys(ITEM_STATUS)
-  .map((status) => status.replace(/[()]/g, '\\$&'))
+  .map(status => status.replace(/[()]/g, '\\$&'))
   .join('|')
 
 /** 列表名称：No more pull requests、No issues and pull requests matched your search 等 */
 const DASHBOARD_LABEL: Readonly<Record<string, string>> = {
   'pull requests': '拉取請求',
-  'issues and pull requests': '議題和拉取請求',
+  'issues and pull requests': '議題和拉取請求'
 }
 
 /** 列表项检查状态图标：Status checks: success（与存储库首页同译；Pending 按术语表作「擱置中」） */
@@ -93,7 +93,7 @@ const STATUS_CHECK_STATE: Readonly<Record<string, string>> = {
   failure: '失敗',
   pending: '擱置中',
   error: '錯誤',
-  expected: '等待回報',
+  expected: '等待回報'
 }
 
 /**
@@ -139,10 +139,8 @@ export default {
     'No pull requests matched your search': '沒有相符的拉取請求',
     'No more pull requests': '沒有更多拉取請求',
     // attention 不译「關注」，免得与 watch 撞词（与 issues/list.ts 同一写法）
-    'When a pull request needs your review or attention, it’ll appear here.':
-      '需要你審查或留意的拉取請求會顯示在這裡。',
-    "When a pull request needs your review or attention, it'll appear here.":
-      '需要你審查或留意的拉取請求會顯示在這裡。',
+    'When a pull request needs your review or attention, it’ll appear here.': '需要你審查或留意的拉取請求會顯示在這裡。',
+    "When a pull request needs your review or attention, it'll appear here.": '需要你審查或留意的拉取請求會顯示在這裡。',
     'Failed to load pull requests. Try refreshing the page.': '無法載入拉取請求。請重新整理頁面。',
     'There aren’t any open pull requests.': '沒有開放中的拉取請求。',
     "There aren't any open pull requests.": '沒有開放中的拉取請求。',
@@ -177,8 +175,7 @@ export default {
     'Filter pull requests by the default branch with': '依預設分支篩選拉取請求可使用',
     'Find all pull requests that aren’t related to any open issues with': '尋找與任何開放中議題都無關的拉取請求可使用',
     "Find all pull requests that aren't related to any open issues with": '尋找與任何開放中議題都無關的拉取請求可使用',
-    'on any issue or pull request to go back to the pull request listing page.':
-      '可從任何議題或拉取請求返回拉取請求清單頁面。',
+    'on any issue or pull request to go back to the pull request listing page.': '可從任何議題或拉取請求返回拉取請求清單頁面。',
     'Exclude your own pull requests with': '排除你自己的拉取請求可使用',
     // ProTip! Add <.patch> or <.diff> to the end of URLs for Git’s plaintext views.
     'to the end of URLs for Git’s plaintext views.': '到 URL 結尾以查看 Git 純文字檢視。',
@@ -207,7 +204,7 @@ export default {
     'Pull Requests mentioning you': '提及你的拉取請求',
     'Pull Requests requesting your review': '請求你審查的拉取請求',
     // 经典 /pulls 的存储库可见性筛选项（Public repositories only 由 org-settings 词典收录）
-    'Private repositories only': '僅限私人儲存庫',
+    'Private repositories only': '僅限私人儲存庫'
   },
   scoped: {
     // 筛选框（与议题列表同一组件）；Parent issue、Blocked by 在议题页由 issues/metadata.ts 收录
@@ -345,7 +342,7 @@ export default {
     Adding: '加入',
 
     // 堆栈进度：<3> unmerged（整句由下方 inline 处理，数字不在独立元素中时按片段）
-    unmerged: '未合併',
+    unmerged: '未合併'
   },
   regexp: [
     // 经典列表计数：546 Open / 12,345 Closed
@@ -357,14 +354,8 @@ export default {
     [/^#(\d+) by$/, '#$1 由'],
     [/^Open pull requests created by ([\w-]+(?:\[bot\])?)$/, '$1 建立的開放中拉取請求'],
     // 空状态：No more pull requests、No issues and pull requests matched your search
-    [
-      /^No (pull requests|issues and pull requests) matched your search$/,
-      (_, label) => `沒有相符的${DASHBOARD_LABEL[label] ?? label}`,
-    ],
-    [
-      /^Search for (pull requests|issues and pull requests)\.$/,
-      (_, label) => `搜尋${DASHBOARD_LABEL[label] ?? label}。`,
-    ],
+    [/^No (pull requests|issues and pull requests) matched your search$/, (_, label) => `沒有相符的${DASHBOARD_LABEL[label] ?? label}`],
+    [/^Search for (pull requests|issues and pull requests)\.$/, (_, label) => `搜尋${DASHBOARD_LABEL[label] ?? label}。`],
     // 首次贡献横幅标题（存储库名是相邻文本节点，拼接后整句匹配；与议题列表同译）
     [/^👋 Want to contribute to ([\w.-]+\/[\w.-]+)\?$/, '👋 想為 $1 做出貢獻嗎？'],
     // 堆栈列表
@@ -374,14 +365,11 @@ export default {
     [/^Filter by assignee (\S+)$/, '依負責人 $1 篩選'],
     [/^Filter by label (.+)$/, '依標籤 $1 篩選'],
     [/^Filter by repository ([\w.-]+\/[\w.-]+)$/, '依儲存庫 $1 篩選'],
-    [
-      new RegExp(`^Filter by review: (${REVIEW_FILTER_SOURCE})$`),
-      (_, label) => `依審查篩選：${REVIEW_FILTER[label] ?? label}`,
-    ],
+    [new RegExp(`^Filter by review: (${REVIEW_FILTER_SOURCE})$`), (_, label) => `依審查篩選：${REVIEW_FILTER[label] ?? label}`],
     // 排序按钮：Sort by Newest descending → 依最新遞減排序（原文无标点，改语序代替冒号、逗号；与 issues/list.ts 同一写法）
     [
       new RegExp(`^Sort by (${SORT_FIELD_SOURCE}) (ascending|descending)$`),
-      (_, field, direction) => `依${SORT_FIELD[field] ?? field}${direction === 'ascending' ? '遞增' : '遞減'}排序`,
+      (_, field, direction) => `依${SORT_FIELD[field] ?? field}${direction === 'ascending' ? '遞增' : '遞減'}排序`
     ],
     [new RegExp(`^Sort by (${SORT_FIELD_SOURCE})$`), (_, field) => `依${SORT_FIELD[field] ?? field}排序`],
     // 审查状态提示
@@ -390,10 +378,7 @@ export default {
     // 检查状态（检查量词作「項」）
     [/^(\d+)\/(\d+) checks passing$/, '$1/$2 項檢查通過'],
     [/^(\d+) ?\/ ?(\d+) checks OK$/, '$1/$2 項檢查正常'],
-    [
-      /^Status checks: (success|failure|pending|error|expected)$/,
-      (_, state) => `狀態檢查：${STATUS_CHECK_STATE[state] ?? state}`,
-    ],
+    [/^Status checks: (success|failure|pending|error|expected)$/, (_, state) => `狀態檢查：${STATUS_CHECK_STATE[state] ?? state}`],
     // 任务列表进度（量词用「項」，按术语表工作清单的写法，与个人主页贡献同译）
     [/^(\d+) of (\d+) tasks?$/, '$2 項工作中已完成 $1 項'],
     [/^(\d+) tasks? done$/, '$1 項工作已完成'],
@@ -403,7 +388,7 @@ export default {
     [/^(\d+) linked issues? for pull request ([\w.-]+\/[\w.-]+#\d+): (.+)$/, '拉取請求 $2 的 $1 個已連結議題：$3'],
     [
       /^([\d,]+) (total|Thumbs up|Thumbs down|Laugh|Hooray|Confused|Rocket|Eyes|Heart) reactions?$/,
-      (_, count, label) => `${REACTION_LABEL[label] ?? ''}${count} 個表情回應`,
+      (_, count, label) => `${REACTION_LABEL[label] ?? ''}${count} 個表情回應`
     ],
     [/^Milestone: (.+)$/, '里程碑：$1'],
     [/^\+(\d+), show all (\d+) assignees$/, '+$1，顯示全部 $2 位負責人'],
@@ -418,7 +403,7 @@ export default {
     [/^Select all pull requests:(?: (.+))?$/, (_, title) => (title ? `全選拉取請求：${title}` : '全選拉取請求')],
     [
       /^([\d,]+) pull requests? (?:of ([\d,]+) )?selected$/,
-      (_, count, total) => (total ? `${total} 個拉取請求中已選取 ${count} 個` : `已選取 ${count} 個拉取請求`),
+      (_, count, total) => (total ? `${total} 個拉取請求中已選取 ${count} 個` : `已選取 ${count} 個拉取請求`)
     ],
     // 数字在独立元素中时的后半段：<3> of 25 selected（原文无标点，不加逗号；与议题列表同一写法）
     [/^of ([\d,]+) selected$/, '/$1 已選取'],
@@ -429,15 +414,15 @@ export default {
     [/^Could not update (\d+) of (\d+) pull requests?$/, '$2 個拉取請求中有 $1 個無法更新'],
     [/^(\d+) pull requests? updated$/, '已更新 $1 個拉取請求'],
     // 筛选框（与议题列表同一组件）：建议列表的组合文字、高级筛选、校验提示；宽泛规则，放在最后
-    ...FILTER_BAR_RULES,
+    ...FILTER_BAR_RULES
   ],
   inline: [
     // 堆栈进度（堆栈列表与堆栈详情）：<span><span>3</span> merged</span>；不收录时 merged 落到头部片段「合併了」
     ['{#} merged', '{#} 個已合併'],
     ['{#} unmerged', '{#} 個未合併'],
     // 筛选框的校验提示（与议题列表同一组件）
-    ...FILTER_BAR_INLINE,
+    ...FILTER_BAR_INLINE
   ],
   // 筛选框 label: 取值建议里的标签名（与议题列表同一组件）
-  ignore: [LABEL_SUGGESTION_IGNORE],
+  ignore: [LABEL_SUGGESTION_IGNORE]
 } satisfies PageDictionary

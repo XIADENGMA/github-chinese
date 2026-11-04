@@ -6,7 +6,7 @@ const DURATION_UNIT: Readonly<Record<string, string>> = {
   day: '天',
   week: '週',
   month: '個月',
-  year: '年',
+  year: '年'
 }
 
 /** 「3 days」→「3 天」；数字与单位之间加空格（术语表） */
@@ -20,7 +20,7 @@ const DURATION_SOURCE = '(\\d+) (hours?|days?|weeks?|months?|years?)'
 const DATA_TYPE: Readonly<Record<string, string>> = {
   Committer: '提交者',
   Diffstat: '差異統計',
-  Overview: '總覽',
+  Overview: '總覽'
 }
 
 /**
@@ -75,7 +75,7 @@ export default {
     'Bad request. Please refresh the page and try again.': '請求無效。請重新整理頁面後再試一次。',
     'Data is unusable': '資料無法使用',
     'Request was cancelled. Please try again.': '請求已取消。請再試一次。',
-    'An unexpected error occurred while fetching the data': '擷取資料時發生未預期的錯誤',
+    'An unexpected error occurred while fetching the data': '擷取資料時發生未預期的錯誤'
   },
   scoped: {
     Summary: '摘要',
@@ -134,14 +134,11 @@ export default {
     '[Example issue]': '[範例議題]',
     '[Example PR]': '[範例 PR]',
     '[Example discussion]': '[範例討論]',
-    'commented on yesterday • -- new comment(s)': '留言於昨天 • -- 則新留言',
+    'commented on yesterday • -- new comment(s)': '留言於昨天 • -- 則新留言'
   },
   regexp: [
     // 页头日期范围：October 18, 2026 – October 25, 2026
-    [
-      new RegExp(`^(${DATE_SOURCE}) [–-] (${DATE_SOURCE})$`),
-      (_, from, to) => `${translateTime(from)} – ${translateTime(to)}`,
-    ],
+    [new RegExp(`^(${DATE_SOURCE}) [–-] (${DATE_SOURCE})$`), (_, from, to) => `${translateTime(from)} – ${translateTime(to)}`],
     // 周期选项（Pulse：3 days / 1 week / 1 month；复刻页：1 month … 5 years）。24 hours 由 common 的静态词条先行命中
     [new RegExp(`^${DURATION_SOURCE}$`), (_, amount, unit) => translateDuration(amount, unit)],
     // 摘要（数字与单位在同一个 <strong> 里，拼接后匹配；作者是人，量词作「位」）
@@ -155,12 +152,10 @@ export default {
     [/^• ([\d,]+) new comments?$/, '• $1 則新留言'],
     // 空状态
     [
-      new RegExp(
-        `^There hasn['’]t been any commit activity on ([\\w.-]+\\/[\\w.-]+) over the last ${DURATION_SOURCE}$`,
-      ),
-      (_, repo, amount, unit) => `${joinCjk('過去', translateDuration(amount, unit))}內 ${repo} 沒有任何提交活動`,
+      new RegExp(`^There hasn['’]t been any commit activity on ([\\w.-]+\\/[\\w.-]+) over the last ${DURATION_SOURCE}$`),
+      (_, repo, amount, unit) => `${joinCjk('過去', translateDuration(amount, unit))}內 ${repo} 沒有任何提交活動`
     ],
     // 数据加载失败
-    [/^(Committer|Diffstat|Overview) data path is not available$/, (_, type) => `${DATA_TYPE[type]}資料路徑無法使用`],
-  ],
+    [/^(Committer|Diffstat|Overview) data path is not available$/, (_, type) => `${DATA_TYPE[type]}資料路徑無法使用`]
+  ]
 } satisfies PageDictionary

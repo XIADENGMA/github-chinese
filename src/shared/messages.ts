@@ -63,7 +63,7 @@ const MAX_URL_LENGTH = 4096
 const CONTENT_MESSAGE_TYPES: ReadonlySet<string> = new Set<ContentMessage['type']>([
   'gcn:get-status',
   'gcn:custom-entries-changed',
-  'gcn:search-rules-changed',
+  'gcn:search-rules-changed'
 ])
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -85,7 +85,7 @@ export function isContentStatus(value: unknown): value is ContentStatus {
     typeof value.active === 'boolean' &&
     typeof value.excluded === 'boolean' &&
     Array.isArray(value.pages) &&
-    value.pages.every((page) => typeof page === 'string') &&
+    value.pages.every(page => typeof page === 'string') &&
     isCount(value.translatedCount)
   )
 }

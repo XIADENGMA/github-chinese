@@ -13,12 +13,11 @@ const EVENTS: Readonly<Record<string, string>> = {
   Statuses: '状态',
   Watches: '关注',
   'Personal access token requests': '个人访问令牌请求',
-  'Personal access token request created, approved, denied, or cancelled.':
-    '个人访问令牌请求被创建、批准、拒绝或取消。',
+  'Personal access token request created, approved, denied, or cancelled.': '个人访问令牌请求被创建、批准、拒绝或取消。',
   Sponsorships: '赞助',
   Deployments: '部署',
   Milestones: '里程碑',
-  Releases: '发行版',
+  Releases: '发行版'
 }
 
 /**
@@ -57,14 +56,11 @@ export default {
     Payload: '有效负载',
     Body: '正文',
     Redeliver: '重新传递',
-    ...EVENTS,
+    ...EVENTS
   },
   regexp: [
     // 交付耗时（句号随原文，与存储库 Web 钩子一致）
-    [
-      /^Completed in (\d+(?:\.\d+)?) seconds?(\.?)$/,
-      (_, seconds: string, dot: string) => `耗时 ${seconds} 秒${dot ? '。' : ''}`,
-    ],
-    [/^(\d+) webhooks?$/, '$1 个 Web 钩子'],
-  ],
+    [/^Completed in (\d+(?:\.\d+)?) seconds?(\.?)$/, (_, seconds: string, dot: string) => `耗时 ${seconds} 秒${dot ? '。' : ''}`],
+    [/^(\d+) webhooks?$/, '$1 个 Web 钩子']
+  ]
 } satisfies PageDictionary

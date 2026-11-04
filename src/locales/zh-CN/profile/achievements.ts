@@ -12,7 +12,7 @@ const ACHIEVEMENTS = [
   'Arctic Code Vault Contributor',
   'Mars 2020 Contributor',
   'Heart On Your Sleeve',
-  'Open Sourcerer',
+  'Open Sourcerer'
 ] as const
 
 const ACHIEVEMENT_SOURCE = ACHIEVEMENTS.join('|')
@@ -55,10 +55,10 @@ export default {
       '你解锁了新成就！要在个人资料中包含成就和私密贡献来展示它们可前往',
 
     // 亮点
-    'GitHub Star': 'GitHub 之星',
+    'GitHub Star': 'GitHub 之星'
   },
   scoped: {
-    inaccessible: '无法访问',
+    inaccessible: '无法访问'
   },
   regexp: [
     [new RegExp(`^(${ACHIEVEMENT_SOURCE}) details$`), '$1 详细信息'],
@@ -81,11 +81,8 @@ export default {
     // 隐藏 / 显示成就后的提示
     [
       new RegExp(`^The (${ACHIEVEMENT_SOURCE}) achievement will now be hidden from your profile\\.$`),
-      '$1 成就将不再显示在你的个人资料中。',
+      '$1 成就将不再显示在你的个人资料中。'
     ],
-    [
-      new RegExp(`^The (${ACHIEVEMENT_SOURCE}) achievement will now be shown in your profile\\.$`),
-      '$1 成就将显示在你的个人资料中。',
-    ],
-  ],
+    [new RegExp(`^The (${ACHIEVEMENT_SOURCE}) achievement will now be shown in your profile\\.$`), '$1 成就将显示在你的个人资料中。']
+  ]
 } satisfies PageDictionary

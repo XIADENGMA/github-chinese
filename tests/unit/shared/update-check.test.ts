@@ -12,7 +12,7 @@ import {
   UPDATE_CHECK_INTERVAL_MS,
   UPDATE_CHECK_TIMEOUT_MS,
   updateCheckItem,
-  type UpdateCheckDeps,
+  type UpdateCheckDeps
 } from '../../../src/shared/update-check'
 
 const NOW = Date.UTC(2026, 10, 1, 8)
@@ -27,14 +27,14 @@ function makeDeps(overrides: Partial<UpdateCheckDeps> = {}): UpdateCheckDeps & {
     now: () => NOW,
     manifest: () => ({ version: '1.2.0' }),
     installType: async () => 'development',
-    ...overrides,
+    ...overrides
   } as UpdateCheckDeps & { fetch: FetchMock }
 }
 
 /** 收集回调收到的版本号 */
 async function collect(deps: UpdateCheckDeps): Promise<string[]> {
   const seen: string[] = []
-  await checkLatestVersion((version) => seen.push(version), deps)
+  await checkLatestVersion(version => seen.push(version), deps)
   return seen
 }
 
@@ -59,7 +59,7 @@ describe('installSource', () => {
     [{}, 'other', 'manual'],
     [{}, undefined, 'manual'],
     [{ update_url: '' }, 'development', 'manual'],
-    [{ update_url: 1 }, undefined, 'manual'],
+    [{ update_url: 1 }, undefined, 'manual']
   ] as const)('manifest %j、installType %s → %s', (manifest, installType, source) => {
     expect(installSource(manifest, installType)).toBe(source)
   })
@@ -77,7 +77,7 @@ describe('isNewerVersion', () => {
     ['1.3.0-beta.1', '1.2.0', false],
     ['', '1.2.0', false],
     ['1.3.0', '', false],
-    ['1.3.0', 'dev', false],
+    ['1.3.0', 'dev', false]
   ])('%s 比 %s 新：%s', (candidate, current, newer) => {
     expect(isNewerVersion(candidate, current)).toBe(newer)
   })
@@ -93,7 +93,7 @@ describe('releaseVersion', () => {
     [`${REPOSITORY_URL}/releases`, undefined],
     ['https://github.com/login?return_to=%2Freleases', undefined],
     ['https://example.com/setube/github-chinese/releases/tag/v1.3.0', undefined],
-    ['', undefined],
+    ['', undefined]
   ])('%s → %s', (url, version) => {
     expect(releaseVersion(url)).toBe(version)
   })
@@ -115,7 +115,7 @@ describe('fetchLatestVersion', () => {
       method: 'HEAD',
       credentials: 'omit',
       cache: 'no-store',
-      referrerPolicy: 'no-referrer',
+      referrerPolicy: 'no-referrer'
     })
     expect(init.signal).toBeInstanceOf(AbortSignal)
   })
@@ -127,8 +127,8 @@ describe('fetchLatestVersion', () => {
       '请求出错',
       async () => {
         throw new TypeError('Failed to fetch')
-      },
-    ],
+      }
+    ]
   ] as const)('%s：undefined', async (_name, fetch) => {
     expect(await fetchLatestVersion(makeDeps({ fetch }))).toBeUndefined()
   })
@@ -139,7 +139,7 @@ describe('fetchLatestVersion', () => {
       (_url, init) =>
         new Promise((_resolve, reject) => {
           init.signal?.addEventListener('abort', () => reject(new DOMException('aborted', 'AbortError')))
-        }),
+        })
     )
     const pending = fetchLatestVersion(makeDeps({ fetch }))
     await vi.advanceTimersByTimeAsync(UPDATE_CHECK_TIMEOUT_MS)
@@ -151,7 +151,7 @@ describe('fetchLatestVersion', () => {
 describe('checkLatestVersion', () => {
   it.each([
     ['商店安装（manifest 带 update_url）', { manifest: () => ({ version: '1.2.0', update_url: CWS_UPDATE_URL }) }],
-    ['企业策略部署', { installType: async () => 'admin' }],
+    ['企业策略部署', { installType: async () => 'admin' }]
   ] as const)('%s：不读缓存、不请求', async (_name, overrides) => {
     await updateCheckItem.setValue({ latest: '1.3.0', checkedAt: NOW })
     const deps = makeDeps(overrides)
@@ -216,7 +216,7 @@ describe('checkLatestVersion', () => {
     const deps = makeDeps({
       installType: async () => {
         throw new Error('不可用')
-      },
+      }
     })
     expect(await collect(deps)).toEqual(['1.3.0'])
   })
@@ -251,7 +251,7 @@ describe('UPDATE_CHECK_DEPS', () => {
   it('manifest：读扩展的 manifest', () => {
     vi.spyOn(fakeBrowser.runtime, 'getManifest').mockReturnValue({
       version: '1.2.0',
-      update_url: CWS_UPDATE_URL,
+      update_url: CWS_UPDATE_URL
     } as never)
     expect(UPDATE_CHECK_DEPS.manifest()).toMatchObject({ update_url: CWS_UPDATE_URL })
   })

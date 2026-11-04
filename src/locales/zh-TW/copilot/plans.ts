@@ -3,7 +3,7 @@ import type { PageDictionary } from '../../../core/types'
 /** 计费周期 */
 const PERIOD: Readonly<Record<string, string>> = {
   month: '月',
-  year: '年',
+  year: '年'
 }
 
 /**
@@ -16,7 +16,7 @@ export const COPILOT_PLANS: Readonly<Record<string, string>> = {
   'Copilot Pro+': 'Copilot 專業增強版',
   'Copilot Business': 'Copilot 商務版',
   'Copilot Enterprise': 'Copilot 企業版',
-  'Copilot Student': 'Copilot 學生版',
+  'Copilot Student': 'Copilot 學生版'
 }
 
 /** 方案名的译名；未收录的保留原文 */
@@ -78,14 +78,13 @@ export default {
 
     // 免费资格（/github-copilot/free_signup）
     'Use GitHub Copilot for free': '免費使用 GitHub Copilot',
-    '🎉 Congratulations! You are eligible to use GitHub Copilot for free.':
-      '🎉 恭喜！你符合免費使用 GitHub Copilot 的資格。',
+    '🎉 Congratulations! You are eligible to use GitHub Copilot for free.': '🎉 恭喜！你符合免費使用 GitHub Copilot 的資格。',
     'Get code suggestions in more than a dozen coding languages including Python, JavaScript, TypeScript, Go, and Ruby':
       '在 Python、JavaScript、TypeScript、Go 和 Ruby 等十多種程式語言中取得程式碼建議',
     'Plugs into IDEs including VS Code, Visual Studio, Neovim, and JetBrains':
       '可整合到 VS Code、Visual Studio、Neovim 和 JetBrains 等 IDE',
     'GitHub Copilot is free to use for open source maintainers, teachers and students. We check eligibility monthly, per our policies.':
-      '開源維護者、教師和學生可以免費使用 GitHub Copilot。我們會依政策每月檢查資格。',
+      '開源維護者、教師和學生可以免費使用 GitHub Copilot。我們會依政策每月檢查資格。'
   },
   scoped: {
     'Try now': '立即試用',
@@ -102,7 +101,7 @@ export default {
     'free use FAQ': '免費使用常見問題',
     'Select your preferences': '選擇你的偏好設定',
     'Save and complete setup': '儲存並完成設定',
-    'Eligibility requirements': '資格條件',
+    'Eligibility requirements': '資格條件'
   },
   regexp: [
     [/^(\d+) premium requests to use the latest models and code review$/, '$1 個進階請求可用於最新模型和程式碼審查'],
@@ -111,8 +110,8 @@ export default {
     // 金额不用「$10.00/月」写法，避免「月」与「計費」之间留空格）
     [
       /^You will be billed (\$[\d,]+(?:\.\d+)?)\/(month|year) starting$/,
-      (_, amount: string, period: string) => `按每${PERIOD[period] ?? period} ${amount} 計費的起始日期為`,
-    ],
+      (_, amount: string, period: string) => `按每${PERIOD[period] ?? period} ${amount} 計費的起始日期為`
+    ]
     // 营销同意复选框的两句由 common/pages.ts 翻译（共用组件，全站生效）
-  ],
+  ]
 } satisfies PageDictionary

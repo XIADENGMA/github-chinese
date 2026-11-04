@@ -8,7 +8,7 @@ const COUNT = '(\\d[\\d,]*)'
 /** 关注按钮文字 */
 const WATCH_BUTTON: Readonly<Record<string, string>> = {
   Watch: '關注',
-  Unwatch: '取消關注',
+  Unwatch: '取消關注'
 }
 
 /** 关注按钮无障碍名称中的当前订阅方式（Participating 是屏幕阅读器用的简称） */
@@ -16,7 +16,7 @@ const WATCH_SELECTION: Readonly<Record<string, string>> = {
   Participating: '參與',
   'All Activity': '所有活動',
   Ignore: '忽略',
-  Custom: '自訂',
+  Custom: '自訂'
 }
 
 /** 自定义订阅对话框中的事件类型 */
@@ -25,71 +25,71 @@ const THREAD_TYPES: Readonly<Record<string, string>> = {
   'Pull requests': '拉取請求',
   Releases: '發行版本',
   Discussions: '討論',
-  'Security alerts': '安全性警示',
+  'Security alerts': '安全性警示'
 }
 
 /** 无法复刻的原因：Cannot fork because <owner/repo> …（复刻按钮的无障碍名称；原文无标点，译文不加） */
 const FORK_BLOCKERS: Readonly<Record<string, (repo: string) => string>> = {
-  'has forking disabled': (repo) => `因 ${repo} 已停用分叉而無法分叉`,
-  'is locked': (repo) => `無法分叉已鎖定的 ${repo}`,
-  'is disabled': (repo) => `無法分叉已停用的 ${repo}`,
-  'is unavailable due to a DMCA takedown': (repo) => `無法分叉已遭 DMCA 下架的 ${repo}`,
-  'is currently unavailable': (repo) => `無法分叉目前無法使用的 ${repo}`,
-  'is empty': (repo) => `無法分叉空儲存庫 ${repo}`,
+  'has forking disabled': repo => `因 ${repo} 已停用分叉而無法分叉`,
+  'is locked': repo => `無法分叉已鎖定的 ${repo}`,
+  'is disabled': repo => `無法分叉已停用的 ${repo}`,
+  'is unavailable due to a DMCA takedown': repo => `無法分叉已遭 DMCA 下架的 ${repo}`,
+  'is currently unavailable': repo => `無法分叉目前無法使用的 ${repo}`,
+  'is empty': repo => `無法分叉空儲存庫 ${repo}`
 }
 
 /** 存储库类型说明：Public archive repository · Forked from */
 const VISIBILITY: Readonly<Record<string, string>> = {
   Public: '公開',
   Private: '私人',
-  Internal: '內部',
+  Internal: '內部'
 }
 
 const REPO_KINDS: Readonly<Record<string, string>> = {
   archive: '封存',
   template: '範本',
-  mirror: '鏡像',
+  mirror: '鏡像'
 }
 
 const ORIGINS: Readonly<Record<string, string>> = {
   Forked: '分叉自',
   Generated: '產生自',
-  Mirrored: '鏡像自',
+  Mirrored: '鏡像自'
 }
 
 const regexp: readonly RegExpRule[] = [
   // 存档横幅（原文是两句，译文同样两句，不并成一句；原文有 repository、repo 两种写法）
   [
     new RegExp(`^This (?:repository|repo) was archived by the owner on (${DATE_SOURCE})\\. It is now read-only\\.$`),
-    (_, date: string) => joinCjk(joinCjk('此儲存庫已由擁有者於', translateTime(date)), '封存。目前為唯讀。'),
+    (_, date: string) => joinCjk(joinCjk('此儲存庫已由擁有者於', translateTime(date)), '封存。目前為唯讀。')
   ],
   // 关注按钮的无障碍名称
   [
     new RegExp(
-      `^(Watch|Unwatch): (Participating|All Activity|Ignore|Custom) in ${REPO}\\. ${COUNT} users? (?:is|are) watching this repository\\. Click to change subscription settings\\.$`,
+      `^(Watch|Unwatch): (Participating|All Activity|Ignore|Custom) in ${REPO}\\. ${COUNT} users? (?:is|are) watching this repository\\. Click to change subscription settings\\.$`
     ),
     (_, button: string, selection: string, repo: string, count: string) =>
-      `${WATCH_BUTTON[button] ?? button}：${repo}（${WATCH_SELECTION[selection] ?? selection}）。${count} 位使用者正在關注此儲存庫。按一下可變更訂閱設定。`,
+      `${WATCH_BUTTON[button] ?? button}：${repo}（${WATCH_SELECTION[selection] ?? selection}）。${count} 位使用者正在關注此儲存庫。按一下可變更訂閱設定。`
   ],
   [
     new RegExp(
-      `^Stop ignoring in ${REPO}\\. ${COUNT} users? (?:is|are) watching this repository\\. Click to change subscription settings\\.$`,
+      `^Stop ignoring in ${REPO}\\. ${COUNT} users? (?:is|are) watching this repository\\. Click to change subscription settings\\.$`
     ),
     // 原文 Stop ignoring 后没有冒号，译文不加
-    '停止忽略 $1。$2 位使用者正在關注此儲存庫。按一下可變更訂閱設定。',
+    '停止忽略 $1。$2 位使用者正在關注此儲存庫。按一下可變更訂閱設定。'
   ],
   // 自定义订阅对话框
   [new RegExp(`^Subscribe to events for ${REPO}$`), '訂閱 $1 的事件'],
   [
     /^(Issues|Pull requests|Releases|Discussions|Security alerts) are not enabled for this repository$/,
-    (_, thread: string) => `此儲存庫未啟用${THREAD_TYPES[thread] ?? thread}`,
+    (_, thread: string) => `此儲存庫未啟用${THREAD_TYPES[thread] ?? thread}`
   ],
   // 复刻按钮：不可复刻的原因与无障碍名称
   [
     new RegExp(
-      `^Cannot fork because ${REPO} (has forking disabled|is locked|is disabled|is unavailable due to a DMCA takedown|is currently unavailable|is empty)$`,
+      `^Cannot fork because ${REPO} (has forking disabled|is locked|is disabled|is unavailable due to a DMCA takedown|is currently unavailable|is empty)$`
     ),
-    (_, repo: string, reason: string) => FORK_BLOCKERS[reason]?.(repo) ?? `無法分叉 ${repo}`,
+    (_, repo: string, reason: string) => FORK_BLOCKERS[reason]?.(repo) ?? `無法分叉 ${repo}`
   ],
   [new RegExp(`^You own ${REPO} and are not a member of any organizations$`), '你擁有 $1 且未加入任何組織'],
   [new RegExp(`^Cannot fork ${REPO}$`), '無法分叉 $1'],
@@ -101,38 +101,32 @@ const regexp: readonly RegExpRule[] = [
   // 取消星标确认：存储库已在星标列表中
   [
     new RegExp(`^This will remove ${REPO} from the ${COUNT} lists? that it['’]s been added to\\.$`),
-    '這會將 $1 從其所在的 $2 個清單中移除。',
+    '這會將 $1 從其所在的 $2 個清單中移除。'
   ],
   // 固定按钮
   [new RegExp(`^Pin ${REPO} to your profile$`), '將 $1 釘選到你的個人檔案'],
   [new RegExp(`^Unpin ${REPO} from your profile$`), '從你的個人檔案取消釘選 $1'],
-  [
-    /^Failed to (pin|unpin) repository$/,
-    (_, action: string) => (action === 'pin' ? '無法釘選儲存庫' : '無法取消釘選儲存庫'),
-  ],
+  [/^Failed to (pin|unpin) repository$/, (_, action: string) => (action === 'pin' ? '無法釘選儲存庫' : '無法取消釘選儲存庫')],
   // 赞助按钮的无障碍名称与赞助对话框标题
   [
     new RegExp(`^(Sponsor|Sponsoring) ${REPO}$`),
-    (_, state: string, repo: string) => `${state === 'Sponsor' ? '贊助' : '正在贊助'} ${repo}`,
+    (_, state: string, repo: string) => `${state === 'Sponsor' ? '贊助' : '正在贊助'} ${repo}`
   ],
   // 固定按钮的无障碍名称（自己的存储库）
-  [
-    new RegExp(`^(Pin|Unpin) ${REPO}$`),
-    (_, action: string, repo: string) => `${action === 'Pin' ? '釘選' : '取消釘選'} ${repo}`,
-  ],
+  [new RegExp(`^(Pin|Unpin) ${REPO}$`), (_, action: string, repo: string) => `${action === 'Pin' ? '釘選' : '取消釘選'} ${repo}`],
   // 存储库类型说明：Public repository · Forked from、Public archive repository
   [
     /^(Public|Private|Internal)(?: (archive|template|mirror))? repository(?: · (Forked|Generated|Mirrored) from)?$/,
     (_, visibility: string, kind: string, origin: string) =>
-      `${VISIBILITY[visibility] ?? visibility}${kind ? (REPO_KINDS[kind] ?? kind) : ''}儲存庫${origin ? ` · ${ORIGINS[origin] ?? origin}` : ''}`,
+      `${VISIBILITY[visibility] ?? visibility}${kind ? (REPO_KINDS[kind] ?? kind) : ''}儲存庫${origin ? ` · ${ORIGINS[origin] ?? origin}` : ''}`
   ],
   // 自定义订阅对话框：已选标签摘要（标签名是用户内容，原样保留；省略号随原文）bug, docs... +3 more
   [
     /^([^+]{1,40}?)(\.\.\.)? \+(\d+) more$/,
-    (_, labels: string, dots: string | undefined, count: string) => `${labels}${dots ?? ''} 和其他 ${count} 個`,
+    (_, labels: string, dots: string | undefined, count: string) => `${labels}${dots ?? ''} 和其他 ${count} 個`
   ],
   // 旧版页头（窄屏）：上下文按钮的无障碍名称 Page context: <所有者> / <存储库>（名称原样保留）
-  [/^Page context: ([\w.-]+) \/ ([\w.-]+)$/, '頁面上下文：$1 / $2'],
+  [/^Page context: ([\w.-]+) \/ ([\w.-]+)$/, '頁面上下文：$1 / $2']
 ]
 
 /**
@@ -177,21 +171,18 @@ export default {
     // 关注菜单
     'You must be signed in to change notification settings': '必須登入才能變更通知設定',
     'Participating and @mentions': '參與和 @提及',
-    'Only receive notifications from this repository when participating or @mentioned.':
-      '只在參與或被 @提及時接收此儲存庫的通知。',
+    'Only receive notifications from this repository when participating or @mentioned.': '只在參與或被 @提及時接收此儲存庫的通知。',
     'All Activity': '所有活動',
     'Notified of all notifications on this repository.': '接收此儲存庫的所有通知。',
     'Never be notified.': '不接收任何通知。',
-    'Select events you want to be notified of in addition to participating and @mentions.':
-      '選擇在參與和 @提及之外還要接收通知的事件。',
+    'Select events you want to be notified of in addition to participating and @mentions.': '選擇在參與和 @提及之外還要接收通知的事件。',
     'Get push notifications on': '推播通知支援',
     'Security alerts': '安全性警示',
     'Select Labels': '選取標籤',
     'Error. Please try again.': '發生錯誤。請再試一次。',
     'You are unable to watch this repository': '你無法關注此儲存庫',
     'This action is not available for this repository.': '此動作不適用於此儲存庫。',
-    'You have reached the limit of 10,000 watched repositories. Update your':
-      '你關注的儲存庫已達 10,000 個上限。請更新你的',
+    'You have reached the limit of 10,000 watched repositories. Update your': '你關注的儲存庫已達 10,000 個上限。請更新你的',
     'watch settings': '關注設定',
     // 旧版关注按钮加载失败
     "Couldn't load subscription status.": '無法載入訂閱狀態。',
@@ -237,8 +228,7 @@ export default {
 
     // 固定按钮与组织固定菜单
     'Pin this repository to your profile': '將此儲存庫釘選到你的個人檔案',
-    'Pin or unpin this repository on organization profiles and your profile':
-      '在組織資料和你的個人檔案中釘選或取消釘選此儲存庫',
+    'Pin or unpin this repository on organization profiles and your profile': '在組織資料和你的個人檔案中釘選或取消釘選此儲存庫',
     'Pin or unpin this repository on organization profiles': '在組織資料中釘選或取消釘選此儲存庫',
     'Pin or unpin this repository on your profile': '在你的個人檔案中釘選或取消釘選此儲存庫',
     'Edit Pins': '編輯釘選項目',
@@ -258,7 +248,7 @@ export default {
     'Unable to create template. Please try again.': '無法建立範本。請再試一次。',
 
     // 赞助对话框
-    'Learn more about GitHub Sponsors': '瞭解 GitHub 贊助',
+    'Learn more about GitHub Sponsors': '瞭解 GitHub 贊助'
   },
   scoped: {
     // Watch、Fork、Star、Pin 等按钮文字与 More、Lists、Name、Description、Create 等通用词由 common-ui 收录
@@ -276,7 +266,7 @@ export default {
     'to continue.': '以繼續。',
     // 星标列表菜单
     'Try again later.': '請稍後再試。',
-    'Try a different search term.': '嘗試其他搜尋字詞。',
+    'Try a different search term.': '嘗試其他搜尋字詞。'
   },
   regexp,
   // 关注数量达到上限的对话框（NotificationsSubscriptionsMenu，React 把 {' '} 渲染成单独的文本节点）：
@@ -284,8 +274,8 @@ export default {
   inline: [
     [
       'You have reached the limit of 10,000 watched repositories. Update your {} to continue.',
-      '你關注的儲存庫已達 10,000 個上限。請更新你的{}以繼續。',
-    ],
+      '你關注的儲存庫已達 10,000 個上限。請更新你的{}以繼續。'
+    ]
   ],
   ignore: [
     // 页头面包屑：所有者名、存储库名（新版 React 页头；登录后的切换存储库按钮也带 contextCrumb__ 类，不用类名匹配）
@@ -296,6 +286,6 @@ export default {
     '.AppHeader-context-compact-mainItem',
     // 旧版页头（自适应）：名称截断时的提示、放不下时收进溢出菜单的项
     'tool-tip[data-target="context-region-crumb.tooltip"]',
-    '[data-targets~="context-region.overflowCrumbs"] .ActionListItem-label',
-  ],
+    '[data-targets~="context-region.overflowCrumbs"] .ActionListItem-label'
+  ]
 } satisfies PageDictionary

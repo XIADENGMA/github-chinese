@@ -19,8 +19,7 @@ export default {
     'Use this method for future logins': '以后登录都使用此方法',
     'Future logins on this device will prompt you to use': '此设备以后登录时将默认提示使用',
     'an authentication code': '验证码',
-    'Future logins on this device will prompt you to use an authentication code by default.':
-      '此设备以后登录时将默认提示使用验证码。',
+    'Future logins on this device will prompt you to use an authentication code by default.': '此设备以后登录时将默认提示使用验证码。',
     'Having problems?': '遇到问题？',
     'Use your passkey': '使用通行密钥',
     'Use a passkey': '使用通行密钥',
@@ -138,8 +137,7 @@ export default {
       '你的帐户恢复设置是否为最新？否则可能无法访问帐户。',
     'View and update your email addresses': '查看并更新电子邮件地址',
     'Verified emails give you access to more features on GitHub.': '验证电子邮件后可使用 GitHub 的更多功能。',
-    'Unverified emails cannot receive notifications or be used to reset your password.':
-      '未验证电子邮件无法接收通知，也不能用于重置密码。',
+    'Unverified emails cannot receive notifications or be used to reset your password.': '未验证电子邮件无法接收通知，也不能用于重置密码。',
     'Passkeys are webauthn credentials that validate your identity using touch, facial recognition, a device password, or a PIN. They can be used as a password replacement or as a 2FA method.':
       '通行密钥是 WebAuthn 凭据，通过触摸、面部识别、设备密码或 PIN 验证身份，可替代密码或用作 2FA 方法。',
     'Your preferred 2FA method is': '你的首选 2FA 方法为',
@@ -187,7 +185,7 @@ export default {
     ". After you've performed a sudo-protected action, you'll only be asked to re-authenticate again after a few hours of inactivity.":
       '。执行受 sudo 保护的操作后，只有在数小时无操作后才会再次要求验证。',
     '. After you’ve performed a sudo-protected action, you’ll only be asked to re-authenticate again after a few hours of inactivity.':
-      '。执行受 sudo 保护的操作后，只有在数小时无操作后才会再次要求验证。',
+      '。执行受 sudo 保护的操作后，只有在数小时无操作后才会再次要求验证。'
   },
   scoped: {
     Verify: '验证',
@@ -223,7 +221,7 @@ export default {
     Emails: '电子邮件',
     'Verified emails': '已验证电子邮件',
     'Unverified emails': '未验证电子邮件',
-    'Password Alternatives': '密码替代方式',
+    'Password Alternatives': '密码替代方式'
   },
   regexp: [
     // 恢复帐户对话框步骤
@@ -231,13 +229,13 @@ export default {
     // 设备验证：通过电子邮件发送的验证码
     [
       /^We just sent your authentication code via email to (\S+@\S+)\. The code will expire at (.+)\.$/,
-      '验证码已通过电子邮件发送至 $1，将于 $2 过期。',
+      '验证码已通过电子邮件发送至 $1，将于 $2 过期。'
     ],
     // 帐户恢复设置复查：计数
     [/^(\d+) verified emails?$/, '$1 个已验证电子邮件'],
     [/^(\d+) unverified emails?$/, '$1 个未验证电子邮件'],
     [/^(\d+) keys?$/, '$1 个密钥'],
     [/^(\d+) devices?$/, '$1 台设备'],
-    [/^You will receive one-time codes at this phone number: (.+)$/, '你将通过此号码接收一次性验证码：$1'],
-  ],
+    [/^You will receive one-time codes at this phone number: (.+)$/, '你将通过此号码接收一次性验证码：$1']
+  ]
 } satisfies PageDictionary

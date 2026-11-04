@@ -9,7 +9,7 @@ const WEEKDAYS: Readonly<Record<string, string>> = {
   Wed: '周三',
   Thu: '周四',
   Fri: '周五',
-  Sat: '周六',
+  Sat: '周六'
 }
 
 const MONTH_NUMBERS: Readonly<Record<string, number>> = {
@@ -24,7 +24,7 @@ const MONTH_NUMBERS: Readonly<Record<string, number>> = {
   sep: 9,
   oct: 10,
   nov: 11,
-  dec: 12,
+  dec: 12
 }
 
 /** 令牌页的日期格式：“Tue, Nov 25 2025”（不含捕获组） */
@@ -270,7 +270,7 @@ export default {
     'Read public user gpg keys': '读取用户公开 GPG 密钥',
     'Full control of public user ssh signing keys': '完全控制用户公开 SSH 签名密钥',
     'Write public user ssh signing keys': '写入用户公开 SSH 签名密钥',
-    'Read public user ssh signing keys': '读取用户公开 SSH 签名密钥',
+    'Read public user ssh signing keys': '读取用户公开 SSH 签名密钥'
   },
   scoped: {
     // 与组织令牌策略共用（Personal access tokens 见 permissions.ts，Note 见 moderation.ts，Custom 由 settings-account 收录）
@@ -301,42 +301,37 @@ export default {
     'Authorization check': '授权检查',
     'Authorization failed': '授权失败',
     'Retry check': '重新检查',
-    'See the documentation': '查看文档',
+    'See the documentation': '查看文档'
   },
   regexp: [
     // 过期时间
     [
       new RegExp(`^(Expires|Expired) on (${ANY_DATE_SOURCE})(\\.?)$`),
       (_, state: string, date: string, dot: string) =>
-        state === 'Expires'
-          ? `${datePhrase('有效期至', date)}${period(dot)}`
-          : `${datePhrase('已于', date, '过期')}${period(dot)}`,
+        state === 'Expires' ? `${datePhrase('有效期至', date)}${period(dot)}` : `${datePhrase('已于', date, '过期')}${period(dot)}`
     ],
     [
       new RegExp(`^This token expires on (${ANY_DATE_SOURCE})(\\.?)$`),
-      (_, date: string, dot: string) => `${datePhrase('此令牌将于', date, '过期')}${period(dot)}`,
+      (_, date: string, dot: string) => `${datePhrase('此令牌将于', date, '过期')}${period(dot)}`
     ],
     [
       new RegExp(`^This token expired on (${ANY_DATE_SOURCE})(\\.?)$`),
-      (_, date: string, dot: string) => `${datePhrase('此令牌已于', date, '过期')}${period(dot)}`,
+      (_, date: string, dot: string) => `${datePhrase('此令牌已于', date, '过期')}${period(dot)}`
     ],
     [
       new RegExp(`^The token will expire on (${ANY_DATE_SOURCE})(\\.?)$`),
-      (_, date: string, dot: string) => `${datePhrase('令牌将于', date, '过期')}${period(dot)}`,
+      (_, date: string, dot: string) => `${datePhrase('令牌将于', date, '过期')}${period(dot)}`
     ],
     [
       new RegExp(`^Expires (${RELATIVE_SOURCE})(\\.?)$`),
-      (_, time: string, dot: string) => `${joinCjk(translateTime(time), '过期')}${period(dot)}`,
+      (_, time: string, dot: string) => `${joinCjk(translateTime(time), '过期')}${period(dot)}`
     ],
     [
       new RegExp(`^(\\d+) days? \\((${ANY_DATE_SOURCE})\\)$`),
-      (_, days: string, date: string) => `${days} 天（${translateTokenDate(date)}）`,
+      (_, days: string, date: string) => `${days} 天（${translateTokenDate(date)}）`
     ],
     // 日期单独在 <strong> 等元素中
-    [
-      new RegExp(`^(${WEEKDAY_DATE_SOURCE})(\\.?)$`),
-      (_, date: string, dot: string) => `${translateTokenDate(date)}${period(dot)}`,
-    ],
+    [new RegExp(`^(${WEEKDAY_DATE_SOURCE})(\\.?)$`), (_, date: string, dot: string) => `${translateTokenDate(date)}${period(dot)}`],
     [/^Limit set by ([\w.-]+) organization$/, '由 $1 组织设定的限制'],
     // 组织或企业的令牌有效期策略（名称为空时原文为「The requires …」；豁免句原文无逗号，译文不加）
     [
@@ -345,7 +340,7 @@ export default {
         const subject = owner ? joinCjk(policyOwner(owner), '要求') : '要求'
         const note = exempt ? '你作为企业管理员不受此要求限制。' : ''
         return `${subject}精细个人访问令牌的最长有效期为 ${days} 天。${note}`
-      },
+      }
     ],
 
     // 使用情况
@@ -358,14 +353,14 @@ export default {
     // 生成前的权限汇总；句末冒号随原文
     [
       /^(\d+) permissions? for all repositories(:?)$/,
-      (_, count: string, colon: string) => `所有存储库的 ${count} 项权限${colon ? '：' : ''}`,
+      (_, count: string, colon: string) => `所有存储库的 ${count} 项权限${colon ? '：' : ''}`
     ],
     [
       /^(\d+) permissions? for (\d+) repositor(?:y|ies)(:?)$/,
-      (_, count: string, repos: string, colon: string) => `${repos} 个存储库的 ${count} 项权限${colon ? '：' : ''}`,
+      (_, count: string, repos: string, colon: string) => `${repos} 个存储库的 ${count} 项权限${colon ? '：' : ''}`
     ],
     [/^(\d+) account permissions?$/, '$1 项帐户权限'],
     [/^(\d+) organization permissions?$/, '$1 项组织权限'],
-    [/^(\d+) repository permissions?$/, '$1 项存储库权限'],
-  ],
+    [/^(\d+) repository permissions?$/, '$1 项存储库权限']
+  ]
 } satisfies PageDictionary

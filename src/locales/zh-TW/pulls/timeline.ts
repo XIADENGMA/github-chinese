@@ -9,7 +9,7 @@ const EFFORT: Readonly<Record<string, string>> = {
   thorough: '深入',
   deep: '深入',
   max: '最高',
-  auto: '自動',
+  auto: '自動'
 }
 
 const EFFORT_SOURCE = Object.keys(EFFORT).join('|')
@@ -22,7 +22,7 @@ function effortName(effort: string): string {
 const AUTO_MERGE_METHOD: Readonly<Record<string, string>> = {
   merge: '合併',
   squash: '壓縮',
-  rebase: '重定基底',
+  rebase: '重定基底'
 }
 
 /** 从合并队列中移除的原因（前一组跟在 due to 后，后一组跟在 because 后） */
@@ -41,11 +41,11 @@ const DEQUEUE_REASON: Readonly<Record<string, string>> = {
   'Branch Protection failures': '未通過分支保護',
   'a pull request earlier in the stack was removed': '堆疊中較早的拉取請求已移除',
   'a pull request earlier in the stack was unmerged and was not in the queue': '堆疊中較早的拉取請求未合併且不在佇列中',
-  'the pull requests in the stack were not ordered correctly in the queue': '堆疊中的拉取請求在佇列中的順序不正確',
+  'the pull requests in the stack were not ordered correctly in the queue': '堆疊中的拉取請求在佇列中的順序不正確'
 }
 
 const DEQUEUE_REASON_SOURCE = Object.keys(DEQUEUE_REASON)
-  .map((reason) => reason.replace(/[()[\]{}*+?.\\^$|]/g, '\\$&'))
+  .map(reason => reason.replace(/[()[\]{}*+?.\\^$|]/g, '\\$&'))
   .join('|')
 
 function dequeueReason(reason: string): string {
@@ -58,7 +58,7 @@ const LOCK_REASON: Readonly<Record<string, string>> = {
   'off-topic': '離題',
   'too heated': '過於激烈',
   resolved: '已解決',
-  spam: '垃圾內容',
+  spam: '垃圾內容'
 }
 
 const LOCK_REASON_SOURCE = Object.keys(LOCK_REASON).join('|')
@@ -73,8 +73,7 @@ function projectStatus(status: string): string {
  * 原文无标点：状态名（用户内容）不加引号，后接的专案链接前用「於」；英文状态名两侧补空格
  */
 function movedText(from: string | undefined, to: string): string {
-  const parts =
-    from === undefined ? ['移至', projectStatus(to)] : ['從', projectStatus(from), '移至', projectStatus(to)]
+  const parts = from === undefined ? ['移至', projectStatus(to)] : ['從', projectStatus(from), '移至', projectStatus(to)]
   return ['將此拉取請求', ...parts, '於'].reduce(joinCjk)
 }
 
@@ -101,7 +100,7 @@ export default {
     // 经典时间线隐去操作者的事件（作者处为文字 Repository owner；带锁定原因的见 scoped 与 inline）
     'Repository owner locked and limited conversation to collaborators': '儲存庫擁有者鎖定了對話並限制為僅協作者可留言',
     'Repository owner deleted a comment': '儲存庫擁有者刪除了一則留言',
-    'Repository owner deleted a comment from': '儲存庫擁有者刪除了以下使用者的一則留言',
+    'Repository owner deleted a comment from': '儲存庫擁有者刪除了以下使用者的一則留言'
   },
   scoped: {
     // 审查（时间线头部）
@@ -350,8 +349,7 @@ export default {
     'Activity on this pull request will appear here.': '此拉取請求的活動會顯示在這裡。',
     'No loaded activity matches the query. Change the query or retry loading activity.':
       '已載入的活動中沒有相符的結果。請變更查詢或重新嘗試載入活動。',
-    'No loaded activity matches the query. Change or clear the query.':
-      '已載入的活動中沒有相符的結果。請變更或清除查詢。',
+    'No loaded activity matches the query. Change or clear the query.': '已載入的活動中沒有相符的結果。請變更或清除查詢。',
     'Loading more activity': '正在載入更多活動',
     'Unable to load more activity. Try again.': '無法載入更多活動。請再試一次。',
     'Retry loading activity': '重新嘗試載入活動',
@@ -396,35 +394,29 @@ export default {
     // 弯撇号版由 common/pages.ts 的全局词条翻译，直撇号版与之同译
     ". We'll occasionally send you account related emails.": '。我們會不定期傳送與帳號相關的電子郵件給你。',
     'Already on GitHub?': '已有 GitHub 帳號？',
-    'to your account': '你的帳號',
+    'to your account': '你的帳號'
   },
   regexp: [
     // 审查强度：requested a lite review from / and a balanced review from
-    [
-      new RegExp(`^requested an? (${EFFORT_SOURCE}) review from$`, 'i'),
-      (_, effort) => `請求${effortName(effort)}強度審查者`,
-    ],
+    [new RegExp(`^requested an? (${EFFORT_SOURCE}) review from$`, 'i'), (_, effort) => `請求${effortName(effort)}強度審查者`],
     [new RegExp(`^and an? (${EFFORT_SOURCE}) review from$`, 'i'), (_, effort) => `和${effortName(effort)}強度審查者`],
     // 新增了 N 個提交
     [/^added (\d+) commits?$/, '新增了 $1 個提交'],
     [/^and others added (\d+) commits?$/, '等人新增了 $1 個提交'],
     // 自动合并
-    [
-      /^enabled auto-merge \((merge|squash|rebase)\)$/,
-      (_, method) => `啟用了自動合併（${AUTO_MERGE_METHOD[method] ?? method}）`,
-    ],
+    [/^enabled auto-merge \((merge|squash|rebase)\)$/, (_, method) => `啟用了自動合併（${AUTO_MERGE_METHOD[method] ?? method}）`],
     [
       /^enabled auto-merge for pull request #(\d+) \((merge|squash|rebase)\)$/,
-      (_, num, method) => `為拉取請求 #${num} 啟用了自動合併（${AUTO_MERGE_METHOD[method] ?? method}）`,
+      (_, num, method) => `為拉取請求 #${num} 啟用了自動合併（${AUTO_MERGE_METHOD[method] ?? method}）`
     ],
     // 合并队列：removed this pull request from the merge queue due to failed status checks（原文无标点，改语序代替逗号、冒号）
     [
       new RegExp(`^removed from the queue (?:due to|because) (${DEQUEUE_REASON_SOURCE})$`),
-      (_, reason) => `因${dequeueReason(reason)}而從佇列中移除`,
+      (_, reason) => `因${dequeueReason(reason)}而從佇列中移除`
     ],
     [
       new RegExp(`^removed this pull request from the merge queue (?:due to|because) (${DEQUEUE_REASON_SOURCE})$`),
-      (_, reason) => `因${dequeueReason(reason)}而將此拉取請求移出合併佇列`,
+      (_, reason) => `因${dequeueReason(reason)}而將此拉取請求移出合併佇列`
     ],
     // 活动面板：<merge queue> 链接之后的原因（与前面的 due to 拼成一段；整句见下方 inline）
     [new RegExp(`^(?:due to|because) (${DEQUEUE_REASON_SOURCE})$`), (_, reason) => `原因是${dequeueReason(reason)}`],
@@ -437,19 +429,17 @@ export default {
     // 交叉引用
     [
       /^mentioned this in (\d+) (issues|pull requests)$/,
-      (_, count, kind) => `在 ${count} 個${kind === 'issues' ? '議題' : '拉取請求'}中提及了此拉取請求`,
+      (_, count, kind) => `在 ${count} 個${kind === 'issues' ? '議題' : '拉取請求'}中提及了此拉取請求`
     ],
     // 锁定：locked [as off-topic] and limited conversation to collaborators（原文无标点，原因不加引号；与议题时间线同一写法）
     [
       new RegExp(`^locked (?:as (${LOCK_REASON_SOURCE}) )?and limited conversation to collaborators$`),
       (_, reason) =>
-        reason
-          ? `以${LOCK_REASON[reason] ?? reason}為由鎖定了對話並限制為僅協作者可留言`
-          : '鎖定了對話並限制為僅協作者可留言',
+        reason ? `以${LOCK_REASON[reason] ?? reason}為由鎖定了對話並限制為僅協作者可留言` : '鎖定了對話並限制為僅協作者可留言'
     ],
     [
       new RegExp(`^locked this conversation as (${LOCK_REASON_SOURCE})$`),
-      (_, reason) => `以${LOCK_REASON[reason] ?? reason}為由鎖定了此對話`,
+      (_, reason) => `以${LOCK_REASON[reason] ?? reason}為由鎖定了此對話`
     ],
     [new RegExp(`^as (${LOCK_REASON_SOURCE})$`), (_, reason) => `以${LOCK_REASON[reason] ?? reason}為由`],
     // 检查通过数
@@ -471,15 +461,12 @@ export default {
     [/^Filter activity: (.+)$/, '篩選活動：$1'],
     [
       /^Sort (comments|activity): (Oldest|Newest)$/,
-      (_, subject, order) => `${SORT_SUBJECT[subject] ?? subject}排序：${SORT_ORDER[order] ?? order}`,
+      (_, subject, order) => `${SORT_SUBJECT[subject] ?? subject}排序：${SORT_ORDER[order] ?? order}`
     ],
     [/^Enter a value for (type|actor|since):\.$/, '請輸入 $1: 的值。'],
-    [
-      /^Use an available since: preset or an ISO timestamp, such as (\S+)\.$/,
-      '請使用可用的 since: 預設集或 ISO 時間戳記，例如 $1。',
-    ],
+    [/^Use an available since: preset or an ISO timestamp, such as (\S+)\.$/, '請使用可用的 since: 預設集或 ISO 時間戳記，例如 $1。'],
     // 代理工作阶段链接：View session <工作阶段 ID>
-    [/^View session ([0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12})$/, '查看工作階段 $1'],
+    [/^View session ([0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12})$/, '查看工作階段 $1']
   ],
   inline: [
     // 经典时间线：<作者> changed the base branch from <main> to <dev> <时间链接>。
@@ -487,19 +474,16 @@ export default {
     [/^(\{\}*)changed the base branch from \{\} to \{\}(\{\}*)$/, '$1 將基底分支從 {} 變更為 {}$2'],
     // 经典时间线锁定事件：<作者> locked as <strong>原因</strong> and limited conversation to collaborators <时间链接>；
     // 隐去操作者时作者处为文字 Repository owner。原文无标点，原因提到句首（与上方正则同一写法）
-    [
-      /^(\{\}*)locked as \{\} and limited conversation to collaborators(\{\}*)$/,
-      '$1 以{}為由鎖定了對話並限制為僅協作者可留言 $2',
-    ],
+    [/^(\{\}*)locked as \{\} and limited conversation to collaborators(\{\}*)$/, '$1 以{}為由鎖定了對話並限制為僅協作者可留言 $2'],
     [
       /^(\{\}*)Repository owner locked as \{\} and limited conversation to collaborators(\{\}*)$/,
-      '$1 儲存庫擁有者以{}為由鎖定了對話並限制為僅協作者可留言 $2',
+      '$1 儲存庫擁有者以{}為由鎖定了對話並限制為僅協作者可留言 $2'
     ],
     // 活动面板（RemovedFromMergeQueueText）：<作者> removed this pull request from the <merge queue> due to <原因>。
     // 原文无标点：原因是文字时提到句首；原因在按钮里时作「…移出合併佇列的原因是 <原因>」。作者元素带右边距，不补空格
     [
       new RegExp(`^(\\{\\}*)removed this pull request from the \\{\\} (?:due to|because) (${DEQUEUE_REASON_SOURCE})$`),
-      (_, lead, reason) => `${lead}因${dequeueReason(reason)}而將此拉取請求移出{}`,
+      (_, lead, reason) => `${lead}因${dequeueReason(reason)}而將此拉取請求移出{}`
     ],
     [/^(\{\}*)removed this pull request from the \{\} (?:due to|because) \{\}$/, '$1將此拉取請求移出{}的原因是{}'],
     // 经典时间线编码代理事件：<Copilot> finished work on behalf of <用户> [due to an error] <时间链接>。
@@ -508,8 +492,8 @@ export default {
     [
       /^(\{\}*)(finished|stopped) work on behalf of \{\}(due to an error)?(\{\}*)$/,
       (_, lead, verb, error, tail) =>
-        `${lead} 代表 {} ${error ? '因發生錯誤而' : ''}${verb === 'finished' ? '完成了工作' : '停止了工作'} ${tail}`,
+        `${lead} 代表 {} ${error ? '因發生錯誤而' : ''}${verb === 'finished' ? '完成了工作' : '停止了工作'} ${tail}`
     ],
-    [/^(\{\}*)finished reviewing on behalf of \{\}(\{\}*)$/, '$1 代表 {} 完成了審查 $2'],
-  ],
+    [/^(\{\}*)finished reviewing on behalf of \{\}(\{\}*)$/, '$1 代表 {} 完成了審查 $2']
+  ]
 } satisfies PageDictionary

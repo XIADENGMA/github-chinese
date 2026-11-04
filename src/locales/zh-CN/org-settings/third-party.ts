@@ -25,8 +25,7 @@ export default {
 
     // OAuth 应用策略
     'Third-party application access policy': '第三方应用访问策略',
-    'Only approved applications can access data in this organization. Applications owned by':
-      '只有已批准的应用才能访问此组织中的数据。由',
+    'Only approved applications can access data in this organization. Applications owned by': '只有已批准的应用才能访问此组织中的数据。由',
     'always have access.': '拥有的应用始终具有访问权限。',
     'Remove restrictions': '解除限制',
     'You’re about to remove all third-party application restrictions. Please read this carefully.':
@@ -97,8 +96,7 @@ export default {
       '选择允许访问组织的精细个人访问令牌的最长有效期。',
 
     // 个人访问令牌：经典
-    'Restrict personal access tokens (classic) from accessing your organizations':
-      '限制个人访问令牌（经典）访问你的组织',
+    'Restrict personal access tokens (classic) from accessing your organizations': '限制个人访问令牌（经典）访问你的组织',
     'By default, personal access tokens (classic) can access content owned by your organization via the GitHub API or Git over HTTPS. This includes both public and private resources such as repositories.':
       '默认情况下，个人访问令牌（经典）可以通过 GitHub API 或基于 HTTPS 的 Git 访问组织拥有的内容。这包括存储库等公共和专用资源。',
     'Allow access via personal access tokens (classic)': '允许通过个人访问令牌（经典）访问',
@@ -133,12 +131,11 @@ export default {
     // GitHub 应用管理者
     'Choose members that are allowed to manage all GitHub Apps belonging to this organization.':
       '选择允许管理此组织所有 GitHub 应用的成员。',
-    'To see or change who can manage GitHub Apps belonging to your organization, see':
-      '要查看或更改谁可以管理组织的 GitHub 应用，请参阅',
+    'To see or change who can manage GitHub Apps belonging to your organization, see': '要查看或更改谁可以管理组织的 GitHub 应用，请参阅',
     'organization role assignments': '组织角色分配',
     '. All organization owners can manage Apps, as well as users and teams with one or more of the app management permissions.':
       '。所有组织所有者都可以管理应用，拥有一项或多项应用管理权限的用户和团队也可以。',
-    'Organization owner': '组织所有者',
+    'Organization owner': '组织所有者'
   },
   scoped: {
     // 已安装的 GitHub 应用（与个人设置共用）
@@ -154,8 +151,7 @@ export default {
     'Only select repositories': '仅选定的存储库',
     'Select at least one repository.': '至少选择一个存储库。',
     // 句号随原文（与个人开发人员设置同译）
-    'Select at least one repository. Also includes public repositories (read-only).':
-      '至少选择一个存储库。同时包括公共存储库（只读）。',
+    'Select at least one repository. Also includes public repositories (read-only).': '至少选择一个存储库。同时包括公共存储库（只读）。',
     'This applies to all current and future repositories owned by the resource owner. Also includes public repositories (read-only).':
       '适用于资源所有者拥有的所有现有和将来的存储库。同时包括公共存储库（只读）。',
     'Suspend your installation': '暂停安装',
@@ -206,14 +202,14 @@ export default {
 
     // 精细令牌权限名：其余由 developer 沿用个人开发人员设置
     'Repository announcement banners': '存储库公告横幅',
-    Plan: '计划',
+    Plan: '计划'
   },
   regexp: [
     [new RegExp(`^Applications owned by ${ORG} always have access\\.$`), '由 $1 拥有的应用始终具有访问权限。'],
     [new RegExp(`^Applications owned by ${ORG} are always trusted\\.$`), '由 $1 拥有的应用始终受信任。'],
     [
       new RegExp(`^All applications authorized by organization members have access to ${ORG}[’']s data\\.$`),
-      '组织成员授权的所有应用都可以访问 $1 的数据。',
+      '组织成员授权的所有应用都可以访问 $1 的数据。'
     ],
     // 令牌与请求批量操作：「2 tokens selected...」（省略号随原文）
     [/^(\d+) requests? selected(\.\.\.|…)$/, '已选择 $1 个请求$2'],
@@ -224,9 +220,9 @@ export default {
       (_, state: string, date: string, dot: string) =>
         state === 'Expires'
           ? `${joinCjk('有效期至', translateTokenDate(date))}${period(dot)}`
-          : `${joinCjk(joinCjk('已于', translateTokenDate(date)), '过期')}${period(dot)}`,
+          : `${joinCjk(joinCjk('已于', translateTokenDate(date)), '过期')}${period(dot)}`
     ],
     [new RegExp(`^(${LAST_USED_SOURCE})$`), (_, usage: string) => translateUsage(usage)],
-    [new RegExp(`^(${USAGE_SOURCE}) •$`), (_, usage: string) => `${translateUsage(usage)} •`],
-  ],
+    [new RegExp(`^(${USAGE_SOURCE}) •$`), (_, usage: string) => `${translateUsage(usage)} •`]
+  ]
 } satisfies PageDictionary

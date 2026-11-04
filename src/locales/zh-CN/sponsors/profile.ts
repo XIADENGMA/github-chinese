@@ -53,10 +53,8 @@ export default {
     'Choose a custom amount.': '选择自定义金额。',
     'A Public Sponsor achievement will be added to your profile.': PUBLIC_SPONSOR_ACHIEVEMENT,
     // 后接加粗的「你是赞助者。」；原文没有逗号，译文不加
-    'Hover over your avatar to review the badge you’ll get that shows':
-      '将鼠标悬停在头像上可预览你将获得的徽章并看到它表明',
-    "Hover over your avatar to review the badge you'll get that shows":
-      '将鼠标悬停在头像上可预览你将获得的徽章并看到它表明',
+    'Hover over your avatar to review the badge you’ll get that shows': '将鼠标悬停在头像上可预览你将获得的徽章并看到它表明',
+    "Hover over your avatar to review the badge you'll get that shows": '将鼠标悬停在头像上可预览你将获得的徽章并看到它表明',
 
     // 结账
     'Sponsor as': '赞助身份',
@@ -68,7 +66,7 @@ export default {
     'Your sponsorships': '你的赞助',
     'Sponsorship log': '赞助日志',
     'Switch to invoiced billing': '切换到开票计费',
-    'GitHub Invoiced Sponsor Agreement': 'GitHub 发票赞助协议',
+    'GitHub Invoiced Sponsor Agreement': 'GitHub 发票赞助协议'
   },
   scoped: {
     Invoices: '发票',
@@ -88,7 +86,7 @@ export default {
     'sponsors this goal': '支持此目标',
     'sponsor this goal': '支持此目标',
     'you’re a sponsor.': '你是赞助者。',
-    "you're a sponsor.": '你是赞助者。',
+    "you're a sponsor.": '你是赞助者。'
   },
   regexp: [
     // 页面标题与按钮
@@ -118,11 +116,11 @@ export default {
     // 所在的 #sponsors-custom-amount-message 带 markdown-body、comment-body 类，需全局忽略规则豁免后才会翻译
     [
       /^You['’]ll receive any rewards listed in the (\$[\d,]+(?:\.\d{2})?) (monthly|one-time) tier\. Additionally, a Public Sponsor achievement will be added to your profile\.$/,
-      (_, amount: string, frequency: string) => customAmountReward(amount, frequency),
+      (_, amount: string, frequency: string) => customAmountReward(amount, frequency)
     ],
 
     // 结账
-    [/^Receive email updates from (.+)$/, '接收 $1 的电子邮件动态'],
+    [/^Receive email updates from (.+)$/, '接收 $1 的电子邮件动态']
   ],
   ignore: [
     // 头部所在地
@@ -134,6 +132,6 @@ export default {
     // 精选作品的存储库描述
     'ol.list-style-none li p.color-fg-muted.text-small',
     // 团队成员卡片
-    '.sponsors-featured-item',
-  ],
+    '.sponsors-featured-item'
+  ]
 } satisfies PageDictionary

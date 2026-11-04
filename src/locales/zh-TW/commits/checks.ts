@@ -2,7 +2,7 @@ import type { PageDictionary, RegExpRule } from '../../../core/types'
 
 const regexp: readonly RegExpRule[] = [
   // 待批准的工作流
-  [/^(\d+) workflows? awaiting approval$/, '$1 個工作流程等待核准'],
+  [/^(\d+) workflows? awaiting approval$/, '$1 個工作流程等待核准']
 ]
 
 /**
@@ -20,7 +20,7 @@ export default {
     'Failed to approve workflows': '無法核准工作流程',
     'Dismiss workflow approval notice': '關閉工作流程核准通知',
     // 检查运行条目的说明（破折号与说明在同一文本节点）
-    '— This check has started...': '— 此檢查已開始...',
+    '— This check has started...': '— 此檢查已開始...'
   },
   scoped: {
     'Status checks': '狀態檢查',
@@ -40,7 +40,7 @@ export default {
     'Action required': '需要採取動作',
     'Startup failure': '啟動失敗',
     Waiting: '等待中',
-    Requested: '已請求',
+    Requested: '已請求'
   },
-  regexp,
+  regexp
 } satisfies PageDictionary

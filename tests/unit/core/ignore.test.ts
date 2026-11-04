@@ -12,7 +12,7 @@ import {
   MIRROR_SELECTOR,
   PLACEHOLDER_SELECTOR,
   PLACEHOLDER_TEXTS,
-  TRANSLATABLE_ATTRIBUTES,
+  TRANSLATABLE_ATTRIBUTES
 } from '../../../src/core/ignore'
 import { normalizeText } from '../../../src/core/matcher'
 import { compileIgnoreIndex, selectorKeys, splitSelectorList } from '../../../src/core/selectors'
@@ -49,7 +49,7 @@ function find(host: Element, selector: string): Element {
 
 /** 返回 texts 中被忽略的文本，便于失败时直接看出是哪一条 */
 function ignoredTexts(host: Element, texts: readonly string[]): string[] {
-  return texts.filter((text) => ignored(owner(host, text)))
+  return texts.filter(text => ignored(owner(host, text)))
 }
 
 /** 最右复合选择器之前的部分（祖先条件）；跳过括号、方括号与引号内的字符 */
@@ -76,7 +76,7 @@ function ancestorPart(selector: string): string {
 
 /** 引用会被引擎翻译（含镜像文字属性）的属性的属性选择器 */
 const TRANSLATED_ATTRIBUTE_RE = new RegExp(
-  `\\[\\s*(?:${[...TRANSLATABLE_ATTRIBUTES, ...MIRROR_ATTRIBUTES, 'value'].join('|')})\\s*[\\]~|^$*=]`,
+  `\\[\\s*(?:${[...TRANSLATABLE_ATTRIBUTES, ...MIRROR_ATTRIBUTES, 'value'].join('|')})\\s*[\\]~|^$*=]`
 )
 
 beforeEach(() => {
@@ -162,11 +162,7 @@ describe('真实结构：用户内容命中，界面文字不命中', () => {
     expect(ignoredTexts(host, ['View all discussions', 'Open', 'Latest activity', 'asked', 'Oct 24, 2026'])).toEqual([])
     expect(ignored(find(host, 'relative-time'))).toBe(false)
     // discussions 词典翻译默认分类名与“(category)”“(author)”无障碍名称，这些链接不能忽略
-    for (const selector of [
-      'a[aria-label="Ideas (category)"]',
-      'a[aria-label$="(category)"]',
-      'a[aria-label$="(author)"]',
-    ]) {
+    for (const selector of ['a[aria-label="Ideas (category)"]', 'a[aria-label$="(category)"]', 'a[aria-label$="(author)"]']) {
       expect(ignored(find(host, selector)), selector).toBe(false)
     }
     expect(ignored(owner(host, 'Help'))).toBe(false)
@@ -226,7 +222,7 @@ describe('真实结构：用户内容命中，界面文字不命中', () => {
       'nightly-build',
       'GitHub CLI 2.103.2',
       'gh checksums',
-      'Stable 3.5.44',
+      'Stable 3.5.44'
     ]
     expect(ignoredTexts(host, user)).toEqual(user)
     const ui = ['Pre-release', 'Compare', 'released this', '23 Oct 07:59', 'Notes', 'Source code', '(zip)']
@@ -264,16 +260,7 @@ describe('真实结构：用户内容命中，界面文字不命中', () => {
       </a>
       <a class="d-inline-block SideNav-subItem" href="/vuejs/core/actions/runs/1/job/3?pr=1">Test matrix</a>
       <a class="d-inline-block SideNav-subItem" href="/vuejs/core/pull/1/checks?check_run_id=5">Header rules</a>`)
-    const user = [
-      'Deploy docs',
-      'feature/docs',
-      'Release pipeline',
-      'Build',
-      'test / Build',
-      'Lint',
-      'Test matrix',
-      'Header rules',
-    ]
+    const user = ['Deploy docs', 'feature/docs', 'Release pipeline', 'Build', 'test / Build', 'Lint', 'Test matrix', 'Header rules']
     expect(ignoredTexts(host, user)).toEqual(user)
     expect(ignoredTexts(host, ['#27405:', 'Commit', 'pushed', 'by', '1m 41s', 'on: pull_request'])).toEqual([])
     expect(ignored(find(host, 'li[aria-label]'))).toBe(false)
@@ -301,12 +288,7 @@ describe('真实结构：用户内容命中，界面文字不命中', () => {
         <tool-tip for="label-857372" popover="manual" data-type="description" class="sr-only" role="tooltip">related to vapor mode</tool-tip>
       </span>
       <tool-tip for="Comment-actions-1-text" popover="manual" data-type="label" class="sr-only">Comment options</tool-tip>`)
-    const user = [
-      'documentation',
-      'Improvements or additions to documentation',
-      'scope: vapor',
-      'related to vapor mode',
-    ]
+    const user = ['documentation', 'Improvements or additions to documentation', 'scope: vapor', 'related to vapor mode']
     expect(ignoredTexts(host, user)).toEqual(user)
     expect(ignoredTexts(host, ['open pull requests', 'Comment options'])).toEqual([])
     expect(ignored(find(host, 'a[aria-label="documentation"]'))).toBe(true)
@@ -351,7 +333,7 @@ describe('真实结构：用户内容命中，界面文字不命中', () => {
       'Awesome Lists',
       'Lists of awesome things.',
       'Music',
-      'Musically themed repositories.',
+      'Musically themed repositories.'
     ]
     expect(ignoredTexts(host, user)).toEqual(user)
     expect(ignoredTexts(host, ['Unknown languages', 'Popular repo', 'Follow', 'See all topics'])).toEqual([])
@@ -455,7 +437,7 @@ describe('真实结构：用户内容命中，界面文字不命中', () => {
       'README.md',
       'src/index.ts',
       'packages/runtime/src/main.ts',
-      'main.ts',
+      'main.ts'
     ]
     expect(ignoredTexts(host, user)).toEqual(user)
     expect(ignoredTexts(host, ['Breadcrumbs', '2 changes: 1 addition & 1 deletion'])).toEqual([])
@@ -484,7 +466,7 @@ describe('真实结构：用户内容命中，界面文字不命中', () => {
       'assign',
       'is:open',
       'author',
-      'label:bug',
+      'label:bug'
     ])
     expect(ignoredTexts(host, ['Search notifications', 'Clear'])).toEqual([])
   })
@@ -541,15 +523,7 @@ describe('真实结构：用户内容命中，界面文字不命中', () => {
         <span class="Search-module__placeholder__p9hbG Search-module__value__TFoak">Type <kbd class="Search-module__kbd__WCskr">/</kbd> to search</span></span></button>`)
     const user = ['is:', 'open', 'Settings', 'Issues', 'is:issue label:bug']
     expect(ignoredTexts(host, user)).toEqual(user)
-    const ui = [
-      'Quick search',
-      'Recent search',
-      'Search all of GitHub',
-      'Explore issues',
-      'Search syntax tips',
-      'Type',
-      'to search',
-    ]
+    const ui = ['Quick search', 'Recent search', 'Search all of GitHub', 'Explore issues', 'Search syntax tips', 'Type', 'to search']
     expect(ignoredTexts(host, ui)).toEqual([])
     expect(ignored(find(host, 'input'))).toBe(false)
   })
@@ -818,12 +792,9 @@ describe('忽略区域里的标签区域', () => {
     }
     expect(new Set(LABEL_SELECTORS).size).toBe(LABEL_SELECTORS.length)
     expect(compileIgnoreIndex(LABEL_SELECTORS, document.createElement('div')).universal).toEqual([])
-    expect([
-      ...LABEL_NAME_SELECTORS,
-      ...LABEL_DESCRIPTION_SELECTORS,
-      ...LIST_NAME_SELECTORS,
-      ...ISSUE_TYPE_NAME_SELECTORS,
-    ]).toEqual(LABEL_SELECTORS)
+    expect([...LABEL_NAME_SELECTORS, ...LABEL_DESCRIPTION_SELECTORS, ...LIST_NAME_SELECTORS, ...ISSUE_TYPE_NAME_SELECTORS]).toEqual(
+      LABEL_SELECTORS
+    )
   })
 
   it('标签名与说明在标签区域里（名称、说明分别在名称区域、说明区域）；计数、评论提示、条目标题、行标题等不在', () => {
@@ -870,16 +841,14 @@ describe('忽略区域里的标签区域', () => {
       'Improvements or additions to documentation',
       'Further information is requested',
       'Extra attention is needed',
-      'New feature or request',
+      'New feature or request'
     ]
-    expect(names.filter((text) => !regionOf(text)?.matches(nameSelector))).toEqual([])
-    expect(descriptions.filter((text) => !regionOf(text)?.matches(descriptionSelector))).toEqual([])
-    expect(names.filter((text) => regionOf(text)?.matches(descriptionSelector))).toEqual([])
-    expect(descriptions.filter((text) => regionOf(text)?.matches(nameSelector))).toEqual([])
+    expect(names.filter(text => !regionOf(text)?.matches(nameSelector))).toEqual([])
+    expect(descriptions.filter(text => !regionOf(text)?.matches(descriptionSelector))).toEqual([])
+    expect(names.filter(text => regionOf(text)?.matches(descriptionSelector))).toEqual([])
+    expect(descriptions.filter(text => regionOf(text)?.matches(nameSelector))).toEqual([])
     // 标签页行标题（屏幕阅读器读，React 读它的文字拼行的无障碍名称）只由列表条目标题的规则忽略
-    expect(
-      ['bug', '20', 'open pull requests', 'Sample text', 'Comment options', 'octocat'].filter((text) => regionOf(text)),
-    ).toEqual([])
+    expect(['bug', '20', 'open pull requests', 'Sample text', 'Comment options', 'octocat'].filter(text => regionOf(text))).toEqual([])
     // 标签区域、行标题都是忽略区域
     const labels = ['bug', ...names, ...descriptions]
     expect(ignoredTexts(host, labels)).toEqual(labels)
@@ -889,10 +858,10 @@ describe('忽略区域里的标签区域', () => {
 describe('页面级忽略规则候选', () => {
   const pageIndex = compileIgnoreIndex(
     [...IGNORE_SELECTORS, ...PAGE_IGNORES.repository, ...PAGE_IGNORES.actions],
-    document.createElement('div'),
+    document.createElement('div')
   )
   const pageIgnoredTexts = (host: Element, texts: readonly string[]): string[] =>
-    texts.filter((text) => owner(host, text).closest(pageIndex.selector) !== null)
+    texts.filter(text => owner(host, text).closest(pageIndex.selector) !== null)
 
   it('合法、可建索引、祖先条件不依赖会被翻译的属性', () => {
     const all = [...PAGE_IGNORES.repository, ...PAGE_IGNORES.actions]

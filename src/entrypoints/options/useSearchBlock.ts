@@ -30,7 +30,7 @@ export function useSearchBlock(): UseSearchBlock {
   let changed = false
 
   // 跟随存储（如另一个设置页修改了规则）
-  const stopWatch = watchSearchBlockRules((next) => {
+  const stopWatch = watchSearchBlockRules(next => {
     changed = true
     loadFailed.value = false
     rules.value = next
@@ -38,12 +38,12 @@ export function useSearchBlock(): UseSearchBlock {
   onScopeDispose(stopWatch)
 
   getSearchBlockRules().then(
-    (value) => {
+    value => {
       if (!changed) rules.value = value
     },
     () => {
       if (!changed) loadFailed.value = true
-    },
+    }
   )
 
   async function save(next: readonly string[]): Promise<boolean> {

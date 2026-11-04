@@ -20,19 +20,19 @@ const BUNDLE: LocaleBundle = [
         Stars: '星标',
         'Sample text': '示例文字',
         '✨ Inspiration': '✨ 灵感',
-        '2 repositories': '2 个存储库',
+        '2 repositories': '2 个存储库'
       },
-      labels: { bug: '缺陷' },
-    },
+      labels: { bug: '缺陷' }
+    }
   ],
   [
     'profile',
     {
       listNames: { '🔮 Future ideas': '🔮 未来构想', '🚀 My stack': '🚀 我的技术栈', '✨ Inspiration': '✨ 灵感' },
       // 列表描述是用户内容（语言包见 profile/tabs.ts）
-      ignore: ['#profile-lists-container a.Box-row > :not(.d-flex)'],
-    },
-  ],
+      ignore: ['#profile-lists-container a.Box-row > :not(.d-flex)']
+    }
+  ]
 ]
 
 const PROFILE: readonly PageKey[] = ['common', 'profile']
@@ -91,7 +91,7 @@ function start(html: string, bundle: LocaleBundle = BUNDLE): Translator {
     matcher: createMatcher(bundle),
     host: window,
     collectUntranslated: true,
-    resolvePages: () => PROFILE,
+    resolvePages: () => PROFILE
   })
   translator.start()
   return translator
@@ -113,8 +113,7 @@ describe('星标列表名称区域', () => {
 
   it('星标页的卡片、列表页标题：预置名称译出，计数照常翻译；stop 后还原', () => {
     const t = start(
-      STARS(CARD('inspiration', '✨ Inspiration', 'insp') + CARD('my-stack', '🚀 My stack', 'stack')) +
-        LIST_PAGE('🔮 Future ideas'),
+      STARS(CARD('inspiration', '✨ Inspiration', 'insp') + CARD('my-stack', '🚀 My stack', 'stack')) + LIST_PAGE('🔮 Future ideas')
     )
     expect(text('#insp')).toBe('✨ 灵感')
     expect(text('#stack')).toBe('🚀 我的技术栈')
@@ -134,8 +133,8 @@ describe('星标列表名称区域', () => {
           CARD('bug', 'bug', 'bug') +
           CARD('inspiration', 'Inspiration', 'plain') +
           CARD('inspiration-1', '✨ inspiration', 'lower') +
-          CARD('sample', 'Sample text', 'sample', '✨ Inspiration'),
-      ) + LIST_PAGE('Sample text'),
+          CARD('sample', 'Sample text', 'sample', '✨ Inspiration')
+      ) + LIST_PAGE('Sample text')
     )
     for (const [id, name] of [
       ['issues', 'Issues'],
@@ -144,7 +143,7 @@ describe('星标列表名称区域', () => {
       ['lower', '✨ inspiration'],
       ['sample', 'Sample text'],
       ['sample-desc', '✨ Inspiration'],
-      ['title', 'Sample text'],
+      ['title', 'Sample text']
     ]) {
       expect(text(`#${id}`), id).toBe(name)
     }
@@ -159,7 +158,7 @@ describe('星标列表名称区域', () => {
         OPTION('list-1', 'react-insp', '✨ Inspiration', 'Sample text') +
         OPTION('list-2', 'react-sample', 'Sample text') +
         OPTION('item-1', 'react-issues', 'Issues') +
-        '</ul>',
+        '</ul>'
     )
     for (const [id, name] of [
       ['panel-insp', '✨ 灵感'],
@@ -171,7 +170,7 @@ describe('星标列表名称区域', () => {
       ['react-insp', '✨ 灵感'],
       ['react-insp-desc', 'Sample text'],
       ['react-sample', 'Sample text'],
-      ['react-issues', '议题'],
+      ['react-issues', '议题']
     ]) {
       expect(text(`#${id}`), id).toBe(name)
     }
@@ -217,9 +216,7 @@ describe('星标列表名称区域', () => {
   })
 
   it('没有列表名表时不翻译列表名区域', () => {
-    start(STARS(CARD('inspiration', '✨ Inspiration', 'insp')), [
-      ['common', { static: { '✨ Inspiration': '✨ 灵感' } }],
-    ])
+    start(STARS(CARD('inspiration', '✨ Inspiration', 'insp')), [['common', { static: { '✨ Inspiration': '✨ 灵感' } }]])
     expect(text('#insp')).toBe('✨ Inspiration')
   })
 })

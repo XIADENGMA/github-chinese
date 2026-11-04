@@ -38,33 +38,30 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Commits on Jan 5, 2024', `${formatDate(2024, 1, 5)}的提交`],
-      ['Commits on Oct 23, 2026', `${formatDate(2026, 10, 23)}的提交`],
+      ['Commits on Oct 23, 2026', `${formatDate(2026, 10, 23)}的提交`]
     ],
-    misses: ['Commits on yesterday'],
+    misses: ['Commits on yesterday']
   },
   {
     hits: [
       ['Copy full SHA for 0ff253b', '复制 0ff253b 的完整 SHA'],
-      [
-        'Copy full SHA for 0ff253b2c1a4e5f6a7b8c9d0e1f2a3b4c5d6e7f8',
-        '复制 0ff253b2c1a4e5f6a7b8c9d0e1f2a3b4c5d6e7f8 的完整 SHA',
-      ],
+      ['Copy full SHA for 0ff253b2c1a4e5f6a7b8c9d0e1f2a3b4c5d6e7f8', '复制 0ff253b2c1a4e5f6a7b8c9d0e1f2a3b4c5d6e7f8 的完整 SHA']
     ],
-    misses: ['Copy full SHA for main'],
+    misses: ['Copy full SHA for main']
   },
   {
     hits: [
       ['Show description for 0ff253b', '显示 0ff253b 的描述'],
-      ['Hide description for 0ff253b', '隐藏 0ff253b 的描述'],
+      ['Hide description for 0ff253b', '隐藏 0ff253b 的描述']
     ],
-    misses: ['Show description for feature'],
+    misses: ['Show description for feature']
   },
   {
     hits: [
       ['View 3 commit comments', '查看 3 条提交评论'],
-      ['View 1 commit comment', '查看 1 条提交评论'],
+      ['View 1 commit comment', '查看 1 条提交评论']
     ],
-    misses: ['View commit comments'],
+    misses: ['View commit comments']
   },
   { hits: [['2 people', '2 人']], misses: ['people'] },
   { hits: [['Show 3 authors', '显示 3 个作者']], misses: ['Show authors'] },
@@ -73,23 +70,23 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ["octo-org's org home page", 'octo-org 的组织主页'],
-      ['octo-org’s org home page', 'octo-org 的组织主页'],
+      ['octo-org’s org home page', 'octo-org 的组织主页']
     ],
-    misses: ['octo-org org home page'],
+    misses: ['octo-org org home page']
   },
   // 提交消息中的关闭关键字提示
   {
     hits: [
       ['This commit closes issue #12.', '此提交关闭议题 #12。'],
       ['This commit fixes pull request octo-org/hello-world#123.', '此提交关闭拉取请求 octo-org/hello-world#123。'],
-      ['This commit resolves issue #7.', '此提交关闭议题 #7。'],
+      ['This commit resolves issue #7.', '此提交关闭议题 #7。']
     ],
-    misses: ['This commit closes issue 12.', 'This commit references issue #12.'],
+    misses: ['This commit closes issue 12.', 'This commit references issue #12.']
   },
   // 文件历史
   {
     hits: [['History for src/index.ts - octo-org/hello-world', 'src/index.ts 的历史记录 - octo-org/hello-world']],
-    misses: ['History for src/index.ts'],
+    misses: ['History for src/index.ts']
   },
   { hits: [['Renamed to src/new.ts', '已重命名为 src/new.ts']], misses: ['Renamed'] },
   { hits: [['Renamed from src/old.ts', '重命名自 src/old.ts']], misses: ['Renamed from'] },
@@ -98,47 +95,47 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['verified: 0ff253b', '已验证：0ff253b'],
       ['unverified: 0ff253b', '未验证：0ff253b'],
-      ['partially verified: 0ff253b', '部分验证：0ff253b'],
+      ['partially verified: 0ff253b', '部分验证：0ff253b']
     ],
-    misses: ['verified: main'],
+    misses: ['verified: main']
   },
   { hits: [['Verification error: 0ff253b', '验证错误：0ff253b']], misses: ['Verification error: main'] },
   {
     hits: [
       ['Upload your public signing GPG key', '上传你的 GPG 签名公钥'],
-      ['Upload your public signing SSH key', '上传你的 SSH 签名公钥'],
+      ['Upload your public signing SSH key', '上传你的 SSH 签名公钥']
     ],
-    misses: ['Upload your public signing key'],
+    misses: ['Upload your public signing key']
   },
   {
     hits: [
       ['’s contribution has been verified via SSH key.', '的贡献已通过 SSH 密钥验证。'],
-      ["'s contribution has been verified via GPG key.", '的贡献已通过 GPG 密钥验证。'],
+      ["'s contribution has been verified via GPG key.", '的贡献已通过 GPG 密钥验证。']
     ],
-    misses: ['’s contribution has been verified.'],
+    misses: ['’s contribution has been verified.']
   },
   // 提交回顾：规模标签
   {
     hits: [
       ['size: M', '规模：M'],
-      ['size: XL', '规模：XL'],
+      ['size: XL', '规模：XL']
     ],
-    misses: ['size: XXL'],
+    misses: ['size: XXL']
   },
   {
     hits: [
       ['12 results', '12 个结果'],
       ['1 result', '1 个结果'],
-      ['1,234 results', '1,234 个结果'],
+      ['1,234 results', '1,234 个结果']
     ],
-    misses: ['results'],
+    misses: ['results']
   },
   {
     hits: [
       ['docs: update README (#123). More information available below.', 'docs: update README (#123)。更多信息见下方。'],
-      ['release: v1.2.3. More information available below.', 'release: v1.2.3。更多信息见下方。'],
+      ['release: v1.2.3. More information available below.', 'release: v1.2.3。更多信息见下方。']
     ],
-    misses: ['More information available below.'],
+    misses: ['More information available below.']
   },
   // 检查汇总与耗时（check-summary.ts）
   {
@@ -147,25 +144,25 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['1 failing and 1 successful check', '1 个检查失败和 1 个成功'],
       ['3 successful checks', '3 个检查成功'],
       ['2 in progress, 1 queued checks', '2 个检查正在进行、1 个已排队'],
-      ['1 neutral, 1 timed out, and 2 pending checks', '1 个检查中性、1 个已超时、2 个挂起'],
+      ['1 neutral, 1 timed out, and 2 pending checks', '1 个检查中性、1 个已超时、2 个挂起']
     ],
-    misses: ['1 failing, 2 unknown checks'],
+    misses: ['1 failing, 2 unknown checks']
   },
   {
     hits: [
       ['3 checks', '3 个检查'],
-      ['1 check', '1 个检查'],
+      ['1 check', '1 个检查']
     ],
-    misses: ['checks'],
+    misses: ['checks']
   },
   {
     hits: [
       ['Successful in 41s', '成功用时 41 秒'],
       ['Successful in 1m 30s', '成功用时 1 分钟 30 秒'],
       ['Success in 2m', '成功用时 2 分钟'],
-      ['Completed in 2h 5m', '完成用时 2 小时 5 分钟'],
+      ['Completed in 2h 5m', '完成用时 2 小时 5 分钟']
     ],
-    misses: ['Successful in a minute'],
+    misses: ['Successful in a minute']
   },
   {
     hits: [
@@ -174,33 +171,33 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Cancelled after 12s', '12 秒后取消'],
       ['Canceled after 3m', '3 分钟后取消'],
       ['Timed out after 6h', '6 小时后超时'],
-      ['Startup failure after 1s', '1 秒后启动失败'],
+      ['Startup failure after 1s', '1 秒后启动失败']
     ],
-    misses: ['Failing after retry', 'Failed after'],
+    misses: ['Failing after retry', 'Failed after']
   },
   // 检查弹层（checks.ts）
   {
     hits: [
       ['2 workflows awaiting approval', '2 个工作流等待批准'],
-      ['1 workflow awaiting approval', '1 个工作流等待批准'],
+      ['1 workflow awaiting approval', '1 个工作流等待批准']
     ],
-    misses: ['workflows awaiting approval'],
+    misses: ['workflows awaiting approval']
   },
   // 日期范围选择器（date-picker.ts）
   {
     hits: [
       ['Oct 1 - Oct 26', `${formatDate(undefined, 10, 1)} - ${formatDate(undefined, 10, 26)}`],
-      ['Dec 1, 2025 - Jan 5, 2026', `${formatDate(2025, 12, 1)} - ${formatDate(2026, 1, 5)}`],
+      ['Dec 1, 2025 - Jan 5, 2026', `${formatDate(2025, 12, 1)} - ${formatDate(2026, 1, 5)}`]
     ],
-    misses: ['Oct 1 - yesterday'],
+    misses: ['Oct 1 - yesterday']
   },
   { hits: [['Oct 1 -', `${formatDate(undefined, 10, 1)} -`]], misses: ['yesterday -'] },
   {
     hits: [
       ['Week 1', '第 1 周'],
-      ['Week 6', '第 6 周'],
+      ['Week 6', '第 6 周']
     ],
-    misses: ['Week 12'],
+    misses: ['Week 12']
   },
   {
     hits: [
@@ -208,54 +205,54 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Monday, October 26 (Today)', `${formatDate(undefined, 10, 26)}星期一（今天）`],
       [
         'Sunday, Nov 1 (Start of selected range) (Maximum allowed date)',
-        `${formatDate(undefined, 11, 1)}星期日（所选范围开始）（允许的最晚日期）`,
-      ],
+        `${formatDate(undefined, 11, 1)}星期日（所选范围开始）（允许的最晚日期）`
+      ]
     ],
-    misses: ['Monday, October 26 (Holiday)', 'Funday, October 26'],
+    misses: ['Monday, October 26 (Holiday)', 'Funday, October 26']
   },
   {
     hits: [['Must be on or after Oct 1, 2025', `不能早于 ${formatDate(2025, 10, 1)}`]],
-    misses: ['Must be on or after yesterday'],
+    misses: ['Must be on or after yesterday']
   },
   {
     hits: [['Must be on or before Oct 26, 2026', `不能晚于 ${formatDate(2026, 10, 26)}`]],
-    misses: ['Must be on or before yesterday'],
+    misses: ['Must be on or before yesterday']
   },
   // 提交详情页（commit.ts）
   {
     hits: [
       ['2 parents', '2 个父提交'],
-      ['1 parent', '1 个父提交'],
+      ['1 parent', '1 个父提交']
     ],
-    misses: ['parents'],
+    misses: ['parents']
   },
   { hits: [['3 tags', '3 个标签']], misses: ['1 tag'] },
   {
     hits: [
       ['2 files changed', '已更改 2 个文件'],
-      ['1 file changed', '已更改 1 个文件'],
+      ['1 file changed', '已更改 1 个文件']
     ],
-    misses: ['files changed'],
+    misses: ['files changed']
   },
   {
     hits: [
       ['3 commit comments', '3 条提交评论'],
-      ['1 commit comment', '1 条提交评论'],
+      ['1 commit comment', '1 条提交评论']
     ],
-    misses: ['no commit comments'],
+    misses: ['no commit comments']
   },
   {
     hits: [
       ['0 comments on commit', '0 条提交评论'],
-      ['1 comment on commit', '1 条提交评论'],
+      ['1 comment on commit', '1 条提交评论']
     ],
-    misses: ['comments on commit'],
+    misses: ['comments on commit']
   },
   { hits: [['3 comments on commit 0ff253b', '提交 0ff253b 的 3 条评论']], misses: ['3 comments on commit main'] },
   { hits: [['Comments on commit 0ff253b', '提交 0ff253b 的评论']], misses: ['Comments on commit main'] },
   {
     hits: [['Only the first 50 replies are currently being shown.', '当前仅显示前 50 条回复。']],
-    misses: ['Only the first replies are currently being shown.'],
+    misses: ['Only the first replies are currently being shown.']
   },
   { hits: [['Reply 2 to Comment 1', '评论 1 的第 2 条回复']], misses: ['Reply to Comment 1'] },
   { hits: [['Reply 3', '第 3 条回复']], misses: ['Reply #3'] },
@@ -264,66 +261,61 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Line +12, commit', '第 +12 行，提交'],
-      ['Line -3 to +5, commit', '第 -3 至 +5 行，提交'],
+      ['Line -3 to +5, commit', '第 -3 至 +5 行，提交']
     ],
-    misses: ['Line +12, commits'],
+    misses: ['Line +12, commits']
   },
   // 应用建议对话框：提交失败
   {
-    hits: [
-      [
-        'There was an error trying to commit changes: Head branch was modified.',
-        '提交更改时出错：Head branch was modified.',
-      ],
-    ],
-    misses: ['There was an error trying to commit changes:'],
+    hits: [['There was an error trying to commit changes: Head branch was modified.', '提交更改时出错：Head branch was modified.']],
+    misses: ['There was an error trying to commit changes:']
   },
   // 差异视图（diff.ts）：原文无逗号，译文不加（& 译“和”）
   {
     hits: [['Lines changed: 10 additions & 2 deletions', '更改行数：新增 10 行和删除 2 行']],
-    misses: ['Lines changed: none'],
+    misses: ['Lines changed: none']
   },
   {
     hits: [
       ['12 changes: 10 additions & 2 deletions', '12 处更改：新增 10 行和删除 2 行'],
-      ['1 change: 1 addition & 0 deletions', '1 处更改：新增 1 行和删除 0 行'],
+      ['1 change: 1 addition & 0 deletions', '1 处更改：新增 1 行和删除 0 行']
     ],
-    misses: ['12 changes'],
+    misses: ['12 changes']
   },
   {
     hits: [
       [
         'Showing 698 changed files with 199,850 additions and 8,959 deletions.',
-        '显示包含新增 199,850 行和删除 8,959 行的 698 个已更改的文件。',
+        '显示包含新增 199,850 行和删除 8,959 行的 698 个已更改的文件。'
       ],
-      ['Showing 1 changed file with 1 addition and 0 deletions.', '显示包含新增 1 行和删除 0 行的 1 个已更改的文件。'],
+      ['Showing 1 changed file with 1 addition and 0 deletions.', '显示包含新增 1 行和删除 0 行的 1 个已更改的文件。']
     ],
-    misses: ['Showing 698 changed files'],
+    misses: ['Showing 698 changed files']
   },
   {
     hits: [
       ['698 changed files', '698 个已更改的文件'],
-      ['1 changed file', '1 个已更改的文件'],
+      ['1 changed file', '1 个已更改的文件']
     ],
-    misses: ['changed files'],
+    misses: ['changed files']
   },
   {
     hits: [
       ['199,850 additions', '新增 199,850 行'],
-      ['1 addition', '新增 1 行'],
+      ['1 addition', '新增 1 行']
     ],
-    misses: ['additions'],
+    misses: ['additions']
   },
   { hits: [['8,959 deletions', '删除 8,959 行']], misses: ['deletions'] },
   {
     hits: [['Diff for: src/a.ts renamed to src/b.ts', 'src/a.ts 重命名为 src/b.ts 的差异']],
-    misses: ['Diff for:'],
+    misses: ['Diff for:']
   },
   { hits: [['Diff for: src/index.ts', 'src/index.ts 的差异']], misses: ['Diff for'] },
   { hits: [['Expand all lines: src/index.ts', '展开所有行：src/index.ts']], misses: ['Expand all lines'] },
   {
     hits: [['Collapse non-diff lines: src/index.ts', '折叠无差异的行：src/index.ts']],
-    misses: ['Collapse non-diff lines'],
+    misses: ['Collapse non-diff lines']
   },
   { hits: [['collapse file: src/index.ts', '折叠文件：src/index.ts']], misses: ['collapse file'] },
   { hits: [['src/a.ts renamed to src/b.ts', 'src/a.ts 重命名为 src/b.ts']], misses: ['renamed to src/b.ts'] },
@@ -332,16 +324,16 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['src/app.ts has 3 comments', 'src/app.ts 有 3 条评论'],
       ['This file has 1 comment', '此文件有 1 条评论'],
-      ['src/app.ts has 9+ comments and has warning annotations', 'src/app.ts 有 9+ 条评论和警告注释'],
+      ['src/app.ts has 9+ comments and has warning annotations', 'src/app.ts 有 9+ 条评论和警告注释']
     ],
-    misses: ['src/app.ts has comments'],
+    misses: ['src/app.ts has comments']
   },
   {
     hits: [
       ['src/app.ts has failure annotations', 'src/app.ts 有失败注释'],
-      ['This file has notice annotations', '此文件有提示注释'],
+      ['This file has notice annotations', '此文件有提示注释']
     ],
-    misses: ['src/app.ts has annotations'],
+    misses: ['src/app.ts has annotations']
   },
   { hits: [['Expand file up from line 12', '从第 12 行向上展开文件']], misses: ['Expand file up'] },
   { hits: [['Expand file down from line 30', '从第 30 行向下展开文件']], misses: ['Expand file down'] },
@@ -349,9 +341,9 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['L12 selected.', '已选择 L12。'],
-      ['R5 selected.', '已选择 R5。'],
+      ['R5 selected.', '已选择 R5。']
     ],
-    misses: ['selected.'],
+    misses: ['selected.']
   },
   { hits: [['L12 to L20 selected.', '已选择 L12 至 L20。']], misses: ['L12 to selected.'] },
   { hits: [['Line 12', '第 12 行']], misses: ['Line L12'] },
@@ -365,36 +357,36 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Add comment on line R12', '在第 R12 行添加评论'],
       ['Suggest change on lines R3-R5', '在第 R3 至 R5 行建议更改'],
       ['Suggest change, modified lines R3-R5', '在修改后的第 R3 至 R5 行建议更改'],
-      ['Add comment, original line L7', '在原始的第 L7 行添加评论'],
+      ['Add comment, original line L7', '在原始的第 L7 行添加评论']
     ],
-    misses: ['Add comment on line 12', 'Suggest change, unchanged line R3'],
+    misses: ['Add comment on line 12', 'Suggest change, unchanged line R3']
   },
   {
     hits: [
       ['3 files remain', '剩余 3 个文件'],
-      ['1 file remains', '剩余 1 个文件'],
+      ['1 file remains', '剩余 1 个文件']
     ],
-    misses: ['files remain'],
+    misses: ['files remain']
   },
   // 子模块
   {
     hits: [
       ['Submodule vendor/lib added at', '子模块 vendor/lib 添加于'],
       ['Submodule vendor/lib added at 0ff253b', '子模块 vendor/lib 添加于 0ff253b'],
-      ['Submodule vendor/lib deleted from 0ff253b', '子模块 vendor/lib 删除自 0ff253b'],
+      ['Submodule vendor/lib deleted from 0ff253b', '子模块 vendor/lib 删除自 0ff253b']
     ],
-    misses: ['Submodule vendor/lib', 'Submodule vendor/lib added at main'],
+    misses: ['Submodule vendor/lib', 'Submodule vendor/lib added at main']
   },
   {
     hits: [
       ['Submodule vendor/lib updated', '子模块 vendor/lib 已更新'],
-      ['Submodule vendor/lib updated from 0ff253b to 1a2b3c4', '子模块 vendor/lib 已从 0ff253b 更新到 1a2b3c4'],
+      ['Submodule vendor/lib updated from 0ff253b to 1a2b3c4', '子模块 vendor/lib 已从 0ff253b 更新到 1a2b3c4']
     ],
-    misses: ['Submodule vendor/lib updated from main to dev'],
+    misses: ['Submodule vendor/lib updated from main to dev']
   },
   {
     hits: [['updated from 0ff253b to 1a2b3c4', '已从 0ff253b 更新到 1a2b3c4']],
-    misses: ['updated from main to dev'],
+    misses: ['updated from main to dev']
   },
   { hits: [['added at 0ff253b', '添加于 0ff253b']], misses: ['added at main'] },
   { hits: [['deleted from 0ff253b', '删除自 0ff253b']], misses: ['deleted from main'] },
@@ -402,126 +394,123 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   // 分支页（branches.ts）
   {
     hits: [['Ahead and behind counts: 3 ahead, 12 behind', '领先和落后计数：领先 3，落后 12']],
-    misses: ['Ahead and behind counts'],
+    misses: ['Ahead and behind counts']
   },
   {
     hits: [
       ['Open pull request #123', '打开的拉取请求 #123'],
       ['Merged pull request #45', '已合并的拉取请求 #45'],
-      ['Draft pull request #7', '草稿拉取请求 #7'],
+      ['Draft pull request #7', '草稿拉取请求 #7']
     ],
-    misses: ['Open pull request'],
+    misses: ['Open pull request']
   },
   {
     hits: [
       ["Rename branch 'feature/login'", '重命名分支“feature/login”'],
-      ['Rename branch ‘main’', '重命名分支“main”'],
+      ['Rename branch ‘main’', '重命名分支“main”']
     ],
-    misses: ['Rename branch main'],
+    misses: ['Rename branch main']
   },
   {
     hits: [
       ["Your main branch isn't protected", '你的 main 分支未受保护'],
-      ['Your dev branch isn’t protected', '你的 dev 分支未受保护'],
+      ['Your dev branch isn’t protected', '你的 dev 分支未受保护']
     ],
-    misses: ['Your branch isn’t protected'],
+    misses: ['Your branch isn’t protected']
   },
   {
     hits: [['There are 3 pull requests in the merge queue', '合并队列中有 3 个拉取请求']],
-    misses: ['There are pull requests in the merge queue'],
+    misses: ['There are pull requests in the merge queue']
   },
   {
     hits: [
       ['12 results found', '找到 12 个结果'],
-      ['1 result found', '找到 1 个结果'],
+      ['1 result found', '找到 1 个结果']
     ],
-    misses: ['results found'],
+    misses: ['results found']
   },
   // 重命名对话框：名称校验结果、重命名成功提示
   { hits: [['Your branch name will be feature-x', '分支名称将为 feature-x']], misses: ['Your branch name will be'] },
   {
     hits: [['Branch main will be renamed to trunk shortly.', '分支 main 即将重命名为 trunk。']],
-    misses: ['Branch main will be renamed shortly.'],
+    misses: ['Branch main will be renamed shortly.']
   },
   // 活动页（activity.ts）
   {
     hits: [
       ['Filter by time: Last week', '按时间筛选：过去一周'],
-      ['Filter by time: All time', '按时间筛选：全部时间'],
+      ['Filter by time: All time', '按时间筛选：全部时间']
     ],
-    misses: ['Filter by time: Yesterday'],
+    misses: ['Filter by time: Yesterday']
   },
   {
     hits: [['Filter by activity type: Force pushes', '按活动类型筛选：强制推送']],
-    misses: ['Filter by activity type: Tags'],
+    misses: ['Filter by activity type: Tags']
   },
   {
     hits: [
       ['Filter by branch: main', '按分支筛选：main'],
-      ['Filter by branch: All branches', '按分支筛选：所有分支'],
+      ['Filter by branch: All branches', '按分支筛选：所有分支']
     ],
-    misses: ['Filter by branch:'],
+    misses: ['Filter by branch:']
   },
   {
     hits: [
       ['Filter by user: octocat', '按用户筛选：octocat'],
-      ['Filter by user: All users', '按用户筛选：所有用户'],
+      ['Filter by user: All users', '按用户筛选：所有用户']
     ],
-    misses: ['Filter by user'],
+    misses: ['Filter by user']
   },
   { hits: [['View octocat profile', '查看 octocat 的个人资料']], misses: ['View profile'] },
   {
     hits: [
       ['pushed 3 commits to', '推送了 3 个提交到'],
-      ['pushed 1 commit to', '推送了 1 个提交到'],
+      ['pushed 1 commit to', '推送了 1 个提交到']
     ],
-    misses: ['pushed commits to'],
+    misses: ['pushed commits to']
   },
   { hits: [['pushed 3 commits', '推送了 3 个提交']], misses: ['pushed commits'] },
   {
     hits: [
       ['adding 3 commits', '新增 3 个提交'],
       ['removing 2 commits', '删除 2 个提交'],
-      ['removing 2 commits and adding 1 commit', '删除 2 个提交并新增 1 个提交'],
+      ['removing 2 commits and adding 1 commit', '删除 2 个提交并新增 1 个提交']
     ],
-    misses: ['adding commits'],
+    misses: ['adding commits']
   },
   {
     hits: [
       ['pushed adding 3 commits', '推送时新增 3 个提交'],
-      ['force pushed removing 2 commits and adding 3 commits', '强制推送时删除 2 个提交并新增 3 个提交'],
+      ['force pushed removing 2 commits and adding 3 commits', '强制推送时删除 2 个提交并新增 3 个提交']
     ],
-    misses: ['force pushed adding commits'],
+    misses: ['force pushed adding commits']
   },
   // 比较页（compare.ts）
   {
     hits: [
       ['Comparing main...feature', '比较 main...feature'],
-      ['Comparing v1.0..v2.0', '比较 v1.0..v2.0'],
+      ['Comparing v1.0..v2.0', '比较 v1.0..v2.0']
     ],
-    misses: ['Comparing main'],
+    misses: ['Comparing main']
   },
   {
     hits: [
       ['12 contributors', '12 个贡献者'],
-      ['1 contributor', '1 个贡献者'],
+      ['1 contributor', '1 个贡献者']
     ],
-    misses: ['contributors'],
+    misses: ['contributors']
   },
   {
     hits: [
       ['This comparison is big! We’re only showing the most recent 250 commits', '此比较较大！仅显示最近 250 个提交'],
-      [
-        "This comparison is big! We're only showing the most recent 1,000 commits",
-        '此比较较大！仅显示最近 1,000 个提交',
-      ],
+      ["This comparison is big! We're only showing the most recent 1,000 commits", '此比较较大！仅显示最近 1,000 个提交']
     ],
-    misses: ['This comparison is big!'],
-  },
+    misses: ['This comparison is big!']
+  }
 ]
 
-const HITS = REGEXP_CASES.flatMap((item) => item.hits)
-const MISSES = REGEXP_CASES.flatMap((item) => item.misses)
+const HITS = REGEXP_CASES.flatMap(item => item.hits)
+const MISSES = REGEXP_CASES.flatMap(item => item.misses)
 const RULES = dict.regexp ?? []
 
 function firstRule(input: string): number {
@@ -535,14 +524,14 @@ describe('commits 正则词条', () => {
     expect(translate(input)).toBe(expected)
   })
 
-  it.each(MISSES)('不命中：%s', (input) => {
+  it.each(MISSES)('不命中：%s', input => {
     expect(translate(input)).toBeUndefined()
   })
 
   it('用例与正则一一对应，正例首个命中对应的正则', () => {
     expect(REGEXP_CASES).toHaveLength(RULES.length)
     const mismatched = REGEXP_CASES.flatMap((item, index) =>
-      item.hits.filter(([input]) => firstRule(input) !== index).map(([input]) => `#${index} ${input}`),
+      item.hits.filter(([input]) => firstRule(input) !== index).map(([input]) => `#${index} ${input}`)
     )
     expect(mismatched).toEqual([])
   })
@@ -558,15 +547,13 @@ describe('commits 检查汇总共享模块', () => {
   it('只含正则，规则对象全部并入 commits', () => {
     expect(Object.keys(checkSummary)).toEqual(['regexp'])
     const rules = new Set(RULES)
-    expect(checkSummary.regexp.filter((rule) => !rules.has(rule)).map(([pattern]) => String(pattern))).toEqual([])
+    expect(checkSummary.regexp.filter(rule => !rules.has(rule)).map(([pattern]) => String(pattern))).toEqual([])
   })
 
   it('由其他页面类型合并后同样生效（存储库首页作用域不含 commits）', () => {
     const code = createMatcher([['code', checkSummary]])
     const scope: readonly PageKey[] = ['common', 'repository', 'code']
-    expect(code.translate('1 failing, 2 skipped, and 15 successful checks', [...scope])).toBe(
-      '1 个检查失败、2 个已跳过、15 个成功',
-    )
+    expect(code.translate('1 failing, 2 skipped, and 15 successful checks', [...scope])).toBe('1 个检查失败、2 个已跳过、15 个成功')
     expect(code.translate('3 checks', [...scope])).toBe('3 个检查')
   })
 })
@@ -580,7 +567,7 @@ describe('commits 静态词条', () => {
     ['There isn’t any commit history to show here.', '这里没有可显示的提交历史记录。'],
     [
       'GitHub supports GPG and S/MIME signatures. We don’t know what type of signature this is.',
-      'GitHub 支持 GPG 和 S/MIME 签名。无法识别此签名的类型。',
+      'GitHub 支持 GPG 和 S/MIME 签名。无法识别此签名的类型。'
     ],
     ['Find a user...', '查找用户...'],
     ['Find a user…', '查找用户…'],
@@ -591,7 +578,7 @@ describe('commits 静态词条', () => {
     // 原文无逗号，译文不加
     [
       'Groups together commits to cut through noise with summarized changes and linked pull requests.',
-      '将提交分组并通过汇总的更改和链接的拉取请求过滤无关信息。',
+      '将提交分组并通过汇总的更改和链接的拉取请求过滤无关信息。'
     ],
     ['This commit was created on GitHub.com and signed with GitHub’s', '此提交在 GitHub.com 上创建并使用 GitHub 的'],
     // 产品名译中文：GitHub Enterprise Server → GitHub 企业服务器
@@ -612,13 +599,10 @@ describe('commits 静态词条', () => {
     // 首句原文无逗号，译文改语序不加
     [
       'This file contains hidden or bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.',
-      '此文件包含解释或编译结果可能与下方显示不同的隐藏或双向 Unicode 文本。要审查，请在能显示隐藏 Unicode 字符的编辑器中打开此文件。',
+      '此文件包含解释或编译结果可能与下方显示不同的隐藏或双向 Unicode 文本。要审查，请在能显示隐藏 Unicode 字符的编辑器中打开此文件。'
     ],
     ['It may be too large to display on GitHub.', '它可能过大而无法在 GitHub 上显示。'],
-    [
-      'Sorry, this diff is temporarily unavailable due to heavy server load.',
-      '抱歉，此差异因服务器负载过高而暂时不可用。',
-    ],
+    ['Sorry, this diff is temporarily unavailable due to heavy server load.', '抱歉，此差异因服务器负载过高而暂时不可用。'],
     ['Thanks for everything, Jim.', '感谢你所做的一切，Jim。'],
     ['More suggestion batching options', '更多建议批处理选项'],
     ['There was an error trying to commit changes.', '提交更改时出错。'],
@@ -626,14 +610,8 @@ describe('commits 静态词条', () => {
     ['There was an error locking this conversation. Please try again.', '锁定此对话时出错。请重试。'],
     ['There was an error unlocking this conversation. Please try again.', '解锁此对话时出错。请重试。'],
     ['We had a problem verifying this signature. Please try again later.', '验证此签名时出现问题。请稍后重试。'],
-    [
-      'We had a problem checking for revoked certificates. Please try again later.',
-      '检查已吊销证书时出现问题。请稍后重试。',
-    ],
-    [
-      'AI-generated content may be inaccurate. Please verify important information.',
-      'AI 生成的内容可能不准确。请核实重要信息。',
-    ],
+    ['We had a problem checking for revoked certificates. Please try again later.', '检查已吊销证书时出现问题。请稍后重试。'],
+    ['AI-generated content may be inaccurate. Please verify important information.', 'AI 生成的内容可能不准确。请核实重要信息。'],
     ['The comment editor failed to load. Try reloading the page.', '评论编辑器加载失败。请尝试重新加载页面。'],
     // GLOSSARY：suggested change → 建议更改
     ['Suggested change cannot be the same as the original line', '建议更改不能与原始行相同'],
@@ -664,7 +642,7 @@ describe('commits 静态词条', () => {
     ['Open a pull request', '创建拉取请求'],
     [
       'Choose two branches to see what’s changed or to start a new pull request. If you need to, you can also',
-      '选择两个分支以查看更改或创建新的拉取请求。如有需要，你也可以',
+      '选择两个分支以查看更改或创建新的拉取请求。如有需要，你也可以'
     ],
     ['Collapse comments, modified line', '折叠评论，修改后的行'],
     ['Expand comments, original line', '展开评论，原始行'],
@@ -677,13 +655,10 @@ describe('commits 静态词条', () => {
     // 两点比较的页头说明（片段见下）、创建拉取请求区的说明
     [
       'This is a direct comparison between two commits made in this repository or its related repositories.',
-      '这是对此存储库或其相关存储库中两个提交的直接比较。',
+      '这是对此存储库或其相关存储库中两个提交的直接比较。'
     ],
     ['View the default comparison', '查看此范围的默认比较'],
-    [
-      'Create another pull request to discuss and review the changes again.',
-      '创建另一个拉取请求以再次讨论和审查这些更改。',
-    ],
+    ['Create another pull request to discuss and review the changes again.', '创建另一个拉取请求以再次讨论和审查这些更改。']
   ])('%s → %s', (input, expected) => {
     expect(dict.static?.[input]).toBe(expected)
     expect(translate(input)).toBe(expected)
@@ -734,7 +709,7 @@ describe('commits 被元素隔开的片段', () => {
     ['switching the base', '切换基础分支'],
     ['for your comparison.', '进行比较。'],
     // 这是对此存储库或其相关存储库中两个提交的直接比较。<查看此范围的默认比较> 或 <了解差异比较>。
-    ['for this range or', '或'],
+    ['for this range or', '或']
   ])('%s → %s', (input, expected) => {
     expect(translate(input)).toBe(expected)
   })
@@ -758,8 +733,7 @@ describe('commits 行内句（DOM）', () => {
 
   it('依赖项审查富差异底部：整句调语序，链接文字照常翻译', () => {
     // 服务端渲染的片段（include-fragment 载入）：链接后有换行文本，整句的末段写在这里
-    document.body.innerHTML =
-      '<div id="feedback">\n  Give feedback on <a href="#feedback">dependency review</a>\n</div>'
+    document.body.innerHTML = '<div id="feedback">\n  Give feedback on <a href="#feedback">dependency review</a>\n</div>'
     translator = createTranslator({ matcher, host: window, resolvePages: () => SCOPE })
     translator.start()
     expect(document.getElementById('feedback')?.textContent?.trim()).toBe('对依赖项审查提供反馈')
@@ -782,7 +756,7 @@ describe('commits 两点比较页头说明（DOM）', () => {
       '<div class="Subhead-description" id="two-dot">          This is a direct comparison between two commits made in this repository or its related repositories.',
       '          <a class="Link--inTextBlock" href="/octo-org/hello-world/compare/main...feature">View the default comparison</a> for this range or',
       '          <a class="Link--inTextBlock Link" href="https://docs.github.com/">learn more about diff comparisons</a>.',
-      '</div>',
+      '</div>'
     ].join('\n')
     translator = createTranslator({ matcher, host: window, resolvePages: () => COMPARE_SCOPE })
     translator.start()
@@ -809,7 +783,7 @@ describe('commits 页面词条', () => {
     // 原文 like 前无逗号，译文改语序不加
     [
       'Use arrow keys to select a date, or type a date like "Dec 28, 2020" or "12/28/2020".',
-      '用方向键选择日期，或输入如“Dec 28, 2020”或“12/28/2020”的日期。',
+      '用方向键选择日期，或输入如“Dec 28, 2020”或“12/28/2020”的日期。'
     ],
     ['Browse files', '浏览文件'],
     ['commit', '提交'],
@@ -825,17 +799,14 @@ describe('commits 页面词条', () => {
     // 原文无逗号，译文不加
     ['File renamed without changes.', '文件已重命名且内容无更改。'],
     ['File copied without changes.', '文件已复制且内容无更改。'],
-    [
-      'This diff could not be loaded automatically because of too many other changes.',
-      '此差异因其他更改过多而无法自动加载。',
-    ],
+    ['This diff could not be loaded automatically because of too many other changes.', '此差异因其他更改过多而无法自动加载。'],
     [
       'This diff could not be loaded automatically because of too many other files to display.',
-      '此差异因要显示的其他文件过多而无法自动加载。',
+      '此差异因要显示的其他文件过多而无法自动加载。'
     ],
     [
       'The default line height has been increased for improved accessibility. You can choose to enable a more compact line height from the view settings menu.',
-      '默认行高已为改善辅助功能而增加。你可以在视图设置菜单中启用更紧凑的行高。',
+      '默认行高已为改善辅助功能而增加。你可以在视图设置菜单中启用更紧凑的行高。'
     ],
     ['The page is unavailable due to a system error.', '页面因系统错误而不可用。'],
     ['Check failure on line', '检查失败位于行'],
@@ -846,7 +817,7 @@ describe('commits 页面词条', () => {
     ['Updated', '更新时间'],
     ['Last quarter', '过去一个季度'],
     ['Files changed', '已更改的文件'],
-    ['File changed', '已更改的文件'],
+    ['File changed', '已更改的文件']
   ])('%s → %s', (input, expected) => {
     expect(dict.scoped?.[input]).toBe(expected)
     expect(translate(input)).toBe(expected)
@@ -876,7 +847,7 @@ describe('commits 页面词条', () => {
       'Rename',
       'Activity',
       'Share feedback',
-      "Failed to save comment: Body can't be blank",
+      "Failed to save comment: Body can't be blank"
     ]
     for (const text of common) {
       expect(dict.static?.[text]).toBeUndefined()
@@ -892,7 +863,7 @@ describe('commits 页面词条', () => {
       'Delete branch',
       'Restore branch',
       'pushed to',
-      'Protect this branch',
+      'Protect this branch'
     ]
     for (const text of shared) {
       expect(dict.static?.[text]).toBeUndefined()
@@ -933,7 +904,7 @@ describe('commits 页面词条', () => {
       'There aren’t any stale branches.',
       'Branch source',
       'Choose a source branch',
-      'Restore Branch',
+      'Restore Branch'
     ]
     for (const text of obsolete) {
       expect(dict.static?.[text]).toBeUndefined()
@@ -961,13 +932,10 @@ describe('commits 繁体词条（zh-TW）', () => {
     // 两点比较的页头说明、创建拉取请求区的说明
     [
       'This is a direct comparison between two commits made in this repository or its related repositories.',
-      '這是對此儲存庫或其相關儲存庫中兩個提交的直接比較。',
+      '這是對此儲存庫或其相關儲存庫中兩個提交的直接比較。'
     ],
     ['View the default comparison', '查看此範圍的預設比較'],
-    [
-      'Create another pull request to discuss and review the changes again.',
-      '建立另一個拉取請求以再次討論並審查這些變更。',
-    ],
+    ['Create another pull request to discuss and review the changes again.', '建立另一個拉取請求以再次討論並審查這些變更。']
   ])('静态：%s → %s', (input, expected) => {
     expect(twDict.static?.[input]).toBe(expected)
     expect(twMatcher.translate(input, [...SCOPE])).toBe(expected)
@@ -976,7 +944,7 @@ describe('commits 繁体词条（zh-TW）', () => {
   it.each([
     ['Stale', '過時'],
     ['File changed', '變更的檔案'],
-    ['for this range or', '或'],
+    ['for this range or', '或']
   ])('页面：%s → %s', (input, expected) => {
     expect(twDict.scoped?.[input]).toBe(expected)
     expect(twMatcher.translate(input, [...SCOPE])).toBe(expected)
@@ -1001,7 +969,7 @@ function commitHeader(parents: string, sha: string): string {
     `<pre class="color-fg-muted d-flex flex-items-center" id="parents">${parents}<span class="fgColor-default">${sha}</span>`,
     '<div><button data-component="IconButton" type="button" class="prc-Button-ButtonBase-9n-Xk ml-2 prc-Button-IconButton-fyge7" aria-labelledby="copy-sha"><svg class="octicon octicon-copy" aria-hidden="true"><path d="M0 0h16v16H0z"></path></svg></button>',
     `<span class="tooltip__XwO6MO prc-TooltipV2-Tooltip-tLeuB" data-direction="sw" data-component="Tooltip" aria-label="Copy full SHA for ${sha}" aria-hidden="true" id="copy-sha">Copy full SHA for ${sha}</span></div>`,
-    '</pre></div>',
+    '</pre></div>'
   ].join('')
 }
 
@@ -1029,13 +997,11 @@ describe('commits 提交页头父提交行（<pre> 由引擎放行）', () => {
   /** <pre> 的直接子文本节点 */
   function preTexts(): string[] {
     const pre = document.getElementById('parents')!
-    return [...pre.childNodes].flatMap((node) => (node instanceof Text ? [node.data] : []))
+    return [...pre.childNodes].flatMap(node => (node instanceof Text ? [node.data] : []))
   }
 
   it('合并提交：父提交数与 commit 译出，哈希、分支名原样，复制提示框文字与无障碍名称译出', () => {
-    const t = start(
-      commitHeader(`2 parents ${parentLink('0ff253b', 'p')} + ${parentLink('1a2b3c4', 'o')} commit `, '5d6e7f8'),
-    )
+    const t = start(commitHeader(`2 parents ${parentLink('0ff253b', 'p')} + ${parentLink('1a2b3c4', 'o')} commit `, '5d6e7f8'))
     expect(preTexts()).toEqual(['2 个父提交 ', ' + ', ' 提交 '])
     expect(document.querySelector('[data-hotkey="p"]')?.textContent).toBe('0ff253b')
     expect(document.querySelector('[data-hotkey="o"]')?.textContent).toBe('1a2b3c4')
@@ -1050,9 +1016,7 @@ describe('commits 提交页头父提交行（<pre> 由引擎放行）', () => {
   it('普通提交：1 个父提交', () => {
     start(commitHeader(`1 parent ${parentLink('0ff253b', 'p')} commit `, '5d6e7f8'))
     expect(preTexts()).toEqual(['1 个父提交 ', ' 提交 '])
-    expect(document.getElementById('parents')?.textContent).toBe(
-      '1 个父提交 0ff253b 提交 5d6e7f8复制 5d6e7f8 的完整 SHA',
-    )
+    expect(document.getElementById('parents')?.textContent).toBe('1 个父提交 0ff253b 提交 5d6e7f8复制 5d6e7f8 的完整 SHA')
   })
 
   it('根提交：没有父提交链接，两段文字之间只隔服务端渲染的注释', () => {
@@ -1061,9 +1025,7 @@ describe('commits 提交页头父提交行（<pre> 由引擎放行）', () => {
   })
 
   it('停止后还原原文', () => {
-    const t = start(
-      commitHeader(`2 parents ${parentLink('0ff253b', 'p')} + ${parentLink('1a2b3c4', 'o')} commit `, '5d6e7f8'),
-    )
+    const t = start(commitHeader(`2 parents ${parentLink('0ff253b', 'p')} + ${parentLink('1a2b3c4', 'o')} commit `, '5d6e7f8'))
     t.stop()
     translator = undefined
     expect(preTexts()).toEqual(['2 parents ', ' + ', ' commit '])
@@ -1072,7 +1034,7 @@ describe('commits 提交页头父提交行（<pre> 由引擎放行）', () => {
 })
 
 describe('commits 忽略选择器', () => {
-  it.each(dict.ignore ?? [])('%s 是合法选择器', (selector) => {
+  it.each(dict.ignore ?? [])('%s 是合法选择器', selector => {
     expect(() => document.createElement('div').querySelector(selector)).not.toThrow()
   })
 

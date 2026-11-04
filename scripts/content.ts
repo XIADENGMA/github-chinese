@@ -40,10 +40,10 @@ const CONTENT_PATTERNS: readonly RegExp[] = [
   /^\$?\d[\d.,]*\s?[kKmMbB]\+?$/,
   /^\d[\d.,]*\s?(?:[KMGTP]i?B|bytes?)$/i,
   // 列表行 aria-label：「<标题>. More information available below.」
-  /\. More information available below\.$/,
+  /\. More information available below\.$/
 ]
 
 /** 明显是用户内容、标识符或数据（时间戳、语言占比等）的文本，不计入覆盖率 */
 export function isLikelyContent(text: string): boolean {
-  return CONTENT_PATTERNS.some((pattern) => pattern.test(text))
+  return CONTENT_PATTERNS.some(pattern => pattern.test(text))
 }

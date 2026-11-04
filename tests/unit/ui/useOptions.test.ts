@@ -13,7 +13,7 @@ import {
   getCustomEntries,
   getSettings,
   settingsItem,
-  updateSettings,
+  updateSettings
 } from '../../../src/shared/settings'
 import { settle, shownToasts, withScope, type Scoped } from './helpers'
 
@@ -37,7 +37,7 @@ function failStorage(area: 'sync' | 'local', method: 'get' | 'set'): void {
 /** 拦截下载：返回导出的文本 */
 function captureDownload(): { readonly text: () => Promise<string>; readonly click: ReturnType<typeof vi.fn> } {
   let blob: Blob | undefined
-  vi.spyOn(URL, 'createObjectURL').mockImplementation((value) => {
+  vi.spyOn(URL, 'createObjectURL').mockImplementation(value => {
     blob = value as Blob
     return 'blob:github-chinese/export'
   })
@@ -51,7 +51,7 @@ function captureDownload(): { readonly text: () => Promise<string>; readonly cli
       if (!blob) throw new Error('未下载')
       return blob.text()
     },
-    click,
+    click
   }
 }
 
@@ -60,7 +60,7 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-  stops.splice(0).forEach((stop) => stop())
+  stops.splice(0).forEach(stop => stop())
   clearToasts()
   vi.useRealTimers()
   vi.restoreAllMocks()
@@ -98,7 +98,7 @@ describe('useSettings', () => {
       ...DEFAULT_SETTINGS,
       translateTime: false,
       translateTitle: false,
-      enabled: false,
+      enabled: false
     })
   })
 
@@ -135,7 +135,7 @@ describe('useSettings', () => {
       ...DEFAULT_SETTINGS,
       enabled: false,
       translateTime: false,
-      translateTitle: false,
+      translateTitle: false
     })
     expect(first.settings.value).toEqual(second.settings.value)
   })
@@ -205,7 +205,7 @@ describe('useTextList', () => {
   })
 
   it('判重按 keyOf：键相同即已存在；改写时不与自己比较', async () => {
-    const { items, list } = createList(['@octocat'], (item) => item.toLowerCase())
+    const { items, list } = createList(['@octocat'], item => item.toLowerCase())
     expect(await list.add('@OctoCat')).toBe(false)
     expect(shownToasts()).toEqual([{ tone: 'danger', key: 'exists' }])
     expect(await list.edit('@octocat', '@OctoCat')).toBe('@OctoCat')
@@ -312,7 +312,7 @@ describe('useCustomEntries', () => {
     expect(total.value).toBe(2)
     expect(rows.value).toEqual([
       ['Issues', '议题'],
-      ['Code', '代码'],
+      ['Code', '代码']
     ])
     query.value = 'code'
     expect(rows.value).toEqual([['Code', '代码']])
@@ -371,7 +371,7 @@ describe('useCustomEntries', () => {
     expect(await getCustomEntries()).toEqual({ Code: '代码', Issues: '问题', Wiki: '维基' })
   })
 
-  it.each(['not json', '["Code"]', '{"Bad": 1}'])('导入 %j → 格式错误，不写入', async (text) => {
+  it.each(['not json', '["Code"]', '{"Bad": 1}'])('导入 %j → 格式错误，不写入', async text => {
     await customEntriesItem.setValue({ Code: '代码' })
     const { importText } = scoped(useCustomEntries)
     await settle()

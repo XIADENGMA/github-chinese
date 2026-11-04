@@ -59,7 +59,7 @@ const PERMISSION_NAMES: Readonly<Record<string, string>> = {
   variables: '變數',
   watching: '關注',
   webhooks: 'Web 鉤子',
-  workflows: '工作流程',
+  workflows: '工作流程'
 }
 
 /** 英文并列「A, B, and C」「A and B」拆成各项 */
@@ -75,7 +75,7 @@ function joinList(items: readonly string[]): string {
 
 /** 「contents, checks, and metadata」→「內容、檢查和中繼資料」，已知权限名转为中文 */
 function permissionList(list: string): string {
-  return joinList(splitList(list).map((item) => PERMISSION_NAMES[item] ?? item))
+  return joinList(splitList(list).map(item => PERMISSION_NAMES[item] ?? item))
 }
 
 /**
@@ -94,7 +94,7 @@ const UNIT_NAMES: Readonly<Record<string, string>> = {
   repository: '儲存庫',
   repo: '儲存庫',
   developer: '開發人員',
-  committer: '提交者',
+  committer: '提交者'
 }
 
 /** 计费单位的正则片段 */
@@ -112,7 +112,7 @@ const PLAN_NAMES: Readonly<Record<string, string>> = {
   Starter: '入門版',
   Basic: '基本版',
   Standard: '標準版',
-  Premium: '進階版',
+  Premium: '進階版'
 }
 
 /**
@@ -120,7 +120,7 @@ const PLAN_NAMES: Readonly<Record<string, string>> = {
  * Team、Enterprise 与全局导航、页脚的导航名同形，由 common 译「團隊」「企業」，不在本页覆盖
  */
 const PLAN_SCOPED = Object.fromEntries(
-  Object.entries(PLAN_NAMES).filter(([name]) => !['Free', 'Pro', 'Open Source', 'Team', 'Enterprise'].includes(name)),
+  Object.entries(PLAN_NAMES).filter(([name]) => !['Free', 'Pro', 'Open Source', 'Team', 'Enterprise'].includes(name))
 )
 
 /** 单个计划名：「Free」→「免費版」，未知名称原样保留 */
@@ -144,14 +144,10 @@ export default {
     'Use latest version': '使用最新版本',
 
     // 旧版本横幅（后接链接「最新版本」与片段 instead?）
-    "You're viewing an older version of this GitHub Action. Do you want to see the":
-      '你正在查看此 GitHub 動作的舊版本。是否改為查看',
-    'You’re viewing an older version of this GitHub Action. Do you want to see the':
-      '你正在查看此 GitHub 動作的舊版本。是否改為查看',
-    'Sorry, we couldn’t find that version of this Action. Here’s the latest version.':
-      '找不到此動作的該版本。以下是最新版本。',
-    "Sorry, we couldn't find that version of this Action. Here's the latest version.":
-      '找不到此動作的該版本。以下是最新版本。',
+    "You're viewing an older version of this GitHub Action. Do you want to see the": '你正在查看此 GitHub 動作的舊版本。是否改為查看',
+    'You’re viewing an older version of this GitHub Action. Do you want to see the': '你正在查看此 GitHub 動作的舊版本。是否改為查看',
+    'Sorry, we couldn’t find that version of this Action. Here’s the latest version.': '找不到此動作的該版本。以下是最新版本。',
+    "Sorry, we couldn't find that version of this Action. Here's the latest version.": '找不到此動作的該版本。以下是最新版本。',
 
     // 安装片段对话框
     'Copy and paste the following snippet into your': '將下列程式碼片段複製並貼到你的',
@@ -261,7 +257,7 @@ export default {
     'Not covered by Microsoft’s indemnity policy. All other Copilot features retain indemnity coverage.':
       '不在 Microsoft 賠償政策的涵蓋範圍內。所有其他 Copilot 功能仍享有賠償保障。',
     'Classified as high risk by EU AI Act': '依歐盟人工智慧法列為高風險',
-    'Third party services used': '使用的第三方服務',
+    'Third party services used': '使用的第三方服務'
   },
   scoped: {
     ...PLAN_SCOPED,
@@ -330,7 +326,7 @@ export default {
     'Requires a': '需要',
     'From the developer': '來自開發人員',
     'an installation URL': '安裝 URL',
-    'and payment information': '和付款資訊',
+    'and payment information': '和付款資訊'
   },
   regexp: [
     // 头部
@@ -343,16 +339,12 @@ export default {
     // 计划与安装：计划名译出后与中文直接相连，保留原文时补空格
     [
       /^(.+) plan(s?) available\.$/,
-      (_, names: string, plural: string) =>
-        joinCjk(joinCjk('提供', plural ? planNames(names) : planName(names)), '方案。'),
+      (_, names: string, plural: string) => joinCjk(joinCjk('提供', plural ? planNames(names) : planName(names)), '方案。')
     ],
     [/^Number of (\w+?)s$/, (_, unit: string) => joinCjk(UNIT_NAMES[unit] ?? unit, '數量')],
     [/^Account: (.+)$/, '帳號：$1'],
     [/^Set up with (.+)$/, '使用 $1 設定'],
-    [
-      /^Try free for (\d+) (day|month)s?$/,
-      (_, count: string, unit: string) => `免費試用 ${count} ${unit === 'day' ? '天' : '個月'}`,
-    ],
+    [/^Try free for (\d+) (day|month)s?$/, (_, count: string, unit: string) => `免費試用 ${count} ${unit === 'day' ? '天' : '個月'}`],
     [new RegExp(`^/ (${UNIT_SOURCE})$`), (_, unit: string) => `/ ${UNIT_NAMES[unit] ?? unit}`],
     [/^(\d+) days? left of free trial$/, '免費試用剩餘 $1 天'],
 
@@ -370,7 +362,7 @@ export default {
     [/^(.+) is owned and operated by GitHub$/, '$1 由 GitHub 擁有和營運'],
 
     // 透明度：权限表
-    [/^access to ([A-Za-z][A-Za-z ,-]*[A-Za-z])$/, (_, list: string) => accessTo(list)],
+    [/^access to ([A-Za-z][A-Za-z ,-]*[A-Za-z])$/, (_, list: string) => accessTo(list)]
   ],
   ignore: [
     // 头部名称、面包屑末项、简介、版本号（标记名）
@@ -390,6 +382,6 @@ export default {
     '[data-testid="plans-radio-group"] [id$="-description"]',
     '[data-testid="plans-radio-group"] li',
     // 截图说明（发布者填写）
-    '.ScreenshotCarousel-screenshot > .pt-2',
-  ],
+    '.ScreenshotCarousel-screenshot > .pt-2'
+  ]
 } satisfies PageDictionary

@@ -20,7 +20,7 @@ const LOGIN = '@?((?!(?:a|an|the|members?|people|someone|users?|collaborators?) 
 const SELECTED_KINDS: Readonly<Record<string, string>> = {
   member: '个成员',
   collaborator: '个协作者',
-  team: '个团队',
+  team: '个团队'
 }
 
 /** 组织见解 Actions 指标：句中的时段（小写） */
@@ -32,7 +32,7 @@ const METRIC_PERIODS: Readonly<Record<string, string>> = {
   'last 30 days': '过去 30 天',
   'last 90 days': '过去 90 天',
   'last year': '去年',
-  custom: '自定义时段',
+  custom: '自定义时段'
 }
 
 /** 组织见解 Actions 指标：图表说明中的指标 */
@@ -41,7 +41,7 @@ const PERFORMANCE_METRICS: Readonly<Record<string, string>> = {
   'Average run time of': '作业的平均运行时间',
   'Average queue time of': '作业的平均排队时间',
   'Failure rate across': '作业的失败率',
-  'Total minutes used across failed': '失败作业使用的总分钟数',
+  'Total minutes used across failed': '失败作业使用的总分钟数'
 }
 
 /** 时段查表：避免 constructor 等原型链键命中 */
@@ -61,8 +61,7 @@ export default {
     'GitHub Sponsor': 'GitHub 赞助者',
     // 头部：关注按钮旁的提示框，正文后接链接 your dashboard feed
     'You can now follow organizations': '现在可以关注组织了',
-    'Organization activity like new discussions, sponsorships, and repositories will appear in':
-      '新讨论、赞助和存储库等组织活动将显示在',
+    'Organization activity like new discussions, sponsorships, and repositories will appear in': '新讨论、赞助和存储库等组织活动将显示在',
 
     // 概述侧栏
     'View all repositories': '查看所有存储库',
@@ -160,8 +159,7 @@ export default {
 
     // 成员视角切换
     'View as:': '查看身份：',
-    'You are viewing the README and pinned repositories as a public user.':
-      '你正以公开用户身份查看自述文件和置顶存储库。',
+    'You are viewing the README and pinned repositories as a public user.': '你正以公开用户身份查看自述文件和置顶存储库。'
   },
   scoped: {
     // 存储库筛选（与 profile 词典一致）
@@ -259,7 +257,7 @@ export default {
     Job: '作业',
     Jobs: '作业',
     hosted: '托管',
-    'hosted-larger': '更大的托管',
+    'hosted-larger': '更大的托管'
   },
   regexp: [
     // 头部与存储库条目的「Label: Verified」「Label: Public」由 common-ui 的通用规则翻译
@@ -290,17 +288,16 @@ export default {
     [/^(\d[\d,]*) team members? not in group$/, '$1 个团队成员不在组中'],
     [
       /^(\d[\d,]*) (member|collaborator|team)s? selected(…|\.\.\.)?$/,
-      (_, count: string, kind: string, ellipsis?: string) =>
-        `已选择 ${count} ${SELECTED_KINDS[kind] ?? kind}${ellipsis ?? ''}`,
+      (_, count: string, kind: string, ellipsis?: string) => `已选择 ${count} ${SELECTED_KINDS[kind] ?? kind}${ellipsis ?? ''}`
     ],
 
     // 人员：邀请、转换、移除、公开成员身份
     [
       new RegExp(
-        `^You['’]ve invited ${LOGIN} to ([\\w.-]+)!( They['’]ll be receiving an email shortly\\.)?(?: They can also visit (\\S+) to accept the invitation\\.)?$`,
+        `^You['’]ve invited ${LOGIN} to ([\\w.-]+)!( They['’]ll be receiving an email shortly\\.)?(?: They can also visit (\\S+) to accept the invitation\\.)?$`
       ),
       (_, login: string, org: string, mail?: string, url?: string) =>
-        `已邀请 ${login} 加入 ${org}！${mail ? '对方很快会收到电子邮件。' : ''}${url ? `对方也可以访问 ${url} 接受邀请。` : ''}`,
+        `已邀请 ${login} 加入 ${org}！${mail ? '对方很快会收到电子邮件。' : ''}${url ? `对方也可以访问 ${url} 接受邀请。` : ''}`
     ],
     [/^Invite a member to ([\w.-]+)$/, '邀请成员加入 $1'],
     [new RegExp(`^Invite ${LOGIN} to ([\\w.-]+)$`), '邀请 $1 加入 $2'],
@@ -309,24 +306,23 @@ export default {
     [/^You['’]ve successfully updated @?([\w-]+)['’]s invitation\.$/, '已更新 $1 的邀请。'],
     [
       /^You['’]ve canceled (\d[\d,]*) invitations? from ([\w.-]+)\. It may take a few minutes to process\.$/,
-      '已取消 $2 的 $1 个邀请。处理可能需要几分钟。',
+      '已取消 $2 的 $1 个邀请。处理可能需要几分钟。'
     ],
     [/^You are now a member of ([\w.-]+)!$/, '你已成为 $1 的成员！'],
     // 邀请页：Sorry, <strong>octocat</strong> is already a member of octo-org.（用户名在前一个元素里）
     [/^is already a member of ([\w.-]+)\.$/, '已是 $1 的成员。'],
     [
       new RegExp(`^Convert (?:(\\d[\\d,]*) members?|${LOGIN}) to (?:an )?outside collaborators?\\?$`),
-      (_, count?: string, login?: string) =>
-        count ? `要将 ${count} 个成员转换为外部协作者吗？` : `要将 ${login} 转换为外部协作者吗？`,
+      (_, count?: string, login?: string) => (count ? `要将 ${count} 个成员转换为外部协作者吗？` : `要将 ${login} 转换为外部协作者吗？`)
     ],
     // 组织名可能在下一个元素里：Removing 2 members from <strong>octo-org</strong>
     [
       /^Removing (\d[\d,]*) members? from(?: ([\w.-]+))?$/,
-      (_, count: string, org?: string) => `将 ${count} 个成员移出${org ? ` ${org}` : ''}`,
+      (_, count: string, org?: string) => `将 ${count} 个成员移出${org ? ` ${org}` : ''}`
     ],
     [
       /^You (publicized|concealed) (\d[\d,]*) memberships?\.$/,
-      (_, action: string, count: string) => `你已${action === 'publicized' ? '公开' : '隐藏'} ${count} 个成员身份。`,
+      (_, action: string, count: string) => `你已${action === 'publicized' ? '公开' : '隐藏'} ${count} 个成员身份。`
     ],
 
     // 赞助
@@ -337,23 +333,22 @@ export default {
     [/^View as: (Public|Member)$/, (_, role) => `查看身份：${role === 'Member' ? '成员' : '公开'}`],
     [
       /^You are viewing the README and pinned repositories as a member of the ([\w.-]+) organization\.$/,
-      '你正以 $1 组织成员的身份查看自述文件和置顶存储库。',
+      '你正以 $1 组织成员的身份查看自述文件和置顶存储库。'
     ],
 
     // 见解：Actions 使用情况 / 性能指标的图表说明
     [/^Showing data from (\d{4}\/\d{1,2}\/\d{1,2}) to$/, '数据时段 $1 至'],
     [
       /^Total (minutes|job runs) across all workflows in this organization for (.+)$/,
-      (_, metric: string, period: string) =>
-        `此组织所有工作流${metricPeriod(period)}的${USAGE_METRICS[metric] ?? metric}`,
+      (_, metric: string, period: string) => `此组织所有工作流${metricPeriod(period)}的${USAGE_METRICS[metric] ?? metric}`
     ],
     [
       new RegExp(`^(${Object.keys(PERFORMANCE_METRICS).join('|')}) jobs in this organization for (.+)$`),
-      (_, metric: string, period: string) => `此组织${metricPeriod(period)}${PERFORMANCE_METRICS[metric] ?? metric}`,
+      (_, metric: string, period: string) => `此组织${metricPeriod(period)}${PERFORMANCE_METRICS[metric] ?? metric}`
     ],
 
     // 标签页标题：vuejs repositories
-    [new RegExp(`^${OWNER} repositories$`), '$1 的存储库'],
+    [new RegExp(`^${OWNER} repositories$`), '$1 的存储库']
   ],
   ignore: [
     // 组织名、描述（所在地由全局忽略规则处理）
@@ -362,6 +357,6 @@ export default {
     // 关注者列表中的简介、公司、所在地（赞助标签页的赞助时间是 span，照常翻译）
     '.d-table.table-fixed .d-table-cell .color-fg-muted.text-small:not(span)',
     // 页头面包屑首项的组织名；只取链接；href 限相对路径
-    'header.GlobalNav li:first-child > a[class*="contextCrumb__"][href^="/"]',
-  ],
+    'header.GlobalNav li:first-child > a[class*="contextCrumb__"][href^="/"]'
+  ]
 } satisfies PageDictionary

@@ -6,7 +6,7 @@ const FILE_VERB: Readonly<Record<string, string>> = {
   Edited: '編輯了',
   Created: '建立了',
   Read: '讀取了',
-  Listed: '列出了',
+  Listed: '列出了'
 }
 
 /** 工具调用汇总：计数动词 + 单位 */
@@ -15,7 +15,7 @@ const COUNT_VERB: Readonly<Record<string, readonly [string, string]>> = {
   'Searched the web': ['在網路上搜尋了', '次'],
   Fetched: ['擷取了', '個網頁'],
   Ran: ['執行了', '個技能'],
-  Asked: ['提出了', '個問題'],
+  Asked: ['提出了', '個問題']
 }
 
 /** 工具显示名（工具调用标题“工具名: 参数”） */
@@ -39,7 +39,7 @@ const TOOL_NAME: Readonly<Record<string, string>> = {
   'Proposed work': '提議的工作',
   Subagent: '子代理',
   'Read agent': '讀取代理',
-  'Message agent': '傳送訊息給代理',
+  'Message agent': '傳送訊息給代理'
 }
 
 /** 不是文件名的常见词（避免把 “Read more” 之类当成工具调用汇总） */
@@ -51,7 +51,7 @@ const SUMMARY_HEAD = [
   '(?:Searched the web|Searched|Fetched|Ran|Asked) \\d+ (?:quer(?:y|ies)|pages?|skills?|questions?)',
   'Updated plan',
   'Used \\d+ tools?',
-  'Ran .+?',
+  'Ran .+?'
 ].join('|')
 
 /** 按次数汇总的工具调用 */
@@ -62,7 +62,7 @@ const TIMES_VERB: Readonly<Record<string, string>> = {
   Thought: '思考',
   'Read agents': '讀取代理',
   'Message agents': '傳送訊息給代理',
-  'List agents': '列出代理',
+  'List agents': '列出代理'
 }
 
 /** 按数量汇总的工具调用：原文模板 → 译文模板（# 为数量） */
@@ -77,11 +77,11 @@ const COUNT_ACTION: Readonly<Record<string, string>> = {
   'Review # changes': '審查 # 個變更',
   'Activate # skills': '啟用 # 個技能',
   'Reply to # comments': '回覆 # 則留言',
-  'Run # subagent tasks': '執行 # 項子代理任務',
+  'Run # subagent tasks': '執行 # 項子代理任務'
 }
 
 const COUNT_ACTION_SOURCE = Object.keys(COUNT_ACTION)
-  .map((key) => key.replace('#', '\\d+'))
+  .map(key => key.replace('#', '\\d+'))
   .join('|')
 
 const TOOL_NAME_SOURCE = Object.keys(TOOL_NAME)
@@ -98,8 +98,7 @@ function summaryHead(head: string): string {
   if (two) return `${FILE_VERB[two[1]!]} ${two[2]} 和 ${two[3]}`
   const one = /^(Edited|Created|Read|Listed) (\S+)$/.exec(head)
   if (one) return `${FILE_VERB[one[1]!]} ${one[2]}`
-  const counted =
-    /^(Searched the web|Searched|Fetched|Ran|Asked) (\d+) (?:quer(?:y|ies)|pages?|skills?|questions?)$/.exec(head)
+  const counted = /^(Searched the web|Searched|Fetched|Ran|Asked) (\d+) (?:quer(?:y|ies)|pages?|skills?|questions?)$/.exec(head)
   if (counted) {
     const [verb, unit] = COUNT_VERB[counted[1]!] ?? [counted[1]!, '']
     return `${verb} ${counted[2]} ${unit}`
@@ -115,9 +114,7 @@ function summaryHead(head: string): string {
 function removedParts(removed: string): string {
   return removed
     .split(' and ')
-    .map((part) =>
-      part.replace(/^([\d.,]+[kKmM]?) tokens?$/, '$1 個權杖').replace(/^([\d.,]+[kKmM]?) messages?$/, '$1 則訊息'),
-    )
+    .map(part => part.replace(/^([\d.,]+[kKmM]?) tokens?$/, '$1 個權杖').replace(/^([\d.,]+[kKmM]?) messages?$/, '$1 則訊息'))
     .join('和 ')
 }
 
@@ -337,10 +334,8 @@ export default {
     'Loading diff…': '正在載入差異…',
     'Could not load the diff for this file.': '無法載入此檔案的差異。',
     'Binary file or no patch available.': '二進位檔案或沒有可用的修補檔。',
-    'File contents are unavailable. Reconnect to the environment to load the diff.':
-      '無法取得檔案內容。重新連線到環境以載入差異。',
-    'Connection lost. Diffs will keep loading automatically once reconnected.':
-      '連線中斷。重新連線後將自動繼續載入差異。',
+    'File contents are unavailable. Reconnect to the environment to load the diff.': '無法取得檔案內容。重新連線到環境以載入差異。',
+    'Connection lost. Diffs will keep loading automatically once reconnected.': '連線中斷。重新連線後將自動繼續載入差異。',
     'Connection restored.': '連線已恢復。',
     'Changed file information is unavailable': '無法取得變更檔案的資訊',
     'Changed file information needs refreshing': '變更檔案的資訊需要重新整理',
@@ -372,17 +367,13 @@ export default {
     'This file is too large to preview.': '此檔案過大而無法預覽。',
     'The repository revision is unavailable.': '無法取得儲存庫修訂版本。',
     'This image does not have a supported preview URL.': '此圖片沒有支援的預覽 URL。',
-    'Preview is unavailable for this file format. Download the original file instead.':
-      '此檔案格式無法預覽。請改為下載原始檔案。',
-    'Unable to load this file. It may no longer exist or you may not have access.':
-      '無法載入此檔案。檔案可能已不存在，或你沒有存取權。',
+    'Preview is unavailable for this file format. Download the original file instead.': '此檔案格式無法預覽。請改為下載原始檔案。',
+    'Unable to load this file. It may no longer exist or you may not have access.': '無法載入此檔案。檔案可能已不存在，或你沒有存取權。',
     'File contents are unavailable.': '無法取得檔案內容。',
     'Unable to load this uploaded file.': '無法載入此上傳的檔案。',
-    'This file is too large to preview. Download the original file instead.':
-      '此檔案過大而無法預覽。請改為下載原始檔案。',
+    'This file is too large to preview. Download the original file instead.': '此檔案過大而無法預覽。請改為下載原始檔案。',
     'Unable to load this file. Please try again.': '無法載入此檔案。請再試一次。',
-    'Repository exploration is unavailable until the conversation owner is known.':
-      '確定對話擁有者之前無法瀏覽儲存庫。',
+    'Repository exploration is unavailable until the conversation owner is known.': '確定對話擁有者之前無法瀏覽儲存庫。',
     'Select repository to explore': '選擇要瀏覽的儲存庫',
     'Close repo explorer': '關閉儲存庫瀏覽器',
 
@@ -472,7 +463,7 @@ export default {
     'Switch this conversation to a different repository': '將此對話切換到其他儲存庫',
     'Show or update the Microsoft Teams task plan': '顯示或更新 Microsoft Teams 任務計畫',
     'Switch the model for this conversation': '切換此對話的模型',
-    'Choose a model for this conversation': '為此對話選擇模型',
+    'Choose a model for this conversation': '為此對話選擇模型'
   },
   scoped: {
     Plan: '計畫',
@@ -492,7 +483,7 @@ export default {
     Ran: '已執行',
     Asked: '已詢問',
     Left: '左側',
-    Right: '右側',
+    Right: '右側'
   },
   regexp: [
     // 工具调用汇总
@@ -502,56 +493,46 @@ export default {
       new RegExp(`^(${SUMMARY_HEAD})(?: and (\\d+) other tool calls?)?(?:, (\\d+) failed)?$`),
       // 原文 and 处无标点：以「和另外」连接；逗号随原文
       (_, head: string, others: string, failed: string) =>
-        `${others ? joinCjk(summaryHead(head), `和另外 ${others} 個工具呼叫`) : summaryHead(head)}${failed ? `，${failed} 個失敗` : ''}`,
+        `${others ? joinCjk(summaryHead(head), `和另外 ${others} 個工具呼叫`) : summaryHead(head)}${failed ? `，${failed} 個失敗` : ''}`
     ],
     [
       /^(Search|Search code|Web search|Thought|Read agents|Message agents|List agents) (\d+) times$/,
-      (_, verb: string, count: string) => `${TIMES_VERB[verb] ?? verb} ${count} 次`,
+      (_, verb: string, count: string) => `${TIMES_VERB[verb] ?? verb} ${count} 次`
     ],
     [
       new RegExp(`^(?:${COUNT_ACTION_SOURCE})$`),
       (match: string) => {
         const count = /\d+/.exec(match)?.[0] ?? ''
         return (COUNT_ACTION[match.replace(count, '#')] ?? '').replace('#', count)
-      },
+      }
     ],
     [/^Insert at (\d+) locations$/, '在 $1 處插入'],
     [/^(\d+) progress updates$/, '$1 次進度更新'],
     [/^(\d+) operations$/, '$1 項操作'],
 
     // 工具调用标题
-    [
-      new RegExp(`^(${TOOL_NAME_SOURCE}): (.+)$`),
-      (_, tool: string, detail: string) => `${TOOL_NAME[tool] ?? tool}：${detail}`,
-    ],
+    [new RegExp(`^(${TOOL_NAME_SOURCE}): (.+)$`), (_, tool: string, detail: string) => `${TOOL_NAME[tool] ?? tool}：${detail}`],
     [/^Activate (.+) skill$/, '啟用 $1 技能'],
     [/^Run "(.+)" custom setup step$/, '執行「$1」自訂設定步驟'],
     [/^Read pull request \((.+)\)$/, '讀取拉取請求 ($1)'],
     [
       /^Read pull request(?: \((.+?)\))? on ([\w.-]+\/[\w.-]+)#(\d+)$/,
-      (_, method: string, repo: string, number: string) =>
-        `讀取拉取請求${method ? ` (${method})` : ''} ${repo}#${number}`,
+      (_, method: string, repo: string, number: string) => `讀取拉取請求${method ? ` (${method})` : ''} ${repo}#${number}`
     ],
     [/^Call to (.+)$/, '呼叫 $1'],
     [
       /^(Send input to|Read logs from|Stop) (Bash|PowerShell) session (\S+)$/,
       (_, action: string, shell: string, id: string) =>
-        `${action === 'Stop' ? '停止' : action === 'Read logs from' ? '讀取' : '向'} ${shell} 工作階段 ${id}${action === 'Send input to' ? ' 傳送輸入' : action === 'Read logs from' ? ' 的記錄' : ''}`,
+        `${action === 'Stop' ? '停止' : action === 'Read logs from' ? '讀取' : '向'} ${shell} 工作階段 ${id}${action === 'Send input to' ? ' 傳送輸入' : action === 'Read logs from' ? ' 的記錄' : ''}`
     ],
     [/^Start or send input to long-running Bash session (\S+)$/, '啟動長時間執行的 Bash 工作階段 $1 或向其傳送輸入'],
     [/^View logs from long-running Bash session (\S+)$/, '查看長時間執行的 Bash 工作階段 $1 的記錄'],
     [/^Stop long-running Bash session (\S+)$/, '停止長時間執行的 Bash 工作階段 $1'],
     [/^Couldn['’]t compact the conversation: (.+)$/, '無法壓縮對話：$1'],
-    [
-      /^Conversation compacted, removing (.+)\.$/,
-      (_, removed: string) => `對話已壓縮，移除了 ${removedParts(removed)}。`,
-    ],
+    [/^Conversation compacted, removing (.+)\.$/, (_, removed: string) => `對話已壓縮，移除了 ${removedParts(removed)}。`],
     [/^The model could not run: (.+)$/, '模型無法執行：$1'],
     [/^(.+) could not run: (.+)$/, '$1 無法執行：$2'],
-    [
-      /^(.+) subagent (timeline|activity)$/,
-      (_, name: string, kind: string) => `${name} 子代理${kind === 'timeline' ? '時間軸' : '活動'}`,
-    ],
+    [/^(.+) subagent (timeline|activity)$/, (_, name: string, kind: string) => `${name} 子代理${kind === 'timeline' ? '時間軸' : '活動'}`],
     [/^Expand diff to show all (\d+) lines$/, '展開差異以顯示全部 $1 行'],
     [/^Collapse (\d+) lines$/, '摺疊 $1 行'],
     [/^Show all (\d+) lines$/, '顯示全部 $1 行'],
@@ -560,7 +541,7 @@ export default {
     [
       /^([\w-]+(?:\[bot\])?) (reviewed|commented|requested changes)$/,
       (_, login: string, action: string) =>
-        `${login} ${action === 'reviewed' ? '審查了' : action === 'commented' ? '發表了留言' : '要求了變更'}`,
+        `${login} ${action === 'reviewed' ? '審查了' : action === 'commented' ? '發表了留言' : '要求了變更'}`
     ],
     [/^(\d+) review comments?$/, '$1 則審查留言'],
 
@@ -569,7 +550,7 @@ export default {
     [/^Allow (.+) for this session$/, '在此工作階段允許 $1'],
     [
       /^Permission request (\d+) of (\d+)(?:: (.+))?$/,
-      (_, current: string, total: string, title: string) => `權限請求 ${current}/${total}${title ? `：${title}` : ''}`,
+      (_, current: string, total: string, title: string) => `權限請求 ${current}/${total}${title ? `：${title}` : ''}`
     ],
     [/^Question table (\d+) of (\d+)$/, '問題表格 $1/$2'],
 
@@ -586,11 +567,8 @@ export default {
     [/^Preview of (.+)$/, '$1 的預覽'],
     [/^(\d+) new artifacts? available\.$/, '有 $1 個新成品可用。'],
     [/^Unable to submit messages?$/, '無法送出訊息'],
-    [
-      /^Copilot finished the session before it could pick up (?:this|these) messages?$/,
-      'Copilot 在處理訊息前已結束工作階段',
-    ],
+    [/^Copilot finished the session before it could pick up (?:this|these) messages?$/, 'Copilot 在處理訊息前已結束工作階段']
   ],
   // grep 计数模式的结果头（3 <span>files</span> with matches）：数字与 file、files 分属不同节点，整段合并后匹配
-  mergeText: ['.tmp-p-3 > span.fgColor-muted.d-block.text-small'],
+  mergeText: ['.tmp-p-3 > span.fgColor-muted.d-block.text-small']
 } satisfies PageDictionary

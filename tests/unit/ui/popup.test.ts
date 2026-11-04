@@ -14,7 +14,7 @@ import {
   openTab,
   seedChineseUi,
   settle,
-  ZH_SETTINGS,
+  ZH_SETTINGS
 } from './helpers'
 import { importSfc, required } from './sfc'
 
@@ -32,13 +32,13 @@ async function render(attached = false): Promise<VueWrapper> {
 }
 
 function button(scope: VueWrapper | DOMWrapper<Element>, text: string): DOMWrapper<HTMLButtonElement> {
-  const found = scope.findAll('button').find((item) => item.text() === text)
+  const found = scope.findAll('button').find(item => item.text() === text)
   if (!found) throw new Error(`未找到按钮：${text}`)
   return found as DOMWrapper<HTMLButtonElement>
 }
 
 function hasButton(wrapper: VueWrapper, text: string): boolean {
-  return wrapper.findAll('button').some((item) => item.text() === text)
+  return wrapper.findAll('button').some(item => item.text() === text)
 }
 
 function stateText(wrapper: VueWrapper): string {
@@ -47,7 +47,7 @@ function stateText(wrapper: VueWrapper): string {
 
 /** 有标题的分区（常规、语言），按标题查找 */
 function section(wrapper: VueWrapper, title: string): DOMWrapper<Element> {
-  const found = wrapper.findAll('section').find((item) => item.find('h2').exists() && item.get('h2').text() === title)
+  const found = wrapper.findAll('section').find(item => item.find('h2').exists() && item.get('h2').text() === title)
   if (!found) throw new Error(`未找到分区：${title}`)
   return found
 }
@@ -57,15 +57,15 @@ function toastTexts(wrapper: VueWrapper): string[] {
   return wrapper
     .get('[aria-live="polite"]')
     .findAll('.ui-toast')
-    .map((toast) => toast.text())
+    .map(toast => toast.text())
 }
 
 function headings(wrapper: VueWrapper): string[] {
-  return wrapper.findAll('h2').map((item) => item.text())
+  return wrapper.findAll('h2').map(item => item.text())
 }
 
 function switchOf(scope: VueWrapper | DOMWrapper<Element>, label: string): DOMWrapper<HTMLButtonElement> {
-  const labelEl = scope.findAll('label').find((item) => item.text() === label)
+  const labelEl = scope.findAll('label').find(item => item.text() === label)
   if (!labelEl) throw new Error(`未找到开关：${label}`)
   return scope.get(`#${CSS.escape(labelEl.attributes('for') ?? '')}`) as DOMWrapper<HTMLButtonElement>
 }
@@ -82,17 +82,17 @@ function optionsOf(wrapper: VueWrapper, name: string): DOMWrapper<Element>[] {
 }
 
 function optionLabels(wrapper: VueWrapper, name: string): string[] {
-  return optionsOf(wrapper, name).map((option) => option.text())
+  return optionsOf(wrapper, name).map(option => option.text())
 }
 
 function optionLangs(wrapper: VueWrapper, name: string): (string | undefined)[] {
-  return optionsOf(wrapper, name).map((option) => option.attributes('lang'))
+  return optionsOf(wrapper, name).map(option => option.attributes('lang'))
 }
 
 /** 选中项的文字 */
 function selectedLabel(wrapper: VueWrapper, name: string): string | undefined {
   return optionsOf(wrapper, name)
-    .find((option) => option.attributes('aria-selected') === 'true')
+    .find(option => option.attributes('aria-selected') === 'true')
     ?.text()
 }
 
@@ -106,7 +106,7 @@ function shownLabel(wrapper: VueWrapper, name: string): string {
 /** 打开下拉并点选项 */
 async function choose(wrapper: VueWrapper, name: string, label: string): Promise<void> {
   await select(wrapper, name).trigger('click')
-  const option = optionsOf(wrapper, name).find((item) => item.text() === label)
+  const option = optionsOf(wrapper, name).find(item => item.text() === label)
   if (!option) throw new Error(`未找到选项：${label}`)
   await option.trigger('click')
 }
@@ -149,7 +149,7 @@ describe.skipIf(!App)('弹出页组件', () => {
     mockContent(contentWith())
     const wrapper = await render()
     const status = wrapper.get('section')
-    const label = status.findAll('span').find((item) => item.text() === '状态')
+    const label = status.findAll('span').find(item => item.text() === '状态')
     const toggle = status.get('[role="switch"]').element
     const state = status.get('[data-test="state"]').element
     expect(label).toBeDefined()
@@ -186,7 +186,7 @@ describe.skipIf(!App)('弹出页组件', () => {
     await openTab(REPO_URL)
     await fakeBrowser.storage.local.set({
       'untranslated:Code': { count: 3, kinds: 1, seen: 1, pages: { code: 2 } },
-      untranslatedMeta: { count: 1, full: true },
+      untranslatedMeta: { count: 1, full: true }
     })
     mockContent(contentWith())
     const wrapper = await render()
@@ -209,7 +209,7 @@ describe.skipIf(!App)('弹出页组件', () => {
   it.each([
     [{ ...STATUS, active: true }, '已翻译'],
     [{ ...STATUS, active: false, excluded: true }, '已排除'],
-    [{ ...STATUS, active: false, excluded: false }, '已停用'],
+    [{ ...STATUS, active: false, excluded: false }, '已停用']
   ])('状态 → %s', async (status, expected) => {
     await openTab(REPO_URL)
     mockContent(contentWith(status))
@@ -227,7 +227,7 @@ describe.skipIf(!App)('弹出页组件', () => {
 
     await button(wrapper, '授权').trigger('click')
     expect(request).toHaveBeenCalledWith({
-      origins: ['https://github.com/*', 'https://gist.github.com/*', 'https://www.githubstatus.com/*'],
+      origins: ['https://github.com/*', 'https://gist.github.com/*', 'https://www.githubstatus.com/*']
     })
   })
 
@@ -295,7 +295,7 @@ describe.skipIf(!App)('弹出页组件', () => {
       const general = section(wrapper, '常规').element
       const language = section(wrapper, '语言').element
       const footer = wrapper.get('footer')
-      expect(children.map((item) => item.tagName)).toEqual(['HEADER', 'SECTION', 'SECTION', 'SECTION', 'FOOTER', 'DIV'])
+      expect(children.map(item => item.tagName)).toEqual(['HEADER', 'SECTION', 'SECTION', 'SECTION', 'FOOTER', 'DIV'])
       expect(children[5]?.getAttribute('aria-live')).toBe('polite')
       expect(toastTexts(wrapper)).toEqual([])
       // 总开关在状态行之前，同在第一个分区
@@ -307,11 +307,7 @@ describe.skipIf(!App)('弹出页组件', () => {
       expect(toggle!.compareDocumentPosition(state!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
       expect(children.indexOf(general)).toBe(2)
       expect(children.indexOf(language)).toBe(3)
-      expect(footer.findAll('button, a').map((item) => item.attributes('aria-label') ?? item.text())).toEqual([
-        '设置',
-        '排除此页',
-        'GitHub',
-      ])
+      expect(footer.findAll('button, a').map(item => item.attributes('aria-label') ?? item.text())).toEqual(['设置', '排除此页', 'GitHub'])
     })
 
     it('页脚右侧的 GitHub 图标：在新标签页打开扩展的存储库', async () => {
@@ -348,12 +344,9 @@ describe.skipIf(!App)('弹出页组件', () => {
     it('不重复：启用开关只在顶部；语言里没有外观下拉；没有快捷键、排除路径、自定义词条、关于', async () => {
       mockContent(contentWith())
       const wrapper = await render()
-      expect(wrapper.findAll('label').filter((item) => item.text() === '启用')).toHaveLength(1)
+      expect(wrapper.findAll('label').filter(item => item.text() === '启用')).toHaveLength(1)
       expect(wrapper.findAll('[role="switch"]')).toHaveLength(8)
-      expect(wrapper.findAll('[role="combobox"]').map((item) => item.attributes('data-test'))).toEqual([
-        'ui-language',
-        'page-language',
-      ])
+      expect(wrapper.findAll('[role="combobox"]').map(item => item.attributes('data-test'))).toEqual(['ui-language', 'page-language'])
       // 下拉是自绘的：没有原生 select（其弹出列表的样式改不了）
       expect(wrapper.find('select').exists()).toBe(false)
       expect(wrapper.find('textarea').exists()).toBe(false)
@@ -367,7 +360,7 @@ describe.skipIf(!App)('弹出页组件', () => {
       const disabled = (): boolean[] =>
         wrapper
           .findAll('[role="switch"], [data-test="theme-toggle"], [role="combobox"]')
-          .map((item) => (item.element as HTMLButtonElement).disabled)
+          .map(item => (item.element as HTMLButtonElement).disabled)
       expect(disabled()).toEqual(Array.from({ length: 11 }, () => true))
       await settle()
       expect(disabled()).toEqual(Array.from({ length: 11 }, () => false))
@@ -375,7 +368,7 @@ describe.skipIf(!App)('弹出页组件', () => {
 
     it.each([
       ['排除此页', '保存失败'],
-      ['设置', '打开失败'],
+      ['设置', '打开失败']
     ])('操作失败的提示（%s）显示在页面顶部，分区布局不变', async (action, message) => {
       await openTab(REPO_URL)
       mockContent(contentWith())
@@ -385,7 +378,7 @@ describe.skipIf(!App)('弹出页组件', () => {
       await button(wrapper, action).trigger('click')
       await settle()
       const children = [...wrapper.element.children]
-      expect(children.map((item) => item.tagName)).toEqual(['HEADER', 'SECTION', 'SECTION', 'SECTION', 'FOOTER', 'DIV'])
+      expect(children.map(item => item.tagName)).toEqual(['HEADER', 'SECTION', 'SECTION', 'SECTION', 'FOOTER', 'DIV'])
       expect(toastTexts(wrapper)).toEqual([message])
       expect(wrapper.find('[role="alert"]').exists()).toBe(false)
     })
@@ -398,7 +391,7 @@ describe.skipIf(!App)('弹出页组件', () => {
       expect(
         section(wrapper, '常规')
           .findAll('label')
-          .map((item) => item.text()),
+          .map(item => item.text())
       ).toEqual(['时间本地化', '翻译标题', '加速下载', '净化搜索', '自动加载', '图片预览', '新标签页打开'])
     })
 
@@ -416,7 +409,7 @@ describe.skipIf(!App)('弹出页组件', () => {
     it.each([
       ['时间本地化', 'translateTime'],
       ['翻译标题', 'translateTitle'],
-      ['净化搜索', 'purifySearch'],
+      ['净化搜索', 'purifySearch']
     ] as const)('%s 开关即时保存', async (label, key) => {
       mockContent(contentWith())
       const wrapper = await render()
@@ -485,14 +478,12 @@ describe.skipIf(!App)('弹出页组件', () => {
       const language = section(wrapper, '语言')
       for (const [name, label] of [
         ['ui-language', '界面语言'],
-        ['page-language', '翻译语言'],
+        ['page-language', '翻译语言']
       ] as const) {
         const button = select(wrapper, name)
         expect(language.get(`label[for="${button.attributes('id')}"]`).text()).toBe(label)
         await button.trigger('click')
-        expect(wrapper.get(`#${CSS.escape(button.attributes('aria-controls') ?? '')}`).attributes('aria-label')).toBe(
-          label,
-        )
+        expect(wrapper.get(`#${CSS.escape(button.attributes('aria-controls') ?? '')}`).attributes('aria-label')).toBe(label)
         await button.trigger('click')
       }
     })
@@ -546,7 +537,7 @@ describe.skipIf(!App)('弹出页组件', () => {
       mockContent(contentWith())
       const wrapper = await render()
       const language = section(wrapper, 'Language')
-      expect(language.findAll('label').map((item) => item.text())).toEqual(['Interface', 'Translation'])
+      expect(language.findAll('label').map(item => item.text())).toEqual(['Interface', 'Translation'])
       expect(optionLabels(wrapper, 'ui-language')).toEqual(['Auto (Traditional)', '简体中文', '繁體中文', 'English'])
       expect(optionLabels(wrapper, 'page-language')).toEqual(['Auto (Traditional)', '简体中文', '繁體中文'])
     })
@@ -580,7 +571,7 @@ describe.skipIf(!App)('弹出页组件', () => {
       for (const [theme, label] of [
         ['light', '外观：浅色'],
         ['dark', '外观：深色'],
-        ['auto', '外观：自动'],
+        ['auto', '外观：自动']
       ] as const) {
         await toggle.trigger('click')
         await settle()
@@ -593,7 +584,7 @@ describe.skipIf(!App)('弹出页组件', () => {
 
     it.each([
       ['en', ['Appearance: Auto', 'Appearance: Light', 'Appearance: Dark']],
-      ['zh-TW', ['外觀：自動', '外觀：淺色', '外觀：深色']],
+      ['zh-TW', ['外觀：自動', '外觀：淺色', '外觀：深色']]
     ] as const)('%s 界面的外观名', async (uiLanguage, labels) => {
       await settingsItem.setValue({ ...ZH_SETTINGS, uiLanguage })
       mockContent(contentWith())
@@ -629,17 +620,8 @@ describe.skipIf(!App)('弹出页组件', () => {
 
   describe('界面语言', () => {
     it.each([
-      [
-        'en',
-        'GitHub Chinese',
-        'Enable',
-        'Status',
-        'Translated',
-        ['General', 'Language'],
-        'Settings',
-        'GitHub repository',
-      ],
-      ['zh-TW', 'GitHub 中文化', '啟用', '狀態', '已翻譯', ['一般', '語言'], '設定', 'GitHub'],
+      ['en', 'GitHub Chinese', 'Enable', 'Status', 'Translated', ['General', 'Language'], 'Settings', 'GitHub repository'],
+      ['zh-TW', 'GitHub 中文化', '啟用', '狀態', '已翻譯', ['一般', '語言'], '設定', 'GitHub']
     ] as const)('%s', async (uiLanguage, title, enable, status, state, sections, settingsButton, repository) => {
       await settingsItem.setValue({ ...ZH_SETTINGS, uiLanguage })
       await openTab(REPO_URL)
@@ -652,7 +634,7 @@ describe.skipIf(!App)('弹出页组件', () => {
         wrapper
           .get('section')
           .findAll('span')
-          .some((item) => item.text() === status),
+          .some(item => item.text() === status)
       ).toBe(true)
       expect(stateText(wrapper)).toBe(state)
       expect(headings(wrapper)).toEqual(sections)

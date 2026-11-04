@@ -22,8 +22,7 @@ export default {
     '. This includes the following:': '，包括：',
     'Personal user data': '個人使用者資料',
     'Email addresses (read-only)': '電子郵件地址（唯讀）',
-    'This application will be able to read your private email addresses.':
-      '此應用程式將能夠讀取你不公開的電子郵件地址。',
+    'This application will be able to read your private email addresses.': '此應用程式將能夠讀取你不公開的電子郵件地址。',
     'This application will be able to read your organization and team membership and private Projects.':
       '此應用程式將能夠讀取你的組織和團隊成員身分，以及私人專案。',
 
@@ -60,7 +59,7 @@ export default {
     // 重新授权
     'Reauthorization required': '需要重新授權',
     'This application has made an unusually high number of requests to access your account. Please reauthorize the application to continue.':
-      '此應用程式存取你帳號的請求次數異常偏高。請重新授權此應用程式以繼續。',
+      '此應用程式存取你帳號的請求次數異常偏高。請重新授權此應用程式以繼續。'
   },
   scoped: {
     // 权限分组
@@ -95,7 +94,7 @@ export default {
     'Deploy keys': '部署金鑰',
     'Webhooks and services': 'Web 鉤子和服務',
     'Collaboration invites': '協作邀請',
-    'Organization access': '組織存取權',
+    'Organization access': '組織存取權'
   },
   regexp: [
     [/^Authorize (.+)$/, '授權 $1'],
@@ -106,6 +105,6 @@ export default {
     [/^More than ([\d.,]+[KkMm]?) GitHub users$/, '超過 $1 位 GitHub 使用者'],
     [/^(?:Fewer|Less) than ([\d.,]+[KkMm]?) GitHub users$/, '少於 $1 位 GitHub 使用者'],
     [/^Verify your GitHub identity \(([\w-]+)\)$/, '驗證你的 GitHub 身分 ($1)'],
-    [new RegExp(`^Created (${TIME_SOURCE})$`), (_, time: string) => joinCjk('建立於', translateTime(time))],
-  ],
+    [new RegExp(`^Created (${TIME_SOURCE})$`), (_, time: string) => joinCjk('建立於', translateTime(time))]
+  ]
 } satisfies PageDictionary

@@ -18,7 +18,7 @@ const REACTIONS: Readonly<Record<string, string>> = {
   confused: '困惑',
   heart: '爱心',
   rocket: '火箭',
-  eyes: '眼睛',
+  eyes: '眼睛'
 }
 const REACTION_SOURCE = '(thumbs up|thumbs down|laugh|hooray|confused|heart|rocket|eyes)'
 /** React 反应按钮中的表情字符 */
@@ -40,7 +40,7 @@ const HIDE_REASONS: Readonly<Record<string, string>> = {
   outdated: '过时',
   duplicate: '重复',
   resolved: '已解决',
-  'low-quality': '低质量',
+  'low-quality': '低质量'
 }
 
 const CONTENT_TYPES: Readonly<Record<string, string>> = {
@@ -50,7 +50,7 @@ const CONTENT_TYPES: Readonly<Record<string, string>> = {
   'pull request': '拉取请求',
   discussion: '讨论',
   commit: '提交',
-  content: '内容',
+  content: '内容'
 }
 
 const LOGIN = '([\\w.-]+(?:\\[bot\\])?)'
@@ -59,7 +59,7 @@ const LOGIN = '([\\w.-]+(?:\\[bot\\])?)'
 const REACTION_CONTEXT = `(?:${LOGIN}['’]s )?(comment|review), (${ARIA_DATE_SOURCE})`
 const REACTION_SUBJECTS: Readonly<Record<string, string>> = {
   comment: '评论',
-  review: '审查',
+  review: '审查'
 }
 
 /** 赞助徽章的月份随浏览器语言本地化：January、一月、1月 */
@@ -174,13 +174,11 @@ export default {
     'To GitHub support': '向 GitHub 支持',
     'Report submitted': '已提交举报',
     'Unable to submit report': '无法提交举报',
-    'Code of Conduct and should be submitted to the maintainers of this repository for review.':
-      '行为准则，应提交给此存储库的维护者审查。',
+    'Code of Conduct and should be submitted to the maintainers of this repository for review.': '行为准则，应提交给此存储库的维护者审查。',
     'This report, as well as your username as the reporter, will be viewable by all admins of this repository.':
       '此举报以及你作为举报人的用户名将对此存储库的所有管理员可见。',
     'requesting that maintainers moderate content.': '请求维护者管理内容。',
-    "Contact GitHub Support about this user's spammy or abusive behavior.":
-      '就此用户的垃圾信息或滥用行为联系 GitHub 支持。',
+    "Contact GitHub Support about this user's spammy or abusive behavior.": '就此用户的垃圾信息或滥用行为联系 GitHub 支持。',
     'reporting abuse to GitHub support': '向 GitHub 支持举报滥用行为',
 
     // 阻止用户：Blocking <b>@user</b> prevents them … Learn more about <a>blocking a user</a>.
@@ -233,8 +231,7 @@ export default {
     'Delete this edit revision': '删除此编辑修订',
     'Failed to delete this revision': '删除此修订失败',
     'Are you sure you want to delete this revision from the history?': '确定要从历史记录中删除此修订吗？',
-    'This edit’s content will no longer be visible. This action can not be undone.':
-      '此编辑的内容将不再可见。此操作无法撤销。',
+    'This edit’s content will no longer be visible. This action can not be undone.': '此编辑的内容将不再可见。此操作无法撤销。',
     // 经典页面（gist 等）的编辑历史：<login> deleted this content（用户名单独成元素时）、(most recent)、(deleted)
     '(most recent)': '（最新）',
     '(deleted)': '（已删除）',
@@ -292,8 +289,7 @@ export default {
     'new Comment': '新评论',
     // 两句之间原文是句号，不改逗号
     'There was a problem saving your comment. Please try again.': '保存评论时出现问题。请重试。',
-    'There was a problem saving your comment. Please reload the page and try again.':
-      '保存评论时出现问题。请重新加载页面后重试。',
+    'There was a problem saving your comment. Please reload the page and try again.': '保存评论时出现问题。请重新加载页面后重试。',
     'Could not edit issue comment': '无法编辑议题评论',
     'Could not update issue comment': '无法更新议题评论',
     'Could not delete this comment': '无法删除此评论',
@@ -305,47 +301,46 @@ export default {
     Unsubscribe: '取消订阅',
     'You’re not receiving notifications from this thread.': '你不会收到此线程的通知。',
     // 从通知邮件退订后的横幅
-    'You’ve been unsubscribed from this thread.': '你已取消订阅此线程。',
+    'You’ve been unsubscribed from this thread.': '你已取消订阅此线程。'
   },
   regexp: [
     // 评论操作按钮：Actions for octocat's comment, 7:05 AM on October 19
     [
       new RegExp(`^Actions for ${LOGIN}['’]s (comment|reply), (${ARIA_DATE_SOURCE})$`),
-      (_, login: string, kind: string, date: string) =>
-        `${login} 的${CONTENT_TYPES[kind]!}操作，${translateAriaDate(date)}`,
+      (_, login: string, kind: string, date: string) => `${login} 的${CONTENT_TYPES[kind]!}操作，${translateAriaDate(date)}`
     ],
     // 评论头部的读屏标题 octocat commented：整句匹配，免得用户名（如 today）被单独翻译
     [
       new RegExp(`^${LOGIN} (commented|replied)$`),
-      (_, login: string, verb: string) => `${login} ${verb === 'commented' ? '评论于' : '回复了'}`,
+      (_, login: string, verb: string) => `${login} ${verb === 'commented' ? '评论于' : '回复了'}`
     ],
     // 评论头部：头像链接 @octocat's profile；赞助徽章 octo-org's sponsor since January 2024（月份随浏览器语言）
     [new RegExp(`^@${LOGIN}['’]s profile$`), '@$1 的个人资料'],
     [
       new RegExp(`^([\\w.-]+)['’]s sponsor since (${SPONSOR_MONTH_SOURCE}) (\\d{4})$`),
-      (_, owner: string, month: string, year: string) => `${joinCjk('自', sponsorSince(month, year))}起赞助 ${owner}`,
+      (_, owner: string, month: string, year: string) => `${joinCjk('自', sponsorSince(month, year))}起赞助 ${owner}`
     ],
     [
       /^Hide comment as (Spam|Abuse|Off-topic|Off Topic|Outdated|Duplicate|Resolved|Low quality)$/,
-      (_, reason: string) => `以${HIDE_REASONS[reason]!}为由隐藏评论`,
+      (_, reason: string) => `以${HIDE_REASONS[reason]!}为由隐藏评论`
     ],
     // 评论头部：Hidden as off-topic
     [
       /^Hidden as (spam|abuse|off-topic|outdated|duplicate|resolved|low-quality)$/,
-      (_, reason: string) => `因${HIDE_REASONS[reason]!}而隐藏`,
+      (_, reason: string) => `因${HIDE_REASONS[reason]!}而隐藏`
     ],
     [/^Report (comment|reply|issue|pull request|discussion)$/, (_, type: string) => `举报${CONTENT_TYPES[type]!}`],
     [/^Unable to submit report: (.+)$/, '无法提交举报：$1'],
     // 举报对话框：Where would you like to report this comment to? / This comment violates <a>@owner's</a> …
     [
       /^Where would you like to report this (comment|issue|pull request|content) to\?$/,
-      (_, type: string) => `你想向何处举报此${CONTENT_TYPES[type]!}？`,
+      (_, type: string) => `你想向何处举报此${CONTENT_TYPES[type]!}？`
     ],
     [/^This (comment|issue|pull request|content) violates$/, (_, type: string) => `此${CONTENT_TYPES[type]!}违反了`],
     [/^@([\w-]+)['’]s$/, '@$1 的'],
     [
       /^Choose a reason for reporting this (comment|issue|pull request|content)$/,
-      (_, type: string) => `选择举报此${CONTENT_TYPES[type]!}的原因`,
+      (_, type: string) => `选择举报此${CONTENT_TYPES[type]!}的原因`
     ],
 
     // 经典页面的编辑历史对话框：octocat's edit / octocat deleted this content <relative-time>.
@@ -362,7 +357,7 @@ export default {
     [/^For (\d+) days?$/, '$1 天'],
     [
       /^Block a user: (?:For (\d+) days?|Until I unblock them)$/,
-      (_, days: string | undefined) => `阻止用户：${days ? `${days} 天` : '直到我取消阻止'}`,
+      (_, days: string | undefined) => `阻止用户：${days ? `${days} 天` : '直到我取消阻止'}`
     ],
     [/^Are you sure you want to unblock @([\w-]+)\?$/, '确定要取消阻止 @$1 吗？'],
     // A maintainer of the @org organization has blocked you because of <a>this content</a>. …
@@ -371,7 +366,7 @@ export default {
     // 无法评论：You do not have permissions to comment on this issue.
     [
       /^You do not have permissions to comment on this (issue|pull request|discussion|commit)\.$/,
-      (_, type: string) => `你没有评论此${CONTENT_TYPES[type]!}的权限。`,
+      (_, type: string) => `你没有评论此${CONTENT_TYPES[type]!}的权限。`
     ],
     // 经典页面保存评论出错：There was an error posting your comment: <服务器返回的原因>
     [/^There was an error posting your comment: (.+)$/, '发布评论时出错：$1'],
@@ -380,12 +375,12 @@ export default {
     [new RegExp(`^react with ${REACTION_SOURCE}$`), (_, name: string) => `添加${REACTIONS[name]!}反应`],
     [
       new RegExp(`^(.+?) reacted with ${REACTION_SOURCE} emoji$`),
-      (_, people: string, name: string) => `${spaced(formatPeople(people))}做出了${REACTIONS[name]!}反应`,
+      (_, people: string, name: string) => `${spaced(formatPeople(people))}做出了${REACTIONS[name]!}反应`
     ],
     [
       new RegExp(`^${REACTION_SOURCE} \\((\\d[\\d,]*)\\): (.+?), (${COMPACT_DATE_SOURCE})$`),
       (_, name: string, count: string, author: string, date: string) =>
-        `${REACTIONS[name]!} (${count})：${author}，${translateCompactDate(date)}`,
+        `${REACTIONS[name]!} (${count})：${author}，${translateCompactDate(date)}`
     ],
     [/^(\d[\d,]*) (?:people|person) reacted$/, '$1 人做出了反应'],
     // 反应摘要（发行版卡片等）：自己与他人都做出反应时
@@ -395,7 +390,7 @@ export default {
     [new RegExp(`^${EMOJI_SOURCE} (\\d[\\d,]*) reactions?$`), '$1 $2 个反应'],
     [
       new RegExp(`^(React|Unreact) with ${EMOJI_SOURCE}$`),
-      (_, verb: string, emoji: string) => (verb === 'React' ? `添加 ${emoji} 反应` : `取消 ${emoji} 反应`),
+      (_, verb: string, emoji: string) => (verb === 'React' ? `添加 ${emoji} 反应` : `取消 ${emoji} 反应`)
     ],
     [new RegExp(`^People who reacted with ${EMOJI_SOURCE}$`), '做出 $1 反应的人'],
     [/^Reacted by (.+)$/, (_, people: string) => `${spaced(formatPeople(people))}做出了反应`],
@@ -404,18 +399,18 @@ export default {
     [
       new RegExp(`^React to ${REACTION_CONTEXT}$`),
       (_, login: string | undefined, kind: string, date: string) =>
-        `为${login ? ` ${login} 的` : ''}${REACTION_SUBJECTS[kind]!}添加反应，${translateAriaDate(date)}`,
+        `为${login ? ` ${login} 的` : ''}${REACTION_SUBJECTS[kind]!}添加反应，${translateAriaDate(date)}`
     ],
     [
       new RegExp(`^Reactions are currently unavailable for ${REACTION_CONTEXT}$`),
       (_, login: string | undefined, kind: string, date: string) =>
-        `${login ? `${login} ` : ''}${REACTION_SUBJECTS[kind]!}的反应当前不可用，${translateAriaDate(date)}`,
+        `${login ? `${login} ` : ''}${REACTION_SUBJECTS[kind]!}的反应当前不可用，${translateAriaDate(date)}`
     ],
     [
       new RegExp(`^Reactions for ${REACTION_CONTEXT}$`),
       (_, login: string | undefined, kind: string, date: string) =>
-        `${login ? `${login} ` : ''}${REACTION_SUBJECTS[kind]!}的反应，${translateAriaDate(date)}`,
-    ],
+        `${login ? `${login} ` : ''}${REACTION_SUBJECTS[kind]!}的反应，${translateAriaDate(date)}`
+    ]
   ],
   inline: [
     // 组织取消阻止对话框（Dialog.Body）：Are you sure you want to unblock <strong>user</strong> from <strong>org</strong>?
@@ -425,13 +420,13 @@ export default {
     // 按整句翻译：开头的 Blocking 不受页面词典 scoped 键（议题依赖关系）影响；链接文字由 static 翻译
     [
       'Blocking {} prevents them from interacting with your repositories, such as opening or commenting on pull requests or issues, starring, forking, or watching. Learn more about {}.',
-      '阻止 {} 后，其将无法与你的存储库互动，例如创建或评论拉取请求和议题、加星标、复刻或关注。了解{}。',
+      '阻止 {} 后，其将无法与你的存储库互动，例如创建或评论拉取请求和议题、加星标、复刻或关注。了解{}。'
     ],
     // 经典拉取请求页的锁定横幅：This conversation has been locked as <strong>原因</strong> and limited to collaborators.
     // 前后的图标等元素原样带回；原因作“因…而”（同 Hidden as），原因词由 pulls 词典翻译，两侧不留空格
     [
       /^(\{\}*)This conversation has been locked as \{\} and limited to collaborators\.(\{\}*)$/,
-      '$1 此对话已因{}而锁定并限制为仅协作者可评论。$2',
-    ],
-  ],
+      '$1 此对话已因{}而锁定并限制为仅协作者可评论。$2'
+    ]
+  ]
 } satisfies PageDictionary

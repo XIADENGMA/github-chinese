@@ -12,13 +12,12 @@ import {
   isPathExcluded,
   removeExcludedPath,
   type Settings,
-  type ThemePreference,
+  type ThemePreference
 } from '../../shared/settings'
 import { sendToTab } from '../../shared/tab-messages'
 
 /** 当前标签页状态 */
-export type PageState =
-  'loading' | 'unauthorized' | 'unavailable' | 'not-ready' | 'translated' | 'excluded' | 'disabled'
+export type PageState = 'loading' | 'unauthorized' | 'unavailable' | 'not-ready' | 'translated' | 'excluded' | 'disabled'
 
 /** 各状态的文案 */
 export const PAGE_STATE_MESSAGE: Readonly<Record<PageState, MessageKey>> = {
@@ -28,7 +27,7 @@ export const PAGE_STATE_MESSAGE: Readonly<Record<PageState, MessageKey>> = {
   'not-ready': 'stateNotReady',
   translated: 'stateTranslated',
   excluded: 'stateExcluded',
-  disabled: 'stateDisabled',
+  disabled: 'stateDisabled'
 }
 
 /** 操作失败时的提示（文案键），显示在页面顶部 */
@@ -38,7 +37,7 @@ export type PopupError = 'saveFailed' | 'authorizeFailed' | 'reloadFailed' | 'op
 export const NEXT_THEME: Readonly<Record<ThemePreference, ThemePreference>> = {
   auto: 'light',
   light: 'dark',
-  dark: 'auto',
+  dark: 'auto'
 }
 
 /** 状态轮询间隔：内容脚本注入、页面跳转后状态随之更新 */
@@ -121,13 +120,9 @@ export function usePopup(): UsePopup {
     return status.value.excluded ? 'excluded' : 'disabled'
   })
 
-  const excluded = computed(
-    () => tab.value !== undefined && isPathExcluded(tab.value.url.pathname, settings.value.excludedPaths),
-  )
+  const excluded = computed(() => tab.value !== undefined && isPathExcluded(tab.value.url.pathname, settings.value.excludedPaths))
 
-  const canToggleExcluded = computed(
-    () => tab.value !== undefined && (excluded.value || canExcludePath(tab.value.url.pathname)),
-  )
+  const canToggleExcluded = computed(() => tab.value !== undefined && (excluded.value || canExcludePath(tab.value.url.pathname)))
 
   function fail(reason: PopupError): void {
     toast.show('danger', reason)
@@ -225,6 +220,6 @@ export function usePopup(): UsePopup {
     toggleExcluded,
     authorize,
     reloadTab,
-    openOptions,
+    openOptions
   }
 }

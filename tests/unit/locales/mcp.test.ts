@@ -31,33 +31,26 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['MCP Registry | Sample Server', 'MCP 注册表 | Sample Server'],
-      ['MCP Registry | GitHub', 'MCP 注册表 | GitHub'],
+      ['MCP Registry | GitHub', 'MCP 注册表 | GitHub']
     ],
-    misses: ['MCP Registry |', 'Registry | Sample Server', 'MCP Registry · Sample Server'],
+    misses: ['MCP Registry |', 'Registry | Sample Server', 'MCP Registry · Sample Server']
   },
   // 搜索无结果
   {
     hits: [
       ['No MCPs found matching "zzqq". Try a different search term.', '未找到与“zzqq”匹配的 MCP。尝试其他搜索词。'],
-      [
-        'No MCPs found matching "sample text". Try a different search term.',
-        '未找到与“sample text”匹配的 MCP。尝试其他搜索词。',
-      ],
+      ['No MCPs found matching "sample text". Try a different search term.', '未找到与“sample text”匹配的 MCP。尝试其他搜索词。']
     ],
-    misses: [
-      'No MCPs found matching "". Try a different search term.',
-      'No MCPs found matching "zzqq".',
-      'Try a different search term.',
-    ],
+    misses: ['No MCPs found matching "". Try a different search term.', 'No MCPs found matching "zzqq".', 'Try a different search term.']
   },
   // 屏幕阅读器通知：可用服务器数（结果数「648 results」由 common-ui/counts.ts 覆盖，见下方「不重复收录」用例）
   {
     hits: [
       ['1 MCP available.', '1 个 MCP 可用。'],
-      ['648 MCPs available.', '648 个 MCP 可用。'],
+      ['648 MCPs available.', '648 个 MCP 可用。']
     ],
-    misses: ['MCPs available.', '648 MCPs available', '648 MCP servers available.'],
-  },
+    misses: ['MCPs available.', '648 MCPs available', '648 MCP servers available.']
+  }
 ]
 
 describe('mcp 正则词条', () => {
@@ -71,11 +64,11 @@ describe('mcp 正则词条', () => {
     }
   })
 
-  it.each(REGEXP_CASES.flatMap((item) => item.hits))('%s → %s', (source, expected) => {
+  it.each(REGEXP_CASES.flatMap(item => item.hits))('%s → %s', (source, expected) => {
     expect(translate(source)).toBe(expected)
   })
 
-  it.each(REGEXP_CASES.flatMap((item) => item.misses))('不命中：%s', (source) => {
+  it.each(REGEXP_CASES.flatMap(item => item.misses))('不命中：%s', source => {
     expect(translate(source)).toBeUndefined()
   })
 })
@@ -85,7 +78,7 @@ describe('mcp 静态词条', () => {
     ['Connect models to the real world', '将模型连接到现实世界'],
     [
       'Servers and tools from the community that connect models to files, APIs, databases, and more.',
-      '来自社区的服务器和工具，将模型连接到文件、API、数据库等。',
+      '来自社区的服务器和工具，将模型连接到文件、API、数据库等。'
     ],
     ['Search MCP registry', '搜索 MCP 注册表'],
     ['Search MCPs', '搜索 MCP'],
@@ -94,7 +87,7 @@ describe('mcp 静态词条', () => {
     ['Install MCP server', '安装 MCP 服务器'],
     ['Install in VS Code', '在 VS Code 中安装'],
     ['Install in VS Code Insiders', '在 VS Code Insiders 中安装'],
-    ['Install in GitHub Copilot app', '在 GitHub Copilot 应用中安装'],
+    ['Install in GitHub Copilot app', '在 GitHub Copilot 应用中安装']
   ])('%s → %s', (source, expected) => {
     expect(dict.static?.[source]).toBe(expected)
     expect(translate(source)).toBe(expected)
@@ -118,8 +111,8 @@ describe('mcp 静态词条', () => {
     'Contact support',
     'Try a different search term',
     '648 results',
-    '1 result',
-  ])('common 已收录的词条不重复收录：%s', (source) => {
+    '1 result'
+  ])('common 已收录的词条不重复收录：%s', source => {
     expect(dict.static?.[source]).toBeUndefined()
     expect(dict.scoped?.[source]).toBeUndefined()
     // 只用本词典不命中（含正则），完整语言包命中
@@ -132,23 +125,21 @@ describe('mcp 标签页标题', () => {
   const translateInBundle = (text: string) => bundleMatcher.translate(text, MCP)
 
   it('目录页：两段都翻译', () => {
-    expect(translateTitleText('MCP Registry · Connect Agents to tools', translateInBundle, '/mcp')).toBe(
-      'MCP 注册表 · 将代理连接到工具',
-    )
+    expect(translateTitleText('MCP Registry · Connect Agents to tools', translateInBundle, '/mcp')).toBe('MCP 注册表 · 将代理连接到工具')
   })
 
   it.each([
     ['MCP Registry | Sample Server', 'MCP 注册表 | Sample Server', '/mcp/octocat/sample-server'],
     // 服务器名与界面词同形也保持原文
     ['MCP Registry | Status', 'MCP 注册表 | Status', '/mcp/octocat/status'],
-    ['MCP Registry | GitHub', 'MCP 注册表 | GitHub', '/mcp/octocat/sample-server'],
+    ['MCP Registry | GitHub', 'MCP 注册表 | GitHub', '/mcp/octocat/sample-server']
   ])('详情页：%s → %s', (title, expected, pathname) => {
     expect(translateTitleText(title, translateInBundle, pathname)).toBe(expected)
   })
 })
 
 describe('mcp 忽略选择器', () => {
-  it.each(dict.ignore ?? [])('%s 是合法选择器', (selector) => {
+  it.each(dict.ignore ?? [])('%s 是合法选择器', selector => {
     expect(() => document.createElement('div').querySelector(selector)).not.toThrow()
   })
 })
@@ -332,9 +323,7 @@ describe('mcp 页面 DOM', () => {
     start()
 
     const crumbs = (scope: string) =>
-      [...document.querySelectorAll(`${scope} [data-component="Breadcrumbs.Item"]`)].map((item) =>
-        item.textContent?.trim(),
-      )
+      [...document.querySelectorAll(`${scope} [data-component="Breadcrumbs.Item"]`)].map(item => item.textContent?.trim())
     // 面包屑：首项翻译，服务器名（与界面词 Status 同形）保持原文
     expect(crumbs('header.GlobalNav')).toEqual(['MCP 注册表', 'Status'])
     expect(crumbs('react-app')).toEqual(['MCP 注册表', 'Status'])
@@ -353,10 +342,10 @@ describe('mcp 页面 DOM', () => {
     expect(text('a[href="/octocat/status"]')).toBe('octocat / status')
     expect(text('a[href="https://support.github.com/"]')).toBe('联系支持')
     // 安装菜单
-    expect([...document.querySelectorAll('[role="menuitem"]')].map((item) => item.textContent?.trim())).toEqual([
+    expect([...document.querySelectorAll('[role="menuitem"]')].map(item => item.textContent?.trim())).toEqual([
       '在 VS Code 中安装',
       '在 VS Code Insiders 中安装',
-      '在 GitHub Copilot 应用中安装',
+      '在 GitHub Copilot 应用中安装'
     ])
   })
 })

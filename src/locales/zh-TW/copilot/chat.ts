@@ -2,15 +2,15 @@ import type { PageDictionary, RegExpRule } from '../../../core/types'
 
 const TOOL_CALL_LEAD: Readonly<Record<string, string>> = {
   'Running tool call': '正在執行工具呼叫',
-  'Ran tool call': '已執行工具呼叫',
+  'Ran tool call': '已執行工具呼叫'
 }
 
 /** 首页 Copilot 输入框（dashboard/composer）沿用的规则：展开在本词典的规则列表中，两处引用同一份 */
 export const COMPOSER_SHARED_RULES: readonly RegExpRule[] = [
   [
     /^The (.+) model doesn[’']t support answering questions about images\. Select a different model and try again\.$/,
-    '$1 模型不支援回答與圖片有關的問題。選擇其他模型後再試一次。',
-  ],
+    '$1 模型不支援回答與圖片有關的問題。選擇其他模型後再試一次。'
+  ]
 ]
 
 /**
@@ -125,8 +125,7 @@ export default {
     'Delete chat': '刪除聊天',
     'Delete conversation': '刪除對話',
     'Are you sure you want to delete this chat? This action cannot be undone.': '確定要刪除此聊天嗎？此動作無法復原。',
-    'Are you sure you want to delete this conversation? This action cannot be undone.':
-      '確定要刪除此對話嗎？此動作無法復原。',
+    'Are you sure you want to delete this conversation? This action cannot be undone.': '確定要刪除此對話嗎？此動作無法復原。',
     'Deleting chat': '正在刪除聊天',
     'Deleting conversation': '正在刪除對話',
     'Failed to delete chat. Please try again.': '無法刪除聊天。請再試一次。',
@@ -200,8 +199,7 @@ export default {
       '知道連結的任何人都可以查看此對話和後續訊息。如果包含私人儲存庫內容，必須具有儲存庫存取權才能查看。',
     'This conversation may contain private content. Viewers must have access to all referenced content.':
       '此對話可能包含私人內容。查看者必須具有所有參考內容的存取權。',
-    'Only users with access to referenced private content can view this conversation.':
-      '只有能存取所參考私人內容的使用者才能查看此對話。',
+    'Only users with access to referenced private content can view this conversation.': '只有能存取所參考私人內容的使用者才能查看此對話。',
     'This conversation is private and only visible to you. Share it to make it accessible to others with the link.':
       '此對話不公開，只有你可以查看。分享此對話，讓知道連結的其他人也能存取。',
     'This conversation is now shared. Anyone with the link can view it. Keep in mind that it is live and publicly accessible.':
@@ -250,8 +248,7 @@ export default {
       '此聊天是在其他 Copilot 用戶端中開始的。基於安全性限制，無法在新的工作階段中繼續',
     "This chat can't be continued in a new session because its owner could not be determined.":
       '無法判定此聊天的擁有者，因此無法在新的工作階段中繼續。',
-    'This chat is view-only. Start a new session to continue the conversation.':
-      '此聊天僅供查看。開始新的工作階段以繼續對話。',
+    'This chat is view-only. Start a new session to continue the conversation.': '此聊天僅供查看。開始新的工作階段以繼續對話。',
     'Creating a new session': '正在建立新的工作階段',
     'Continue in a new session': '在新的工作階段中繼續',
     'Error during copilot chat has occurred.': 'Copilot 聊天發生錯誤。',
@@ -260,8 +257,7 @@ export default {
     "You don't currently have access to this conversation.": '你目前沒有此對話的存取權。',
     'Sign in to see this conversation': '登入以查看此對話',
     'This conversation is protected.': '此對話受到保護。',
-    "This conversation is protected. Use your organization's single sign-on to continue.":
-      '此對話受到保護。使用你組織的單一登入以繼續。',
+    "This conversation is protected. Use your organization's single sign-on to continue.": '此對話受到保護。使用你組織的單一登入以繼續。',
 
     // 消息
     'Scroll to bottom': '捲動到底部',
@@ -442,8 +438,7 @@ export default {
     'Image…': '圖片…',
     'Extension…': '擴充功能…',
     'Chat with your favorite tools and services': '與你慣用的工具和服務聊天',
-    'Browse the marketplace to find extensions for the tools and services you rely on':
-      '瀏覽市集以尋找你常用工具和服務的擴充功能',
+    'Browse the marketplace to find extensions for the tools and services you rely on': '瀏覽市集以尋找你常用工具和服務的擴充功能',
     'Browse marketplace': '瀏覽市集',
     // 切换到不支持图片的模型：<圖片> 不受此模型支援 切換回 <GPT-4o> 模型或開始新對話
     "aren't supported by this model": '不受此模型支援',
@@ -454,8 +449,7 @@ export default {
     // 错误
     'An unexpected error has occurred.': '發生未預期的錯誤。',
     'An error occurred uploading image attachments': '上傳圖片附件時發生錯誤',
-    'Image analysis is temporarily unavailable. Try sending your message without images.':
-      '圖片分析暫時無法使用。試著傳送不含圖片的訊息。',
+    'Image analysis is temporarily unavailable. Try sending your message without images.': '圖片分析暫時無法使用。試著傳送不含圖片的訊息。',
     'An unexpected error occurred during message streaming.': '串流傳輸訊息時發生未預期的錯誤。',
     // 错误横幅说明：Copilot 页由行内句整句翻译（见 inline），其他页面的停靠聊天按片段翻译：
     // ……而這受限於 <你的 Copilot 設定>。
@@ -468,8 +462,7 @@ export default {
     // 此回應遭到過濾的原因是違反了 <GitHub 的安全政策>。
     'This response has been filtered because it violates': '此回應遭到過濾的原因是違反了',
     "GitHub's safety policies": 'GitHub 的安全政策',
-    "This response has been filtered because it violates GitHub's safety policies.":
-      '此回應因違反 GitHub 的安全政策而遭到過濾。',
+    "This response has been filtered because it violates GitHub's safety policies.": '此回應因違反 GitHub 的安全政策而遭到過濾。',
     'Describe this image': '描述這張圖片',
     "Only one agent is allowed per thread, and their context can't be shared. If you want to interact with another agent, please start a new thread and @ mention the new agent.":
       '每個對話只能使用一個代理，且代理的上下文無法共用。如果要與其他代理互動，請開始新對話並 @ 提及新的代理。',
@@ -486,14 +479,12 @@ export default {
     'Failed to process file. Please try again.': '無法處理檔案。請再試一次。',
     'Network error. Please check your connection and try again.': '網路錯誤。請檢查網路連線後再試一次。',
     'The request was invalid. Please verify your input and try again.': '請求無效。請確認輸入內容後再試一次。',
-    "You don't have permission to perform this action. Please sign in and try again.":
-      '你沒有執行此動作的權限。請登入後再試一次。',
+    "You don't have permission to perform this action. Please sign in and try again.": '你沒有執行此動作的權限。請登入後再試一次。',
     "This feature isn't available for this repository or organization.": '此儲存庫或組織無法使用此功能。',
     "The requested resource couldn't be found.": '找不到請求的資源。',
     'The request timed out. Please try again.': '請求已逾時。請再試一次。',
     'A conflict occurred. The resource may already exist.': '發生衝突。資源可能已存在。',
-    'The request was rejected. A repository rule may have blocked this action.':
-      '請求遭拒。可能是儲存庫規則阻擋了此動作。',
+    'The request was rejected. A repository rule may have blocked this action.': '請求遭拒。可能是儲存庫規則阻擋了此動作。',
     'Too many requests. Please wait a moment and try again.': '請求過多。請稍候片刻再試一次。',
     'Copilot is unavailable for this repository because of organization-specific policies.':
       '由於組織特定的政策，此儲存庫無法使用 Copilot。',
@@ -603,7 +594,7 @@ export default {
     'Role, domain, style, and focus areas': '角色、領域、風格和重點領域',
     'Language, tone and format': '語言、語氣和格式',
     'Code style, patterns, and conventions': '程式碼風格、模式和慣例',
-    'Personal custom instructions': '個人自訂指示',
+    'Personal custom instructions': '個人自訂指示'
   },
   scoped: {
     Conversations: '對話',
@@ -645,7 +636,7 @@ export default {
     // 推广横幅正文（旧版空状态，只见于 Copilot 页；由 inline 整句翻译，片段兜底）：了解……的所有 <优势>。
     'Discover all the': '瞭解全球領先的 AI 開發人員工具的所有',
     benefits: '優勢',
-    'of the world’s leading AI developer tool.': '。',
+    'of the world’s leading AI developer tool.': '。'
   },
   regexp: [
     [/^Delete conversation: "(.+)"$/, '刪除對話：「$1」'],
@@ -654,34 +645,28 @@ export default {
     [/^You can add up to (\d+) image files per message\.$/, '每則訊息最多可新增 $1 個圖片檔案。'],
     [/^An error occurred uploading the attachment (.+)$/, '上傳附件 $1 時發生錯誤'],
     [/^Attached text files must be smaller than (\d+(?:\.\d+)?) ?KB$/, '附加的文字檔必須小於 $1 KB'],
-    [
-      /^"(.+)" has an unsupported file type\. Please try again with a plain text file$/,
-      '「$1」的檔案類型不受支援。請改用純文字檔再試一次',
-    ],
+    [/^"(.+)" has an unsupported file type\. Please try again with a plain text file$/, '「$1」的檔案類型不受支援。請改用純文字檔再試一次'],
     [/^Personal instructions must be (\d+) characters or fewer\.$/, '個人指示不得超過 $1 個字元。'],
     [
       /^The (.+) model currently doesn[’']t support external context from ongoing conversations\. Start a new conversation to chat with this model\.$/,
-      '$1 模型目前不支援來自進行中對話的外部上下文。開始新對話以與此模型聊天。',
+      '$1 模型目前不支援來自進行中對話的外部上下文。開始新對話以與此模型聊天。'
     ],
     [
       /^The (.+) model doesn[’']t support answering questions about images\. Start a new conversation without images to chat with this model\.$/,
-      '$1 模型不支援回答與圖片有關的問題。開始不含圖片的新對話以與此模型聊天。',
+      '$1 模型不支援回答與圖片有關的問題。開始不含圖片的新對話以與此模型聊天。'
     ],
     ...COMPOSER_SHARED_RULES,
     [/^Connect with (.+)$/, '連接 $1'],
     [
       /^To use the (.+) extension, you[’']ll need to connect your GitHub account to your (.+) account\.$/,
-      '若要使用 $1 擴充功能，必須將你的 GitHub 帳號連接到你的 $2 帳號。',
+      '若要使用 $1 擴充功能，必須將你的 GitHub 帳號連接到你的 $2 帳號。'
     ],
     [/^Click connect to be redirected to (\S+)$/, '按一下連接以重新導向至 $1'],
     [/^Dismissed the connection with (.+)\.$/, '已取消與 $1 的連接。'],
-    [
-      /^I was unable to connect you to (.+) because you cancelled the authentication\.$/,
-      '你已取消身分驗證，因此無法將你連接到 $1。',
-    ],
+    [/^I was unable to connect you to (.+) because you cancelled the authentication\.$/, '你已取消身分驗證，因此無法將你連接到 $1。'],
     [
       /^(Running tool call|Ran tool call) and (\d+) other tool calls?$/,
-      (_, lead: string, count: string) => `${TOOL_CALL_LEAD[lead] ?? lead}和另外 ${count} 個`,
+      (_, lead: string, count: string) => `${TOOL_CALL_LEAD[lead] ?? lead}和另外 ${count} 個`
     ],
     [/^No sessions matching "(.+)"$/, '沒有與「$1」相符的工作階段'],
     [/^Recent sessions on (.+)$/, '$1 的最近工作階段'],
@@ -691,21 +676,21 @@ export default {
     [/^(\S+) accepted the action$/, '$1 允許了此動作'],
     [/^(\S+) dismissed the action$/, '$1 拒絕了此動作'],
     // 工具调用确认卡片的说明：未收录的工具名保持原文
-    [/^Are you sure you wish to execute the "(.+)" tool\?$/, '確定要執行「$1」工具嗎？'],
+    [/^Are you sure you wish to execute the "(.+)" tool\?$/, '確定要執行「$1」工具嗎？']
   ],
   // 错误横幅的说明（Banner.Description）：文字被链接拆开，整句翻译；槽位是链接
   inline: [
     ['This response has been filtered because it violates {}.', '此回應因違反 {}而遭到過濾。'],
     [
       'This response cannot be shown because it references public code, which is restricted by {}.',
-      '無法顯示此回應，因為它參考了公開程式碼，而這受限於{}。',
+      '無法顯示此回應，因為它參考了公開程式碼，而這受限於{}。'
     ],
     // 系统提示说明：槽位是名称元素
     [
       'The system prompt for {} is a set of instructions that guides the LLM to provide enhanced functionality and output quality based on user input.',
-      '{} 的系統提示是一組指示，用來引導 LLM 根據使用者輸入強化功能並提升輸出品質。',
+      '{} 的系統提示是一組指示，用來引導 LLM 根據使用者輸入強化功能並提升輸出品質。'
     ],
     // 推广横幅正文：槽位是链接 benefits
-    ['Discover all the {} of the world’s leading AI developer tool.', '瞭解全球領先的 AI 開發人員工具的所有{}。'],
-  ],
+    ['Discover all the {} of the world’s leading AI developer tool.', '瞭解全球領先的 AI 開發人員工具的所有{}。']
+  ]
 } satisfies PageDictionary

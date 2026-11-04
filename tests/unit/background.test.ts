@@ -15,7 +15,7 @@ async function badgeText(): Promise<string> {
 
 /** 等待存储事件与异步回调完成 */
 async function settle(): Promise<void> {
-  await new Promise((resolve) => setTimeout(resolve, 0))
+  await new Promise(resolve => setTimeout(resolve, 0))
 }
 
 type Sender = Browser.runtime.MessageSender
@@ -26,18 +26,18 @@ function githubTab(frameId = 0): Sender {
     id: fakeBrowser.runtime.id,
     url: 'https://github.com/vuejs/core',
     frameId,
-    tab: { id: 7, incognito: false } as Browser.tabs.Tab,
+    tab: { id: 7, incognito: false } as Browser.tabs.Tab
   }
 }
 
 /** 发消息给后台：handled 为监听器是否保持消息通道，保持时一并等到应答 */
 async function deliver(message: unknown, sender: Sender): Promise<{ handled: boolean; response?: unknown }> {
   let respond: (value: unknown) => void = () => undefined
-  const response = new Promise((resolve) => {
+  const response = new Promise(resolve => {
     respond = resolve
   })
   const results: unknown[] = await fakeBrowser.runtime.onMessage.trigger(message, sender, respond)
-  const handled = results.some((result) => result === true)
+  const handled = results.some(result => result === true)
   return handled ? { handled, response: await response } : { handled }
 }
 
@@ -102,7 +102,7 @@ describe('background', () => {
     expect(fakeBrowser.scripting.updateContentScripts).not.toHaveBeenCalled()
     scripts.restart()
     expect(scripts.registered).toEqual([
-      expect.objectContaining({ id: LOCALE_SCRIPT_ID, js: ['locale-zh-cn.js'], persistAcrossSessions: true }),
+      expect.objectContaining({ id: LOCALE_SCRIPT_ID, js: ['locale-zh-cn.js'], persistAcrossSessions: true })
     ])
   })
 
@@ -119,7 +119,7 @@ describe('background', () => {
     expect(fakeBrowser.scripting.registerContentScripts).toHaveBeenCalledTimes(1)
     expect(fakeBrowser.scripting.updateContentScripts).not.toHaveBeenCalled()
     expect(scripts.registered).toEqual([
-      expect.objectContaining({ id: LOCALE_SCRIPT_ID, js: ['locale-zh-cn.js'], persistAcrossSessions: true }),
+      expect.objectContaining({ id: LOCALE_SCRIPT_ID, js: ['locale-zh-cn.js'], persistAcrossSessions: true })
     ])
   })
 
@@ -130,18 +130,13 @@ describe('background', () => {
     await updateSettings({ language: 'zh-TW' })
     await settle()
     scripts.restart()
-    expect(scripts.registered).toEqual([
-      expect.objectContaining({ js: ['locale-zh-tw.js'], persistAcrossSessions: true }),
-    ])
+    expect(scripts.registered).toEqual([expect.objectContaining({ js: ['locale-zh-tw.js'], persistAcrossSessions: true })])
   })
 
   it('浏览器语言变化：按新语言重新注册（语言自动）', async () => {
     let languageChange: (() => void) | undefined
     const addEventListener = globalThis.addEventListener.bind(globalThis)
-    vi.spyOn(globalThis, 'addEventListener').mockImplementation(((
-      type: string,
-      listener: EventListenerOrEventListenerObject,
-    ) => {
+    vi.spyOn(globalThis, 'addEventListener').mockImplementation(((type: string, listener: EventListenerOrEventListenerObject) => {
       if (type === 'languagechange') languageChange = listener as () => void
       else addEventListener(type, listener)
     }) as never)
@@ -152,9 +147,7 @@ describe('background', () => {
     accept.mockResolvedValue(['zh-HK', 'zh-CN'] as never)
     languageChange!()
     await settle()
-    expect(scripts.registered).toEqual([
-      expect.objectContaining({ js: ['locale-zh-tw.js'], persistAcrossSessions: true }),
-    ])
+    expect(scripts.registered).toEqual([expect.objectContaining({ js: ['locale-zh-tw.js'], persistAcrossSessions: true })])
   })
 
   it('设置变化时同步徽标', async () => {
@@ -200,7 +193,7 @@ describe('旧版本的未翻译文本', () => {
     'untranslated:Open issues': { count: 2, kinds: 1, seen: 1, pages: { issues: 1 } },
     untranslatedMeta: { count: 1, full: false },
     untranslatedEpoch: 2,
-    untranslated: { records: [] },
+    untranslated: { records: [] }
   }
   const CUSTOM_ENTRIES = { customEntries: { Issues: '议题' } }
 
@@ -209,7 +202,7 @@ describe('旧版本的未翻译文本', () => {
       id: fakeBrowser.runtime.id,
       url: 'https://github.com/vuejs/core/issues',
       frameId: 0,
-      tab: { id: 1, incognito: false } as Browser.tabs.Tab,
+      tab: { id: 1, incognito: false } as Browser.tabs.Tab
     }
   }
 
@@ -221,7 +214,7 @@ describe('旧版本的未翻译文本', () => {
   async function deliver(message: unknown, sender: Sender): Promise<{ handled: boolean; responded: boolean }> {
     const respond = vi.fn()
     const results: unknown[] = await fakeBrowser.runtime.onMessage.trigger(message, sender, respond)
-    return { handled: results.some((result) => result === true), responded: respond.mock.calls.length > 0 }
+    return { handled: results.some(result => result === true), responded: respond.mock.calls.length > 0 }
   }
 
   async function update(): Promise<void> {
@@ -231,7 +224,7 @@ describe('旧版本的未翻译文本', () => {
 
   it.each<[string, unknown, () => Sender]>([
     ['内容脚本上报', { type: 'gcn:report-untranslated', items: [['Open issues', 'issues', 1, 2, 1]] }, githubTab],
-    ['扩展页面请求清空', { type: 'gcn:clear-untranslated' }, extensionPage],
+    ['扩展页面请求清空', { type: 'gcn:clear-untranslated' }, extensionPage]
   ])('%s：不处理、不应答，不写存储、不通知标签页', async (_name, message, sender) => {
     background.main()
     await fakeBrowser.tabs.create({ url: 'https://github.com/vuejs/core' })
@@ -268,7 +261,7 @@ describe('旧版本的未翻译文本', () => {
 
   it('扩展更新时把设置里的 collectUntranslated 改为 false（同步给未更新的旧版本），其余设置不变', async () => {
     await fakeBrowser.storage.sync.set({
-      settings: { ...DEFAULT_SETTINGS, enabled: false, excludedPaths: ['/settings'], collectUntranslated: true },
+      settings: { ...DEFAULT_SETTINGS, enabled: false, excludedPaths: ['/settings'], collectUntranslated: true }
     })
     background.main()
     await update()
@@ -276,14 +269,14 @@ describe('旧版本的未翻译文本', () => {
       ...DEFAULT_SETTINGS,
       enabled: false,
       excludedPaths: ['/settings'],
-      collectUntranslated: false,
+      collectUntranslated: false
     })
   })
 
   it('删除失败只记录错误：徽标同步、已打开页面的注入照常', async () => {
     const consoleError = vi.spyOn(console, 'error').mockImplementation(() => undefined)
     await fakeBrowser.storage.sync.set({
-      settings: { ...DEFAULT_SETTINGS, enabled: false, uiLanguage: 'zh-CN', collectUntranslated: true },
+      settings: { ...DEFAULT_SETTINGS, enabled: false, uiLanguage: 'zh-CN', collectUntranslated: true }
     })
     const tab = await fakeBrowser.tabs.create({ url: 'https://github.com/vuejs/core' })
     vi.spyOn(fakeBrowser.tabs, 'sendMessage').mockRejectedValue(new Error('Receiving end does not exist.'))
@@ -295,7 +288,7 @@ describe('旧版本的未翻译文本', () => {
     expect(consoleError).toHaveBeenCalledWith('[GitHub 中文化]', expect.objectContaining({ message: '配额' }))
     expect(await badgeText()).toBe(BADGE_OFF)
     expect(fakeBrowser.scripting.executeScript).toHaveBeenCalledWith(
-      expect.objectContaining({ target: { tabId: tab.id }, files: ['/content-scripts/content.js'] }),
+      expect.objectContaining({ target: { tabId: tab.id }, files: ['/content-scripts/content.js'] })
     )
   })
 })
@@ -310,7 +303,7 @@ describe('自定义词条、屏蔽规则转发', () => {
     return {
       id: fakeBrowser.runtime.id,
       url: fakeBrowser.runtime.getURL('/options.html'),
-      tab: { id: 7, incognito: false } as Browser.tabs.Tab,
+      tab: { id: 7, incognito: false } as Browser.tabs.Tab
     }
   }
 
@@ -325,13 +318,13 @@ describe('自定义词条、屏蔽规则转发', () => {
       id: fakeBrowser.runtime.id,
       url: 'https://github.com/vuejs/core/issues',
       frameId: 0,
-      tab: { id: 1, incognito: false } as Browser.tabs.Tab,
+      tab: { id: 1, incognito: false } as Browser.tabs.Tab
     }
   }
 
   it.each<[string, () => Sender]>([
     ['设置页', optionsPage],
-    ['弹出页', popupPage],
+    ['弹出页', popupPage]
   ])('%s保存词条后通知各 GitHub 标签页重新读取', async (_name, sender) => {
     background.main()
     const tab = await fakeBrowser.tabs.create({ url: 'https://github.com/vuejs/core' })
@@ -347,7 +340,7 @@ describe('自定义词条、屏蔽规则转发', () => {
 
   it.each<[string, () => Sender]>([
     ['GitHub 页面的内容脚本', githubTab],
-    ['其他扩展（发送方 id 不符）', () => ({ ...popupPage(), id: 'other-extension' })],
+    ['其他扩展（发送方 id 不符）', () => ({ ...popupPage(), id: 'other-extension' })]
   ])('%s发来：不处理、不应答、不转发', async (_name, sender) => {
     background.main()
     await fakeBrowser.tabs.create({ url: 'https://github.com/vuejs/core' })
@@ -383,10 +376,7 @@ describe('自定义词条、屏蔽规则转发', () => {
 
   it('url 不可见的标签页也通知（撤销站点权限后内容脚本仍在运行）', async () => {
     background.main()
-    vi.spyOn(fakeBrowser.tabs, 'query').mockImplementation((async () => [
-      { id: 7 },
-      { id: 8, url: 'https://example.com/' },
-    ]) as never)
+    vi.spyOn(fakeBrowser.tabs, 'query').mockImplementation((async () => [{ id: 7 }, { id: 8, url: 'https://example.com/' }]) as never)
     const send = vi.spyOn(fakeBrowser.tabs, 'sendMessage').mockResolvedValue(undefined as never)
     await fakeBrowser.runtime.onMessage.trigger(SAVED, popupPage(), vi.fn())
     await settle()
@@ -446,9 +436,7 @@ describe('扩展安装、更新后向已打开的 GitHub 页面注入桥接与�
     execute: ReturnType<typeof vi.spyOn>
   } {
     const injections: Injection[] = []
-    const execute = vi.spyOn(fakeBrowser.scripting, 'executeScript').mockImplementation((async (
-      injection: Injection,
-    ) => {
+    const execute = vi.spyOn(fakeBrowser.scripting, 'executeScript').mockImplementation((async (injection: Injection) => {
       if (fail(injection)) throw new Error('Cannot access contents of the page.')
       injections.push(injection)
       return []
@@ -478,34 +466,29 @@ describe('扩展安装、更新后向已打开的 GitHub 页面注入桥接与�
       { id: 3, url: 'https://github.com/vuejs/core/issues', discarded: true },
       { id: 4, url: 'https://example.com/' },
       // 无站点权限：url 不可见
-      { id: 5 },
+      { id: 5 }
     ]) as never)
     // 默认没有接收方：未注入，或只有已失效的旧版本内容脚本
-    vi.spyOn(fakeBrowser.tabs, 'sendMessage').mockRejectedValue(
-      new Error('Could not establish connection. Receiving end does not exist.'),
-    )
+    vi.spyOn(fakeBrowser.tabs, 'sendMessage').mockRejectedValue(new Error('Could not establish connection. Receiving end does not exist.'))
   })
 
-  it.each(['install', 'update'])(
-    '%s：先在主世界注入桥接，再注入内容脚本；跳过休眠的标签页与其他站点',
-    async (reason) => {
-      const { injections } = captureInjections()
-      await trigger(reason)
-      expect(perTab(injections)).toEqual(
-        new Map([
-          [1, [BRIDGE, CONTENT]],
-          [2, [BRIDGE, CONTENT]],
-        ]),
-      )
-      // 立即注入，不等 document_idle
-      expect(injections.every((injection) => injection.injectImmediately === true)).toBe(true)
-    },
-  )
+  it.each(['install', 'update'])('%s：先在主世界注入桥接，再注入内容脚本；跳过休眠的标签页与其他站点', async reason => {
+    const { injections } = captureInjections()
+    await trigger(reason)
+    expect(perTab(injections)).toEqual(
+      new Map([
+        [1, [BRIDGE, CONTENT]],
+        [2, [BRIDGE, CONTENT]]
+      ])
+    )
+    // 立即注入，不等 document_idle
+    expect(injections.every(injection => injection.injectImmediately === true)).toBe(true)
+  })
 
   it('GitHub 状态页的标签页同样注入', async () => {
     vi.spyOn(fakeBrowser.tabs, 'query').mockImplementation((async () => [
       { id: 6, url: 'https://www.githubstatus.com/' },
-      { id: 7, url: 'https://eu.githubstatus.com/' },
+      { id: 7, url: 'https://eu.githubstatus.com/' }
     ]) as never)
     const { injections } = captureInjections()
     await trigger('update')
@@ -524,7 +507,7 @@ describe('扩展安装、更新后向已打开的 GitHub 页面注入桥接与�
     expect(perTab(injections)).toEqual(new Map([[2, [BRIDGE, CONTENT]]]))
   })
 
-  it.each(['chrome_update', 'shared_module_update'])('%s：不注入', async (reason) => {
+  it.each(['chrome_update', 'shared_module_update'])('%s：不注入', async reason => {
     const { execute } = captureInjections()
     await trigger(reason)
     expect(execute).not.toHaveBeenCalled()
@@ -544,19 +527,19 @@ describe('扩展安装、更新后向已打开的 GitHub 页面注入桥接与�
 
   it.each(['install', 'update'])(
     'Firefox（import.meta.env.FIREFOX 为真）%s：不注入（Firefox 自动注入已打开的页面），照常注册词典脚本',
-    async (reason) => {
+    async reason => {
       vi.stubEnv('FIREFOX', 'true')
       const { execute } = captureInjections()
       await trigger(reason)
       expect(execute).not.toHaveBeenCalled()
       expect(fakeBrowser.tabs.sendMessage).not.toHaveBeenCalled()
       expect(scripts.registered).toEqual([expect.objectContaining({ id: LOCALE_SCRIPT_ID })])
-    },
+    }
   )
 
   it('单个标签页注入失败不影响其他标签页，不报错', async () => {
     const consoleError = vi.spyOn(console, 'error').mockImplementation(() => undefined)
-    const { injections, execute } = captureInjections((injection) => injection.target.tabId === 1)
+    const { injections, execute } = captureInjections(injection => injection.target.tabId === 1)
     await trigger('update')
     expect(execute).toHaveBeenCalledTimes(4)
     expect(perTab(injections)).toEqual(new Map([[2, [BRIDGE, CONTENT]]]))
@@ -564,13 +547,13 @@ describe('扩展安装、更新后向已打开的 GitHub 页面注入桥接与�
   })
 
   it('桥接注入失败时照常注入内容脚本', async () => {
-    const { injections } = captureInjections((injection) => injection.target.tabId === 1 && injection.world === 'MAIN')
+    const { injections } = captureInjections(injection => injection.target.tabId === 1 && injection.world === 'MAIN')
     await trigger('install')
     expect(perTab(injections)).toEqual(
       new Map([
         [1, [CONTENT]],
-        [2, [BRIDGE, CONTENT]],
-      ]),
+        [2, [BRIDGE, CONTENT]]
+      ])
     )
   })
 
@@ -581,7 +564,7 @@ describe('扩展安装、更新后向已打开的 GitHub 页面注入桥接与�
       if (injection.target.tabId !== 1) return []
       started.push(injection.files[0]!)
       if (injection.world === 'MAIN') {
-        await new Promise<void>((resolve) => {
+        await new Promise<void>(resolve => {
           finishBridge = resolve
         })
       }
@@ -608,7 +591,7 @@ describe('词典脚本注入（内容脚本动态导入失败时的退路）', (
     expect(execute).toHaveBeenCalledWith({
       target: { tabId: 7, frameIds: [3] },
       files: ['/locale-zh-tw.js'],
-      injectImmediately: true,
+      injectImmediately: true
     })
   })
 
@@ -621,13 +604,9 @@ describe('词典脚本注入（内容脚本动态导入失败时的退路）', (
 
   it.each([
     ['扩展页面', INJECT, { id: fakeBrowser.runtime.id, url: fakeBrowser.runtime.getURL('/popup.html') }],
-    [
-      '其他网站',
-      INJECT,
-      { id: fakeBrowser.runtime.id, url: 'https://example.com/', tab: { id: 7 } as Browser.tabs.Tab },
-    ],
+    ['其他网站', INJECT, { id: fakeBrowser.runtime.id, url: 'https://example.com/', tab: { id: 7 } as Browser.tabs.Tab }],
     ['其他扩展（发送方 id 不符）', INJECT, { ...githubTab(), id: 'other-extension' }],
-    ['语言不合法', { type: 'gcn:inject-locale', locale: 'ja' }, githubTab()],
+    ['语言不合法', { type: 'gcn:inject-locale', locale: 'ja' }, githubTab()]
   ] as const)('%s → 不处理、不注入', async (_name, message, sender) => {
     expect(await deliver(message, sender as Sender)).toEqual({ handled: false })
     expect(fakeBrowser.scripting.executeScript).not.toHaveBeenCalled()
@@ -640,7 +619,7 @@ describe('词典脚本注入（内容脚本动态导入失败时的退路）', (
     expect(execute).toHaveBeenCalledWith({
       target: { tabId: 7, frameIds: [2] },
       files: ['/locale-zh-tw.js'],
-      injectImmediately: true,
+      injectImmediately: true
     })
   })
 
@@ -668,7 +647,7 @@ describe('下载加速的选源', () => {
     await updateSettings({ accelerate: true, accelerateSource: 'wget-la' })
     expect(await deliver(RESOLVE, githubTab())).toEqual({
       handled: true,
-      response: { ok: true, url: `https://wget.la/${RELEASE}` },
+      response: { ok: true, url: `https://wget.la/${RELEASE}` }
     })
     expect(fetch).not.toHaveBeenCalled()
   })
@@ -676,12 +655,12 @@ describe('下载加速的选源', () => {
   it('故障转移开启：首选连不上时应答其他加速源的地址', async () => {
     vi.stubGlobal(
       'fetch',
-      vi.fn(async (url: string) => (url === 'https://ghfast.top/' ? Promise.reject(new TypeError('Failed')) : {})),
+      vi.fn(async (url: string) => (url === 'https://ghfast.top/' ? Promise.reject(new TypeError('Failed')) : {}))
     )
     await updateSettings({ accelerate: true, failover: true })
     expect(await deliver(RESOLVE, githubTab())).toEqual({
       handled: true,
-      response: { ok: true, url: `https://wget.la/${RELEASE}` },
+      response: { ok: true, url: `https://wget.la/${RELEASE}` }
     })
   })
 
@@ -698,14 +677,10 @@ describe('下载加速的选源', () => {
 
   it.each([
     ['扩展页面', RESOLVE, { id: fakeBrowser.runtime.id, url: fakeBrowser.runtime.getURL('/popup.html') }],
-    [
-      '其他网站',
-      RESOLVE,
-      { id: fakeBrowser.runtime.id, url: 'https://example.com/', tab: { id: 7 } as Browser.tabs.Tab },
-    ],
+    ['其他网站', RESOLVE, { id: fakeBrowser.runtime.id, url: 'https://example.com/', tab: { id: 7 } as Browser.tabs.Tab }],
     ['其他扩展（发送方 id 不符）', RESOLVE, { ...githubTab(), id: 'other-extension' }],
     ['地址不是字符串', { type: 'gcn:resolve-download', url: 1 }, githubTab()],
-    ['地址过长', { type: 'gcn:resolve-download', url: `${RELEASE}?${'a'.repeat(5000)}` }, githubTab()],
+    ['地址过长', { type: 'gcn:resolve-download', url: `${RELEASE}?${'a'.repeat(5000)}` }, githubTab()]
   ] as const)('%s → 不处理', async (_name, message, sender) => {
     expect(await deliver(message, sender as Sender)).toEqual({ handled: false })
   })
@@ -715,7 +690,7 @@ describe('下载加速的选源', () => {
     await updateSettings({ accelerate: true })
     expect(await deliver({ type: 'gcn:resolve-download', url: clone }, githubTab())).toEqual({
       handled: true,
-      response: { ok: true, url: `https://ghfast.top/${clone}` },
+      response: { ok: true, url: `https://ghfast.top/${clone}` }
     })
   })
 })
@@ -729,14 +704,12 @@ describe('图片加速的取回', () => {
   })
 
   it('经支持该地址的加速源取回（头像：hk.gh-proxy.org），应答 data: 地址', async () => {
-    const fetch = vi.fn(
-      async () => new Response(new Uint8Array([1, 2, 3]), { headers: { 'content-type': 'image/png' } }),
-    )
+    const fetch = vi.fn(async () => new Response(new Uint8Array([1, 2, 3]), { headers: { 'content-type': 'image/png' } }))
     vi.stubGlobal('fetch', fetch)
     await updateSettings({ accelerateImages: true })
     expect(await deliver(FETCH_IMAGE, githubTab())).toEqual({
       handled: true,
-      response: { ok: true, url: 'data:image/png;base64,AQID' },
+      response: { ok: true, url: 'data:image/png;base64,AQID' }
     })
     expect(fetch).toHaveBeenCalledExactlyOnceWith(`https://hk.gh-proxy.org/${AVATAR}`, expect.any(Object))
   })
@@ -759,7 +732,7 @@ describe('图片加速的取回', () => {
 
   it.each([
     ['扩展页面', { id: fakeBrowser.runtime.id, url: fakeBrowser.runtime.getURL('/popup.html') }],
-    ['其他扩展（发送方 id 不符）', { ...githubTab(), id: 'other-extension' }],
+    ['其他扩展（发送方 id 不符）', { ...githubTab(), id: 'other-extension' }]
   ] as const)('%s → 不处理', async (_name, sender) => {
     expect(await deliver(FETCH_IMAGE, sender as Sender)).toEqual({ handled: false })
   })

@@ -46,9 +46,9 @@ export function extractStrings(args: ExtractArgs): HarvestedString[] {
   }
   /** 相邻的文本节点：两段以上含非空白文字时记为文本组，否则（或整组超长）逐段记 */
   const addRun = (parts: readonly string[]): void => {
-    const spaced = parts.map((part) => part.replace(/\s+/g, ' '))
+    const spaced = parts.map(part => part.replace(/\s+/g, ' '))
     const joined = spaced.join('').trim()
-    if (spaced.filter((part) => /\S/.test(part)).length >= 2 && joined.length <= 400 && /[A-Za-z]/.test(joined)) {
+    if (spaced.filter(part => /\S/.test(part)).length >= 2 && joined.length <= 400 && /[A-Za-z]/.test(joined)) {
       count(`group\u0001${spaced.join('\u0002')}`)
     } else {
       for (const part of spaced) add(part, 'text')
@@ -73,7 +73,7 @@ export function extractStrings(args: ExtractArgs): HarvestedString[] {
           return NodeFilter.FILTER_REJECT
         }
         return NodeFilter.FILTER_ACCEPT
-      },
+      }
     })
     let run: string[] = []
     let last: Node | null = null
@@ -116,14 +116,14 @@ export function expandGroup(item: HarvestedString, translate: (text: string) => 
   const joined = normalizeText(parts.join(''))
   if (translate(joined) !== undefined) return [{ ...item, text: joined }]
   return parts
-    .map((part) => normalizeText(part))
-    .filter((text) => LATIN_RE.test(text))
-    .map((text) => ({ ...item, kind: 'text', text }))
+    .map(part => normalizeText(part))
+    .filter(text => LATIN_RE.test(text))
+    .map(text => ({ ...item, kind: 'text', text }))
 }
 
 /** 文本组的整组文字与各段（判断词条是否用到时都算出现过）；其他类型只有自身 */
 export function groupTexts(item: HarvestedString): string[] {
   if (item.kind !== 'group') return [item.text]
   const parts = item.text.split(PART_SEPARATOR)
-  return [normalizeText(parts.join('')), ...parts.map((part) => normalizeText(part)).filter((text) => text !== '')]
+  return [normalizeText(parts.join('')), ...parts.map(part => normalizeText(part)).filter(text => text !== '')]
 }

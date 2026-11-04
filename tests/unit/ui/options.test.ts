@@ -4,13 +4,7 @@ import { fakeBrowser } from 'wxt/testing/fake-browser'
 import { clearToasts } from '../../../src/components/toast'
 import { EXPORT_FILE_NAME } from '../../../src/shared/custom-entries'
 import { REPOSITORY_URL } from '../../../src/shared/extension'
-import {
-  customEntriesItem,
-  getCustomEntries,
-  getSettings,
-  settingsItem,
-  updateSettings,
-} from '../../../src/shared/settings'
+import { customEntriesItem, getCustomEntries, getSettings, settingsItem, updateSettings } from '../../../src/shared/settings'
 import '../../../src/entrypoints/options/options.css'
 import { mockVersion, seedChineseUi, settle, ZH_SETTINGS } from './helpers'
 import { importSfc, required } from './sfc'
@@ -26,30 +20,30 @@ async function render(): Promise<VueWrapper> {
 }
 
 function tab(wrapper: VueWrapper, label: string): DOMWrapper<Element> {
-  const found = wrapper.findAll('[role="tab"]').find((item) => item.text() === label)
+  const found = wrapper.findAll('[role="tab"]').find(item => item.text() === label)
   if (!found) throw new Error(`未找到标签：${label}`)
   return found
 }
 
 /** 分区：标签页（加速设置、净化设置）按标签文字取对应的面板，其余按标题（h2）取 section */
 function section(wrapper: VueWrapper, title: string): DOMWrapper<Element> {
-  const tabbed = wrapper.findAll('[role="tab"]').find((item) => item.text() === title)
+  const tabbed = wrapper.findAll('[role="tab"]').find(item => item.text() === title)
   if (tabbed) return wrapper.get(`#${CSS.escape(tabbed.attributes('aria-controls') ?? '')}`) as DOMWrapper<Element>
-  const found = wrapper.findAll('section').find((item) => item.find('h2').text() === title)
+  const found = wrapper.findAll('section').find(item => item.find('h2').text() === title)
   if (!found) throw new Error(`未找到分区：${title}`)
   return found
 }
 
 function tabLabels(wrapper: VueWrapper): string[] {
-  return wrapper.findAll('[role="tab"]').map((item) => item.text())
+  return wrapper.findAll('[role="tab"]').map(item => item.text())
 }
 
 /** 显示中的面板对应的标签 */
 function visiblePanels(wrapper: VueWrapper): string[] {
   return wrapper
     .findAll<HTMLElement>('[role="tabpanel"]')
-    .filter((panel) => panel.element.style.display !== 'none')
-    .map((panel) => wrapper.get(`#${CSS.escape(panel.attributes('aria-labelledby') ?? '')}`).text())
+    .filter(panel => panel.element.style.display !== 'none')
+    .map(panel => wrapper.get(`#${CSS.escape(panel.attributes('aria-labelledby') ?? '')}`).text())
 }
 
 /** 页面顶部的提示文字（读屏朗读的区域内），先显示的在前 */
@@ -57,15 +51,15 @@ function toastTexts(wrapper: VueWrapper): string[] {
   return wrapper
     .get('[aria-live="polite"]')
     .findAll('.ui-toast')
-    .map((toast) => toast.text())
+    .map(toast => toast.text())
 }
 
 function headings(wrapper: VueWrapper): string[] {
-  return wrapper.findAll('h2').map((item) => item.text())
+  return wrapper.findAll('h2').map(item => item.text())
 }
 
 function button(scope: VueWrapper | DOMWrapper<Element>, text: string): DOMWrapper<HTMLButtonElement> {
-  const found = scope.findAll('button').find((item) => item.text() === text)
+  const found = scope.findAll('button').find(item => item.text() === text)
   if (!found) throw new Error(`未找到按钮：${text}`)
   return found as DOMWrapper<HTMLButtonElement>
 }
@@ -78,7 +72,7 @@ function addInput(scope: DOMWrapper<Element>): DOMWrapper<HTMLInputElement> {
 function pathRows(wrapper: VueWrapper): string[] {
   return section(wrapper, '排除路径')
     .findAll<HTMLInputElement>('tbody input')
-    .map((input) => input.element.value)
+    .map(input => input.element.value)
 }
 
 async function addPath(wrapper: VueWrapper, value: string): Promise<void> {
@@ -92,7 +86,7 @@ async function chooseFile(wrapper: VueWrapper, content: string): Promise<void> {
   const input = wrapper.get('[data-test="import-file"]')
   Object.defineProperty(input.element, 'files', {
     value: [new File([content], 'entries.json', { type: 'application/json' })],
-    configurable: true,
+    configurable: true
   })
   await input.trigger('change')
   await settle()
@@ -128,14 +122,14 @@ describe.skipIf(!App)('设置页组件', () => {
       expect(headings(wrapper)).toEqual(['排除路径', '自定义词条', '新标签页打开', '关于'])
       for (const title of ['排除路径', '自定义词条']) {
         expect(section(wrapper, title).element.closest('[role="tabpanel"]')?.getAttribute('aria-labelledby')).toBe(
-          tab(wrapper, '汉化设置').attributes('id'),
+          tab(wrapper, '汉化设置').attributes('id')
         )
       }
       expect(section(wrapper, '关于').element.closest('[role="tabpanel"]')).toBeNull()
       const main = wrapper.get('main').element
       expect(main.firstElementChild?.contains(wrapper.get('[role="tablist"]').element)).toBe(true)
       // 开关只有加速的三个、净化搜索，与增强设置里的自动加载、图片预览、新标签页打开及其范围
-      expect(wrapper.findAll('.ui-switch-label').map((item) => item.text())).toEqual([
+      expect(wrapper.findAll('.ui-switch-label').map(item => item.text())).toEqual([
         '加速下载',
         '加速图片',
         '故障转移',
@@ -150,7 +144,7 @@ describe.skipIf(!App)('设置页组件', () => {
         '通知',
         '首页',
         '个人与组织主页',
-        '探索',
+        '探索'
       ])
       expect(wrapper.find('[role="combobox"]').exists()).toBe(false)
       expect(wrapper.text()).not.toContain('快捷键')
@@ -185,7 +179,7 @@ describe.skipIf(!App)('设置页组件', () => {
     it('关于：GitHub 存储库地址，在新标签页打开', async () => {
       const wrapper = await render()
       const about = section(wrapper, '关于')
-      expect(about.findAll('dt').map((item) => item.text())).toEqual(['GitHub'])
+      expect(about.findAll('dt').map(item => item.text())).toEqual(['GitHub'])
       const link = about.get('dd a')
       expect(link.attributes('href')).toBe(REPOSITORY_URL)
       expect(link.attributes('target')).toBe('_blank')
@@ -200,7 +194,7 @@ describe.skipIf(!App)('设置页组件', () => {
         'Settings',
         ['Translation', 'Acceleration', 'Search filter', 'Enhancements'],
         ['Excluded paths', 'Custom entries', 'Open in new tab', 'About'],
-        'GitHub repository',
+        'GitHub repository'
       ],
       [
         'zh-TW',
@@ -208,22 +202,19 @@ describe.skipIf(!App)('设置页组件', () => {
         '設定',
         ['中文化設定', '加速設定', '淨化設定', '增強設定'],
         ['排除路徑', '自訂詞條', '新分頁開啟', '關於'],
-        'GitHub',
-      ],
-    ] as const)(
-      '界面语言随设置（如在弹出页修改）切换：%s',
-      async (uiLanguage, title, tabsLabel, tabs, sections, repository) => {
-        const wrapper = await render()
-        await updateSettings({ uiLanguage })
-        await settle()
-        expect(wrapper.get('h1').text()).toBe(title)
-        expect(wrapper.get('[role="tablist"]').attributes('aria-label')).toBe(tabsLabel)
-        expect(tabLabels(wrapper)).toEqual(tabs)
-        expect(headings(wrapper)).toEqual(sections)
-        expect(wrapper.get('dt').text()).toBe(repository)
-        expect(document.documentElement.lang).toBe(uiLanguage)
-      },
-    )
+        'GitHub'
+      ]
+    ] as const)('界面语言随设置（如在弹出页修改）切换：%s', async (uiLanguage, title, tabsLabel, tabs, sections, repository) => {
+      const wrapper = await render()
+      await updateSettings({ uiLanguage })
+      await settle()
+      expect(wrapper.get('h1').text()).toBe(title)
+      expect(wrapper.get('[role="tablist"]').attributes('aria-label')).toBe(tabsLabel)
+      expect(tabLabels(wrapper)).toEqual(tabs)
+      expect(headings(wrapper)).toEqual(sections)
+      expect(wrapper.get('dt').text()).toBe(repository)
+      expect(document.documentElement.lang).toBe(uiLanguage)
+    })
 
     it('外观随设置', async () => {
       await settingsItem.setValue({ ...ZH_SETTINGS, theme: 'dark' })
@@ -241,14 +232,11 @@ describe.skipIf(!App)('设置页组件', () => {
       const wrapper = await render()
       const excluded = section(wrapper, '排除路径')
       expect(pathRows(wrapper)).toEqual(['/*/*/wiki', '/settings'])
-      expect(excluded.findAll('th').map((item) => item.text())).toEqual(['路径', '操作'])
+      expect(excluded.findAll('th').map(item => item.text())).toEqual(['路径', '操作'])
       expect(addInput(excluded).attributes('aria-label')).toBe('路径')
       expect(addInput(excluded).attributes('placeholder')).toBe('/*/*/wiki')
-      expect(excluded.findAll('tbody input').map((input) => input.attributes('aria-label'))).toEqual(['路径', '路径'])
-      expect(excluded.findAll('tbody button').map((item) => item.attributes('aria-label'))).toEqual([
-        '删除 /*/*/wiki',
-        '删除 /settings',
-      ])
+      expect(excluded.findAll('tbody input').map(input => input.attributes('aria-label'))).toEqual(['路径', '路径'])
+      expect(excluded.findAll('tbody button').map(item => item.attributes('aria-label'))).toEqual(['删除 /*/*/wiki', '删除 /settings'])
     })
 
     it('空时显示暂无路径；添加框为空时不能添加', async () => {
@@ -275,7 +263,7 @@ describe.skipIf(!App)('设置页组件', () => {
 
     it.each([
       ['不以 / 开头', 'settings', '格式错误'],
-      ['已存在', ' /settings ', '已存在'],
+      ['已存在', ' /settings ', '已存在']
     ])('添加失败（%s）：提示，不保存，添加框保留', async (_name, value, message) => {
       await settingsItem.setValue({ ...ZH_SETTINGS, excludedPaths: ['/settings'] })
       const wrapper = await render()
@@ -591,7 +579,7 @@ describe.skipIf(!App)('设置页组件', () => {
     it('导出 JSON', async () => {
       await customEntriesItem.setValue({ Code: '代码' })
       let blob: Blob | undefined
-      vi.spyOn(URL, 'createObjectURL').mockImplementation((value) => {
+      vi.spyOn(URL, 'createObjectURL').mockImplementation(value => {
         blob = value as Blob
         return 'blob:export'
       })
@@ -621,9 +609,7 @@ describe.skipIf(!App)('设置页组件', () => {
 
       /** count 条词条；列表里新添加的在前：第 i 行是 Sample text {count - 1 - i} */
       function manyEntries(count: number): Record<string, string> {
-        return Object.fromEntries(
-          Array.from({ length: count }, (_, index) => [`Sample text ${index}`, `示例文字 ${index}`]),
-        )
+        return Object.fromEntries(Array.from({ length: count }, (_, index) => [`Sample text ${index}`, `示例文字 ${index}`]))
       }
 
       function range(start: number, end: number): number[] {
@@ -640,7 +626,7 @@ describe.skipIf(!App)('设置页组件', () => {
       function rendered(wrapper: VueWrapper): number[] {
         return section(wrapper, '自定义词条')
           .findAll('tbody tr[data-index]')
-          .map((row) => Number(row.attributes('data-index')))
+          .map(row => Number(row.attributes('data-index')))
       }
 
       function inputAt(wrapper: VueWrapper, index: number, label: '原文' | '译文'): HTMLInputElement {

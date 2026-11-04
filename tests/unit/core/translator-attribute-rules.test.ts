@@ -9,20 +9,17 @@ const ENTRY_TYPES: Readonly<Record<string, string>> = { Directory: '目录', Fil
 
 const BUNDLE: LocaleBundle = [
   ...TEST_BUNDLE,
-  [
-    'common',
-    { static: { 'View progress': '查看进度', Documentation: '文档', 'Loading...': '正在加载...', Copy: '复制' } },
-  ],
+  ['common', { static: { 'View progress': '查看进度', Documentation: '文档', 'Loading...': '正在加载...', Copy: '复制' } }],
   [
     'issues',
     {
       attributeRules: [
         ['[invalid', 'title', /^(.+)$/, '不应生效'],
         ['[class*="titleOptionsContainer__"] a', 'aria-label', /^View (.+)$/, (_, title: string) => `查看 ${title}`],
-        ['.sample-filters input', 'value', /^Sample (.+)$/, '示例 $1'],
+        ['.sample-filters input', 'value', /^Sample (.+)$/, '示例 $1']
       ],
-      ignore: ['ul[role="group"]:not(:has([data-loading]))', '[aria-label$=" (user)"]'],
-    },
+      ignore: ['ul[role="group"]:not(:has([data-loading]))', '[aria-label$=" (user)"]']
+    }
   ],
   [
     'repository',
@@ -32,12 +29,12 @@ const BUNDLE: LocaleBundle = [
           '.react-directory-filename-cell a',
           'aria-label',
           /^(.+), \((Directory|File)\)$/,
-          (_, name: string, type: string) => `${name}（${ENTRY_TYPES[type] ?? type}）`,
+          (_, name: string, type: string) => `${name}（${ENTRY_TYPES[type] ?? type}）`
         ],
-        ['.react-directory-filename-cell a', 'title', /^(.+)$/, '$1'],
-      ],
-    },
-  ],
+        ['.react-directory-filename-cell a', 'title', /^(.+)$/, '$1']
+      ]
+    }
+  ]
 ]
 
 const ISSUES: readonly PageKey[] = ['common', 'repository', 'issues']
@@ -52,7 +49,7 @@ function start(html: string, pages: readonly PageKey[] = ISSUES, options: Partia
     host: window,
     collectUntranslated: true,
     resolvePages: () => pages,
-    ...options,
+    ...options
   })
   translator.start()
   return translator
@@ -64,7 +61,7 @@ const label = (selector: string): string | null => $(selector).getAttribute('ari
 function watchAttributes(element: Element): () => string[] {
   const names: string[] = []
   const collect = (records: MutationRecord[]): void => {
-    names.push(...records.flatMap((record) => record.attributeName ?? []))
+    names.push(...records.flatMap(record => record.attributeName ?? []))
   }
   const observer = new MutationObserver(collect)
   observer.observe(element, { attributes: true })
@@ -169,7 +166,7 @@ describe('value 属性规则', () => {
 
   it('切换到没有 value 规则的页面类型：还原原文；切回后再改写', () => {
     const t = start(FILTERS, ISSUES, {
-      resolvePages: (location) => (location.pathname.endsWith('/pulls') ? PULLS : ISSUES),
+      resolvePages: location => (location.pathname.endsWith('/pulls') ? PULLS : ISSUES)
     })
     history.pushState(null, '', '/vuejs/core/pulls')
     t.checkLocation()

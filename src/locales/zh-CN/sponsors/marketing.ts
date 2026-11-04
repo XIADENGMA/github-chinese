@@ -18,8 +18,7 @@ export default {
     'Regions supported globally': '全球支持的地区',
     'Organizations sponsoring': '参与赞助的组织',
     'GitHub Sponsors allows the developer community': 'GitHub 赞助让开发者社区',
-    'to financially support the open source projects they depend on, directly on GitHub':
-      '直接在 GitHub 上资助其依赖的开源项目',
+    'to financially support the open source projects they depend on, directly on GitHub': '直接在 GitHub 上资助其依赖的开源项目',
 
     // 面向维护者 / 赞助者
     'For maintainers': '面向维护者',
@@ -51,8 +50,7 @@ export default {
     'trending repositories': '趋势存储库',
     ', or': '，或',
     collections: '集合',
-    '. When a repository has the Sponsor graphic, you can sponsor them directly.':
-      '。存储库带有赞助标识时，可直接赞助。',
+    '. When a repository has the Sponsor graphic, you can sponsor them directly.': '。存储库带有赞助标识时，可直接赞助。',
     'How do I get paid for my contributions?': '如何为我的贡献获得报酬？',
     'You can become a sponsored developer by joining GitHub Sponsors, completing your sponsored developer profile, creating sponsorship tiers, submitting your bank and tax information, and enabling two-factor authentication for your account on GitHub.com.':
       '加入 GitHub 赞助、完善被赞助开发者个人资料、创建赞助等级、提交银行和税务信息，并为你的 GitHub.com 帐户启用双因素身份验证即可成为被赞助的开发者。',
@@ -64,6 +62,6 @@ export default {
       '请注意我们会尽力协助你参与赞助计划，但无法提供税务指导。',
     "Note that we do our best to help you with the Sponsors program, but we're unable to provide tax guidance.":
       '请注意我们会尽力协助你参与赞助计划，但无法提供税务指导。',
-    'Learn more about tax information for GitHub Sponsors': '了解 GitHub 赞助的税务信息',
-  },
+    'Learn more about tax information for GitHub Sponsors': '了解 GitHub 赞助的税务信息'
+  }
 } satisfies PageDictionary

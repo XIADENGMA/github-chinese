@@ -13,14 +13,7 @@ export interface DownloadClickOptions {
 
 /** 普通的左键单击（含键盘触发的点击）：不带修饰键，页面没有取消 */
 function isPlainClick(event: MouseEvent): boolean {
-  return (
-    event.button === 0 &&
-    !event.defaultPrevented &&
-    !event.metaKey &&
-    !event.ctrlKey &&
-    !event.shiftKey &&
-    !event.altKey
-  )
+  return event.button === 0 && !event.defaultPrevented && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey
 }
 
 /** 点击落在的链接（含开放影子树内的） */
@@ -34,7 +27,7 @@ function anchorOf(event: Event): HTMLAnchorElement | undefined {
  * 没有加速源支持该链接时不处理。中键、带修饰键的点击（新标签页打开、另存为等）不处理
  */
 export function createDownloadClickHandler(options: DownloadClickOptions): (event: MouseEvent) => void {
-  return (event) => {
+  return event => {
     const settings = options.settings()
     if (!settings.enabled || !settings.accelerate || !isPlainClick(event)) return
     const anchor = anchorOf(event)
@@ -54,8 +47,8 @@ export function createDownloadClickHandler(options: DownloadClickOptions): (even
     event.preventDefault()
     const { href } = anchor
     options.resolve(href).then(
-      (url) => options.open(url, newTab),
-      () => options.open(href, newTab),
+      url => options.open(url, newTab),
+      () => options.open(href, newTab)
     )
   }
 }

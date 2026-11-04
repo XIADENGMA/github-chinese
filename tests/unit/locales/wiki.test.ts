@@ -34,51 +34,51 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Welcome to the hello-world wiki!', '欢迎来到 hello-world Wiki！'],
-      ['Welcome to the octo-repo Wiki!', '欢迎来到 octo-repo Wiki！'],
+      ['Welcome to the octo-repo Wiki!', '欢迎来到 octo-repo Wiki！']
     ],
-    misses: ['Welcome to the wiki', 'Welcome to the hello-world wiki'],
+    misses: ['Welcome to the wiki', 'Welcome to the hello-world wiki']
   },
   // 空 Wiki（登录后）：Wiki: owner/repo
   {
     hits: [
       ['Wiki: octocat/hello-world', 'Wiki：octocat/hello-world'],
-      ['Wiki: octo-org/octo-repo', 'Wiki：octo-org/octo-repo'],
+      ['Wiki: octo-org/octo-repo', 'Wiki：octo-org/octo-repo']
     ],
-    misses: ['Wiki: Home', 'Wiki:', 'Wiki: acme/app/extra'],
+    misses: ['Wiki: Home', 'Wiki:', 'Wiki: acme/app/extra']
   },
   // 页面头部：<用户> edited this page
   {
     hits: [
       ['Monalisa Octocat edited this page', 'Monalisa Octocat 编辑于'],
-      ['octocat edited this page', 'octocat 编辑于'],
+      ['octocat edited this page', 'octocat 编辑于']
     ],
-    misses: ['octocat edited this file', 'octocat edited this page yesterday'],
+    misses: ['octocat edited this file', 'octocat edited this page yesterday']
   },
   // 修订数
   {
     hits: [
       ['14 revisions', '14 次修订'],
       ['1 revision', '1 次修订'],
-      ['1,024 revisions', '1,024 次修订'],
+      ['1,024 revisions', '1,024 次修订']
     ],
-    misses: ['revisions', 'many revisions'],
+    misses: ['revisions', 'many revisions']
   },
   // 最后编辑者与时间
   {
     hits: [
       ['Last edited by octocat 2 weeks ago', 'octocat 最后编辑于 2 周前'],
       ['Last edited by octocat, on Mar 18, 2025', 'octocat 最后编辑于 2025 年 3 月 18 日'],
-      ['Last edited by octocat yesterday', 'octocat 最后编辑于昨天'],
+      ['Last edited by octocat yesterday', 'octocat 最后编辑于昨天']
     ],
-    misses: ['Last edited by octocat', 'Last edited by octocat recently'],
+    misses: ['Last edited by octocat', 'Last edited by octocat recently']
   },
   // 侧栏：Show N more pages
   {
     hits: [
       ['Show 38 more pages…', '再显示 38 个页面…'],
-      ['Show 1 more page...', '再显示 1 个页面...'],
+      ['Show 1 more page...', '再显示 1 个页面...']
     ],
-    misses: ['Show more pages…', 'Show 38 more pages'],
+    misses: ['Show more pages…', 'Show 38 more pages']
   },
   // 侧栏：Structure for <页面名>
   {
@@ -86,64 +86,64 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       // 页面名原文不带引号，译文也不加；中文页面名后不补空格
       ['Structure for Home', 'Home 的结构'],
       ['Structure for 0. Index', '0. Index 的结构'],
-      ['Structure for 安装指南', '安装指南的结构'],
+      ['Structure for 安装指南', '安装指南的结构']
     ],
-    misses: ['Structure for'],
+    misses: ['Structure for']
   },
   // 编辑
   {
     hits: [
       ['Editing Home', '编辑 Home'],
-      ['Editing FAQ', '编辑 FAQ'],
+      ['Editing FAQ', '编辑 FAQ']
     ],
-    misses: ['Edit Home'],
+    misses: ['Edit Home']
   },
   {
     hits: [['Could not find version "abc1234"', '找不到版本“abc1234”']],
-    misses: ['Could not find version', 'Could not find version abc1234'],
+    misses: ['Could not find version', 'Could not find version abc1234']
   },
   // 比较修订：Compare: <页面名>
   {
     hits: [
       ['Compare: Home', '比较：Home'],
-      ['Compare: 0. Index', '比较：0. Index'],
+      ['Compare: 0. Index', '比较：0. Index']
     ],
-    misses: ['Compare:', 'Compare Home'],
+    misses: ['Compare:', 'Compare Home']
   },
   // 比较：差异统计
   {
     hits: [
       ['1 change: 0 additions & 1 deletion', '1 处更改：新增 0 行和删除 1 行'],
-      ['12 changes: 10 additions & 2 deletions', '12 处更改：新增 10 行和删除 2 行'],
+      ['12 changes: 10 additions & 2 deletions', '12 处更改：新增 10 行和删除 2 行']
     ],
-    misses: ['0 changes: none', '1 change: 0 additions'],
+    misses: ['0 changes: none', '1 change: 0 additions']
   },
   {
     hits: [
       ['1 changed file', '1 个已更改的文件'],
-      ['3 changed files', '3 个已更改的文件'],
+      ['3 changed files', '3 个已更改的文件']
     ],
-    misses: ['changed file'],
+    misses: ['changed file']
   },
   {
     hits: [
       ['3 additions', '新增 3 行'],
       ['0 additions', '新增 0 行'],
-      ['1 addition', '新增 1 行'],
+      ['1 addition', '新增 1 行']
     ],
-    misses: ['additions'],
+    misses: ['additions']
   },
   {
     hits: [
       ['1 deletion', '删除 1 行'],
-      ['7 deletions', '删除 7 行'],
+      ['7 deletions', '删除 7 行']
     ],
-    misses: ['deletions'],
-  },
+    misses: ['deletions']
+  }
 ]
 
-const HITS = REGEXP_CASES.flatMap((item) => item.hits)
-const MISSES = REGEXP_CASES.flatMap((item) => item.misses)
+const HITS = REGEXP_CASES.flatMap(item => item.hits)
+const MISSES = REGEXP_CASES.flatMap(item => item.misses)
 const RULES = dict.regexp ?? []
 
 function firstRule(input: string): number {
@@ -153,10 +153,10 @@ function firstRule(input: string): number {
 describe('wiki 合并', () => {
   it('包含两个子文件的全部词条与正则', () => {
     expect(Object.keys(dict.static ?? {})).toHaveLength(
-      Object.keys(pages.static ?? {}).length + Object.keys(editorHelp.static ?? {}).length,
+      Object.keys(pages.static ?? {}).length + Object.keys(editorHelp.static ?? {}).length
     )
     expect(Object.keys(dict.scoped ?? {})).toHaveLength(
-      Object.keys(pages.scoped ?? {}).length + Object.keys(editorHelp.scoped ?? {}).length,
+      Object.keys(pages.scoped ?? {}).length + Object.keys(editorHelp.scoped ?? {}).length
     )
     expect(RULES).toHaveLength((pages.regexp?.length ?? 0) + (helpDict.regexp?.length ?? 0))
     expect(dict.ignore).toEqual(pages.ignore)
@@ -170,14 +170,14 @@ describe('wiki 正则词条', () => {
     expect(translate(input)).toBe(expected)
   })
 
-  it.each(MISSES)('不命中：%s', (input) => {
+  it.each(MISSES)('不命中：%s', input => {
     expect(translate(input)).toBeUndefined()
   })
 
   it('用例与正则一一对应，正例首个命中对应的正则', () => {
     expect(REGEXP_CASES).toHaveLength(RULES.length)
     const mismatched = REGEXP_CASES.flatMap((item, index) =>
-      item.hits.filter(([input]) => firstRule(input) !== index).map(([input]) => `#${index} ${input}`),
+      item.hits.filter(([input]) => firstRule(input) !== index).map(([input]) => `#${index} ${input}`)
     )
     expect(mismatched).toEqual([])
   })
@@ -196,14 +196,12 @@ describe('wiki 正则词条', () => {
     expect(translate('Last updated')).toBe('最后更新于')
     // Markdown 帮助：Markdown creates blockquotes … with the <code>&gt;</code>. This looks best …
     expect(translate('Markdown creates blockquotes email-style by prefixing each line with the')).toBe(
-      'Markdown 按电子邮件风格创建引用块的方法是在每行前加上',
+      'Markdown 按电子邮件风格创建引用块的方法是在每行前加上'
     )
     expect(translate('before your paragraph.')).toBe('。')
     // Markdown 帮助：… wrap your words in single/double asterisks/underscores. …（中文之间的斜杠两侧不加空格）
     expect(
-      translate(
-        'tag. To create italic or bold text, simply wrap your words in single/double asterisks/underscores. For example,',
-      ),
+      translate('tag. To create italic or bold text, simply wrap your words in single/double asterisks/underscores. For example,')
     ).toBe('标签。要创建斜体或粗体文本，只需用一个或两个星号/下划线包裹文字。例如，')
     // AsciiDoc 帮助：To display text as <strong>bold</strong>, wrap the text in <code>*</code> (asterisks). …
     expect(translate('To display text as')).toBe('要将文本显示为')
@@ -225,13 +223,11 @@ describe('wiki 正则词条', () => {
     // Pod 帮助：<code>=headN</code>, where <code>N</code> is the number of the heading 1 through 4. …
     // 原文 1 through 4 两侧无括号，译文不加
     expect(
-      translate(
-        'is the number of the heading 1 through 4. For example, to make a first-order heading (the largest possible,) write',
-      ),
+      translate('is the number of the heading 1 through 4. For example, to make a first-order heading (the largest possible,) write')
     ).toBe('是 1～4 的标题级别。例如，要创建一级标题（最大的标题），请写')
     // Textile 帮助：To display a link, put the text … then a colon (<code>:</code>), then the URL …
     expect(translate('To display a link, put the text you want to display in quotes, then a colon (')).toBe(
-      '要显示链接，请将要显示的文本放在引号中，后接冒号 (',
+      '要显示链接，请将要显示的文本放在引号中，后接冒号 ('
     )
     expect(translate('), then the URL after the colon. For example')).toBe(')，再在冒号后写 URL。例如')
   })
@@ -267,16 +263,16 @@ describe('wiki 静态词条', () => {
     // 原文分句、原文无逗号处，译文不合并、不添加
     [
       'Someone has edited the wiki since you started. Please reload this page and re-apply your changes.',
-      '在你编辑期间有人修改了此 Wiki。请重新加载此页面并重新应用你的更改。',
+      '在你编辑期间有人修改了此 Wiki。请重新加载此页面并重新应用你的更改。'
     ],
     [') are treated as emphasis and are wrapped with an', ') 表示强调并会被包裹在'],
     ['Block Elements', '块级元素'],
     [
       'ASCIIDoc will automatically convert textual representations of commonly-used special characters. For example,',
-      'ASCIIDoc 会自动转换常用特殊字符的文本写法。例如，',
+      'ASCIIDoc 会自动转换常用特殊字符的文本写法。例如，'
     ],
     ['To create ordered lists, prefix each line with', '要创建有序列表，请在每行前加上'],
-    ['To display an image, simply wrap the image’s URL in', '要显示图片，只需用'],
+    ['To display an image, simply wrap the image’s URL in', '要显示图片，只需用']
   ])('%s → %s', (input, expected) => {
     expect(dict.static?.[input]).toBe(expected)
     expect(translate(input)).toBe(expected)
@@ -322,7 +318,7 @@ describe('wiki 页面词条', () => {
     ['Superscript / Subscript', '上标/下标'],
     ['Command Paragraphs', '命令段落'],
     ['Phrase Modifiers', '短语修饰'],
-    ['Links / Images', '链接/图片'],
+    ['Links / Images', '链接/图片']
   ])('%s → %s', (input, expected) => {
     expect(dict.scoped?.[input]).toBe(expected)
     expect(translate(input)).toBe(expected)
@@ -349,16 +345,14 @@ describe('wiki 页面词条', () => {
     expect(translate(text)).toBeUndefined()
     const withCommonUi = createMatcher([
       ['common', commonUi],
-      ['wiki', wiki],
+      ['wiki', wiki]
     ])
-    expect(withCommonUi.translate(text, [...SCOPE])).toBe(
-      '并改用 GIF、JPEG、JPG、MOV、MP4、PNG、SVG、WEBM 或 WEBP 格式的文件。',
-    )
+    expect(withCommonUi.translate(text, [...SCOPE])).toBe('并改用 GIF、JPEG、JPG、MOV、MP4、PNG、SVG、WEBM 或 WEBP 格式的文件。')
   })
 })
 
 describe('wiki 忽略选择器', () => {
-  it.each(dict.ignore ?? [])('%s 是合法选择器', (selector) => {
+  it.each(dict.ignore ?? [])('%s 是合法选择器', selector => {
     expect(() => document.createElement('div').querySelector(selector)).not.toThrow()
   })
 
@@ -407,7 +401,7 @@ describe('wiki 忽略选择器', () => {
 
     const selector = (dict.ignore ?? []).join(', ')
     const ignored = (text: string): boolean => {
-      const element = [...document.querySelectorAll('*')].reverse().find((node) => node.textContent?.trim() === text)
+      const element = [...document.querySelectorAll('*')].reverse().find(node => node.textContent?.trim() === text)
       return Boolean(element?.closest(selector))
     }
     expect(ignored('Release Notes')).toBe(true)

@@ -9,7 +9,7 @@ export const DOCUMENT_NAVIGATION_EVENTS: readonly string[] = [
   'turbo:render',
   'turbo:frame-load',
   'soft-nav:end',
-  'soft-nav:success',
+  'soft-nav:success'
 ]
 
 /** window 上的导航事件 */
@@ -76,6 +76,6 @@ export function createNavigationWatcher(host: NavigationHost, onChange: (href: s
       observer = null
     },
 
-    check,
+    check
   }
 }

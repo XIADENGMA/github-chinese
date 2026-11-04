@@ -290,8 +290,7 @@ export default {
     'Submit comment and close or open pull request': '提交评论并关闭或打开拉取请求',
     'Request reviewers': '请求审查者',
     'Link an issue or pull request from the same repository': '链接同一存储库中的议题或拉取请求',
-    'Toggle visibility of all collapsed review comments instead of just the current one':
-      '切换全部已折叠审查评论的显示',
+    'Toggle visibility of all collapsed review comments instead of just the current one': '切换全部已折叠审查评论的显示',
     'Open commits list': '打开提交列表',
     'Open files list': '打开文件列表',
     'Next commit': '下一个提交',
@@ -341,27 +340,21 @@ export default {
     'Select item': '选择项',
     'Create issue': '创建议题',
     'Submit form': '提交表单',
-    'Submit input': '提交输入',
+    'Submit input': '提交输入'
   },
   regexp: [
     // 快捷键提示：头部按钮与工具提示（g then d、(g then d)、(control shift l)）
     [new RegExp(`^\\((${HINT_SOURCE})\\)$`), (_, hint) => hintParens(hint)],
     [new RegExp(`^(${HINT_SOURCE})$`), (_, hint) => hintLabel(hint)],
     // 用户状态过期时间选项（服务端下发，首字母大写）：In 30 minutes / In 4 hours；自定义时长可到天、周
-    [
-      /^In (\d+) (minute|hour|day|week)s?$/,
-      (_, amount, unit) => relativeTime(Number(amount), unit as Intl.RelativeTimeFormatUnit),
-    ],
+    [/^In (\d+) (minute|hour|day|week)s?$/, (_, amount, unit) => relativeTime(Number(amount), unit as Intl.RelativeTimeFormatUnit)],
     [/^Select an emoji: (:[\w+-]+:)$/, '选择表情符号：$1'],
     // 功能预览开关的无障碍名称
-    [
-      /^(Enable|Disable) the (.+) feature preview$/,
-      (_, action, name) => `${action === 'Enable' ? '启用' : '禁用'} ${name} 功能预览`,
-    ],
+    [/^(Enable|Disable) the (.+) feature preview$/, (_, action, name) => `${action === 'Enable' ? '启用' : '禁用'} ${name} 功能预览`],
     // sudo 确认对话框：电子邮件验证（设置、存储库设置等任意页面）。电子邮件用 [^\s@]+，避免大量 @ 时的二次方回溯
     [
       /^Enter the verification code sent to ([^\s@]+@[^\s@]+)\. If it doesn['’]t appear within a few minutes, check your spam folder\.$/,
-      '输入发送至 $1 的验证码。如果几分钟内未收到，请检查垃圾邮件文件夹。',
-    ],
-  ],
+      '输入发送至 $1 的验证码。如果几分钟内未收到，请检查垃圾邮件文件夹。'
+    ]
+  ]
 } satisfies PageDictionary

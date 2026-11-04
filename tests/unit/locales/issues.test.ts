@@ -40,43 +40,43 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   { hits: [['Issue #123', '议题 #123']], misses: ['Issue #abc'] },
   {
     hits: [['Parent issue: Improve onboarding flow', '父议题：Improve onboarding flow']],
-    misses: ['Parent issue Improve onboarding flow'],
+    misses: ['Parent issue Improve onboarding flow']
   },
   {
     hits: [
       ['Blocked by 3 issues', '被 3 个议题阻止'],
-      ['Blocked by 1 issue', '被 1 个议题阻止'],
+      ['Blocked by 1 issue', '被 1 个议题阻止']
     ],
-    misses: ['Blocked by many issues'],
+    misses: ['Blocked by many issues']
   },
   {
     hits: [
       ['Blocked by issue Fix login bug', '被议题 Fix login bug 阻止'],
       // 标题以半角标点开头时同样与中文隔开
-      ['Blocked by issue [Bug] Fix login', '被议题 [Bug] Fix login 阻止'],
+      ['Blocked by issue [Bug] Fix login', '被议题 [Bug] Fix login 阻止']
     ],
-    misses: ['Blocked by issue'],
+    misses: ['Blocked by issue']
   },
   {
     hits: [
       ['2 of 5 issues completed', '已完成 2/5 个议题'],
-      ['0 of 1 issue completed', '已完成 0/1 个议题'],
+      ['0 of 1 issue completed', '已完成 0/1 个议题']
     ],
-    misses: ['2 of 5 tasks completed'],
+    misses: ['2 of 5 tasks completed']
   },
   { hits: [['Listed in 2 issues', '列于 2 个议题']], misses: ['Listed in many issues'] },
   {
     hits: [
       ['octocat is assigned', '已分配给 octocat'],
-      ['copilot-swe-agent[bot] is assigned', '已分配给 copilot-swe-agent[bot]'],
+      ['copilot-swe-agent[bot] is assigned', '已分配给 copilot-swe-agent[bot]']
     ],
-    misses: ['Mona Lisa is assigned'],
+    misses: ['Mona Lisa is assigned']
   },
   { hits: [['Issue 3 of 12', '12 个议题中的第 3 个']], misses: ['Issue three of 12'] },
   { hits: [['Alert: #42', '警报：#42']], misses: ['Alert #42'] },
   {
     hits: [['Alert: Prototype pollution in lodash', '警报：Prototype pollution in lodash']],
-    misses: ['Alert: '],
+    misses: ['Alert: ']
   },
   { hits: [['View pull request #77', '查看拉取请求 #77']], misses: ['View pull request #abc'] },
   { hits: [['Agents assigned by octocat', '由 octocat 分配的代理']], misses: ['Agents assigned by Mona Lisa'] },
@@ -86,15 +86,15 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['1 session running', '1 个会话运行中'],
       ['2 sessions needs input, 1 failed', '2 个会话需要输入，1 个失败'],
       ['3 sessions complete, 2 others', '3 个会话已完成，其他 2 个'],
-      ['Agent sessions: 1 session needs input, 1 other', '代理会话：1 个会话需要输入，其他 1 个'],
+      ['Agent sessions: 1 session needs input, 1 other', '代理会话：1 个会话需要输入，其他 1 个']
     ],
-    misses: ['1 session paused', '2 sessions running, 1 paused'],
+    misses: ['1 session paused', '2 sessions running, 1 paused']
   },
   // viewer：关闭 / 状态
   { hits: [['Close as duplicate of #12', '以 #12 的重复项关闭']], misses: ['Close as duplicate of 12'] },
   {
     hits: [['Issue closed as a duplicate of #12', '议题已作为 #12 的重复项关闭']],
-    misses: ['Issue closed as a duplicate'],
+    misses: ['Issue closed as a duplicate']
   },
   {
     hits: [
@@ -103,60 +103,60 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Mark as Duplicate of #12 with comment', '标记为 #12 的重复项并评论'],
       // 组织自定义的状态名原样保留，与中文之间留空格（表情符号开头的同样隔开）
       ['Mark as Shipped', '标记为 Shipped'],
-      ['Mark as 🚢 Shipped', '标记为 🚢 Shipped'],
+      ['Mark as 🚢 Shipped', '标记为 🚢 Shipped']
     ],
-    misses: ['Marked as Done'],
+    misses: ['Marked as Done']
   },
   {
     hits: [
       ['Status set to In progress', '状态已设为正在进行'],
       ['Status set to Duplicate of #12', '状态已设为 #12 的重复项'],
-      ['Status set to Shipped', '状态已设为 Shipped'],
+      ['Status set to Shipped', '状态已设为 Shipped']
     ],
-    misses: ['Status set'],
+    misses: ['Status set']
   },
   { hits: [['Could not set the status to Done', '无法将状态设为已完成']], misses: ['Could not set the status'] },
   {
     hits: [
       ['Status: Open', '状态：打开'],
       ['Status: Closed as not planned', '状态：已关闭为未计划'],
-      ['Status: Shipped', '状态：Shipped'],
+      ['Status: Shipped', '状态：Shipped']
     ],
-    misses: ['Status: v1.2'],
+    misses: ['Status: v1.2']
   },
   {
     hits: [['3/3 issues already pinned. Unpin an issue to pin this one.', '已置顶 3/3 个议题。请先取消置顶一个议题。']],
-    misses: ['3/3 issues already pinned.'],
+    misses: ['3/3 issues already pinned.']
   },
   // viewer：正文
   {
     hits: [['Create an issue with the title "Add dark mode"', '创建标题为“Add dark mode”的议题']],
-    misses: ['Create an issue with the title'],
+    misses: ['Create an issue with the title']
   },
   {
     hits: [
       ["octocat's profile", 'octocat 的个人资料'],
-      ["Copilot's profile", 'Copilot 的个人资料'],
+      ["Copilot's profile", 'Copilot 的个人资料']
     ],
     // @octocat's profile 由通用词典处理
-    misses: ["Mona Lisa's profile", "@octocat's profile"],
+    misses: ["Mona Lisa's profile", "@octocat's profile"]
   },
   { hits: [['Open issue #12', '打开议题 #12']], misses: ['Open issue #'] },
   // viewer：活动排序
   {
     hits: [
       ['Sort comments: Oldest', '评论排序：最早'],
-      ['Sort activity: Newest', '活动排序：最新'],
+      ['Sort activity: Newest', '活动排序：最新']
     ],
-    misses: ['Sort comments: Popular'],
+    misses: ['Sort comments: Popular']
   },
   // viewer：代理建议
   {
     hits: [
       ['High confidence', '置信度高'],
-      ['Low confidence', '置信度低'],
+      ['Low confidence', '置信度低']
     ],
-    misses: ['Very high confidence'],
+    misses: ['Very high confidence']
   },
   { hits: [['3 suggestions approved', '已接受 3 条建议']], misses: ['Some suggestions approved'] },
   { hits: [['2 suggestions rejected', '已拒绝 2 条建议']], misses: ['Some suggestions rejected'] },
@@ -164,32 +164,29 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       [
         'Pending label suggestions: bug, enhancement. High confidence. View details',
-        '待处理的标签建议：bug, enhancement。置信度高。查看详细信息',
+        '待处理的标签建议：bug, enhancement。置信度高。查看详细信息'
       ],
-      ['Pending label suggestions: bug. View details', '待处理的标签建议：bug。查看详细信息'],
+      ['Pending label suggestions: bug. View details', '待处理的标签建议：bug。查看详细信息']
     ],
-    misses: ['Pending label suggestions: bug'],
+    misses: ['Pending label suggestions: bug']
   },
   {
     hits: [
-      [
-        'Pending type suggestion: Bug. Medium confidence. View details',
-        '待处理的类型建议：Bug。置信度中。查看详细信息',
-      ],
+      ['Pending type suggestion: Bug. Medium confidence. View details', '待处理的类型建议：Bug。置信度中。查看详细信息'],
       ['Pending close suggestion. View details', '待处理的关闭建议。查看详细信息'],
       // 组织自定义的问题字段名保留原文，与中文之间留空格（表情符号开头的同样隔开）
       ['Pending Priority suggestion: High. View details', '待处理的 Priority 建议：High。查看详细信息'],
-      ['Pending 🎯 Goal suggestion: Q4. View details', '待处理的 🎯 Goal 建议：Q4。查看详细信息'],
+      ['Pending 🎯 Goal suggestion: Q4. View details', '待处理的 🎯 Goal 建议：Q4。查看详细信息']
     ],
-    misses: ['Pending type suggestion: Bug'],
+    misses: ['Pending type suggestion: Bug']
   },
   {
     hits: [
       ['Applied type: Bug. View rationale', '已应用类型：Bug。查看理由'],
       ['Applied label: enhancement', '已应用标签：enhancement'],
-      ['Applied priority: High', '已应用 priority：High'],
+      ['Applied priority: High', '已应用 priority：High']
     ],
-    misses: ['Applied type Bug'],
+    misses: ['Applied type Bug']
   },
   { hits: [['duplicate of octo-org/octo-repo#12', '重复于 octo-org/octo-repo#12']], misses: ['duplicate of #12'] },
   // viewer：工件
@@ -200,19 +197,16 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['locked and limited conversation to collaborators', '锁定了对话并限制为仅协作者可评论'],
-      [
-        'locked as too heated and limited conversation to collaborators',
-        '以争论过激为由锁定了对话并限制为仅协作者可评论',
-      ],
+      ['locked as too heated and limited conversation to collaborators', '以争论过激为由锁定了对话并限制为仅协作者可评论']
     ],
-    misses: ['locked as rude and limited conversation to collaborators'],
+    misses: ['locked as rude and limited conversation to collaborators']
   },
   {
     hits: [
       ['as off topic', '以偏离主题为由'],
-      ['as spam', '以垃圾信息为由'],
+      ['as spam', '以垃圾信息为由']
     ],
-    misses: ['as rude'],
+    misses: ['as rude']
   },
   // timeline：项目状态
   {
@@ -220,76 +214,68 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['closed this by moving to Done in', '通过移至 Done 关闭了此议题于'],
       // 项目模板常见的表情符号状态名：两侧都与中文隔开
-      ['closed this by moving to ✅ Done in', '通过移至 ✅ Done 关闭了此议题于'],
+      ['closed this by moving to ✅ Done in', '通过移至 ✅ Done 关闭了此议题于']
     ],
-    misses: ['closed this by moving to Done'],
+    misses: ['closed this by moving to Done']
   },
   { hits: [['by moving to No status in', '通过移至无状态于']], misses: ['by moving to Done'] },
   {
     hits: [
       ['moved this from Todo to In Progress in', '将此议题从 Todo 移至 In Progress 于'],
-      ['moved this from 📋 Backlog to 🏗 In progress in', '将此议题从 📋 Backlog 移至 🏗 In progress 于'],
+      ['moved this from 📋 Backlog to 🏗 In progress in', '将此议题从 📋 Backlog 移至 🏗 In progress 于']
     ],
-    misses: ['moved this from Todo to In Progress'],
+    misses: ['moved this from Todo to In Progress']
   },
   { hits: [['moved this to Done in', '将此议题移至 Done 于']], misses: ['moved this to Done'] },
   // timeline：交叉引用
   { hits: [['mentioned this in 3 issues', '在 3 个议题中提及了此议题']], misses: ['mentioned this in an issue'] },
   {
     hits: [['mentioned this in 2 pull requests', '在 2 个拉取请求中提及了此议题']],
-    misses: ['mentioned this in a pull request'],
+    misses: ['mentioned this in a pull request']
   },
   {
     hits: [['added 4 commits that reference this issue', '添加了 4 个引用此议题的提交']],
-    misses: ['added commits that reference this issue'],
+    misses: ['added commits that reference this issue']
   },
   {
     hits: [['Private repository: octo-org/secret', '专用存储库：octo-org/secret']],
-    misses: ['Private repository: secret'],
+    misses: ['Private repository: secret']
+  },
+  {
+    hits: [['Only people who can see octo-org/secret will see this reference.', '只有能查看 octo-org/secret 的用户才能看到此引用。']],
+    misses: ['Only people who can see this will see this reference.']
   },
   {
     hits: [
-      [
-        'Only people who can see octo-org/secret will see this reference.',
-        '只有能查看 octo-org/secret 的用户才能看到此引用。',
-      ],
-    ],
-    misses: ['Only people who can see this will see this reference.'],
-  },
-  {
-    hits: [
-      [
-        "This issue will close once commit 1a2b3c4 is merged into the 'main' branch.",
-        '提交 1a2b3c4 合并到“main”分支后此议题将关闭。',
-      ],
+      ["This issue will close once commit 1a2b3c4 is merged into the 'main' branch.", '提交 1a2b3c4 合并到“main”分支后此议题将关闭。'],
       [
         "This pull request will close once commit 1a2b3c4d5e is merged into the 'release/1.0' branch.",
-        '提交 1a2b3c4d5e 合并到“release/1.0”分支后此拉取请求将关闭。',
-      ],
+        '提交 1a2b3c4d5e 合并到“release/1.0”分支后此拉取请求将关闭。'
+      ]
     ],
-    misses: ["This issue will close once commit main is merged into the 'main' branch."],
+    misses: ["This issue will close once commit main is merged into the 'main' branch."]
   },
   {
     hits: [['Undo marking issue as duplicate of issue #12', '撤销将此议题标记为议题 #12 的重复项']],
-    misses: ['Undo marking issue as duplicate'],
+    misses: ['Undo marking issue as duplicate']
   },
   { hits: [['Discussion #8', '讨论 #8']], misses: ['Discussion #'] },
   // timeline：依赖与相关（多个）
   {
     hits: [['marked this as blocked by 2 issues', '将此议题标记为被 2 个议题阻止']],
-    misses: ['marked this as blocked by many issues'],
+    misses: ['marked this as blocked by many issues']
   },
   {
     hits: [['unmarked this as blocked by 3 issues', '取消将此议题标记为被 3 个议题阻止']],
-    misses: ['unmarked this as blocked by many issues'],
+    misses: ['unmarked this as blocked by many issues']
   },
   {
     hits: [['marked this as blocking 2 issues', '将此议题标记为阻止 2 个议题']],
-    misses: ['marked this as blocking many issues'],
+    misses: ['marked this as blocking many issues']
   },
   {
     hits: [['unmarked this as blocking 4 issues', '取消将此议题标记为阻止 4 个议题']],
-    misses: ['unmarked this as blocking many issues'],
+    misses: ['unmarked this as blocking many issues']
   },
   { hits: [['added 2 related issues', '添加了 2 个相关议题']], misses: ['added related issues'] },
   { hits: [['removed 3 related issues', '删除了 3 个相关议题']], misses: ['removed related issues'] },
@@ -298,18 +284,18 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['3 new items loaded.', '已加载 3 条新内容。'],
-      ['1 new item loaded.', '已加载 1 条新内容。'],
+      ['1 new item loaded.', '已加载 1 条新内容。']
     ],
-    misses: ['3 new items loaded'],
+    misses: ['3 new items loaded']
   },
   // timeline：加载更多标题（mergeText 合并后的整段）
   {
     hits: [
       ['12 remaining items', '还有 12 项'],
       ['1 remaining item', '还有 1 项'],
-      ['1,200 remaining items', '还有 1,200 项'],
+      ['1,200 remaining items', '还有 1,200 项']
     ],
-    misses: ['Some remaining items', 'remaining items'],
+    misses: ['Some remaining items', 'remaining items']
   },
 
   // metadata：分区编辑按钮
@@ -317,15 +303,15 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['Edit Assignees', '编辑受理人'],
       ['Edit Issue type', '编辑议题类型'],
-      ['Edit Milestone', '编辑里程碑'],
+      ['Edit Milestone', '编辑里程碑']
     ],
-    misses: ['Edit Reviewers'],
+    misses: ['Edit Reviewers']
   },
   // metadata：标签删除
   { hits: [['Removing label: bug.', '正在删除标签：bug。']], misses: ['Removing label: bug'] },
   {
     hits: [['Could not remove label: bug. The label was restored.', '无法删除标签：bug。标签已恢复。']],
-    misses: ['Could not remove label: bug.'],
+    misses: ['Could not remove label: bug.']
   },
   { hits: [['Removed label: bug.', '已删除标签：bug。']], misses: ['Removed label: bug'] },
   // 删除按钮的提示文字（常态下即按钮名称）：默认标签名与令牌同译，已存档的 Archived 译出，自定义标签名保持原文
@@ -335,52 +321,52 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Remove label: bug', '删除标签：缺陷'],
       ['Remove label: Archived wontfix', '删除标签：已存档不予修复'],
       ['Remove label: Archived scope: vapor', '删除标签：已存档 scope: vapor'],
-      ['Remove label: Archived', '删除标签：Archived'],
+      ['Remove label: Archived', '删除标签：Archived']
     ],
-    misses: ['Remove label bug'],
+    misses: ['Remove label bug']
   },
   // metadata：项目分区
   {
     hits: [
       ['Show 2 closed projects', '显示 2 个已关闭的项目'],
-      ['Show 1 closed project', '显示 1 个已关闭的项目'],
+      ['Show 1 closed project', '显示 1 个已关闭的项目']
     ],
-    misses: ['Show closed projects'],
+    misses: ['Show closed projects']
   },
   { hits: [['Show 5 more (2 closed)', '再显示 5 个（2 个已关闭的）']], misses: ['Show 5 more (some closed)'] },
   { hits: [[', 45% complete', '，已完成 45%']], misses: [', almost complete'] },
   // metadata：问题字段
   {
     hits: [['Value cannot be more than 1024 characters (1100)', '值不能超过 1024 个字符（当前 1100 个）']],
-    misses: ['Value cannot be more than 1024 characters'],
+    misses: ['Value cannot be more than 1024 characters']
   },
   // 字段名是用户内容，不加引号；英文名与中文之间留空格
   {
     hits: [
       ['The value for the Priority field', 'Priority 字段的值'],
-      ['The value for the 优先级 field', '优先级字段的值'],
+      ['The value for the 优先级 field', '优先级字段的值']
     ],
-    misses: ['The value for the field'],
+    misses: ['The value for the field']
   },
   { hits: [['Toolbar for Notes field', 'Notes 字段工具栏']], misses: ['Toolbar for Notes'] },
   {
     hits: [
       ['Cannot be greater than 100', '不能大于 100'],
-      ['Cannot be greater than -1.5', '不能大于 -1.5'],
+      ['Cannot be greater than -1.5', '不能大于 -1.5']
     ],
-    misses: ['Cannot be greater than max'],
+    misses: ['Cannot be greater than max']
   },
   { hits: [['Cannot be less than 0', '不能小于 0']], misses: ['Cannot be less than min'] },
   {
     hits: [
       ['Remove field Priority', '删除字段 Priority'],
-      ['Remove field 🎯 Goal', '删除字段 🎯 Goal'],
+      ['Remove field 🎯 Goal', '删除字段 🎯 Goal']
     ],
-    misses: ['Remove fields'],
+    misses: ['Remove fields']
   },
   {
     hits: [['Update field Estimate (press enter to submit)', '更新字段 Estimate（按 Enter 提交）']],
-    misses: ['Update field Estimate'],
+    misses: ['Update field Estimate']
   },
   { hits: [['No fields configured for Bug.', 'Bug 未配置字段。']], misses: ['No fields configured for Bug'] },
   { hits: [['Set Priority, none', '设置 Priority，当前为空']], misses: ['Set Priority'] },
@@ -390,98 +376,96 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['Cannot edit labels right now', '暂时无法编辑标签'],
       ['Cannot edit issue type right now', '暂时无法编辑议题类型'],
-      ['Cannot edit fields right now', '暂时无法编辑 fields'],
+      ['Cannot edit fields right now', '暂时无法编辑 fields']
     ],
-    misses: ['Cannot edit labels'],
+    misses: ['Cannot edit labels']
   },
   {
     hits: [['You have reached the limit of 10 assignees', '已达到 10 个受理人的上限']],
-    misses: ['You have reached the limit of assignees'],
+    misses: ['You have reached the limit of assignees']
   },
   // 分配代理对话框标题：只收已知代理名（默认标题 Assign agent to issue 是 static）
   {
     hits: [
       ['Assign Copilot to issue', '将 Copilot 分配给议题'],
       ['Assign Claude to issue', '将 Claude 分配给议题'],
-      ['Assign Codex to issue', '将 Codex 分配给议题'],
+      ['Assign Codex to issue', '将 Codex 分配给议题']
     ],
-    misses: ['Assign Gemini to issue', 'Assign Copilot to issues'],
+    misses: ['Assign Gemini to issue', 'Assign Copilot to issues']
   },
   {
     hits: [['Create new label: "needs triage"', '新建标签：“needs triage”']],
-    misses: ['Create new label: needs triage'],
+    misses: ['Create new label: needs triage']
   },
   {
     hits: [['Created and selected label: needs triage.', '已创建并选中标签：needs triage。']],
-    misses: ['Created and selected label: needs triage'],
+    misses: ['Created and selected label: needs triage']
   },
   { hits: [['Create new milestone: "v2.0"', '新建里程碑：“v2.0”']], misses: ['Create new milestone: v2.0'] },
   {
     hits: [['Filter milestones (12 milestones loaded)', '筛选里程碑（已加载 12 个）']],
-    misses: ['Filter milestones (loading)'],
+    misses: ['Filter milestones (loading)']
   },
   {
     hits: [
       ['2 pull requests selected', '已选择 2 个拉取请求'],
-      ['1 pull request selected', '已选择 1 个拉取请求'],
+      ['1 pull request selected', '已选择 1 个拉取请求']
     ],
-    misses: ['Some pull requests selected'],
+    misses: ['Some pull requests selected']
   },
   {
     hits: [['The branch 12-fix-login already exists.', '分支 12-fix-login 已存在。']],
-    misses: ['The branch already exists.'],
+    misses: ['The branch already exists.']
   },
   {
     hits: [
       ['Repository: octo-org/octo-repo', '存储库：octo-org/octo-repo'],
-      ['Repository: octo-org/octo-repo (private)', '存储库：octo-org/octo-repo（专用）'],
+      ['Repository: octo-org/octo-repo (private)', '存储库：octo-org/octo-repo（专用）']
     ],
-    misses: ['Repository: octo-repo'],
+    misses: ['Repository: octo-repo']
   },
   {
     hits: [['Change destination, current repository: octo-org/octo-repo', '更改目标，当前存储库：octo-org/octo-repo']],
-    misses: ['Change destination'],
+    misses: ['Change destination']
   },
   // metadata：开发
   {
     hits: [['Creating in octo-org/octo-repo…', '正在 octo-org/octo-repo 中创建…']],
-    misses: ['Creating in octo-org/octo-repo'],
+    misses: ['Creating in octo-org/octo-repo']
   },
   {
-    hits: [
-      ['Creating branch 12-fix-login in octo-org/octo-repo.', '正在 octo-org/octo-repo 中创建分支 12-fix-login。'],
-    ],
-    misses: ['Creating branch 12-fix-login.'],
+    hits: [['Creating branch 12-fix-login in octo-org/octo-repo.', '正在 octo-org/octo-repo 中创建分支 12-fix-login。']],
+    misses: ['Creating branch 12-fix-login.']
   },
   {
     // 产品名按用户要求译成中文：codespace → 代码空间
     hits: [['Codespace creation failed. Quota exceeded', '代码空间创建失败。Quota exceeded']],
-    misses: ['Codespace creation failed: quota'],
+    misses: ['Codespace creation failed: quota']
   },
   // metadata：关系
   {
     hits: [
       [
         'Issues have a limit of 50 relationships. To add more, an existing one must be removed.',
-        '每个议题最多有 50 个关系。如需添加，请先删除现有关系。',
+        '每个议题最多有 50 个关系。如需添加，请先删除现有关系。'
       ],
       [
         'Issues have a limit of 50 "blocked by" relationships. To add more, an existing one must be removed.',
-        '每个议题最多有 50 个“被阻止”关系。如需添加，请先删除现有关系。',
-      ],
+        '每个议题最多有 50 个“被阻止”关系。如需添加，请先删除现有关系。'
+      ]
     ],
-    misses: ['Issues have a limit of 50 relationships.'],
+    misses: ['Issues have a limit of 50 relationships.']
   },
   { hits: [['Failed to save 2 issues', '2 个议题保存失败']], misses: ['Failed to save issues'] },
   { hits: [['Failed to save 1 alert', '1 个警报保存失败']], misses: ['Failed to save alerts'] },
   {
     hits: [['An unexpected error occurred. Request timed out', '发生意外错误。Request timed out']],
-    misses: ['An unexpected error occurred: timeout'],
+    misses: ['An unexpected error occurred: timeout']
   },
   // metadata：参与者
   {
     hits: [['and 12 other participants, click to see the full list', '以及其他 12 个参与者，单击可查看完整列表']],
-    misses: ['and other participants, click to see the full list'],
+    misses: ['and other participants, click to see the full list']
   },
   // metadata：子问题
   { hits: [['Loading 4 sub-issues', '正在加载 4 个子议题']], misses: ['Loading sub-issues'] },
@@ -489,39 +473,39 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Collapse Sub-issues', '折叠子议题'],
-      ['Expand Sub-issues', '展开子议题'],
+      ['Expand Sub-issues', '展开子议题']
     ],
-    misses: ['Collapsed Sub-issues'],
+    misses: ['Collapsed Sub-issues']
   },
   { hits: [['Fix login bug, blocked', 'Fix login bug，被阻止']], misses: ['Fix login bug, blocking'] },
   {
     hits: [
       [
         'Parents have a limit of 100 sub-issues. To add more, an existing one must be removed.',
-        '每个父议题最多有 100 个子议题。如需添加，请先删除现有子议题。',
-      ],
+        '每个父议题最多有 100 个子议题。如需添加，请先删除现有子议题。'
+      ]
     ],
-    misses: ['Parents have a limit of 100 sub-issues.'],
+    misses: ['Parents have a limit of 100 sub-issues.']
   },
   {
     hits: [
       [
         "You can't add more than 8 layers of sub-issues. To add a sub-issue, remove a parent issue at any level.",
-        '子议题最多 8 层。如需添加子议题，请删除任一层级的父议题。',
-      ],
+        '子议题最多 8 层。如需添加子议题，请删除任一层级的父议题。'
+      ]
     ],
-    misses: ["You can't add more than 8 layers of sub-issues."],
+    misses: ["You can't add more than 8 layers of sub-issues."]
   },
   {
     hits: [['You can’t add more than 8 layers of sub-issues', '子议题最多 8 层']],
-    misses: ['You cannot add more than 8 layers of sub-issues'],
+    misses: ['You cannot add more than 8 layers of sub-issues']
   },
   {
     hits: [
       ['3 tasks', '3 个任务'],
-      ['1 task', '1 个任务'],
+      ['1 task', '1 个任务']
     ],
-    misses: ['Some tasks'],
+    misses: ['Some tasks']
   },
   { hits: [['2 tasks,', '2 个任务，']], misses: ['Some tasks,'] },
   { hits: [['2 of 5', '2/5']], misses: ['2 of many'] },
@@ -531,10 +515,10 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Press Control, Shift, U for more actions.', '按 Control、Shift、U 查看更多操作。'],
       [
         'Fix login bug: Open. 2 of 5. Press Control, Shift, U for more actions.',
-        'Fix login bug: Open. 2 of 5。按 Control、Shift、U 查看更多操作。',
-      ],
+        'Fix login bug: Open. 2 of 5。按 Control、Shift、U 查看更多操作。'
+      ]
     ],
-    misses: ['Press Alt, Shift, U for more actions', 'Fix login bug Press Control, Shift, U for more actions.'],
+    misses: ['Press Alt, Shift, U for more actions', 'Fix login bug Press Control, Shift, U for more actions.']
   },
   // metadata：正文任务清单项
   { hits: [['Open Write tests task options', '打开 Write tests 的任务选项']], misses: ['Open task options'] },
@@ -545,27 +529,27 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Create new sub-issue - "Fix login"', '新建子议题 - “Fix login”'],
-      ['Create new issue - "Fix login"', '新建议题 - “Fix login”'],
+      ['Create new issue - "Fix login"', '新建议题 - “Fix login”']
     ],
-    misses: ['Create new sub-issue - Fix login'],
+    misses: ['Create new sub-issue - Fix login']
   },
   {
     hits: [
       ['Create new issue in octo-org/octo-repo', '在 octo-org/octo-repo 中新建议题'],
-      ['Create new issue in octo-org/octo-repo: Bug report', '在 octo-org/octo-repo 中新建议题：Bug report'],
+      ['Create new issue in octo-org/octo-repo: Bug report', '在 octo-org/octo-repo 中新建议题：Bug report']
     ],
-    misses: ['Create new issue in octo-repo'],
+    misses: ['Create new issue in octo-repo']
   },
   {
     hits: [['Clone current issue in octo-org/octo-repo', '在 octo-org/octo-repo 中克隆当前议题']],
-    misses: ['Clone current issue'],
+    misses: ['Clone current issue']
   },
   {
     hits: [
       ['Selected repository: octo-org/octo-repo', '已选存储库：octo-org/octo-repo'],
-      ['Selected repository: octo-repo (required)', '已选存储库：octo-repo（必填）'],
+      ['Selected repository: octo-repo (required)', '已选存储库：octo-repo（必填）']
     ],
-    misses: ['Selected repository: octo org'],
+    misses: ['Selected repository: octo org']
   },
   { hits: [['Issue #42 created', '议题 #42 已创建']], misses: ['Issue #42 was created'] },
   // create：可能重复
@@ -573,70 +557,70 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Dismiss potential duplicates', '隐藏可能重复的议题'],
-      ['Dismiss potential duplicate', '隐藏可能重复的议题'],
+      ['Dismiss potential duplicate', '隐藏可能重复的议题']
     ],
-    misses: ['Dismiss duplicates'],
+    misses: ['Dismiss duplicates']
   },
   {
     hits: [
       [
         'This issue is being cloned across repositories. The following metadata might not be copied: Milestone, Labels, Type.',
-        '正在跨存储库克隆此议题。以下元数据可能不会被复制：里程碑、标签、类型。',
-      ],
+        '正在跨存储库克隆此议题。以下元数据可能不会被复制：里程碑、标签、类型。'
+      ]
     ],
-    misses: ['This issue is being cloned across repositories. The following metadata might not be copied: Reactions.'],
+    misses: ['This issue is being cloned across repositories. The following metadata might not be copied: Reactions.']
   },
   // create：上传与关系
   {
     hits: [
       ['Uploading 2 files...', '正在上传 2 个文件...'],
-      ['Uploading 1 file...', '正在上传 1 个文件...'],
+      ['Uploading 1 file...', '正在上传 1 个文件...']
     ],
-    misses: ['Uploading files...'],
+    misses: ['Uploading files...']
   },
   { hits: [['View 3 more', '再查看 3 个']], misses: ['View three more'] },
   {
     hits: [['Failed to add 2 of 5 issue relationship(s)', '5 个议题关系中有 2 个添加失败']],
-    misses: ['Failed to add issue relationship(s)'],
+    misses: ['Failed to add issue relationship(s)']
   },
 
   // filter：建议列表
   {
     hits: [
       ['Author, Filter, The author of the item', '作者，筛选器，项的作者'],
-      ['Story points, Filter', 'Story points，筛选器'],
+      ['Story points, Filter', 'Story points，筛选器']
     ],
-    misses: ['Author Filter'],
+    misses: ['Author Filter']
   },
   {
     hits: [
       ['@me, Signed-in user', '@me，已登录用户'],
-      ['@copilot, Your AI pair programmer', '@copilot，你的 AI 结对程序员'],
+      ['@copilot, Your AI pair programmer', '@copilot，你的 AI 结对程序员']
     ],
-    misses: ['@octocat, Signed-in user'],
+    misses: ['@octocat, Signed-in user']
   },
   {
     hits: [
       ['Has Label, Label', '有标签，标签'],
       // 未收录的筛选器名保留原文，与中文之间留空格
-      ['Has Story points, Story points', '有 Story points，Story points'],
+      ['Has Story points, Story points', '有 Story points，Story points']
     ],
-    misses: ['Has Label, Milestone'],
+    misses: ['Has Label, Milestone']
   },
   {
     hits: [
       ['No Milestone, Milestone', '无里程碑，里程碑'],
-      ['No Story points, Story points', '无 Story points，Story points'],
+      ['No Story points, Story points', '无 Story points，Story points']
     ],
-    misses: ['No Milestone, Label'],
+    misses: ['No Milestone, Label']
   },
   {
     hits: [
       ['Has label', '有标签'],
       ['Has parent issue', '有父议题'],
-      ['Has priority', '有 priority'],
+      ['Has priority', '有 priority']
     ],
-    misses: ['Has Label'],
+    misses: ['Has Label']
   },
   {
     hits: [
@@ -649,150 +633,148 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Exclude org', '排除组织'],
       ['Exclude repo', '排除存储库'],
       ['Exclude review', '排除审查状态'],
-      ['Exclude sha', '排除提交 SHA'],
+      ['Exclude sha', '排除提交 SHA']
     ],
-    misses: ['Exclude Label'],
+    misses: ['Exclude Label']
   },
   {
     hits: [
       ['No assignee', '无受理人'],
       ['No label', '无标签'],
-      ['No parent issue', '无父议题'],
+      ['No parent issue', '无父议题']
     ],
-    misses: ['No priority'],
+    misses: ['No priority']
   },
   // filter：高级筛选
   {
     hits: [
       ['Advanced filter dialog', '高级筛选器对话框'],
-      ['Advanced filter dialog: 2 valid filters', '高级筛选器对话框：2 个有效筛选器'],
+      ['Advanced filter dialog: 2 valid filters', '高级筛选器对话框：2 个有效筛选器']
     ],
-    misses: ['Advanced filter dialog: no valid filters'],
+    misses: ['Advanced filter dialog: no valid filters']
   },
   { hits: [['Row 2', '第 2 行']], misses: ['Row two'] },
   { hits: [['Delete filter 1: label:bug', '删除筛选器 1：label:bug']], misses: ['Delete filter: label:bug'] },
   {
     hits: [
       ['Qualifier 1', '限定符 1'],
-      ['Label, Qualifier 2', '标签，限定符 2'],
+      ['Label, Qualifier 2', '标签，限定符 2']
     ],
-    misses: ['Qualifier one'],
+    misses: ['Qualifier one']
   },
   {
     hits: [
       ['Operator 1', '运算符 1'],
-      ['is one of, Operator 1', '是以下之一，运算符 1'],
+      ['is one of, Operator 1', '是以下之一，运算符 1']
     ],
-    misses: ['Operator one'],
+    misses: ['Operator one']
   },
   {
     hits: [
       ['Value 1 From', '值 1 起始'],
-      ['Value 2 To', '值 2 结束'],
+      ['Value 2 To', '值 2 结束']
     ],
-    misses: ['Value 1 Until'],
+    misses: ['Value 1 Until']
   },
   {
     hits: [
       ['Value 1', '值 1'],
       ['True, Value 2', '是，值 2'],
-      ['bug, Value 1', 'bug，值 1'],
+      ['bug, Value 1', 'bug，值 1']
     ],
-    misses: ['Value one'],
+    misses: ['Value one']
   },
   {
     hits: [
       ['Enter a number', '输入数字'],
-      ['Enter a value', '输入值'],
+      ['Enter a value', '输入值']
     ],
-    misses: ['Enter a color'],
+    misses: ['Enter a color']
   },
   // filter：校验提示
   {
     hits: [
       ['Filter contains 2 issues:', '筛选器有 2 处错误：'],
-      ['Filter contains 1 issue:', '筛选器有 1 处错误：'],
+      ['Filter contains 1 issue:', '筛选器有 1 处错误：']
     ],
-    misses: ['Filter contains 2 issues'],
+    misses: ['Filter contains 2 issues']
   },
   { hits: [["Filter 'reason' not supported", '不支持筛选器“reason”']], misses: ['Filter reason not supported'] },
   {
-    hits: [
-      ["Filter 'involves' is deprecated and will be removed in the future", '筛选器“involves”已弃用且将来会被删除'],
-    ],
-    misses: ["Filter 'involves' is deprecated"],
+    hits: [["Filter 'involves' is deprecated and will be removed in the future", '筛选器“involves”已弃用且将来会被删除']],
+    misses: ["Filter 'involves' is deprecated"]
   },
   { hits: [['Maximum nested groups of 5 exceeded', '嵌套分组超过上限 5']], misses: ['Maximum nested groups exceeded'] },
   {
     hits: [['Authenticate with SAML SSO to access', '使用 SAML SSO 进行身份验证以访问']],
-    misses: ['Authenticate to access'],
+    misses: ['Authenticate to access']
   },
   { hits: [['SSO required for octo-org', 'octo-org 需要 SSO']], misses: ['SSO required'] },
   {
     hits: [
       ['created:>2026-13-01 is invalid', 'created:>2026-13-01 无效'],
-      ['label:foo is invalid', 'label:foo 无效'],
+      ['label:foo is invalid', 'label:foo 无效']
     ],
-    misses: ['Date is not valid', 'Title is invalid', "Name can't be blank. Name is invalid"],
+    misses: ['Date is not valid', 'Title is invalid', "Name can't be blank. Name is invalid"]
   },
   // filter：选择器对话框
   {
     hits: [
       ['Filter users', '筛选用户'],
-      ['Filter repositories', '筛选存储库'],
+      ['Filter repositories', '筛选存储库']
     ],
-    misses: ['Filter user'],
+    misses: ['Filter user']
   },
   {
     hits: [
       ['Select users', '选择用户'],
-      ['Select issue types', '选择议题类型'],
+      ['Select issue types', '选择议题类型']
     ],
-    misses: ['Select colors'],
+    misses: ['Select colors']
   },
   {
     hits: [
       ['Select a label', '选择标签'],
       ['Select an assignee', '选择受理人'],
-      ['Select an issue type', '选择议题类型'],
+      ['Select an issue type', '选择议题类型']
     ],
-    misses: ['Select a color'],
+    misses: ['Select a color']
   },
   {
     hits: [
       ['3 labels selected', '已选择 3 个标签'],
-      ['1 label selected', '已选择 1 个标签'],
+      ['1 label selected', '已选择 1 个标签']
     ],
-    misses: ['3 colors selected'],
+    misses: ['3 colors selected']
   },
   { hits: [['Loading labels...', '正在加载标签...']], misses: ['Loading colors...'] },
   { hits: [['Error loading milestones.', '加载里程碑时出错。']], misses: ['Error loading milestones'] },
   { hits: [['No users to show.', '没有可显示的用户。']], misses: ['No users to show'] },
   {
     hits: [['Add a filter using the input to match labels.', '在输入框中添加筛选器以匹配标签。']],
-    misses: ['Add a filter using the input.'],
+    misses: ['Add a filter using the input.']
   },
   {
     hits: [
       ['2 selected items hidden by search', '2 个所选条目被搜索隐藏'],
-      ['1.2k selected items hidden by search', '1.2k 个所选条目被搜索隐藏'],
+      ['1.2k selected items hidden by search', '1.2k 个所选条目被搜索隐藏']
     ],
-    misses: ['Selected items hidden by search'],
+    misses: ['Selected items hidden by search']
   },
   {
     hits: [
       ['250 labels matching, showing first 100', '250 个匹配项，显示前 100 个'],
-      ['1,200 issue types matching, showing first 50', '1,200 个匹配项，显示前 50 个'],
+      ['1,200 issue types matching, showing first 50', '1,200 个匹配项，显示前 50 个']
     ],
-    misses: ['250 labels matching, showing all'],
+    misses: ['250 labels matching, showing all']
   },
   {
     hits: [
       ['12 labels matching', '12 个匹配项'],
       ['3 issue types matching', '3 个匹配项'],
-      ['1.5k users matching', '1.5k 个匹配项'],
+      ['1.5k users matching', '1.5k 个匹配项']
     ],
-    misses: ['12 Labels matching'],
+    misses: ['12 Labels matching']
   },
 
   // labels：计数（59 labels 由通用词典处理）
@@ -800,43 +782,43 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['4 open issues', '4 个打开的议题'],
-      ['1 open issue', '1 个打开的议题'],
+      ['1 open issue', '1 个打开的议题']
     ],
-    misses: ['Some open issues'],
+    misses: ['Some open issues']
   },
   {
     hits: [
       [
         ':lady_beetle: bug. 9 open pull requests9 open pull requests48 open issues48 open issues.',
-        ':lady_beetle: bug。9 个打开的拉取请求 48 个打开的议题。',
+        ':lady_beetle: bug。9 个打开的拉取请求 48 个打开的议题。'
       ],
       ['has PR. 12 open issues12 open issues.', 'has PR。12 个打开的议题。'],
       // 默认标签名与行里的标签令牌同译（标签表）
-      ['dependencies. 7 open pull requests7 open pull requests.', '依赖项。7 个打开的拉取请求。'],
+      ['dependencies. 7 open pull requests7 open pull requests.', '依赖项。7 个打开的拉取请求。']
     ],
-    misses: ['good first issue.', 'bug. 9 open pull requests8 open pull requests.', 'v1. 2 fixes.'],
+    misses: ['good first issue.', 'bug. 9 open pull requests8 open pull requests.', 'v1. 2 fixes.']
   },
   {
     hits: [
       // 默认标签名与行里的标签令牌同译，自定义标签名原样保留
       [
         'Archiving hides "wontfix" so it can’t be added to discussions, issues, or pull requests. It remains on anything that already uses it, and you can unarchive it any time.',
-        '存档后，“不予修复”将被隐藏，无法再添加到讨论、议题或拉取请求中。已使用它的内容会保留该标签，你可以随时取消存档。',
+        '存档后，“不予修复”将被隐藏，无法再添加到讨论、议题或拉取请求中。已使用它的内容会保留该标签，你可以随时取消存档。'
       ],
       [
         'Archiving hides "scope: vapor" so it can\'t be added to discussions, issues, or pull requests. It remains on anything that already uses it, and you can unarchive it any time.',
-        '存档后，“scope: vapor”将被隐藏，无法再添加到讨论、议题或拉取请求中。已使用它的内容会保留该标签，你可以随时取消存档。',
-      ],
+        '存档后，“scope: vapor”将被隐藏，无法再添加到讨论、议题或拉取请求中。已使用它的内容会保留该标签，你可以随时取消存档。'
+      ]
     ],
-    misses: ['Archiving hides "wontfix".'],
+    misses: ['Archiving hides "wontfix".']
   },
   // labels：颜色选择器
   {
     hits: [
       ['Red (#b60205)', '红色 (#b60205)'],
-      ['Light Blue (#c5def5)', '浅蓝色 (#c5def5)'],
+      ['Light Blue (#c5def5)', '浅蓝色 (#c5def5)']
     ],
-    misses: ['Crimson (#b60205)'],
+    misses: ['Crimson (#b60205)']
   },
   { hits: [['Color: Red (#b60205)', '颜色：红色 (#b60205)']], misses: ['Color: Crimson (#b60205)'] },
   { hits: [['Color: #ab12cd', '颜色：#ab12cd']], misses: ['Color: #ab12'] },
@@ -851,16 +833,16 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Due by October 26, 2026', '2026 年 10 月 26 日截止'],
       ['Due by Oct 26, 2026, 45% complete', '2026 年 10 月 26 日截止，已完成 45%'],
       ['Due by October 26, 2026, not started', '2026 年 10 月 26 日截止，未开始'],
-      ['Due by January 2027', '2027 年 1 月截止'],
+      ['Due by January 2027', '2027 年 1 月截止']
     ],
-    misses: ['Due by next week'],
+    misses: ['Due by next week']
   },
   {
     hits: [
       ['Overdue by 3 day(s)', '逾期 3 天'],
-      ['Overdue by 2 month(s)', '逾期 2 个月'],
+      ['Overdue by 2 month(s)', '逾期 2 个月']
     ],
-    misses: ['Overdue by 3 days'],
+    misses: ['Overdue by 3 days']
   },
   { hits: [['3/10 issues closed', '已关闭 3/10 个议题']], misses: ['3 of 10 issues closed'] },
   { hits: [['45% complete', '已完成 45%']], misses: ['almost complete'] },
@@ -868,96 +850,94 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       [
         'Milestones cannot be loaded due to a system error. Try reloading the page, or if the problem persists',
-        '系统错误，无法加载里程碑。请尝试重新加载页面；仍然出错时请',
+        '系统错误，无法加载里程碑。请尝试重新加载页面；仍然出错时请'
       ],
       [
         "This milestone's issues can not be loaded due to a system error. Try reloading the page, or if the problem persists",
-        '系统错误，无法加载此里程碑的议题。请尝试重新加载页面；仍然出错时请',
-      ],
+        '系统错误，无法加载此里程碑的议题。请尝试重新加载页面；仍然出错时请'
+      ]
     ],
-    misses: ['Labels cannot be loaded due to a system error. Try reloading the page, or if the problem persists'],
+    misses: ['Labels cannot be loaded due to a system error. Try reloading the page, or if the problem persists']
   },
 
   // views：视图行与分区
   {
     hits: [
       ['Created by octocat', '由 octocat 创建'],
-      ['Created by octocat •', '由 octocat 创建 •'],
+      ['Created by octocat •', '由 octocat 创建 •']
     ],
-    misses: ['Created by Mona Lisa'],
+    misses: ['Created by Mona Lisa']
   },
   {
     hits: [
       ['Expand Private', '展开专用视图'],
-      ['Collapse Shared', '折叠共享视图'],
+      ['Collapse Shared', '折叠共享视图']
     ],
-    misses: ['Expanded Private'],
+    misses: ['Expanded Private']
   },
   { hits: [['Showing all 12 shared views', '显示全部 12 个共享视图']], misses: ['Showing all shared views'] },
   { hits: [['Show more private views', '显示更多专用视图']], misses: ['Show more public views'] },
   // views：可见范围
   {
-    hits: [
-      ['Everyone who can view this repository can see this shared view.', '所有能查看此存储库的人都能看到此共享视图。'],
-    ],
-    misses: ['Everyone who can view this team can see this shared view.'],
+    hits: [['Everyone who can view this repository can see this shared view.', '所有能查看此存储库的人都能看到此共享视图。']],
+    misses: ['Everyone who can view this team can see this shared view.']
   },
   {
     hits: [['Anyone with organization access can see this view.', '拥有组织访问权限的任何人都能看到此视图。']],
-    misses: ['Anyone with team access can see this view.'],
+    misses: ['Anyone with team access can see this view.']
   },
   {
     hits: [['Everyone who can view this profile', '所有能查看此个人资料的人']],
-    misses: ['Everyone who can view this team'],
+    misses: ['Everyone who can view this team']
   },
   {
     hits: [
       [
         'Save a search as a view. Views are visible to everyone with repository access.',
-        '将搜索保存为视图。拥有存储库访问权限的所有人都能看到视图。',
-      ],
+        '将搜索保存为视图。拥有存储库访问权限的所有人都能看到视图。'
+      ]
     ],
-    misses: ['Save a search as a view.'],
+    misses: ['Save a search as a view.']
   },
   {
     hits: [['for everyone in this organization.', '供此组织中的所有人使用。']],
-    misses: ['for everyone in this team.'],
+    misses: ['for everyone in this team.']
   },
   // views：删除、复制、置顶
   {
     hits: [["Are you sure you want to delete view 'Bugs'?", '确定要删除视图“Bugs”吗？']],
-    misses: ["Are you sure you want to delete view 'Bugs'"],
+    misses: ["Are you sure you want to delete view 'Bugs'"]
   },
   // 原文无引号的视图名不加引号；英文名与中文之间留空格
   {
     hits: [
       ['Are you sure you want to delete view Bugs?', '确定要删除视图 Bugs 吗？'],
-      ['Are you sure you want to delete view 缺陷?', '确定要删除视图缺陷吗？'],
+      ['Are you sure you want to delete view 缺陷?', '确定要删除视图缺陷吗？']
     ],
-    misses: ['Are you sure you want to delete view?'],
+    misses: ['Are you sure you want to delete view?']
   },
   {
     hits: [['View Bugs deleted. No private views remaining.', '视图 Bugs 已删除。已没有专用视图。']],
-    misses: ['View Bugs deleted. No public views remaining.'],
+    misses: ['View Bugs deleted. No public views remaining.']
   },
   {
     hits: [['View Bugs deleted. No saved views remaining.', '视图 Bugs 已删除。已没有已保存的视图。']],
-    misses: ['View Bugs deleted. No views remaining.'],
+    misses: ['View Bugs deleted. No views remaining.']
   },
   {
     hits: [
       ['View Bugs deleted', '视图 Bugs 已删除'],
-      ['View 🔥 Hot deleted', '视图 🔥 Hot 已删除'],
+      ['View 🔥 Hot deleted', '视图 🔥 Hot 已删除']
     ],
-    misses: ['View deleted'],
+    misses: ['View deleted']
   },
   {
     hits: [['Create a copy of “Bugs” as a new saved view.', '将“Bugs”复制为新的已保存视图。']],
-    misses: ['Create a copy of Bugs as a new saved view.'],
+    misses: ['Create a copy of Bugs as a new saved view.']
   },
   {
     hits: [['Maximum of 5 pins reached. Unpin an item to pin another.', '已达到 5 个置顶项的上限。请先取消置顶一项。']],
-    misses: ['Maximum of 5 pins reached.'],
+    misses: ['Maximum of 5 pins reached.']
   },
   { hits: [['View Bugs pinned', '视图 Bugs 已置顶']], misses: ['View pinned'] },
   { hits: [['View Bugs unpinned', '视图 Bugs 已取消置顶']], misses: ['View unpinned'] },
@@ -969,48 +949,48 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Gray color', '灰色'],
-      ['Purple color', '紫色'],
+      ['Purple color', '紫色']
     ],
-    misses: ['Yellow color'],
+    misses: ['Yellow color']
   },
   {
     hits: [
       ['Bug icon', '虫子图标'],
       ['Git pull request icon', '拉取请求图标'],
-      ['Copilot icon', 'Copilot 图标'],
+      ['Copilot icon', 'Copilot 图标']
     ],
-    misses: ['Unicorn icon'],
+    misses: ['Unicorn icon']
   },
   {
     hits: [
       ['Visibility: Shared', '可见性：共享'],
       // 与单独出现的 Private（通用词典“专用”）一致
-      ['Visibility: Private', '可见性：专用'],
+      ['Visibility: Private', '可见性：专用']
     ],
-    misses: ['Visibility: Public'],
+    misses: ['Visibility: Public']
   },
   // views：仪表板
   { hits: [['Change the issues type filter', '切换议题视图']], misses: ['Change the type filter'] },
   {
     hits: [['Default to this view when visiting github.com/issues', '访问 github.com/issues 时默认打开此视图']],
-    misses: ['Default to this view'],
+    misses: ['Default to this view']
   },
   // views：看板
   {
     hits: [
       ['12 cards', '12 张卡片'],
-      ['1 card', '1 张卡片'],
+      ['1 card', '1 张卡片']
     ],
-    misses: ['Some cards'],
+    misses: ['Some cards']
   },
   { hits: [['More cards in Todo', 'Todo 中的更多卡片']], misses: ['More cards'] },
   { hits: [['Alice row, 3 cards', 'Alice 行，3 张卡片']], misses: ['Alice row'] },
   {
     hits: [
       ['Done, Alice, 1 card', 'Done, Alice，1 张卡片'],
-      ['Todo, 1,204 cards', 'Todo，1,204 张卡片'],
+      ['Todo, 1,204 cards', 'Todo，1,204 张卡片']
     ],
-    misses: ['Done, Alice'],
+    misses: ['Done, Alice']
   },
 
   // list：选择（1,234 results、3 selected、3 of 25 selected 由通用词典处理）
@@ -1019,59 +999,56 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['3 issues selected', '已选择 3 个议题'],
       // 与通用词典的“25 个列表项中已选择 3 个”同一写法
       ['3 issues of 25 selected', '25 个议题中已选择 3 个'],
-      ['2 list items selected', '已选择 2 个列表项'],
+      ['2 list items selected', '已选择 2 个列表项']
     ],
-    misses: ['3 cats selected', '3 selected', '3 of 25 selected'],
+    misses: ['3 cats selected', '3 selected', '3 of 25 selected']
   },
   { hits: [['of 25 selected', '/25 已选择']], misses: ['of many selected'] },
   // list：排序（原文无标点，译文不加冒号、逗号；表情符号两侧留空格）
   {
     hits: [
       ['Sort by Newest descending', '按最新降序排序'],
-      ['Sort by Thumbs up ascending', '按 👍 升序排序'],
+      ['Sort by Thumbs up ascending', '按 👍 升序排序']
     ],
-    misses: ['Sort by Newest random'],
+    misses: ['Sort by Newest random']
   },
   {
     hits: [
       ['Sort by Last updated', '按最后更新排序'],
       ['Sort by Comments', '按评论数排序'],
-      ['Sort by Heart', '按 ❤️ 排序'],
+      ['Sort by Heart', '按 ❤️ 排序']
     ],
-    misses: ['Sort by Priority'],
+    misses: ['Sort by Priority']
   },
   {
     hits: [
       ['12 issues found. List is sorted by Last updated in descending order.', '找到 12 个议题。按最后更新降序排列。'],
       // 表情符号排序字段与排序按钮同一写法，两侧留空格
       ['3 issues found. List is sorted by Thumbs up in descending order.', '找到 3 个议题。按 👍 降序排列。'],
-      [
-        '1.2k results found. List is sorted by Best match in descending order.',
-        '找到 1.2k 个结果。按最佳匹配降序排列。',
-      ],
+      ['1.2k results found. List is sorted by Best match in descending order.', '找到 1.2k 个结果。按最佳匹配降序排列。']
     ],
-    misses: ['12 issues found.'],
+    misses: ['12 issues found.']
   },
   {
     hits: [['Page 2 of 5 loaded with 25 items', '第 2/5 页已加载 25 个条目']],
-    misses: ['Page 2 of 5 loaded'],
+    misses: ['Page 2 of 5 loaded']
   },
   // list：列表项
   {
     hits: [
       ['Status: Open.', '状态：打开。'],
       ['Status: Closed (completed).', '状态：已关闭（已完成）。'],
-      ['Status: Not planned (skipped).', '状态：未计划（已跳过）。'],
+      ['Status: Not planned (skipped).', '状态：未计划（已跳过）。']
     ],
-    misses: ['Status: Pending.'],
+    misses: ['Status: Pending.']
   },
   {
     hits: [
       ['Fix login bug. More information available below.', 'Fix login bug。更多信息见下方。'],
       ['Selected. Fix login bug. More information available below.', '已选择。Fix login bug。更多信息见下方。'],
-      ['Fix login bug. New activity. More information available below.', 'Fix login bug。有新动态。更多信息见下方。'],
+      ['Fix login bug. New activity. More information available below.', 'Fix login bug。有新动态。更多信息见下方。']
     ],
-    misses: ['Fix login bug. More information available below'],
+    misses: ['Fix login bug. More information available below']
   },
   { hits: [['Select: Fix login bug', '选择：Fix login bug']], misses: ['Select Fix login bug'] },
   { hits: [['Selected. Fix login bug.', '已选择。Fix login bug。']], misses: ['Selected. Fix login bug'] },
@@ -1080,27 +1057,27 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['Select all issues: Issues', '全选议题：Issues'],
       ['Select all pull requests: Review requests', '全选拉取请求：Review requests'],
-      ['Select all issues:', '全选议题：'],
+      ['Select all issues:', '全选议题：']
     ],
-    misses: ['Select all issues', 'Select all repositories: Mine'],
+    misses: ['Select all issues', 'Select all repositories: Mine']
   },
   // list：列表项元数据（12 comments 由通用词典处理）
   {
     hits: [
       ['5 Thumbs up reactions', '5 个 👍 反应'],
       ['1 Heart reaction', '1 个 ❤️ 反应'],
-      ['12 Total reactions reactions', '12 个反应'],
+      ['12 Total reactions reactions', '12 个反应']
     ],
-    misses: ['5 Sparkles reactions'],
+    misses: ['5 Sparkles reactions']
   },
   {
     hits: [
       [
         '2 / 5 sub-issues completed, filter by parent issue octo-org/octo-repo#12',
-        '已完成 2/5 个子议题，按父议题 octo-org/octo-repo#12 筛选',
-      ],
+        '已完成 2/5 个子议题，按父议题 octo-org/octo-repo#12 筛选'
+      ]
     ],
-    misses: ['2 / 5 sub-issues completed'],
+    misses: ['2 / 5 sub-issues completed']
   },
   { hits: [['Filter by author octocat', '按作者 octocat 筛选']], misses: ['Filter by author Mona Lisa'] },
   { hits: [['Filter by assignee hubot', '按受理人 hubot 筛选']], misses: ['Filter by assignee Mona Lisa'] },
@@ -1111,28 +1088,28 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Filter by label 缺陷', '按标签缺陷筛选'],
       // 表情符号短代码、表情符号开头的标签名与中文隔开
       ['Filter by label :bug: bug', '按标签 :bug: bug 筛选'],
-      ['Filter by label 🐛 缺陷', '按标签 🐛 缺陷筛选'],
+      ['Filter by label 🐛 缺陷', '按标签 🐛 缺陷筛选']
     ],
-    misses: ['Filter by labeling'],
+    misses: ['Filter by labeling']
   },
   {
     hits: [['Filter by repository octo-org/octo-repo', '按存储库 octo-org/octo-repo 筛选']],
-    misses: ['Filter by repository octo-repo'],
+    misses: ['Filter by repository octo-repo']
   },
   {
     hits: [
       ['Filter by Priority: High', '按 Priority 为 High 筛选'],
       ['Filter by 优先级: 高', '按优先级为高筛选'],
-      ['Filter by Status: ✅ Done', '按 Status 为 ✅ Done 筛选'],
+      ['Filter by Status: ✅ Done', '按 Status 为 ✅ Done 筛选']
     ],
-    misses: ['Filter by Priority High'],
+    misses: ['Filter by Priority High']
   },
   {
     hits: [
       ['Show 3 more issue field values', '再显示 3 个议题字段值'],
-      ['Show 1 more issue field value', '再显示 1 个议题字段值'],
+      ['Show 1 more issue field value', '再显示 1 个议题字段值']
     ],
-    misses: ['Show more issue field values'],
+    misses: ['Show more issue field values']
   },
   { hits: [['+3, show all 5 assignees', '+3，显示全部 5 个受理人']], misses: ['+3 assignees'] },
   { hits: [['Milestone: v2.0', '里程碑：v2.0']], misses: ['Milestone v2.0'] },
@@ -1141,26 +1118,26 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['1 linked pull request #34: Fix login, Open', '1 个链接的拉取请求 #34：Fix login，打开'],
-      ['1 linked pull request octo-org/octo-repo#34, Merged', '1 个链接的拉取请求 octo-org/octo-repo#34，已合并'],
+      ['1 linked pull request octo-org/octo-repo#34, Merged', '1 个链接的拉取请求 octo-org/octo-repo#34，已合并']
     ],
-    misses: ['1 linked pull request #34, Stale'],
+    misses: ['1 linked pull request #34, Stale']
   },
   { hits: [['3 linked pull requests', '3 个链接的拉取请求']], misses: ['Several linked pull requests'] },
   {
     hits: [['30 linked pull requests, showing first 25', '30 个链接的拉取请求，显示前 25 个']],
-    misses: ['30 linked pull requests, showing all'],
+    misses: ['30 linked pull requests, showing all']
   },
   { hits: [['3 linked PRs', '3 个链接的拉取请求']], misses: ['Several linked PRs'] },
   {
     hits: [['Only the first 25 of 30 linked pull requests are shown.', '仅显示 30 个链接的拉取请求中的前 25 个。']],
-    misses: ['Only the first linked pull requests are shown.'],
+    misses: ['Only the first linked pull requests are shown.']
   },
   {
     hits: [
       ['#34 · Draft', '#34 · 草稿'],
-      ['octo-org/octo-repo#34 · State unavailable', 'octo-org/octo-repo#34 · 状态不可用'],
+      ['octo-org/octo-repo#34 · State unavailable', 'octo-org/octo-repo#34 · 状态不可用']
     ],
-    misses: ['#34 · Stale'],
+    misses: ['#34 · Stale']
   },
   { hits: [['link to the pull request #34', '指向拉取请求 #34 的链接']], misses: ['link to the pull request'] },
   { hits: [['link to the issue #12', '指向议题 #12 的链接']], misses: ['link to the issue'] },
@@ -1169,64 +1146,61 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       [
         'Showing the first 1,000 issues. To view additional issues, please refine your search.',
-        '仅显示前 1,000 个议题。如需查看更多议题，请细化搜索条件。',
-      ],
+        '仅显示前 1,000 个议题。如需查看更多议题，请细化搜索条件。'
+      ]
     ],
-    misses: ['Showing the first 1,000 issues. To view additional pull requests, please refine your search.'],
+    misses: ['Showing the first 1,000 issues. To view additional pull requests, please refine your search.']
   },
   {
     hits: [
       ['When an issue needs your review or attention, it’ll appear here.', '需要你审查或关注的议题会显示在这里。'],
-      [
-        "When a pull request needs your review or attention, it'll appear here.",
-        '需要你审查或关注的拉取请求会显示在这里。',
-      ],
+      ["When a pull request needs your review or attention, it'll appear here.", '需要你审查或关注的拉取请求会显示在这里。']
     ],
-    misses: ['When a discussion needs your review or attention, it’ll appear here.'],
+    misses: ['When a discussion needs your review or attention, it’ll appear here.']
   },
   // list：置顶议题、首次贡献横幅
   { hits: [['Pinned issue #12 options', '置顶议题 #12 的选项']], misses: ['Pinned issue options'] },
   { hits: [['Unpin issue #12, Fix login bug', '取消置顶议题 #12，Fix login bug']], misses: ['Unpin issue #12'] },
   {
     hits: [['👋 Want to contribute to octo-org/octo-repo?', '👋 想为 octo-org/octo-repo 做贡献吗？']],
-    misses: ['Want to contribute to octo-org/octo-repo?'],
+    misses: ['Want to contribute to octo-org/octo-repo?']
   },
   // list：批量更新
   {
     hits: [
       ['Bulk update is in progress 40 %', '批量更新进行中 40%'],
-      ['Bulk update is in progress 40 % (2 issues failing to update)', '批量更新进行中 40%（2 个议题更新失败）'],
+      ['Bulk update is in progress 40 % (2 issues failing to update)', '批量更新进行中 40%（2 个议题更新失败）']
     ],
-    misses: ['Bulk update is in progress'],
+    misses: ['Bulk update is in progress']
   },
   { hits: [['(2 issues failing to update)', '（2 个议题更新失败）']], misses: ['(issues failing to update)'] },
   {
     hits: [['Could not update 2 of 10 issues', '10 个议题中有 2 个无法更新']],
-    misses: ['Could not update some issues'],
+    misses: ['Could not update some issues']
   },
   {
     hits: [
       ['10 issues updated', '已更新 10 个议题'],
-      ['1 issue updated', '已更新 1 个议题'],
+      ['1 issue updated', '已更新 1 个议题']
     ],
-    misses: ['Issues updated'],
+    misses: ['Issues updated']
   },
   { hits: [['Updating 10 issues', '正在更新 10 个议题']], misses: ['Updating many issues'] },
   {
     hits: [
       ['3 issues marked as read', '已将 3 个议题标记为已读'],
-      ['1 issue marked as unread', '已将 1 个议题标记为未读'],
+      ['1 issue marked as unread', '已将 1 个议题标记为未读']
     ],
-    misses: ['3 issues marked as done'],
+    misses: ['3 issues marked as done']
   },
   { hits: [['Marking 3 issues as unread', '正在将 3 个议题标记为未读']], misses: ['Marking 3 issues as done'] },
   {
     hits: [['Select at most 100 issues to change read state', '最多选择 100 个议题以更改已读状态']],
-    misses: ['Select issues to change read state'],
+    misses: ['Select issues to change read state']
   },
   {
     hits: [['Select between 1 and 1,000 issues', '请选择 1 到 1,000 个议题']],
-    misses: ['Select between 2 and 1,000 issues'],
+    misses: ['Select between 2 and 1,000 issues']
   },
   // list：看板卡片
   { hits: [['Author: octocat', '作者：octocat']], misses: ['Author octocat'] },
@@ -1235,55 +1209,55 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   { hits: [['Sub-issues progress: 2 / 5 completed', '子议题进度：已完成 2/5']], misses: ['Sub-issues progress: none'] },
   {
     hits: [['bug, docs and 3 more', 'bug, docs 及另外 3 个']],
-    misses: ['octocat and others', 'Reacted by a, b and 22 more', ', and 3 more'],
+    misses: ['octocat and others', 'Reacted by a, b and 22 more', ', and 3 more']
   },
   {
     hits: [
       ['No Status', '无状态'],
       ['No Assignees', '无受理人'],
-      ['No Issue type', '无议题类型'],
+      ['No Issue type', '无议题类型']
     ],
-    misses: ['No Sprint'],
+    misses: ['No Sprint']
   },
   {
     hits: [
       ['(Open)', '（打开）'],
-      ['(Not planned)', '（未计划）'],
+      ['(Not planned)', '（未计划）']
     ],
-    misses: ['(Merged)'],
+    misses: ['(Merged)']
   },
   // list：代理会话
   { hits: [['Open Copilot session', '打开 Copilot 会话']], misses: ['Open Gemini session'] },
   {
     hits: [
       ['Claude session', 'Claude 会话'],
-      ['Copilot session:', 'Copilot 会话：'],
+      ['Copilot session:', 'Copilot 会话：']
     ],
-    misses: ['Gemini session'],
+    misses: ['Gemini session']
   },
   {
     hits: [
       ['Fix login bug · Updated 5m ago · Running for 1h 2m', 'Fix login bug · 5 分钟前更新 · 已运行 1 小时 2 分钟'],
-      ['Fix login bug · Updated 2d 3h ago · Ran for 45s', 'Fix login bug · 2 天 3 小时前更新 · 运行了 45 秒'],
+      ['Fix login bug · Updated 2d 3h ago · Ran for 45s', 'Fix login bug · 2 天 3 小时前更新 · 运行了 45 秒']
     ],
-    misses: ['Fix login bug · Updated 5m ago'],
+    misses: ['Fix login bug · Updated 5m ago']
   },
   // list：拖放播报（条目标题是用户内容，原文无引号，译文不加；标题与中文之间按 joinName 留空格）
   {
     hits: [
       ['Moving Fix login bug.', '正在移动 Fix login bug。'],
       ['Moving 修复登录.', '正在移动修复登录。'],
-      ['Moving [Bug] Fix login.', '正在移动 [Bug] Fix login。'],
+      ['Moving [Bug] Fix login.', '正在移动 [Bug] Fix login。']
     ],
-    misses: ['Moving Fix login bug'],
+    misses: ['Moving Fix login bug']
   },
   {
     hits: [['Between Fix login bug and Add dark mode.', '位于 Fix login bug 和 Add dark mode 之间。']],
-    misses: ['Between Fix login bug and Add dark mode'],
+    misses: ['Between Fix login bug and Add dark mode']
   },
   {
     hits: [['Cancel moving Fix login bug and 2 other items', '取消移动 Fix login bug 及其他 2 个条目']],
-    misses: ['Cancel moving'],
+    misses: ['Cancel moving']
   },
   { hits: [['Cancel moving Fix login bug', '取消移动 Fix login bug']], misses: ['Cancel move Fix login bug'] },
   {
@@ -1291,59 +1265,54 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Fix login bug successfully moved to first item in list.', 'Fix login bug 已移到列表第一项。'],
       // 以半角括号结尾的标题与中文隔开，以全角括号结尾的直接相连
       ['Fix login (Safari) successfully moved to first item in list.', 'Fix login (Safari) 已移到列表第一项。'],
-      ['修复登录（Safari） successfully moved to first item in list.', '修复登录（Safari）已移到列表第一项。'],
+      ['修复登录（Safari） successfully moved to first item in list.', '修复登录（Safari）已移到列表第一项。']
     ],
-    misses: ['Fix login bug successfully moved to first item in list'],
+    misses: ['Fix login bug successfully moved to first item in list']
   },
   {
     hits: [['Fix login bug successfully moved to last item in list.', 'Fix login bug 已移到列表最后一项。']],
-    misses: ['Fix login bug successfully moved to last item'],
+    misses: ['Fix login bug successfully moved to last item']
   },
   {
     hits: [
       [
         'Fix login bug successfully moved between Add dark mode and Update docs.',
-        'Fix login bug 已移到 Add dark mode 和 Update docs 之间。',
-      ],
+        'Fix login bug 已移到 Add dark mode 和 Update docs 之间。'
+      ]
     ],
-    misses: ['Fix login bug successfully moved between Add dark mode and Update docs'],
+    misses: ['Fix login bug successfully moved between Add dark mode and Update docs']
   },
   {
     hits: [
       ['Fix login bug did not move.', 'Fix login bug 未移动。'],
-      ['Fix login bug not moved.', 'Fix login bug 未移动。'],
+      ['Fix login bug not moved.', 'Fix login bug 未移动。']
     ],
-    misses: ['Fix login bug did not move'],
+    misses: ['Fix login bug did not move']
   },
   {
     hits: [['Entry must be less than or equal to 12.', '输入值必须小于或等于 12。']],
-    misses: ['Entry must be less than or equal to twelve.'],
+    misses: ['Entry must be less than or equal to twelve.']
   },
   { hits: [['Fix login bug will be moved...', 'Fix login bug 将被移动...']], misses: ['Fix login bug will be moved'] },
   {
     hits: [['Fix login bug will not be moved.', 'Fix login bug 不会被移动。']],
-    misses: ['Fix login bug will not be moved'],
+    misses: ['Fix login bug will not be moved']
   },
   {
     hits: [['Fix login bug will be first item in the list.', 'Fix login bug 将成为列表第一项。']],
-    misses: ['Fix login bug will be first item'],
+    misses: ['Fix login bug will be first item']
   },
   {
     hits: [['Fix login bug will be last item in the list.', 'Fix login bug 将成为列表最后一项。']],
-    misses: ['Fix login bug will be last item'],
+    misses: ['Fix login bug will be last item']
   },
   {
-    hits: [
-      [
-        'Fix login bug will be between Add dark mode and Update docs.',
-        'Fix login bug 将位于 Add dark mode 和 Update docs 之间。',
-      ],
-    ],
-    misses: ['Fix login bug will be between Add dark mode and Update docs'],
+    hits: [['Fix login bug will be between Add dark mode and Update docs.', 'Fix login bug 将位于 Add dark mode 和 Update docs 之间。']],
+    misses: ['Fix login bug will be between Add dark mode and Update docs']
   },
   {
     hits: [['Fix login bug cannot be moved to an invalid position.', 'Fix login bug 无法移到无效位置。']],
-    misses: ['Fix login bug cannot be moved.'],
+    misses: ['Fix login bug cannot be moved.']
   },
   // list：兜底（标签名、分组值、卡片标题不加冒号、引号）
   { hits: [['Archived wontfix', '已存档 wontfix']], misses: ['Archive wontfix'] },
@@ -1351,18 +1320,18 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['Collapse Alice', '折叠 Alice'],
       ['Expand No Status', '展开 No Status'],
-      ['Collapse 待办', '折叠待办'],
+      ['Collapse 待办', '折叠待办']
     ],
-    misses: ['Collapse'],
+    misses: ['Collapse']
   },
   {
     hits: [['Actions for Fix login bug', 'Fix login bug 的操作']],
-    misses: ["Actions for octocat's comment, 7:05 AM on October 19", 'Actions for'],
-  },
+    misses: ["Actions for octocat's comment, 7:05 AM on October 19", 'Actions for']
+  }
 ]
 
-const HITS = REGEXP_CASES.flatMap((item) => item.hits)
-const MISSES = REGEXP_CASES.flatMap((item) => item.misses)
+const HITS = REGEXP_CASES.flatMap(item => item.hits)
+const MISSES = REGEXP_CASES.flatMap(item => item.misses)
 const RULES = dict.regexp ?? []
 
 function firstRule(input: string): number {
@@ -1376,14 +1345,14 @@ describe('issues 正则词条', () => {
     expect(translate(input)).toBe(expected)
   })
 
-  it.each(MISSES)('不命中：%s', (input) => {
+  it.each(MISSES)('不命中：%s', input => {
     expect(translate(input)).toBeUndefined()
   })
 
   it('用例与正则一一对应，正例首个命中对应的正则', () => {
     expect(REGEXP_CASES).toHaveLength(RULES.length)
     const mismatched = REGEXP_CASES.flatMap((item, index) =>
-      item.hits.filter(([input]) => firstRule(input) !== index).map(([input]) => `#${index} ${input}`),
+      item.hits.filter(([input]) => firstRule(input) !== index).map(([input]) => `#${index} ${input}`)
     )
     expect(mismatched).toEqual([])
   })
@@ -1401,7 +1370,7 @@ describe('issues 正则词条', () => {
       `Has ${'a'.repeat(40)}!`,
       `${'Value '.repeat(200)}!`,
       `${', Filter'.repeat(200)}!`,
-      `${'a. 1 open issues'.repeat(200)}!`,
+      `${'a. 1 open issues'.repeat(200)}!`
     ]
     const start = performance.now()
     for (const input of inputs) translate(input)
@@ -1411,14 +1380,10 @@ describe('issues 正则词条', () => {
   it('React 拆分的相邻文本节点拼接后命中', () => {
     expect(translate(normalizeText(['Change the ', 'issues', ' type filter'].join('')))).toBe('切换议题视图')
     expect(translate(normalizeText(['Default to this view when visiting ', 'github.com/issues'].join('')))).toBe(
-      '访问 github.com/issues 时默认打开此视图',
+      '访问 github.com/issues 时默认打开此视图'
     )
     expect(
-      translate(
-        normalizeText(
-          ['Showing the first ', '1,000', ' issues. To view additional issues, please refine your search.'].join(''),
-        ),
-      ),
+      translate(normalizeText(['Showing the first ', '1,000', ' issues. To view additional issues, please refine your search.'].join('')))
     ).toBe('仅显示前 1,000 个议题。如需查看更多议题，请细化搜索条件。')
     expect(translate(normalizeText(['Bulk update is in progress ', '40', ' %'].join('')))).toBe('批量更新进行中 40%')
     expect(translate(normalizeText(['12', ' ', 'labels', ' matching'].join('')))).toBe('12 个匹配项')
@@ -1434,9 +1399,7 @@ describe('issues 正则词条', () => {
     expect(translate("Please follow this repository's")).toBe('请遵守此存储库的')
     expect(translate('Try reloading the page, or if the problem persists')).toBe('请尝试重新加载页面；仍然出错时请')
     expect(translate('contact support')).toBe('联系支持')
-    expect(translate('Commenting has been disabled because this issue was converted to a')).toBe(
-      '已禁用评论的原因是此议题已转换为',
-    )
+    expect(translate('Commenting has been disabled because this issue was converted to a')).toBe('已禁用评论的原因是此议题已转换为')
     expect(translate('discussion')).toBe('讨论')
   })
 
@@ -1475,7 +1438,7 @@ describe('issues 静态词条', () => {
     ["You're receiving notifications because you're subscribed to this thread.", '你因已订阅此线程而收到通知。'],
     [
       "You're receiving notifications because you're subscribed to this thread. Click to unsubscribe",
-      '你因已订阅此线程而收到通知。单击可取消订阅',
+      '你因已订阅此线程而收到通知。单击可取消订阅'
     ],
     ['This conversation has been locked and limited to collaborators.', '此对话已锁定并限制为仅协作者可评论。'],
     ['Paste HTML source...', '粘贴 HTML 源码...'],
@@ -1489,7 +1452,7 @@ describe('issues 静态词条', () => {
     ['Reopen Issue', '重新打开议题'],
     [
       'Up to 3 issues can be pinned and they will appear publicly at the top of the issues page',
-      '最多可置顶 3 个议题并公开显示在议题页顶部',
+      '最多可置顶 3 个议题并公开显示在议题页顶部'
     ],
     ['The issue has been pinned.', '议题已置顶。'],
     ['The issue was successfully deleted.', '议题已删除。'],
@@ -1507,7 +1470,7 @@ describe('issues 静态词条', () => {
     // 产品名按用户要求译成中文（product-names.md）：codespace → 代码空间、Copilot Chat → Copilot 聊天
     [
       'Start a codespace with Copilot agent mode for this issue in another repository.',
-      '在其他存储库中为此议题启动使用 Copilot 代理模式的代码空间。',
+      '在其他存储库中为此议题启动使用 Copilot 代理模式的代码空间。'
     ],
     ['Unable to load Copilot Chat. Ensure Copilot is enabled.', '无法加载 Copilot 聊天。请确认已启用 Copilot。'],
     // 项目项（item → 项）
@@ -1523,26 +1486,17 @@ describe('issues 静态词条', () => {
     ['Select repository (required)', '选择存储库（必填）'],
     [
       'You need the triage role or higher in this repository to change the issue type.',
-      '需要此存储库的分类角色或更高角色才能更改议题类型。',
+      '需要此存储库的分类角色或更高角色才能更改议题类型。'
     ],
     ['Go to Copilot', '转到 Copilot'],
     ['Navigate to Copilot Chat', '转到 Copilot 聊天'],
     ['Writing…', '撰写中…'],
     ['Type your message here...', '在此输入消息...'],
     ['Failed to upload file. Please try again.', '上传文件失败。请重试。'],
-    [
-      'You have made edits to the generated content. Discarding will lose your changes.',
-      '你已编辑生成的内容。放弃将丢失这些更改。',
-    ],
+    ['You have made edits to the generated content. Discarding will lose your changes.', '你已编辑生成的内容。放弃将丢失这些更改。'],
     // 首次贡献提示、议题表单提示的句尾、经典页提交按钮、模板编辑器
-    [
-      'It looks like this is your first time opening an issue in this project!',
-      '看起来这是你第一次在此项目中打开议题！',
-    ],
-    [
-      'It looks like this is your first time opening a pull request in this project!',
-      '看起来这是你第一次在此项目中创建拉取请求！',
-    ],
+    ['It looks like this is your first time opening an issue in this project!', '看起来这是你第一次在此项目中打开议题！'],
+    ['It looks like this is your first time opening a pull request in this project!', '看起来这是你第一次在此项目中创建拉取请求！'],
     ['Be sure to review the', '请务必查看'],
     ['. Take a look before submitting an issue:', '。提交议题前请先查看：'],
     ['. Take a look before submitting a pull request:', '。提交拉取请求前请先查看：'],
@@ -1564,7 +1518,7 @@ describe('issues 静态词条', () => {
     ['Convert issue to discussion', '将议题转换为讨论'],
     [
       'You must choose a category for the discussion to belong to. You will be able to change this after the conversion is complete.',
-      '你必须为讨论选择所属类别。转换完成后可以更改。',
+      '你必须为讨论选择所属类别。转换完成后可以更改。'
     ],
     ['I understand, convert issues to discussions', '我已了解，将议题转换为讨论'],
     // milestones
@@ -1600,16 +1554,14 @@ describe('issues 静态词条', () => {
     ["we've collected some good first issues for you", '我们为你挑选了一些适合新手的议题'],
     ['Label issues and pull requests for new contributors', '为议题和拉取请求添加面向新贡献者的标签'],
     ['discover issues', '发现'],
-    ['labeled with', '带有以下标签的议题'],
+    ['labeled with', '带有以下标签的议题']
   ])('%s → %s', (input, expected) => {
     expect(dict.static?.[input]).toBe(expected)
     expect(translate(input)).toBe(expected)
   })
 
   it('「X. (Please) try again.」保持两句，译作「…。请重试。」', () => {
-    const entries = Object.entries({ ...dict.static, ...dict.scoped }).filter(([source]) =>
-      /\. (?:Please )?[Tt]ry again\.$/.test(source),
-    )
+    const entries = Object.entries({ ...dict.static, ...dict.scoped }).filter(([source]) => /\. (?:Please )?[Tt]ry again\.$/.test(source))
     expect(entries.length).toBeGreaterThan(20)
     expect(entries.filter(([, target]) => !/[^，]。请重试。$/.test(target))).toEqual([])
   })
@@ -1619,10 +1571,9 @@ describe('issues 静态词条', () => {
   })
 
   it('译文中不残留应译成中文的产品名（product-names.md）', () => {
-    const english =
-      /\b(?:Copilot Chat|[Cc]odespaces?|Workspace|Marketplace|GitHub (?:Actions|Pages|Packages|Mobile|Desktop))\b/
+    const english = /\b(?:Copilot Chat|[Cc]odespaces?|Workspace|Marketplace|GitHub (?:Actions|Pages|Packages|Mobile|Desktop))\b/
     const values = [...Object.values(dict.static ?? {}), ...Object.values(dict.scoped ?? {})]
-    expect(values.filter((value) => english.test(value))).toEqual([])
+    expect(values.filter(value => english.test(value))).toEqual([])
   })
 })
 
@@ -1691,8 +1642,8 @@ describe('issues 页面词条', () => {
     // 原文三句，译文随原文分句
     [
       'To pick up a draggable item, press the space bar. While dragging, use the arrow keys to move the item. Press space again to drop the item in its new position, or press escape to cancel.',
-      '按空格键拿起可拖动的条目。拖动时用方向键移动条目。再按空格键将条目放到新位置，或按 Esc 取消。',
-    ],
+      '按空格键拿起可拖动的条目。拖动时用方向键移动条目。再按空格键将条目放到新位置，或按 Esc 取消。'
+    ]
   ])('%s → %s', (input, expected) => {
     expect(dict.scoped?.[input]).toBe(expected)
     expect(translate(input)).toBe(expected)
@@ -1757,9 +1708,7 @@ describe('issues 页面词条', () => {
     expect(dict.scoped?.Label).toBe('标签')
     expect(dict.scoped?.['Blocked by']).toBe('被阻止')
     expect(dict.scoped?.Comments).toBe('评论')
-    expect(translate('Status, Filter, Issue status or pull request commit status')).toBe(
-      '状态，筛选器，议题状态或拉取请求的提交状态',
-    )
+    expect(translate('Status, Filter, Issue status or pull request commit status')).toBe('状态，筛选器，议题状态或拉取请求的提交状态')
     expect(translate('Author, Filter, The author of the item')).toBe('作者，筛选器，项的作者')
     expect(dict.scoped?.['Interactions count']).toBe('交互数')
     expect(dict.scoped?.['Items linked to an issue or pull request']).toBe('链接了议题或拉取请求的项')
@@ -1788,7 +1737,7 @@ describe('issues 页面词条', () => {
 })
 
 describe('issues 忽略选择器', () => {
-  it.each(dict.ignore ?? [])('%s 是合法选择器', (selector) => {
+  it.each(dict.ignore ?? [])('%s 是合法选择器', selector => {
     expect(() => document.createElement('div').querySelector(selector)).not.toThrow()
   })
 
@@ -1812,7 +1761,7 @@ describe('issues 忽略选择器', () => {
       <h2>Labels</h2>`
     const selector = (dict.ignore ?? []).join(', ')
     const ignored = (text: string): boolean => {
-      const element = [...document.querySelectorAll('*')].reverse().find((node) => node.textContent?.trim() === text)
+      const element = [...document.querySelectorAll('*')].reverse().find(node => node.textContent?.trim() === text)
       return Boolean(element?.closest(selector))
     }
     expect(ignored('What happened?')).toBe(true)
@@ -1847,7 +1796,7 @@ describe('issues 忽略选择器', () => {
       </div>`
     const selector = IGNORE_SELECTORS.join(', ')
     const ignored = (text: string): boolean => {
-      const element = [...document.querySelectorAll('*')].reverse().find((node) => node.textContent?.trim() === text)
+      const element = [...document.querySelectorAll('*')].reverse().find(node => node.textContent?.trim() === text)
       return Boolean(element?.closest(selector))
     }
     expect(ignored('React')).toBe(true)
@@ -1982,7 +1931,7 @@ describe('issues 被元素拆开的句子与属性（DOM）', () => {
 
   /** 等待变动回调处理完 */
   function settle(): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, 0))
+    return new Promise(resolve => setTimeout(resolve, 0))
   }
 
   afterEach(() => {
@@ -1992,9 +1941,7 @@ describe('issues 被元素拆开的句子与属性（DOM）', () => {
   })
 
   it('删除评论事件：<操作者> deleted a comment from <用户> <时间> 整句译出，语序调整', () => {
-    render(
-      `<div class="timelineBodyContent__Uq4b9L" id="event">${ACTOR}deleted a comment from ${AUTHOR_LINK} ${AGO}</div>`,
-    )
+    render(`<div class="timelineBodyContent__Uq4b9L" id="event">${ACTOR}deleted a comment from ${AUTHOR_LINK} ${AGO}</div>`)
     expect(shown('event')).toBe('octocat 删除了 hubot 的一条评论 <时间>')
     // 链接内的用户名原样保留
     expect(document.querySelector('#event [data-testid="actor-link"]')?.textContent).toBe('octocat')
@@ -2007,9 +1954,7 @@ describe('issues 被元素拆开的句子与属性（DOM）', () => {
   })
 
   it('删除评论事件：停止后还原', () => {
-    render(
-      `<div class="timelineBodyContent__Uq4b9L" id="event">${ACTOR}deleted a comment from ${AUTHOR_LINK} ${AGO}</div>`,
-    )
+    render(`<div class="timelineBodyContent__Uq4b9L" id="event">${ACTOR}deleted a comment from ${AUTHOR_LINK} ${AGO}</div>`)
     translator?.stop()
     translator = undefined
     // 操作者容器与文字之间原本没有空白（容器是块级元素）
@@ -2019,7 +1964,7 @@ describe('issues 被元素拆开的句子与属性（DOM）', () => {
   it('时间线错误占位：说明 + <联系支持> + 句尾整句译出，链接移到句末', () => {
     render(
       '<div class="Blankslate prc-Blankslate-Blankslate-oYfTM" data-component="Blankslate"><h2 class="Blankslate-Heading prc-Blankslate-Heading-rCrgF">Timeline cannot be loaded</h2>' +
-        '<p class="Blankslate-Description prc-Blankslate-Description-nqiRV" data-component="Blankslate.Description" id="description">The timeline is currently unavailable due to a system error. Try reloading the page. <a class="prc-Link-Link-9ZwDx" data-component="Link" data-inline="true" href="https://support.github.com/contact">Contact support</a> if the problem persists.</p></div>',
+        '<p class="Blankslate-Description prc-Blankslate-Description-nqiRV" data-component="Blankslate.Description" id="description">The timeline is currently unavailable due to a system error. Try reloading the page. <a class="prc-Link-Link-9ZwDx" data-component="Link" data-inline="true" href="https://support.github.com/contact">Contact support</a> if the problem persists.</p></div>'
     )
     expect(shown('description')).toBe('系统错误，时间线暂不可用。请尝试重新加载页面。仍然出错时请联系支持。')
     expect(document.querySelector('h2')?.textContent).toBe('无法加载时间线')
@@ -2064,8 +2009,8 @@ describe('issues 被元素拆开的句子与属性（DOM）', () => {
     const body = render(
       PINNED_CARD.replace('aria-label="View Sample text"', 'aria-label="View View options for 示例"').replace(
         '>Sample text<',
-        '>View options for 示例<',
-      ),
+        '>View options for 示例<'
+      )
     )
     const title = body.querySelector('#title')!
     expect(title.getAttribute('aria-label')).toBe('查看 View options for 示例')
@@ -2093,7 +2038,7 @@ describe('issues 被元素拆开的句子与属性（DOM）', () => {
   it('属性规则选择器不依赖 aria-label 的取值', () => {
     const selectors = (dict.attributeRules ?? []).map(([selector]) => selector)
     expect(selectors.length).toBeGreaterThan(0)
-    expect(selectors.filter((selector) => /\[aria-label[~|^$*]?=/.test(selector))).toEqual([])
+    expect(selectors.filter(selector => /\[aria-label[~|^$*]?=/.test(selector))).toEqual([])
     for (const selector of selectors) expect(() => document.createElement('div').querySelector(selector)).not.toThrow()
   })
 
@@ -2101,7 +2046,7 @@ describe('issues 被元素拆开的句子与属性（DOM）', () => {
     // 用 wiki 页面类型对照：pulls 的 React 对话页用同一时间线组件，之后可能加同样的规则
     const body = render(
       `<div class="timelineBodyContent__Uq4b9L" id="event">${ACTOR}deleted a comment from ${AUTHOR_LINK} ${AGO}</div>${LOAD_MORE}${PINNED_CARD}`,
-      ['common', 'repository', 'wiki'],
+      ['common', 'repository', 'wiki']
     )
     expect(shown('event')).not.toContain('删除了 hubot 的一条评论')
     // 不整段合并：计数节点原样，items 由通用词典逐段翻译
@@ -2142,18 +2087,18 @@ const LABEL_SUGGESTION_LOCALES: readonly LabelSuggestionLocale[] = [
     matcher: bundleMatcher,
     values: ['无标签', '有标签'],
     ariaLabels: ['无标签，标签', '有标签，标签'],
-    description: '新功能或功能请求',
+    description: '新功能或功能请求'
   },
   {
     name: 'zh-TW',
     matcher: createMatcher(zhTW),
     values: ['無標籤', '有標籤'],
     ariaLabels: ['無標籤，標籤', '有標籤，標籤'],
-    description: '新功能或功能請求',
-  },
+    description: '新功能或功能請求'
+  }
 ]
 
-describe.each(LABEL_SUGGESTION_LOCALES)('筛选框 label: 的取值建议（DOM，$name）', (locale) => {
+describe.each(LABEL_SUGGESTION_LOCALES)('筛选框 label: 的取值建议（DOM，$name）', locale => {
   let translator: Translator | undefined
 
   /** 用完整语言包按存储库问题页的页面类型翻译 html */
@@ -2169,7 +2114,7 @@ describe.each(LABEL_SUGGESTION_LOCALES)('筛选框 label: 的取值建议（DOM�
 
   /** 等待变动回调处理完 */
   function settle(): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, 0))
+    return new Promise(resolve => setTimeout(resolve, 0))
   }
 
   afterEach(() => {
@@ -2231,11 +2176,7 @@ const GAP_CASES: readonly (readonly [string, string, string])[] = [
   ['Submit new issue', '提交新议题', '送出新議題'],
   ['issue form', '议题表单', '議題表單'],
   ['Template name', '模板名称', '範本名稱'],
-  [
-    'Documentation has changed since you last contributed',
-    '自你上次贡献以来文档已更改',
-    '自你上次貢獻以來說明文件已變更',
-  ],
+  ['Documentation has changed since you last contributed', '自你上次贡献以来文档已更改', '自你上次貢獻以來說明文件已變更'],
   ['. Take a look before submitting an issue:', '。提交议题前请先查看：', '。送出議題前請先查看：'],
   // labels
   ['Alphabetically', '按字母顺序', '依字母順序'],
@@ -2252,7 +2193,7 @@ const GAP_CASES: readonly (readonly [string, string, string])[] = [
   ['Exclude closed', '排除关闭日期', '排除關閉日期'],
   ['Exclude merged', '排除合并日期', '排除合併日期'],
   ['Exclude org', '排除组织', '排除組織'],
-  ['Exclude reason', '排除关闭原因', '排除關閉原因'],
+  ['Exclude reason', '排除关闭原因', '排除關閉原因']
 ]
 
 /** static 在其他页面类型同样生效（盖过别处正则的误配），scoped 不外溢：[作用域, 原文, 简体, 繁体] */
@@ -2261,7 +2202,7 @@ const GAP_SCOPE_CASES: readonly (readonly [readonly PageKey[], string, string | 
     ['common', 'repository', 'pulls'],
     'Label issues and pull requests for new contributors',
     '为议题和拉取请求添加面向新贡献者的标签',
-    '為議題和拉取請求加上適合新貢獻者的標籤',
+    '為議題和拉取請求加上適合新貢獻者的標籤'
   ],
   [['common', 'repository', 'pulls'], 'labeled with', '带有以下标签的议题', '帶有以下標籤的議題'],
   [['common', 'repository', 'commits', 'pulls'], 'Be sure to review the', '请务必查看', '請務必詳閱'],
@@ -2269,19 +2210,19 @@ const GAP_SCOPE_CASES: readonly (readonly [readonly PageKey[], string, string | 
     ['common', 'repository', 'commits', 'pulls'],
     'It looks like this is your first time opening a pull request in this project!',
     '看起来这是你第一次在此项目中创建拉取请求！',
-    '看來這是你第一次在此專案中建立拉取請求！',
+    '看來這是你第一次在此專案中建立拉取請求！'
   ],
   [
     ['common', 'repository', 'commits', 'pulls'],
     '. Take a look before submitting a pull request:',
     '。提交拉取请求前请先查看：',
-    '。送出拉取請求前請先查看：',
+    '。送出拉取請求前請先查看：'
   ],
   [['common', 'repository', 'repo-settings'], 'Add template:', '添加模板：', '新增範本：'],
   [['common', 'repository', 'releases'], 'Preview and edit', '预览并编辑', '預覽並編輯'],
   [['common', 'repository', 'copilot'], 'Assign agent to issue', '将代理分配给议题', '將代理指派給議題'],
   [['common', 'repository', 'pulls'], 'as', undefined, undefined],
-  [['common', 'repository', 'pulls'], 'select', undefined, undefined],
+  [['common', 'repository', 'pulls'], 'select', undefined, undefined]
 ]
 
 /** 贡献指南链接 */
@@ -2298,7 +2239,7 @@ const GAP_BANNERS: readonly (readonly [string, readonly PageKey[], string, strin
     'Now, GitHub will help potential first-time contributors <a href="/vuejs/core/contribute">discover issues</a> ' +
       'labeled with <span class="IssueLabel">good first issue</span>',
     '现在，GitHub 将帮助潜在的首次贡献者 发现 带有以下标签的议题 适合新手的议题',
-    '現在，GitHub 會協助潛在的首次貢獻者 探索 帶有以下標籤的議題 適合新手的議題',
+    '現在，GitHub 會協助潛在的首次貢獻者 探索 帶有以下標籤的議題 適合新手的議題'
   ],
   [
     '维护者横幅 Now, GitHub will help … <discover issues> labeled with <自定义标签>',
@@ -2306,7 +2247,7 @@ const GAP_BANNERS: readonly (readonly [string, readonly PageKey[], string, strin
     'Now, GitHub will help potential first-time contributors <a href="/vuejs/core/contribute">discover issues</a> ' +
       'labeled with <span class="IssueLabel">scope: vapor</span>',
     '现在，GitHub 将帮助潜在的首次贡献者 发现 带有以下标签的议题 scope: vapor',
-    '現在，GitHub 會協助潛在的首次貢獻者 探索 帶有以下標籤的議題 scope: vapor',
+    '現在，GitHub 會協助潛在的首次貢獻者 探索 帶有以下標籤的議題 scope: vapor'
   ],
   [
     '比较页 Documentation has changed … Take a look before submitting a pull request: <Contributing guidelines>',
@@ -2314,7 +2255,7 @@ const GAP_BANNERS: readonly (readonly [string, readonly PageKey[], string, strin
     '<strong>Documentation has changed since you last contributed</strong>. Take a look before submitting a pull request: ' +
       `${GUIDELINES_LINK}Contributing guidelines</a>`,
     '自你上次贡献以来文档已更改。提交拉取请求前请先查看：贡献指南',
-    '自你上次貢獻以來說明文件已變更。送出拉取請求前請先查看：貢獻指南',
+    '自你上次貢獻以來說明文件已變更。送出拉取請求前請先查看：貢獻指南'
   ],
   [
     '比较页 It looks like … opening a pull request … Be sure to review the <contributing guidelines>.',
@@ -2322,8 +2263,8 @@ const GAP_BANNERS: readonly (readonly [string, readonly PageKey[], string, strin
     'It looks like this is your first time opening a pull request in this project! Be sure to review the ' +
       `${GUIDELINES_LINK}contributing guidelines</a>.`,
     '看起来这是你第一次在此项目中创建拉取请求！请务必查看 贡献指南。',
-    '看來這是你第一次在此專案中建立拉取請求！請務必詳閱 貢獻指南。',
-  ],
+    '看來這是你第一次在此專案中建立拉取請求！請務必詳閱 貢獻指南。'
+  ]
 ]
 
 interface GapLocale {
@@ -2336,7 +2277,7 @@ interface GapLocale {
 
 const GAP_LOCALES: readonly GapLocale[] = [
   { name: 'zh-CN', index: 1, full: bundleMatcher },
-  { name: 'zh-TW', index: 2, full: createMatcher(zhTW) },
+  { name: 'zh-TW', index: 2, full: createMatcher(zhTW) }
 ]
 
 describe.each(GAP_LOCALES)('参考词库对照补收（完整语言包，$name）', ({ index, full }) => {
@@ -2349,10 +2290,8 @@ describe.each(GAP_LOCALES)('参考词库对照补收（完整语言包，$name�
   })
 
   it('React 时间线 closed this | as | not planned 逐段拼读', () => {
-    const parts = ['closed this', 'as', 'not planned'].map((part) => full.translate(part, SCOPE))
-    expect(parts).toEqual(
-      index === 1 ? ['关闭了此议题', '并标记为', '未计划'] : ['關閉了此議題', '並標示為', '不予處理'],
-    )
+    const parts = ['closed this', 'as', 'not planned'].map(part => full.translate(part, SCOPE))
+    expect(parts).toEqual(index === 1 ? ['关闭了此议题', '并标记为', '未计划'] : ['關閉了此議題', '並標示為', '不予處理'])
   })
 
   describe('被链接、标签元素拆开的横幅（DOM）', () => {
@@ -2385,7 +2324,7 @@ const DEFAULT_LABEL_NAMES: readonly (readonly [string, string, string])[] = [
   ['question', '疑问', '疑問'],
   ['wontfix', '不予修复', '不予修正'],
   ['dependencies', '依赖项', '相依項目'],
-  ['accessibility', '辅助功能', '無障礙'],
+  ['accessibility', '辅助功能', '無障礙']
 ]
 
 /** 与默认标签名同形、另有词条的普通词（搜索语法说明里的 documentation 链接、时间线的关闭原因 duplicate） */
@@ -2405,7 +2344,7 @@ const DEFAULT_LABEL_DESCRIPTIONS: readonly (readonly [string, string, string])[]
   ['This doesn’t seem right', '这似乎不对', '這似乎不對'],
   ['Further information is requested', '需要更多信息', '需要更多資訊'],
   ['This will not be worked on', '不会处理', '不會處理'],
-  ['Pull requests that update a dependency file', '更新依赖文件的拉取请求', '更新相依性檔案的拉取請求'],
+  ['Pull requests that update a dependency file', '更新依赖文件的拉取请求', '更新相依性檔案的拉取請求']
 ]
 
 /** 标签区域里 GitHub 写入的占位文字（新建、编辑标签对话框的预览令牌）：[原文, 简体, 繁体] */
@@ -2437,12 +2376,8 @@ const LABEL_ROW = (name: string, description: string, id: string, counted = true
 const ECOSYSTEM_DESCRIPTIONS: readonly (readonly [string, string, string])[] = [
   ['Pull requests that update javascript code', '更新 javascript 代码的拉取请求', '更新 javascript 程式碼的拉取請求'],
   ['Pull requests that update Javascript code', '更新 Javascript 代码的拉取请求', '更新 Javascript 程式碼的拉取請求'],
-  [
-    'Pull requests that update GitHub Actions code',
-    '更新 GitHub 操作代码的拉取请求',
-    '更新 GitHub 動作程式碼的拉取請求',
-  ],
-  ['Pull requests that update .net code', '更新 .net 代码的拉取请求', '更新 .net 程式碼的拉取請求'],
+  ['Pull requests that update GitHub Actions code', '更新 GitHub 操作代码的拉取请求', '更新 GitHub 動作程式碼的拉取請求'],
+  ['Pull requests that update .net code', '更新 .net 代码的拉取请求', '更新 .net 程式碼的拉取請求']
 ]
 
 /** 拉取请求列表、项目页的作用域 */
@@ -2470,20 +2405,20 @@ const LABEL_LOCALES: readonly LabelLocale[] = [
     bundle: zhTW,
     full: createMatcher(zhTW),
     nameOf: twLabelName,
-    glossary: 'GLOSSARY.zh-TW.md',
-  },
+    glossary: 'GLOSSARY.zh-TW.md'
+  }
 ]
 
 /** 术语表第 4 节的默认标签行：原文列、译文列按“ / ”拆开，逐项配对 */
 function glossaryLabelNames(file: string): readonly (readonly [string, string])[] {
   const row = readFileSync(resolve(__dirname, '../../../docs', file), 'utf8')
     .split('\n')
-    .find((line) => line.startsWith('| 默认标签：'))
+    .find(line => line.startsWith('| 默认标签：'))
   if (row === undefined) throw new Error(`${file} 没有默认标签行`)
   const [sources = '', targets = ''] = row
     .split('|')
     .slice(1, 3)
-    .map((cell) => cell.trim())
+    .map(cell => cell.trim())
   const names = sources.replace(/^默认标签：/, '').split(' / ')
   const translations = targets.split(' / ')
   expect(translations, file).toHaveLength(names.length)
@@ -2497,15 +2432,13 @@ describe.each(LABEL_LOCALES)('默认标签表（完整语言包，$name）', ({ 
       ([, dict]) =>
         Object.keys(dict.labels ?? {}).length > 0 ||
         Object.keys(dict.labelDescriptions ?? {}).length > 0 ||
-        (dict.labelRegexp ?? []).length > 0,
+        (dict.labelRegexp ?? []).length > 0
     )
     expect(owners.map(([page]) => page)).toEqual(['issues'])
     expect(Object.keys(owners[0]?.[1].labels ?? {}).sort()).toEqual(
-      [...DEFAULT_LABEL_NAMES, ...LABEL_PLACEHOLDERS].map(([source]) => source).sort(),
+      [...DEFAULT_LABEL_NAMES, ...LABEL_PLACEHOLDERS].map(([source]) => source).sort()
     )
-    expect(Object.keys(owners[0]?.[1].labelDescriptions ?? {}).sort()).toEqual(
-      DEFAULT_LABEL_DESCRIPTIONS.map(([source]) => source).sort(),
-    )
+    expect(Object.keys(owners[0]?.[1].labelDescriptions ?? {}).sort()).toEqual(DEFAULT_LABEL_DESCRIPTIONS.map(([source]) => source).sort())
     expect(owners[0]?.[1].labelRegexp).toHaveLength(1)
   })
 
@@ -2542,18 +2475,15 @@ describe.each(LABEL_LOCALES)('默认标签表（完整语言包，$name）', ({ 
     expect(nameOf(source)).toBe(source)
   })
 
-  it.each(ECOSYSTEM_DESCRIPTIONS)(
-    '生态标签的说明 %s：说明区域按标签正则、区域外按全站 regexp 同译，名称区域不译',
-    (source, cn, tw) => {
-      const expected = index === 1 ? cn : tw
-      expect(full.translateLabel(source, 'description')).toBe(expected)
-      expect(full.translateLabel(source, 'name')).toBeUndefined()
-      // 标签选择器、拉取请求侧栏令牌的 title 等：与 static 里的默认说明一样全站生效
-      for (const scope of [['common'], SCOPE, PULLS_SCOPE, PROJECTS_SCOPE, ['common', 'dashboard']] as const) {
-        expect(full.translate(source, scope), scope.join('|')).toBe(expected)
-      }
-    },
-  )
+  it.each(ECOSYSTEM_DESCRIPTIONS)('生态标签的说明 %s：说明区域按标签正则、区域外按全站 regexp 同译，名称区域不译', (source, cn, tw) => {
+    const expected = index === 1 ? cn : tw
+    expect(full.translateLabel(source, 'description')).toBe(expected)
+    expect(full.translateLabel(source, 'name')).toBeUndefined()
+    // 标签选择器、拉取请求侧栏令牌的 title 等：与 static 里的默认说明一样全站生效
+    for (const scope of [['common'], SCOPE, PULLS_SCOPE, PROJECTS_SCOPE, ['common', 'dashboard']] as const) {
+      expect(full.translate(source, scope), scope.join('|')).toBe(expected)
+    }
+  })
 
   it('整段区分大小写匹配：大小写不同、自定义名、带表情、多段的不收；首尾空白照原文保留', () => {
     for (const source of [
@@ -2565,7 +2495,7 @@ describe.each(LABEL_LOCALES)('默认标签表（完整语言包，$name）', ({ 
       'bug question',
       'good first',
       'javascript',
-      'Pull requests that update docs',
+      'Pull requests that update docs'
     ]) {
       expect(full.translateLabel(source, 'name'), source).toBeUndefined()
       expect(full.translateLabel(source, 'description'), source).toBeUndefined()
@@ -2605,10 +2535,9 @@ describe.each(LABEL_LOCALES)('默认标签表（完整语言包，$name）', ({ 
     }
 
     /** 等待变动回调处理完 */
-    const settle = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 0))
+    const settle = (): Promise<void> => new Promise(resolve => setTimeout(resolve, 0))
 
-    const row = (id: string): string | null | undefined =>
-      document.querySelector(`[data-label-id="${id}"]`)?.getAttribute('aria-label')
+    const row = (id: string): string | null | undefined => document.querySelector(`[data-label-id="${id}"]`)?.getAttribute('aria-label')
     const label = (id: string): string | null | undefined => document.getElementById(id)?.getAttribute('aria-label')
     const text = (id: string): string | null | undefined => document.getElementById(id)?.textContent
 
@@ -2616,12 +2545,10 @@ describe.each(LABEL_LOCALES)('默认标签表（完整语言包，$name）', ({ 
       render(
         '<ul data-listview-component="items-list">' +
           `${LABEL_ROW('documentation', 'Improvements or additions to documentation', 'doc')}` +
-          `${LABEL_ROW('scope: vapor', 'related to vapor mode', 'custom')}</ul>`,
+          `${LABEL_ROW('scope: vapor', 'related to vapor mode', 'custom')}</ul>`
       )
       const [name, description, count] =
-        index === 1
-          ? ['文档', '文档改进或补充', '1 个打开的议题']
-          : ['說明文件', '說明文件的改進或補充', '1 個開放中的議題']
+        index === 1 ? ['文档', '文档改进或补充', '1 个打开的议题'] : ['說明文件', '說明文件的改進或補充', '1 個開放中的議題']
       expect(row('doc')).toBe(`${name}。${count}。`)
       expect(label('doc-link')).toBe(name)
       // 屏幕阅读器读的行标题不在标签区域里（React 读它的文字拼行的无障碍名称，见下一条）
@@ -2645,12 +2572,12 @@ describe.each(LABEL_LOCALES)('默认标签表（完整语言包，$name）', ({ 
       render(
         '<ul data-listview-component="items-list">' +
           `${LABEL_ROW('documentation', 'Improvements or additions to documentation', 'doc')}` +
-          `${LABEL_ROW('good first issue', 'Good for newcomers', 'gfi', false)}</ul>`,
+          `${LABEL_ROW('good first issue', 'Good for newcomers', 'gfi', false)}</ul>`
       )
       // 列表条目的 TitleProvider：被动副作用（晚于变动回调）读行标题的 textContent，按它重拼行的 aria-label
       for (const [id, counted] of [
         ['doc', true],
-        ['gfi', false],
+        ['gfi', false]
       ] as const) {
         const title = document.getElementById(`${id}-title`)?.textContent?.trim() ?? ''
         document
@@ -2672,12 +2599,10 @@ describe.each(LABEL_LOCALES)('默认标签表（完整语言包，$name）', ({ 
         '<ul data-listview-component="items-list">' +
           `${LABEL_ROW('good first issue', 'Good for newcomers', 'gfi', false)}` +
           `${LABEL_ROW('regression', 'related to vapor mode', 'reg', false)}` +
-          `${LABEL_ROW('javascript', 'Pull requests that update javascript code', 'js', false)}</ul>`,
+          `${LABEL_ROW('javascript', 'Pull requests that update javascript code', 'js', false)}</ul>`
       )
       const [name, ecosystem] =
-        index === 1
-          ? ['适合新手的议题', '更新 javascript 代码的拉取请求']
-          : ['適合新手的議題', '更新 javascript 程式碼的拉取請求']
+        index === 1 ? ['适合新手的议题', '更新 javascript 代码的拉取请求'] : ['適合新手的議題', '更新 javascript 程式碼的拉取請求']
       expect(row('gfi')).toBe(`${name}。`)
       expect(label('gfi-link')).toBe(name)
       expect(text('gfi-name')).toBe(name)
@@ -2694,7 +2619,7 @@ describe.each(LABEL_LOCALES)('默认标签表（完整语言包，$name）', ({ 
     it('区域外同样的文字不按标签表翻译：同一段里的标签区域译出，区域外的标签名保持原文', () => {
       render(
         '<p id="banner">Sample text good first issue <span class="IssueLabel" id="inside">good first issue</span></p>' +
-          '<a class="Link--primary" href="/vuejs/core/tree/main/help%20wanted" id="dir">help wanted</a>',
+          '<a class="Link--primary" href="/vuejs/core/tree/main/help%20wanted" id="dir">help wanted</a>'
       )
       expect(text('inside')).toBe(index === 1 ? '适合新手的议题' : '適合新手的議題')
       expect(document.getElementById('banner')?.firstChild?.textContent).toBe('Sample text good first issue ')
@@ -2727,7 +2652,7 @@ describe.each(LABEL_LOCALES)('默认标签表（完整语言包，$name）', ({ 
       render(
         `${card('question', 'card')}${card('Enterprise', 'card-custom')}` +
           `${card('wontfix', 'card-archived', true)}${card('Enterprise', 'card-archived-custom', true)}`,
-        PROJECTS_SCOPE,
+        PROJECTS_SCOPE
       )
       expect(text('card')).toBe(index === 1 ? '疑问' : '疑問')
       expect(label('card')).toBe(index === 1 ? '标签：疑问' : '標籤：疑問')
@@ -2762,22 +2687,12 @@ describe.each(LABEL_LOCALES)('默认标签表（完整语言包，$name）', ({ 
       render(
         `${removable('help wanted', 'remove')}${removable('scope: vapor', 'remove-custom')}` +
           `${removable('wontfix', 'remove-archived', true)}${removable('scope: vapor', 'remove-archived-custom', true)}` +
-          `${removable('待办', 'remove-archived-cjk', true)}`,
+          `${removable('待办', 'remove-archived-cjk', true)}`
       )
       const expected =
         index === 1
-          ? [
-              '删除标签：需要帮助',
-              '删除标签：scope: vapor',
-              '删除标签：已存档不予修复',
-              '删除标签：已存档 scope: vapor',
-            ]
-          : [
-              '移除標籤：需要協助',
-              '移除標籤：scope: vapor',
-              '移除標籤：已封存不予修正',
-              '移除標籤：已封存 scope: vapor',
-            ]
+          ? ['删除标签：需要帮助', '删除标签：scope: vapor', '删除标签：已存档不予修复', '删除标签：已存档 scope: vapor']
+          : ['移除標籤：需要協助', '移除標籤：scope: vapor', '移除標籤：已封存不予修正', '移除標籤：已封存 scope: vapor']
       expect(text('remove-name')).toBe(index === 1 ? '需要帮助' : '需要協助')
       expect(text('remove-tip')).toBe(expected[0])
       expect(text('remove-custom-tip')).toBe(expected[1])
@@ -2802,7 +2717,7 @@ describe.each(LABEL_LOCALES)('默认标签表（完整语言包，$name）', ({ 
           `${sidebar('javascript', 'Pull requests that update javascript code', 'js')}` +
           `${sidebar('scope: vapor', 'related to vapor mode', 'custom')}` +
           // 自定义说明恰好是默认标签名、自定义标签名恰好是默认说明：名称与说明分开匹配，都保持原文
-          `${sidebar('a11y', 'accessibility', 'a11y')}${sidebar('Good for newcomers', 'related to vapor mode', 'gfn')}`,
+          `${sidebar('a11y', 'accessibility', 'a11y')}${sidebar('Good for newcomers', 'related to vapor mode', 'gfn')}`
       )
       const [name, description, ecosystem] =
         index === 1
@@ -2847,7 +2762,7 @@ describe.each(LABEL_LOCALES)('默认标签表（完整语言包，$name）', ({ 
       render(
         `<ul data-listview-component="items-list">${archivedRow('wontfix', 'won')}${archivedRow('scope: vapor', 'custom')}` +
           `${archivedRow('待办', 'cjk')}</ul>` +
-          `${removable('help wanted', 'remove')}${removable('scope: vapor', 'remove-custom')}`,
+          `${removable('help wanted', 'remove')}${removable('scope: vapor', 'remove-custom')}`
       )
       const [name, linkName, removeName, archivedPrefix, removePrefix] =
         index === 1
@@ -2875,7 +2790,7 @@ describe.each(LABEL_LOCALES)('默认标签表（完整语言包，$name）', ({ 
     it('新建、编辑标签对话框的预览令牌：占位文字与输入的默认标签名、令牌的无障碍名称同译；自定义名称保持原文', async () => {
       render(
         '<div class="container__pR3vW1"><span class="prc-Token-TokenBase-te5-F prc-Token-IssueLabel-2IazM IssueLabelToken__0H-m6r" ' +
-          'aria-label="Label preview" id="preview"><span class="prc-Token-TokenTextContainer-cOUaD" id="preview-name">Label preview</span></span></div>',
+          'aria-label="Label preview" id="preview"><span class="prc-Token-TokenTextContainer-cOUaD" id="preview-name">Label preview</span></span></div>'
       )
       const preview = index === 1 ? '标签预览' : '標籤預覽'
       expect(text('preview-name')).toBe(preview)
@@ -2910,7 +2825,7 @@ describe.each(LABEL_LOCALES)('默认标签表（完整语言包，$name）', ({ 
       render(
         `${token('dependencies', 'Pull requests that update a dependency file', 'deps')}` +
           `${token('javascript', 'Pull requests that update javascript code', 'js')}`,
-        PULLS_SCOPE,
+        PULLS_SCOPE
       )
       const title = (id: string): string | null | undefined => document.getElementById(id)?.getAttribute('title')
       expect(text('deps-name')).toBe(index === 1 ? '依赖项' : '相依項目')

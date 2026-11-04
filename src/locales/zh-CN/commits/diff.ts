@@ -7,7 +7,7 @@ const LINE_SOURCE = '[LR]?\\d+'
 /** 行操作菜单：Add comment / Suggest change */
 const LINE_ACTIONS: Readonly<Record<string, string>> = {
   'Add comment': '添加评论',
-  'Suggest change': '建议更改',
+  'Suggest change': '建议更改'
 }
 
 /** 行操作菜单的行范围：修改后 / 原始 */
@@ -17,7 +17,7 @@ const LINE_SIDES: Readonly<Record<string, string>> = { modified: '修改后的',
 const ANNOTATION_LEVELS: Readonly<Record<string, string>> = {
   warning: '警告',
   notice: '提示',
-  failure: '失败',
+  failure: '失败'
 }
 
 /** 文件树条目的屏幕阅读器文字：src/app.ts 有 3 条评论和警告注释（原文无标点，译文不加） */
@@ -34,7 +34,7 @@ const regexp: readonly RegExpRule[] = [
   // 经典比较页摘要（整句在同一节点时；原文无逗号，改语序不加逗号，with 与拆开时的 scoped 同译“包含”）
   [
     /^Showing ([\d,]+) changed files? with ([\d,]+) additions? and ([\d,]+) deletions?\.$/,
-    '显示包含新增 $2 行和删除 $3 行的 $1 个已更改的文件。',
+    '显示包含新增 $2 行和删除 $3 行的 $1 个已更改的文件。'
   ],
   // 经典比较页摘要：Showing <698 changed files> with <199,850 additions> and <8,959 deletions>.
   [/^([\d,]+) changed files?$/, '$1 个已更改的文件'],
@@ -50,12 +50,9 @@ const regexp: readonly RegExpRule[] = [
   // 文件树：src/app.ts has 3 comments and has warning annotations
   [
     /^(\S.*?) has (\d+|9\+) comments?(?: and has (warning|notice|failure) annotations)?$/,
-    (_, file: string, count: string, level: string) => fileTreeNote(file, count, level),
+    (_, file: string, count: string, level: string) => fileTreeNote(file, count, level)
   ],
-  [
-    /^(\S.*?) has (warning|notice|failure) annotations$/,
-    (_, file: string, level: string) => fileTreeNote(file, '', level),
-  ],
+  [/^(\S.*?) has (warning|notice|failure) annotations$/, (_, file: string, level: string) => fileTreeNote(file, '', level)],
   // 展开上下文
   [/^Expand file up from line (\d+)$/, '从第 $1 行向上展开文件'],
   [/^Expand file down from line (\d+)$/, '从第 $1 行向下展开文件'],
@@ -73,25 +70,23 @@ const regexp: readonly RegExpRule[] = [
   [
     /^(Add comment|Suggest change)(?: on lines? |, (modified|original) lines? )([LR]\d+)(?:-([LR]\d+))?$/,
     (_, action: string, side: string, start: string, end: string) =>
-      `在${side ? LINE_SIDES[side] : ''}第 ${end ? `${start} 至 ${end}` : start} 行${LINE_ACTIONS[action] ?? action}`,
+      `在${side ? LINE_SIDES[side] : ''}第 ${end ? `${start} 至 ${end}` : start} 行${LINE_ACTIONS[action] ?? action}`
   ],
   // 文件筛选后的剩余数播报
   [/^(\d+) files? remains?$/, '剩余 $1 个文件'],
   // 子模块：Submodule <路径> added at <sha> / updated <3 files>（路径无链接时与后面的动作拼成一句）
   [
     /^Submodule (\S+) (added at|deleted from)(?: ([0-9a-f]{7}))?$/,
-    (_, path: string, action: string, sha: string) =>
-      `子模块 ${path} ${action === 'added at' ? '添加于' : '删除自'}${sha ? ` ${sha}` : ''}`,
+    (_, path: string, action: string, sha: string) => `子模块 ${path} ${action === 'added at' ? '添加于' : '删除自'}${sha ? ` ${sha}` : ''}`
   ],
   [
     /^Submodule (\S+) updated(?: from ([0-9a-f]{7}) to ([0-9a-f]{7}))?$/,
-    (_, path: string, from: string, to: string) =>
-      from ? `子模块 ${path} 已从 ${from} 更新到 ${to}` : `子模块 ${path} 已更新`,
+    (_, path: string, from: string, to: string) => (from ? `子模块 ${path} 已从 ${from} 更新到 ${to}` : `子模块 ${path} 已更新`)
   ],
   [/^updated from ([0-9a-f]{7}) to ([0-9a-f]{7})$/, '已从 $1 更新到 $2'],
   [/^added at ([0-9a-f]{7})$/, '添加于 $1'],
   [/^deleted from ([0-9a-f]{7})$/, '删除自 $1'],
-  [/^from ([0-9a-f]{7}) to ([0-9a-f]{7})$/, '从 $1 到 $2'],
+  [/^from ([0-9a-f]{7}) to ([0-9a-f]{7})$/, '从 $1 到 $2']
 ]
 
 /**
@@ -180,7 +175,7 @@ export default {
     'Select to change location': '选择以更改位置',
     'Line range': '行范围',
     'Left (L)': '左侧 (L)',
-    'Right (R)': '右侧 (R)',
+    'Right (R)': '右侧 (R)'
   },
   scoped: {
     // 视图设置
@@ -244,8 +239,7 @@ export default {
     'The contents of the file couldn’t be loaded.': '无法加载文件内容。',
     'maximum diff size exceeded.': '超出最大差异大小。',
     'maximum number of lines exceeded.': '超出最大行数。',
-    'This diff could not be loaded automatically because of too many other changes.':
-      '此差异因其他更改过多而无法自动加载。',
+    'This diff could not be loaded automatically because of too many other changes.': '此差异因其他更改过多而无法自动加载。',
     'This diff could not be loaded automatically because of too many other files to display.':
       '此差异因要显示的其他文件过多而无法自动加载。',
     'There was an issue loading this file': '加载此文件时出现问题',
@@ -283,11 +277,11 @@ export default {
     'Add comment': '添加评论',
     // 新评论标题与更改位置对话框：添加评论于 <R12>（行号在按钮中）
     'Add a comment on': '添加评论于',
-    'Add comment on': '添加评论于',
+    'Add comment on': '添加评论于'
   },
   regexp,
   inline: [
     // 依赖项审查富差异底部：对 <依赖项审查> 提供反馈（与 Give feedback on Issues 同一句式）
-    ['Give feedback on {}', '对{}提供反馈'],
-  ],
+    ['Give feedback on {}', '对{}提供反馈']
+  ]
 } satisfies PageDictionary

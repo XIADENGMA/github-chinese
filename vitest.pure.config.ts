@@ -7,6 +7,6 @@ export default defineConfig({
     // 时区固定为 GMT+8：完整时间是否写时区取决于浏览器本地时区（见 time-text.ts、common-ui/time.ts）
     env: { TZ: 'Asia/Shanghai' },
     include: ['tests/unit/core/**/*.test.ts', 'tests/unit/locales/**/*.test.ts'],
-    globals: true,
-  },
+    globals: true
+  }
 })

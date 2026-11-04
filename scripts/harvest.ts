@@ -50,7 +50,7 @@ const matcher = createMatcher(zhCN)
 const RATE_LIMIT_BACKOFF_MS = 20_000
 
 function collectLinks(): string[] {
-  return [...new Set([...document.querySelectorAll('a[href]')].map((a) => (a as HTMLAnchorElement).href))]
+  return [...new Set([...document.querySelectorAll('a[href]')].map(a => (a as HTMLAnchorElement).href))]
 }
 
 async function settle(page: Page): Promise<void> {
@@ -90,12 +90,12 @@ async function visit(page: Page, task: Task): Promise<{ page: HarvestedPage; lin
       ignoreTags: [...IGNORE_TAGS],
       timeTags: [...TIME_TAGS],
       attributes: TRANSLATABLE_ATTRIBUTES,
-      buttonTypes: [...BUTTON_INPUT_TYPES],
+      buttonTypes: [...BUTTON_INPUT_TYPES]
     })
     const links = task.follow ? await page.evaluate(collectLinks) : []
     return {
       page: { url: task.url, finalUrl, status, redirected: isRedirectedAway(task.url, finalUrl), scopes, strings },
-      links,
+      links
     }
   }
 }
@@ -104,23 +104,19 @@ function expandFollow(task: Task, links: readonly string[]): Task[] {
   const follow = task.follow
   if (!follow) return []
   const pattern = new RegExp(follow.pattern)
-  const picked = links.filter((link) => pattern.test(link.split(/[?#]/)[0]!)).slice(0, follow.count)
-  return picked.flatMap((link) =>
-    (follow.suffixes ?? ['']).map((suffix) => ({
+  const picked = links.filter(link => pattern.test(link.split(/[?#]/)[0]!)).slice(0, follow.count)
+  return picked.flatMap(link =>
+    (follow.suffixes ?? ['']).map(suffix => ({
       area: task.area,
       url: link.split(/[?#]/)[0]! + suffix,
-      follow: follow.then,
-    })),
+      follow: follow.then
+    }))
   )
 }
 
-async function runQueue(
-  context: BrowserContext,
-  initial: Task[],
-  concurrency: number,
-): Promise<Map<string, HarvestedPage[]>> {
+async function runQueue(context: BrowserContext, initial: Task[], concurrency: number): Promise<Map<string, HarvestedPage[]>> {
   const queue = [...initial]
-  const seen = new Set(initial.map((task) => task.url))
+  const seen = new Set(initial.map(task => task.url))
   const results = new Map<string, HarvestedPage[]>()
   let done = 0
 
@@ -152,9 +148,7 @@ function toTasks(config: Record<string, readonly UrlSpec[]>, areas: ReadonlySet<
   return Object.entries(config)
     .filter(([area]) => !areas || areas.has(area))
     .flatMap(([area, specs]) =>
-      specs.map((spec) =>
-        typeof spec === 'string' ? { area, url: spec } : { area, url: spec.url, follow: spec.follow },
-      ),
+      specs.map(spec => (typeof spec === 'string' ? { area, url: spec } : { area, url: spec.url, follow: spec.follow }))
     )
 }
 
@@ -164,11 +158,11 @@ async function main(): Promise<void> {
       urls: { type: 'string', default: 'scripts/harvest-urls.json' },
       out: { type: 'string', default: '.harvest/raw' },
       areas: { type: 'string' },
-      concurrency: { type: 'string', default: '3' },
-    },
+      concurrency: { type: 'string', default: '3' }
+    }
   })
   const config = JSON.parse(await readFile(resolve(values.urls), 'utf8')) as Record<string, readonly UrlSpec[]>
-  const areas = values.areas ? new Set(values.areas.split(',').map((area) => area.trim())) : undefined
+  const areas = values.areas ? new Set(values.areas.split(',').map(area => area.trim())) : undefined
   const tasks = toTasks(config, areas)
   const outDir = resolve(values.out)
   await mkdir(outDir, { recursive: true })
@@ -177,7 +171,7 @@ async function main(): Promise<void> {
   const context = await browser.newContext({
     locale: 'en-US',
     viewport: { width: 1440, height: 900 },
-    extraHTTPHeaders: { 'Accept-Language': 'en-US,en;q=0.9' },
+    extraHTTPHeaders: { 'Accept-Language': 'en-US,en;q=0.9' }
   })
   // tsx（esbuild keepNames）会给函数包一层 __name，页面内需要同名占位
   await context.addInitScript({ content: 'globalThis.__name = (fn) => fn' })

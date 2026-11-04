@@ -4,7 +4,7 @@ import type { PageDictionary } from '../../../core/types'
 const MERGE_METHOD: Readonly<Record<string, string>> = {
   Merge: '合併',
   Squash: '壓縮',
-  Rebase: '重定基底',
+  Rebase: '重定基底'
 }
 
 /** 元数据限制的对象：英文 → 中文 */
@@ -13,7 +13,7 @@ const METADATA_SUBJECT: Readonly<Record<string, string>> = {
   'Author email': '作者電子郵件',
   'Committer email': '提交者電子郵件',
   'Branch name': '分支名稱',
-  'Tag name': '標記名稱',
+  'Tag name': '標記名稱'
 }
 
 /** 元数据限制的匹配方式：英文 → 中文（matching pattern 是用户填写的「比對模式」） */
@@ -21,7 +21,7 @@ const METADATA_OPERATOR: Readonly<Record<string, string>> = {
   'start with a matching pattern': '以比對模式開頭',
   'end with a matching pattern': '以比對模式結尾',
   'contain a matching pattern': '包含比對模式',
-  'match a given regex pattern': '符合指定的規則運算式',
+  'match a given regex pattern': '符合指定的規則運算式'
 }
 
 /** 输入校验的字段：英文 → 中文 */
@@ -29,14 +29,14 @@ const FIELD: Readonly<Record<string, string>> = {
   'File path': '檔案路徑',
   'File extension': '副檔名',
   'Maximum file path length': '檔案路徑長度上限',
-  'Maximum file size (MB)': '檔案大小上限 (MB)',
+  'Maximum file size (MB)': '檔案大小上限 (MB)'
 }
 
 /** 输入校验的问题：英文 → 中文 */
 const FIELD_PROBLEM: Readonly<Record<string, string>> = {
   'cannot be empty': '不可空白',
   'has already been added': '已加入',
-  'must be a whole number': '必須為整數',
+  'must be a whole number': '必須為整數'
 }
 
 /**
@@ -115,16 +115,13 @@ export default {
     'Require all commits be made to a non-target branch and submitted via a pull request before they can be merged.':
       '所有提交都必須先提交到非目標分支並透過拉取請求送出，才能合併。',
     'Required approvals': '必要的核准數',
-    'The number of approving reviews that are required before a pull request can be merged.':
-      '合併拉取請求前所需的核准審查數量。',
+    'The number of approving reviews that are required before a pull request can be merged.': '合併拉取請求前所需的核准審查數量。',
     'New, reviewable commits pushed will dismiss previous pull request review approvals.':
       '推送新的可審查提交時，將駁回先前的拉取請求審查核准。',
     'Require an approving review in pull requests that modify files that have a designated code owner.':
       '拉取請求修改有指定程式碼擁有者的檔案時，須取得核准審查。',
-    'All conversations on code must be resolved before a pull request can be merged.':
-      '必須先解決程式碼上的所有對話，拉取請求才能合併。',
-    'Require an additional approval for unattributed Copilot pull requests':
-      '要求未署名的 Copilot 拉取請求額外取得一次核准',
+    'All conversations on code must be resolved before a pull request can be merged.': '必須先解決程式碼上的所有對話，拉取請求才能合併。',
+    'Require an additional approval for unattributed Copilot pull requests': '要求未署名的 Copilot 拉取請求額外取得一次核准',
     'When Copilot opens a pull request without a human collaborator, require one more approving review if a non-zero approval count is required.':
       '當 Copilot 在沒有人類協作者的情況下建立拉取請求時，若所需核准數不為零，則要求多一次核准審查。',
     'Allowed merge methods': '允許的合併方式',
@@ -144,8 +141,7 @@ export default {
     'Select reviewer': '選擇審查者',
     'Search reviewers': '搜尋審查者',
     'Pagination for required reviewers': '必要審查者分頁',
-    'Pull requests which change matching files must be approved by the specified team.':
-      '變更相符檔案的拉取請求必須經指定團隊核准。',
+    'Pull requests which change matching files must be approved by the specified team.': '變更相符檔案的拉取請求必須經指定團隊核准。',
     'Pull requests which change matching files must be approved by the specified team. File patterns use fnmatch syntax.':
       '變更相符檔案的拉取請求必須經指定團隊核准。檔案模式使用 fnmatch 語法。',
     'A reviewer must be selected': '必須選擇審查者',
@@ -209,8 +205,7 @@ export default {
     'High or higher': '高以上',
     'Medium or higher': '中以上',
     'Errors and Warnings': '錯誤和警告',
-    'Tools that must provide code scanning results for this rule to pass.':
-      '必須提供程式碼掃描結果才能通過此規則的工具。',
+    'Tools that must provide code scanning results for this rule to pass.': '必須提供程式碼掃描結果才能通過此規則的工具。',
     'Learn more about enabling code scanning.': '瞭解如何啟用程式碼掃描。',
     'Please select at least one code scanning tool': '請至少選擇一個程式碼掃描工具',
 
@@ -259,10 +254,8 @@ export default {
     'Secret types': '機密類型',
     'Provider patterns': '提供者模式',
     'Secrets tied to a specific service provider.': '與特定服務提供者關聯的機密。',
-    'Secrets detected using regular expression patterns defined by your organization.':
-      '使用組織定義的規則運算式模式偵測到的機密。',
-    'Secrets not tied to a specific provider, detected with deterministic methods.':
-      '不與特定提供者關聯、以確定性方法偵測到的機密。',
+    'Secrets detected using regular expression patterns defined by your organization.': '使用組織定義的規則運算式模式偵測到的機密。',
+    'Secrets not tied to a specific provider, detected with deterministic methods.': '不與特定提供者關聯、以確定性方法偵測到的機密。',
     'Require license compliance results before merging': '要求合併前取得授權條款合規性結果',
     "Enforce any added or changed dependencies to comply with the organization's license policy.":
       '強制要求新增或變更的相依項目符合組織的授權條款政策。',
@@ -280,17 +273,14 @@ export default {
 
     // 推送规则
     'Restrict file paths': '限制檔案路徑',
-    'Prevent commits that include changes in specified file paths from being pushed.':
-      '禁止推送包含指定檔案路徑變更的提交。',
+    'Prevent commits that include changes in specified file paths from being pushed.': '禁止推送包含指定檔案路徑變更的提交。',
     'Restrict file path length': '限制檔案路徑長度',
     'Prevent commits that include file paths that exceed a specified character limit from being pushed.':
       '禁止推送檔案路徑超過指定字元數上限的提交。',
     'Restrict file extensions': '限制副檔名',
-    'Prevent commits that include files with specified file extensions from being pushed.':
-      '禁止推送包含指定副檔名檔案的提交。',
+    'Prevent commits that include files with specified file extensions from being pushed.': '禁止推送包含指定副檔名檔案的提交。',
     'Restrict file size': '限制檔案大小',
-    'Prevent commits that exceed a specified file size limit from being pushed.':
-      '禁止推送超過指定檔案大小上限的提交。',
+    'Prevent commits that exceed a specified file size limit from being pushed.': '禁止推送超過指定檔案大小上限的提交。',
     'Restricted file paths': '受限的檔案路徑',
     'Add restricted path': '新增受限路徑',
     'No restricted paths': '沒有受限路徑',
@@ -306,8 +296,7 @@ export default {
     'Restricted file extensions': '受限的副檔名',
     'Add file extension': '新增副檔名',
     'File extension': '副檔名',
-    'Commits that include files with the specified file extension will be rejected.':
-      '包含指定副檔名檔案的提交將遭拒絕。',
+    'Commits that include files with the specified file extension will be rejected.': '包含指定副檔名檔案的提交將遭拒絕。',
     'Examples: `bin`, `exe`': '範例：`bin`、`exe`',
     'No file extensions': '沒有副檔名',
     'File extension cannot contain \\, /, or *': '副檔名不可包含 \\、/ 或 *',
@@ -331,8 +320,7 @@ export default {
       '新增提交 ID 限制以禁止特定提交進入目標分支',
 
     // 按名称匹配存储库（组织规则集）
-    'Specify if repository names must match or cannot match the naming pattern.':
-      '指定儲存庫名稱必須符合還是不得符合命名模式。',
+    'Specify if repository names must match or cannot match the naming pattern.': '指定儲存庫名稱必須符合還是不得符合命名模式。',
     'Must match': '必須符合',
     'Repository names must match the specified naming pattern.': '儲存庫名稱必須符合指定的命名模式。',
     'Cannot match': '不得符合',
@@ -395,7 +383,7 @@ export default {
     'Required status checks cannot be empty. Please add at least one status check or disable the rule.':
       '必要狀態檢查不可空白。請至少新增一項狀態檢查，或停用此規則。',
     'Workflows cannot be empty. Please add at least one workflow or disable the rule.':
-      '工作流程不可空白。請至少新增一個工作流程，或停用此規則。',
+      '工作流程不可空白。請至少新增一個工作流程，或停用此規則。'
   },
   scoped: {
     Merge: '合併',
@@ -425,14 +413,14 @@ export default {
     Reviewer: '審查者',
     'File patterns': '檔案模式',
     // 文件路径限制说明：<字段说明> Supports <a>fnmatch patterns</a> for files and folders.（支援 fnmatch 模式比對檔案和資料夾。）
-    Supports: '支援',
+    Supports: '支援'
   },
   regexp: [
     // 元数据限制说明：Commit message must start with a matching pattern
     [
       /^(Commit message|Author email|Committer email|Branch name|Tag name) must (not )?(start with a matching pattern|end with a matching pattern|contain a matching pattern|match a given regex pattern)$/,
       (_, subject: string, not: string, operator: string) =>
-        `${METADATA_SUBJECT[subject] ?? subject}${not ? '不得' : '必須'}${METADATA_OPERATOR[operator] ?? operator}`,
+        `${METADATA_SUBJECT[subject] ?? subject}${not ? '不得' : '必須'}${METADATA_OPERATOR[operator] ?? operator}`
     ],
     // 允许的合并方式组合：Merge, Squash, Rebase
     [
@@ -440,8 +428,8 @@ export default {
       (match: string) =>
         match
           .split(', ')
-          .map((method) => MERGE_METHOD[method] ?? method)
-          .join('、'),
+          .map(method => MERGE_METHOD[method] ?? method)
+          .join('、')
     ],
     // 状态检查搜索结果：Already added ci/build、Add ci/build（只认带 / : . _ - 的检查名，避免误伤普通按钮）
     [/^Already added (.{1,100})$/, '已加入 $1'],
@@ -460,7 +448,7 @@ export default {
         const name = FIELD[field] ?? field
         // 半角括号与中文之间空一格：檔案大小上限 (MB) 必須為整數
         return `${name}${name.endsWith(')') ? ' ' : ''}${FIELD_PROBLEM[problem] ?? problem}`
-      },
-    ],
-  ],
+      }
+    ]
+  ]
 } satisfies PageDictionary

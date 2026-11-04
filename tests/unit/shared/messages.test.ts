@@ -4,18 +4,18 @@ import {
   isContentMessage,
   isContentStatus,
   isFetchedImage,
-  isResolvedDownload,
+  isResolvedDownload
 } from '../../../src/shared/messages'
 
 const STATUS = {
   active: true,
   excluded: false,
   pages: ['common', 'repository'],
-  translatedCount: 12,
+  translatedCount: 12
 }
 
 describe('isContentMessage', () => {
-  it.each(['gcn:get-status', 'gcn:custom-entries-changed', 'gcn:search-rules-changed'])('%s 合法', (type) => {
+  it.each(['gcn:get-status', 'gcn:custom-entries-changed', 'gcn:search-rules-changed'])('%s 合法', type => {
     expect(isContentMessage({ type })).toBe(true)
   })
 
@@ -29,8 +29,8 @@ describe('isContentMessage', () => {
     { type: 'gcn:get-untranslated' },
     { type: 'gcn:flush-untranslated' },
     { type: 'gcn:untranslated-cleared', epoch: 1 },
-    { type: 'gcn:clear-untranslated' },
-  ])('%j 非法', (value) => {
+    { type: 'gcn:clear-untranslated' }
+  ])('%j 非法', value => {
     expect(isContentMessage(value)).toBe(false)
   })
 })
@@ -49,14 +49,14 @@ describe('isContentStatus', () => {
     ['pages 含非字符串', { ...STATUS, pages: ['common', 1] }],
     ['计数为负', { ...STATUS, translatedCount: -1 }],
     ['计数非整数', { ...STATUS, translatedCount: 1.5 }],
-    ['计数为字符串', { ...STATUS, translatedCount: '3' }],
+    ['计数为字符串', { ...STATUS, translatedCount: '3' }]
   ])('%s → 非法', (_name, value) => {
     expect(isContentStatus(value)).toBe(false)
   })
 })
 
 describe('isBackgroundMessage', () => {
-  it.each(['gcn:custom-entries-saved', 'gcn:search-rules-saved'])('%s（设置页已保存）合法', (type) => {
+  it.each(['gcn:custom-entries-saved', 'gcn:search-rules-saved'])('%s（设置页已保存）合法', type => {
     expect(isBackgroundMessage({ type })).toBe(true)
   })
 
@@ -74,7 +74,7 @@ describe('isBackgroundMessage', () => {
     ['未知类型', { type: 'gcn:get-status' }],
     ['发给内容脚本的类型', { type: 'gcn:search-rules-changed' }],
     ['旧版未翻译上报', { type: 'gcn:report-untranslated', items: [['Open issues', 'issues', 1, 2, 1]] }],
-    ['旧版未翻译清空', { type: 'gcn:clear-untranslated' }],
+    ['旧版未翻译清空', { type: 'gcn:clear-untranslated' }]
   ])('%s → 非法', (_name, value) => {
     expect(isBackgroundMessage(value)).toBe(false)
   })

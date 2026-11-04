@@ -31,8 +31,8 @@ describe('simplifiedChars', () => {
     '斯里蘭卡',
     '千里達及托巴哥',
     '史瓦希里文',
-    '佛羅里達州',
-  ])('繁体「%s」不报', (text) => {
+    '佛羅里達州'
+  ])('繁体「%s」不报', text => {
     expect(simplifiedChars(text)).toEqual([])
   })
 
@@ -53,7 +53,7 @@ describe('simplifiedChars', () => {
     ['损坏', ['损', '坏']],
     ['这里', ['这', '里']],
     ['云端', ['云']],
-    ['设置设置', ['设']],
+    ['设置设置', ['设']]
   ])('「%s」报 %j', (text, chars) => {
     expect(simplifiedChars(text)).toEqual(chars)
   })

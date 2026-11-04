@@ -19,10 +19,10 @@ export default defineConfig({
   use: {
     actionTimeout: 15_000,
     navigationTimeout: 60_000,
-    trace: 'retain-on-failure',
+    trace: 'retain-on-failure'
   },
   projects: [
     { name: 'offline', testIgnore: /live\.spec\.ts$/ },
-    { name: 'live', testMatch: /live\.spec\.ts$/, timeout: 180_000 },
-  ],
+    { name: 'live', testMatch: /live\.spec\.ts$/, timeout: 180_000 }
+  ]
 })

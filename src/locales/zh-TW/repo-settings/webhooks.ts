@@ -77,8 +77,7 @@ export default {
     'Recent Deliveries': '最近傳遞',
     'Loading deliveries…': '正在載入傳遞記錄…',
     'Loading deliveries...': '正在載入傳遞記錄...',
-    'Detailed delivery information will be shown here once the hook has been triggered.':
-      'Web 鉤子觸發後，詳細的傳遞資訊會顯示在這裡。',
+    'Detailed delivery information will be shown here once the hook has been triggered.': 'Web 鉤子觸發後，詳細的傳遞資訊會顯示在這裡。',
     'Redeliver payload?': '重新傳遞承載？',
     // 「The payload will be delivered to」+ <code>URL</code> +「using the current webhook configuration.」：后半句的意思并入前一段，只留句号
     'The payload will be delivered to': '承載將依目前的 Web 鉤子設定傳遞到',
@@ -151,8 +150,7 @@ export default {
     'Milestone created, closed, opened, edited, or deleted.': '里程碑已建立、關閉、開啟、編輯或刪除。',
     'Org blocks': '組織封鎖',
     'A user has been blocked or unblocked.': '使用者已被封鎖或解除封鎖。',
-    'Organization deleted, renamed, member invited, member added, or member removed.':
-      '組織已刪除或重新命名，或已邀請、新增或移除成員。',
+    'Organization deleted, renamed, member invited, member added, or member removed.': '組織已刪除或重新命名，或已邀請、新增或移除成員。',
     'GitHub Packages published or updated in a repository.': '儲存庫中已發布或更新 GitHub 套件。',
     'Page builds': '頁面建置',
     'Pages site built.': '已建置頁面網站。',
@@ -214,8 +212,7 @@ export default {
     'Commit status updated from the API.': '已透過 API 更新提交狀態。',
     'Team adds': '團隊加入',
     'Team added or modified on a repository.': '團隊已加入儲存庫或已在儲存庫中修改。',
-    'Team is created, deleted, edited, or added to/removed from a repository.':
-      '團隊已建立、刪除、編輯，或已加入儲存庫/從儲存庫移除。',
+    'Team is created, deleted, edited, or added to/removed from a repository.': '團隊已建立、刪除、編輯，或已加入儲存庫/從儲存庫移除。',
     'Visibility changes': '可見度變更',
     'Repository changes from private to public.': '儲存庫從私人變更為公開。',
     'User stars a repository.': '使用者為儲存庫加星號。',
@@ -228,14 +225,12 @@ export default {
     'Sub-issues added or removed, and parent issues added or removed.': '子議題已新增或移除，父議題已新增或移除。',
     // 议题之间的依赖作「相依關係」（同 issues/metadata.ts）；原文两个 - 夹注改作括号
     'Issue dependencies': '議題相依關係',
-    'Issue dependencies - such as blocked by or blocking - added or removed.':
-      '議題相依關係（例如受阻於或阻擋）已新增或移除。',
+    'Issue dependencies - such as blocked by or blocking - added or removed.': '議題相依關係（例如受阻於或阻擋）已新增或移除。',
     'Related issues': '相關議題',
     'Related issues - such as relates to - added or removed.': '相關議題關係（例如相關）已新增或移除。',
 
     // 电子邮件通知
-    'Setup email addresses to receive notifications when push events are triggered.':
-      '設定在推送事件觸發時接收通知的電子郵件地址。',
+    'Setup email addresses to receive notifications when push events are triggered.': '設定在推送事件觸發時接收通知的電子郵件地址。',
     'Asterisk (*) denotes a required field': '星號 (*) 表示必填欄位',
     'Whitespace separated email addresses (at most two).': '以空白分隔的電子郵件地址（最多兩個）。',
     'Approved header': 'Approved 標頭',
@@ -272,7 +267,7 @@ export default {
     'GitHub Apps augment and extend your workflows on GitHub with commercial, open source, and homegrown tools.':
       'GitHub 應用程式透過商業、開源和自行開發的工具，增強並擴充你在 GitHub 上的工作流程。',
     "There aren't any GitHub Apps installed on this repository.": '此儲存庫未安裝任何 GitHub 應用程式。',
-    'There aren’t any GitHub Apps installed on this repository.': '此儲存庫未安裝任何 GitHub 應用程式。',
+    'There aren’t any GitHub Apps installed on this repository.': '此儲存庫未安裝任何 GitHub 應用程式。'
   },
   scoped: {
     'Webhooks /': 'Web 鉤子 /',
@@ -316,25 +311,19 @@ export default {
     Numeric: '數字',
     '/ Add new': '/ 新增',
     Suspended: '已暫停',
-    'Developed by': '開發人員',
+    'Developed by': '開發人員'
   },
   regexp: [
     // 列表：传递失败原因、删除确认（含 URL）
     [/^Last delivery was not successful\. (.+)$/, '上次傳遞失敗。$1'],
     [
       /^This action cannot be undone\. Future events will no longer be delivered to this webhook \((\S+)\)(\.?)$/,
-      (_, url: string, dot: string) => `此動作無法復原。之後的事件將不再傳遞到此 Web 鉤子 (${url})${dot ? '。' : ''}`,
+      (_, url: string, dot: string) => `此動作無法復原。之後的事件將不再傳遞到此 Web 鉤子 (${url})${dot ? '。' : ''}`
     ],
     // 传递详细资料
-    [
-      /^Completed in ([\d.]+) seconds?(\.?)$/,
-      (_, seconds: string, dot: string) => `耗時 ${seconds} 秒${dot ? '。' : ''}`,
-    ],
-    [
-      /^The payload will be delivered to (\S+) using the current webhook configuration\.$/,
-      '承載將依目前的 Web 鉤子設定傳遞到 $1。',
-    ],
+    [/^Completed in ([\d.]+) seconds?(\.?)$/, (_, seconds: string, dot: string) => `耗時 ${seconds} 秒${dot ? '。' : ''}`],
+    [/^The payload will be delivered to (\S+) using the current webhook configuration\.$/, '承載將依目前的 Web 鉤子設定傳遞到 $1。'],
     // 已安装的 GitHub 应用程序：整句在同一文本节点时按中文语序；被链接拆开时见 scoped 的「Developed by」
-    [/^Developed by ([\w.-]+)$/, '由 $1 開發'],
-  ],
+    [/^Developed by ([\w.-]+)$/, '由 $1 開發']
+  ]
 } satisfies PageDictionary

@@ -28,9 +28,9 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Published 38 minutes ago · Digest', '38 分钟前发布 · 摘要'],
-      ['Published about 24 hours ago · Digest', '约 24 小时前发布 · 摘要'],
+      ['Published about 24 hours ago · Digest', '约 24 小时前发布 · 摘要']
     ],
-    misses: ['Published · Digest', 'Published recently · Digest'],
+    misses: ['Published · Digest', 'Published recently · Digest']
   },
   {
     hits: [
@@ -39,9 +39,9 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Published on Mar 25, 2021', '2021 年 3 月 25 日发布'],
       // translateDate 接受 on 前缀的月年、日月年写法
       ['Published on January 2024', '2024 年 1 月发布'],
-      ['Published on 5 January 2024', '2024 年 1 月 5 日发布'],
+      ['Published on 5 January 2024', '2024 年 1 月 5 日发布']
     ],
-    misses: ['Published recently', 'Published by octocat'],
+    misses: ['Published recently', 'Published by octocat']
   },
   // 版本列表标签页与筛选
   { hits: [['4,558 tagged', '4,558 个带标签版本']], misses: ['all tagged'] },
@@ -50,23 +50,23 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   { hits: [['3 deleted', '3 个已删除版本']], misses: ['none deleted'] },
   {
     hits: [['Package versions of hello-world', 'hello-world 的软件包版本']],
-    misses: ['Package versions of'],
+    misses: ['Package versions of']
   },
   // 详情侧栏
   {
     hits: [
       ['+ 5,355 contributors', '+ 5,355 个贡献者'],
-      ['+ 1 contributor', '+ 1 个贡献者'],
+      ['+ 1 contributor', '+ 1 个贡献者']
     ],
-    misses: ['5,355 contributors'],
+    misses: ['5,355 contributors']
   },
   {
     hits: [
       ['1 dependencies', '1 个依赖项'],
       ['1 dependency', '1 个依赖项'],
-      ['12 dependencies', '12 个依赖项'],
+      ['12 dependencies', '12 个依赖项']
     ],
-    misses: ['No dependencies'],
+    misses: ['No dependencies']
   },
   {
     hits: [
@@ -78,25 +78,25 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Learn more about Docker', '了解 Docker'],
       ['Learn more about Containers', '了解容器'],
       ['Learn more about Containers packages', '了解容器软件包'],
-      ['Learn more about npm', '了解 npm'],
+      ['Learn more about npm', '了解 npm']
     ],
-    misses: ['Learn more about Cargo packages', 'Learn more about Swift'],
+    misses: ['Learn more about Cargo packages', 'Learn more about Swift']
   },
   // 页面标题段
   {
     hits: [
       ['Package hello-world', '软件包 hello-world'],
       ['Package @octo-org/prettier-config', '软件包 @octo-org/prettier-config'],
-      ['Package Octocat.Json', '软件包 Octocat.Json'],
+      ['Package Octocat.Json', '软件包 Octocat.Json']
     ],
-    misses: ['Package Details', 'Package visibility', 'Package'],
+    misses: ['Package Details', 'Package visibility', 'Package']
   },
   {
     hits: [
       ['hello-world versions', 'hello-world 的版本'],
       ['prettier-config versions', 'prettier-config 的版本'],
       ['Octocat.Json versions', 'Octocat.Json 的版本'],
-      ['@octo-org/prettier-config versions', '@octo-org/prettier-config 的版本'],
+      ['@octo-org/prettier-config versions', '@octo-org/prettier-config 的版本']
     ],
     misses: [
       'View versions',
@@ -106,74 +106,69 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       'Older versions',
       'all versions',
       'older versions',
-      'hello-world Versions',
-    ],
+      'hello-world Versions'
+    ]
   },
   // 设置：确认对话框
   {
     hits: [
       ['Please type hello-world to confirm.', '请输入 hello-world 以确认。'],
-      ['Please type acme/app to confirm:', '请输入 acme/app 以确认：'],
+      ['Please type acme/app to confirm:', '请输入 acme/app 以确认：']
     ],
-    misses: ['Please type to confirm', 'Please type acme/app to confirm'],
+    misses: ['Please type to confirm', 'Please type acme/app to confirm']
   },
   {
     hits: [['Are you sure you want to unlink acme/web from app-image?', '确定要取消 acme/web 与 app-image 的链接吗？']],
-    misses: ['Are you sure you want to unlink this?'],
+    misses: ['Are you sure you want to unlink this?']
   },
   // 设置：访问权限列表
   {
     hits: [
       ['2 repositories selected…', '已选择 2 个存储库…'],
-      ['1 repository selected...', '已选择 1 个存储库...'],
+      ['1 repository selected...', '已选择 1 个存储库...']
     ],
-    misses: ['repositories selected…'],
+    misses: ['repositories selected…']
   },
   {
     hits: [['Change the role of 2 repositories?', '要更改 2 个存储库的角色吗？']],
-    misses: ['Change the role of repositories?'],
+    misses: ['Change the role of repositories?']
   },
   {
     hits: [
       ['1 member selected...', '已选择 1 个成员...'],
-      ['3 members selected…', '已选择 3 个成员…'],
+      ['3 members selected…', '已选择 3 个成员…']
     ],
-    misses: ['members selected…'],
+    misses: ['members selected…']
   },
   { hits: [['Change the role of 4 members?', '要更改 4 个成员的角色吗？']], misses: ['Change the role of members?'] },
   {
     hits: [
       ['Change 2 Roles', '更改 2 个角色'],
-      ['Change 1 role', '更改 1 个角色'],
+      ['Change 1 role', '更改 1 个角色']
     ],
-    misses: ['Change roles'],
+    misses: ['Change roles']
   },
   { hits: [["octocat's access settings", 'octocat 的访问设置']], misses: ["'s access settings"] },
   {
     hits: [['Removed access from repository acme/web.', '已移除存储库 acme/web 的访问权限。']],
-    misses: ['Removed access from repository.'],
+    misses: ['Removed access from repository.']
   },
   {
     hits: [['Removed octocat as a package collaborator.', '已将 octocat 从软件包协作者中移除。']],
-    misses: ['Removed as a package collaborator.'],
+    misses: ['Removed as a package collaborator.']
   },
   {
     hits: [
       ['Remove acme/web from app-image', '从 app-image 中移除 acme/web'],
       ['Remove acme/web from app-image?', '要从 app-image 中移除 acme/web 吗？'],
-      ['Remove octocat from app-image', '从 app-image 中移除 octocat'],
+      ['Remove octocat from app-image', '从 app-image 中移除 octocat']
     ],
-    misses: [
-      'Remove from app-image',
-      'Remove acme web from app-image',
-      'Remove access from repository',
-      'Remove user from package?',
-    ],
-  },
+    misses: ['Remove from app-image', 'Remove acme web from app-image', 'Remove access from repository', 'Remove user from package?']
+  }
 ]
 
-const HITS = REGEXP_CASES.flatMap((item) => item.hits)
-const MISSES = REGEXP_CASES.flatMap((item) => item.misses)
+const HITS = REGEXP_CASES.flatMap(item => item.hits)
+const MISSES = REGEXP_CASES.flatMap(item => item.misses)
 const RULES = dict.regexp ?? []
 
 function firstRule(input: string): number {
@@ -187,14 +182,14 @@ describe('packages 正则词条', () => {
     expect(translate(input)).toBe(expected)
   })
 
-  it.each(MISSES)('不命中：%s', (input) => {
+  it.each(MISSES)('不命中：%s', input => {
     expect(translate(input)).toBeUndefined()
   })
 
   it('用例与正则一一对应，正例首个命中对应的正则', () => {
     expect(REGEXP_CASES).toHaveLength(RULES.length)
     const mismatched = REGEXP_CASES.flatMap((item, index) =>
-      item.hits.filter(([input]) => firstRule(input) !== index).map(([input]) => `#${index} ${input}`),
+      item.hits.filter(([input]) => firstRule(input) !== index).map(([input]) => `#${index} ${input}`)
     )
     expect(mismatched).toEqual([])
   })
@@ -218,12 +213,8 @@ describe('packages 正则词条', () => {
     expect(translate('This package version was published')).toBe('此软件包版本发布于')
     // This cannot be undone. This will permanently delete the version <strong>…</strong> so users and processes …
     // 原文片段之间没有逗号，译文用“并”衔接
-    expect(translate('This cannot be undone. This will permanently delete the version')).toBe(
-      '此操作无法撤销。这将永久删除版本',
-    )
-    expect(translate('so users and processes won’t be able to download this version.')).toBe(
-      '并让用户和进程无法再下载此版本。',
-    )
+    expect(translate('This cannot be undone. This will permanently delete the version')).toBe('此操作无法撤销。这将永久删除版本')
+    expect(translate('so users and processes won’t be able to download this version.')).toBe('并让用户和进程无法再下载此版本。')
     // Once removed, <strong>repo</strong> will no longer have access to the <strong>name</strong> package.
     expect(translate('Once removed,')).toBe('移除后，')
     expect(translate('will no longer have access to the')).toBe('将无法再访问')
@@ -233,11 +224,9 @@ describe('packages 正则词条', () => {
     expect(translate('to confirm:')).toBe('以确认：')
     // Go to <a>owner/repo</a> to change access, or remove inherited access …
     expect(translate('Go to')).toBe('转到')
-    expect(
-      translate(
-        'to change access, or remove inherited access to manage it separately. Inherited access is recommended.',
-      ),
-    ).toBe('更改访问权限，或移除继承的访问权限以单独管理。推荐使用继承的访问权限。')
+    expect(translate('to change access, or remove inherited access to manage it separately. Inherited access is recommended.')).toBe(
+      '更改访问权限，或移除继承的访问权限以单独管理。推荐使用继承的访问权限。'
+    )
     // This action will delete package <strong>name</strong>. Versions of this package …
     expect(translate('This action will delete package')).toBe('此操作将删除软件包')
     // Try <a>browsing all packages</a> to find what you're looking for.（原文无逗号，译文不加）
@@ -279,19 +268,13 @@ describe('packages 静态词条', () => {
     ['Learn more about labelling container images', '了解如何标注容器映像'],
     ['Manage Actions access', '管理操作访问权限'],
     ['Manage Codespaces access', '管理代码空间访问权限'],
-    [
-      'Pick the repositories that can access this package using GitHub Actions.',
-      '选择可通过 GitHub 操作访问此软件包的存储库。',
-    ],
+    ['Pick the repositories that can access this package using GitHub Actions.', '选择可通过 GitHub 操作访问此软件包的存储库。'],
     ['remove access to repository from this package', '移除存储库对此软件包的访问权限'],
     // 原文分句、原文无逗号或括号处，译文不合并、不添加
-    [
-      'Can upload and download this package. Can read and write package metadata.',
-      '可上传和下载此软件包。可读写软件包元数据。',
-    ],
+    ['Can upload and download this package. Can read and write package metadata.', '可上传和下载此软件包。可读写软件包元数据。'],
     [
       'A software platform used for building applications based on containers — small and lightweight execution environments.',
-      '基于容器构建应用的软件平台——容器即小巧轻量的执行环境。',
+      '基于容器构建应用的软件平台——容器即小巧轻量的执行环境。'
     ],
     ['Once you delete a package, there is no going back. Please be certain.', '删除软件包后，将无法恢复。请谨慎操作。'],
     ['Inherit access from source repository (recommended)', '从源存储库继承访问权限（推荐）'],
@@ -302,7 +285,7 @@ describe('packages 静态词条', () => {
     ['Delete this package', '删除此软件包'],
     ['I understand the consequences, delete this package', '我了解后果，删除此软件包'],
     ['I understand, delete this package.', '我了解，删除此软件包。'],
-    ['I understand the consequences, restore this version.', '我了解后果，恢复此版本。'],
+    ['I understand the consequences, restore this version.', '我了解后果，恢复此版本。']
   ])('%s → %s', (input, expected) => {
     expect(dict.static?.[input]).toBe(expected)
     expect(translate(input)).toBe(expected)
@@ -341,7 +324,7 @@ describe('packages 页面词条', () => {
     ['Manage versions', '管理版本'],
     ['Actions access', '操作访问权限'],
     ['Danger Zone', '危险区域'],
-    ['Change visibility', '更改可见性'],
+    ['Change visibility', '更改可见性']
   ])('%s → %s', (input, expected) => {
     expect(dict.scoped?.[input]).toBe(expected)
     expect(translate(input)).toBe(expected)
@@ -369,7 +352,7 @@ describe('packages 页面词条', () => {
 })
 
 describe('packages 忽略选择器', () => {
-  it.each(dict.ignore ?? [])('%s 是合法选择器', (selector) => {
+  it.each(dict.ignore ?? [])('%s 是合法选择器', selector => {
     expect(() => document.createElement('div').querySelector(selector)).not.toThrow()
   })
 
@@ -399,7 +382,7 @@ describe('packages 忽略选择器', () => {
       <span class="Label v-align-middle">Latest</span>`
     const selector = (dict.ignore ?? []).join(', ')
     const ignored = (text: string): boolean => {
-      const element = [...document.querySelectorAll('*')].reverse().find((node) => node.textContent?.trim() === text)
+      const element = [...document.querySelectorAll('*')].reverse().find(node => node.textContent?.trim() === text)
       return Boolean(element?.closest(selector))
     }
     expect(ignored('app-image')).toBe(true)

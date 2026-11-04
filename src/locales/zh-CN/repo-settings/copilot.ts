@@ -21,8 +21,7 @@ export default {
       '使用 Copilot 代码审查，可以将 Copilot 添加为拉取请求（包括草稿）的审查者。也可以在 Visual Studio Code 中选择代码行，让 Copilot 审查并评论特定部分。',
     'Learn more about Copilot code reviews.': '了解 Copilot 代码审查。',
     'Automated code reviews using rulesets': '使用规则集自动审查代码',
-    'Use rulesets to configure Copilot to review pull requests automatically.':
-      '使用规则集配置 Copilot 自动审查拉取请求。',
+    'Use rulesets to configure Copilot to review pull requests automatically.': '使用规则集配置 Copilot 自动审查拉取请求。',
     'Learn how to set up rulesets.': '了解如何设置规则集。',
     'Go to rulesets': '转到规则集',
     'No rulesets set up for automated reviews': '尚未为自动审查设置规则集',
@@ -120,8 +119,7 @@ export default {
     'Automation level': '自动化级别',
     'Set how much control the agent has to apply changes': '设置代理应用更改的自主程度',
     'Full control': '完全掌控',
-    'Every suggestion is held for your review. Nothing is applied automatically.':
-      '每条建议都等待你审查，不会自动应用任何更改。',
+    'Every suggestion is held for your review. Nothing is applied automatically.': '每条建议都等待你审查，不会自动应用任何更改。',
     Cautious: '谨慎',
     'Only high confidence changes are applied automatically. Everything else is held for your review.':
       '仅自动应用高置信度的更改，其余更改都等待你审查。',
@@ -205,12 +203,11 @@ export default {
     'See the GitHub Docs for syntax and examples.': '语法和示例请参阅 GitHub 文档。',
     'e.g. https://example.com/a/path or example.com': '例如 https://example.com/a/path 或 example.com',
     'Rule must be a valid domain, IP address, or URL': '规则必须是有效的域、IP 地址或 URL',
-    'Tip: Paste a list of rules into the input to add them all at once.':
-      '提示：将规则列表粘贴到输入框可一次性全部添加。',
+    'Tip: Paste a list of rules into the input to add them all at once.': '提示：将规则列表粘贴到输入框可一次性全部添加。',
     'Allowlist settings saved successfully!': '已保存允许列表设置！',
     'Allow repository custom rules': '允许存储库自定义规则',
     'Let repositories decide': '由存储库决定',
-    'Organization custom allowlist': '组织自定义允许列表',
+    'Organization custom allowlist': '组织自定义允许列表'
   },
   scoped: {
     // 「With」+ 链接「Copilot in the cloud」+「, developers can …」
@@ -244,6 +241,6 @@ export default {
     Use: '使用',
     'to toggle the': '切换',
     'key moving focus. Alternatively, use': '键是否移动焦点。也可以先按',
-    'to move to the next interactive element on the page.': '移动到页面上的下一个交互元素。',
-  },
+    'to move to the next interactive element on the page.': '移动到页面上的下一个交互元素。'
+  }
 } satisfies PageDictionary

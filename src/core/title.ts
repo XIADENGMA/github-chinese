@@ -55,7 +55,7 @@ function isRulesPage(parts: readonly string[]): boolean {
 function userSegmentCount(segments: readonly string[], pathname: string, end: number): number {
   if (WORKFLOW_PATH_RE.test(pathname) || isDescriptionTitle(segments[0] ?? '', pathname)) return end
   const wiki = WIKI_PATH_RE.exec(pathname)
-  const wikiPage = wiki !== null && !(wiki[1] ?? '').split('/').some((part) => part.startsWith('_'))
+  const wikiPage = wiki !== null && !(wiki[1] ?? '').split('/').some(part => part.startsWith('_'))
   let count = 0
   segments.forEach((segment, i) => {
     const normalized = normalizeText(segment)
@@ -103,10 +103,7 @@ function userSegment(segments: readonly string[], pathname: string, hostname: st
   return (normalized, i) => {
     const lower = normalized.toLowerCase()
     return (
-      i < skip ||
-      lower === login ||
-      (i === repositoryIndex && lower === repository) ||
-      (i === 0 && first === 'topics' && lower === topic)
+      i < skip || lower === login || (i === repositoryIndex && lower === repository) || (i === 0 && first === 'topics' && lower === topic)
     )
   }
 }
@@ -121,7 +118,7 @@ export function translateTitleText(
   title: string,
   translate: (text: string) => string | undefined,
   pathname = '',
-  hostname = 'github.com',
+  hostname = 'github.com'
 ): string {
   const segments = title.split(TITLE_SEPARATOR)
   const isUser = userSegment(segments, pathname, hostname)

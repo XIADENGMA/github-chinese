@@ -19,7 +19,7 @@ const PERIODS: Readonly<Record<string, string>> = {
   'last 30 days': '過去 30 天',
   'last 90 days': '過去 90 天',
   'last year': '去年',
-  custom: '自訂範圍',
+  custom: '自訂範圍'
 }
 
 function period(text: string): string {
@@ -35,7 +35,7 @@ const PERFORMANCE_METRICS: Readonly<Record<string, string>> = {
   'Average run time of': '作業的平均執行時間',
   'Average queue time of': '作業的平均佇列時間',
   'Failure rate across': '作業的失敗率',
-  'Total minutes used across failed': '失敗作業使用的總分鐘數',
+  'Total minutes used across failed': '失敗作業使用的總分鐘數'
 }
 
 const PERFORMANCE_SOURCE = Object.keys(PERFORMANCE_METRICS).join('|')
@@ -45,7 +45,7 @@ const ATTESTATION_FIELDS: Readonly<Record<string, string>> = {
   Created: '建立時間',
   Commit: '提交',
   'Build Summary': '建置摘要',
-  'Workflow File': '工作流程檔案',
+  'Workflow File': '工作流程檔案'
 }
 
 /** Created 的取值：Oct 23 (Fri, 23 Oct 2026 20:22:17 GMT) → 10 月 23 日 (Fri, 23 Oct 2026 20:22:17 GMT)；括号内的完整时间戳保留原文 */
@@ -178,7 +178,7 @@ export default {
     'Source Repository Owner URI': '來源儲存庫擁有者 URI',
     'Source Repository Ref': '來源儲存庫參考',
     'Source Repository URI': '來源儲存庫 URI',
-    'Source Repository Visibility': '來源儲存庫可見度',
+    'Source Repository Visibility': '來源儲存庫可見度'
   },
 
   scoped: {
@@ -218,7 +218,7 @@ export default {
     Issuer: '簽發者',
     // 排序按钮的读屏后缀：Sort by Newest, descending
     ', descending': '，遞減',
-    ', ascending': '，遞增',
+    ', ascending': '，遞增'
   },
 
   regexp: [
@@ -230,14 +230,14 @@ export default {
     [/^Delete (.+) on ([^ ]+)$/, '刪除 $2 上的快取 $1'],
     [
       /^Least recently used caches will be automatically evicted to limit the total cache storage to ([\d.]+ [KMGT]B)\.$/,
-      '最久未使用的快取會自動清除，以將快取總儲存量限制在 $1。',
+      '最久未使用的快取會自動清除，以將快取總儲存量限制在 $1。'
     ],
     // 运行器
     [/^([\d,]+) available runners?$/, '$1 個可用執行器'],
     [
       /^(\d+)-cores · (\d+) GB RAM · (\d+) GB SSD Storage(?: · (.+))?$/,
       (_, cores: string, ram: string, ssd: string, systems: string) =>
-        `${cores} 核心 · ${ram} GB 記憶體 · ${ssd} GB SSD 儲存空間${systems ? ` · ${joinList(systems)}` : ''}`,
+        `${cores} 核心 · ${ram} GB 記憶體 · ${ssd} GB SSD 儲存空間${systems ? ` · ${joinList(systems)}` : ''}`
     ],
     [/^Copy ([\w.-]+-latest)( label)?$/, (_, name: string, label: string) => `複製 ${name}${label ? ' 標籤' : ''}`],
     // 指标
@@ -247,12 +247,11 @@ export default {
     [
       /^Total (minutes|job runs) across all workflows in this (organization|repository) for (.+)$/,
       (_, metric: string, scope: string, text: string) =>
-        `${pick(SCOPES, scope)}所有工作流程${period(text)}的${pick(USAGE_METRICS, metric)}`,
+        `${pick(SCOPES, scope)}所有工作流程${period(text)}的${pick(USAGE_METRICS, metric)}`
     ],
     [
       new RegExp(`^(${PERFORMANCE_SOURCE}) jobs in this (organization|repository) for (.+)$`),
-      (_, metric: string, scope: string, text: string) =>
-        `${pick(SCOPES, scope)}${period(text)}${pick(PERFORMANCE_METRICS, metric)}`,
+      (_, metric: string, scope: string, text: string) => `${pick(SCOPES, scope)}${period(text)}${pick(PERFORMANCE_METRICS, metric)}`
     ],
     // 证明列表：主体名不含空格，避免误伤带“and N others”的运行标题
     [/^([\d,]+) subjects? ·$/, '$1 個主體 ·'],
@@ -262,17 +261,17 @@ export default {
     [
       /^(\S+?)(?: and ([\d,]+) others?)?\. (\S+)\. More information available below\.$/,
       (_, subject: string, count: string | undefined, workflow: string) =>
-        `${subject}${count ? ` 和另外 ${count} 個` : ''}。${workflow}。下方有更多資訊。`,
+        `${subject}${count ? ` 和另外 ${count} 個` : ''}。${workflow}。下方有更多資訊。`
     ],
     // 证明详情的摘要条目：Commit. 4f2cfe9….（标点随原文，名称与取值之间用句号；Created 的日期按通则译出）
     [
       new RegExp(`^(${Object.keys(ATTESTATION_FIELDS).join('|')})\\. (.+)\\.$`),
-      (_, field: string, value: string) => `${pick(ATTESTATION_FIELDS, field)}。${attestationValue(field, value)}。`,
-    ],
+      (_, field: string, value: string) => `${pick(ATTESTATION_FIELDS, field)}。${attestationValue(field, value)}。`
+    ]
   ],
 
   ignore: [
     // 运行器页自托管标签页：条目标题后的运行器标签（self-hosted、Linux、X64 等，runs-on 用的标识符），来源标签（accent）照常
-    '[class*="SelfHostedRunners__"] [data-listview-item-title-container] > [data-component="Label"]:not([data-variant="accent"])',
-  ],
+    '[class*="SelfHostedRunners__"] [data-listview-item-title-container] > [data-component="Label"]:not([data-variant="accent"])'
+  ]
 } satisfies PageDictionary

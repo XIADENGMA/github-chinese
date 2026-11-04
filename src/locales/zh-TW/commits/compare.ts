@@ -6,10 +6,7 @@ const regexp: readonly RegExpRule[] = [
   // 统计栏（贡献者是人，量词作「位」）
   [/^(\d[\d,]*) contributors?$/, '$1 位貢獻者'],
   // 比较过大
-  [
-    /^This comparison is big! We[’']re only showing the most recent (\d[\d,]*) commits$/,
-    '此比較內容龐大！僅顯示最近 $1 個提交',
-  ],
+  [/^This comparison is big! We[’']re only showing the most recent (\d[\d,]*) commits$/, '此比較內容龐大！僅顯示最近 $1 個提交']
 ]
 
 /**
@@ -68,8 +65,7 @@ export default {
     'Checking mergeability...': '正在檢查是否可合併...',
     'Discuss and review the changes in this comparison with others.': '與他人討論並審查此比較中的變更。',
     // 创建拉取请求区的另一种说明（原文无逗号）
-    'Create another pull request to discuss and review the changes again.':
-      '建立另一個拉取請求以再次討論並審查這些變更。',
+    'Create another pull request to discuss and review the changes again.': '建立另一個拉取請求以再次討論並審查這些變更。',
 
     // 统计栏
     'Compare Stats': '比較統計資料',
@@ -87,17 +83,12 @@ export default {
     'is up to date with all commits from': '已包含來自',
     'switching the base': '切換基底分支',
     'for your comparison.': '來比較。',
-    'We couldn’t figure out how to compare these references, do they point to valid commits?':
-      '無法比較這些參考，它們是否指向有效的提交？',
-    "We couldn't figure out how to compare these references, do they point to valid commits?":
-      '無法比較這些參考，它們是否指向有效的提交？',
-    'You’ll need to use two different branch names to get a valid comparison.':
-      '必須使用兩個不同的分支名稱才能有效比較。',
-    "You'll need to use two different branch names to get a valid comparison.":
-      '必須使用兩個不同的分支名稱才能有效比較。',
+    'We couldn’t figure out how to compare these references, do they point to valid commits?': '無法比較這些參考，它們是否指向有效的提交？',
+    "We couldn't figure out how to compare these references, do they point to valid commits?": '無法比較這些參考，它們是否指向有效的提交？',
+    'You’ll need to use two different branch names to get a valid comparison.': '必須使用兩個不同的分支名稱才能有效比較。',
+    "You'll need to use two different branch names to get a valid comparison.": '必須使用兩個不同的分支名稱才能有效比較。',
     'Check out some of these sample comparisons.': '查看以下範例比較。',
-    'Choose different branches or forks above to discuss and review changes.':
-      '在上方選擇不同的分支或分叉來討論並審查變更。',
+    'Choose different branches or forks above to discuss and review changes.': '在上方選擇不同的分支或分叉來討論並審查變更。',
     'Compare and review just about anything': '比較並審查幾乎任何內容',
     'Branches, tags, commit ranges, and time ranges. In the same repository and across forks.':
       '分支、標記、提交範圍和時間範圍。同一儲存庫內或跨分叉皆可。',
@@ -110,8 +101,7 @@ export default {
       '目前無法顯示此比較。可能是內容過大，或儲存庫有異常。',
     "Unfortunately it looks like we can't render this comparison for you right now. It might be too big, or there might be something weird with your repository.":
       '目前無法顯示此比較。可能是內容過大，或儲存庫有異常。',
-    'You can try running this command locally to see the comparison on your machine:':
-      '你可以嘗試在本機執行以下命令來查看比較：',
+    'You can try running this command locally to see the comparison on your machine:': '你可以嘗試在本機執行以下命令來查看比較：'
   },
   scoped: {
     // 空比较提示片段：<main> 已包含來自 <v3.0.0> 的所有提交。請嘗試 …
@@ -123,11 +113,11 @@ export default {
     // 标签 Files changed 的单数形式
     'File changed': '變更的檔案',
     // 两点比较页头说明的链接间片段：“此範圍”已并入前一个链接的译文
-    'for this range or': '或',
+    'for this range or': '或'
   },
   regexp,
   ignore: [
     // 经典比较页摘要下展开的文件路径列表
-    'ol.content > li > a[href^="#diff-"]',
-  ],
+    'ol.content > li > a[href^="#diff-"]'
+  ]
 } satisfies PageDictionary

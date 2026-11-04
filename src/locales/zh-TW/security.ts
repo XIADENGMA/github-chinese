@@ -20,5 +20,5 @@ export default mergeDictionaries(
   cvssCalculator,
   dependabot,
   codeScanning,
-  secretScanning,
+  secretScanning
 ) satisfies PageDictionary

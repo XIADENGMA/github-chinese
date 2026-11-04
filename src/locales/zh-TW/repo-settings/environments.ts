@@ -11,8 +11,7 @@ export default {
   static: {
     // 列表
     'New environment': '新增環境',
-    'You can configure environments with protection rules, variables, and secrets.':
-      '你可以為環境設定保護規則、變數和機密。',
+    'You can configure environments with protection rules, variables, and secrets.': '你可以為環境設定保護規則、變數和機密。',
     'You can configure environments with protection rules and secrets.': '你可以為環境設定保護規則和機密。',
     'Learn more about configuring environments.': '瞭解如何設定環境。',
     'There are no environments for this repository': '此儲存庫沒有環境',
@@ -34,8 +33,7 @@ export default {
     'Search for people or teams...': '搜尋人員或團隊...',
     'Search for people or teams…': '搜尋人員或團隊…',
     'Prevent self-review': '禁止自我審查',
-    'Require a different approver than the user who triggered the workflow run.':
-      '要求由觸發工作流程執行的使用者以外的人核准。',
+    'Require a different approver than the user who triggered the workflow run.': '要求由觸發工作流程執行的使用者以外的人核准。',
     'Wait timer': '等待計時器',
     'Set an amount of time to wait before allowing deployments to proceed.': '設定允許部署繼續前要等待的時間。',
     'Enable custom rules with GitHub Apps': '使用 GitHub 應用程式啟用自訂規則',
@@ -50,8 +48,7 @@ export default {
     'Limit which branches and tags can deploy to this environment based on rules or naming patterns.':
       '依據規則或命名模式，限制哪些分支和標記可以部署到此環境。',
     'No restriction': '無限制',
-    'No restriction to which branch or tag from this repository can deploy.':
-      '不限制此儲存庫的哪些分支或標記可以部署。',
+    'No restriction to which branch or tag from this repository can deploy.': '不限制此儲存庫的哪些分支或標記可以部署。',
     'Protected branches only': '僅限受保護的分支',
     'Deployment limited to branches with protection rules.': '僅允許具有保護規則的分支部署。',
     'Selected branches and tags': '選取的分支和標記',
@@ -65,10 +62,8 @@ export default {
     'Name pattern:': '名稱模式：',
     'Update deployment branch rule': '更新部署分支規則',
     'Environment changes successfully saved: all branches can deploy.': '已儲存環境變更：所有分支都可以部署。',
-    'Environment changes successfully saved: only protected branches can deploy.':
-      '已儲存環境變更：僅受保護的分支可以部署。',
-    'Environment changes successfully saved: only selected branches and tags can deploy.':
-      '已儲存環境變更：僅選取的分支和標記可以部署。',
+    'Environment changes successfully saved: only protected branches can deploy.': '已儲存環境變更：僅受保護的分支可以部署。',
+    'Environment changes successfully saved: only selected branches and tags can deploy.': '已儲存環境變更：僅選取的分支和標記可以部署。',
 
     // 环境机密 / 变量
     'Secrets are encrypted environment variables. They are accessible only by GitHub Actions in the context of this environment by using the':
@@ -87,7 +82,7 @@ export default {
     'Add environment variable': '新增環境變數',
     'Variable value': '變數值',
     'Failed to add variable: Variable names can only contain alphanumeric characters ([a-z], [A-Z], [0-9]) or underscores (_). Spaces are not allowed. Must start with a letter ([a-z], [A-Z]) or underscores (_).':
-      '無法新增變數：變數名稱只能包含英數字元 ([a-z], [A-Z], [0-9]) 或底線 (_)。不允許使用空格。必須以字母 ([a-z], [A-Z]) 或底線 (_) 開頭。',
+      '無法新增變數：變數名稱只能包含英數字元 ([a-z], [A-Z], [0-9]) 或底線 (_)。不允許使用空格。必須以字母 ([a-z], [A-Z]) 或底線 (_) 開頭。'
   },
   scoped: {
     // 与 Actions 部署审查对话框共用（actions 词典可能以 static 收录）
@@ -103,7 +98,7 @@ export default {
     Branch: '分支',
     'Update rule': '更新規則',
     'Environment secrets': '環境機密',
-    'Environment variables': '環境變數',
+    'Environment variables': '環境變數'
   },
   regexp: [
     // 环境列表：保护规则 / 机密 / 变量数
@@ -115,7 +110,7 @@ export default {
     // 部署分支：受保护分支数
     [
       /^Applies to (\d+) branch(?:es)?\. Based on the existing repository branch protection rules\.$/,
-      '適用於 $1 個分支。依據現有的儲存庫分支保護規則。',
-    ],
-  ],
+      '適用於 $1 個分支。依據現有的儲存庫分支保護規則。'
+    ]
+  ]
 } satisfies PageDictionary

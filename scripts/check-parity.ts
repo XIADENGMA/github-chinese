@@ -18,7 +18,7 @@ const NON_DICTIONARY_FILES = new Set(['index.ts', 'helpers.ts'])
 const CJK_QUOTED_RE = /"[^"]*[一-鿿][^"]*"|'[^']*[一-鿿][^']*'/g
 
 function listFiles(dir: string, base = dir): string[] {
-  return readdirSync(dir).flatMap((name) => {
+  return readdirSync(dir).flatMap(name => {
     const full = join(dir, name)
     if (statSync(full).isDirectory()) return listFiles(full, base)
     const rel = relative(base, full).replace(/\\/g, '/')
@@ -44,25 +44,22 @@ async function load(file: string, label: string): Promise<DictionaryModule | str
 function diffKeys(label: string, cn: object | undefined, tw: object | undefined): string[] {
   const cnKeys = new Set(Object.keys(cn ?? {}))
   const twKeys = new Set(Object.keys(tw ?? {}))
-  const missing = [...cnKeys].filter((key) => !twKeys.has(key)).map((key) => `${label} 缺少 ${JSON.stringify(key)}`)
-  const extra = [...twKeys].filter((key) => !cnKeys.has(key)).map((key) => `${label} 多出 ${JSON.stringify(key)}`)
+  const missing = [...cnKeys].filter(key => !twKeys.has(key)).map(key => `${label} 缺少 ${JSON.stringify(key)}`)
+  const extra = [...twKeys].filter(key => !cnKeys.has(key)).map(key => `${label} 多出 ${JSON.stringify(key)}`)
   return [...missing, ...extra]
 }
 
 function diffRules(
   label: 'regexp' | 'labelRegexp',
   cnRules: PageDictionary['regexp'] = [],
-  twRules: PageDictionary['regexp'] = [],
+  twRules: PageDictionary['regexp'] = []
 ): string[] {
   const problems: string[] = []
-  if (cnRules.length !== twRules.length)
-    problems.push(`${label} 数量不同：简体 ${cnRules.length}，繁体 ${twRules.length}`)
+  if (cnRules.length !== twRules.length) problems.push(`${label} 数量不同：简体 ${cnRules.length}，繁体 ${twRules.length}`)
   cnRules.forEach(([pattern], index) => {
     const other = twRules[index]?.[0]
     if (!other || other.source !== pattern.source || other.flags !== pattern.flags) {
-      problems.push(
-        `${label}[${index}] 不同：/${pattern.source}/${pattern.flags} ≠ ${other ? `/${other.source}/${other.flags}` : '缺失'}`,
-      )
+      problems.push(`${label}[${index}] 不同：/${pattern.source}/${pattern.flags} ≠ ${other ? `/${other.source}/${other.flags}` : '缺失'}`)
     }
   })
   return problems
@@ -70,9 +67,7 @@ function diffRules(
 
 /** 选择器的结构：含中文的引号属性值换成占位 */
 function selectorShape(selector: unknown): unknown {
-  return typeof selector === 'string'
-    ? selector.replace(CJK_QUOTED_RE, (quoted) => `${quoted[0]}…${quoted[0]}`)
-    : selector
+  return typeof selector === 'string' ? selector.replace(CJK_QUOTED_RE, quoted => `${quoted[0]}…${quoted[0]}`) : selector
 }
 
 /** ignore、mergeText：选择器逐条相同 */
@@ -93,8 +88,7 @@ function diffAttributeRules(cn: PageDictionary, tw: PageDictionary): string[] {
   const cnRules = cn.attributeRules ?? []
   const twRules = tw.attributeRules ?? []
   const problems: string[] = []
-  if (cnRules.length !== twRules.length)
-    problems.push(`attributeRules 数量不同：简体 ${cnRules.length}，繁体 ${twRules.length}`)
+  if (cnRules.length !== twRules.length) problems.push(`attributeRules 数量不同：简体 ${cnRules.length}，繁体 ${twRules.length}`)
   cnRules.forEach((rule, index) => {
     const a = describe(rule)
     const b = describe(twRules[index])
@@ -108,8 +102,7 @@ function diffInline(cn: PageDictionary, tw: PageDictionary): string[] {
   const cnRules: readonly InlineRule[] = cn.inline ?? []
   const twRules: readonly InlineRule[] = tw.inline ?? []
   const problems: string[] = []
-  if (cnRules.length !== twRules.length)
-    problems.push(`inline 数量不同：简体 ${cnRules.length}，繁体 ${twRules.length}`)
+  if (cnRules.length !== twRules.length) problems.push(`inline 数量不同：简体 ${cnRules.length}，繁体 ${twRules.length}`)
   cnRules.forEach(([pattern], index) => {
     const a = describePattern(pattern)
     const b = describePattern(twRules[index]?.[0])
@@ -158,7 +151,7 @@ async function compareFile(file: string): Promise<string[]> {
     ...diffSelectors('ignore', cn.ignore, tw.ignore),
     ...diffAttributeRules(cn, tw),
     ...diffInline(cn, tw),
-    ...diffSelectors('mergeText', cn.mergeText, tw.mergeText),
+    ...diffSelectors('mergeText', cn.mergeText, tw.mergeText)
   ]
 }
 
@@ -169,9 +162,9 @@ function inside(dir: string, file: string): boolean {
 
 /** 命令行指定的文件：换成相对词典目录的路径 */
 function selectedFiles(args: readonly string[]): string[] {
-  return args.map((arg) => {
+  return args.map(arg => {
     const full = resolve(arg)
-    const base = [CN_DIR, TW_DIR].find((dir) => inside(dir, full))
+    const base = [CN_DIR, TW_DIR].find(dir => inside(dir, full))
     if (!base) throw new Error(`不在词典目录下：${arg}`)
     return relative(base, full).replaceAll('\\', '/')
   })
@@ -204,7 +197,7 @@ async function main(): Promise<void> {
 
   let count = 0
   for (const [file, problems] of report) {
-    process.stdout.write(`✖ ${file}\n${problems.map((problem) => `    ${problem}`).join('\n')}\n`)
+    process.stdout.write(`✖ ${file}\n${problems.map(problem => `    ${problem}`).join('\n')}\n`)
     count += problems.length
   }
   process.stdout.write(count === 0 ? `✔ 简繁结构一致（${cnFiles.length} 个文件）\n` : `共 ${count} 处不一致\n`)

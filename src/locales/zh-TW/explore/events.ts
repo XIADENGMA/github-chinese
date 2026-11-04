@@ -19,7 +19,7 @@ export default {
     // 名词 filters → 篩選器（GLOSSARY.zh-TW：Clear filters → 清除篩選器）
     'No results found. Please clear your filters and try another search.': '找不到結果。請清除篩選器並重新搜尋。',
     // 标签页标题段
-    'Upcoming GitHub events, webinars & developer conferences': '即將舉行的 GitHub 活動、網路研討會和開發人員大會',
+    'Upcoming GitHub events, webinars & developer conferences': '即將舉行的 GitHub 活動、網路研討會和開發人員大會'
   },
   scoped: {
     // 筛选：Type（形式）、Topic、Region、Availability
@@ -41,7 +41,7 @@ export default {
     'Close Filters': '關閉篩選器',
     // 活动卡片按钮
     Register: '報名',
-    'Join now': '立即加入',
+    'Join now': '立即加入'
   },
   regexp: [
     // 筛选标题带已选数量：Filters (2)
@@ -49,11 +49,11 @@ export default {
     // 标签页标题段的分页变体：Upcoming GitHub events, webinars & developer conferences - Page 2
     [
       /^Upcoming GitHub events, webinars & developer conferences - Page (\d+)$/,
-      '即將舉行的 GitHub 活動、網路研討會和開發人員大會 - 第 $1 頁',
-    ],
+      '即將舉行的 GitHub 活動、網路研討會和開發人員大會 - 第 $1 頁'
+    ]
   ],
   ignore: [
     // 页脚站点语言选择器的当前语言（与自然语言筛选同名，保持原文）
-    '[class*="triggerContent__"]:has(.octicon-globe) [class*="triggerLabel__"]',
-  ],
+    '[class*="triggerContent__"]:has(.octicon-globe) [class*="triggerLabel__"]'
+  ]
 } satisfies PageDictionary

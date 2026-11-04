@@ -65,8 +65,7 @@ export default {
     // 机密保护（provider 译「提供者」；Provider patterns 由 repo-settings 的 static 译作「提供者模式」，此处不重复）
     'GitHub Secret Protection': 'GitHub 機密保護',
     'Push protection': '推送保護',
-    'Prevent secret exposures by proactively blocking secrets before they reach your code.':
-      '在機密進入程式碼前主動攔截，防止機密外洩。',
+    'Prevent secret exposures by proactively blocking secrets before they reach your code.': '在機密進入程式碼前主動攔截，防止機密外洩。',
     'Secret scanning': '機密掃描',
     'Detect and manage exposed secrets across git history, pull requests, issues, and wikis.':
       '在 Git 歷史記錄、拉取請求、議題和 Wiki 中偵測並管理外洩的機密。',
@@ -76,11 +75,9 @@ export default {
     'Providers get real-time alerts when their tokens appear in public code, enabling them to notify, quarantine, or revoke secrets.':
       '提供者的權杖出現在公開程式碼中時，提供者會即時收到警示，以便通知、隔離或撤銷機密。',
     'Validity checks': '有效性檢查',
-    'Prioritize active secrets with validity checks for provider patterns.':
-      '透過提供者模式的有效性檢查，優先處理仍有效的機密。',
+    'Prioritize active secrets with validity checks for provider patterns.': '透過提供者模式的有效性檢查，優先處理仍有效的機密。',
     'AI detection for alerts': '警示 AI 偵測',
-    'Use AI to detect unstructured secrets, like passwords, in existing code.':
-      '使用 AI 偵測現有程式碼中的非結構化機密（例如密碼）。',
+    'Use AI to detect unstructured secrets, like passwords, in existing code.': '使用 AI 偵測現有程式碼中的非結構化機密（例如密碼）。',
     'AI detection for push protection': '推送保護 AI 偵測',
     'Use AI to detect unstructured secrets, like passwords, and block pushes that contain them.':
       '使用 AI 偵測非結構化機密（例如密碼），並阻擋包含這些機密的推送。',
@@ -121,12 +118,10 @@ export default {
     'Define alert-centric policies to control how Dependabot handles alerts and pull requests.':
       '定義以警示為中心的政策，控制 Dependabot 處理警示和拉取請求的方式。',
     'Dependabot security updates with grouped updates': '支援分組更新的 Dependabot 安全性更新',
-    'Automated pull requests that batch dependency updates for known vulnerabilities.':
-      '自動建立拉取請求，批次更新有已知漏洞的相依項目。',
+    'Automated pull requests that batch dependency updates for known vulnerabilities.': '自動建立拉取請求，批次更新有已知漏洞的相依項目。',
     'Dependabot version updates': 'Dependabot 版本更新',
     'Automated pull requests that keep your dependencies up to date.': '自動建立拉取請求，讓相依項目保持最新。',
-    'Get a clear view of risk distribution with security metrics and dashboards.':
-      '透過安全性指標和儀表板，清楚掌握風險分布。',
+    'Get a clear view of risk distribution with security metrics and dashboards.': '透過安全性指標和儀表板，清楚掌握風險分布。',
 
     // 平台安全与合规
     SBOMs: 'SBOM',
@@ -158,16 +153,15 @@ export default {
     'Invoice billing': '發票付款',
     'Pay bills via invoice, rather than using your credit card.': '以發票支付帳單，而不使用信用卡。',
     'Self-hosted deployment': '自架部署',
-    'Self-hosted GitHub for on-prem appliances or self-managed cloud tenants.':
-      '在內部部署設備或自行管理的雲端租戶上自架 GitHub。',
+    'Self-hosted GitHub for on-prem appliances or self-managed cloud tenants.': '在內部部署設備或自行管理的雲端租戶上自架 GitHub。',
     'Enterprise Managed Users': '企業受控使用者',
     'GitHub Connect': 'GitHub 連接',
     'Multi-tenant enterprise SaaS solution on Microsoft Azure, allowing you to choose a regional cloud deployment for data residency, so your in-scope data is stored at rest in a designated location. This is available in the EU and Australia with additional regions coming soon.':
-      'Microsoft Azure 上的多租戶企業 SaaS 解決方案，可讓你選擇區域雲端部署以實現資料落地，使範圍內的待用資料儲存在指定位置。目前已在歐盟和澳洲提供，更多區域即將推出。',
+      'Microsoft Azure 上的多租戶企業 SaaS 解決方案，可讓你選擇區域雲端部署以實現資料落地，使範圍內的待用資料儲存在指定位置。目前已在歐盟和澳洲提供，更多區域即將推出。'
   },
   regexp: [
     // 使用量与支出上限
     [/^([\d,]+) minutes\/month$/, '每月 $1 分鐘'],
-    [/^(\$[\d,]+(?:\.\d+)?) spend limit$/, '$1 支出上限'],
-  ],
+    [/^(\$[\d,]+(?:\.\d+)?) spend limit$/, '$1 支出上限']
+  ]
 } satisfies PageDictionary

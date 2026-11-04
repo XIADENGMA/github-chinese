@@ -9,11 +9,11 @@ const LOAD_ERROR: Readonly<Record<string, string>> = {
   'Milestones cannot be loaded due to a system error.': '系统错误，无法加载里程碑。',
   'This milestone cannot be loaded due to a system error.': '系统错误，无法加载此里程碑。',
   'This page cannot be loaded due to a system error.': '系统错误，无法加载此页面。',
-  "This milestone's issues can not be loaded due to a system error.": '系统错误，无法加载此里程碑的议题。',
+  "This milestone's issues can not be loaded due to a system error.": '系统错误，无法加载此里程碑的议题。'
 }
 
 const LOAD_ERROR_SOURCE = Object.keys(LOAD_ERROR)
-  .map((text) => text.replace(/[.']/g, '\\$&'))
+  .map(text => text.replace(/[.']/g, '\\$&'))
   .join('|')
 
 /**
@@ -81,8 +81,7 @@ export default {
     // 新建 / 编辑
     'Create milestone': '创建里程碑',
     'Edit milestone': '编辑里程碑',
-    'Create a new milestone to help organize your issues and pull requests. Learn more about':
-      '创建新的里程碑来组织议题和拉取请求。了解',
+    'Create a new milestone to help organize your issues and pull requests. Learn more about': '创建新的里程碑来组织议题和拉取请求。了解',
     'Create a new milestone to help organize your issues and pull requests.': '创建新的里程碑来组织议题和拉取请求。',
     'milestones and issues': '里程碑和议题',
     'Milestone name': '里程碑名称',
@@ -102,7 +101,7 @@ export default {
     'Delete milestone': '删除里程碑',
     'Could not delete this milestone. Please try again.': '无法删除此里程碑。请重试。',
     'Could not delete Milestone': '无法删除里程碑',
-    'Error deleting milestone': '删除里程碑时出错',
+    'Error deleting milestone': '删除里程碑时出错'
   },
   scoped: {
     // 进度：<span>45%</span> complete、<span>3</span> open、<span>2</span> closed
@@ -112,7 +111,7 @@ export default {
     'Overdue by': '逾期',
     'contact support': '联系支持',
     // 系统错误说明的后半句 + 链接 contact support
-    'Try reloading the page, or if the problem persists': '请尝试重新加载页面；仍然出错时请',
+    'Try reloading the page, or if the problem persists': '请尝试重新加载页面；仍然出错时请'
   },
   regexp: [
     // 标签页标题片段：Milestone #3
@@ -121,7 +120,7 @@ export default {
     [
       new RegExp(`^Due by (${DATE_SOURCE})(?:, (\\d+)% complete|(, not started))?$`),
       (_, date, percent, notStarted) =>
-        `${joinCjk(translateDate(date) ?? date, '截止')}${percent ? `，已完成 ${percent}%` : notStarted ? '，未开始' : ''}`,
+        `${joinCjk(translateDate(date) ?? date, '截止')}${percent ? `，已完成 ${percent}%` : notStarted ? '，未开始' : ''}`
     ],
     // 逾期：Overdue by 3 day(s)
     [/^Overdue by (\d+) (day|month|year)\(s\)$/, (_, count, unit) => `逾期 ${count} ${OVERDUE_UNIT[unit] ?? unit}`],
@@ -132,8 +131,8 @@ export default {
     // 系统错误 + “请尝试重新加载页面；仍然出错时请” + 链接“联系支持”
     [
       new RegExp(`^(${LOAD_ERROR_SOURCE}) Try reloading the page, or if the problem persists$`),
-      (_, message) => `${LOAD_ERROR[message] ?? message}请尝试重新加载页面；仍然出错时请`,
-    ],
+      (_, message) => `${LOAD_ERROR[message] ?? message}请尝试重新加载页面；仍然出错时请`
+    ]
   ],
   inline: [
     // 详情页状态行：Closed <relative-time>（未关闭时的 Last updated 由通用词典按片段翻译）；
@@ -141,12 +140,12 @@ export default {
     ['Closed {}', '关闭于 {}'],
     // 议题侧栏与里程碑选择器的说明（MilestoneDescription）：Closed&nbsp;<relative-time>，
     // 侧栏带进度时后接“, 45% complete”
-    [/^Closed \{\}, (\d+)% complete$/, '关闭于 {}，已完成 $1%'],
+    [/^Closed \{\}, (\d+)% complete$/, '关闭于 {}，已完成 $1%']
   ],
   ignore: [
     // 列表行中的里程碑描述、详情页的乐观更新描述与旧版标题
     'p[class*="listDescription__"]',
     '#milestone-description > p',
-    '[class*="milestoneTitleWrapper__"] h2',
-  ],
+    '[class*="milestoneTitleWrapper__"] h2'
+  ]
 } satisfies PageDictionary

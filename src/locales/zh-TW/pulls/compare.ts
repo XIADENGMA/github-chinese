@@ -32,20 +32,20 @@ export default {
     'Looking for help?': '需要協助嗎？',
     "Check out the project's": '請查看此專案的',
     'Check out the project’s': '請查看此專案的',
-    'instructions for getting support': '支援說明',
+    'instructions for getting support': '支援說明'
   },
   scoped: {
     'Create draft pull request': '建立草稿拉取請求',
     'View pull request': '查看拉取請求',
     'Add a title': '新增標題',
     'Add a description': '新增描述',
-    'Helpful resources': '實用資源',
+    'Helpful resources': '實用資源'
   },
   regexp: [
     [
       /^Pull request creation failed\. Validation failed: A pull request already exists for (\S+)\.$/,
-      '拉取請求建立失敗。驗證失敗：$1 已有拉取請求。',
+      '拉取請求建立失敗。驗證失敗：$1 已有拉取請求。'
     ],
-    [/^No commits between (\S+) and (\S+)$/, '$1 和 $2 之間沒有提交'],
-  ],
+    [/^No commits between (\S+) and (\S+)$/, '$1 和 $2 之間沒有提交']
+  ]
 } satisfies PageDictionary

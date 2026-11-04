@@ -12,7 +12,7 @@ const RESOLUTION: Readonly<Record<string, string>> = {
   'false positive': '誤報',
   'used in tests': '用於測試',
   "won't fix": '不予修正',
-  'won’t fix': '不予修正',
+  'won’t fix': '不予修正'
 }
 
 /** 原因：as false positive → 以誤報為由（原文无标点，不加引号） */
@@ -44,28 +44,22 @@ export default {
     'Submit feedback and approve merging these changes into': '送出意見回饋並核准將這些變更合併到',
     "Pull request authors can't approve their own pull requests.": '拉取請求作者無法核准自己的拉取請求。',
     'Pull request authors can’t approve their own pull requests.': '拉取請求作者無法核准自己的拉取請求。',
-    "Pull request authors can't request changes on their own pull requests.":
-      '拉取請求作者無法對自己的拉取請求要求變更。',
-    'Pull request authors can’t request changes on their own pull requests.':
-      '拉取請求作者無法對自己的拉取請求要求變更。',
-    "Users that pushed changes to this pull request after it was opened can't approve":
-      '在此拉取請求建立後推送過變更的使用者無法核准',
-    'Only users with explicit access to this repository may approve pull requests':
-      '只有明確擁有此儲存庫存取權的使用者才能核准拉取請求',
+    "Pull request authors can't request changes on their own pull requests.": '拉取請求作者無法對自己的拉取請求要求變更。',
+    'Pull request authors can’t request changes on their own pull requests.': '拉取請求作者無法對自己的拉取請求要求變更。',
+    "Users that pushed changes to this pull request after it was opened can't approve": '在此拉取請求建立後推送過變更的使用者無法核准',
+    'Only users with explicit access to this repository may approve pull requests': '只有明確擁有此儲存庫存取權的使用者才能核准拉取請求',
     'Only users with explicit access to this repository may request changes on pull requests':
       '只有明確擁有此儲存庫存取權的使用者才能對拉取請求要求變更',
     // 经典审查菜单：Approve 选项说明、单数 pull request 版的禁用提示、请求更改未填评论时的校验提示
     'Submit feedback approving these changes.': '送出核准這些變更的意見回饋。',
     'Pull request authors can’t approve their own pull request.': '拉取請求作者無法核准自己的拉取請求。',
-    'Pull request authors can’t request changes on their own pull request.':
-      '拉取請求作者無法對自己的拉取請求要求變更。',
+    'Pull request authors can’t request changes on their own pull request.': '拉取請求作者無法對自己的拉取請求要求變更。',
     'Only users with explicit access to this repository may request changes to pull requests':
       '只有明確擁有此儲存庫存取權的使用者才能對拉取請求要求變更',
     'You need to leave a comment indicating the requested changes.': '你需要發表留言說明所要求的變更。',
     'Only users who did not collaborate with the cloud agent will satisfy review requirements.':
       '只有未與雲端代理協作的使用者才能滿足審查要求。',
-    'Are you sure you want to cancel? You will lose all your pending comments.':
-      '確定要取消嗎？所有待處理的留言都將遺失。',
+    'Are you sure you want to cancel? You will lose all your pending comments.': '確定要取消嗎？所有待處理的留言都將遺失。',
     'Are you sure you want to abandon your review? You will lose all your pending comments.':
       '確定要放棄審查嗎？所有待處理的留言都將遺失。',
     'Cancel review': '取消審查',
@@ -91,8 +85,7 @@ export default {
     'Reply…': '回覆…',
     'Reply...': '回覆...',
     'Reply and resolve comment': '回覆並解決留言',
-    'Changing the line number of a comment with a suggested change is not supported.':
-      '不支援變更含有建議變更的留言行號。',
+    'Changing the line number of a comment with a suggested change is not supported.': '不支援變更含有建議變更的留言行號。',
 
     // 审查讨论串
     'Resolve conversation': '解決對話',
@@ -149,13 +142,11 @@ export default {
     'Suggestions cannot be applied from pending reviews.': '無法從待處理的審查中套用建議。',
     'Suggestions cannot be applied on multi-line comments.': '無法在多行留言上套用建議。',
     'Suggestions cannot be applied on outdated comments.': '無法在過時的留言上套用建議。',
-    'Suggestions cannot be applied while the pull request is queued to merge.':
-      '拉取請求已排入佇列等待合併時無法套用建議。',
+    'Suggestions cannot be applied while the pull request is queued to merge.': '拉取請求已排入佇列等待合併時無法套用建議。',
     'Suggestion cannot be applied right now. Please check back later.': '目前無法套用建議。請稍後再查看。',
     'You do not have permission to apply this suggestion.': '你沒有套用此建議的權限。',
     'This suggestion cannot be applied because the pull request is closed.': '此建議因拉取請求已關閉而無法套用。',
-    'This suggestion cannot be applied because the pull request is queued to merge.':
-      '此建議因拉取請求已排入佇列等待合併而無法套用。',
+    'This suggestion cannot be applied because the pull request is queued to merge.': '此建議因拉取請求已排入佇列等待合併而無法套用。',
     'This suggestion is outdated and cannot be applied.': '此建議已過時且無法套用。',
     'This suggestion is part of a pending comment and cannot be applied.': '此建議因屬於待處理的留言而無法套用。',
     'This suggestion is part of a resolved comment and cannot be applied.': '此建議因屬於已解決的留言而無法套用。',
@@ -180,8 +171,7 @@ export default {
     'Commit message cleared for the updated batch.': '已為更新後的批次清除提交訊息。',
     'Copilot is generating a commit message. Enter your own message or wait for Copilot to finish.':
       'Copilot 正在產生提交訊息。請自行輸入訊息或等待 Copilot 完成。',
-    "Copilot couldn't generate a commit message. Using the default commit message instead.":
-      'Copilot 無法產生提交訊息。改用預設提交訊息。',
+    "Copilot couldn't generate a commit message. Using the default commit message instead.": 'Copilot 無法產生提交訊息。改用預設提交訊息。',
     'Commit description updated with a generated suggestion.': '已使用產生的建議更新提交描述。',
     'Generated commit description cleared.': '已清除產生的提交描述。',
     'Message suggested by Copilot.': '訊息由 Copilot 建議。',
@@ -224,7 +214,7 @@ export default {
     'Request to dismiss was denied': '解除請求已遭拒絕',
     'Request to close license alert': '請求關閉授權條款警示',
     'An authorized approver needs to close this alert. Submitting this request will send a notification to all approvers for their review.':
-      '此警示需要由獲得授權的核准者關閉。送出此請求會通知所有核准者審查。',
+      '此警示需要由獲得授權的核准者關閉。送出此請求會通知所有核准者審查。'
   },
   scoped: {
     'Review event': '審查事件',
@@ -259,7 +249,7 @@ export default {
     // 捨棄批次对话框：… remove all <3> <suggestions> <from the batch.>（建议只是移出批次，留言本身保留）
     suggestion: '建議',
     suggestions: '建議',
-    'from the batch.': '從批次中移除。',
+    'from the batch.': '從批次中移除。'
   },
   regexp: [
     // 待处理的留言数（pending review comments 按术语表作「待處理」，与 common-ui 的 Pending 徽章一致）
@@ -267,35 +257,32 @@ export default {
     // 行留言表单：Comment on line R12 / Commenting on lines +12 to +14（与 commits 词典的「對第 N 行留言」同一写法）
     [
       new RegExp(`^Comment(?:ing)? on lines? (${LINE_SOURCE})(?: to (${LINE_SOURCE}))?$`),
-      (_, start, end) => (end ? `對第 ${start} 至 ${end} 行留言` : `對第 ${start} 行留言`),
+      (_, start, end) => (end ? `對第 ${start} 至 ${end} 行留言` : `對第 ${start} 行留言`)
     ],
     // 批次：Commit 3 suggestions
     [/^Commit (\d+) suggestions?$/, '提交 $1 項建議'],
     [/^(\d+) suggestions? in batch$/, '批次中有 $1 項建議'],
-    [
-      /^Are you sure you want to discard this batch\? This will remove all (\d+)$/,
-      '確定要捨棄此批次嗎？此動作會將全部 $1 項',
-    ],
+    [/^Are you sure you want to discard this batch\? This will remove all (\d+)$/, '確定要捨棄此批次嗎？此動作會將全部 $1 項'],
     // 提交建议失败：冒号后为服务器返回的原因（与 commits 词典同译）
     [/^There was an error trying to commit changes: (\S.*)$/, '提交變更時發生錯誤：$1'],
     // 自动审查留言（代码扫描等）的解除与关闭状态
     [
       /^requested to (dismiss|close)(?: as (.+))?$/,
-      (_, action, reason) => `請求${reasonPrefix(reason)}${action === 'dismiss' ? '解除' : '關閉'}`,
+      (_, action, reason) => `請求${reasonPrefix(reason)}${action === 'dismiss' ? '解除' : '關閉'}`
     ],
     [
       new RegExp(`^This (${RESOURCE_SOURCE}) was dismissed(?: as (.+))?$`),
       // 不带原因：此警示已解除；带原因：此警示已以誤報為由解除
-      (_, resource, reason) => `此${RESOURCE[resource] ?? resource}已${reason ? reasonPrefix(reason) : ''}解除`,
+      (_, resource, reason) => `此${RESOURCE[resource] ?? resource}已${reason ? reasonPrefix(reason) : ''}解除`
     ],
     [
       new RegExp(`^(dismissed|closed) this (${RESOURCE_SOURCE})(?: as (.+))?$`),
       (_, action, resource, reason) =>
-        `${reasonPrefix(reason)}${action === 'dismissed' ? '解除' : '關閉'}了此${RESOURCE[resource] ?? resource}`,
+        `${reasonPrefix(reason)}${action === 'dismissed' ? '解除' : '關閉'}了此${RESOURCE[resource] ?? resource}`
     ],
     [
       new RegExp(`^Dismissing the (${RESOURCE_SOURCE}) will mark this conversation as resolved\\.$`),
-      (_, resource) => `解除此${RESOURCE[resource] ?? resource}會將此對話標示為已解決。`,
-    ],
-  ],
+      (_, resource) => `解除此${RESOURCE[resource] ?? resource}會將此對話標示為已解決。`
+    ]
+  ]
 } satisfies PageDictionary

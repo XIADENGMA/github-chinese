@@ -58,8 +58,7 @@ export default {
     'Where to find recovery codes': '在哪裡找到復原碼',
     'Locked out?': '無法存取帳號？',
     // unlink → 取消連結（GLOSSARY.zh-TW link 行）
-    'Try recovering your account, or unlink your account email address(es)':
-      '嘗試復原帳號，或取消連結帳號的電子郵件地址',
+    'Try recovering your account, or unlink your account email address(es)': '嘗試復原帳號，或取消連結帳號的電子郵件地址',
 
     // 恢复帐户对话框
     'Recovering your account': '復原你的帳號',
@@ -103,10 +102,8 @@ export default {
     'Unable to verify an alternative factor?': '無法驗證其他因素？',
     'Begin account or email recovery': '開始帳號或電子郵件復原',
     'Verify a personal access token': '驗證個人存取權杖',
-    "you've used in the past to verify your account. The token must have":
-      '（須為你過去用過的）以驗證帳號。權杖必須具有',
-    'you’ve used in the past to verify your account. The token must have':
-      '（須為你過去用過的）以驗證帳號。權杖必須具有',
+    "you've used in the past to verify your account. The token must have": '（須為你過去用過的）以驗證帳號。權杖必須具有',
+    'you’ve used in the past to verify your account. The token must have': '（須為你過去用過的）以驗證帳號。權杖必須具有',
     'Verify and submit for review': '驗證並送出審查',
     'Unable to verify personal access token': '無法驗證個人存取權杖',
 
@@ -116,10 +113,8 @@ export default {
     'Having trouble verifying via email?': '透過電子郵件驗證時遇到問題？',
     'Re-send the authentication code': '重新傳送驗證碼',
     'Try GitHub Mobile for simplified device verification': '試用 GitHub 行動版以簡化裝置驗證',
-    "If you'd like to require verification on every sign in, consider enabling":
-      '如果希望每次登入都要驗證，可考慮為帳號啟用',
-    'If you’d like to require verification on every sign in, consider enabling':
-      '如果希望每次登入都要驗證，可考慮為帳號啟用',
+    "If you'd like to require verification on every sign in, consider enabling": '如果希望每次登入都要驗證，可考慮為帳號啟用',
+    'If you’d like to require verification on every sign in, consider enabling': '如果希望每次登入都要驗證，可考慮為帳號啟用',
     'Incorrect verification code provided.': '驗證碼不正確。',
 
     // 无密码身份验证提示 /sessions/trusted-device
@@ -193,7 +188,7 @@ export default {
     ". After you've performed a sudo-protected action, you'll only be asked to re-authenticate again after a few hours of inactivity.":
       '。執行受 sudo 保護的動作後，只有在閒置數小時後才會再次要求你重新驗證。',
     '. After you’ve performed a sudo-protected action, you’ll only be asked to re-authenticate again after a few hours of inactivity.':
-      '。執行受 sudo 保護的動作後，只有在閒置數小時後才會再次要求你重新驗證。',
+      '。執行受 sudo 保護的動作後，只有在閒置數小時後才會再次要求你重新驗證。'
   },
   scoped: {
     Verify: '驗證',
@@ -229,7 +224,7 @@ export default {
     Emails: '電子郵件',
     'Verified emails': '已驗證的電子郵件',
     'Unverified emails': '未驗證的電子郵件',
-    'Password Alternatives': '密碼替代方式',
+    'Password Alternatives': '密碼替代方式'
   },
   regexp: [
     // 恢复帐户对话框步骤
@@ -237,7 +232,7 @@ export default {
     // 设备验证：通过电子邮件发送的验证码
     [
       /^We just sent your authentication code via email to (\S+@\S+)\. The code will expire at (.+)\.$/,
-      '驗證碼已透過電子郵件傳送至 $1，將於 $2 到期。',
+      '驗證碼已透過電子郵件傳送至 $1，將於 $2 到期。'
     ],
     // 帐户恢复设置复查：计数
     [/^(\d+) verified emails?$/, '$1 個已驗證的電子郵件'],
@@ -245,6 +240,6 @@ export default {
     [/^(\d+) keys?$/, '$1 個金鑰'],
     // 设备的量词用「部」（GLOSSARY.zh-TW 第 2 节：`2 部裝置`）
     [/^(\d+) devices?$/, '$1 部裝置'],
-    [/^You will receive one-time codes at this phone number: (.+)$/, '你會透過此電話號碼收到一次性驗證碼：$1'],
-  ],
+    [/^You will receive one-time codes at this phone number: (.+)$/, '你會透過此電話號碼收到一次性驗證碼：$1']
+  ]
 } satisfies PageDictionary

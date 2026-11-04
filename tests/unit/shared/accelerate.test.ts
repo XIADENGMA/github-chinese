@@ -30,7 +30,7 @@ import {
   type AccelerableLink,
   type AccelerateSettings,
   type AccelerateSource,
-  type ProbeDeps,
+  type ProbeDeps
 } from '../../../src/shared/accelerate'
 
 const RELEASE = 'https://github.com/vuejs/core/releases/download/v3.5.0/vue.global.js'
@@ -65,7 +65,7 @@ describe('parseDownloadLink', () => {
     ['https://codeload.github.com/vuejs/core/tar.gz/v3.5.0', 'archive'],
     ['https://gist.github.com/octocat/0831f3fbd83ac4d46451/archive/c197afe.zip', 'gist'],
     ['https://gist.github.com/octocat/0831f3fbd83ac4d46451/raw/c197afe/sample.sh', 'raw'],
-    ['https://gist.githubusercontent.com/octocat/0831f3fbd83ac4d46451/raw/sample.sh', 'raw'],
+    ['https://gist.githubusercontent.com/octocat/0831f3fbd83ac4d46451/raw/sample.sh', 'raw']
   ])('%s → %s', (href, kind) => {
     expect(parseDownloadLink(href)?.kind).toBe(kind)
   })
@@ -86,7 +86,7 @@ describe('parseDownloadLink', () => {
     ['带端口', 'https://github.com:8443/vuejs/core/archive/main.zip'],
     ['带用户名', 'https://user@github.com/vuejs/core/archive/main.zip'],
     ['其他网站', 'https://example.com/vuejs/core/archive/main.zip'],
-    ['不是地址', 'not a url'],
+    ['不是地址', 'not a url']
   ])('%s：不可加速', (_name, href) => {
     expect(parseDownloadLink(href)).toBeUndefined()
   })
@@ -95,40 +95,36 @@ describe('parseDownloadLink', () => {
     expect(parseDownloadLink(`${RELEASE}?x=1#top`)).toEqual({
       kind: 'release',
       url: `${RELEASE}?x=1`,
-      path: 'vuejs/core/releases/download/v3.5.0/vue.global.js?x=1',
+      path: 'vuejs/core/releases/download/v3.5.0/vue.global.js?x=1'
     })
   })
 
   it('raw.githubusercontent.com 的路径换成 github.com 上的 raw 路径', () => {
-    expect(link('https://raw.githubusercontent.com/vuejs/core/main/README.md').path).toBe(
-      'vuejs/core/raw/main/README.md',
-    )
+    expect(link('https://raw.githubusercontent.com/vuejs/core/main/README.md').path).toBe('vuejs/core/raw/main/README.md')
   })
 
   it('效果相同的写法统一：codeload 换成 github.com 的 archive，blob?raw=true 换成 raw', () => {
     expect(link('https://codeload.github.com/vuejs/core/zip/refs/heads/main')).toEqual({
       kind: 'archive',
       url: 'https://github.com/vuejs/core/archive/refs/heads/main.zip',
-      path: 'vuejs/core/archive/refs/heads/main.zip',
+      path: 'vuejs/core/archive/refs/heads/main.zip'
     })
-    expect(link('https://codeload.github.com/vuejs/core/tar.gz/v3.5.0').url).toBe(
-      'https://github.com/vuejs/core/archive/v3.5.0.tar.gz',
-    )
+    expect(link('https://codeload.github.com/vuejs/core/tar.gz/v3.5.0').url).toBe('https://github.com/vuejs/core/archive/v3.5.0.tar.gz')
     expect(link('https://github.com/vuejs/core/blob/main/README.md?raw=true')).toEqual({
       kind: 'raw',
       url: 'https://github.com/vuejs/core/raw/main/README.md',
-      path: 'vuejs/core/raw/main/README.md',
+      path: 'vuejs/core/raw/main/README.md'
     })
   })
 
   it('Gist：Raw 换成 gist.githubusercontent.com；不在 github.com 上，没有路径', () => {
     expect(link('https://gist.github.com/octocat/0831f3fbd83ac4d46451/raw/c197afe/sample.sh#L1')).toEqual({
       kind: 'raw',
-      url: 'https://gist.githubusercontent.com/octocat/0831f3fbd83ac4d46451/raw/c197afe/sample.sh',
+      url: 'https://gist.githubusercontent.com/octocat/0831f3fbd83ac4d46451/raw/c197afe/sample.sh'
     })
     expect(link('https://gist.github.com/octocat/0831f3fbd83ac4d46451/archive/c197afe.zip')).toEqual({
       kind: 'gist',
-      url: 'https://gist.github.com/octocat/0831f3fbd83ac4d46451/archive/c197afe.zip',
+      url: 'https://gist.github.com/octocat/0831f3fbd83ac4d46451/archive/c197afe.zip'
     })
   })
 })
@@ -138,11 +134,11 @@ describe('parseCloneUrl / parseAccelerableLink', () => {
     expect(parseCloneUrl('https://github.com/vuejs/core.git')).toEqual({
       kind: 'clone',
       url: 'https://github.com/vuejs/core.git',
-      path: 'vuejs/core.git',
+      path: 'vuejs/core.git'
     })
     expect(parseCloneUrl('https://gist.github.com/0831f3fbd83ac4d46451.git')).toEqual({
       kind: 'clone',
-      url: 'https://gist.github.com/0831f3fbd83ac4d46451.git',
+      url: 'https://gist.github.com/0831f3fbd83ac4d46451.git'
     })
   })
 
@@ -152,7 +148,7 @@ describe('parseCloneUrl / parseAccelerableLink', () => {
     ['GitHub CLI', 'gh repo clone vuejs/core'],
     ['带查询串', 'https://github.com/vuejs/core.git?x=1'],
     ['路径过深', 'https://github.com/vuejs/core/sub.git'],
-    ['其他网站', 'https://example.com/vuejs/core.git'],
+    ['其他网站', 'https://example.com/vuejs/core.git']
   ])('%s：不是可加速的克隆地址', (_name, href) => {
     expect(parseCloneUrl(href)).toBeUndefined()
   })
@@ -171,7 +167,7 @@ describe('parseImageUrl', () => {
     ['https://user-images.githubusercontent.com/1/sample.png', undefined],
     ['https://raw.githubusercontent.com/vuejs/core/main/logo.png', 'vuejs/core/raw/main/logo.png'],
     ['https://github.com/vuejs/core/raw/main/logo.png', 'vuejs/core/raw/main/logo.png'],
-    ['https://github.com/vuejs/core/blob/main/logo.png?raw=true', 'vuejs/core/raw/main/logo.png'],
+    ['https://github.com/vuejs/core/blob/main/logo.png?raw=true', 'vuejs/core/raw/main/logo.png']
   ])('%s → 图片', (href, path) => {
     const parsed = parseImageUrl(href)
     expect(parsed?.kind).toBe('image')
@@ -183,7 +179,7 @@ describe('parseImageUrl', () => {
     ['外部图片的代理', 'https://camo.githubusercontent.com/abc/def'],
     ['带 token', 'https://raw.githubusercontent.com/vuejs/core/main/logo.png?token=ABC'],
     ['data:', 'data:image/png;base64,AAAA'],
-    ['其他网站', 'https://example.com/logo.png'],
+    ['其他网站', 'https://example.com/logo.png']
   ])('%s：不经加速源', (_name, href) => {
     expect(parseImageUrl(href)).toBeUndefined()
   })
@@ -196,7 +192,7 @@ describe('accelerateLink', () => {
     ['https://mirror.example/{path}', 'https://mirror.example/vuejs/core/releases/download/v3.5.0/vue.global.js'],
     ['https://ghfast.top', `https://ghfast.top/${RELEASE}`],
     ['https://ghfast.top/', `https://ghfast.top/${RELEASE}`],
-    ['https://mirror.example/gh/', `https://mirror.example/gh/${RELEASE}`],
+    ['https://mirror.example/gh/', `https://mirror.example/gh/${RELEASE}`]
   ])('%s', (template, expected) => {
     expect(accelerateLink(template, link(RELEASE))).toBe(expected)
   })
@@ -217,7 +213,7 @@ describe('supportsLink / candidateSources / acceleratePreferred', () => {
   const GIST = 'https://gist.github.com/octocat/0831f3fbd83ac4d46451/archive/c197afe.zip'
   const AVATAR = 'https://avatars.githubusercontent.com/u/583231?v=4'
   const PATH_MIRROR: AccelerateSource = { id: 'custom-2', name: 'Path', template: 'https://path.example/{path}' }
-  const byId = (id: string): AccelerateSource => BUILTIN_SOURCES.find((source) => source.id === id)!
+  const byId = (id: string): AccelerateSource => BUILTIN_SOURCES.find(source => source.id === id)!
   const avatar = (): AccelerableLink => parseImageUrl(AVATAR)!
 
   it('内置源跳过实测不支持的主机；自定义源视为都支持，用 {path} 的只支持 github.com 上的地址', () => {
@@ -231,20 +227,20 @@ describe('supportsLink / candidateSources / acceleratePreferred', () => {
 
   it('候选只留支持该地址的，顺序不变；不探测时首选不支持就用第一个支持的', () => {
     const settings = settingsWith({ accelerateSource: 'gh-proxy-hk', customSources: [PATH_MIRROR] })
-    expect(candidateSources(settings, link(GIST)).map((source) => source.id)).toEqual([
+    expect(candidateSources(settings, link(GIST)).map(source => source.id)).toEqual([
       'ghfast',
       'wget-la',
       'gh-monlor',
       'hub-ddayh',
-      'ghproxy-053000',
+      'ghproxy-053000'
     ])
     expect(acceleratePreferred(settings, link(GIST))).toBe(`https://ghfast.top/${GIST}`)
     expect(acceleratePreferred(settings, link(RELEASE))).toBe(`https://hk.gh-proxy.org/${RELEASE}`)
-    expect(candidateSources(settingsWith(), avatar()).map((source) => source.id)).toEqual([
+    expect(candidateSources(settingsWith(), avatar()).map(source => source.id)).toEqual([
       'gh-proxy-hk',
       'gh-proxy-cdn',
       'gh-proxy-edgeone',
-      'gh-proxy-com',
+      'gh-proxy-com'
     ])
   })
 
@@ -260,7 +256,7 @@ describe('parseSourceTemplate', () => {
     ['https://ghfast.top/{url}', 'https://ghfast.top/{url}'],
     ['  https://ghfast.top  ', 'https://ghfast.top'],
     ['https://mirror.example/{path}', 'https://mirror.example/{path}'],
-    ['https://mirror.example/?u={url}', 'https://mirror.example/?u={url}'],
+    ['https://mirror.example/?u={url}', 'https://mirror.example/?u={url}']
   ])('%s → 合法', (text, expected) => {
     expect(parseSourceTemplate(text)).toBe(expected)
   })
@@ -278,7 +274,7 @@ describe('parseSourceTemplate', () => {
     ['GitHub 自己的域名', 'https://github.com/{path}'],
     ['GitHub 子域名', 'https://raw.githubusercontent.com/{path}'],
     ['带用户名', 'https://user:pass@mirror.example/{url}'],
-    ['过长', `https://mirror.example/${'a'.repeat(200)}/{url}`],
+    ['过长', `https://mirror.example/${'a'.repeat(200)}/{url}`]
   ])('%s → 不合法', (_name, text) => {
     expect(parseSourceTemplate(text)).toBeUndefined()
   })
@@ -295,13 +291,13 @@ describe('probeUrl', () => {
 describe('内置加速源', () => {
   it('模板都合法、标识不重复，默认首选是第一个', () => {
     for (const source of BUILTIN_SOURCES) expect(parseSourceTemplate(source.template), source.id).toBe(source.template)
-    expect(new Set(BUILTIN_SOURCES.map((source) => source.id)).size).toBe(BUILTIN_SOURCES.length)
+    expect(new Set(BUILTIN_SOURCES.map(source => source.id)).size).toBe(BUILTIN_SOURCES.length)
     expect(BUILTIN_SOURCES[0]?.id).toBe(DEFAULT_SOURCE_ID)
   })
 })
 
 describe('sanitizeCustomSources / sanitizeRemovedSources', () => {
-  it.each([undefined, null, 'x', { id: 'a' }])('非数组 %j → 空', (value) => {
+  it.each([undefined, null, 'x', { id: 'a' }])('非数组 %j → 空', value => {
     expect(sanitizeCustomSources(value)).toEqual([])
     expect(sanitizeRemovedSources(value)).toEqual([])
   })
@@ -317,12 +313,12 @@ describe('sanitizeCustomSources / sanitizeRemovedSources', () => {
         { id: '', name: '空标识', template: 'https://other.example/{url}' },
         { id: 'custom-4', template: 'https://other.example/{url}' },
         { id: 'custom-5', name: 'x'.repeat(40), template: 'https://third.example/{path}' },
-        'custom-6',
-      ]),
+        'custom-6'
+      ])
     ).toEqual([
       MIRROR,
       { id: 'custom-4', name: 'other.example', template: 'https://other.example/{url}' },
-      { id: 'custom-5', name: 'x'.repeat(30), template: 'https://third.example/{path}' },
+      { id: 'custom-5', name: 'x'.repeat(30), template: 'https://third.example/{path}' }
     ])
   })
 
@@ -330,7 +326,7 @@ describe('sanitizeCustomSources / sanitizeRemovedSources', () => {
     const many = Array.from({ length: MAX_CUSTOM_SOURCES + 2 }, (_, index) => ({
       id: `custom-${index}`,
       name: `M${index}`,
-      template: `https://m${index}.example/{url}`,
+      template: `https://m${index}.example/{url}`
     }))
     expect(sanitizeCustomSources(many)).toHaveLength(MAX_CUSTOM_SOURCES)
   })
@@ -343,7 +339,7 @@ describe('sanitizeCustomSources / sanitizeRemovedSources', () => {
 describe('加速源列表', () => {
   it('未删除的内置源在前，自定义源在后', () => {
     const settings = settingsWith({ customSources: [MIRROR], removedSources: ['wget-la'] })
-    expect(listSources(settings).map((source) => source.id)).toEqual([
+    expect(listSources(settings).map(source => source.id)).toEqual([
       'ghfast',
       'gh-proxy-hk',
       'gh-proxy-cdn',
@@ -352,25 +348,23 @@ describe('加速源列表', () => {
       'gh-monlor',
       'hub-ddayh',
       'ghproxy-053000',
-      'custom-1',
+      'custom-1'
     ])
     expect(countRemovedSources(settings)).toBe(1)
   })
 
   it('首选：设置中的首选；不在列表中（已删除）时用第一个；列表为空时没有', () => {
     expect(preferredSource(settingsWith({ customSources: [MIRROR], accelerateSource: 'custom-1' }))).toBe(MIRROR)
-    expect(preferredSource(settingsWith({ accelerateSource: 'ghfast', removedSources: ['ghfast'] }))?.id).toBe(
-      'wget-la',
-    )
+    expect(preferredSource(settingsWith({ accelerateSource: 'ghfast', removedSources: ['ghfast'] }))?.id).toBe('wget-la')
     expect(preferredSource(settingsWith({ accelerateSource: 'gone' }))?.id).toBe('ghfast')
-    const removedAll = BUILTIN_SOURCES.map((source) => source.id)
+    const removedAll = BUILTIN_SOURCES.map(source => source.id)
     expect(preferredSource(settingsWith({ removedSources: removedAll }))).toBeUndefined()
     expect(candidateSources(settingsWith({ removedSources: removedAll }))).toEqual([])
   })
 
   it('故障转移的候选：首选在前，其余按列表顺序', () => {
     const settings = settingsWith({ customSources: [MIRROR], accelerateSource: 'gh-proxy-hk' })
-    expect(candidateSources(settings).map((source) => source.id)).toEqual([
+    expect(candidateSources(settings).map(source => source.id)).toEqual([
       'gh-proxy-hk',
       'ghfast',
       'wget-la',
@@ -380,7 +374,7 @@ describe('加速源列表', () => {
       'gh-monlor',
       'hub-ddayh',
       'ghproxy-053000',
-      'custom-1',
+      'custom-1'
     ])
   })
 
@@ -404,7 +398,7 @@ describe('dropBuiltinCopies', () => {
     expect(dropBuiltinCopies(settings)).toEqual({
       ...settings,
       customSources: [MIRROR],
-      accelerateSource: 'gh-proxy-com',
+      accelerateSource: 'gh-proxy-com'
     })
     expect(dropBuiltinCopies(settingsWith({ customSources: [COPY] })).accelerateSource).toBe(DEFAULT_SOURCE_ID)
   })
@@ -425,20 +419,15 @@ describe('addSource / removeSource / restoreSources', () => {
     expect(result).toEqual({
       ok: true,
       patch: {
-        customSources: [
-          { id: `custom-${TIME.toString(36)}`, name: 'mirror.example', template: 'https://mirror.example/{url}' },
-        ],
-      },
+        customSources: [{ id: `custom-${TIME.toString(36)}`, name: 'mirror.example', template: 'https://mirror.example/{url}' }]
+      }
     })
   })
 
   it('同一时刻添加的标识不重复', () => {
     const first = { id: `custom-${TIME.toString(36)}`, name: 'A', template: 'https://a.example/{url}' }
     const result = addSource(settingsWith({ customSources: [first] }), 'B', 'https://b.example/{url}', TIME)
-    expect(result.ok && result.patch.customSources.map((source) => source.id)).toEqual([
-      first.id,
-      `custom-${TIME.toString(36)}-2`,
-    ])
+    expect(result.ok && result.patch.customSources.map(source => source.id)).toEqual([first.id, `custom-${TIME.toString(36)}-2`])
   })
 
   it('格式错误、已存在（含效果相同的写法与内置源）、已达上限', () => {
@@ -446,16 +435,16 @@ describe('addSource / removeSource / restoreSources', () => {
     expect(addSource(settingsWith(), 'A', 'https://ghfast.top', TIME)).toEqual({ ok: false, reason: 'exists' })
     expect(addSource(settingsWith({ customSources: [MIRROR] }), 'A', 'https://mirror.example/', TIME)).toEqual({
       ok: false,
-      reason: 'exists',
+      reason: 'exists'
     })
     const full = Array.from({ length: MAX_CUSTOM_SOURCES }, (_, index) => ({
       id: `custom-${index}`,
       name: `M${index}`,
-      template: `https://m${index}.example/{url}`,
+      template: `https://m${index}.example/{url}`
     }))
     expect(addSource(settingsWith({ customSources: full }), 'A', 'https://a.example/{url}', TIME)).toEqual({
       ok: false,
-      reason: 'limit',
+      reason: 'limit'
     })
   })
 
@@ -496,7 +485,7 @@ describe('probe / measureLatency', () => {
         }
         clock += step
         return Promise.resolve({})
-      },
+      }
     }
   }
 
@@ -508,7 +497,7 @@ describe('probe / measureLatency', () => {
       mode: 'no-cors',
       cache: 'no-store',
       credentials: 'omit',
-      referrerPolicy: 'no-referrer',
+      referrerPolicy: 'no-referrer'
     })
   })
 
@@ -525,17 +514,17 @@ describe('probe / measureLatency', () => {
   it('延迟为首次请求的耗时，Ping 为之后三次的中位数', async () => {
     expect(await measureLatency('https://ghfast.top/', fakeDeps([420, 90, 70, 110]))).toEqual({
       latency: { ok: true, ms: 420 },
-      ping: { ok: true, ms: 90 },
+      ping: { ok: true, ms: 90 }
     })
   })
 
   it('首次请求失败：没有 Ping；之后的请求失败：Ping 为失败', async () => {
     expect(await measureLatency('https://ghfast.top/', fakeDeps(['error']))).toEqual({
-      latency: { ok: false, reason: 'error' },
+      latency: { ok: false, reason: 'error' }
     })
     expect(await measureLatency('https://ghfast.top/', fakeDeps([420, 90, 'error']))).toEqual({
       latency: { ok: true, ms: 420 },
-      ping: { ok: false, reason: 'error' },
+      ping: { ok: false, reason: 'error' }
     })
   })
 })

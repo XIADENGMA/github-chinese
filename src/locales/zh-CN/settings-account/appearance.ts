@@ -1,8 +1,7 @@
 import type { PageDictionary } from '../../../core/types'
 
 /** 键盘组合键片段：control + k、command + option + k */
-const KEY_COMBO =
-  '((?:control|command|ctrl|cmd|alt|option|shift) \\+ (?:(?:control|command|ctrl|cmd|alt|option|shift) \\+ )*\\S)'
+const KEY_COMBO = '((?:control|command|ctrl|cmd|alt|option|shift) \\+ (?:(?:control|command|ctrl|cmd|alt|option|shift) \\+ )*\\S)'
 
 /**
  * 外观（/settings/appearance）：主题首选项与主题名、对比度、表情符号肤色、制表符宽度、Markdown 编辑器字体、时间戳显示；
@@ -56,8 +55,7 @@ export default {
     'Dark dimmed': '深色柔和',
     'Soft dark': '柔和深色',
     // 主题说明（原文无逗号，译文用定语代替）
-    "GitHub's standard light theme with full color contrast and brightness.":
-      '具有完整色彩对比度和亮度的 GitHub 标准浅色主题。',
+    "GitHub's standard light theme with full color contrast and brightness.": '具有完整色彩对比度和亮度的 GitHub 标准浅色主题。',
     "GitHub's standard dark theme with full color contrast and brightness on a dark background.":
       '在深色背景上具有完整色彩对比度和亮度的 GitHub 标准深色主题。',
     'For people who may find it difficult to distinguish between reds and greens.': '适合难以区分红色和绿色的人。',
@@ -151,8 +149,7 @@ export default {
     'Select if URLs should be formatted on paste. You can use': '选择粘贴 URL 时是否格式化。可使用',
     'to paste a link in the opposite way.': '以相反方式粘贴链接。',
     'Formatted link': '格式化链接',
-    'Pasting a URL while having text selected will format to a Markdown link':
-      '选中文本时粘贴 URL 将格式化为 Markdown 链接',
+    'Pasting a URL while having text selected will format to a Markdown link': '选中文本时粘贴 URL 将格式化为 Markdown 链接',
     'Plain text': '纯文本',
     'Pasting a URL while having text selected will replace the text': '选中文本时粘贴 URL 将替换所选文本',
     'Save editor settings': '保存编辑器设置',
@@ -164,7 +161,7 @@ export default {
     'Enable screen reader hint': '启用屏幕阅读器提示',
     'Disable screen reader hint': '禁用屏幕阅读器提示',
     'Save assistive technology hint preferences': '保存辅助技术提示首选项',
-    'Hovercard assistive technology hint preferences successfully saved.': '悬停卡片辅助技术提示首选项已保存。',
+    'Hovercard assistive technology hint preferences successfully saved.': '悬停卡片辅助技术提示首选项已保存。'
   },
   scoped: {
     'Sync with system': '跟随系统',
@@ -184,13 +181,13 @@ export default {
     // 表情符号肤色：默认（无肤色修饰）
     Neutral: '中性',
     // <kbd> 中的读屏文字：按键名保留，只译连接词（与 common 的快捷方式提示一致）
-    'control shift and V': 'control shift 和 V',
+    'control shift and V': 'control shift 和 V'
   },
   regexp: [
     // 制表符宽度选项：4 (Default)
     [/^(\d{1,2}) \(Default\)$/, '$1（默认）'],
     // 命令面板快捷方式选项：control + k or control + alt + k (default)
     [new RegExp(`^${KEY_COMBO} or ${KEY_COMBO} \\(default\\)$`), '$1 或 $2（默认）'],
-    [new RegExp(`^${KEY_COMBO} \\(default\\)$`), '$1（默认）'],
-  ],
+    [new RegExp(`^${KEY_COMBO} \\(default\\)$`), '$1（默认）']
+  ]
 } satisfies PageDictionary

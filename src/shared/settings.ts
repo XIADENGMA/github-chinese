@@ -1,17 +1,6 @@
 import { storage } from 'wxt/utils/storage'
-import {
-  DEFAULT_SOURCE_ID,
-  dropBuiltinCopies,
-  sanitizeCustomSources,
-  sanitizeRemovedSources,
-  type AccelerateSettings,
-} from './accelerate'
-import {
-  isPageLocalePreference,
-  isUiLanguagePreference,
-  type PageLocalePreference,
-  type UiLanguagePreference,
-} from './locale'
+import { DEFAULT_SOURCE_ID, dropBuiltinCopies, sanitizeCustomSources, sanitizeRemovedSources, type AccelerateSettings } from './accelerate'
+import { isPageLocalePreference, isUiLanguagePreference, type PageLocalePreference, type UiLanguagePreference } from './locale'
 import { DEFAULT_NEW_TAB_SCOPES, sanitizeNewTabScopes, type NewTabScope } from './new-tab'
 
 /** 扩展界面外观：auto 跟随浏览器 */
@@ -86,7 +75,7 @@ export const DEFAULT_SETTINGS: Settings = {
   newTabPaths: [],
   accelerateSource: DEFAULT_SOURCE_ID,
   customSources: [],
-  removedSources: [],
+  removedSources: []
 }
 
 /**
@@ -96,20 +85,20 @@ export const DEFAULT_SETTINGS: Settings = {
 export const LEGACY_SETTING_VALUES = { collectUntranslated: false } as const
 
 export const settingsItem = storage.defineItem<Partial<Settings>>('sync:settings', {
-  fallback: DEFAULT_SETTINGS,
+  fallback: DEFAULT_SETTINGS
 })
 
 export const customEntriesItem = storage.defineItem<CustomEntries>('local:customEntries', {
-  fallback: {},
+  fallback: {}
 })
 
 /** 搜索净化的屏蔽规则：每项一条（写法见 shared/search-block）。可能较多，不放进同步的设置 */
 export const searchBlockRulesItem = storage.defineItem<readonly string[]>('local:searchBlockRules', {
-  fallback: [],
+  fallback: []
 })
 
 function isStringArray(value: unknown): value is string[] {
-  return Array.isArray(value) && value.every((item) => typeof item === 'string')
+  return Array.isArray(value) && value.every(item => typeof item === 'string')
 }
 
 /** 合并存储值与默认值，丢弃类型不符的字段与未知字段；与内置源重复的自定义源去掉（见 dropBuiltinCopies） */
@@ -135,10 +124,9 @@ export function mergeSettings(stored: unknown): Settings {
     newTab: pickBoolean('newTab', DEFAULT_SETTINGS.newTab),
     newTabScopes: sanitizeNewTabScopes(value.newTabScopes),
     newTabPaths: isStringArray(value.newTabPaths) ? value.newTabPaths : DEFAULT_SETTINGS.newTabPaths,
-    accelerateSource:
-      typeof value.accelerateSource === 'string' ? value.accelerateSource : DEFAULT_SETTINGS.accelerateSource,
+    accelerateSource: typeof value.accelerateSource === 'string' ? value.accelerateSource : DEFAULT_SETTINGS.accelerateSource,
     customSources: sanitizeCustomSources(value.customSources),
-    removedSources: sanitizeRemovedSources(value.removedSources),
+    removedSources: sanitizeRemovedSources(value.removedSources)
   }
   return { ...merged, ...dropBuiltinCopies(merged) }
 }
@@ -147,8 +135,7 @@ export function mergeSettings(stored: unknown): Settings {
 export function sanitizeCustomEntries(stored: unknown): CustomEntries {
   if (typeof stored !== 'object' || stored === null || Array.isArray(stored)) return {}
   const entries = Object.entries(stored as Record<string, unknown>).filter(
-    (entry): entry is [string, string] =>
-      typeof entry[1] === 'string' && entry[0].trim() !== '' && entry[1].trim() !== '',
+    (entry): entry is [string, string] => typeof entry[1] === 'string' && entry[0].trim() !== '' && entry[1].trim() !== ''
   )
   return Object.fromEntries(entries)
 }
@@ -169,7 +156,7 @@ export async function updateSettings(patch: SettingsPatch): Promise<Settings> {
 }
 
 export function watchSettings(callback: (settings: Settings) => void): () => void {
-  return settingsItem.watch((value) => callback(mergeSettings(value)))
+  return settingsItem.watch(value => callback(mergeSettings(value)))
 }
 
 export async function getCustomEntries(): Promise<CustomEntries> {
@@ -177,14 +164,14 @@ export async function getCustomEntries(): Promise<CustomEntries> {
 }
 
 export function watchCustomEntries(callback: (entries: CustomEntries) => void): () => void {
-  return customEntriesItem.watch((value) => callback(sanitizeCustomEntries(value)))
+  return customEntriesItem.watch(value => callback(sanitizeCustomEntries(value)))
 }
 
 function globToRegExp(pattern: string): RegExp {
   const source = pattern
     .replace(/\/+$/, '')
     .split(/(\*\*|\*)/)
-    .map((part) => {
+    .map(part => {
       if (part === '**') return '.*'
       if (part === '*') return '[^/]*'
       return part.replace(/[.+?^${}()|[\]\\]/g, '\\$&')
@@ -196,9 +183,9 @@ function globToRegExp(pattern: string): RegExp {
 /** 路径是否命中路径规则（排除路径、新标签页打开的自定义页面）：以 / 开头，* 匹配单段，** 匹配任意多段，含下级路径 */
 export function matchesPathPattern(pathname: string, patterns: readonly string[]): boolean {
   return patterns
-    .map((pattern) => pattern.trim())
-    .filter((pattern) => pattern.startsWith('/'))
-    .some((pattern) => globToRegExp(pattern).test(pathname))
+    .map(pattern => pattern.trim())
+    .filter(pattern => pattern.startsWith('/'))
+    .some(pattern => globToRegExp(pattern).test(pathname))
 }
 
 /** 路径是否被排除规则命中 */
@@ -223,8 +210,8 @@ export function sanitizeSearchBlockRules(stored: unknown): readonly string[] {
   if (!Array.isArray(stored)) return []
   return stored
     .filter((item): item is string => typeof item === 'string')
-    .map((item) => item.trim())
-    .filter((item) => item !== '')
+    .map(item => item.trim())
+    .filter(item => item !== '')
 }
 
 export async function getSearchBlockRules(): Promise<readonly string[]> {
@@ -232,7 +219,7 @@ export async function getSearchBlockRules(): Promise<readonly string[]> {
 }
 
 export function watchSearchBlockRules(callback: (rules: readonly string[]) => void): () => void {
-  return searchBlockRulesItem.watch((value) => callback(sanitizeSearchBlockRules(value)))
+  return searchBlockRulesItem.watch(value => callback(sanitizeSearchBlockRules(value)))
 }
 
 /** 写入屏蔽规则（先过滤无效项），返回实际写入的值 */
@@ -261,5 +248,5 @@ export function addExcludedPath(patterns: readonly string[], pathname: string): 
 
 /** 移除所有命中页面路径的排除规则 */
 export function removeExcludedPath(patterns: readonly string[], pathname: string): readonly string[] {
-  return patterns.filter((pattern) => !isPathExcluded(pathname, [pattern]))
+  return patterns.filter(pattern => !isPathExcluded(pathname, [pattern]))
 }

@@ -11,16 +11,16 @@ import { DATE_SOURCE, joinCjk, translateTime } from '../helpers'
 const SUMMARY_HEADS = ['result for', 'results for'] as const
 const SUMMARY_SUBJECTS: Readonly<Record<string, string>> = {
   repositories: '存储库',
-  'starred repositories': '已加星标的存储库',
+  'starred repositories': '已加星标的存储库'
 }
 const SUMMARY_TAILS: Readonly<Record<string, string>> = {
   matching: '匹配',
   'written in': '语言为',
-  'sorted by': '排序依据为',
+  'sorted by': '排序依据为'
 }
 
 function summaryFragments(): Record<string, string> {
-  const entries: [string, string][] = SUMMARY_HEADS.map((head) => [head, '个结果 类型为'])
+  const entries: [string, string][] = SUMMARY_HEADS.map(head => [head, '个结果 类型为'])
   for (const [subject, subjectZh] of Object.entries(SUMMARY_SUBJECTS)) {
     for (const [tail, tailZh] of Object.entries(SUMMARY_TAILS)) {
       // 前面是类型词：「源 的存储库 匹配」
@@ -50,7 +50,7 @@ const TAB_TITLES: Readonly<Record<string, string>> = {
   Projects: '项目',
   Packages: '软件包',
   Sponsoring: '正在赞助',
-  Achievements: '成就',
+  Achievements: '成就'
 }
 
 /** 星标标签页按钮里的类型与排序值 */
@@ -63,12 +63,12 @@ const TYPE_LABELS: Readonly<Record<string, string>> = {
   Templates: '模板',
   Archived: '已存档',
   Public: '公共',
-  Private: '专用',
+  Private: '专用'
 }
 const SORT_LABELS: Readonly<Record<string, string>> = {
   'Recently starred': '最近星标',
   'Recently active': '最近活跃',
-  'Most stars': '星标最多',
+  'Most stars': '星标最多'
 }
 
 /**
@@ -79,7 +79,7 @@ const SORT_LABELS: Readonly<Record<string, string>> = {
 export const STAR_LIST_NAMES: Readonly<Record<string, string>> = {
   '🔮 Future ideas': '🔮 未来构想',
   '🚀 My stack': '🚀 我的技术栈',
-  '✨ Inspiration': '✨ 灵感',
+  '✨ Inspiration': '✨ 灵感'
 }
 
 /** 列表名：预置名称取译名，其余保持原文 */
@@ -140,15 +140,12 @@ export default {
     'Show all lists…': '显示所有列表…',
     'Create your first list': '创建你的第一个列表',
     'Create your first list.': '创建你的第一个列表。',
-    'Lists make it easier to organize and curate repositories that you have starred.':
-      '列表可以帮你整理和归类已加星标的存储库。',
+    'Lists make it easier to organize and curate repositories that you have starred.': '列表可以帮你整理和归类已加星标的存储库。',
     'Write a description': '编写描述',
     // 本人星标空状态：As you <explore GitHub>, star repositories to save them for later and they’ll show up here.
     'explore GitHub': '探索 GitHub',
-    ', star repositories to save them for later and they’ll show up here.':
-      '时为存储库加星标留待以后查看，它们会显示在这里。',
-    ", star repositories to save them for later and they'll show up here.":
-      '时为存储库加星标留待以后查看，它们会显示在这里。',
+    ', star repositories to save them for later and they’ll show up here.': '时为存储库加星标留待以后查看，它们会显示在这里。',
+    ", star repositories to save them for later and they'll show up here.": '时为存储库加星标留待以后查看，它们会显示在这里。',
     // 星标列表页（/stars/<用户>/lists/<列表>）的空状态
     'Add repositories to this list': '将存储库添加到此列表',
     'Star repositories on GitHub to keep track of your favorite projects and inspirational code.':
@@ -184,8 +181,7 @@ export default {
     "There aren't any projects yet": '暂无项目',
     'There aren’t any projects yet': '暂无项目',
     'Create your first GitHub project': '创建你的第一个 GitHub 项目',
-    'Projects are a customizable, flexible tool for planning and tracking your work.':
-      '项目是可自定义的灵活工具，用于规划和跟踪工作。',
+    'Projects are a customizable, flexible tool for planning and tracking your work.': '项目是可自定义的灵活工具，用于规划和跟踪工作。',
 
     // 软件包标签页
     'Get started with GitHub Packages': '开始使用 GitHub 软件包',
@@ -204,7 +200,7 @@ export default {
       '集中管理 Docker 映像并决定谁可以查看和访问你的映像。',
 
     // 赞助标签页
-    'Past sponsorship': '过往赞助',
+    'Past sponsorship': '过往赞助'
   },
   scoped: {
     ...summaryFragments(),
@@ -274,32 +270,22 @@ export default {
     'organization or maintainer in the past': '个组织或维护者',
     'in the past': '个',
     // Bulk Sponsor 卡片按钮
-    'Get started': '开始使用',
+    'Get started': '开始使用'
   },
   regexp: [
     // 星标标签页按钮：Type: Forks / Language: Swift / Sort by: Most stars
-    [
-      new RegExp(`^Type: (${Object.keys(TYPE_LABELS).join('|')})$`),
-      (_, type: string) => `类型：${TYPE_LABELS[type] ?? type}`,
-    ],
+    [new RegExp(`^Type: (${Object.keys(TYPE_LABELS).join('|')})$`), (_, type: string) => `类型：${TYPE_LABELS[type] ?? type}`],
     [/^Language: (.+)$/, (_, language: string) => `语言：${language === 'All' ? '全部' : language}`],
-    [
-      new RegExp(`^Sort by: (${Object.keys(SORT_LABELS).join('|')})$`),
-      (_, sort: string) => `排序依据：${SORT_LABELS[sort] ?? sort}`,
-    ],
+    [new RegExp(`^Sort by: (${Object.keys(SORT_LABELS).join('|')})$`), (_, sort: string) => `排序依据：${SORT_LABELS[sort] ?? sort}`],
     // 存储库条目：1 issue needs help
     [/^(\d[\d,]*) issues? needs? help$/, '$1 个议题需要帮助'],
 
     // 空状态
     [
       /^(You|[\w-]+) (?:don|doesn)[’']t have any (public )?repositories (that match|yet)\.$/,
-      (_, name, isPublic, kind) =>
-        `${who(name)}${kind === 'yet' ? '还没有' : '没有匹配的'}${isPublic ? '公共' : ''}存储库。`,
+      (_, name, isPublic, kind) => `${who(name)}${kind === 'yet' ? '还没有' : '没有匹配的'}${isPublic ? '公共' : ''}存储库。`
     ],
-    [
-      /^(You|[\w-]+) (?:don|doesn)[’']t have any starred repositories yet\.$/,
-      (_, name) => `${who(name)}还没有已加星标的存储库。`,
-    ],
+    [/^(You|[\w-]+) (?:don|doesn)[’']t have any starred repositories yet\.$/, (_, name) => `${who(name)}还没有已加星标的存储库。`],
     [/^(You|[\w-]+) (?:don|doesn)[’']t have any followers yet\.$/, (_, name) => `${who(name)}还没有关注者。`],
     [/^(You|[\w-]+) (?:aren|isn)[’']t following anybody\.$/, (_, name) => `${who(name)}还没有关注任何人。`],
     [/^That[’']s it\. You[’']ve reached the end of ([\w-]+)[’']s stars\.$/, '已显示 $1 的全部星标。'],
@@ -313,37 +299,28 @@ export default {
     // 软件包标签页
     [
       /^Learn more about (Apache Maven|NuGet|RubyGems|npm|Containers)$/,
-      (_, registry) => (registry === 'Containers' ? '了解容器' : `了解 ${registry}`),
+      (_, registry) => (registry === 'Containers' ? '了解容器' : `了解 ${registry}`)
     ],
 
     // 列表页标题段：先于标签页标题段，列表名与标签页同名（如 Projects）时仍按列表页翻译
     [/^([\w-]+)[’']s list \/ (.+)$/, (_, user: string, name: string) => `${user} 的列表 / ${starListName(name)}`],
 
     // 标签页标题段
-    [
-      new RegExp(`^(.+?) / (${Object.keys(TAB_TITLES).join('|')})$`),
-      (_, owner, tab) => `${owner} / ${TAB_TITLES[tab] ?? tab}`,
-    ],
+    [new RegExp(`^(.+?) / (${Object.keys(TAB_TITLES).join('|')})$`), (_, owner, tab) => `${owner} / ${TAB_TITLES[tab] ?? tab}`]
   ],
   inline: [
     // 本人星标空状态、已加星标的主题空状态：As you <explore GitHub>, star … show up here.
     // 整句收录，链接两侧按中文排版补空格；As you 与句尾片段仍按片段收录作兜底
     [
       'As you {}, star repositories to save them for later and they’ll show up here.',
-      '在你{} 时为存储库加星标留待以后查看，它们会显示在这里。',
+      '在你{} 时为存储库加星标留待以后查看，它们会显示在这里。'
     ],
     [
       "As you {}, star repositories to save them for later and they'll show up here.",
-      '在你{} 时为存储库加星标留待以后查看，它们会显示在这里。',
+      '在你{} 时为存储库加星标留待以后查看，它们会显示在这里。'
     ],
-    [
-      'As you {}, star topics to save them for later and they’ll show up here.',
-      '在你{} 时为主题加星标留待以后查看，它们会显示在这里。',
-    ],
-    [
-      "As you {}, star topics to save them for later and they'll show up here.",
-      '在你{} 时为主题加星标留待以后查看，它们会显示在这里。',
-    ],
+    ['As you {}, star topics to save them for later and they’ll show up here.', '在你{} 时为主题加星标留待以后查看，它们会显示在这里。'],
+    ["As you {}, star topics to save them for later and they'll show up here.", '在你{} 时为主题加星标留待以后查看，它们会显示在这里。']
   ],
   listNames: STAR_LIST_NAMES,
   ignore: [
@@ -360,6 +337,6 @@ export default {
     '#language-options input[name="language"]:not([value=""]) ~ .text-normal',
     // 软件包列表中的软件包名、所有者名与存储库名
     '#package-results .Box-row a.f4',
-    '#package-results .Box-row .f6 a',
-  ],
+    '#package-results .Box-row .f6 a'
+  ]
 } satisfies PageDictionary

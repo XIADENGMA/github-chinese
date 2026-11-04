@@ -14,7 +14,7 @@ const EMPTY_HEADINGS: Readonly<Record<string, string>> = {
   wikis: '沒有與搜尋相符的 Wiki',
   topics: '沒有與搜尋相符的主題',
   // 产品名译中文（用户定）：Marketplace → 市集；结果含应用程序与动作，统称「項目」
-  marketplace: '沒有與搜尋相符的市集項目',
+  marketplace: '沒有與搜尋相符的市集項目'
 }
 
 /** 「However we found 3 repositories that matched…」中的类型 */
@@ -38,7 +38,7 @@ const FOUND_KINDS: Readonly<Record<string, string>> = {
   wiki: 'Wiki',
   wikis: 'Wiki',
   topic: '主題',
-  topics: '主題',
+  topics: '主題'
 }
 
 /** 量词随名词：使用者作「位」，程式碼结果（搜索结果）作「項」，其余作「個」 */
@@ -46,7 +46,7 @@ const FOUND_MEASURES: Readonly<Record<string, string>> = {
   'code result': '項',
   'code results': '項',
   user: '位',
-  users: '位',
+  users: '位'
 }
 
 function measure(kind: string): string {
@@ -129,27 +129,24 @@ export default {
 
     // 提示：已保存的搜索
     'Always searching within the same organization or set of repositories? Try constructing a query and click the save button in the top right corner.':
-      '經常在同一個組織或同一組儲存庫中搜尋？可建立查詢後按一下右上角的儲存按鈕。',
+      '經常在同一個組織或同一組儲存庫中搜尋？可建立查詢後按一下右上角的儲存按鈕。'
   },
   scoped: {
     // 数量在单独元素中：3 + code results（搜索结果量词作「項」）
     'code results': '項程式碼結果',
-    'code result': '項程式碼結果',
+    'code result': '項程式碼結果'
   },
   regexp: [
     // 「Your search did not match any 」「repositories」拼接（类型词不单独收录，避免误译路径、代码中的同名单词）
-    [
-      new RegExp(`^Your search did not match any (${Object.keys(EMPTY_HEADINGS).join('|')})$`),
-      (_, type) => EMPTY_HEADINGS[type] ?? type,
-    ],
+    [new RegExp(`^Your search did not match any (${Object.keys(EMPTY_HEADINGS).join('|')})$`), (_, type) => EMPTY_HEADINGS[type] ?? type],
     [
       new RegExp(
-        `^However we found (\\d[\\d.,]*[kKMB]?) (${Object.keys(FOUND_KINDS).join('|')}) that matched your search query\\. Alternatively try one of the tips below\\.$`,
+        `^However we found (\\d[\\d.,]*[kKMB]?) (${Object.keys(FOUND_KINDS).join('|')}) that matched your search query\\. Alternatively try one of the tips below\\.$`
       ),
       (_, count, kind) =>
-        `${joinCjk(`不過找到了 ${count} ${measure(kind)}與搜尋查詢相符的`, FOUND_KINDS[kind] ?? kind)}。也可嘗試以下提示。`,
+        `${joinCjk(`不過找到了 ${count} ${measure(kind)}與搜尋查詢相符的`, FOUND_KINDS[kind] ?? kind)}。也可嘗試以下提示。`
     ],
     // 句中类型为链接时：However we found <3 code results> that matched…
-    [new RegExp(`^(\\d[\\d.,]*[kKMB]?) (${FOUND_COUNT_KINDS})$`), (_, count, kind) => foundCount(count, kind)],
-  ],
+    [new RegExp(`^(\\d[\\d.,]*[kKMB]?) (${FOUND_COUNT_KINDS})$`), (_, count, kind) => foundCount(count, kind)]
+  ]
 } satisfies PageDictionary

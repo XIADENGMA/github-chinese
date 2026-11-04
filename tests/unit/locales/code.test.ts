@@ -30,7 +30,7 @@ function translate(text: string): string | undefined {
 /** 检查弹层的词条由 commits 词典维护（译文在 commits.test.ts 校验），这里取它在提交页的译文作期望 */
 const commitsMatcher = createMatcher([
   ['commits', checkSummary],
-  ['commits', checks],
+  ['commits', checks]
 ])
 
 function commitsTranslation(text: string): string {
@@ -49,86 +49,86 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   // tree：页面标题分段（原文无标点，引用名不加括号）
   {
     hits: [['Blaming core/package.json at main', '追溯 main 上的 core/package.json']],
-    misses: ['Blaming core/package.json'],
+    misses: ['Blaming core/package.json']
   },
   {
     hits: [['Editing core/README.md at main', '编辑 main 上的 core/README.md']],
-    misses: ['Editing'],
+    misses: ['Editing']
   },
   {
     hits: [['Deleting core/README.md at v3.5.0', '删除 v3.5.0 上的 core/README.md']],
-    misses: ['Deleting core/README.md'],
+    misses: ['Deleting core/README.md']
   },
   {
     hits: [
       ['New File at /', '新建文件'],
-      ['New File at src/utils', '在 src/utils 中新建文件'],
+      ['New File at src/utils', '在 src/utils 中新建文件']
     ],
-    misses: ['New File'],
+    misses: ['New File']
   },
   {
     hits: [
       ['core/packages at main', 'main 上的 core/packages'],
-      ['cli/pkg at trunk', 'trunk 上的 cli/pkg'],
+      ['cli/pkg at trunk', 'trunk 上的 cli/pkg']
     ],
-    misses: ['Fix crash at startup', 'core at main'],
+    misses: ['Fix crash at startup', 'core at main']
   },
   // tree：文件树、目录截断
   {
     hits: [['12 entries not shown', '另有 12 项未显示']],
-    misses: ['entries not shown'],
+    misses: ['entries not shown']
   },
   {
     hits: [
       [
         'Sorry, we had to truncate this directory to 1,000 files. 2,345 entries were omitted from the list. Latest commit info may be omitted.',
-        '此目录已截断为 1,000 个文件，另有 2,345 个条目未列出。最新提交信息可能不完整。',
+        '此目录已截断为 1,000 个文件，另有 2,345 个条目未列出。最新提交信息可能不完整。'
       ],
       [
         'Sorry, we had to truncate this directory to 1,000 files. 1 entry was omitted from the list. Latest commit info may be omitted.',
-        '此目录已截断为 1,000 个文件，另有 1 个条目未列出。最新提交信息可能不完整。',
-      ],
+        '此目录已截断为 1,000 个文件，另有 1 个条目未列出。最新提交信息可能不完整。'
+      ]
     ],
     // 不带末句的版本由 repository 词典处理
-    misses: ['Sorry, we had to truncate this directory to 1,000 files. 2,345 entries were omitted from the list.'],
+    misses: ['Sorry, we had to truncate this directory to 1,000 files. 2,345 entries were omitted from the list.']
   },
   // tree：贡献者
   {
     hits: [
       ['Show 31 contributors"', '显示 31 个贡献者'],
-      ['Show 1 contributor', '显示 1 个贡献者'],
+      ['Show 1 contributor', '显示 1 个贡献者']
     ],
-    misses: ['Show contributors'],
+    misses: ['Show contributors']
   },
   {
     hits: [
       ['31 contributors', '31 个贡献者'],
-      ['1 contributor', '1 个贡献者'],
+      ['1 contributor', '1 个贡献者']
     ],
-    misses: ['contributors'],
+    misses: ['contributors']
   },
   {
     hits: [
       ['12 commits by octocat', 'octocat 的 12 个提交'],
-      ['1 commit by dependabot[bot]', 'dependabot[bot] 的 1 个提交'],
+      ['1 commit by dependabot[bot]', 'dependabot[bot] 的 1 个提交']
     ],
-    misses: ['commits by octocat'],
+    misses: ['commits by octocat']
   },
   {
     hits: [
       ['Ask Copilot about this file', '向 Copilot 询问此文件'],
-      ['Ask Copilot about this symbol', '向 Copilot 询问此符号'],
+      ['Ask Copilot about this symbol', '向 Copilot 询问此符号']
     ],
     // 存储库级由 repository 词典的 static 处理
-    misses: ['Ask Copilot about this repository'],
+    misses: ['Ask Copilot about this repository']
   },
   // tree：存储库概述侧栏的引用对话框
   {
     hits: [
       ['Copy APA', '复制 APA'],
-      ['Copy BibTeX', '复制 BibTeX'],
+      ['Copy BibTeX', '复制 BibTeX']
     ],
-    misses: ['Copy MLA', 'Copy'],
+    misses: ['Copy MLA', 'Copy']
   },
   // blob：文件大小
   {
@@ -136,49 +136,46 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['117 lines (117 loc) · 5.03 KB', '117 行（117 行代码）· 5.03 KB'],
       ['1,204 lines (1,033 loc) · 41.2 KB', '1,204 行（1,033 行代码）· 41.2 KB'],
       ['12.3k lines (10.1k loc) · 410 KB', '12.3k 行（10.1k 行代码）· 410 KB'],
-      ['3 lines (3 loc) · 99 Bytes', '3 行（3 行代码）· 99 字节'],
+      ['3 lines (3 loc) · 99 Bytes', '3 行（3 行代码）· 99 字节']
     ],
-    misses: ['117 lines', 'lines (loc) · 5.03 KB'],
+    misses: ['117 lines', 'lines (loc) · 5.03 KB']
   },
   // blob：不可预览文件只显示大小（KB、MB 原样保留）
   {
     hits: [
       ['504 Bytes', '504 字节'],
-      ['1 Byte', '1 字节'],
+      ['1 Byte', '1 字节']
     ],
-    misses: ['Bytes', '1.2 KB'],
+    misses: ['Bytes', '1.2 KB']
   },
   // blob：代码所有者（原文无标点，译文不加冒号、顿号；与 pulls 差异视图的同一提示同译「所有者为 X」）
   {
     hits: [
       ['Owned by you', '所有者为你'],
-      [
-        'Owned by you along with @org/team (from CODEOWNERS line 3)',
-        '所有者为你和 @org/team（来自 CODEOWNERS 第 3 行）',
-      ],
-      ['Owned by younull (from CODEOWNERS line 7)', '所有者为你（来自 CODEOWNERS 第 7 行）'],
+      ['Owned by you along with @org/team (from CODEOWNERS line 3)', '所有者为你和 @org/team（来自 CODEOWNERS 第 3 行）'],
+      ['Owned by younull (from CODEOWNERS line 7)', '所有者为你（来自 CODEOWNERS 第 7 行）']
     ],
-    misses: ['Owned by'],
+    misses: ['Owned by']
   },
   {
     hits: [
       ['Owned by @octocat @org/team', '所有者为 @octocat @org/team'],
       ['Owned by @org/docs (from CODEOWNERS line 12)', '所有者为 @org/docs（来自 CODEOWNERS 第 12 行）'],
-      ['Owned by youngster', '所有者为 youngster'],
+      ['Owned by youngster', '所有者为 youngster']
     ],
-    misses: ['Owned'],
+    misses: ['Owned']
   },
   {
     hits: [['Code owners: You, @org/team', '代码所有者：你、@org/team']],
-    misses: ['Code owners:'],
+    misses: ['Code owners:']
   },
   {
     hits: [['Code owner: You', '代码所有者：你']],
-    misses: ['Code owner:'],
+    misses: ['Code owner:']
   },
   {
     hits: [['Code owner: @octocat', '代码所有者：@octocat']],
-    misses: ['Code owner'],
+    misses: ['Code owner']
   },
   // blob：行菜单
   { hits: [['Line 12 options', '第 12 行选项']], misses: ['Line options'] },
@@ -188,85 +185,83 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ["Press Ctrl F again to open the browser's find menu", '再次按 Ctrl F 打开浏览器的查找菜单'],
-      ["Press ⌘ F again to open the browser's find menu", '再次按 ⌘ F 打开浏览器的查找菜单'],
+      ["Press ⌘ F again to open the browser's find menu", '再次按 ⌘ F 打开浏览器的查找菜单']
     ],
-    misses: ["Press again to open the browser's find menu"],
+    misses: ["Press again to open the browser's find menu"]
   },
   // blob：追溯（日期由 helpers 生成，与前面的中文隔空格；原文只有逗号，译文不换成括号）
   {
-    hits: [
-      ['Blame prior to change 20ea62d, made on Feb 3, 2023', '追溯 20ea62d 之前的版本，该更改提交于 2023 年 2 月 3 日'],
-    ],
-    misses: ['Blame prior to change 20ea62d'],
+    hits: [['Blame prior to change 20ea62d, made on Feb 3, 2023', '追溯 20ea62d 之前的版本，该更改提交于 2023 年 2 月 3 日']],
+    misses: ['Blame prior to change 20ea62d']
   },
   // blob：符号面板
   {
     hits: [
       ['12 symbols found', '找到 12 个符号'],
-      ['1 symbol found\u200B\u200B', '找到 1 个符号'],
+      ['1 symbol found\u200B\u200B', '找到 1 个符号']
     ],
-    misses: ['symbols found'],
+    misses: ['symbols found']
   },
   {
     hits: [
       ['5 References', '5 个引用'],
-      ['1 Reference', '1 个引用'],
+      ['1 Reference', '1 个引用']
     ],
     // 单独的 References 由 scoped 词条译为「引用」
-    misses: ['References found', '5 Referees'],
+    misses: ['References found', '5 Referees']
   },
   {
     hits: [
       ['Definitions in this file', '此文件中的定义'],
       ['References in src/core/index.ts', 'src/core/index.ts 中的引用'],
-      ['Results in this file', '此文件中的结果'],
+      ['Results in this file', '此文件中的结果']
     ],
-    misses: ['Definitions in'],
+    misses: ['Definitions in']
   },
   // blob：错误页
   {
     hits: [['An unexpected 500 error occurred. Try', '发生意外的 500 错误。请尝试']],
-    misses: ['An unexpected 50 error occurred. Try'],
+    misses: ['An unexpected 50 error occurred. Try']
   },
   // blob：计划限制（方案名译「X 版」）
   {
     hits: [
       [
         'Upgrade to GitHub Pro or make this repository public to enable CODEOWNERS.',
-        '升级到 GitHub 专业版或将此存储库设为公共以启用 CODEOWNERS。',
+        '升级到 GitHub 专业版或将此存储库设为公共以启用 CODEOWNERS。'
       ],
       [
         'Upgrade to GitHub Team or make this repository public to enable this feature.',
-        '升级到 GitHub 团队版或将此存储库设为公共以启用此功能。',
-      ],
+        '升级到 GitHub 团队版或将此存储库设为公共以启用此功能。'
+      ]
     ],
-    misses: ['Upgrade to GitHub Enterprise or make this repository public to enable CODEOWNERS.'],
+    misses: ['Upgrade to GitHub Enterprise or make this repository public to enable CODEOWNERS.']
   },
   {
     hits: [
       [
         'This repository is a fork, and inherits the features of the parent repository. Contact the owner of the root repository to enable CODEOWNERS',
-        '此存储库是复刻，继承父存储库的功能。联系根存储库所有者以启用 CODEOWNERS',
+        '此存储库是复刻，继承父存储库的功能。联系根存储库所有者以启用 CODEOWNERS'
       ],
       [
         'This repository is a fork, and inherits the features of the parent repository. Contact the owner of the root repository to enable this feature.',
-        '此存储库是复刻，继承父存储库的功能。联系根存储库所有者以启用此功能。',
-      ],
+        '此存储库是复刻，继承父存储库的功能。联系根存储库所有者以启用此功能。'
+      ]
     ],
-    misses: ['This repository is a fork'],
+    misses: ['This repository is a fork']
   },
   {
     hits: [['Contact the owner of the repository to enable CODEOWNERS.', '联系存储库所有者以启用 CODEOWNERS。']],
-    misses: ['Contact the owner of the repository'],
+    misses: ['Contact the owner of the repository']
   },
   // blob：实验性代码视图
   { hits: [['Line 12 annotations', '第 12 行注释']], misses: ['Line annotations'] },
   {
     hits: [
       ['Line 12 annotations: Hidden Unicode', '第 12 行注释：隐藏 Unicode'],
-      ['Line 3 annotations: Hidden Unicode, CODEOWNERS error', '第 3 行注释：隐藏 Unicode、CODEOWNERS 错误'],
+      ['Line 3 annotations: Hidden Unicode, CODEOWNERS error', '第 3 行注释：隐藏 Unicode、CODEOWNERS 错误']
     ],
-    misses: ['Line 3 annotations: Unknown kind', 'Line 3 annotations:'],
+    misses: ['Line 3 annotations: Unknown kind', 'Line 3 annotations:']
   },
   { hits: [['Line 12 actions', '第 12 行操作']], misses: ['Line actions'] },
   { hits: [['Lines 3–8 actions', '第 3–8 行操作']], misses: ['Lines actions'] },
@@ -277,7 +272,7 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   { hits: [['Lines 4 to 9 highlighted.', '已高亮第 4 至 9 行。']], misses: ['Lines highlighted.'] },
   {
     hits: [['Find in file: 3 results. Result 1 of 3, line 12.', '文件内查找：共 3 个结果。第 1 个，第 12 行。']],
-    misses: ['Find in file: 3 results.'],
+    misses: ['Find in file: 3 results.']
   },
   // 原文只有一个逗号：译文不多加逗号、冒号
   { hits: [['Result 2 of 3, line 40.', '共 3 个结果中的第 2 个，第 40 行。']], misses: ['Result 2 of 3.'] },
@@ -285,54 +280,54 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['12 text references to useState.', 'useState 的 12 处文本引用。'],
-      ['1 text reference to foo bar.', 'foo bar 的 1 处文本引用。'],
+      ['1 text reference to foo bar.', 'foo bar 的 1 处文本引用。']
     ],
-    misses: ['text references to foo.'],
+    misses: ['text references to foo.']
   },
   {
     hits: [
       ['3 sections collapsed. 40 of 120 source lines visible.', '已折叠 3 个代码段。120 行源代码中可见 40 行。'],
       [
         '1 section collapsed. 98 of 100 source lines visible. Caret moved to visible line 7.',
-        '已折叠 1 个代码段。100 行源代码中可见 98 行。光标已移到可见的第 7 行。',
-      ],
+        '已折叠 1 个代码段。100 行源代码中可见 98 行。光标已移到可见的第 7 行。'
+      ]
     ],
-    misses: ['sections collapsed. source lines visible.'],
+    misses: ['sections collapsed. source lines visible.']
   },
   {
     hits: [['Source preparation failed. Worker crashed', '源代码准备失败。Worker crashed']],
-    misses: ['Source preparation failed.'],
+    misses: ['Source preparation failed.']
   },
   {
     hits: [['Loading symbol details for useState.', '正在加载 useState 的符号详细信息。']],
-    misses: ['Loading symbol details for'],
+    misses: ['Loading symbol details for']
   },
   {
     hits: [['Unable to load symbol details for useState.', '无法加载 useState 的符号详细信息。']],
-    misses: ['Unable to load symbol details'],
+    misses: ['Unable to load symbol details']
   },
   {
     hits: [['Loading references for useState.', '正在加载 useState 的引用。']],
-    misses: ['Loading references'],
+    misses: ['Loading references']
   },
   {
     hits: [['Unable to load references for useState.', '无法加载 useState 的引用。']],
-    misses: ['Unable to load references'],
+    misses: ['Unable to load references']
   },
   {
     hits: [
       ['2 definitions and 5 references for useState.', 'useState 的 2 个定义和 5 个引用。'],
-      ['1 definition and 1 reference for foo.', 'foo 的 1 个定义和 1 个引用。'],
+      ['1 definition and 1 reference for foo.', 'foo 的 1 个定义和 1 个引用。']
     ],
-    misses: ['definitions and references for foo.'],
+    misses: ['definitions and references for foo.']
   },
   // banners：许可证
   {
     hits: [
       ['octo-org/hello-world is licensed under the', 'octo-org/hello-world 采用以下许可证'],
-      ['octocat/hello-world is licensed under', 'octocat/hello-world 采用以下许可证'],
+      ['octocat/hello-world is licensed under', 'octocat/hello-world 采用以下许可证']
     ],
-    misses: ['is licensed under the'],
+    misses: ['is licensed under the']
   },
   // banners：问题模板错误
   { hits: [['Learn more about error 2.', '了解错误 2。']], misses: ['Learn more about error.'] },
@@ -342,211 +337,192 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['if this error is corrected: No commas found in this CSV file in line 0.', '：此 CSV 文件第 0 行中未找到逗号。'],
       ['if this error is corrected: Illegal quoting in line 3.', '：第 3 行的引号不合法。'],
       ['if this error is corrected: Unclosed quoted field in line 12.', '：第 12 行有未闭合的引号字段。'],
-      [
-        "if this error is corrected: Any value after quoted field isn't allowed in line 5.",
-        '：第 5 行的引号字段后不允许有值。',
-      ],
+      ["if this error is corrected: Any value after quoted field isn't allowed in line 5.", '：第 5 行的引号字段后不允许有值。'],
       ['if this error is corrected: Field size exceeded in line 7.', '：第 7 行的字段过大。'],
       [
         'if this error is corrected: Unquoted fields do not allow new line <"\\r"> in line 2.',
-        '：Unquoted fields do not allow new line <"\\r"> in line 2.',
-      ],
+        '：Unquoted fields do not allow new line <"\\r"> in line 2.'
+      ]
     ],
-    misses: ['if this error is corrected:'],
+    misses: ['if this error is corrected:']
   },
   // banners：Copilot Spaces
   {
     hits: [['Space owner. Required. Selected owner: @octocat', '空间所有者。必填。已选所有者：@octocat']],
-    misses: ['Space owner. Required. Selected owner: @'],
+    misses: ['Space owner. Required. Selected owner: @']
   },
   {
     hits: [['File added to My space successfully.', '文件已添加到 My space。']],
-    misses: ['File added to successfully.'],
+    misses: ['File added to successfully.']
   },
   // banners：Copilot 申请被拒（日期可缺省；功能名按 product-names.md 译出，与两侧中文按 joinCjk 补空格）
   {
     hits: [
       [
         'Your request for Copilot Business was declined by an admin on Mar 3, 2025.',
-        '你的 Copilot 商业版申请已于 2025 年 3 月 3 日被管理员拒绝。',
+        '你的 Copilot 商业版申请已于 2025 年 3 月 3 日被管理员拒绝。'
       ],
       // 无法解析的日期原样保留，与两侧中文各空一格
       [
         'Your request for Copilot Business was declined by an admin on 2025-03-03.',
-        '你的 Copilot 商业版申请已于 2025-03-03 被管理员拒绝。',
+        '你的 Copilot 商业版申请已于 2025-03-03 被管理员拒绝。'
       ],
       ['Your request for Copilot Business was declined by an admin.', '你的 Copilot 商业版申请已被管理员拒绝。'],
       // 品牌词 Copilot 保留，与后文中文隔空格；未收录的功能名原样保留
       ['Your request for Copilot was declined by an admin.', '你的 Copilot 申请已被管理员拒绝。'],
-      ['Your request for Sample feature was declined by an admin.', '你的 Sample feature 申请已被管理员拒绝。'],
+      ['Your request for Sample feature was declined by an admin.', '你的 Sample feature 申请已被管理员拒绝。']
     ],
-    misses: [
-      'Your request for  was declined by an admin.',
-      'Your request for Copilot Business was declined by an admin on Mar 3, 2025',
-    ],
+    misses: ['Your request for  was declined by an admin.', 'Your request for Copilot Business was declined by an admin on Mar 3, 2025']
   },
   // banners：空存储库引导卡片的功能申请已提交（功能名按 product-names.md 译出）
   {
     hits: [
       [
         "You've successfully submitted a request to your organization's admins for access to Copilot. An admin will need to approve your request before you can use this feature.",
-        '你已成功向组织管理员申请访问 Copilot。管理员批准后才能使用此功能。',
+        '你已成功向组织管理员申请访问 Copilot。管理员批准后才能使用此功能。'
       ],
       [
         'You’ve successfully submitted a request to your organization’s admins for access to GitHub Codespaces. An admin will need to approve your request before you can use this feature.',
-        '你已成功向组织管理员申请访问 GitHub 代码空间。管理员批准后才能使用此功能。',
+        '你已成功向组织管理员申请访问 GitHub 代码空间。管理员批准后才能使用此功能。'
       ],
       [
         "You've successfully submitted a request to your organization's admins for access to Codespaces. An admin will need to approve your request before you can use this feature.",
-        '你已成功向组织管理员申请访问代码空间。管理员批准后才能使用此功能。',
-      ],
+        '你已成功向组织管理员申请访问代码空间。管理员批准后才能使用此功能。'
+      ]
     ],
     misses: [
-      "You've successfully submitted a request to your organization's admins for access to. An admin will need to approve your request before you can use this feature.",
-    ],
+      "You've successfully submitted a request to your organization's admins for access to. An admin will need to approve your request before you can use this feature."
+    ]
   },
   // edit：编辑器屏幕阅读器标题（英文类型名与两侧中文隔空格）
   {
     hits: [
       ['Creating a new file in core', '在 core 中新建文件'],
       ['Creating a new workflow file in core', '在 core 中新建工作流文件'],
-      ['Creating a new dependabot file in hello-world', '在 hello-world 中新建 Dependabot 文件'],
+      ['Creating a new dependabot file in hello-world', '在 hello-world 中新建 Dependabot 文件']
     ],
-    misses: ['Creating a new file'],
+    misses: ['Creating a new file']
   },
   {
     hits: [
       ['Editing README.md in core', '编辑 core 中的文件 README.md'],
       ['Editing workflow file ci.yml in core', '编辑 core 中的工作流文件 ci.yml'],
-      [
-        'Editing devcontainer file devcontainer.json in hello-world',
-        '编辑 hello-world 中的 devcontainer 文件 devcontainer.json',
-      ],
+      ['Editing devcontainer file devcontainer.json in hello-world', '编辑 hello-world 中的 devcontainer 文件 devcontainer.json']
     ],
-    misses: ['Editing README.md'],
+    misses: ['Editing README.md']
   },
   { hits: [['Editing README.md file contents', '编辑 README.md 文件内容']], misses: ['Editing contents'] },
   // edit：CodeMirror 搜索播报（原文只有句号，译文不加冒号、逗号）
   {
     hits: [['current match. const foo = 1 on line 3.', '当前匹配。第 3 行的 const foo = 1。']],
-    misses: ['current match.'],
+    misses: ['current match.']
   },
   {
     hits: [
       ['replaced 3 matches.', '已替换 3 处匹配。'],
-      ['replaced 1 match.', '已替换 1 处匹配。'],
+      ['replaced 1 match.', '已替换 1 处匹配。']
     ],
-    misses: ['replaced matches.'],
+    misses: ['replaced matches.']
   },
   { hits: [['replaced match on line 7.', '已替换第 7 行的匹配。']], misses: ['replaced match on line.'] },
   // edit：赞助文件预览（文件名是相邻文本节点）
   {
     hits: [['Some errors were encountered when parsing the FUNDING.yml file:', '解析 FUNDING.yml 文件时出错：']],
-    misses: ['Some errors were encountered when parsing the file:'],
+    misses: ['Some errors were encountered when parsing the file:']
   },
   {
-    hits: [
-      [
-        'The FUNDING.yml file does not currently contain valid funding links.',
-        'FUNDING.yml 文件当前不包含有效的赞助链接。',
-      ],
-    ],
-    misses: ['The file does not currently contain valid funding links.'],
+    hits: [['The FUNDING.yml file does not currently contain valid funding links.', 'FUNDING.yml 文件当前不包含有效的赞助链接。']],
+    misses: ['The file does not currently contain valid funding links.']
   },
   {
     hits: [['Learn more about formatting FUNDING.yml', '了解 FUNDING.yml 的格式']],
-    misses: ['Learn more about formatting'],
+    misses: ['Learn more about formatting']
   },
   // edit：帮助面板（Marketplace → 市场）
   {
     hits: [['Search Marketplace for Docker Actions', '在市场中搜索 Docker 操作']],
-    misses: ['Search Marketplace for'],
+    misses: ['Search Marketplace for']
   },
   { hits: [['Search for Node.js features', '搜索 Node.js 功能']], misses: ['Search for'] },
   { hits: [['Code snippet for actions/checkout', 'actions/checkout 的代码片段']], misses: ['Code snippet'] },
   {
     hits: [
       ['Your search has returned 3 results.', '搜索返回 3 个结果。'],
-      ['Your search has returned 1 result.', '搜索返回 1 个结果。'],
+      ['Your search has returned 1 result.', '搜索返回 1 个结果。']
     ],
-    misses: ['Your search has returned results.'],
+    misses: ['Your search has returned results.']
   },
   // edit：提交对话框、推送保护（签署说明整句由 inline 处理，此为未拼成整句时的片段：原文无标点，译文不加逗号、冒号）
   {
     hits: [['on this commit as octocat@users.noreply.github.com', '此提交并署名为 octocat@users.noreply.github.com']],
-    misses: ['on this commit as'],
+    misses: ['on this commit as']
   },
   {
     hits: [['octocat has committed since you started editing.', 'octocat 在你开始编辑后提交了更改。']],
-    misses: ['has committed since you started editing.'],
+    misses: ['has committed since you started editing.']
   },
   { hits: [['line 42', '第 42 行']], misses: ['line'] },
   // edit：删除页
   {
     hits: [
       ['Deleting core/README.md. Commit changes to save.', '正在删除 core/README.md。提交更改后生效。'],
-      ['Deleting directory core/docs. Commit changes to save.', '正在删除目录 core/docs。提交更改后生效。'],
+      ['Deleting directory core/docs. Commit changes to save.', '正在删除目录 core/docs。提交更改后生效。']
     ],
-    misses: ['Commit changes to save.'],
+    misses: ['Commit changes to save.']
   },
   { hits: [['Failed to load diff: 500', '差异加载失败：500']], misses: ['Failed to load diff:'] },
   // edit：上传页文件列表、屏幕阅读器标题
   {
     hits: [
       ['Remove hello.py', '删除 hello.py'],
-      ['Remove Makefile', '删除 Makefile'],
+      ['Remove Makefile', '删除 Makefile']
     ],
-    misses: ['Remove the selected files'],
+    misses: ['Remove the selected files']
   },
   {
     hits: [['Uploading files to hello-world', '上传文件到 hello-world']],
-    misses: ['Uploading files to'],
+    misses: ['Uploading files to']
   },
   // templates：选定许可证 / 行为准则模板后的编辑器提示
   {
     hits: [
       [
         'Your license is ready. Please review it below and either commit it to the main branch or to a new branch.',
-        '许可证已就绪。审查后提交到 main 分支或新分支。',
+        '许可证已就绪。审查后提交到 main 分支或新分支。'
       ],
       [
         'Your code of conduct is ready. Please review it below and either commit it to the dev branch or to a new branch.',
-        '行为准则已就绪。审查后提交到 dev 分支或新分支。',
-      ],
+        '行为准则已就绪。审查后提交到 dev 分支或新分支。'
+      ]
     ],
     misses: [
       'Your license is ready.',
-      'Your readme is ready. Please review it below and either commit it to the main branch or to a new branch.',
-    ],
+      'Your readme is ready. Please review it below and either commit it to the main branch or to a new branch.'
+    ]
   },
   // commits/check-summary：最新提交行的检查弹层（期望取 commits 词典的译文）
   {
-    hits: [
-      [
-        '1 failing, 2 skipped, and 15 successful checks',
-        commitsTranslation('1 failing, 2 skipped, and 15 successful checks'),
-      ],
-    ],
-    misses: ['1 failing, 2 skipped, and 15 successful'],
+    hits: [['1 failing, 2 skipped, and 15 successful checks', commitsTranslation('1 failing, 2 skipped, and 15 successful checks')]],
+    misses: ['1 failing, 2 skipped, and 15 successful']
   },
   { hits: [['3 checks', commitsTranslation('3 checks')]], misses: ['checks'] },
   {
     hits: [
       ['Successful in 41s', commitsTranslation('Successful in 41s')],
-      ['Completed in 1m 30s', commitsTranslation('Completed in 1m 30s')],
+      ['Completed in 1m 30s', commitsTranslation('Completed in 1m 30s')]
     ],
-    misses: ['Successful in'],
+    misses: ['Successful in']
   },
   { hits: [['Failing after 2m 5s', commitsTranslation('Failing after 2m 5s')]], misses: ['Failing after'] },
   // commits/checks：检查弹层的待批准工作流横幅
   {
     hits: [['2 workflows awaiting approval', commitsTranslation('2 workflows awaiting approval')]],
-    misses: ['workflows awaiting approval'],
-  },
+    misses: ['workflows awaiting approval']
+  }
 ]
 
-const HITS = REGEXP_CASES.flatMap((item) => item.hits)
-const MISSES = REGEXP_CASES.flatMap((item) => item.misses)
+const HITS = REGEXP_CASES.flatMap(item => item.hits)
+const MISSES = REGEXP_CASES.flatMap(item => item.misses)
 const RULES = dict.regexp ?? []
 
 function firstRule(input: string): number {
@@ -560,14 +536,14 @@ describe('code 正则词条', () => {
     expect(translate(input)).toBe(expected)
   })
 
-  it.each(MISSES)('不命中：%s', (input) => {
+  it.each(MISSES)('不命中：%s', input => {
     expect(translate(input)).toBeUndefined()
   })
 
   it('用例与正则一一对应，正例首个命中对应的正则', () => {
     expect(REGEXP_CASES).toHaveLength(RULES.length)
     const mismatched = REGEXP_CASES.flatMap((item, index) =>
-      item.hits.filter(([input]) => firstRule(input) !== index).map(([input]) => `#${index} ${input}`),
+      item.hits.filter(([input]) => firstRule(input) !== index).map(([input]) => `#${index} ${input}`)
     )
     expect(mismatched).toEqual([])
   })
@@ -586,10 +562,7 @@ describe('code 正则词条', () => {
 
   it('代码所有者提示与拉取请求差异视图（pulls/files）的同一提示同译', () => {
     const pullsMatcher = createMatcher([['pulls', pullsFiles]])
-    for (const text of [
-      'Owned by @org/docs (from CODEOWNERS line 12)',
-      'Owned by @octocat @org/team (from CODEOWNERS line 3)',
-    ]) {
+    for (const text of ['Owned by @org/docs (from CODEOWNERS line 12)', 'Owned by @octocat @org/team (from CODEOWNERS line 3)']) {
       expect(translate(text), text).toBe(pullsMatcher.translate(text, ['common', 'repository', 'pulls']))
     }
   })
@@ -641,7 +614,7 @@ describe('code 静态词条', () => {
     // 组织演示存储库的工作流说明：opened 译作「创建」，不写成「打开问题」
     [
       'happens to add reviewers and assignees to issues and pull requests when they’re opened in this repository.',
-      '会在此存储库中创建议题和拉取请求时为其添加审查者和受理人。',
+      '会在此存储库中创建议题和拉取请求时为其添加审查者和受理人。'
     ],
     // edit（省略号随原文）
     ['Commit changes...', '提交更改...'],
@@ -653,15 +626,12 @@ describe('code 静态词条', () => {
     ['Editing file contents', '编辑文件内容'],
     [
       'Use Control + Shift + m to toggle the tab key moving focus. Alternatively, use esc then tab to move to the next interactive element on the page.',
-      '使用 Control + Shift + m 切换 tab 键是否移动焦点。也可以按 esc 再按 tab 移到页面上的下一个交互元素。',
+      '使用 Control + Shift + m 切换 tab 键是否移动焦点。也可以按 esc 再按 tab 移到页面上的下一个交互元素。'
     ],
-    [
-      'Use Control + Space to trigger autocomplete in most situations.',
-      '使用 Control + Space 可在大多数情况下触发自动补全。',
-    ],
+    ['Use Control + Space to trigger autocomplete in most situations.', '使用 Control + Space 可在大多数情况下触发自动补全。'],
     [
       'Use Control + Space or Option + Space to trigger autocomplete in most situations.',
-      '使用 Control + Space 或 Option + Space 可在大多数情况下触发自动补全。',
+      '使用 Control + Space 或 Option + Space 可在大多数情况下触发自动补全。'
     ],
     ['Use Tab to navigate to the next placeholder.', '使用 Tab 可跳到下一个占位符。'],
     ['The requested page could not be found.', '找不到请求的页面。'],
@@ -678,10 +648,7 @@ describe('code 静态词条', () => {
     // 拉取请求语境的 start 与 open 同作「创建」
     ['for this commit and start a pull request', '用于此提交并创建拉取请求'],
     ['for this commit and start a pull request.', '用于此提交并创建拉取请求。'],
-    [
-      'A file with the same name already exists. Please choose a different name and try again.',
-      '已存在同名文件。请换个名称重试。',
-    ],
+    ['A file with the same name already exists. Please choose a different name and try again.', '已存在同名文件。请换个名称重试。'],
     ['See what changed', '查看更改'],
     ['Drag files here to add them to your repository', '将文件拖到此处以添加到存储库'],
     ['Select a branch to upload files', '选择要上传文件的分支'],
@@ -692,22 +659,22 @@ describe('code 静态词条', () => {
     // 分支保护未生效横幅：方案名译「X 版」；原文只有句号，译文不加冒号、逗号
     [
       "branch won't be enforced on this private repository until you move to a GitHub Team or Enterprise account.",
-      '分支在转为 GitHub 团队版或企业版帐户之前不会在此专用存储库中强制实施。',
+      '分支在转为 GitHub 团队版或企业版帐户之前不会在此专用存储库中强制实施。'
     ],
     [
       "branch won't be enforced on this private repository until your organization admins upgrade this organization account to GitHub Team.",
-      '分支在组织管理员将此组织帐户升级到 GitHub 团队版之前不会在此专用存储库中强制实施。',
+      '分支在组织管理员将此组织帐户升级到 GitHub 团队版之前不会在此专用存储库中强制实施。'
     ],
     // write access → 写入访问权限（术语表 permission 行）；整句由 inline 调整语序，此为片段（原文无逗号）：
     // 复刻名接在「复刻」之后，不放在「新分支」之后（否则会被读成分支名）
     [
       'You’re making changes in a project you don’t have write access to. Submitting a change will write it to a new branch in your fork',
-      '你正在更改没有写入访问权限的项目。提交的更改将写入新分支。新分支位于你的复刻',
+      '你正在更改没有写入访问权限的项目。提交的更改将写入新分支。新分支位于你的复刻'
     ],
     // 原文只有破折号连接两个分句：译作 ——，不另加逗号
     [
       'Sorry, you’re not able to edit this repository directly—you need to fork it and propose your changes from there instead.',
-      '无法直接编辑此存储库——须先复刻再在复刻中提议更改。',
+      '无法直接编辑此存储库——须先复刻再在复刻中提议更改。'
     ],
     // 原文只有句号、问号：译文不把句号换成逗号
     ['You have unsaved changes. Do you want to discard them?', '有未保存的更改。是否放弃？'],
@@ -723,32 +690,29 @@ describe('code 静态词条', () => {
     ['Apply to Sponsors.', '申请加入赞助。'],
     [
       'are configuration files used by Codespaces and tools implementing the dev container specification.',
-      '是代码空间及实现了开发容器规范的工具所使用的配置文件。',
+      '是代码空间及实现了开发容器规范的工具所使用的配置文件。'
     ],
     ['Help us improve GitHub Codespaces', '帮助我们改进 GitHub 代码空间'],
     [
       'Tell us how to make GitHub Codespaces work better for you with three quick questions.',
-      '通过三个简短问题告诉我们如何改进 GitHub 代码空间。',
+      '通过三个简短问题告诉我们如何改进 GitHub 代码空间。'
     ],
     ['Auto-assign new issue with GitHub Actions', '使用 GitHub 操作自动分配新议题'],
     ['your repository’s “Actions” tab.', '存储库的“操作”标签页中查看。'],
     ['You can publish this Action to the GitHub Marketplace', '可将此操作发布到 GitHub 市场'],
     [
       "We noticed that you're personally paying for GitHub Copilot. Instead, ask your organization admin to purchase the business version of GitHub Copilot.",
-      '你正在个人付费使用 GitHub Copilot。可请组织管理员购买 Copilot 商业版。',
+      '你正在个人付费使用 GitHub Copilot。可请组织管理员购买 Copilot 商业版。'
     ],
     // 特殊存储库横幅：profile 译作「个人资料」
-    [
-      'will appear on your public organization profile, visible to anyone.',
-      '将显示在组织的公开个人资料中，所有人可见。',
-    ],
+    ['will appear on your public organization profile, visible to anyone.', '将显示在组织的公开个人资料中，所有人可见。'],
     // templates
     ['Add a license to your project', '为项目添加许可证'],
     ['Choose a license to add to your project', '选择要添加到项目的许可证'],
     ['Choose a code of conduct to add to your project', '选择要添加到项目的行为准则'],
     ['Review and submit', '审查并提交'],
     ['The current year', '当前年份'],
-    ['Recommended for projects of all sizes', '推荐用于各种规模的项目'],
+    ['Recommended for projects of all sizes', '推荐用于各种规模的项目']
   ])('%s → %s', (input, expected) => {
     expect(dict.static?.[input]).toBe(expected)
     expect(translate(input)).toBe(expected)
@@ -757,17 +721,15 @@ describe('code 静态词条', () => {
   it('长句许可证说明整句匹配（原文没有的逗号、冒号、括号不加）', () => {
     expect(
       translate(
-        'A short and simple permissive license with conditions only requiring preservation of copyright and license notices. Licensed works, modifications, and larger works may be distributed under different terms and without source code.',
-      ),
-    ).toBe(
-      '一种仅以保留版权和许可证声明为条件的简短宽松许可证。被许可作品、修改版本和更大的作品可以按不同条款分发且无需提供源码。',
-    )
+        'A short and simple permissive license with conditions only requiring preservation of copyright and license notices. Licensed works, modifications, and larger works may be distributed under different terms and without source code.'
+      )
+    ).toBe('一种仅以保留版权和许可证声明为条件的简短宽松许可证。被许可作品、修改版本和更大的作品可以按不同条款分发且无需提供源码。')
     expect(
       translate(
-        'This commercially-friendly copyleft license provides the ability to commercially license binaries; a modern royalty-free patent license grant; and the ability for linked works to use other licenses, including commercial ones.',
-      ),
+        'This commercially-friendly copyleft license provides the ability to commercially license binaries; a modern royalty-free patent license grant; and the ability for linked works to use other licenses, including commercial ones.'
+      )
     ).toBe(
-      '这种对商业友好的 Copyleft 许可证允许对二进制文件进行商业授权；提供现代的免版税专利许可；并允许链接作品使用其他许可证，包括商业许可证。',
+      '这种对商业友好的 Copyleft 许可证允许对二进制文件进行商业授权；提供现代的免版税专利许可；并允许链接作品使用其他许可证，包括商业许可证。'
     )
   })
 
@@ -815,7 +777,7 @@ describe('code 页面词条', () => {
     ['An unexpected error occurred. Please try again.', '发生意外错误。请重试。'],
     ['Year', '年份'],
     ['Contact method', '联系方式'],
-    ['Governing body', '管理机构'],
+    ['Governing body', '管理机构']
   ])('%s → %s', (input, expected) => {
     expect(dict.scoped?.[input]).toBe(expected)
     expect(translate(input)).toBe(expected)
@@ -860,9 +822,7 @@ describe('code 页面词条', () => {
     expect(translate('Attach files by')).toBe('附加文件可')
     expect(translate('dragging & dropping,')).toBe('拖放、')
     expect(translate('selecting or pasting them.')).toBe('选择或粘贴。')
-    expect(translate('Attach files by dragging & dropping, selecting or pasting them.')).toBe(
-      '拖放、选择或粘贴文件以附加。',
-    )
+    expect(translate('Attach files by dragging & dropping, selecting or pasting them.')).toBe('拖放、选择或粘贴文件以附加。')
     // The <span>auto-assign.yml</span> file below lives inside your <span>demo-repository</span> and defines …
     expect(translate('file below lives inside your')).toBe('文件位于你的')
     expect(translate('“Auto Assign” workflow')).toBe('“Auto Assign”工作流')
@@ -881,12 +841,8 @@ describe('code 页面词条', () => {
     // To adopt <strong>MIT License</strong>, enter your details. You’ll have a chance to review before committing a
     // <code>LICENSE</code> file to a new branch or the root of your project.（后半句原文无标点，译文不加逗号）
     expect(translate('To adopt')).toBe('要采用')
-    expect(translate(', enter your details. You’ll have a chance to review before committing a')).toBe(
-      '，填写以下信息。你可以先审查再将',
-    )
-    expect(translate(", enter your details. You'll have a chance to review before committing a")).toBe(
-      '，填写以下信息。你可以先审查再将',
-    )
+    expect(translate(', enter your details. You’ll have a chance to review before committing a')).toBe('，填写以下信息。你可以先审查再将')
+    expect(translate(", enter your details. You'll have a chance to review before committing a")).toBe('，填写以下信息。你可以先审查再将')
     expect(translate("You'll have a chance to review before committing a")).toBe('你可以先审查再将')
     expect(translate('file to a new branch or the root of your project.')).toBe('文件提交到新分支或项目根目录。')
     // Learn more about <a>what a code of conduct is</a> and how to enforce it.
@@ -921,7 +877,7 @@ describe('code 页面词条', () => {
     // 全局 static（pulls 等词典）是状态义「打开的拉取请求」
     const withStatic = createMatcher([
       ['common', { static: { 'Open pull request': '打开的拉取请求' } }],
-      ['code', code],
+      ['code', code]
     ])
     expect(withStatic.translate('Open pull request', SCOPE)).toBe('创建拉取请求')
     expect(withStatic.translate('Open pull request', ['common', 'repository'])).toBe('打开的拉取请求')
@@ -937,7 +893,7 @@ describe('code 繁体词条（zh-TW）', () => {
     ['Copy file permalink', '複製檔案永久連結'],
     ['Invalid PDF', 'PDF 無效'],
     ['Extended commit message', '詳細提交訊息'],
-    ['Add an optional extended description', '新增選填的詳細描述'],
+    ['Add an optional extended description', '新增選填的詳細描述']
   ])('静态：%s → %s', (input, expected) => {
     expect(twDict.static?.[input]).toBe(expected)
     expect(twMatcher.translate(input, SCOPE)).toBe(expected)
@@ -971,7 +927,7 @@ describe('code 合并的检查弹层词条（commits/check-summary、commits/che
 
   it.each([
     ['1 failing, 2 skipped, and 15 successful checks', '检查'],
-    ['Successful in 41s', '成功'],
+    ['Successful in 41s', '成功']
   ])('存储库首页最新提交的检查弹层：%s', (text, word) => {
     const expected = commitsTranslation(text)
     expect(translate(text)).toBe(expected)
@@ -980,9 +936,9 @@ describe('code 合并的检查弹层词条（commits/check-summary、commits/che
 
   it.each(['In progress', 'Skipped', 'Expected', 'Successful', 'Failing', 'Timed out', 'Pending'])(
     '检查弹层的单独状态词与提交页同译：%s',
-    (text) => {
+    text => {
       expect(translate(text)).toBe(commitsTranslation(text))
-    },
+    }
   )
 
   it('检查弹层的 Pending 按检查状态译为「挂起」（commits/checks 的页面词条）', () => {
@@ -1010,44 +966,40 @@ describe('code 被 <kbd> 拆开的提示（引擎整句匹配，按 kbd 文字�
     [
       '编辑区焦点提示',
       'Use <kbd>Control + Shift + m</kbd> to toggle the <kbd>tab</kbd> key moving focus. Alternatively, use <kbd>esc</kbd> then <kbd>tab</kbd> to move to the next interactive element on the page.',
-      '使用 Control + Shift + m 切换 tab 键是否移动焦点。也可以按 esc 再按 tab 移到页面上的下一个交互元素。',
+      '使用 Control + Shift + m 切换 tab 键是否移动焦点。也可以按 esc 再按 tab 移到页面上的下一个交互元素。'
     ],
     // lit-html 渲染，片段间有注释节点；macOS 多一个快捷键
     [
       '自动补全提示',
       '\n  Use <kbd>Control + Space</kbd>\n  <!--?lit$1$--><!----> to trigger autocomplete in most situations.\n',
-      '使用 Control + Space 可在大多数情况下触发自动补全。',
+      '使用 Control + Space 可在大多数情况下触发自动补全。'
     ],
     [
       '自动补全提示（macOS）',
       '\n  Use <kbd>Control + Space</kbd>\n  <!--?lit$1$-->or <kbd>Option + Space</kbd><!----> to trigger autocomplete in most situations.\n',
-      '使用 Control + Space 或 Option + Space 可在大多数情况下触发自动补全。',
+      '使用 Control + Space 或 Option + Space 可在大多数情况下触发自动补全。'
     ],
     ['占位符提示', ' Use <kbd>Tab</kbd> to navigate to the next placeholder. ', '使用 Tab 可跳到下一个占位符。'],
-    [
-      '文件内查找提示',
-      "Press <kbd>Ctrl F</kbd> again to open the browser's find menu",
-      '再次按 Ctrl F 打开浏览器的查找菜单',
-    ],
+    ['文件内查找提示', "Press <kbd>Ctrl F</kbd> again to open the browser's find menu", '再次按 Ctrl F 打开浏览器的查找菜单']
   ])('%s', (_, html, expected) => {
     document.body.innerHTML = `<div id="hint">${html}</div>`
     const hint = document.getElementById('hint')!
-    const keys = [...hint.querySelectorAll('kbd')].map((kbd) => kbd.textContent)
+    const keys = [...hint.querySelectorAll('kbd')].map(kbd => kbd.textContent)
     translator = createTranslator({ matcher, host: window, resolvePages: () => SCOPE })
     translator.start()
     expect(hint.textContent?.replace(/\s+/g, ' ').trim()).toBe(expected)
-    expect([...hint.querySelectorAll('kbd')].map((kbd) => kbd.textContent)).toEqual(keys)
+    expect([...hint.querySelectorAll('kbd')].map(kbd => kbd.textContent)).toEqual(keys)
   })
 })
 
 describe('code 忽略选择器', () => {
-  it.each(dict.ignore ?? [])('%s 是合法选择器', (selector) => {
+  it.each(dict.ignore ?? [])('%s 是合法选择器', selector => {
     expect(() => document.createElement('div').querySelector(selector)).not.toThrow()
   })
 
   it('忽略选择器与属性规则选择器不依赖 aria-label 的取值', () => {
     const selectors = [...(dict.ignore ?? []), ...(dict.attributeRules ?? []).map(([selector]) => selector)]
-    expect(selectors.filter((selector) => /\[aria-label[~|^$*]?=/.test(selector))).toEqual([])
+    expect(selectors.filter(selector => /\[aria-label[~|^$*]?=/.test(selector))).toEqual([])
   })
 
   it('选择器只对代码页生效', () => {
@@ -1112,7 +1064,7 @@ describe('code 忽略选择器', () => {
 
     const selector = (dict.ignore ?? []).join(', ')
     const ignored = (text: string): boolean => {
-      const element = [...document.querySelectorAll('*')].reverse().find((node) => node.textContent?.trim() === text)
+      const element = [...document.querySelectorAll('*')].reverse().find(node => node.textContent?.trim() === text)
       if (!element) throw new Error(`找不到元素：${text}`)
       return Boolean(element.closest(selector))
     }
@@ -1141,7 +1093,7 @@ describe('code 忽略选择器', () => {
       'detail-crumb',
       'detail-name',
       'detail-owner',
-      'detail-description',
+      'detail-description'
     ]) {
       expect(ignored(text), text).toBe(true)
     }
@@ -1157,7 +1109,7 @@ describe('code 忽略选择器', () => {
       'Featured actions',
       'Marketplace',
       'Installation',
-      'Blame',
+      'Blame'
     ]) {
       expect(ignored(text), text).toBe(false)
     }
@@ -1201,24 +1153,24 @@ const DIRECTORY_LISTING =
   '<table aria-labelledby="folders-and-files"><tbody>' +
   directoryRow(
     'dir',
-    '<a id="" title="Tasks" aria-label="Tasks, (Directory)" class="Link--primary" href="/octo-org/hello-world/tree/main/packages/Tasks">Tasks</a>',
+    '<a id="" title="Tasks" aria-label="Tasks, (Directory)" class="Link--primary" href="/octo-org/hello-world/tree/main/packages/Tasks">Tasks</a>'
   ) +
   directoryRow(
     'file',
-    '<a id="" title="README.md" aria-label="README.md, (File)" class="Link--primary" href="/octo-org/hello-world/blob/main/packages/README.md">README.md</a>',
+    '<a id="" title="README.md" aria-label="README.md, (File)" class="Link--primary" href="/octo-org/hello-world/blob/main/packages/README.md">README.md</a>'
   ) +
   directoryRow(
     'submodule',
-    '<a id="" title="vendor" aria-label="vendor, (Submodule)" class="Link--primary" href="/octo-org/vendor/tree/0ff253b">vendor</a>',
+    '<a id="" title="vendor" aria-label="vendor, (Submodule)" class="Link--primary" href="/octo-org/vendor/tree/0ff253b">vendor</a>'
   ) +
   directoryRow(
     'symlink',
-    '<a id="" title="current" aria-label="current, (Symlink to directory)" class="Link--primary" href="/octo-org/hello-world/tree/main/packages/current">current</a>',
+    '<a id="" title="current" aria-label="current, (Symlink to directory)" class="Link--primary" href="/octo-org/hello-world/tree/main/packages/current">current</a>'
   ) +
   directoryRow(
     'merged',
     '<a id="" title="This path skips through empty directories" aria-label=".licenses/npm, (Directory)" class="Link--primary" href="/octo-org/hello-world/tree/main/packages/.licenses/npm">' +
-      '<span class="react-directory-default-color" data-testid="path-name-segment">.licenses/</span><span class="" data-testid="path-name-segment">npm</span></a>',
+      '<span class="react-directory-default-color" data-testid="path-name-segment">.licenses/</span><span class="" data-testid="path-name-segment">npm</span></a>'
   ) +
   '</tbody></table>'
 
@@ -1226,7 +1178,7 @@ describe('code 目录列表文件名链接（忽略区域根元素的属性按�
   /** 代码页的作用域含 repository：合并路径链接的 title 由 repository 词典的全站词条翻译 */
   const fullMatcher = createMatcher([
     ['repository', repository],
-    ['code', code],
+    ['code', code]
   ])
   let translator: Translator | undefined
 
@@ -1252,7 +1204,7 @@ describe('code 目录列表文件名链接（忽略区域根元素的属性按�
       matcher: fullMatcher,
       host: window,
       resolvePages: () => SCOPE,
-      collectUntranslated: true,
+      collectUntranslated: true
     })
     translator.start()
     for (const screen of ['small', 'large']) {
@@ -1282,10 +1234,7 @@ describe('code 目录列表文件名链接（忽略区域根元素的属性按�
       const link = document.getElementById(`merged-${screen}`)!
       expect(link.getAttribute('aria-label')).toBe('.licenses/npm（目录）')
       expect(link.getAttribute('title')).toBe('此路径跳过了空目录')
-      expect([...link.querySelectorAll('[data-testid="path-name-segment"]')].map((span) => span.textContent)).toEqual([
-        '.licenses/',
-        'npm',
-      ])
+      expect([...link.querySelectorAll('[data-testid="path-name-segment"]')].map(span => span.textContent)).toEqual(['.licenses/', 'npm'])
     }
   })
 
@@ -1304,8 +1253,8 @@ describe('code 目录列表文件名链接（忽略区域根元素的属性按�
       .map((type, index) =>
         directoryRow(
           `type${index}`,
-          `<a id="" title="Sample" aria-label="Sample, (${type})" class="Link--primary" href="/octo-org/hello-world/tree/main/Sample">Sample</a>`,
-        ),
+          `<a id="" title="Sample" aria-label="Sample, (${type})" class="Link--primary" href="/octo-org/hello-world/tree/main/Sample">Sample</a>`
+        )
       )
       .join('')}</tbody></table>`
     translator = createTranslator({ matcher, host: window, resolvePages: () => SCOPE })
@@ -1324,7 +1273,7 @@ describe('code 提交对话框的签署说明（被链接拆开的整句，邮�
 
   /** 元素的直接子文本节点 */
   function ownTexts(element: Element): string[] {
-    return [...element.childNodes].filter((node) => node.nodeType === Node.TEXT_NODE).map((node) => (node as Text).data)
+    return [...element.childNodes].filter(node => node.nodeType === Node.TEXT_NODE).map(node => (node as Text).data)
   }
 
   afterEach(() => {
@@ -1400,11 +1349,8 @@ describe('code 复刻编辑横幅（被 <b> 拆开的整句，复刻名提到「
   }
 
   it.each([
-    [
-      true,
-      '你正在更改没有写入访问权限的项目。提交的更改将写入你的复刻 octocat/hello-world 中的新分支，之后可发送拉取请求。',
-    ],
-    [false, '你正在更改没有写入访问权限的项目。提交的更改将写入你的复刻 octocat/hello-world 中的新分支。'],
+    [true, '你正在更改没有写入访问权限的项目。提交的更改将写入你的复刻 octocat/hello-world 中的新分支，之后可发送拉取请求。'],
+    [false, '你正在更改没有写入访问权限的项目。提交的更改将写入你的复刻 octocat/hello-world 中的新分支。']
   ])('可创建拉取请求：%s', (canCreatePullRequest, expected) => {
     const banner = forkBanner(canCreatePullRequest)
     const original = banner.textContent
@@ -1431,32 +1377,32 @@ describe('code 含链接的许可证说明（许可证选择页 div.VerifiedHTML
     [
       'BSD 3-Clause：链接后的中文与英文名隔空格',
       'A permissive license similar to the <a href="/licenses/bsd-2-clause/">BSD 2-Clause License</a>, but with a 3rd clause that prohibits others from using the name of the copyright holder or its contributors to promote derived products without written consent.',
-      '一种类似于 BSD 2-Clause License 的宽松许可证，但增加的第三条禁止他人未经书面同意使用版权所有者或其贡献者的名义推广衍生产品。',
+      '一种类似于 BSD 2-Clause License 的宽松许可证，但增加的第三条禁止他人未经书面同意使用版权所有者或其贡献者的名义推广衍生产品。'
     ],
     [
       'BSD 3-Clause Clear：定语提到链接之前，不加逗号',
       'A variant of the <a href="/licenses/bsd-3-clause/">BSD 3-Clause License</a> that explicitly does not grant any patent rights.',
-      '一种明确不授予任何专利权的 BSD 3-Clause License 变体。',
+      '一种明确不授予任何专利权的 BSD 3-Clause License 变体。'
     ],
     [
       'EUPL 1.2：不加逗号，链接后的中文不留空格',
       'The European Union Public Licence (EUPL) is a copyleft free/open source software license created on the initiative of and approved by the European Commission in <a href="https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12">23 official languages</a> of the European Union.',
-      '欧盟公共许可证 (EUPL) 是由欧盟委员会发起并以欧盟 23 种官方语言版本批准的 Copyleft 自由/开源软件许可证。',
+      '欧盟公共许可证 (EUPL) 是由欧盟委员会发起并以欧盟 23 种官方语言版本批准的 Copyleft 自由/开源软件许可证。'
     ],
     [
       'CC BY-SA 4.0：「兼容」两侧不留空格',
       'Similar to <a href="/licenses/cc-by-4.0/">CC-BY-4.0</a> but requires derivatives be distributed under the same or a similar, <a href="https://creativecommons.org/compatiblelicenses">compatible</a> license. Frequently used for media assets and educational materials. A previous version is the default license for Wikipedia and other Wikimedia projects. Not recommended for software.',
-      '类似于 CC-BY-4.0 但要求衍生作品以相同或类似的兼容许可证分发。常用于媒体资源和教育材料。其旧版本是维基百科等维基媒体项目的默认许可证。不建议用于软件。',
-    ],
+      '类似于 CC-BY-4.0 但要求衍生作品以相同或类似的兼容许可证分发。常用于媒体资源和教育材料。其旧版本是维基百科等维基媒体项目的默认许可证。不建议用于软件。'
+    ]
   ])('%s', (_, html, expected) => {
     // 许可证卡片：<div class="Box_2__…">[标题区, <VerifiedHTMLBox html={description}>]</div>，说明 HTML 是宿主的直接子节点
     document.body.innerHTML = `<div class="Box_2__M8iAnv"><div id="description" class="VerifiedHTMLBox__4GHziY">${html}</div></div>`
     const host = document.getElementById('description')!
-    const hrefs = [...host.querySelectorAll('a')].map((link) => link.getAttribute('href'))
+    const hrefs = [...host.querySelectorAll('a')].map(link => link.getAttribute('href'))
     translator = createTranslator({ matcher, host: window, resolvePages: () => SCOPE })
     translator.start()
     expect(host.textContent).toBe(expected)
-    expect([...host.querySelectorAll('a')].map((link) => link.getAttribute('href'))).toEqual(hrefs)
+    expect([...host.querySelectorAll('a')].map(link => link.getAttribute('href'))).toEqual(hrefs)
     translator.stop()
     translator = undefined
     expect(host.innerHTML).toBe(html)
@@ -1465,13 +1411,11 @@ describe('code 含链接的许可证说明（许可证选择页 div.VerifiedHTML
   it('整句未命中时片段照常翻译（原文没有的逗号不加）', () => {
     expect(
       translate(
-        'The European Union Public Licence (EUPL) is a copyleft free/open source software license created on the initiative of and approved by the European Commission in',
-      ),
+        'The European Union Public Licence (EUPL) is a copyleft free/open source software license created on the initiative of and approved by the European Commission in'
+      )
     ).toBe('欧盟公共许可证 (EUPL) 是由欧盟委员会发起并以欧盟')
     expect(translate('of the European Union.')).toBe('版本批准的 Copyleft 自由/开源软件许可证。')
-    expect(translate('but requires derivatives be distributed under the same or a similar,')).toBe(
-      '但要求衍生作品以相同或类似的',
-    )
+    expect(translate('but requires derivatives be distributed under the same or a similar,')).toBe('但要求衍生作品以相同或类似的')
   })
 })
 
@@ -1484,7 +1428,7 @@ describe('code 标点随原文、产品名译中文（本组各子文件）', ()
     ['冒号', /[:：]/, /[：:]/],
     ['引号', /["“”]/, /[“”"]/],
     ['分号', /[;；]/, /[；;]/],
-    ['括号', /[()（）]/, /[（）()]/],
+    ['括号', /[()（）]/, /[（）()]/]
   ]
 
   /**
@@ -1497,8 +1441,8 @@ describe('code 标点随原文、产品名译中文（本组各子文件）', ()
   /** REGEXP_CASES 中本组规则的正例（合并顺序 tree → blob → banners → edit → templates 在前，commits 的规则在后） */
   const OWN_HITS = REGEXP_CASES.slice(
     0,
-    OWN.reduce((count, part) => count + (part.regexp?.length ?? 0), 0),
-  ).flatMap((item) => item.hits)
+    OWN.reduce((count, part) => count + (part.regexp?.length ?? 0), 0)
+  ).flatMap(item => item.hits)
 
   /** 原文没有、译文却有的标点 */
   function extraPunctuation(entries: readonly (readonly [string, string])[]): string[] {
@@ -1506,18 +1450,18 @@ describe('code 标点随原文、产品名译中文（本组各子文件）', ()
       EXCEPTIONS.has(source)
         ? []
         : KINDS.filter(([, inSource, inTranslation]) => !inSource.test(source) && inTranslation.test(translation)).map(
-            ([name]) => `${name}：${source} → ${translation}`,
-          ),
+            ([name]) => `${name}：${source} → ${translation}`
+          )
     )
   }
 
   it('静态、页面词条与字符串行内句的译文不加原文没有的逗号、冒号、引号、分号、括号', () => {
-    const entries = OWN.flatMap((part) => [
+    const entries = OWN.flatMap(part => [
       ...Object.entries(part.static ?? {}),
       ...Object.entries(part.scoped ?? {}),
       ...(part.inline ?? []).flatMap(([pattern, translation]) =>
-        typeof pattern === 'string' && typeof translation === 'string' ? [[pattern, translation] as const] : [],
-      ),
+        typeof pattern === 'string' && typeof translation === 'string' ? [[pattern, translation] as const] : []
+      )
     ])
     expect(extraPunctuation(entries)).toEqual([])
   })
@@ -1529,17 +1473,17 @@ describe('code 标点随原文、产品名译中文（本组各子文件）', ()
 
   it('产品名、方案名按 product-names.md 译出：译文不再保留英文 Marketplace、Codespaces、GitHub Team 等', () => {
     const values = [
-      ...OWN.flatMap((part) => [
+      ...OWN.flatMap(part => [
         ...Object.values(part.static ?? {}),
         ...Object.values(part.scoped ?? {}),
-        ...(part.inline ?? []).flatMap(([, translation]) => (typeof translation === 'string' ? [translation] : [])),
+        ...(part.inline ?? []).flatMap(([, translation]) => (typeof translation === 'string' ? [translation] : []))
       ]),
-      ...OWN_HITS.map(([, expected]) => expected),
+      ...OWN_HITS.map(([, expected]) => expected)
     ]
-    const leftovers = values.filter((value) =>
+    const leftovers = values.filter(value =>
       /\b(?:Marketplace|Codespaces?|Sponsors|GitHub (?:Actions|Pro|Team|Enterprise)|Copilot (?:Business|Enterprise|Chat))\b|“Actions”/.test(
-        value,
-      ),
+        value
+      )
     )
     expect(leftovers).toEqual([])
   })

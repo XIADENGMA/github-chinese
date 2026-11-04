@@ -21,12 +21,9 @@ export default {
     'Disable for all repositories': '为所有存储库禁用',
 
     // 常规：存储库级自托管运行器
-    'Choose which repositories are allowed to create repository-level self-hosted runners.':
-      '选择允许创建存储库级自托管运行器的存储库。',
-    'Repo-level self-hosted runners can be used by any repository in the organization':
-      '组织中的任何存储库都可以使用存储库级自托管运行器',
-    'Repo-level self-hosted runners can be used by specifically selected repositories':
-      '明确选定的存储库可以使用存储库级自托管运行器',
+    'Choose which repositories are allowed to create repository-level self-hosted runners.': '选择允许创建存储库级自托管运行器的存储库。',
+    'Repo-level self-hosted runners can be used by any repository in the organization': '组织中的任何存储库都可以使用存储库级自托管运行器',
+    'Repo-level self-hosted runners can be used by specifically selected repositories': '明确选定的存储库可以使用存储库级自托管运行器',
     'Select the organization repositories that may use repository-level self-hosted runners.':
       '选择可以使用存储库级自托管运行器的组织存储库。',
     'Repo-level self-hosted runners are disabled for all repositories in the organization':
@@ -61,8 +58,7 @@ export default {
     'There are no required workflows in this organization.': '此组织中暂无必需工作流。',
 
     // 运行器
-    'Includes all runners across self-hosted and GitHub-hosted runners.':
-      '包括所有自托管运行器和 GitHub 托管的运行器。',
+    'Includes all runners across self-hosted and GitHub-hosted runners.': '包括所有自托管运行器和 GitHub 托管的运行器。',
     'Host your own runners and customize the environment used to run jobs in your GitHub Actions workflows. Runners added to this organization can be used to process jobs in multiple repositories in your organization.':
       '托管你自己的运行器，并自定义运行 GitHub 操作工作流作业的环境。添加到此组织的运行器可以处理组织中多个存储库的作业。',
     'New GitHub-hosted runner': '新建 GitHub 托管的运行器',
@@ -92,8 +88,7 @@ export default {
     'Find or create a label': '查找或创建标签',
     'Create new label': '创建新标签',
     'Use dedicated runner groups for image generation.': '使用专用运行器组生成映像。',
-    'Do not allow public repositories to access image-generation runners.':
-      '不允许公共存储库访问用于生成映像的运行器。',
+    'Do not allow public repositories to access image-generation runners.': '不允许公共存储库访问用于生成映像的运行器。',
     'Apply least privilege to repositories.': '对存储库应用最小权限。',
 
     // 运行器组
@@ -124,8 +119,7 @@ export default {
     'Learn more about network configurations.': '了解网络配置。',
     'Note: Network configurations are not supported for macOS runners. Any macOS runners assigned to runner groups with network configurations will fail to come online.':
       '注意：macOS 运行器不支持网络配置。分配到带网络配置的运行器组的 macOS 运行器将无法上线。',
-    'This group contains a macOS runner and cannot be assigned a network configuration.':
-      '此组包含 macOS 运行器，无法分配网络配置。',
+    'This group contains a macOS runner and cannot be assigned a network configuration.': '此组包含 macOS 运行器，无法分配网络配置。',
     'No configuration': '无配置',
     'Disabled configuration': '已禁用的配置',
     'No network configuration found': '未找到网络配置',
@@ -145,7 +139,7 @@ export default {
     'Nothing has been cached by workflows running in any repositories of this organization.':
       '此组织中的存储库运行的工作流尚未缓存任何内容。',
     'Learn more about caching': '了解如何缓存',
-    'dependencies and build outputs to improve workflow execution time.': '依赖项和构建输出，以缩短工作流执行时间。',
+    'dependencies and build outputs to improve workflow execution time.': '依赖项和构建输出，以缩短工作流执行时间。'
   },
   scoped: {
     // 「Applies to」+ <public> +「repositories only」：整句由 inline 收录（仅适用于公共存储库），这两条是片段后备；
@@ -224,32 +218,25 @@ export default {
       'macOS-arm64 运行器目前处于预发行状态，可能会有变动。',
     // 「Add `」+ 标签 +「` to your workflow's YAML to send jobs to …」（原文无逗号，译文不加，与存储库设置一致）
     'Add `': '将 `',
-    "` to your workflow's YAML to send jobs to GitHub-hosted runners.":
-      '` 添加到工作流 YAML 即可将作业发送到 GitHub 托管的运行器。',
-    '` to your workflow’s YAML to send jobs to GitHub-hosted runners.':
-      '` 添加到工作流 YAML 即可将作业发送到 GitHub 托管的运行器。',
+    "` to your workflow's YAML to send jobs to GitHub-hosted runners.": '` 添加到工作流 YAML 即可将作业发送到 GitHub 托管的运行器。',
+    '` to your workflow’s YAML to send jobs to GitHub-hosted runners.': '` 添加到工作流 YAML 即可将作业发送到 GitHub 托管的运行器。',
     "` to your workflow's YAML to send jobs to this runner.": '` 添加到工作流 YAML 即可将作业发送到此运行器。',
-    '` to your workflow’s YAML to send jobs to this runner.': '` 添加到工作流 YAML 即可将作业发送到此运行器。',
+    '` to your workflow’s YAML to send jobs to this runner.': '` 添加到工作流 YAML 即可将作业发送到此运行器。'
   },
   regexp: [
     [/^(\d+) selected repositor(?:y|ies)$/, '$1 个所选存储库'],
     // 「Allow all actions and reusable workflows」由存储库设置的 static 收录，组织名排除 all
     [new RegExp(`^Allow (?!all )${ORG} actions and reusable workflows$`), '允许 $1 的操作和可复用工作流'],
     [
-      new RegExp(
-        `^Any action or reusable workflow defined in a repository within the ${ORG} organization can be used\\.$`,
-      ),
-      '可以使用 $1 组织内任何存储库中定义的操作或可复用工作流。',
+      new RegExp(`^Any action or reusable workflow defined in a repository within the ${ORG} organization can be used\\.$`),
+      '可以使用 $1 组织内任何存储库中定义的操作或可复用工作流。'
     ],
-    [
-      new RegExp(`^Allow ${ORG}, and select non-${ORG}, actions and reusable workflows$`),
-      '允许 $1 的以及所选的非 $2 的操作和可复用工作流',
-    ],
+    [new RegExp(`^Allow ${ORG}, and select non-${ORG}, actions and reusable workflows$`), '允许 $1 的以及所选的非 $2 的操作和可复用工作流'],
     [
       new RegExp(
-        `^Any action or reusable workflow that matches the specified criteria, plus those defined in a repository within the ${ORG} organization, can be used\\.$`,
+        `^Any action or reusable workflow that matches the specified criteria, plus those defined in a repository within the ${ORG} organization, can be used\\.$`
       ),
-      '可以使用符合指定条件的操作或可复用工作流，以及 $1 组织内存储库中定义的操作或可复用工作流。',
+      '可以使用符合指定条件的操作或可复用工作流，以及 $1 组织内存储库中定义的操作或可复用工作流。'
     ],
     [/^(\d+) active jobs?$/, '$1 个活动作业'],
     [/^(\d+) caches?$/, '$1 个缓存'],
@@ -261,9 +248,9 @@ export default {
     [
       /^Add `([^`]{1,100})` to your workflow[’']s YAML to send jobs to (this runner|GitHub-hosted runners)\.$/,
       (_, label: string, target: string) =>
-        `将 \`${label}\` 添加到工作流 YAML 即可将作业发送到${target === 'this runner' ? '此运行器' : ' GitHub 托管的运行器'}。`,
-    ],
+        `将 \`${label}\` 添加到工作流 YAML 即可将作业发送到${target === 'this runner' ? '此运行器' : ' GitHub 托管的运行器'}。`
+    ]
   ],
   // 策略说明：Applies to <strong>public</strong> repositories only，only 在片段里译不出来，整句收录
-  inline: [['Applies to {} repositories only', '仅适用于{}存储库']],
+  inline: [['Applies to {} repositories only', '仅适用于{}存储库']]
 } satisfies PageDictionary

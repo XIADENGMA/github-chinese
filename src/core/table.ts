@@ -43,7 +43,7 @@ function asTable(table: RuntimeTable): Table {
 /** 压缩：原文、译文依次以分隔符相连；有原文或译文含分隔符时返回 undefined（该表不压缩） */
 export function packTable(entries: readonly (readonly [string, string])[]): string | undefined {
   const items = entries.flat()
-  return items.some((item) => item.includes(TABLE_SEPARATOR)) ? undefined : items.join(TABLE_SEPARATOR)
+  return items.some(item => item.includes(TABLE_SEPARATOR)) ? undefined : items.join(TABLE_SEPARATOR)
 }
 
 /** 把表中的条目加进 target：target 已有的原文不覆盖（先收录者优先） */
@@ -119,7 +119,7 @@ export function tableEntries(table: Table | undefined): [string, string][] {
 /** 按原文查译文的函数：只查表自身的条目（不查原型链），第一次调用时建立查找表 */
 export function lookupTable(table: Table | undefined): (key: string) => string | undefined {
   let map: Map<string, string> | undefined
-  return (key) => {
+  return key => {
     if (!map) {
       map = new Map()
       addEntries(map, table)

@@ -15,8 +15,7 @@ export default {
     'Partner with GitHub Education': '與 GitHub 教育合作',
 
     // 数据（数字见 regexp）
-    'Your presence with us now can set the stage for future partnerships.':
-      '現在與我們同行，就能為未來的合作奠定基礎。',
+    'Your presence with us now can set the stage for future partnerships.': '現在與我們同行，就能為未來的合作奠定基礎。',
     'Integrate your tools with our resources to amplify the learning path of tomorrow’s developers.':
       '將你的工具與我們的資源整合，拓展未來開發人員的學習路徑。',
     'Connect with us to help them build their skills and become an integral part of their career.':
@@ -48,8 +47,7 @@ export default {
 
     // CTA
     'Ready to work with us?': '準備好與我們合作了嗎？',
-    'Join us today in our mission to empower the tech innovators of tomorrow.':
-      '立即與我們一同肩負培育未來科技創新者的使命。',
+    'Join us today in our mission to empower the tech innovators of tomorrow.': '立即與我們一同肩負培育未來科技創新者的使命。',
 
     // 三类合作伙伴卡片
     'There are multiple ways you can partner with us. Choose what best aligns with your business goals.':
@@ -85,8 +83,7 @@ export default {
     'GitHub Education partnerships drive adoption and engagement by seeking out and providing industry standard tools and resources for all future developers. We do this by partnering with companies who support our learners with free use of their tools, special events, training opportunities, product testing, and more for a mutually beneficial learning environment. To grow your business with GitHub, please visit the':
       'GitHub 教育的合作關係致力於為所有未來的開發人員尋找並提供業界標準的工具和資源，藉此推動採用和參與。為此，我們與各家公司合作，由它們為學習者提供免費使用的工具、特別活動、培訓機會、產品測試等，共同打造互惠的學習環境。若要與 GitHub 一起拓展業務，請造訪',
     'partner portal': '合作夥伴入口網站',
-    'to better understand Channel, Service, and Technical Partnership opportunities.':
-      '，進一步瞭解通路、服務和技術合作機會。',
+    'to better understand Channel, Service, and Technical Partnership opportunities.': '，進一步瞭解通路、服務和技術合作機會。',
     'What kinds of partners are you looking for?': '你們在尋找什麼樣的合作夥伴？',
     'GitHub Education’s mission is to enable all future developers. We seek partners who align with this mission to share knowledge, tools, and resources to make the future of development as strong as it can be. Partners must be willing to offer free resources to students that align with the learning journey.':
       'GitHub 教育的使命是培育所有未來的開發人員。我們尋找認同這項使命的合作夥伴，一起分享知識、工具和資源，讓軟體開發的未來盡可能茁壯。合作夥伴必須願意向學生免費提供符合學習歷程的資源。',
@@ -95,11 +92,9 @@ export default {
     // … but please fill out <!-- -->our partnership form<!-- --> and we will be in touch …
     'We have limited capacity to support all in person event requests, but please fill out our partnership form and we will be in touch if we are able to move forward with your request.':
       '我們能支援的實體活動申請有限，但請填寫我們的合作表單，如果我們能推進你的申請，會再與你聯絡。',
-    'We have limited capacity to support all in person event requests, but please fill out':
-      '我們能支援的實體活動申請有限，但請填寫',
+    'We have limited capacity to support all in person event requests, but please fill out': '我們能支援的實體活動申請有限，但請填寫',
     'our partnership form': '我們的合作表單',
-    'and we will be in touch if we are able to move forward with your request.':
-      '，如果我們能推進你的申請，會再與你聯絡。',
+    'and we will be in touch if we are able to move forward with your request.': '，如果我們能推進你的申請，會再與你聯絡。',
     'There was a product I thought was in the Student Developer Pack but I no longer see it. What happened?':
       '我以為學生開發人員套件裡有某項產品，但現在看不到了。這是怎麼回事？',
     // … visit our <!-- -->Student Developer Pack public repository<!-- -->, which is updated regularly.
@@ -107,18 +102,18 @@ export default {
       '有時，某家公司必須退出學生開發人員套件，不再透過我們的系統向學生提供資源。有些是因為該公司決定直接提供自己的學生優惠，有些則是因為提供免費優惠不符合其業務目標。如需最新的套件合作夥伴清單，請造訪我們的學生開發人員套件公開儲存庫，該儲存庫會定期更新。',
     'Sometimes, a company has to leave the Student Developer Pack and no longer offers their resources to students through our system. In some cases, it’s because the company has decided to offer their own student benefit directly. In other cases, it’s because offering a free benefit isn’t aligned with their business goals. For the most up to date list of Pack partners, visit our':
       '有時，某家公司必須退出學生開發人員套件，不再透過我們的系統向學生提供資源。有些是因為該公司決定直接提供自己的學生優惠，有些則是因為提供免費優惠不符合其業務目標。如需最新的套件合作夥伴清單，請造訪我們的',
-    'Student Developer Pack public repository': '學生開發人員套件公開儲存庫',
+    'Student Developer Pack public repository': '學生開發人員套件公開儲存庫'
   },
   scoped: {
     'Partner now': '立即合作',
     // 只用于「… visit our <!-- -->Student Developer Pack public repository<!-- -->, which is updated regularly.」逐段回退，「該儲存庫」只对本句成立
-    ', which is updated regularly.': '，該儲存庫會定期更新。',
+    ', which is updated regularly.': '，該儲存庫會定期更新。'
   },
   regexp: [
     // +50% of students will influence their workplaces / 75% of student developers actively self-educate
     [/^\+(\d+)% of students will influence their workplaces$/, '超過 $1% 的學生將影響其職場'],
     [/^(\d+)% of student developers actively self-educate$/, '$1% 的學生開發人員主動自學'],
     // 5M students use GitHub Education
-    [/^(\d+)M students use GitHub Education$/, (_, count) => joinCjk(millions(count!), '位學生使用 GitHub 教育')],
-  ],
+    [/^(\d+)M students use GitHub Education$/, (_, count) => joinCjk(millions(count!), '位學生使用 GitHub 教育')]
+  ]
 } satisfies PageDictionary

@@ -21,7 +21,7 @@ export const SOURCES = [
   'wxt.config.ts',
   'tsconfig.json',
   'README.md',
-  'LICENSE',
+  'LICENSE'
 ]
 
 /**
@@ -32,7 +32,7 @@ export function excludedFromSources(path: string): boolean {
   const segments = path.split('/')
   const name = segments.at(-1) ?? ''
   return (
-    segments.some((segment) => segment.startsWith('.') || segment === 'node_modules' || segment === '__tests__') ||
+    segments.some(segment => segment.startsWith('.') || segment === 'node_modules' || segment === '__tests__') ||
     /\.(test|spec)\./.test(name) ||
     name === 'web-ext.config.ts'
   )
@@ -51,7 +51,7 @@ function sourceFiles(path: string): string[] {
   const stat = statSync(absolute)
   if (stat.isFile()) return [path]
   if (!stat.isDirectory()) return []
-  return readdirSync(absolute).flatMap((name) => sourceFiles(`${path}/${name}`))
+  return readdirSync(absolute).flatMap(name => sourceFiles(`${path}/${name}`))
 }
 
 /**
@@ -83,8 +83,8 @@ export default defineConfig({
       plugins: [
         // 词典的 static / scoped 表改写成字符串，缩短词典脚本在 document_start 的编译与执行（见 scripts/pack-tables.ts）
         packTablesPlugin(`${ROOT}/src/locales`),
-        stripVueStaticContentPlugin(),
-      ],
+        stripVueStaticContentPlugin()
+      ]
     }
   },
   // 各浏览器统一使用 MV3（WXT 对 Firefox、Safari 默认 MV2）
@@ -99,14 +99,14 @@ export default defineConfig({
     permissions: ['storage', 'scripting'],
     host_permissions: GITHUB_ORIGINS,
     action: {
-      default_title: '__MSG_extName__',
+      default_title: '__MSG_extName__'
     },
     // 词典脚本由内容脚本动态导入（见 src/shared/locale-loader.ts），只对 GitHub 页面开放，用会话随机地址，
     // 页面无法据固定地址探测扩展。Firefox、Safari 不动态导入（改请后台注入），不开放
     ...(browser === 'firefox' || browser === 'safari'
       ? {}
       : {
-          web_accessible_resources: [{ resources: ['locale-*.js'], matches: GITHUB_ORIGINS, use_dynamic_url: true }],
+          web_accessible_resources: [{ resources: ['locale-*.js'], matches: GITHUB_ORIGINS, use_dynamic_url: true }]
         }),
     ...(browser === 'firefox'
       ? {
@@ -114,22 +114,22 @@ export default defineConfig({
             gecko: {
               id: GECKO_ID,
               strict_min_version: '140.0',
-              data_collection_permissions: { required: ['none'] },
+              data_collection_permissions: { required: ['none'] }
             },
             // Android 版从 142 起支持 data_collection_permissions
             gecko_android: {
-              strict_min_version: '142.0',
-            },
-          },
+              strict_min_version: '142.0'
+            }
+          }
         }
       : {}),
     // 主世界内容脚本（src/entrypoints/turbo-bridge.content.ts）从 Safari 18 起支持
-    ...(browser === 'safari' ? { browser_specific_settings: { safari: { strict_min_version: '18.0' } } } : {}),
+    ...(browser === 'safari' ? { browser_specific_settings: { safari: { strict_min_version: '18.0' } } } : {})
   }),
   zip: {
-    includeSources: SOURCES,
+    includeSources: SOURCES
   },
   webExt: {
-    startUrls: ['https://github.com/vuejs/core'],
-  },
+    startUrls: ['https://github.com/vuejs/core']
+  }
 })

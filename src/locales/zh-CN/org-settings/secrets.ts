@@ -14,14 +14,12 @@ export default {
       '你的计划不支持专用存储库使用组织机密和变量。',
     'This secret may be used by public repositories in the organization. Paid GitHub plans include private repositories.':
       '组织中的公共存储库可以使用此机密。付费 GitHub 计划包含专用存储库。',
-    'Organization secrets cannot be used by private repositories with your plan.':
-      '你的计划不支持专用存储库使用组织机密。',
+    'Organization secrets cannot be used by private repositories with your plan.': '你的计划不支持专用存储库使用组织机密。',
     'This secret may only be used by specifically selected repositories.': '只有明确选定的存储库才能使用此机密。',
     'Secret repository access': '机密存储库访问权限',
     'Select the organization repositories that may use this secret.': '选择可以使用此机密的组织存储库。',
     'This secret may be used by any repository in the organization.': '组织中的任何存储库都可以使用此机密。',
-    'This secret may be used by any private repository in the organization.':
-      '组织中的任何专用存储库都可以使用此机密。',
+    'This secret may be used by any private repository in the organization.': '组织中的任何专用存储库都可以使用此机密。',
 
     // Actions 变量
     'New organization variable': '新建组织变量',
@@ -30,8 +28,7 @@ export default {
     'This organization has no variables.': '此组织暂无变量。',
     'This variable may be used by public repositories in the organization. Paid GitHub plans include private repositories.':
       '组织中的公共存储库可以使用此变量。付费 GitHub 计划包含专用存储库。',
-    'Organization variables cannot be used by private repositories with your plan.':
-      '你的计划不支持专用存储库使用组织变量。',
+    'Organization variables cannot be used by private repositories with your plan.': '你的计划不支持专用存储库使用组织变量。',
     'This variable may only be used by specifically selected repositories.': '只有明确选定的存储库才能使用此变量。',
     'Variable repository access': '变量存储库访问权限',
     'Select the organization repositories that may use this variable.': '选择可以使用此变量的组织存储库。',
@@ -48,13 +45,12 @@ export default {
     'New private registry': '新建专用注册表',
     'Select registry type': '选择注册表类型',
     'Add Registry': '添加注册表',
-    'Edit private registry': '编辑专用注册表',
+    'Edit private registry': '编辑专用注册表'
   },
   scoped: {
     // 页头说明（与存储库设置共用，片段间原文无逗号，译文不加）
     'Actions secrets and variables': '操作机密和变量',
-    'Secrets and variables allow you to manage reusable configuration data. Secrets are':
-      '机密和变量可用于管理可复用的配置数据。机密经过',
+    'Secrets and variables allow you to manage reusable configuration data. Secrets are': '机密和变量可用于管理可复用的配置数据。机密经过',
     encrypted: '加密',
     'and are used for sensitive data.': '并用于敏感数据。',
     'Learn more about encrypted secrets': '了解加密机密',
@@ -148,8 +144,7 @@ export default {
     // Dependabot 机密
     'Secrets are credentials that are': '机密是经过',
     '. Anyone with': '的凭据。对有权访问各机密的存储库拥有',
-    'access to the repositories with access to each secret can use it for Dependabot.':
-      '权限的任何人都可以在 Dependabot 中使用它们。',
+    'access to the repositories with access to each secret can use it for Dependabot.': '权限的任何人都可以在 Dependabot 中使用它们。',
     'Secrets are not passed to forks.': '机密不会传递给复刻。',
 
     // 专用注册表
@@ -176,6 +171,6 @@ export default {
     'Workload Identity Provider': '工作负载标识提供者',
     'Service Account': '服务帐户',
     'OIDC Provider Name': 'OIDC 提供方名称',
-    'Identity Mapping Name': '身份映射名称',
-  },
+    'Identity Mapping Name': '身份映射名称'
+  }
 } satisfies PageDictionary

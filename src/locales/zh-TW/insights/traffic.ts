@@ -5,7 +5,7 @@ const TRAFFIC_METRIC: Readonly<Record<string, string>> = {
   Clones: '複製次數',
   'Unique cloners': '不重複複製者',
   'Total views': '總瀏覽次數',
-  'Unique visitors': '不重複訪客',
+  'Unique visitors': '不重複訪客'
 }
 
 /** 流量计数单位：12 Clones（次数用「次」，人用「位」） */
@@ -13,7 +13,7 @@ const TRAFFIC_UNIT: Readonly<Record<string, string>> = {
   clone: '次複製',
   'unique cloner': '位不重複複製者',
   view: '次瀏覽',
-  'unique visitor': '位不重複訪客',
+  'unique visitor': '位不重複訪客'
 }
 
 /**
@@ -52,7 +52,7 @@ export default {
     // 组织见解侧栏
     'Insights navigation': '洞察導覽',
     'Copilot impact': 'Copilot 成效',
-    'Code generation': '程式碼產生',
+    'Code generation': '程式碼產生'
   },
   scoped: {
     Views: '瀏覽次數',
@@ -73,18 +73,18 @@ export default {
     views: '次瀏覽',
     view: '次瀏覽',
     'unique visitors': '位不重複訪客',
-    'unique visitor': '位不重複訪客',
+    'unique visitor': '位不重複訪客'
   },
   regexp: [
     // 图表标题：Clones in last 14 days
     [
       /^(Clones|Unique cloners|Total views|Unique visitors) in last (\d+) days$/,
-      (_, metric: string, days: string) => `過去 ${days} 天的${TRAFFIC_METRIC[metric]}`,
+      (_, metric: string, days: string) => `過去 ${days} 天的${TRAFFIC_METRIC[metric]}`
     ],
     // 计数：12 Clones / 1 Unique visitor
     [
       /^([\d,]+) (Clones?|Unique cloners?|Views?|Unique visitors?)$/,
-      (_, count: string, unit: string) => `${count} ${TRAFFIC_UNIT[unit.toLowerCase().replace(/s$/, '')]}`,
-    ],
-  ],
+      (_, count: string, unit: string) => `${count} ${TRAFFIC_UNIT[unit.toLowerCase().replace(/s$/, '')]}`
+    ]
+  ]
 } satisfies PageDictionary

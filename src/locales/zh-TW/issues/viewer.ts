@@ -11,7 +11,7 @@ const SUGGESTION_FIELD: Readonly<Record<string, string>> = {
   label: '標籤',
   close: '關閉',
   assignee: '負責人',
-  field: '欄位',
+  field: '欄位'
 }
 
 function suggestionField(name: string): string {
@@ -51,7 +51,7 @@ const STATUS_NAME: Readonly<Record<string, string>> = {
   Merged: '已合併',
   Draft: '草稿',
   Queued: '已排入佇列',
-  Archived: '已封存',
+  Archived: '已封存'
 }
 
 function statusName(name: string): string {
@@ -69,7 +69,7 @@ const SESSION_GROUP: Readonly<Record<string, string>> = {
   running: '執行中',
   failed: '失敗',
   complete: '已完成',
-  cancelled: '已取消',
+  cancelled: '已取消'
 }
 
 const SESSION_GROUP_SOURCE = Object.keys(SESSION_GROUP).join('|')
@@ -153,8 +153,7 @@ export default {
     'Consider using reactions instead': '可考慮改用表情回應',
     'To help keep issues focused, consider reacting or adding more details to your comment.':
       '為了讓議題保持聚焦，可考慮改用表情回應，或在留言中補充更多細節。',
-    'To help keep issues focused, consider adding more details to your comment.':
-      '為了讓議題保持聚焦，可考慮在留言中補充更多細節。',
+    'To help keep issues focused, consider adding more details to your comment.': '為了讓議題保持聚焦，可考慮在留言中補充更多細節。',
     'Like issue instead 👍': '改為對議題按讚 👍',
     'Added a 👍 to this issue.': '已為此議題按讚 👍。',
     'Added a 👍 to this issue and subscribed to updates.': '已為此議題按讚 👍 並訂閱更新。',
@@ -165,8 +164,7 @@ export default {
     'Commenting has been disabled because this issue was converted to a': '已停用留言的原因是此議題已轉換為',
     'You do not have permissions to comment on this issue.': '你沒有在此議題留言的權限。',
     'Comment form unavailable': '無法使用留言表單',
-    'The comment form cannot be displayed. Reload the page to try again.':
-      '無法顯示留言表單。請重新載入頁面後再試一次。',
+    'The comment form cannot be displayed. Reload the page to try again.': '無法顯示留言表單。請重新載入頁面後再試一次。',
 
     // 议题操作
     'Pin issue': '釘選議題',
@@ -176,8 +174,7 @@ export default {
     // 固定 / 取消固定的说明（公共存储库、专用存储库各一句）与结果提示
     'Up to 3 issues can be pinned and they will appear publicly at the top of the issues page':
       '最多可釘選 3 個議題並公開顯示在議題頁面頂端',
-    'Up to 3 issues can be pinned and they will appear at the top of the issues page':
-      '最多可釘選 3 個議題並顯示在議題頁面頂端',
+    'Up to 3 issues can be pinned and they will appear at the top of the issues page': '最多可釘選 3 個議題並顯示在議題頁面頂端',
     'Up to 3 issues can be pinned to the top of the issues page': '最多可將 3 個議題釘選到議題頁面頂端',
     'This will unpin this issue from the top of the issues page': '這會從議題頁面頂端取消釘選此議題',
     'The issue has been pinned.': '議題已釘選。',
@@ -279,8 +276,7 @@ export default {
     'Nothing on this issue matches the selected filters.': '此議題中沒有與所選篩選器相符的內容。',
     '(give feedback on the issue timeline, opens in a new tab)': '（提供議題時間軸的意見回饋，在新分頁中開啟）',
     'Activity on this issue will appear here.': '此議題的活動會顯示在這裡。',
-    'Comment unavailable. This comment cannot be shown in the activity timeline.':
-      '無法顯示留言。此留言無法在活動時間軸中顯示。',
+    'Comment unavailable. This comment cannot be shown in the activity timeline.': '無法顯示留言。此留言無法在活動時間軸中顯示。',
     'This comment cannot be shown in the activity timeline.': '此留言無法在活動時間軸中顯示。',
 
     // 反馈
@@ -327,7 +323,7 @@ export default {
     'Write markdown...': '撰寫 Markdown...',
     'Unable to reorder artifact. Previous order restored.': '無法調整成品順序。已還原先前的順序。',
     'Link could not be updated. Try again.': '無法更新連結。請再試一次。',
-    'Link could not be added. Try again.': '無法新增連結。請再試一次。',
+    'Link could not be added. Try again.': '無法新增連結。請再試一次。'
   },
   scoped: {
     // 头部与正文头部（“– with”“No description provided.”等评论通用文字由通用词典处理）
@@ -442,7 +438,7 @@ export default {
     // 时间线加载更多：<span>12</span><span> remaining <span>items</span></span>（整段由 timeline.ts 的 mergeText 合并翻译为「還有 12 個項目」；
     // 此为整段未命中时的片段，items 由通用词典处理）
     remaining: '剩餘',
-    item: '項目',
+    item: '項目'
   },
   regexp: [
     // 标签页标题片段：Issue #123
@@ -462,11 +458,9 @@ export default {
     [/^Agents assigned by ([\w-]+(?:\[bot\])?)$/, '由 $1 指派的代理'],
     // 头部代理会话摘要（按钮文字与 aria-label）：2 sessions needs input, 1 failed
     [
-      new RegExp(
-        `^(Agent sessions: )?(\\d+) sessions? (${SESSION_GROUP_SOURCE})(?:, (\\d+) (${SESSION_GROUP_SOURCE}|others?))?$`,
-      ),
+      new RegExp(`^(Agent sessions: )?(\\d+) sessions? (${SESSION_GROUP_SOURCE})(?:, (\\d+) (${SESSION_GROUP_SOURCE}|others?))?$`),
       (_, prefix, count, group, restCount, restName) =>
-        `${prefix ? '代理工作階段：' : ''}${count} 個工作階段${sessionGroup(group)}${sessionRest(restCount, restName)}`,
+        `${prefix ? '代理工作階段：' : ''}${count} 個工作階段${sessionGroup(group)}${sessionRest(restCount, restName)}`
     ],
     // 关闭 / 状态
     [/^Close as duplicate of #(\d+)$/, '關閉並標示為 #$1 的重複項目'],
@@ -474,21 +468,17 @@ export default {
     // 评论框状态按钮：Mark as Done、Mark as Duplicate of #12 with comment（状态名两侧不加引号；带留言时按「留言並…」语序）
     [
       /^Mark as (.+?)(?: of #(\d+))?( with comment)?$/,
-      (_, status, number, comment) =>
-        `${comment ? '留言並' : ''}${number ? `標示為 #${number} 的重複項目` : withStatus('標示為', status)}`,
+      (_, status, number, comment) => `${comment ? '留言並' : ''}${number ? `標示為 #${number} 的重複項目` : withStatus('標示為', status)}`
     ],
     [
       /^Status set to (.+?)(?: of #(\d+))?$/,
-      (_, status, number) => (number ? `狀態已設為 #${number} 的重複項目` : withStatus('狀態已設為', status)),
+      (_, status, number) => (number ? `狀態已設為 #${number} 的重複項目` : withStatus('狀態已設為', status))
     ],
     [/^Could not set the status to (.+)$/, (_, status) => withStatus('無法將狀態設為', status)],
     // 头部状态按钮：Status: Open（列表项图标的“Status: … .”带句号，由 list.ts 处理）
     [/^Status: ([^.]+)$/, (_, status) => `狀態：${statusName(status)}`],
     // 固定上限
-    [
-      /^(\d+)\/(\d+) issues already pinned\. Unpin an issue to pin this one\.$/,
-      '已釘選 $1/$2 個議題。請先取消釘選一個議題。',
-    ],
+    [/^(\d+)\/(\d+) issues already pinned\. Unpin an issue to pin this one\.$/, '已釘選 $1/$2 個議題。請先取消釘選一個議題。'],
     // 正文：清单项转议题
     [/^Create an issue with the title "(.+)"$/, '建立標題為「$1」的議題'],
     // 正文头部：Copilot 等非用户名作者的头像链接（@octocat's profile 与阻止、取消阻止 @用户由通用词典处理）
@@ -498,7 +488,7 @@ export default {
     // 活动排序按钮
     [
       /^Sort (comments|activity): (Oldest|Newest)$/,
-      (_, subject, order) => `${SORT_SUBJECT[subject] ?? subject}排序：${order === 'Oldest' ? '最舊' : '最新'}`,
+      (_, subject, order) => `${SORT_SUBJECT[subject] ?? subject}排序：${order === 'Oldest' ? '最舊' : '最新'}`
     ],
     // 代理建议
     [/^(High|Medium|Low) confidence$/, (_, level) => `${CONFIDENCE[level] ?? level}信賴度`],
@@ -506,21 +496,19 @@ export default {
     [/^(\d+) suggestions rejected$/, '已拒絕 $1 項建議'],
     [
       /^Pending label suggestions: (.+?)(?:\. (High|Medium|Low) confidence)?\. View details$/,
-      (_, labels, level) => `待處理的標籤建議：${labels}${confidenceText(level)}。查看詳細資料`,
+      (_, labels, level) => `待處理的標籤建議：${labels}${confidenceText(level)}。查看詳細資料`
     ],
     [
       /^Pending (.+?) suggestion(?:: (.+?))?(?:\. (High|Medium|Low) confidence)?\. View details$/,
-      (_, field, value, level) =>
-        `${pendingSuggestion(field)}${value ? `：${value}` : ''}${confidenceText(level)}。查看詳細資料`,
+      (_, field, value, level) => `${pendingSuggestion(field)}${value ? `：${value}` : ''}${confidenceText(level)}。查看詳細資料`
     ],
     [
       /^Applied ([\w -]+?): (.+?)(\. View rationale)?$/,
-      (_, field, value, rationale) =>
-        `${joinCjk('已套用', suggestionField(field))}：${value}${rationale ? '。查看理由' : ''}`,
+      (_, field, value, rationale) => `${joinCjk('已套用', suggestionField(field))}：${value}${rationale ? '。查看理由' : ''}`
     ],
     [/^duplicate of ([\w.-]+\/[\w.-]+#\d+)$/, '重複於 $1'],
     // 工件
     [/^Edit artifact: (.+)$/, '編輯成品：$1'],
-    [/^More actions for (.+)$/, '$1 的更多動作'],
-  ],
+    [/^More actions for (.+)$/, '$1 的更多動作']
+  ]
 } satisfies PageDictionary

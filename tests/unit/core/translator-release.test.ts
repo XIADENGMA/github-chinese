@@ -13,10 +13,10 @@ const BUNDLE: LocaleBundle = [
       scoped: { commit: '提交' },
       regexp: [
         [/^(\d+) parents?$/, '$1 个父提交'],
-        [/^Copy full SHA for ([0-9a-f]{7,40})$/, '复制 $1 的完整 SHA'],
-      ],
-    },
-  ],
+        [/^Copy full SHA for ([0-9a-f]{7,40})$/, '复制 $1 的完整 SHA']
+      ]
+    }
+  ]
 ]
 
 /** React 新版提交页页头（服务端渲染，合并提交：2 个父提交） */
@@ -38,7 +38,7 @@ function start(html: string, pages: readonly PageKey[] = COMMIT_PAGES): Translat
     matcher: testMatcher(undefined, BUNDLE),
     host: window,
     collectUntranslated: true,
-    resolvePages: () => pages,
+    resolvePages: () => pages
   })
   translator.start()
   return translator
@@ -95,10 +95,7 @@ describe('提交详情页头的 <pre> 按选择器放行', () => {
   it.each([
     ['自身命中退出标记', '<div class="commitBranchContainer__x"><pre class="notranslate" id="p">1 parent </pre></div>'],
     ['不是容器的直接子元素', '<div class="commitBranchContainer__x"><div><pre id="p">1 parent </pre></div></div>'],
-    [
-      '位于忽略区域内',
-      '<div class="markdown-body"><div class="commitBranchContainer__x"><pre id="p">1 parent </pre></div></div>',
-    ],
+    ['位于忽略区域内', '<div class="markdown-body"><div class="commitBranchContainer__x"><pre id="p">1 parent </pre></div></div>']
   ])('%s：不放行（首轮、插入后都保持原文）', async (_, html) => {
     start(html)
     expect($('#p').textContent).toBe('1 parent ')
@@ -127,12 +124,7 @@ describe('活动概览雷达图的 <svg> 按选择器放行', () => {
 
   it('标签译出；说明（title）不译、不进未翻译；其他 SVG 照旧跳过', () => {
     const t = start(RADAR, PROFILE_PAGES)
-    expect(['#top', '#right', '#bottom', '#left'].map((id) => $(id).textContent)).toEqual([
-      '代码审查',
-      '议题',
-      '拉取请求',
-      '提交',
-    ])
+    expect(['#top', '#right', '#bottom', '#left'].map(id => $(id).textContent)).toEqual(['代码审查', '议题', '拉取请求', '提交'])
     expect($('.js-activity-overview-graph title').textContent).toContain("octocat's contributions")
     expect($('#icon').textContent).toBe('Issues')
     expect(t.drainUntranslated()).toEqual([])

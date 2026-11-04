@@ -45,8 +45,7 @@ export default {
     // 原文无标点（撇号不算），译文不加逗号
     "We don't have enough data to generate this graph": '資料不足以產生此圖表',
     'We don’t have enough data to generate this graph': '資料不足以產生此圖表',
-    'We need at least one non-empty commit with an email to generate this graph':
-      '至少需要一個帶有電子郵件的非空提交才能產生此圖表',
+    'We need at least one non-empty commit with an email to generate this graph': '至少需要一個帶有電子郵件的非空提交才能產生此圖表',
     'There was an error generating this graph': '產生此圖表時發生錯誤',
     'Graph could not be rendered': '無法顯示圖表',
     'Crunching the latest data, just for you. Hang tight…': '正在為你計算最新資料，請稍候…',
@@ -70,7 +69,7 @@ export default {
     'There are too many commits to generate this graph.': '提交過多而無法產生此圖表。',
     // More information about this data can be found in the <activity documentation>.（原文无标点，译文不加逗号）
     'More information about this data can be found in the': '有關此資料的詳細資訊請參閱',
-    'activity documentation': '活動說明文件',
+    'activity documentation': '活動說明文件'
   },
   scoped: {
     'Last month': '過去 1 個月',
@@ -80,7 +79,7 @@ export default {
     // 拼接失败时的单节点兜底：Contributions per week to <main>, excluding merge commits
     'Contributions per week to': '每週貢獻至',
     ', excluding merge commits': '，不含合併提交',
-    'over time': '趨勢',
+    'over time': '趨勢'
   },
   regexp: [
     // 无障碍标题与页面标题
@@ -91,7 +90,7 @@ export default {
     [/^Contributions per week to (\S+), excluding merge commits$/, '每週對 $1 的貢獻，不含合併提交'],
     [
       /^Contributions per week to (\S+), line counts have been omitted because commit count exceeds ([\d,]+)\.$/,
-      '每週對 $1 的貢獻，因提交數超過 $2 而省略行數統計。',
+      '每週對 $1 的貢獻，因提交數超過 $2 而省略行數統計。'
     ],
     // 拼接失败时的单节点兜底（同 scoped 的「, excluding merge commits」）
     [/^, line counts have been omitted because commit count exceeds ([\d,]+)\.$/, '，因提交數超過 $1 而省略行數統計。'],
@@ -105,11 +104,11 @@ export default {
     // 周统计说明：Weekly from Jul 25, 2026 to Oct 25, 2026（原文无冒号，译文不加；按中文语序作「自 … 至 … 的每週統計」）；前缀与日期用 joinCjk 拼接
     [
       new RegExp(`^Weekly from ${WEEK_DATE} to ${WEEK_DATE}$`),
-      (_, from, to) => `${joinCjk('自', weekDate(from))}${joinCjk('至', weekDate(to))}的每週統計`,
+      (_, from, to) => `${joinCjk('自', weekDate(from))}${joinCjk('至', weekDate(to))}的每週統計`
     ],
     // 提交数：Pulse 摘要、贡献者卡片
-    [/^([\d,]+) commits?$/, '$1 個提交'],
+    [/^([\d,]+) commits?$/, '$1 個提交']
   ],
   // 贡献者卡片标题里的用户名链接
-  ignore: ['[class*="chartListItem"] h2 a'],
+  ignore: ['[class*="chartListItem"] h2 a']
 } satisfies PageDictionary

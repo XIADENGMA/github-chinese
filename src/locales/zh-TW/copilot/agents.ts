@@ -9,7 +9,7 @@ const PERMISSION_MODE: Readonly<Record<string, string>> = {
   'Allow all': '全部允許',
   Interactive: '互動式',
   Autopilot: '自動駕駛',
-  Plan: '規劃',
+  Plan: '規劃'
 }
 
 /** 选择器里的占位值与聊天模式 */
@@ -19,14 +19,14 @@ const PICKER_VALUE: Readonly<Record<string, string>> = {
   'Loading branch...': '正在載入分支...',
   Personal: '個人',
   Ask: '詢問',
-  Agent: '代理',
+  Agent: '代理'
 }
 
 /** 日志详细程度 */
 const VERBOSITY: Readonly<Record<string, string>> = {
   Minimal: '精簡',
   Balanced: '平衡',
-  Detailed: '詳細',
+  Detailed: '詳細'
 }
 
 /** 环境状态 */
@@ -39,7 +39,7 @@ const ENV_STATUS: Readonly<Record<string, string>> = {
   Draining: '排空中',
   Connecting: '連線中',
   Connected: '已連線',
-  Disconnected: '已中斷連線',
+  Disconnected: '已中斷連線'
 }
 
 /** 代理显示名（Copilot、Claude、OpenAI Codex 等，最多 4 个词），避免匹配会话标题等长文本 */
@@ -57,7 +57,7 @@ function paren(text: string): string {
 /** 任务创建失败横幅的说明（字符串替换）；读屏播报“Task creation failed. <说明>”与首页输入框（dashboard/composer）沿用 */
 export const TASK_FAILURE_RULES: readonly (readonly [RegExp, string])[] = [
   [/^Unable to start task for '(.+)'\. Please try again\.$/, '無法為「$1」開始任務。請再試一次。'],
-  [/^Unable to start task for '(.+?)': (.+)$/, '無法為「$1」開始任務：$2'],
+  [/^Unable to start task for '(.+?)': (.+)$/, '無法為「$1」開始任務：$2']
 ]
 
 /** models 词典的全局词条（任务创建失败横幅的计费提示从这里取译文） */
@@ -150,8 +150,7 @@ export default {
     'Task cannot start in Sandbox': '任務無法在沙箱中開始',
     'Go back and try again from the previous page.': '返回上一頁再試一次。',
     'Go back to Automations': '返回自動化',
-    'Chat is only available for Cloud sessions. Choose a repository to create a task.':
-      '聊天僅適用於雲端工作階段。選擇儲存庫以建立任務。',
+    'Chat is only available for Cloud sessions. Choose a repository to create a task.': '聊天僅適用於雲端工作階段。選擇儲存庫以建立任務。',
     'Submission error': '送出錯誤',
     'Startup may already have reached the environment. Restarting may send the first message again.':
       '啟動請求可能已送達環境。重新啟動可能會再次傳送第一則訊息。',
@@ -164,14 +163,11 @@ export default {
     'Try asking Copilot to plan before implementing': '試著讓 Copilot 先規劃再實作',
     'Reference specific files to give Copilot better context': '引用特定檔案為 Copilot 提供更好的上下文',
     'You can ask Copilot to explain its approach before making changes': '你可以讓 Copilot 在變更前先說明做法',
-    'Add a .github/agents.md file to customize Copilot for your repository':
-      '新增 .github/agents.md 檔案，為儲存庫自訂 Copilot',
-    'Copilot can work on multiple tasks in parallel across different repos':
-      'Copilot 可以在不同儲存庫中平行處理多項任務',
+    'Add a .github/agents.md file to customize Copilot for your repository': '新增 .github/agents.md 檔案，為儲存庫自訂 Copilot',
+    'Copilot can work on multiple tasks in parallel across different repos': 'Copilot 可以在不同儲存庫中平行處理多項任務',
     'Use the Copilot CLI to start tasks from your terminal': '使用 Copilot CLI 從終端機開始任務',
     'Ask Copilot to write tests for its own changes before finishing': '讓 Copilot 在完成前為自己的變更撰寫測試',
-    "You can approve or reject Copilot's plan before it starts coding":
-      '你可以在 Copilot 開始撰寫程式碼前核准或拒絕它的計畫',
+    "You can approve or reject Copilot's plan before it starts coding": '你可以在 Copilot 開始撰寫程式碼前核准或拒絕它的計畫',
     'Spinning up dev environment…': '正在啟動開發環境…',
     'Fueling the runtime engines…': '正在為執行階段引擎加油…',
     'Clearing the airspace for MCP traffic…': '正在為 MCP 流量淨空空域…',
@@ -204,8 +200,7 @@ export default {
     'No Mission Control environments available': '沒有可用的任務控制中心環境',
     'No custom environments available.': '沒有可用的自訂環境。',
     'Set one up': '設定一個',
-    'Selected environment is no longer available. Switched to the default environment.':
-      '選取的環境已無法使用。已切換到預設環境。',
+    'Selected environment is no longer available. Switched to the default environment.': '選取的環境已無法使用。已切換到預設環境。',
     'Mode: Chat': '模式：聊天',
     'Choose Chat or a repository': '選擇聊天或儲存庫',
     'Start a general chat for Personal or an organization, or select a repository to give Copilot project context.':
@@ -240,10 +235,8 @@ export default {
     'Create a custom agent': '建立自訂代理',
     'This repository has no custom agents': '此儲存庫沒有自訂代理',
     'No custom agents available': '沒有可用的自訂代理',
-    'Custom agents are reusable instructions and tools in your repository.':
-      '自訂代理是儲存庫中可重複使用的指示和工具。',
-    'Custom agents come from a repository. Select one to use its agents.':
-      '自訂代理來自儲存庫。選擇一個儲存庫以使用其中的代理。',
+    'Custom agents are reusable instructions and tools in your repository.': '自訂代理是儲存庫中可重複使用的指示和工具。',
+    'Custom agents come from a repository. Select one to use its agents.': '自訂代理來自儲存庫。選擇一個儲存庫以使用其中的代理。',
     'Loading agents': '正在載入代理',
     'Loading agent': '正在載入代理',
     'Loading agent…': '正在載入代理…',
@@ -394,18 +387,15 @@ export default {
       '原本的執行環境已無法使用。在雲端開始新的工作階段。',
     'You can still view its history. To send messages, start a new session in the cloud.':
       '你仍可查看其歷史記錄。若要傳送訊息，請在雲端開始新的工作階段。',
-    'Reopen this session after a compatible version of Copilot is available.':
-      '有相容版本的 Copilot 後，再重新開啟此工作階段。',
-    'Check that Copilot access is available, then reopen this session.':
-      '確認可以存取 Copilot 後，再重新開啟此工作階段。',
+    'Reopen this session after a compatible version of Copilot is available.': '有相容版本的 Copilot 後，再重新開啟此工作階段。',
+    'Check that Copilot access is available, then reopen this session.': '確認可以存取 Copilot 後，再重新開啟此工作階段。',
     'This session is open in read-only mode.': '此工作階段以唯讀模式開啟。',
     'Resuming session…': '正在恢復工作階段…',
     'Reconnecting this session and catching up on its conversation.': '正在重新連線此工作階段並同步對話。',
     'The session connection was lost.': '工作階段連線已中斷。',
     'The active AHP session could not be connected.': '無法連線到使用中的 AHP 工作階段。',
     'The live conversation is unavailable. Reconnect to continue.': '即時對話無法使用。重新連線以繼續。',
-    'This conversation is missing valid creation metadata. Retry to load it again.':
-      '此對話缺少有效的建立中繼資料。重試以再次載入。',
+    'This conversation is missing valid creation metadata. Retry to load it again.': '此對話缺少有效的建立中繼資料。重試以再次載入。',
     'Activity cannot be loaded': '無法載入活動',
     'The activity on this task is temporarily unavailable due to a system error. Try reloading the page, or if the problem persists, contact support.':
       '由於系統錯誤，此任務的活動暫時無法使用。試著重新載入頁面；如果問題持續發生，聯絡支援團隊。',
@@ -433,17 +423,14 @@ export default {
     'Only the task owner can steer this session.': '只有任務擁有者可以引導此工作階段。',
     'Sessions created by organizations cannot be steered.': '無法引導由組織建立的工作階段。',
     'Only the author of the task can ask for changes.': '只有任務作者可以要求變更。',
-    'Steering disabled. Contact your administrator to enable steering on local sessions.':
-      '引導已停用。聯絡管理員為本機工作階段啟用引導。',
+    'Steering disabled. Contact your administrator to enable steering on local sessions.': '引導已停用。聯絡管理員為本機工作階段啟用引導。',
     'This session has been archived': '此工作階段已封存',
     'This session has been archived.': '此工作階段已封存。',
     'You do not have write permission on the repository': '你沒有此儲存庫的寫入權限',
-    'This pull request was merged. Start a new session to continue iterating.':
-      '此拉取請求已合併。開始新的工作階段以繼續迭代。',
+    'This pull request was merged. Start a new session to continue iterating.': '此拉取請求已合併。開始新的工作階段以繼續迭代。',
     'This pull request was merged. To continue iterating,': '此拉取請求已合併。若要繼續迭代，請',
     'start a new session': '開始新的工作階段',
-    'This pull request was closed. To continue iterating, reopen the pull request.':
-      '此拉取請求已關閉。若要繼續迭代，請重新開啟拉取請求。',
+    'This pull request was closed. To continue iterating, reopen the pull request.': '此拉取請求已關閉。若要繼續迭代，請重新開啟拉取請求。',
     'This pending prompt has expired. Start a new task to continue.': '此待處理的提示已過期。開始新任務以繼續。',
     'Send a message to the CLI session...': '傳送訊息到 CLI 工作階段...',
     'Failed to submit latest message': '無法送出最新訊息',
@@ -454,8 +441,7 @@ export default {
     // 排队的消息
     'Queued messages': '佇列中的訊息',
     'Message queued': '訊息已排入佇列',
-    'Message queued. It will be sent after the current response finishes.':
-      '訊息已排入佇列。將在目前的回應完成後傳送。',
+    'Message queued. It will be sent after the current response finishes.': '訊息已排入佇列。將在目前的回應完成後傳送。',
     'Queued message removed.': '已移除佇列中的訊息。',
     'Queued message sent now.': '已立即傳送佇列中的訊息。',
     'Queued message could not be removed.': '無法移除佇列中的訊息。',
@@ -487,15 +473,13 @@ export default {
     'Failed to share session. Please try again.': '無法分享工作階段。請再試一次。',
     'Failed to unshare session. Please try again.': '無法取消分享工作階段。請再試一次。',
     'View shared session (opens in a new tab)': '查看分享的工作階段（在新分頁中開啟）',
-    'Your session has expired. Sign in again to change sharing settings.':
-      '你的工作階段已過期。重新登入以變更分享設定。',
+    'Your session has expired. Sign in again to change sharing settings.': '你的工作階段已過期。重新登入以變更分享設定。',
     "You don't have permission to access this session's sharing settings.": '你沒有權限存取此工作階段的分享設定。',
     'This session could not be found or you no longer have access to it.': '找不到此工作階段，或你已無權存取。',
     'Invalid usage. Use /share, /share link, or /share off.': '用法無效。使用 /share、/share link 或 /share off。',
     'You must be signed in to share a session.': '必須登入才能分享工作階段。',
     'Session sharing is not available.': '無法使用工作階段分享。',
-    'This session is not attached to a web task and cannot be shared here.':
-      '此工作階段未附加到網頁任務，無法在這裡分享。',
+    'This session is not attached to a web task and cannot be shared here.': '此工作階段未附加到網頁任務，無法在這裡分享。',
     'Could not load session sharing settings. Please try again.': '無法載入工作階段分享設定。請再試一次。',
     'Could not change session sharing settings. Please try again.': '無法變更工作階段分享設定。請再試一次。',
     'Session sharing turned off.': '已關閉工作階段分享。',
@@ -531,8 +515,7 @@ export default {
       '工作階段已取消封存，但無法重新開啟拉取請求。請手動重新開啟。',
     'Failed to unarchive the session. Please try again.': '無法取消封存工作階段。請再試一次。',
     'Delete session': '刪除工作階段',
-    'Are you sure you want to delete this session? This action cannot be undone.':
-      '確定要刪除此工作階段嗎？此動作無法復原。',
+    'Are you sure you want to delete this session? This action cannot be undone.': '確定要刪除此工作階段嗎？此動作無法復原。',
     'Failed to delete session. Please try again.': '無法刪除工作階段。請再試一次。',
 
     // 分配给代理
@@ -633,7 +616,7 @@ export default {
 
     // 引导提示
     'Close tour': '關閉導覽',
-    'Could not save your dismissal.': '無法儲存關閉狀態。',
+    'Could not save your dismissal.': '無法儲存關閉狀態。'
   },
   scoped: {
     // 会话状态与筛选
@@ -678,25 +661,22 @@ export default {
     Choices: '選項',
     Background: '背景',
     Step: '步驟',
-    Finish: '完成',
+    Finish: '完成'
   },
   regexp: [
     // 范围、存储库、分支、环境（composerRule：首页输入框沿用）
     composerRule([/^Personal \(([\w.-]+)\)$/, '個人 ($1)']),
-    composerRule([
-      /^Select conversation scope, current: (.+)$/,
-      (_, value: string) => `選擇對話範圍，目前：${pickerValue(value)}`,
-    ]),
+    composerRule([/^Select conversation scope, current: (.+)$/, (_, value: string) => `選擇對話範圍，目前：${pickerValue(value)}`]),
     [/^(\d+) owners?$/, '$1 位擁有者'],
     [/^(\d+) repositor(?:y|ies)$/, '$1 個儲存庫'],
     composerRule([
       /^Repositories in @([\w.-]+)( and public repositories)?$/,
-      (_, owner: string, more: string) => `@${owner} 中的儲存庫${more ? '和公開儲存庫' : ''}`,
+      (_, owner: string, more: string) => `@${owner} 中的儲存庫${more ? '和公開儲存庫' : ''}`
     ]),
     composerRule([
       /^Repositories are limited to (.+)\. Change the Chat scope to work in another owner['’]s repositories\.$/,
       (_, owner: string) =>
-        `儲存庫僅限於${owner === 'your personal account' ? '你的個人帳號' : ` ${owner}`}。變更聊天範圍以在其他擁有者的儲存庫中工作。`,
+        `儲存庫僅限於${owner === 'your personal account' ? '你的個人帳號' : ` ${owner}`}。變更聊天範圍以在其他擁有者的儲存庫中工作。`
     ]),
     composerRule([/^Cloud sessions are disabled for ([\w.-]+)$/, '$1 已停用雲端工作階段']),
     [/^Private repository selection is restricted to ([\w.-]+)\.$/, '只能從 $1 選擇私人儲存庫。'],
@@ -705,8 +685,7 @@ export default {
     composerRule([/^Remove ([\w.-]+\/[\w.-]+)$/, '移除 $1']),
     composerRule([
       /^Environment: (.+?)(?: \((.+)\))?$/,
-      (_, name: string, status: string) =>
-        `環境：${name === 'Cloud' ? '雲端' : name}${status ? paren(ENV_STATUS[status] ?? status) : ''}`,
+      (_, name: string, status: string) => `環境：${name === 'Cloud' ? '雲端' : name}${status ? paren(ENV_STATUS[status] ?? status) : ''}`
     ]),
     [/^Environment status: (.+)$/, (_, status: string) => `環境狀態：${ENV_STATUS[status] ?? status}`],
     [/^(.+) environment details$/, '$1 環境詳細資料'],
@@ -714,35 +693,28 @@ export default {
     composerRule([/^Mode: Chat \((.+)\)$/, (_, owner: string) => `模式：聊天${paren(pickerValue(owner))}`]),
     composerRule([
       /^Space: (.+)$/,
-      (_, name: string) => `空間：${name === 'Resolving…' ? '解析中…' : name === 'No space' ? '無空間' : name}`,
+      (_, name: string) => `空間：${name === 'Resolving…' ? '解析中…' : name === 'No space' ? '無空間' : name}`
     ]),
     composerRule([/^Resolving space: (.+)$/, '正在解析空間：$1']),
     composerRule([/^Space selected: (.+)$/, '已選擇空間：$1']),
 
     // 代理与模式
-    composerRule([
-      /^(Agent|Custom agent): (.+)$/,
-      (_, kind: string, name: string) => `${kind === 'Agent' ? '代理' : '自訂代理'}：${name}`,
-    ]),
+    composerRule([/^(Agent|Custom agent): (.+)$/, (_, kind: string, name: string) => `${kind === 'Agent' ? '代理' : '自訂代理'}：${name}`]),
     composerRule([/^Mode: (.+)$/, (_, mode: string) => `模式：${pickerValue(mode)}`]),
     composerRule([
       /^Select (CLI agent|MCP permission) mode, current: (.+)$/,
-      (_, kind: string, mode: string) =>
-        `選擇${kind === 'CLI agent' ? ' CLI 代理' : ' MCP 權限'}模式，目前：${pickerValue(mode)}`,
+      (_, kind: string, mode: string) => `選擇${kind === 'CLI agent' ? ' CLI 代理' : ' MCP 權限'}模式，目前：${pickerValue(mode)}`
     ]),
     [/^Tool permissions (?:are )?set to “(.+)”\.$/, (_, mode: string) => `工具權限已設為「${pickerValue(mode)}」。`],
     composerRule([
       /^Tool permissions: "(.+)" isn['’]t available for this session\. Choose an available option to continue\.$/,
-      (_, mode: string) => `工具權限：「${pickerValue(mode)}」不適用於此工作階段。選擇可用的選項以繼續。`,
+      (_, mode: string) => `工具權限：「${pickerValue(mode)}」不適用於此工作階段。選擇可用的選項以繼續。`
     ]),
-    [
-      /^Log verbosity: (Minimal|Balanced|Detailed)$/,
-      (_, level: string) => `記錄詳細程度：${VERBOSITY[level] ?? level}`,
-    ],
+    [/^Log verbosity: (Minimal|Balanced|Detailed)$/, (_, level: string) => `記錄詳細程度：${VERBOSITY[level] ?? level}`],
     [/^Information about the (.+) agent$/, '關於 $1 代理的資訊'],
     [
       new RegExp(`^(${AGENT_NAME}) requires authorization( first\\.)?$`),
-      (_, agent: string, first: string) => `${agent} 需要${first ? '先' : ''}授權${first ? '。' : ''}`,
+      (_, agent: string, first: string) => `${agent} 需要${first ? '先' : ''}授權${first ? '。' : ''}`
     ],
     [/^Couldn['’]t start authorization for (.+)\. Please try again\.$/, '無法開始 $1 的授權。請再試一次。'],
 
@@ -759,11 +731,11 @@ export default {
     [/^Assignment failed for #(\d+), #(\d+) and (\d+) others?$/, '#$1、#$2 和其他 $3 個議題指派失敗'],
     [
       /^Instructions must be ([\d,]+) characters or fewer\. Current length: ([\d,]+) characters\.$/,
-      '指示不得超過 $1 個字元。目前長度：$2 個字元。',
+      '指示不得超過 $1 個字元。目前長度：$2 個字元。'
     ],
     [
       /^Choose which repositories (.+) should be enabled in\. (.+) will only be available where it is enabled for the repository and in the Copilot license policies\.$/,
-      '選擇要在哪些儲存庫中啟用 $1。只有在儲存庫已啟用且 Copilot 授權政策允許時，$2 才可使用。',
+      '選擇要在哪些儲存庫中啟用 $1。只有在儲存庫已啟用且 Copilot 授權政策允許時，$2 才可使用。'
     ],
 
     // 会话状态与操作
@@ -773,14 +745,14 @@ export default {
     [new RegExp(`^(${AGENT_NAME}) timed out$`), '$1 已逾時'],
     [
       /^Only (.+) can steer this session$/,
-      (_, who: string) => `只有${who === 'the session owner' ? '工作階段擁有者' : ` ${who} `}可以引導此工作階段`,
+      (_, who: string) => `只有${who === 'the session owner' ? '工作階段擁有者' : ` ${who} `}可以引導此工作階段`
     ],
     [/^Wait until the session is complete before steering (.+) sessions$/, '等待工作階段完成後再引導 $1 工作階段'],
     [/^This session is steered from (.+)$/, '此工作階段由 $1 引導'],
     [/^Continue the conversation in the originating (.+) channel\.$/, '在原始的 $1 頻道中繼續對話。'],
     [
       /^You can['’]t view this task because you do not have any active sessions( for this pull request)?\.$/,
-      (_, forPull: string) => `你無法查看此任務，因為你${forPull ? '在此拉取請求中' : ''}沒有任何使用中的工作階段。`,
+      (_, forPull: string) => `你無法查看此任務，因為你${forPull ? '在此拉取請求中' : ''}沒有任何使用中的工作階段。`
     ],
     [/^Remote (.+) session$/, '遠端 $1 工作階段'],
     [/^(.+) session \(read only\)$/, '$1 工作階段（唯讀）'],
@@ -795,7 +767,7 @@ export default {
     [/^(\d+) messages queued$/, '$1 則訊息已排入佇列'],
     [
       /^(\d+) messages queued\. They will be sent after the current response finishes\.$/,
-      '$1 則訊息已排入佇列。將在目前的回應完成後傳送。',
+      '$1 則訊息已排入佇列。將在目前的回應完成後傳送。'
     ],
     [/^Queued message removed: (.+)\.$/, '已移除佇列中的訊息：$1。'],
     [/^(\d+) queued messages removed\.$/, '已移除 $1 則佇列中的訊息。'],
@@ -805,27 +777,21 @@ export default {
     [
       /^Copilot will start a background cloud agent session on ([\w.-]+\/[\w.-]+)( and open a pull request)?\. It works independently of this chat\.$/,
       (_, repo: string, pull: string) =>
-        `Copilot 將在 ${repo} 上開始背景雲端代理工作階段${pull ? '並建立拉取請求' : ''}。它會獨立於此聊天運作。`,
+        `Copilot 將在 ${repo} 上開始背景雲端代理工作階段${pull ? '並建立拉取請求' : ''}。它會獨立於此聊天運作。`
     ],
     // 代码审查会话的标题：Review of <拉取请求标题>
     [/^Review of (.+)$/, '審查 $1'],
     // 步骤计数（引导弹窗页脚 Step 1 of 3，句末可带句点）：与 repo-settings 的“步驟 N/M”一致
-    [
-      /^Step (\d+) of (\d+)(\.?)$/,
-      (_, step: string, total: string, period: string) => `步驟 ${step}/${total}${period ? '。' : ''}`,
-    ],
+    [/^Step (\d+) of (\d+)(\.?)$/, (_, step: string, total: string, period: string) => `步驟 ${step}/${total}${period ? '。' : ''}`],
     [/^View debug log \((\d+) events?\)$/, '查看偵錯記錄（$1 個事件）'],
-    [
-      /^Request failed with status (\d+)(\.)?$/,
-      (_, status: string, period = '') => `請求以狀態碼 ${status} 失敗${period ? '。' : ''}`,
-    ],
+    [/^Request failed with status (\d+)(\.)?$/, (_, status: string, period = '') => `請求以狀態碼 ${status} 失敗${period ? '。' : ''}`],
     [
       /^Unknown \/collect-debug-logs option “(.+)”\. Try \/collect-debug-logs download\.$/,
-      '未知的 /collect-debug-logs 選項「$1」。試試 /collect-debug-logs download。',
+      '未知的 /collect-debug-logs 選項「$1」。試試 /collect-debug-logs download。'
     ],
     [
       /^(\S+) needs a repository, and this session doesn['’]t have one\. Start a session from a repository to use it\.$/,
-      '$1 需要儲存庫，但此工作階段沒有儲存庫。從儲存庫開始工作階段後再使用。',
+      '$1 需要儲存庫，但此工作階段沒有儲存庫。從儲存庫開始工作階段後再使用。'
     ],
     [/^issue #(\d+)$/, '議題 #$1'],
     [/^pull request #(\d+)$/, '拉取請求 #$1'],
@@ -841,12 +807,12 @@ export default {
     composerRule([/^You can attach up to (\d+) images per task$/, '每項任務最多可附加 $1 張圖片']),
     composerRule([
       /^(\d+) files could not be attached: (.+)\. Text and PDF files must be (.+) or smaller, and you can attach up to (\d+) text, PDF, or image files at a time\.$/,
-      '$1 個檔案無法附加：$2。文字和 PDF 檔案不得超過 $3，且一次最多可附加 $4 個文字、PDF 或圖片檔案。',
+      '$1 個檔案無法附加：$2。文字和 PDF 檔案不得超過 $3，且一次最多可附加 $4 個文字、PDF 或圖片檔案。'
     ]),
     composerRule([
       /^(.+) could not be attached\. Text and PDF files must be (.+) or smaller, and you can attach up to (\d+) text, PDF, or image files at a time\.$/,
-      '無法附加 $1。文字和 PDF 檔案不得超過 $2，且一次最多可附加 $3 個文字、PDF 或圖片檔案。',
-    ]),
+      '無法附加 $1。文字和 PDF 檔案不得超過 $2，且一次最多可附加 $3 個文字、PDF 或圖片檔案。'
+    ])
   ],
   // 存档确认对话框（agent-sessions 的 ArchiveConfirmationDialog，正文是 Primer Dialog.Body 的直接子节点）：
   // 仅存档为“文字、{' '} 空格、<strong>Completed</strong>、文字”，有打开的拉取请求时空格在第一段文字末尾。
@@ -854,11 +820,11 @@ export default {
   inline: [
     [
       'This session will be removed from your active sessions. You can find and restore it anytime from the {} tab in My sessions.',
-      '此工作階段將從你使用中的工作階段移除。你可以隨時在我的工作階段頁面的{}分頁中找到並還原它。',
+      '此工作階段將從你使用中的工作階段移除。你可以隨時在我的工作階段頁面的{}分頁中找到並還原它。'
     ],
     [
       'This session has an open pull request. Would you like to close it? You can find and restore this session anytime from the {} tab in My sessions.',
-      '此工作階段有一個開放中的拉取請求。要關閉它嗎？你可以隨時在我的工作階段頁面的{}分頁中找到並還原此工作階段。',
-    ],
-  ],
+      '此工作階段有一個開放中的拉取請求。要關閉它嗎？你可以隨時在我的工作階段頁面的{}分頁中找到並還原此工作階段。'
+    ]
+  ]
 } satisfies PageDictionary

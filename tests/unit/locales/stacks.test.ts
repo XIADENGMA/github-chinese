@@ -34,7 +34,7 @@ interface Locale {
 
 const LOCALES: readonly Locale[] = [
   { name: 'zh-CN', index: 0, dict: cnStacks, own: createMatcher([['pulls', cnStacks]]), full: createMatcher(zhCN) },
-  { name: 'zh-TW', index: 1, dict: twStacks, own: createMatcher([['pulls', twStacks]]), full: createMatcher(zhTW) },
+  { name: 'zh-TW', index: 1, dict: twStacks, own: createMatcher([['pulls', twStacks]]), full: createMatcher(zhTW) }
 ]
 
 /** 新增的全局词条 */
@@ -43,52 +43,49 @@ const STATIC_CASES: readonly (readonly [string, Pair])[] = [
   ['Open Pull requests navigation', ['打开拉取请求导航', '開啟拉取請求導覽']],
   [
     'Unable to perform this operation. Please check your internet connection and try again later.',
-    ['无法执行此操作。请检查网络连接并稍后重试。', '無法執行此操作。請檢查網路連線並稍後再試。'],
+    ['无法执行此操作。请检查网络连接并稍后重试。', '無法執行此操作。請檢查網路連線並稍後再試。']
   ],
   [
     'The server is currently unable to perform this operation. Please try again later.',
-    ['服务器当前无法执行此操作。请稍后重试。', '伺服器目前無法執行此操作。請稍後再試。'],
+    ['服务器当前无法执行此操作。请稍后重试。', '伺服器目前無法執行此操作。請稍後再試。']
   ],
   [
     'Unable to read response from the server. Please try again later.',
-    ['无法读取服务器的响应。请稍后重试。', '無法讀取伺服器的回應。請稍後再試。'],
+    ['无法读取服务器的响应。请稍后重试。', '無法讀取伺服器的回應。請稍後再試。']
   ],
   [
     'You need to sign in again to perform this action. Please refresh the page and try again.',
-    ['你需要重新登录才能执行此操作。请刷新页面后重试。', '你需要重新登入才能執行此動作。請重新整理頁面後再試一次。'],
-  ],
+    ['你需要重新登录才能执行此操作。请刷新页面后重试。', '你需要重新登入才能執行此動作。請重新整理頁面後再試一次。']
+  ]
 ]
 
 /** 堆栈创建横幅的堆栈引用不是链接时，相邻文本节点连成的整段：由 header.ts 的堆栈编号正则处理 */
 const JOINED_CASES: readonly (readonly [string, Pair])[] = [
   ['This pull request was added to stack #4', ['此拉取请求已添加到堆栈 #4', '此拉取請求已加入堆疊 #4']],
   ['This pull request was added to stack #1024', ['此拉取请求已添加到堆栈 #1024', '此拉取請求已加入堆疊 #1024']],
-  ['Stack #4', ['堆栈 #4', '堆疊 #4']],
+  ['Stack #4', ['堆栈 #4', '堆疊 #4']]
 ]
 const JOINED_MISSES: readonly string[] = [
   'This pull request was added to stack',
   'This pull request was added to stack #abc',
-  'This pull request was added to #4',
+  'This pull request was added to #4'
 ]
 
 /** 行内句：{} 为元素槽位 */
 const INLINE_CASES: readonly (readonly [string, Pair])[] = [
   [
     'This pull request can be stacked with other pull requests. {}',
-    ['此拉取请求可以与其他拉取请求堆叠。{}', '此拉取請求可以和其他拉取請求堆疊。{}'],
+    ['此拉取请求可以与其他拉取请求堆叠。{}', '此拉取請求可以和其他拉取請求堆疊。{}']
   ],
   ['This pull request was added to {}', ['此拉取请求已添加到{}', '此拉取請求已加入{}']],
   [
     'This pull request can be added to {}. Review and update the stack when you’re ready.',
-    ['此拉取请求可添加到{}。准备好后审查并更新堆栈。', '此拉取請求可加入{}。準備好後審查並更新堆疊。'],
+    ['此拉取请求可添加到{}。准备好后审查并更新堆栈。', '此拉取請求可加入{}。準備好後審查並更新堆疊。']
   ],
   [
     'This pull request and other pull requests can be added to {}. Review and update the stack when you’re ready.',
-    [
-      '此拉取请求及其他拉取请求可添加到{}。准备好后审查并更新堆栈。',
-      '此拉取請求和其他拉取請求可加入{}。準備好後審查並更新堆疊。',
-    ],
-  ],
+    ['此拉取请求及其他拉取请求可添加到{}。准备好后审查并更新堆栈。', '此拉取請求和其他拉取請求可加入{}。準備好後審查並更新堆疊。']
+  ]
 ]
 
 /** 已有的拉取请求词条：堆栈页归入拉取请求作用域后才生效 */
@@ -102,7 +99,7 @@ const SCOPED_EXISTING: readonly (readonly [string, Pair])[] = [
   ['Pull request stack, position 2 of 3', ['拉取请求堆栈，3 个中的第 2 个', '拉取請求堆疊，共 3 個中的第 2 個']],
   ['Unstack', ['取消堆叠', '取消堆疊']],
   ['Links copied!', ['链接已复制！', '已複製連結！']],
-  ["You don't have permission", ['你没有权限', '你沒有權限']],
+  ["You don't have permission", ['你没有权限', '你沒有權限']]
 ]
 
 describe('堆栈页作用域', () => {
@@ -358,12 +355,10 @@ describe.each(LOCALES)('$name 堆栈页面', ({ index, full }) => {
     expect(shown('dialog-message')).toBe(
       t([
         '此堆栈的自动合并将被禁用。所有拉取请求都将从堆栈中删除。其基础分支不会重新指定且提交历史记录保持不变。',
-        '此堆疊的自動合併將會停用。所有拉取請求都將從堆疊中移除。其基底分支不會重新指定且提交歷史記錄維持不變。',
-      ]),
+        '此堆疊的自動合併將會停用。所有拉取請求都將從堆疊中移除。其基底分支不會重新指定且提交歷史記錄維持不變。'
+      ])
     )
-    expect(shown('dialog-error')).toBe(
-      t(['无法执行此操作。请检查网络连接并稍后重试。', '無法執行此操作。請檢查網路連線並稍後再試。']),
-    )
+    expect(shown('dialog-error')).toBe(t(['无法执行此操作。请检查网络连接并稍后重试。', '無法執行此操作。請檢查網路連線並稍後再試。']))
     expect(shown('dialog-live')).toBe(t(['正在检查此堆栈是否启用了自动合并。', '正在檢查此堆疊是否已啟用自動合併。']))
     expect(shown('dialog-cancel')).toBe('取消')
     expect(shown('dialog-unstack')).toBe(t(['取消堆叠', '取消堆疊']))
@@ -380,25 +375,20 @@ describe.each(LOCALES)('$name 堆栈页面', ({ index, full }) => {
     translator = render(PULL_HTML, full, PULL_URL)
     expect(label('can-stack')).toBe(t(['可堆叠横幅', '可堆疊橫幅']))
     // 句号与链接之间的空格是单独的文本节点：按整句写入后“。”后不留空格
-    expect(shown('can-stack-text')).toBe(
-      t(['此拉取请求可以与其他拉取请求堆叠。了解堆栈', '此拉取請求可以和其他拉取請求堆疊。瞭解堆疊']),
-    )
+    expect(shown('can-stack-text')).toBe(t(['此拉取请求可以与其他拉取请求堆叠。了解堆栈', '此拉取請求可以和其他拉取請求堆疊。瞭解堆疊']))
     const added = t(['此拉取请求已添加到堆栈 #4', '此拉取請求已加入堆疊 #4'])
     expect(label('banner')).toBe(t(['堆栈已更新横幅', '堆疊已更新橫幅']))
     expect(shown('added-link')).toBe(added)
     expect(shown('added-text')).toBe(added)
     expect(shown('created-link')).toBe(t(['堆栈 #4 已成功创建', '堆疊 #4 已成功建立']))
-    const preview = t([
-      '此拉取请求可添加到堆栈 #4。准备好后审查并更新堆栈。',
-      '此拉取請求可加入堆疊 #4。準備好後審查並更新堆疊。',
-    ])
+    const preview = t(['此拉取请求可添加到堆栈 #4。准备好后审查并更新堆栈。', '此拉取請求可加入堆疊 #4。準備好後審查並更新堆疊。'])
     expect(shown('preview-link')).toBe(preview)
     expect(shown('preview-text')).toBe(preview)
     expect(shown('preview-others')).toBe(
       t([
         '此拉取请求及其他拉取请求可添加到堆栈 #4。准备好后审查并更新堆栈。',
-        '此拉取請求和其他拉取請求可加入堆疊 #4。準備好後審查並更新堆疊。',
-      ]),
+        '此拉取請求和其他拉取請求可加入堆疊 #4。準備好後審查並更新堆疊。'
+      ])
     )
   })
 
@@ -410,27 +400,18 @@ describe.each(LOCALES)('$name 堆栈页面', ({ index, full }) => {
         DETAIL_URL,
         [
           ['size', ['此堆栈中有 3 个拉取请求', '此堆疊中有 3 個拉取請求']],
-          ['badge-title', ['堆栈 #12', '堆疊 #12']],
-        ],
+          ['badge-title', ['堆栈 #12', '堆疊 #12']]
+        ]
       ],
       [
         PULL_HTML,
         PULL_URL,
         [
-          [
-            'can-stack-text',
-            ['此拉取请求可以与其他拉取请求堆叠。了解堆栈', '此拉取請求可以和其他拉取請求堆疊。瞭解堆疊'],
-          ],
+          ['can-stack-text', ['此拉取请求可以与其他拉取请求堆叠。了解堆栈', '此拉取請求可以和其他拉取請求堆疊。瞭解堆疊']],
           ['added-text', ['此拉取请求已添加到堆栈 #4', '此拉取請求已加入堆疊 #4']],
-          [
-            'preview-link',
-            [
-              '此拉取请求可添加到堆栈 #4。准备好后审查并更新堆栈。',
-              '此拉取請求可加入堆疊 #4。準備好後審查並更新堆疊。',
-            ],
-          ],
-        ],
-      ],
+          ['preview-link', ['此拉取请求可添加到堆栈 #4。准备好后审查并更新堆栈。', '此拉取請求可加入堆疊 #4。準備好後審查並更新堆疊。']]
+        ]
+      ]
     ]
     for (const [html, url, checks] of cases) {
       translator?.stop()

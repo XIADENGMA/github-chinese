@@ -13,7 +13,7 @@ import {
   sentenceKey,
   SLOT,
   slotCount,
-  splitTemplate,
+  splitTemplate
 } from '../../../src/core/inline-key'
 import { createRecordStore } from '../../../src/core/records'
 
@@ -32,7 +32,7 @@ describe('句型键', () => {
 
   it('字符串句型编译成同样的键；{#} 是数字槽位', () => {
     expect(patternKey('Are you sure you want to unblock {} from {}?')).toBe(
-      sentenceKey(['Are you sure you want to unblock ', ' from ', '?'], [SLOT, SLOT]),
+      sentenceKey(['Are you sure you want to unblock ', ' from ', '?'], [SLOT, SLOT])
     )
     expect(patternKey('{#} merged')).toBe(`${NUM_SLOT}merged`)
     expect(generalizeKey(`${NUM_SLOT}merged${SLOT}`)).toBe(`${SLOT}merged${SLOT}`)
@@ -94,18 +94,18 @@ describe('行内句上限与引擎拆句一致', () => {
     const records = createRecordStore(() => 0)
     const fragments = createInlineFragments({
       records,
-      textSource: (node) => records.textSource(node),
+      textSource: node => records.textSource(node),
       translate: () => undefined,
       fit: (_node, translated) => translated,
       applyRun: () => undefined,
       noteRunMiss: () => undefined,
-      translateInline: (key) => {
+      translateInline: key => {
         keys.push(key)
         return undefined
       },
       inlineEnabled: () => true,
       touch: () => undefined,
-      skipped: () => false,
+      skipped: () => false
     })
     /** 宿主为「文字 + 元素」，句型键为文字 + 槽位 */
     const lookups = (length: number): string[] => {
@@ -117,7 +117,7 @@ describe('行内句上限与引擎拆句一致', () => {
       fragments.endRound()
       return [...keys]
     }
-    expect(lookups(MAX_SENTENCE_KEY).map((key) => key.length)).toEqual([MAX_SENTENCE_KEY])
+    expect(lookups(MAX_SENTENCE_KEY).map(key => key.length)).toEqual([MAX_SENTENCE_KEY])
     expect(lookups(MAX_SENTENCE_KEY + 1)).toEqual([])
   })
 })

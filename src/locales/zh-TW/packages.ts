@@ -41,19 +41,13 @@ const regexp: readonly RegExpRule[] = [
   // 详情侧栏
   [/^\+ (\d[\d,]*) contributors?$/, '+ $1 位貢獻者'],
   [/^(\d[\d,]*) dependenc(?:y|ies)$/, '$1 個相依項目'],
-  [
-    new RegExp(`^Learn more about (${REGISTRY_SOURCE})( packages)?$`),
-    (_, registry, suffix) => learnMoreAbout(registry, Boolean(suffix)),
-  ],
+  [new RegExp(`^Learn more about (${REGISTRY_SOURCE})( packages)?$`), (_, registry, suffix) => learnMoreAbout(registry, Boolean(suffix))],
   // 页面标题段：Package hello-world / hello-world versions
   [new RegExp(`^Package ${NOT_PACKAGE_WORD}(${NAME_SOURCE})$`), '套件 $1'],
   [new RegExp(`^${NOT_VERSIONS_WORD}(${NAME_SOURCE}) versions$`), '$1 的版本'],
   // 设置：确认对话框
   [/^Please type (.+) to confirm([.:])$/, (_, name, mark) => `請輸入 ${name} 以確認${mark === ':' ? '：' : '。'}`],
-  [
-    new RegExp(`^Are you sure you want to unlink (${ID_SOURCE}) from (${ID_SOURCE})\\?$`),
-    '確定要取消 $1 和 $2 的連結嗎？',
-  ],
+  [new RegExp(`^Are you sure you want to unlink (${ID_SOURCE}) from (${ID_SOURCE})\\?$`), '確定要取消 $1 和 $2 的連結嗎？'],
   // 设置：访问权限列表
   [/^(\d[\d,]*) repositor(?:y|ies) selected(…|\.\.\.)$/, '已選取 $1 個儲存庫$2'],
   [/^Change the role of (\d[\d,]*) repositor(?:y|ies)\?$/, '要變更 $1 個儲存庫的角色嗎？'],
@@ -65,8 +59,8 @@ const regexp: readonly RegExpRule[] = [
   [new RegExp(`^Removed (${ID_SOURCE}) as a package collaborator\\.$`), '已將 $1 從套件協作者中移除。'],
   [
     new RegExp(`^Remove ${NOT_UI_NOUN}(${ID_SOURCE}) from (${ID_SOURCE})(\\??)$`),
-    (_, item, target, question) => (question ? `要從 ${target} 中移除 ${item} 嗎？` : `從 ${target} 中移除 ${item}`),
-  ],
+    (_, item, target, question) => (question ? `要從 ${target} 中移除 ${item} 嗎？` : `從 ${target} 中移除 ${item}`)
+  ]
 ]
 
 /**
@@ -129,8 +123,7 @@ export default {
     'Container instructions': '容器使用說明',
     'OS / Arch': '作業系統/架構',
     'This package version was published': '此套件版本發布於',
-    'To provide a description, add the following line to your Dockerfile:':
-      '若要提供描述，請在 Dockerfile 中新增下列這行：',
+    'To provide a description, add the following line to your Dockerfile:': '若要提供描述，請在 Dockerfile 中新增下列這行：',
     // For multi-arch images, set a value for the <code>…</code> key in the <code>…</code> field of the manifest:
     // 译文按片段读作：若是多架構映像檔，請為 <code> 鍵在資訊清單的 <code> 欄位中設定值：
     'For multi-arch images, set a value for the': '若是多架構映像檔，請為',
@@ -153,26 +146,22 @@ export default {
       '這是存放套件原始碼的儲存庫。它由儲存庫 package.json 檔案中的',
     'A GitHub repository has been identified as the source for this package. This package will be displayed in this repositories package list.':
       '已識別出此套件的來源 GitHub 儲存庫。此套件將顯示在該儲存庫的套件清單中。',
-    'You have referenced a non-GitHub source for this package that cannot be verified.':
-      '你為此套件參照了無法驗證的非 GitHub 來源。',
+    'You have referenced a non-GitHub source for this package that cannot be verified.': '你為此套件參照了無法驗證的非 GitHub 來源。',
     'Confirm you want to unlink this repository': '確認取消連結此儲存庫',
     'Yes, unlink this repository': '是，取消連結此儲存庫',
 
     // 软件包设置：Actions / Codespaces 访问权限（产品名译成中文：Actions → 動作，Codespaces → 程式碼空間）
     'Manage Actions access': '管理動作存取權',
     'Actions repository access': '動作儲存庫存取權',
-    'Pick the repositories that can access this package using GitHub Actions.':
-      '選擇可透過 GitHub 動作存取此套件的儲存庫。',
+    'Pick the repositories that can access this package using GitHub Actions.': '選擇可透過 GitHub 動作存取此套件的儲存庫。',
     // Pick the repositories that can access this package using <a>GitHub Actions</a>.
     'Pick the repositories that can access this package using': '選擇可透過下列方式存取此套件的儲存庫',
     'Select repository that can access this package using GitHub actions': '選擇可透過 GitHub 動作存取此套件的儲存庫',
     'Manage Codespaces access': '管理程式碼空間存取權',
     'Codespaces repository access': '程式碼空間儲存庫存取權',
-    'Pick the repositories that can read this package using GitHub Codespaces.':
-      '選擇可透過 GitHub 程式碼空間讀取此套件的儲存庫。',
+    'Pick the repositories that can read this package using GitHub Codespaces.': '選擇可透過 GitHub 程式碼空間讀取此套件的儲存庫。',
     'Pick the repositories that can read this package using': '選擇可透過下列方式讀取此套件的儲存庫',
-    'Select repository that can access this package using GitHub codespaces':
-      '選擇可透過 GitHub 程式碼空間存取此套件的儲存庫',
+    'Select repository that can access this package using GitHub codespaces': '選擇可透過 GitHub 程式碼空間存取此套件的儲存庫',
     'Permissions added for selected repositories.': '已為選取的儲存庫新增權限。',
     'Permissions updated for selected repositories.': '已為選取的儲存庫更新權限。',
     'Confirm you want to remove this repository': '確認移除此儲存庫',
@@ -181,14 +170,12 @@ export default {
 
     // 软件包设置：角色说明（原文分句，译文同样分句）
     'Can download this package and read package metadata.': '可下載此套件並讀取套件中繼資料。',
-    'Can upload and download this package. Can read and write package metadata.':
-      '可上傳和下載此套件。可讀寫套件中繼資料。',
+    'Can upload and download this package. Can read and write package metadata.': '可上傳和下載此套件。可讀寫套件中繼資料。',
     'Can upload, download, and manage this package. Can read and write package metadata. Can delete and restore packages.':
       '可上傳、下載並管理此套件。可讀寫套件中繼資料。可刪除和還原套件。',
     'Can upload, download, and manage this package. Can read and write package metadata. Can grant package permissions.':
       '可上傳、下載並管理此套件。可讀寫套件中繼資料。可授予套件權限。',
-    'Recommended for non-code contributors who want to view or discuss your package.':
-      '適合想查看或討論套件的非程式碼貢獻者。',
+    'Recommended for non-code contributors who want to view or discuss your package.': '適合想查看或討論套件的非程式碼貢獻者。',
     'Recommended for contributors who actively push to your package.': '適合積極推送到套件的貢獻者。',
     'Recommended for people who need full access to the package, including sensitive and destructive actions like managing security and package visibility.':
       '適合需要套件完整存取權的人員，包括管理安全性和套件可見度等敏感且具破壞性的動作。',
@@ -207,8 +194,7 @@ export default {
     'This package is currently private.': '此套件目前為私人套件。',
     'This package is currently internal.': '此套件目前為內部套件。',
     'Make this package visible to anyone.': '讓任何人都能看到此套件。',
-    'Make this package visible privately, to organization members that have access.':
-      '將此套件設為私人，僅向有存取權的組織成員顯示。',
+    'Make this package visible privately, to organization members that have access.': '將此套件設為私人，僅向有存取權的組織成員顯示。',
     'I understand the consequences, change package visibility': '我瞭解後果，變更套件可見度',
     'I understand the consequences, change package visibility.': '我瞭解後果，變更套件可見度。',
     'Delete this package': '刪除此套件',
@@ -224,7 +210,7 @@ export default {
     'I understand, delete this package': '我瞭解，刪除此套件',
     'I understand the consequences, restore this package': '我瞭解後果，還原此套件',
     'I understand the consequences, restore this version.': '我瞭解後果，還原此版本。',
-    'I understand the consequences, restore this version': '我瞭解後果，還原此版本',
+    'I understand the consequences, restore this version': '我瞭解後果，還原此版本'
   },
   scoped: {
     // 侧栏与筛选（组织软件包页侧栏：Packages 标题下的 GitHub Packages、Linked artifacts）
@@ -322,7 +308,7 @@ export default {
     'Please type': '請輸入',
     'to confirm:': '以確認：',
     'to confirm.': '以確認。',
-    'Are you absolutely sure?': '你確定嗎？',
+    'Are you absolutely sure?': '你確定嗎？'
   },
   regexp,
   ignore: [
@@ -340,6 +326,6 @@ export default {
     '.breadcrumb-item-selected > a[href*="?tag="]',
     // 侧栏 Details：所有者、链接的存储库（星标数链接是界面文字）
     '.col-md-3 h4 + ul.list-style-none a.Link--primary',
-    '.col-md-3 h4 + ul.list-style-none a.Link--muted:not([href$="/stargazers"])',
-  ],
+    '.col-md-3 h4 + ul.list-style-none a.Link--muted:not([href$="/stargazers"])'
+  ]
 } satisfies PageDictionary

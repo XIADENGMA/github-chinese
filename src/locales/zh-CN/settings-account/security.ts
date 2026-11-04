@@ -12,7 +12,7 @@ const METHOD_ACTIONS: Readonly<Record<string, string>> = {
   Edit: '编辑',
   Show: '显示',
   Hide: '隐藏',
-  View: '查看',
+  View: '查看'
 }
 const METHODS: Readonly<Record<string, string>> = {
   'Authenticator app': '身份验证器应用',
@@ -20,7 +20,7 @@ const METHODS: Readonly<Record<string, string>> = {
   'Security keys': '安全密钥',
   // 产品名按用户规定译成中文：GitHub Mobile → GitHub 移动版
   'GitHub Mobile': 'GitHub 移动版',
-  'Recovery codes': '恢复代码',
+  'Recovery codes': '恢复代码'
 }
 
 /** 动作与方法名相接，方法名是英文时中间加空格 */
@@ -40,7 +40,7 @@ const PASSWORD_PARTS: readonly (readonly [RegExp, string])[] = [
   [/^cannot include your login$/, '不能包含你的登录名'],
   [/^is in a list of passwords commonly used on other websites$/, '在其他网站的常用密码列表中'],
   [/^can['’]t be blank$/, '不能为空'],
-  [/^is invalid$/, '无效'],
+  [/^is invalid$/, '无效']
 ]
 
 /**
@@ -49,7 +49,7 @@ const PASSWORD_PARTS: readonly (readonly [RegExp, string])[] = [
  * → “太短（最少 8 个字符），至少需要 1 个数字，且不能包含你的登录名”
  */
 export function passwordProblems(list: string): string {
-  const parts = list.split(/,? and |, /).map((part) => {
+  const parts = list.split(/,? and |, /).map(part => {
     const rule = PASSWORD_PARTS.find(([pattern]) => pattern.test(part))
     return rule ? part.replace(rule[0], rule[1]) : part
   })
@@ -129,8 +129,7 @@ export default {
     'Google sign in method dropdown': 'Google 登录方式下拉菜单',
 
     // 双因素身份验证
-    'You can now manage your two-factor authentication methods from this page.':
-      '现在可以在此页面管理双因素身份验证方法。',
+    'You can now manage your two-factor authentication methods from this page.': '现在可以在此页面管理双因素身份验证方法。',
     'Two-factor authentication successfully disabled.': '已禁用双因素身份验证。',
     'SMS/Text message successfully configured.': '已配置短信。',
     'SMS/Text message successfully disabled.': '已禁用短信。',
@@ -165,12 +164,10 @@ export default {
     'Preferred 2FA method': '首选 2FA 方法',
     'Set your preferred method to use for two-factor authentication when signing into GitHub.':
       '设置登录 GitHub 时首选的双因素身份验证方法。',
-    'Passkeys should be used primarily for standalone, password-less authentication.':
-      '通行密钥主要用于独立的免密码身份验证。',
+    'Passkeys should be used primarily for standalone, password-less authentication.': '通行密钥主要用于独立的免密码身份验证。',
 
     // 身份验证器应用
-    'Use an authentication app or browser extension to generate one-time codes.':
-      '使用身份验证应用或浏览器扩展生成一次性验证码。',
+    'Use an authentication app or browser extension to generate one-time codes.': '使用身份验证应用或浏览器扩展生成一次性验证码。',
     'Manage Authenticator app': '管理身份验证器应用',
     'Authenticator apps and browser extensions like': '身份验证器应用和浏览器扩展如',
     ', etc. generate one-time passwords that are used as a second factor to verify your identity when prompted during sign-in.':
@@ -243,14 +240,12 @@ export default {
     'Keep your recovery codes as safe as your password. We recommend saving them with a password manager such as':
       '请像保护密码一样妥善保管恢复代码。建议使用密码管理器保存，例如',
     'Keep your recovery codes in a safe spot.': '请将恢复代码保存在安全的地方。',
-    'These new codes have replaced your old codes. Save them in a safe spot.':
-      '这些新恢复代码已替换旧恢复代码。请保存在安全的地方。',
+    'These new codes have replaced your old codes. Save them in a safe spot.': '这些新恢复代码已替换旧恢复代码。请保存在安全的地方。',
     'These codes are the last resort for accessing your account in case you lose your password and second factors. If you cannot find these codes, you':
       '这些恢复代码是你丢失密码和第二因素时访问帐户的最后手段。如果找不到这些恢复代码，你',
     'lose access to your account.': '无法再访问你的帐户。',
     'Generate new recovery codes': '生成新的恢复代码',
-    'When you generate new recovery codes, you must download or print the new codes.':
-      '生成新的恢复代码后，必须下载或打印新的恢复代码。',
+    'When you generate new recovery codes, you must download or print the new codes.': '生成新的恢复代码后，必须下载或打印新的恢复代码。',
     "Your old codes won't work anymore.": '旧恢复代码将失效。',
     'Your old codes won’t work anymore.': '旧恢复代码将失效。',
     'Back to settings': '返回设置',
@@ -272,11 +267,9 @@ export default {
     'If you lose your device and don’t have the recovery codes, you will lose access to your account.':
       '如果丢失设备且没有恢复代码，你将无法访问帐户。',
     'I have saved my recovery codes': '我已保存恢复代码',
-    'Two-factor authentication (2FA) is now enabled for your GitHub account':
-      '你的 GitHub 帐户已启用双因素身份验证 (2FA)',
+    'Two-factor authentication (2FA) is now enabled for your GitHub account': '你的 GitHub 帐户已启用双因素身份验证 (2FA)',
     'You have enabled two-factor authentication using SMS.': '你已通过短信启用双因素身份验证。',
-    'You have enabled two-factor authentication using your authenticator app.':
-      '你已通过身份验证器应用启用双因素身份验证。',
+    'You have enabled two-factor authentication using your authenticator app.': '你已通过身份验证器应用启用双因素身份验证。',
     "Don't get locked out, configure additional authentication methods": '为防止无法访问帐户，请配置更多身份验证方法',
     'Don’t get locked out, configure additional authentication methods': '为防止无法访问帐户，请配置更多身份验证方法',
     "Configuring additional authentication methods will help you gain access to your account in case you lose your device and don't have your recovery codes.":
@@ -290,8 +283,7 @@ export default {
 
     // 2FA 复查
     'Verify your two-factor authentication (2FA) settings': '验证你的双因素身份验证 (2FA) 设置',
-    'This is a one-time verification of your recent configured 2FA credentials.':
-      '这是对你最近配置的 2FA 凭据的一次性验证。',
+    'This is a one-time verification of your recent configured 2FA credentials.': '这是对你最近配置的 2FA 凭据的一次性验证。',
     "Make sure that 2FA is correctly configured, and avoid a potential account lockout disaster. If you're having trouble verifying, you'll be able to reconfigure 2FA for your account.":
       '请确认 2FA 配置正确，避免帐户被锁定。如果验证遇到问题，可以为帐户重新配置 2FA。',
     'Make sure that 2FA is correctly configured, and avoid a potential account lockout disaster. If you’re having trouble verifying, you’ll be able to reconfigure 2FA for your account.':
@@ -322,9 +314,8 @@ export default {
     '. It is a proven method of keeping you safe from hackers and account takeover, even if your password is stolen or compromised.':
       '。即使密码被盗或泄露，这也是防止黑客入侵和帐户被盗的有效方法。',
     'Enable 2FA now': '立即启用 2FA',
-    'left to enable 2FA. Take action now to avoid additional interruptions.':
-      '时间启用 2FA。请立即操作以免受到更多干扰。',
-    'Remind me tomorrow': '明天提醒我',
+    'left to enable 2FA. Take action now to avoid additional interruptions.': '时间启用 2FA。请立即操作以免受到更多干扰。',
+    'Remind me tomorrow': '明天提醒我'
   },
   scoped: {
     // 更改密码
@@ -349,7 +340,7 @@ export default {
     // 按钮
     View: '查看',
     Print: '打印',
-    'You have': '你还有',
+    'You have': '你还有'
   },
   regexp: [
     [/^(\d+) devices?$/, '$1 台设备'],
@@ -361,47 +352,42 @@ export default {
     [/^(\d+) accounts? connected$/, '已连接 $1 个帐户'],
     [
       new RegExp(`^Added (${TIME_SOURCE}) \\| Last used (${TIME_SOURCE}|never)$`),
-      (_, added: string, used: string) => `${joinCjk(translateTime(added), '添加')} | ${usedTime(used)}`,
+      (_, added: string, used: string) => `${joinCjk(translateTime(added), '添加')} | ${usedTime(used)}`
     ],
     [/^Delete [`'"“‘](.+?)[`'"”’] passkey$/, '删除通行密钥“$1”'],
     [/^Are you sure you want to delete your [`'"“‘](.+?)[`'"”’] passkey\?$/, '确定要删除通行密钥“$1”吗？'],
     [/^You will receive one-time codes at this phone number: (.+)$/, '你将通过此号码接收一次性验证码：$1'],
     // 更改密码的校验错误：各项组合多样，逐项翻译后拼接（句号随原文）
     [
-      new RegExp(
-        `^Password (${PASSWORD_PART_SOURCE}(?:, ${PASSWORD_PART_SOURCE})*(?:,? and ${PASSWORD_PART_SOURCE})?)(\\.?)$`,
-      ),
-      (_, list: string, dot: string) => `密码${passwordProblems(list)}${dot ? '。' : ''}`,
+      new RegExp(`^Password (${PASSWORD_PART_SOURCE}(?:, ${PASSWORD_PART_SOURCE})*(?:,? and ${PASSWORD_PART_SOURCE})?)(\\.?)$`),
+      (_, list: string, dot: string) => `密码${passwordProblems(list)}${dot ? '。' : ''}`
     ],
     // 强制启用 2FA：日期未被拆开时
     [
       new RegExp(
-        `^Because of your contributions on GitHub, two-factor authentication will be required for your account starting (${DATE_SOURCE})\\. Thank you for helping keep the ecosystem safe!$`,
+        `^Because of your contributions on GitHub, two-factor authentication will be required for your account starting (${DATE_SOURCE})\\. Thank you for helping keep the ecosystem safe!$`
       ),
       (_, date: string) =>
         joinCjk(
           joinCjk('鉴于你在 GitHub 上的贡献，你的帐户将从', translateTime(date)),
-          '起需要启用双因素身份验证。感谢你帮助维护生态安全！',
-        ),
+          '起需要启用双因素身份验证。感谢你帮助维护生态安全！'
+        )
     ],
     // 禁用 2FA 确认对话框的后半句（前半句「Some GitHub users are <strong>now required</strong>」见 static / scoped）
     [
       new RegExp(
-        `^to enable two-factor authentication as an additional security measure\\. Your activity on GitHub includes you in this requirement\\. You will need to re-enable two-factor authentication on your account before (${DATE_SOURCE}), otherwise your account will be restricted on that date\\.$`,
+        `^to enable two-factor authentication as an additional security measure\\. Your activity on GitHub includes you in this requirement\\. You will need to re-enable two-factor authentication on your account before (${DATE_SOURCE}), otherwise your account will be restricted on that date\\.$`
       ),
       (_, date: string) =>
         joinCjk(
-          joinCjk(
-            '启用双因素身份验证作为额外的安全措施。你在 GitHub 上的活动使你也在此要求范围内。你需要在',
-            translateTime(date),
-          ),
-          '之前为帐户重新启用双因素身份验证，否则你的帐户将在当天受到限制。',
-        ),
+          joinCjk('启用双因素身份验证作为额外的安全措施。你在 GitHub 上的活动使你也在此要求范围内。你需要在', translateTime(date)),
+          '之前为帐户重新启用双因素身份验证，否则你的帐户将在当天受到限制。'
+        )
     ],
     // 双因素方法各行按钮的无障碍名称：Edit Authenticator app、Add SMS/Text message、View Recovery codes
     [
       new RegExp(`^(${Object.keys(METHOD_ACTIONS).join('|')}) (${Object.keys(METHODS).join('|')})$`),
-      (_, action: string, method: string) => methodAction(action, method),
-    ],
-  ],
+      (_, action: string, method: string) => methodAction(action, method)
+    ]
+  ]
 } satisfies PageDictionary

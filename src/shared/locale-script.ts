@@ -31,7 +31,7 @@ function sameSet(a: readonly string[] | undefined, b: readonly string[]): boolea
   if (a === undefined) return false
   const have = new Set(a)
   const want = new Set(b)
-  return have.size === want.size && [...want].every((value) => have.has(value))
+  return have.size === want.size && [...want].every(value => have.has(value))
 }
 
 /** 注册报 ID 已存在 */

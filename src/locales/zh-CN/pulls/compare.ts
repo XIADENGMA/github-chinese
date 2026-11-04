@@ -31,20 +31,20 @@ export default {
     'Looking for help?': '需要帮助？',
     "Check out the project's": '请查看此项目的',
     'Check out the project’s': '请查看此项目的',
-    'instructions for getting support': '支持说明',
+    'instructions for getting support': '支持说明'
   },
   scoped: {
     'Create draft pull request': '创建草稿拉取请求',
     'View pull request': '查看拉取请求',
     'Add a title': '添加标题',
     'Add a description': '添加描述',
-    'Helpful resources': '实用资源',
+    'Helpful resources': '实用资源'
   },
   regexp: [
     [
       /^Pull request creation failed\. Validation failed: A pull request already exists for (\S+)\.$/,
-      '拉取请求创建失败。验证失败：$1 已存在拉取请求。',
+      '拉取请求创建失败。验证失败：$1 已存在拉取请求。'
     ],
-    [/^No commits between (\S+) and (\S+)$/, '$1 和 $2 之间没有提交'],
-  ],
+    [/^No commits between (\S+) and (\S+)$/, '$1 和 $2 之间没有提交']
+  ]
 } satisfies PageDictionary

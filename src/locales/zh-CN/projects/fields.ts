@@ -30,7 +30,7 @@ export const FIELD_NAMES: Readonly<Record<string, string>> = {
   Size: '规模',
   'Start date': '开始日期',
   'Target date': '目标日期',
-  'End date': '结束日期',
+  'End date': '结束日期'
 }
 
 const FIELD_NAMES_LOWER = new Map(Object.entries(FIELD_NAMES).map(([name, zh]) => [name.toLowerCase(), zh]))
@@ -43,7 +43,7 @@ export function translateFieldName(name: string): string {
 /** 字段名正则片段（不含捕获组），长名在前 */
 export const FIELD_NAME_SOURCE = Object.keys(FIELD_NAMES)
   .sort((a, b) => b.length - a.length)
-  .map((name) => name.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&'))
+  .map(name => name.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&'))
   .join('|')
 
 /** 拼接用户字段名后，在中文与英文 / 数字之间补空格 */
@@ -59,7 +59,7 @@ const VALUE_NOUNS: Readonly<Record<string, string>> = {
   'iteration value': '迭代值',
   'iteration values': '迭代值',
   value: '值',
-  values: '值',
+  values: '值'
 }
 
 function valueNoun(noun: string): string {
@@ -103,10 +103,8 @@ export default {
     'Reorder custom fields': '调整自定义字段顺序',
     'Reorder fields list': '字段顺序列表',
     'Reorder custom fields list': '自定义字段顺序列表',
-    'Change the order in which fields appear on project items and in field lists.':
-      '更改字段在项目项和字段列表中的显示顺序。',
-    'Change the order in which custom fields appear on project items and in field lists.':
-      '更改自定义字段在项目项和字段列表中的显示顺序。',
+    'Change the order in which fields appear on project items and in field lists.': '更改字段在项目项和字段列表中的显示顺序。',
+    'Change the order in which custom fields appear on project items and in field lists.': '更改自定义字段在项目项和字段列表中的显示顺序。',
     'appear on project items and in field lists.': '在项目项和字段列表中的显示顺序。',
     'No fields are available to reorder.': '没有可调整顺序的字段。',
     'No sortable columns available. Only custom fields can be reordered.': '没有可排序的列。只能调整自定义字段的顺序。',
@@ -120,8 +118,7 @@ export default {
     'Delete field': '删除字段',
     'This field no longer exists': '此字段已不存在',
     'Select another field to view settings.': '选择其他字段以查看设置。',
-    'New items added to the project will automatically have this value set for this field.':
-      '添加到项目的新项会自动将此字段设为该值。',
+    'New items added to the project will automatically have this value set for this field.': '添加到项目的新项会自动将此字段设为该值。',
 
     // 删除 / 移除字段
     'Delete field?': '删除字段？',
@@ -178,8 +175,7 @@ export default {
     'See more fields': '查看更多字段',
     'This field conflicts with an issue field. Rename this field.': '此字段与议题字段冲突。请重命名此字段。',
     'No Issue Fields available': '没有可用的议题字段',
-    "All issue fields have restricted visibility and can't be added to this project.":
-      '所有议题字段都因可见性受限而无法添加到此项目。',
+    "All issue fields have restricted visibility and can't be added to this project.": '所有议题字段都因可见性受限而无法添加到此项目。',
     'All available Issue Fields have been added to this project.': '所有可用的议题字段都已添加到此项目。',
     "Issue fields can be created in the project owner's settings.": '可在项目所有者的设置中创建议题字段。',
     'Manage Issue Fields': '管理议题字段',
@@ -201,7 +197,7 @@ export default {
       '在项目中选择类型字段，并为项目项设置 Epic、Feature 和 Task',
     'New timestamp fields available': '新增时间戳字段',
     'You can now add Created, Closed, and Updated timestamp fields to your project to track when issues and pull requests were created, closed, or last updated.':
-      '现在可以向项目添加创建时间、关闭时间和更新时间字段，跟踪议题和拉取请求的创建、关闭和最后更新时间。',
+      '现在可以向项目添加创建时间、关闭时间和更新时间字段，跟踪议题和拉取请求的创建、关闭和最后更新时间。'
   },
   scoped: {
     // 通用文本（仅项目页生效）
@@ -284,20 +280,17 @@ export default {
     Planned: '计划中',
     Completed: '已完成',
     Active: '活动',
-    'Remove item': '移除',
+    'Remove item': '移除'
   },
   regexp: [
     // 字段设置页（字段名原文没有引号，译文也不加；中英文之间由 pangu / joinCjk 补空格；原文没有的逗号不加）
     [/^(.+) field settings$/, (_, name: string) => pangu(`${translateFieldName(name)}字段设置`)],
     [
       /^(.+) fields are created by GitHub and cannot be renamed\.$/,
-      (_, name: string) => pangu(`${translateFieldName(name)}字段由 GitHub 创建且无法重命名。`),
+      (_, name: string) => pangu(`${translateFieldName(name)}字段由 GitHub 创建且无法重命名。`)
     ],
     // 原文是 field actions；去掉引号后“打开状态的操作”有歧义，补“字段”：打开状态字段的操作
-    [
-      /^Open field actions for (.+)$/,
-      (_, name: string) => joinCjk(joinCjk('打开', translateFieldName(name)), '字段的操作'),
-    ],
+    [/^Open field actions for (.+)$/, (_, name: string) => joinCjk(joinCjk('打开', translateFieldName(name)), '字段的操作')],
     [/^Move field (.+)$/, (_, name: string) => joinCjk('移动字段', translateFieldName(name))],
     [new RegExp(`^(${FIELD_NAME_SOURCE}) options$`), (_, name: string) => `${translateFieldName(name)}选项`],
     [/^Add ([a-z][\w -]*)…$/, (_, name: string) => pangu(`添加${translateFieldName(name)}…`)],
@@ -305,15 +298,15 @@ export default {
     // 删除 / 移除字段（原文的 “” 保留；带数据的整句由下方 inline 规则译出，不构成行内句时按首段翻译）
     [
       /^This will delete the field “(.+)”(\.)?$/,
-      (_, name: string, dot?: string) => `这将删除字段“${translateFieldName(name)}”${dot ? '。' : ''}`,
+      (_, name: string, dot?: string) => `这将删除字段“${translateFieldName(name)}”${dot ? '。' : ''}`
     ],
     [
       /^This will delete the field “(.+)” and remove its data from$/,
-      (_, name: string) => `这将删除字段“${translateFieldName(name)}”并从以下位置删除其数据`,
+      (_, name: string) => `这将删除字段“${translateFieldName(name)}”并从以下位置删除其数据`
     ],
     [
       /^This will remove the field “(.+)” from this project, but it will remain on existing issues\.$/,
-      (_, name: string) => `这将从此项目中移除字段“${translateFieldName(name)}”，但会保留在现有议题上。`,
+      (_, name: string) => `这将从此项目中移除字段“${translateFieldName(name)}”，但会保留在现有议题上。`
     ],
     [/^This will remove the field “(.+)”$/, (_, name: string) => `这将移除字段“${translateFieldName(name)}”`],
     [/^(\d+) items?$/, '$1 个项'],
@@ -341,79 +334,60 @@ export default {
     [
       new RegExp(`^Delete (?:(${NOUN_SOURCE})|(\\d+) (${NOUN_SOURCE}))(\\?)?$`),
       (_, single: string, count: string, plural: string, mark: string) =>
-        `删除${count ? ` ${count} 个` : ''}${valueNoun(single || plural)}${mark ? '？' : ''}`,
+        `删除${count ? ` ${count} 个` : ''}${valueNoun(single || plural)}${mark ? '？' : ''}`
     ],
     [
       /^This will permanently delete (?:this|these) (option|options|iteration|iterations|value|values|iteration value|iteration values) from the "(.+)" field and will impact everyone using this project\.$/,
       (_, noun: string, field: string) =>
-        `这将从“${translateFieldName(field)}”字段中永久删除所选${valueNoun(noun)}并影响此项目的所有使用者。`,
+        `这将从“${translateFieldName(field)}”字段中永久删除所选${valueNoun(noun)}并影响此项目的所有使用者。`
     ],
     [
       new RegExp(`^The ${NOUN_SOURCE} will be permanently deleted from (\\d+) items? in this project\\.$`),
-      '将从此项目的 $1 个项中永久删除。',
+      '将从此项目的 $1 个项中永久删除。'
     ],
-    [
-      new RegExp(`^The ${NOUN_SOURCE} will be permanently deleted from any items in this project\\.$`),
-      '将从此项目的所有项中永久删除。',
-    ],
+    [new RegExp(`^The ${NOUN_SOURCE} will be permanently deleted from any items in this project\\.$`), '将从此项目的所有项中永久删除。'],
     [
       /^(?:This iteration value|These iteration values) will be removed from (\d+) items? in this project\.$/,
-      '将从此项目的 $1 个项中移除。',
+      '将从此项目的 $1 个项中移除。'
     ],
-    [
-      /^(?:This iteration value|These iteration values) will be removed from any items in this project\.$/,
-      '将从此项目的所有项中移除。',
-    ],
+    [/^(?:This iteration value|These iteration values) will be removed from any items in this project\.$/, '将从此项目的所有项中移除。'],
     [
       new RegExp(
-        `^(?:This|These) (${NOUN_SOURCE}) (?:is|are) used in (\\d+) workflows?\\. Deleting (?:it|them) will disable the workflows? and invalidate any actions referencing (?:it|them)\\.$`,
+        `^(?:This|These) (${NOUN_SOURCE}) (?:is|are) used in (\\d+) workflows?\\. Deleting (?:it|them) will disable the workflows? and invalidate any actions referencing (?:it|them)\\.$`
       ),
-      (_, noun: string, count: string) =>
-        `${count} 个工作流正在使用所选${valueNoun(noun)}。删除后会禁用相关工作流并使引用它的操作失效。`,
+      (_, noun: string, count: string) => `${count} 个工作流正在使用所选${valueNoun(noun)}。删除后会禁用相关工作流并使引用它的操作失效。`
     ],
 
     // 议题字段（字段名原文没有引号，译文也不加；两句之间随原文用句号）
-    [
-      /^Use issue fields defined by (.+) to keep information consistent across projects\.$/,
-      '使用 $1 定义的议题字段以保持各项目信息一致。',
-    ],
-    [
-      /^Add (.+) field to project$/,
-      (_, name: string) => joinCjk(joinCjk('将', translateFieldName(name)), '字段添加到项目'),
-    ],
+    [/^Use issue fields defined by (.+) to keep information consistent across projects\.$/, '使用 $1 定义的议题字段以保持各项目信息一致。'],
+    [/^Add (.+) field to project$/, (_, name: string) => joinCjk(joinCjk('将', translateFieldName(name)), '字段添加到项目')],
     [/^(.+) field added to project$/, (_, name: string) => joinCjk(translateFieldName(name), '字段已添加到项目')],
     [
       /^Could not add (.+) field to project\. Please try again\.$/,
-      (_, name: string) => `${joinCjk(joinCjk('无法将', translateFieldName(name)), '字段添加到项目')}。请重试。`,
+      (_, name: string) => `${joinCjk(joinCjk('无法将', translateFieldName(name)), '字段添加到项目')}。请重试。`
     ],
-    [
-      /^In order to add the "(.+)" issue field, you need to rename your project field\.$/,
-      '要添加“$1”议题字段，需先重命名项目字段。',
-    ],
+    [/^In order to add the "(.+)" issue field, you need to rename your project field\.$/, '要添加“$1”议题字段，需先重命名项目字段。'],
     [/^Rename project field "(.+)"$/, '重命名项目字段“$1”'],
     [
       /^You already have (\d+) fields in your project\. Remove some in order to add more fields\.$/,
-      '项目已有 $1 个字段。移除部分字段后才能添加。',
+      '项目已有 $1 个字段。移除部分字段后才能添加。'
     ],
-    [
-      /^You can only add (\d+) at a time\. Deselect some fields to continue\.$/,
-      '一次最多添加 $1 个。取消选择部分字段后继续。',
-    ],
+    [/^You can only add (\d+) at a time\. Deselect some fields to continue\.$/, '一次最多添加 $1 个。取消选择部分字段后继续。'],
     [
       /^You already have (\d+) fields in your project\. Adding these would exceed the (\d+)-field limit\.$/,
-      '项目已有 $1 个字段。添加后将超出 $2 个字段的上限。',
+      '项目已有 $1 个字段。添加后将超出 $2 个字段的上限。'
     ],
     [/^Issue fields can only be applied to issues within the (.+) organization$/, '议题字段只能用于 $1 组织内的议题'],
 
     // 议题类型设置（原文右引号误用为左引号 “）
     [
       /^Rename your “(.+)[“”] custom field and start using issue types defined by your organization\.$/,
-      '重命名自定义字段“$1”并开始使用组织定义的议题类型。',
+      '重命名自定义字段“$1”并开始使用组织定义的议题类型。'
     ],
     [
       /^To start using issue types in your project, please rename your “(.+)[“”] custom field and update any filters that reference it\.$/,
-      '要在项目中使用议题类型，需重命名自定义字段“$1”并更新引用它的筛选器。',
-    ],
+      '要在项目中使用议题类型，需重命名自定义字段“$1”并更新引用它的筛选器。'
+    ]
   ],
   inline: [
     // 删除字段对话框（delete-field-dialog.tsx）：<p>This will delete the field “字段” and remove its data from <strong>3 items</strong> and <strong>2 workflows</strong>.</p>
@@ -421,13 +395,13 @@ export default {
     // 译文只在槽位前留空格，原文没有的逗号不加。不构成行内句时按上方 regexp 的首段翻译
     [
       /^This will delete the field “(.+)” and remove its data from \{\}\.$/,
-      (_, name: string) => `这将删除字段“${translateFieldName(name)}”并从 {}中删除其数据。`,
+      (_, name: string) => `这将删除字段“${translateFieldName(name)}”并从 {}中删除其数据。`
     ],
     [
       /^This will delete the field “(.+)” and remove its data from \{\} and \{\}\.$/,
-      (_, name: string) => `这将删除字段“${translateFieldName(name)}”并从 {}和 {}中删除其数据。`,
+      (_, name: string) => `这将删除字段“${translateFieldName(name)}”并从 {}和 {}中删除其数据。`
     ],
     // 字段设置页议题字段的说明（column-settings-view.tsx）：<span>Issue fields can only be edited in the <a>project owner's settings</a>.</span>
-    ['Issue fields can only be edited in the {}.', '议题字段只能在{}中编辑。'],
-  ],
+    ['Issue fields can only be edited in the {}.', '议题字段只能在{}中编辑。']
+  ]
 } satisfies PageDictionary

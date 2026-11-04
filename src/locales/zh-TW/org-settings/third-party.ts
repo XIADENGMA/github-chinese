@@ -97,8 +97,7 @@ export default {
       '選擇允許存取組織的精細個人存取權杖的最長有效期。',
 
     // 个人访问令牌：经典
-    'Restrict personal access tokens (classic) from accessing your organizations':
-      '限制個人存取權杖（傳統）存取你的組織',
+    'Restrict personal access tokens (classic) from accessing your organizations': '限制個人存取權杖（傳統）存取你的組織',
     'By default, personal access tokens (classic) can access content owned by your organization via the GitHub API or Git over HTTPS. This includes both public and private resources such as repositories.':
       '根據預設，個人存取權杖（傳統）可以透過 GitHub API 或使用 HTTPS 的 Git 存取組織擁有的內容。這包括儲存庫等公開和私人資源。',
     'Allow access via personal access tokens (classic)': '允許透過個人存取權杖（傳統）存取',
@@ -138,7 +137,7 @@ export default {
     'organization role assignments': '組織角色指派',
     '. All organization owners can manage Apps, as well as users and teams with one or more of the app management permissions.':
       '。所有組織擁有者都可以管理應用程式，擁有一項或多項應用程式管理權限的使用者和團隊也可以。',
-    'Organization owner': '組織擁有者',
+    'Organization owner': '組織擁有者'
   },
   scoped: {
     // 已安装的 GitHub 应用（与个人设置共用）
@@ -154,8 +153,7 @@ export default {
     'Only select repositories': '僅限選取的儲存庫',
     'Select at least one repository.': '至少選取一個儲存庫。',
     // 句号随原文（与个人开发人员设置同译）
-    'Select at least one repository. Also includes public repositories (read-only).':
-      '至少選取一個儲存庫。同時包含公開儲存庫（唯讀）。',
+    'Select at least one repository. Also includes public repositories (read-only).': '至少選取一個儲存庫。同時包含公開儲存庫（唯讀）。',
     'This applies to all current and future repositories owned by the resource owner. Also includes public repositories (read-only).':
       '適用於資源擁有者擁有的所有現有和未來儲存庫。同時包含公開儲存庫（唯讀）。',
     'Suspend your installation': '暫停安裝',
@@ -206,14 +204,14 @@ export default {
 
     // 精细令牌权限名：其余由 developer 沿用个人开发人员设置
     'Repository announcement banners': '儲存庫公告橫幅',
-    Plan: '方案',
+    Plan: '方案'
   },
   regexp: [
     [new RegExp(`^Applications owned by ${ORG} always have access\\.$`), '由 $1 擁有的應用程式一律具有存取權。'],
     [new RegExp(`^Applications owned by ${ORG} are always trusted\\.$`), '由 $1 擁有的應用程式一律受信任。'],
     [
       new RegExp(`^All applications authorized by organization members have access to ${ORG}[’']s data\\.$`),
-      '組織成員授權的所有應用程式都可以存取 $1 的資料。',
+      '組織成員授權的所有應用程式都可以存取 $1 的資料。'
     ],
     // 令牌与请求批量操作：「2 tokens selected...」（省略号随原文）
     [/^(\d+) requests? selected(\.\.\.|…)$/, '已選取 $1 個請求$2'],
@@ -224,9 +222,9 @@ export default {
       (_, state: string, date: string, dot: string) =>
         state === 'Expires'
           ? `${joinCjk(joinCjk('將於', translateTokenDate(date)), '到期')}${period(dot)}`
-          : `${joinCjk(joinCjk('已於', translateTokenDate(date)), '過期')}${period(dot)}`,
+          : `${joinCjk(joinCjk('已於', translateTokenDate(date)), '過期')}${period(dot)}`
     ],
     [new RegExp(`^(${LAST_USED_SOURCE})$`), (_, usage: string) => translateUsage(usage)],
-    [new RegExp(`^(${USAGE_SOURCE}) •$`), (_, usage: string) => `${translateUsage(usage)} •`],
-  ],
+    [new RegExp(`^(${USAGE_SOURCE}) •$`), (_, usage: string) => `${translateUsage(usage)} •`]
+  ]
 } satisfies PageDictionary

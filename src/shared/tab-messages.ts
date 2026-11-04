@@ -24,11 +24,7 @@ async function withTimeout<T>(task: Promise<T>, timeoutMs: number, reason: strin
  */
 export function sendToTab(tabId: number, type: TabRequest['type']): Promise<unknown> {
   const message: TabRequest = { type }
-  return withTimeout<unknown>(
-    browser.tabs.sendMessage(tabId, message, { frameId: 0 }),
-    MESSAGE_TIMEOUT_MS,
-    '内容脚本无响应',
-  )
+  return withTimeout<unknown>(browser.tabs.sendMessage(tabId, message, { frameId: 0 }), MESSAGE_TIMEOUT_MS, '内容脚本无响应')
 }
 
 /** 向后台发消息；超时未回复时 Promise 拒绝。调用方须校验响应（isAcknowledged） */

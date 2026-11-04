@@ -14,7 +14,7 @@ import {
   restoreSources,
   type AccelerateSource,
   type LatencyResult,
-  type SourceAddResult,
+  type SourceAddResult
 } from '../../shared/accelerate'
 import type { Settings, SettingsPatch } from '../../shared/settings'
 
@@ -59,7 +59,7 @@ type AddFailure = Extract<SourceAddResult, { readonly ok: false }>['reason']
 const ADD_FAILURE_MESSAGE: Readonly<Record<AddFailure, MessageKey>> = {
   invalid: 'invalidFormat',
   exists: 'exists',
-  limit: 'limitReached',
+  limit: 'limitReached'
 }
 
 /** 下载加速的设置。保存失败、添加失败在页面顶部提示。须在组件 setup 或 effectScope 内调用 */
@@ -72,15 +72,15 @@ export function useAccelerateSources(): UseAccelerateSources {
 
   const rows = computed<readonly SourceRow[]>(() => {
     const preferred = preferredSource(settings.value)
-    return listSources(settings.value).map((source) => ({
+    return listSources(settings.value).map(source => ({
       source,
       preferred: source.id === preferred?.id,
-      latency: latency.value.get(source.id),
+      latency: latency.value.get(source.id)
     }))
   })
   const auto = computed(() => isAutoSource(settings.value))
   const removedCount = computed(() => countRemovedSources(settings.value))
-  const testing = computed(() => [...latency.value.values()].some((state) => state.testing))
+  const testing = computed(() => [...latency.value.values()].some(state => state.testing))
 
   async function save(patch: SettingsPatch): Promise<boolean> {
     if (!(await update(patch))) {
@@ -107,14 +107,14 @@ export function useAccelerateSources(): UseAccelerateSources {
       toast.show('danger', ADD_FAILURE_MESSAGE[checked.reason])
       return Promise.resolve(false)
     }
-    return save((current) => {
+    return save(current => {
       const result = addSource(current, name, template, time)
       return result.ok ? result.patch : {}
     })
   }
 
   function remove(id: string): Promise<boolean> {
-    return save((current) => removeSource(current, id))
+    return save(current => removeSource(current, id))
   }
 
   async function restore(): Promise<void> {
@@ -124,13 +124,13 @@ export function useAccelerateSources(): UseAccelerateSources {
   async function test(): Promise<void> {
     const run = ++testRun
     const sources = listSources(settings.value)
-    latency.value = new Map<string, LatencyState>(sources.map((source) => [source.id, { testing: true }]))
+    latency.value = new Map<string, LatencyState>(sources.map(source => [source.id, { testing: true }]))
     await Promise.all(
-      sources.map(async (source) => {
+      sources.map(async source => {
         const url = probeUrl(source.template)
         const result: LatencyResult = url ? await measureLatency(url) : { latency: { ok: false, reason: 'error' } }
         if (run === testRun) latency.value = new Map(latency.value).set(source.id, { testing: false, result })
-      }),
+      })
     )
   }
 

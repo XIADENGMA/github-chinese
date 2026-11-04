@@ -33,13 +33,10 @@ export default {
     'Manual workflow': '手動工作流程',
     'Simple workflow that is manually triggered.': '手動觸發的簡單工作流程。',
     'Getting started and core concepts': '入門和核心概念',
-    'New to Actions? Start here. Learn the core concepts and how to get started.':
-      '初次使用動作？從這裡開始。瞭解核心概念和入門方法。',
+    'New to Actions? Start here. Learn the core concepts and how to get started.': '初次使用動作？從這裡開始。瞭解核心概念和入門方法。',
     'Configuring and managing workflows': '設定並管理工作流程',
-    'Create custom workflows to control your project’s life cycle processes.':
-      '建立自訂工作流程來控制專案的生命週期流程。',
-    "Create custom workflows to control your project's life cycle processes.":
-      '建立自訂工作流程來控制專案的生命週期流程。',
+    'Create custom workflows to control your project’s life cycle processes.': '建立自訂工作流程來控制專案的生命週期流程。',
+    "Create custom workflows to control your project's life cycle processes.": '建立自訂工作流程來控制專案的生命週期流程。',
     'Language and framework guides': '語言和框架指南',
     'Guides for projects written in many programming languages.': '適用於多種程式語言專案的指南。',
     'Didn’t find what you’re looking for?': '找不到你要的內容嗎？',
@@ -68,14 +65,12 @@ export default {
       'GitHub 為 C、C++、C#、Go、Java、JavaScript、TypeScript、Python、Ruby、Kotlin 和 Swift 開發人員提供的安全性分析。',
     'Test a Laravel project.': '測試 Laravel 專案。',
     'Test a Symfony project.': '測試 Symfony 專案。',
-    'Build a Java Package using Gradle and publish to GitHub Packages.':
-      '使用 Gradle 建置 Java 套件並發布到 GitHub 套件。',
+    'Build a Java Package using Gradle and publish to GitHub Packages.': '使用 Gradle 建置 Java 套件並發布到 GitHub 套件。',
     'Create and test an R package on multiple R versions.': '在多個 R 版本上建立並測試 R 套件。',
     'Greets users who are first time contributors to the repo': '問候儲存庫的首次貢獻者',
     'Labels pull requests based on the files changed': '根據變更的檔案為拉取請求加上標籤',
     'Summarizes new issues': '為新議題產生摘要',
-    'Package a Jekyll site with GitHub Pages dependencies preinstalled.':
-      '打包預先安裝 GitHub 頁面相依項目的 Jekyll 網站。',
+    'Package a Jekyll site with GitHub Pages dependencies preinstalled.': '打包預先安裝 GitHub 頁面相依項目的 Jekyll 網站。',
     'Package a Next.js site.': '打包 Next.js 網站。',
     'Package a Jekyll site.': '打包 Jekyll 網站。',
     'Package a Gatsby site.': '打包 Gatsby 網站。',
@@ -84,8 +79,7 @@ export default {
     'Deploy an Astro site.': '部署 Astro 網站。',
     'Publishes a Node.js package to GitHub Packages.': '將 Node.js 套件發布到 GitHub 套件。',
     'Build and test a Crystal project.': '建置並測試 Crystal 專案。',
-    'Run linters for several languages on your code base for changed files':
-      '對程式碼基底中變更的檔案執行多種語言的 Linter',
+    'Run linters for several languages on your code base for changed files': '對程式碼基底中變更的檔案執行多種語言的 Linter',
     'Checks for stale issues and pull requests': '檢查過時的議題和拉取請求',
     'Build and test a Node.js project with npm.': '使用 npm 建置並測試 Node.js 專案。',
     'Create and test a Python application.': '建立並測試 Python 應用程式。',
@@ -125,7 +119,7 @@ export default {
     'Built-in secret store': '內建機密存放區',
     'Automate your software development practices with workflow files embracing the Git flow by codifying it in your repository.':
       '使用將 Git 流程寫入儲存庫的工作流程檔案自動化軟體開發實務。',
-    'Multi-container testing': '多容器測試',
+    'Multi-container testing': '多容器測試'
   },
 
   scoped: {
@@ -144,12 +138,12 @@ export default {
     'continuous integration workflows': '持續整合工作流程',
     'automation workflows': '自動化工作流程',
     'code scanning workflows': '程式碼掃描工作流程',
-    'Pages workflows': '頁面工作流程',
+    'Pages workflows': '頁面工作流程'
   },
 
   regexp: [
     [/^Found ([\d,]+) workflows?$/, '找到 $1 個工作流程'],
     // 模板作者：By GitHub Actions、By Microsoft Azure
-    [/^By (.+)$/, (_, author: string) => `來自 ${pick(AUTHORS, author) ?? author}`],
-  ],
+    [/^By (.+)$/, (_, author: string) => `來自 ${pick(AUTHORS, author) ?? author}`]
+  ]
 } satisfies PageDictionary

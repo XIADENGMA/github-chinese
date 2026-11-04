@@ -42,11 +42,11 @@ describe.skipIf(!UiSwitch)('UiSwitch', () => {
   it('同一页面内多个开关的 id 不重复', () => {
     const toggle = required(UiSwitch)
     const Page = defineComponent({
-      render: () => [h(toggle, { checked: false, label: 'A' }), h(toggle, { checked: true, label: 'B' })],
+      render: () => [h(toggle, { checked: false, label: 'A' }), h(toggle, { checked: true, label: 'B' })]
     })
     const ids = mount(Page)
       .findAll('[role="switch"]')
-      .map((item) => item.attributes('id'))
+      .map(item => item.attributes('id'))
     expect(ids).toHaveLength(2)
     expect(new Set(ids).size).toBe(2)
   })

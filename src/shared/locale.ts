@@ -22,7 +22,7 @@ export const UI_LANGUAGE_PREFERENCES: readonly UiLanguagePreference[] = ['auto',
 export const LANGUAGE_NAMES: Readonly<Record<UiLanguage, string>> = {
   'zh-CN': '简体中文',
   'zh-TW': '繁體中文',
-  en: 'English',
+  en: 'English'
 }
 
 /** 浏览器语言里没有中文时，这些时区（台北、香港、澳门）按繁体 */
@@ -42,7 +42,7 @@ export function chineseScript(tag: string): PageLocale | undefined {
   if (language !== 'zh' && language !== 'yue') return undefined
   if (subtags.includes('hant')) return 'zh-TW'
   if (subtags.includes('hans')) return 'zh-CN'
-  if (language === 'yue' || subtags.some((subtag) => TRADITIONAL_REGIONS.has(subtag))) return 'zh-TW'
+  if (language === 'yue' || subtags.some(subtag => TRADITIONAL_REGIONS.has(subtag))) return 'zh-TW'
   return 'zh-CN'
 }
 

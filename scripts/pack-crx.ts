@@ -30,7 +30,7 @@ async function loadKey(file: string | undefined): Promise<KeyObject> {
 async function main(): Promise<void> {
   const { values, positionals } = parseArgs({ options: { key: { type: 'string' } }, allowPositionals: true })
   if (positionals.length === 0) throw new Error(USAGE)
-  const bad = positionals.find((file) => !file.endsWith('.zip'))
+  const bad = positionals.find(file => !file.endsWith('.zip'))
   if (bad !== undefined) throw new Error(`不是 .zip 文件：${bad}`)
   const key = await loadKey(values.key)
   for (const zip of positionals) {

@@ -9,7 +9,7 @@ const PERMISSION_MODE: Readonly<Record<string, string>> = {
   'Allow all': '全部允许',
   Interactive: '交互式',
   Autopilot: '自动驾驶',
-  Plan: '计划',
+  Plan: '计划'
 }
 
 /** 选择器里的占位值与聊天模式 */
@@ -19,14 +19,14 @@ const PICKER_VALUE: Readonly<Record<string, string>> = {
   'Loading branch...': '正在加载分支...',
   Personal: '个人',
   Ask: '询问',
-  Agent: '代理',
+  Agent: '代理'
 }
 
 /** 日志详细程度 */
 const VERBOSITY: Readonly<Record<string, string>> = {
   Minimal: '精简',
   Balanced: '均衡',
-  Detailed: '详细',
+  Detailed: '详细'
 }
 
 /** 环境状态 */
@@ -39,7 +39,7 @@ const ENV_STATUS: Readonly<Record<string, string>> = {
   Draining: '排空中',
   Connecting: '连接中',
   Connected: '已连接',
-  Disconnected: '已断开',
+  Disconnected: '已断开'
 }
 
 /** 代理显示名（Copilot、Claude、OpenAI Codex 等，最多 4 个词），避免匹配会话标题等长文本 */
@@ -57,7 +57,7 @@ function paren(text: string): string {
 /** 任务创建失败横幅的说明（字符串替换）；读屏播报“Task creation failed. <说明>”与首页输入框（dashboard/composer）沿用 */
 export const TASK_FAILURE_RULES: readonly (readonly [RegExp, string])[] = [
   [/^Unable to start task for '(.+)'\. Please try again\.$/, '无法为“$1”启动任务。请重试。'],
-  [/^Unable to start task for '(.+?)': (.+)$/, '无法为“$1”启动任务：$2'],
+  [/^Unable to start task for '(.+?)': (.+)$/, '无法为“$1”启动任务：$2']
 ]
 
 /** models 词典的全局词条（任务创建失败横幅的计费提示从这里取译文） */
@@ -150,8 +150,7 @@ export default {
     'Task cannot start in Sandbox': '任务无法在沙盒中启动',
     'Go back and try again from the previous page.': '返回上一页后重试。',
     'Go back to Automations': '返回自动化页面',
-    'Chat is only available for Cloud sessions. Choose a repository to create a task.':
-      '聊天仅适用于云端会话。请选择存储库以创建任务。',
+    'Chat is only available for Cloud sessions. Choose a repository to create a task.': '聊天仅适用于云端会话。请选择存储库以创建任务。',
     'Submission error': '提交出错',
     'Startup may already have reached the environment. Restarting may send the first message again.':
       '启动请求可能已到达环境。重新启动可能会再次发送第一条消息。',
@@ -164,10 +163,8 @@ export default {
     'Try asking Copilot to plan before implementing': '试着让 Copilot 先规划再实现',
     'Reference specific files to give Copilot better context': '引用具体文件为 Copilot 提供更好的上下文',
     'You can ask Copilot to explain its approach before making changes': '你可以让 Copilot 在修改前先解释其方案',
-    'Add a .github/agents.md file to customize Copilot for your repository':
-      '添加 .github/agents.md 文件，为存储库自定义 Copilot',
-    'Copilot can work on multiple tasks in parallel across different repos':
-      'Copilot 可以在不同存储库中并行处理多个任务',
+    'Add a .github/agents.md file to customize Copilot for your repository': '添加 .github/agents.md 文件，为存储库自定义 Copilot',
+    'Copilot can work on multiple tasks in parallel across different repos': 'Copilot 可以在不同存储库中并行处理多个任务',
     'Use the Copilot CLI to start tasks from your terminal': '使用 Copilot CLI 从终端启动任务',
     'Ask Copilot to write tests for its own changes before finishing': '让 Copilot 在完成前为自己的更改编写测试',
     "You can approve or reject Copilot's plan before it starts coding": '你可以在 Copilot 开始编码前批准或拒绝其计划',
@@ -203,8 +200,7 @@ export default {
     'No Mission Control environments available': '没有可用的任务控制中心环境',
     'No custom environments available.': '没有可用的自定义环境。',
     'Set one up': '设置一个',
-    'Selected environment is no longer available. Switched to the default environment.':
-      '所选环境已不可用。已切换到默认环境。',
+    'Selected environment is no longer available. Switched to the default environment.': '所选环境已不可用。已切换到默认环境。',
     'Mode: Chat': '模式：聊天',
     'Choose Chat or a repository': '选择聊天或存储库',
     'Start a general chat for Personal or an organization, or select a repository to give Copilot project context.':
@@ -240,8 +236,7 @@ export default {
     'This repository has no custom agents': '此存储库没有自定义代理',
     'No custom agents available': '没有可用的自定义代理',
     'Custom agents are reusable instructions and tools in your repository.': '自定义代理是存储库中可复用的说明和工具。',
-    'Custom agents come from a repository. Select one to use its agents.':
-      '自定义代理来自存储库。选择一个存储库以使用其中的代理。',
+    'Custom agents come from a repository. Select one to use its agents.': '自定义代理来自存储库。选择一个存储库以使用其中的代理。',
     'Loading agents': '正在加载代理',
     'Loading agent': '正在加载代理',
     'Loading agent…': '正在加载代理…',
@@ -267,8 +262,7 @@ export default {
     'Change approval setting': '更改审批设置',
     'Always ask': '始终询问',
     'Require approval for each request.': '每个请求都需要批准。',
-    'Automatically approve tool requests that pass an LLM safety check. Ask otherwise.':
-      '自动批准通过 LLM 安全检查的工具请求。否则询问。',
+    'Automatically approve tool requests that pass an LLM safety check. Ask otherwise.': '自动批准通过 LLM 安全检查的工具请求。否则询问。',
     'Auto-approve all tool, path, and URL requests.': '自动批准所有工具、路径和 URL 请求。',
     'Show the current permission status.': '显示当前权限状态。',
     'Configure tool permissions': '配置工具权限',
@@ -278,8 +272,7 @@ export default {
     'Show whether auto-approve is on': '显示是否已开启自动批准',
     'Loading tool permissions': '正在加载工具权限',
     'Tool permissions could not be loaded. Only Always ask is available.': '无法加载工具权限。仅可使用始终询问。',
-    "Tool permissions: No options are available for this session, so it can't be started.":
-      '工具权限：此会话没有可用选项，因此无法启动。',
+    "Tool permissions: No options are available for this session, so it can't be started.": '工具权限：此会话没有可用选项，因此无法启动。',
     'No permitted tool permissions are available for this session.': '此会话没有允许的工具权限。',
     'Disabled by your organization. Contact your administrator': '已被你的组织禁用。请联系管理员',
     'Tool permissions are not ready.': '工具权限尚未就绪。',
@@ -388,12 +381,10 @@ export default {
     'This session is read-only': '此会话为只读',
     'The session could not finish preparing its environment': '会话未能完成环境准备',
     'Try connecting to this session again.': '请再次尝试连接此会话。',
-    'The environment it ran in is no longer available. Start a new session in the cloud.':
-      '其运行环境已不可用。请在云端开始新会话。',
+    'The environment it ran in is no longer available. Start a new session in the cloud.': '其运行环境已不可用。请在云端开始新会话。',
     'You can still view its history. To send messages, start a new session in the cloud.':
       '你仍可查看其历史记录。要发送消息，请在云端开始新会话。',
-    'Reopen this session after a compatible version of Copilot is available.':
-      '有兼容版本的 Copilot 后，请重新打开此会话。',
+    'Reopen this session after a compatible version of Copilot is available.': '有兼容版本的 Copilot 后，请重新打开此会话。',
     'Check that Copilot access is available, then reopen this session.': '请确认可以访问 Copilot，然后重新打开此会话。',
     'This session is open in read-only mode.': '此会话以只读模式打开。',
     'Resuming session…': '正在恢复会话…',
@@ -401,8 +392,7 @@ export default {
     'The session connection was lost.': '会话连接已断开。',
     'The active AHP session could not be connected.': '无法连接活动的 AHP 会话。',
     'The live conversation is unavailable. Reconnect to continue.': '实时对话不可用。重新连接以继续。',
-    'This conversation is missing valid creation metadata. Retry to load it again.':
-      '此对话缺少有效的创建元数据。请重试加载。',
+    'This conversation is missing valid creation metadata. Retry to load it again.': '此对话缺少有效的创建元数据。请重试加载。',
     'Activity cannot be loaded': '无法加载活动',
     'The activity on this task is temporarily unavailable due to a system error. Try reloading the page, or if the problem persists, contact support.':
       '由于系统错误，此任务的活动暂时不可用。请尝试重新加载页面；如果问题仍然存在，请联系支持。',
@@ -430,17 +420,14 @@ export default {
     'Only the task owner can steer this session.': '只有任务所有者才能引导此会话。',
     'Sessions created by organizations cannot be steered.': '无法引导由组织创建的会话。',
     'Only the author of the task can ask for changes.': '只有任务作者可以请求更改。',
-    'Steering disabled. Contact your administrator to enable steering on local sessions.':
-      '引导已禁用。请联系管理员为本地会话启用引导。',
+    'Steering disabled. Contact your administrator to enable steering on local sessions.': '引导已禁用。请联系管理员为本地会话启用引导。',
     'This session has been archived': '此会话已存档',
     'This session has been archived.': '此会话已存档。',
     'You do not have write permission on the repository': '你没有此存储库的写入权限',
-    'This pull request was merged. Start a new session to continue iterating.':
-      '此拉取请求已合并。开始新会话以继续迭代。',
+    'This pull request was merged. Start a new session to continue iterating.': '此拉取请求已合并。开始新会话以继续迭代。',
     'This pull request was merged. To continue iterating,': '此拉取请求已合并。要继续迭代，请',
     'start a new session': '开始新会话',
-    'This pull request was closed. To continue iterating, reopen the pull request.':
-      '此拉取请求已关闭。要继续迭代，请重新打开拉取请求。',
+    'This pull request was closed. To continue iterating, reopen the pull request.': '此拉取请求已关闭。要继续迭代，请重新打开拉取请求。',
     'This pending prompt has expired. Start a new task to continue.': '此待处理提示已过期。请开始新任务以继续。',
     'Send a message to the CLI session...': '向 CLI 会话发送消息...',
     'Failed to submit latest message': '提交最新消息失败',
@@ -506,8 +493,7 @@ export default {
     'Loading pinned sessions.': '正在加载置顶会话。',
     'Couldn’t update pinned session': '无法更新置顶会话',
     'Couldn’t update the pinned session. Please try again.': '无法更新置顶会话。请重试。',
-    'You can pin up to 20 sessions. Unpin a session before pinning another.':
-      '最多可置顶 20 个会话。请先取消置顶一个会话再置顶其他会话。',
+    'You can pin up to 20 sessions. Unpin a session before pinning another.': '最多可置顶 20 个会话。请先取消置顶一个会话再置顶其他会话。',
     'This session is no longer available to pin. It may have been deleted or you may have lost access.':
       '此会话已无法置顶。可能已被删除或你已失去访问权限。',
     'Archive only': '仅存档',
@@ -525,8 +511,7 @@ export default {
       '会话已取消存档，但无法重新打开拉取请求。请手动重新打开。',
     'Failed to unarchive the session. Please try again.': '取消存档会话失败。请重试。',
     'Delete session': '删除会话',
-    'Are you sure you want to delete this session? This action cannot be undone.':
-      '确定要删除此会话吗？此操作无法撤销。',
+    'Are you sure you want to delete this session? This action cannot be undone.': '确定要删除此会话吗？此操作无法撤销。',
     'Failed to delete session. Please try again.': '删除会话失败。请重试。',
 
     // 分配给代理
@@ -560,8 +545,7 @@ export default {
     'Failed to save changes': '保存更改失败',
     'Repository access': '存储库访问权限',
     'Failed to update third-party agent settings, please try again later.': '更新第三方代理设置失败，请稍后重试。',
-    "Agent installation is blocked because the partner agent's app is already installed":
-      '已安装合作方代理的应用，因此无法安装此代理',
+    "Agent installation is blocked because the partner agent's app is already installed": '已安装合作方代理的应用，因此无法安装此代理',
     'Learn more about Claude on GitHub': '了解 GitHub 上的 Claude',
     'Learn more about Codex on GitHub': '了解 GitHub 上的 Codex',
     'Using this alongside the Claude app may cause conflicts or confusion. Since both use "@Claude" for mentions, enabling both may lead to mixed or incorrect responses.':
@@ -627,7 +611,7 @@ export default {
 
     // 引导提示
     'Close tour': '关闭导览',
-    'Could not save your dismissal.': '无法保存关闭操作。',
+    'Could not save your dismissal.': '无法保存关闭操作。'
   },
   scoped: {
     // 会话状态与筛选
@@ -672,25 +656,22 @@ export default {
     Choices: '选项',
     Background: '后台',
     Step: '步骤',
-    Finish: '完成',
+    Finish: '完成'
   },
   regexp: [
     // 范围、存储库、分支、环境（composerRule：首页输入框沿用）
     composerRule([/^Personal \(([\w.-]+)\)$/, '个人 ($1)']),
-    composerRule([
-      /^Select conversation scope, current: (.+)$/,
-      (_, value: string) => `选择对话范围，当前：${pickerValue(value)}`,
-    ]),
+    composerRule([/^Select conversation scope, current: (.+)$/, (_, value: string) => `选择对话范围，当前：${pickerValue(value)}`]),
     [/^(\d+) owners?$/, '$1 个所有者'],
     [/^(\d+) repositor(?:y|ies)$/, '$1 个存储库'],
     composerRule([
       /^Repositories in @([\w.-]+)( and public repositories)?$/,
-      (_, owner: string, more: string) => `@${owner} 中的存储库${more ? '和公共存储库' : ''}`,
+      (_, owner: string, more: string) => `@${owner} 中的存储库${more ? '和公共存储库' : ''}`
     ]),
     composerRule([
       /^Repositories are limited to (.+)\. Change the Chat scope to work in another owner['’]s repositories\.$/,
       (_, owner: string) =>
-        `存储库仅限于${owner === 'your personal account' ? '你的个人帐户' : ` ${owner}`}。更改聊天范围以在其他所有者的存储库中工作。`,
+        `存储库仅限于${owner === 'your personal account' ? '你的个人帐户' : ` ${owner}`}。更改聊天范围以在其他所有者的存储库中工作。`
     ]),
     composerRule([/^Cloud sessions are disabled for ([\w.-]+)$/, '$1 已禁用云端会话']),
     [/^Private repository selection is restricted to ([\w.-]+)\.$/, '专用存储库只能从 $1 中选择。'],
@@ -699,8 +680,7 @@ export default {
     composerRule([/^Remove ([\w.-]+\/[\w.-]+)$/, '删除 $1']),
     composerRule([
       /^Environment: (.+?)(?: \((.+)\))?$/,
-      (_, name: string, status: string) =>
-        `环境：${name === 'Cloud' ? '云端' : name}${status ? paren(ENV_STATUS[status] ?? status) : ''}`,
+      (_, name: string, status: string) => `环境：${name === 'Cloud' ? '云端' : name}${status ? paren(ENV_STATUS[status] ?? status) : ''}`
     ]),
     [/^Environment status: (.+)$/, (_, status: string) => `环境状态：${ENV_STATUS[status] ?? status}`],
     [/^(.+) environment details$/, '$1 环境详细信息'],
@@ -708,7 +688,7 @@ export default {
     composerRule([/^Mode: Chat \((.+)\)$/, (_, owner: string) => `模式：聊天${paren(pickerValue(owner))}`]),
     composerRule([
       /^Space: (.+)$/,
-      (_, name: string) => `空间：${name === 'Resolving…' ? '解析中…' : name === 'No space' ? '无空间' : name}`,
+      (_, name: string) => `空间：${name === 'Resolving…' ? '解析中…' : name === 'No space' ? '无空间' : name}`
     ]),
     composerRule([/^Resolving space: (.+)$/, '正在解析空间：$1']),
     composerRule([/^Space selected: (.+)$/, '已选择空间：$1']),
@@ -716,27 +696,23 @@ export default {
     // 代理与模式
     composerRule([
       /^(Agent|Custom agent): (.+)$/,
-      (_, kind: string, name: string) => `${kind === 'Agent' ? '代理' : '自定义代理'}：${name}`,
+      (_, kind: string, name: string) => `${kind === 'Agent' ? '代理' : '自定义代理'}：${name}`
     ]),
     composerRule([/^Mode: (.+)$/, (_, mode: string) => `模式：${pickerValue(mode)}`]),
     composerRule([
       /^Select (CLI agent|MCP permission) mode, current: (.+)$/,
-      (_, kind: string, mode: string) =>
-        `选择${kind === 'CLI agent' ? ' CLI 代理' : ' MCP 权限'}模式，当前：${pickerValue(mode)}`,
+      (_, kind: string, mode: string) => `选择${kind === 'CLI agent' ? ' CLI 代理' : ' MCP 权限'}模式，当前：${pickerValue(mode)}`
     ]),
     [/^Tool permissions (?:are )?set to “(.+)”\.$/, (_, mode: string) => `工具权限已设为“${pickerValue(mode)}”。`],
     composerRule([
       /^Tool permissions: "(.+)" isn['’]t available for this session\. Choose an available option to continue\.$/,
-      (_, mode: string) => `工具权限：“${pickerValue(mode)}”不适用于此会话。请选择可用选项以继续。`,
+      (_, mode: string) => `工具权限：“${pickerValue(mode)}”不适用于此会话。请选择可用选项以继续。`
     ]),
-    [
-      /^Log verbosity: (Minimal|Balanced|Detailed)$/,
-      (_, level: string) => `日志详细程度：${VERBOSITY[level] ?? level}`,
-    ],
+    [/^Log verbosity: (Minimal|Balanced|Detailed)$/, (_, level: string) => `日志详细程度：${VERBOSITY[level] ?? level}`],
     [/^Information about the (.+) agent$/, '关于 $1 代理的信息'],
     [
       new RegExp(`^(${AGENT_NAME}) requires authorization( first\\.)?$`),
-      (_, agent: string, first: string) => `${agent} 需要${first ? '先' : ''}授权${first ? '。' : ''}`,
+      (_, agent: string, first: string) => `${agent} 需要${first ? '先' : ''}授权${first ? '。' : ''}`
     ],
     [/^Couldn['’]t start authorization for (.+)\. Please try again\.$/, '无法开始 $1 的授权。请重试。'],
 
@@ -753,11 +729,11 @@ export default {
     [/^Assignment failed for #(\d+), #(\d+) and (\d+) others?$/, '#$1、#$2 及其他 $3 个议题分配失败'],
     [
       /^Instructions must be ([\d,]+) characters or fewer\. Current length: ([\d,]+) characters\.$/,
-      '说明不能超过 $1 个字符。当前长度：$2 个字符。',
+      '说明不能超过 $1 个字符。当前长度：$2 个字符。'
     ],
     [
       /^Choose which repositories (.+) should be enabled in\. (.+) will only be available where it is enabled for the repository and in the Copilot license policies\.$/,
-      '选择要在哪些存储库中启用 $1。仅当存储库已启用且 Copilot 许可证策略允许时，$2 才可用。',
+      '选择要在哪些存储库中启用 $1。仅当存储库已启用且 Copilot 许可证策略允许时，$2 才可用。'
     ],
 
     // 会话状态与操作
@@ -767,14 +743,14 @@ export default {
     [new RegExp(`^(${AGENT_NAME}) timed out$`), '$1 已超时'],
     [
       /^Only (.+) can steer this session$/,
-      (_, who: string) => `只有${who === 'the session owner' ? '会话所有者' : ` ${who} `}可以引导此会话`,
+      (_, who: string) => `只有${who === 'the session owner' ? '会话所有者' : ` ${who} `}可以引导此会话`
     ],
     [/^Wait until the session is complete before steering (.+) sessions$/, '请等待会话完成后再引导 $1 会话'],
     [/^This session is steered from (.+)$/, '此会话由 $1 引导'],
     [/^Continue the conversation in the originating (.+) channel\.$/, '在原始 $1 频道中继续对话。'],
     [
       /^You can['’]t view this task because you do not have any active sessions( for this pull request)?\.$/,
-      (_, forPull: string) => `你无法查看此任务，因为你${forPull ? '在此拉取请求中' : ''}没有任何活动会话。`,
+      (_, forPull: string) => `你无法查看此任务，因为你${forPull ? '在此拉取请求中' : ''}没有任何活动会话。`
     ],
     [/^Remote (.+) session$/, '远程 $1 会话'],
     [/^(.+) session \(read only\)$/, '$1 会话（只读）'],
@@ -787,10 +763,7 @@ export default {
     [/^(\d+) of (\d+)$/, '$1/$2'],
     [/^(\d+) results?$/, '$1 个结果'],
     [/^(\d+) messages queued$/, '$1 条消息已排队'],
-    [
-      /^(\d+) messages queued\. They will be sent after the current response finishes\.$/,
-      '$1 条消息已排队。将在当前回复完成后发送。',
-    ],
+    [/^(\d+) messages queued\. They will be sent after the current response finishes\.$/, '$1 条消息已排队。将在当前回复完成后发送。'],
     [/^Queued message removed: (.+)\.$/, '已删除排队的消息：$1。'],
     [/^(\d+) queued messages removed\.$/, '已删除 $1 条排队的消息。'],
     [/^(\d+) queued messages sent now\.$/, '$1 条排队的消息已立即发送。'],
@@ -798,28 +771,21 @@ export default {
     [/^Listed (\d+) sessions$/, '已列出 $1 个会话'],
     [
       /^Copilot will start a background cloud agent session on ([\w.-]+\/[\w.-]+)( and open a pull request)?\. It works independently of this chat\.$/,
-      (_, repo: string, pull: string) =>
-        `Copilot 将在 ${repo} 上开始后台云代理会话${pull ? '并创建拉取请求' : ''}。它独立于此聊天运行。`,
+      (_, repo: string, pull: string) => `Copilot 将在 ${repo} 上开始后台云代理会话${pull ? '并创建拉取请求' : ''}。它独立于此聊天运行。`
     ],
     // 代码审查会话的标题：Review of <拉取请求标题>
     [/^Review of (.+)$/, '审查 $1'],
     // 步骤计数（引导弹窗页脚 Step 1 of 3，句末可带句点）：与 repo-settings 的“步骤 N/M”一致
-    [
-      /^Step (\d+) of (\d+)(\.?)$/,
-      (_, step: string, total: string, period: string) => `步骤 ${step}/${total}${period ? '。' : ''}`,
-    ],
+    [/^Step (\d+) of (\d+)(\.?)$/, (_, step: string, total: string, period: string) => `步骤 ${step}/${total}${period ? '。' : ''}`],
     [/^View debug log \((\d+) events?\)$/, '查看调试日志（$1 个事件）'],
-    [
-      /^Request failed with status (\d+)(\.)?$/,
-      (_, status: string, period = '') => `请求以状态码 ${status} 失败${period ? '。' : ''}`,
-    ],
+    [/^Request failed with status (\d+)(\.)?$/, (_, status: string, period = '') => `请求以状态码 ${status} 失败${period ? '。' : ''}`],
     [
       /^Unknown \/collect-debug-logs option “(.+)”\. Try \/collect-debug-logs download\.$/,
-      '未知的 /collect-debug-logs 选项“$1”。请尝试 /collect-debug-logs download。',
+      '未知的 /collect-debug-logs 选项“$1”。请尝试 /collect-debug-logs download。'
     ],
     [
       /^(\S+) needs a repository, and this session doesn['’]t have one\. Start a session from a repository to use it\.$/,
-      '$1 需要存储库，但此会话没有存储库。请从存储库开始会话后再使用。',
+      '$1 需要存储库，但此会话没有存储库。请从存储库开始会话后再使用。'
     ],
     [/^issue #(\d+)$/, '议题 #$1'],
     [/^pull request #(\d+)$/, '拉取请求 #$1'],
@@ -835,12 +801,12 @@ export default {
     composerRule([/^You can attach up to (\d+) images per task$/, '每个任务最多可附加 $1 张图片']),
     composerRule([
       /^(\d+) files could not be attached: (.+)\. Text and PDF files must be (.+) or smaller, and you can attach up to (\d+) text, PDF, or image files at a time\.$/,
-      '$1 个文件无法附加：$2。文本和 PDF 文件不能超过 $3，且一次最多可附加 $4 个文本、PDF 或图片文件。',
+      '$1 个文件无法附加：$2。文本和 PDF 文件不能超过 $3，且一次最多可附加 $4 个文本、PDF 或图片文件。'
     ]),
     composerRule([
       /^(.+) could not be attached\. Text and PDF files must be (.+) or smaller, and you can attach up to (\d+) text, PDF, or image files at a time\.$/,
-      '无法附加 $1。文本和 PDF 文件不能超过 $2，且一次最多可附加 $3 个文本、PDF 或图片文件。',
-    ]),
+      '无法附加 $1。文本和 PDF 文件不能超过 $2，且一次最多可附加 $3 个文本、PDF 或图片文件。'
+    ])
   ],
   // 存档确认对话框（agent-sessions 的 ArchiveConfirmationDialog，正文是 Primer Dialog.Body 的直接子节点）：
   // 仅存档为“文字、{' '} 空格、<strong>Completed</strong>、文字”，有打开的拉取请求时空格在第一段文字末尾。
@@ -848,11 +814,11 @@ export default {
   inline: [
     [
       'This session will be removed from your active sessions. You can find and restore it anytime from the {} tab in My sessions.',
-      '此会话将从你的活动会话中移除。你可以随时在我的会话页面的{}标签页中找到并恢复它。',
+      '此会话将从你的活动会话中移除。你可以随时在我的会话页面的{}标签页中找到并恢复它。'
     ],
     [
       'This session has an open pull request. Would you like to close it? You can find and restore this session anytime from the {} tab in My sessions.',
-      '此会话有一个打开的拉取请求。要关闭它吗？你可以随时在我的会话页面的{}标签页中找到并恢复此会话。',
-    ],
-  ],
+      '此会话有一个打开的拉取请求。要关闭它吗？你可以随时在我的会话页面的{}标签页中找到并恢复此会话。'
+    ]
+  ]
 } satisfies PageDictionary

@@ -3,7 +3,7 @@ import type { PageDictionary } from '../../../core/types'
 /** 计费周期 */
 const PERIOD: Readonly<Record<string, string>> = {
   month: '月',
-  year: '年',
+  year: '年'
 }
 
 /**
@@ -16,7 +16,7 @@ export const COPILOT_PLANS: Readonly<Record<string, string>> = {
   'Copilot Pro+': 'Copilot 专业增强版',
   'Copilot Business': 'Copilot 商业版',
   'Copilot Enterprise': 'Copilot 企业版',
-  'Copilot Student': 'Copilot 学生版',
+  'Copilot Student': 'Copilot 学生版'
 }
 
 /** 方案名的译名；未收录的保留原文 */
@@ -77,14 +77,12 @@ export default {
 
     // 免费资格（/github-copilot/free_signup）
     'Use GitHub Copilot for free': '免费使用 GitHub Copilot',
-    '🎉 Congratulations! You are eligible to use GitHub Copilot for free.':
-      '🎉 恭喜！你有资格免费使用 GitHub Copilot。',
+    '🎉 Congratulations! You are eligible to use GitHub Copilot for free.': '🎉 恭喜！你有资格免费使用 GitHub Copilot。',
     'Get code suggestions in more than a dozen coding languages including Python, JavaScript, TypeScript, Go, and Ruby':
       '在 Python、JavaScript、TypeScript、Go 和 Ruby 等十多种编程语言中获取代码建议',
-    'Plugs into IDEs including VS Code, Visual Studio, Neovim, and JetBrains':
-      '可接入 VS Code、Visual Studio、Neovim 和 JetBrains 等 IDE',
+    'Plugs into IDEs including VS Code, Visual Studio, Neovim, and JetBrains': '可接入 VS Code、Visual Studio、Neovim 和 JetBrains 等 IDE',
     'GitHub Copilot is free to use for open source maintainers, teachers and students. We check eligibility monthly, per our policies.':
-      '开源维护者、教师和学生可免费使用 GitHub Copilot。我们会根据政策每月检查资格。',
+      '开源维护者、教师和学生可免费使用 GitHub Copilot。我们会根据政策每月检查资格。'
   },
   scoped: {
     'Try now': '立即试用',
@@ -101,7 +99,7 @@ export default {
     'free use FAQ': '免费使用常见问题',
     'Select your preferences': '选择你的首选项',
     'Save and complete setup': '保存并完成设置',
-    'Eligibility requirements': '资格要求',
+    'Eligibility requirements': '资格要求'
   },
   regexp: [
     [/^(\d+) premium requests to use the latest models and code review$/, '$1 个高级请求可用于最新模型和代码审查'],
@@ -110,8 +108,8 @@ export default {
     // 金额不用“$10.00/月”写法，避免“月”与“计费”之间留空格）
     [
       /^You will be billed (\$[\d,]+(?:\.\d+)?)\/(month|year) starting$/,
-      (_, amount: string, period: string) => `按每${PERIOD[period] ?? period} ${amount} 计费的起始日期为`,
-    ],
+      (_, amount: string, period: string) => `按每${PERIOD[period] ?? period} ${amount} 计费的起始日期为`
+    ]
     // 营销同意复选框的两句由 common/pages.ts 翻译（共用组件，全站生效）
-  ],
+  ]
 } satisfies PageDictionary

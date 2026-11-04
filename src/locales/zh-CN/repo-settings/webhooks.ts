@@ -69,8 +69,7 @@ export default {
     'Recent Deliveries': '最近交付',
     'Loading deliveries…': '正在加载交付记录…',
     'Loading deliveries...': '正在加载交付记录...',
-    'Detailed delivery information will be shown here once the hook has been triggered.':
-      'Web 钩子触发后，这里将显示详细的交付信息。',
+    'Detailed delivery information will be shown here once the hook has been triggered.': 'Web 钩子触发后，这里将显示详细的交付信息。',
     'Redeliver payload?': '重新传递有效负载？',
     // 「The payload will be delivered to」+ <code>URL</code> +「using the current webhook configuration.」：后半句的意思并入前一段，只留句号
     'The payload will be delivered to': '有效负载将按当前 Web 钩子配置交付到',
@@ -142,8 +141,7 @@ export default {
     'Milestone created, closed, opened, edited, or deleted.': '里程碑被创建、关闭、打开、编辑或删除。',
     'Org blocks': '组织阻止',
     'A user has been blocked or unblocked.': '用户被阻止或取消阻止。',
-    'Organization deleted, renamed, member invited, member added, or member removed.':
-      '组织被删除或重命名，或有成员被邀请、添加或移除。',
+    'Organization deleted, renamed, member invited, member added, or member removed.': '组织被删除或重命名，或有成员被邀请、添加或移除。',
     'GitHub Packages published or updated in a repository.': '存储库中发布或更新了 GitHub 软件包。',
     'Page builds': '页面构建',
     'Pages site built.': '页面站点已构建。',
@@ -156,8 +154,7 @@ export default {
     'Project item created, edited, deleted, archived, restored, converted, or reordered. Feedback is welcome in':
       '项目中的项被创建、编辑、删除、存档、恢复、转换或重新排序。欢迎反馈至',
     'Project created, updated, or deleted.': '项目被创建、更新或删除。',
-    'Project created, updated, deleted, closed, or reopened. Feedback is welcome in':
-      '项目被创建、更新、删除、关闭或重新打开。欢迎反馈至',
+    'Project created, updated, deleted, closed, or reopened. Feedback is welcome in': '项目被创建、更新、删除、关闭或重新打开。欢迎反馈至',
     'Pull request review comments': '拉取请求审查评论',
     'Pull request diff comment created, edited, or deleted.': '拉取请求差异评论被创建、编辑或删除。',
     'Pull request review threads': '拉取请求审查线程',
@@ -201,27 +198,23 @@ export default {
     'Commit status updated from the API.': '通过 API 更新了提交状态。',
     'Team adds': '团队添加',
     'Team added or modified on a repository.': '团队被添加到存储库或在存储库中被修改。',
-    'Team is created, deleted, edited, or added to/removed from a repository.':
-      '团队被创建、删除、编辑，或被添加到存储库/从存储库移除。',
+    'Team is created, deleted, edited, or added to/removed from a repository.': '团队被创建、删除、编辑，或被添加到存储库/从存储库移除。',
     'Visibility changes': '可见性更改',
     'Repository changes from private to public.': '存储库从专用变为公共。',
     'User stars a repository.': '用户为存储库加星标。',
     'Wiki page updated.': 'Wiki 页面已更新。',
     'Workflow jobs': '工作流作业',
-    'Workflow job queued, waiting, in progress, or completed on a repository.':
-      '存储库中的工作流作业排队、等待、进行中或完成。',
+    'Workflow job queued, waiting, in progress, or completed on a repository.': '存储库中的工作流作业排队、等待、进行中或完成。',
     'Workflow run requested or completed on a repository.': '存储库中的工作流运行被请求或完成。',
     'Sub issues': '子议题',
     'Sub-issues added or removed, and parent issues added or removed.': '子议题被添加或移除，父议题被添加或移除。',
     'Issue dependencies': '议题依赖',
-    'Issue dependencies - such as blocked by or blocking - added or removed.':
-      '议题依赖关系（如被阻止或阻止）被添加或移除。',
+    'Issue dependencies - such as blocked by or blocking - added or removed.': '议题依赖关系（如被阻止或阻止）被添加或移除。',
     'Related issues': '相关议题',
     'Related issues - such as relates to - added or removed.': '相关议题关系（如相关）被添加或移除。',
 
     // 电子邮件通知
-    'Setup email addresses to receive notifications when push events are triggered.':
-      '设置在触发推送事件时接收通知的电子邮件地址。',
+    'Setup email addresses to receive notifications when push events are triggered.': '设置在触发推送事件时接收通知的电子邮件地址。',
     'Asterisk (*) denotes a required field': '星号 (*) 表示必填字段',
     'Whitespace separated email addresses (at most two).': '以空白分隔的电子邮件地址（最多两个）。',
     'Approved header': 'Approved 标头',
@@ -254,7 +247,7 @@ export default {
     'GitHub Apps augment and extend your workflows on GitHub with commercial, open source, and homegrown tools.':
       'GitHub 应用通过商业、开源和自研工具增强和扩展你在 GitHub 上的工作流。',
     "There aren't any GitHub Apps installed on this repository.": '此存储库未安装任何 GitHub 应用。',
-    'There aren’t any GitHub Apps installed on this repository.': '此存储库未安装任何 GitHub 应用。',
+    'There aren’t any GitHub Apps installed on this repository.': '此存储库未安装任何 GitHub 应用。'
   },
   scoped: {
     'Webhooks /': 'Web 钩子 /',
@@ -297,25 +290,19 @@ export default {
     Numeric: '数字',
     '/ Add new': '/ 新增',
     Suspended: '已暂停',
-    'Developed by': '开发人员',
+    'Developed by': '开发人员'
   },
   regexp: [
     // 列表：交付失败原因、删除确认（含 URL）
     [/^Last delivery was not successful\. (.+)$/, '最近一次交付失败。$1'],
     [
       /^This action cannot be undone\. Future events will no longer be delivered to this webhook \((\S+)\)(\.?)$/,
-      (_, url: string, dot: string) => `此操作无法撤销。今后的事件将不再交付到此 Web 钩子 (${url})${dot ? '。' : ''}`,
+      (_, url: string, dot: string) => `此操作无法撤销。今后的事件将不再交付到此 Web 钩子 (${url})${dot ? '。' : ''}`
     ],
     // 交付详细信息
-    [
-      /^Completed in ([\d.]+) seconds?(\.?)$/,
-      (_, seconds: string, dot: string) => `耗时 ${seconds} 秒${dot ? '。' : ''}`,
-    ],
-    [
-      /^The payload will be delivered to (\S+) using the current webhook configuration\.$/,
-      '有效负载将按当前 Web 钩子配置交付到 $1。',
-    ],
+    [/^Completed in ([\d.]+) seconds?(\.?)$/, (_, seconds: string, dot: string) => `耗时 ${seconds} 秒${dot ? '。' : ''}`],
+    [/^The payload will be delivered to (\S+) using the current webhook configuration\.$/, '有效负载将按当前 Web 钩子配置交付到 $1。'],
     // 已安装的 GitHub 应用
-    [/^Developed by ([\w.-]+)$/, '开发人员 $1'],
-  ],
+    [/^Developed by ([\w.-]+)$/, '开发人员 $1']
+  ]
 } satisfies PageDictionary

@@ -45,8 +45,7 @@ export default {
       '網際網路上的所有人都擁有此專案的讀取權限。由你決定誰擁有寫入和管理權限。',
     'Everyone in your enterprise has read access to this project. You choose who has write and admin access.':
       '你企業中的所有人都擁有此專案的讀取權限。由你決定誰擁有寫入和管理權限。',
-    'has read access to this project. You choose who has write and admin access.':
-      '擁有此專案的讀取權限。由你決定誰擁有寫入和管理權限。',
+    'has read access to this project. You choose who has write and admin access.': '擁有此專案的讀取權限。由你決定誰擁有寫入和管理權限。',
     'Only organization owners can change project visibility.': '只有組織擁有者可以變更專案可見度。',
     'Only admins can change project visibility.': '只有管理員可以變更專案可見度。',
     'This project is currently public.': '此專案目前設為公開。',
@@ -59,8 +58,7 @@ export default {
     'Remove this project as a template? It will no longer be available as a template when creating new projects.':
       '要取消將此專案設為範本嗎？建立新專案時將無法再使用它作為範本。',
     'Copy as template': '複製為範本',
-    'Copy this project into a template that can be used when creating new projects.':
-      '將此專案複製為可在建立新專案時使用的範本。',
+    'Copy this project into a template that can be used when creating new projects.': '將此專案複製為可在建立新專案時使用的範本。',
     'Make a copy of this project.': '建立此專案的副本。',
     'Re-open project': '重新開啟專案',
     'Re-opening a project will add it to the list of open projects.': '重新開啟專案會將它加入開放中的專案清單。',
@@ -80,8 +78,7 @@ export default {
     // 删除项目对话框：整句由下方 inline 规则译出，不构成行内句时按以下片段翻译
     'Delete project warning': '刪除專案警告',
     'I understand the consequences, delete this project': '我瞭解後果，刪除此專案',
-    'project, saved views, custom fields and associated values, and Insights data.':
-      '專案、已儲存的檢視、自訂欄位和相關值，以及洞察資料。',
+    'project, saved views, custom fields and associated values, and Insights data.': '專案、已儲存的檢視、自訂欄位和相關值，以及洞察資料。',
     'This will not delete issues or pull requests themselves.': '這不會刪除議題或拉取請求本身。',
 
     // 访问权限
@@ -103,8 +100,7 @@ export default {
       '此專案公開時組織成員才能查看。若要授予組織成員更多存取權，可將其加入團隊或新增為協作者。',
 
     // 默认存储库
-    'By default, new issues created from this project are added to this repository.':
-      '從此專案建立的新議題預設會加入此儲存庫。',
+    'By default, new issues created from this project are added to this repository.': '從此專案建立的新議題預設會加入此儲存庫。',
 
     // 经典项目迁移
     'Setting up the project…': '正在設定專案…',
@@ -115,10 +111,8 @@ export default {
     'Your classic project': '你的傳統專案',
     'Users visiting the classic project will be linked to this one.': '造訪傳統專案的使用者會被導向此專案。',
     '• Users visiting the classic project will be linked to this one.': '• 造訪傳統專案的使用者會被導向此專案。',
-    'This project has been migrated as part of the sunset for Projects (classic).':
-      '此專案已隨專案（傳統）淘汰而移轉。',
-    'This project is being migrated as part of the sunset for Projects (classic).':
-      '此專案正隨專案（傳統）淘汰而移轉。',
+    'This project has been migrated as part of the sunset for Projects (classic).': '此專案已隨專案（傳統）淘汰而移轉。',
+    'This project is being migrated as part of the sunset for Projects (classic).': '此專案正隨專案（傳統）淘汰而移轉。'
   },
   scoped: {
     // 通用文本（仅项目页生效）
@@ -126,8 +120,7 @@ export default {
     'Short description': '簡短描述',
     'An error occurred while saving.': '儲存時發生錯誤。',
     'Edit README': '編輯讀我檔案',
-    'You have unsaved changes. Are you sure you want leave this page and discard them?':
-      '你有未儲存的變更。確定要離開此頁面並捨棄變更嗎？',
+    'You have unsaved changes. Are you sure you want leave this page and discard them?': '你有未儲存的變更。確定要離開此頁面並捨棄變更嗎？',
     // 原文无逗号，译文不加；与 org-settings/general.ts 同句一致
     'Unexpected bad things will happen if you don’t read this!': '不讀完以下內容可能會造成意想不到的後果！',
     'Are you absolutely sure?': '你確定嗎？',
@@ -213,7 +206,7 @@ export default {
     'Filter repositories': '篩選儲存庫',
     'No repositories available': '沒有可用的儲存庫',
     // 经典项目迁移
-    'Try again': '再試一次',
+    'Try again': '再試一次'
   },
   regexp: [
     [/^Workflows \((\d+) enabled\)$/, '工作流程（已啟用 $1 個）'],
@@ -221,34 +214,28 @@ export default {
     [/^(\d+) users? successfully added$/, '已成功新增 $1 位使用者'],
     [/^Remove collaborator (.+)$/, (_, name: string) => `移除協作者 ${collaboratorName(name)}`],
     // 协作者列表的勾选框：选中列表项 → 「選取」
-    [
-      new RegExp(`^Unselect ${NOT_COLLABORATOR}(${COLLABORATOR_SOURCE})$`),
-      (_, name: string) => `取消選取 ${collaboratorName(name)}`,
-    ],
-    [
-      new RegExp(`^Select ${NOT_COLLABORATOR}(${COLLABORATOR_SOURCE})$`),
-      (_, name: string) => `選取 ${collaboratorName(name)}`,
-    ],
+    [new RegExp(`^Unselect ${NOT_COLLABORATOR}(${COLLABORATOR_SOURCE})$`), (_, name: string) => `取消選取 ${collaboratorName(name)}`],
+    [new RegExp(`^Select ${NOT_COLLABORATOR}(${COLLABORATOR_SOURCE})$`), (_, name: string) => `選取 ${collaboratorName(name)}`],
     [/^(\d+) selected$/, '已選取 $1 個'],
     [/^(\d+) members?, (\d+) teams?$/, '$1 位成員，$2 個團隊'],
     [/^(\d+) members?$/, '$1 位成員'],
     [/^(\d+) teams?$/, '$1 個團隊'],
     [/^@(.+) • (\d+) members?$/, '@$1 • $2 位成員'],
     [/^(\d+) collaborators? found\.$/, '找到 $1 位協作者。'],
-    [/^Migrating (.+)$/, '正在移轉 $1'],
+    [/^Migrating (.+)$/, '正在移轉 $1']
   ],
   // 删除项目对话框里的项目名：须照原文输入才能确认，不翻译。默认标题 @user's untitled project 在顶栏、详细信息侧栏、
   // 项目列表同样保持原文（views.ts、list.ts 的 ignore），items.ts 的正则只在标签页标题等未忽略处生效
   ignore: [
     'label[for="confirm-delete-input"] > span',
-    '[role="alertdialog"]:has(#confirm-delete-input) p:first-of-type > span:nth-of-type(2)',
+    '[role="alertdialog"]:has(#confirm-delete-input) p:first-of-type > span:nth-of-type(2)'
   ],
   inline: [
     // 删除项目对话框（delete-project-dialog.tsx）：加粗的 cannot、项目名、草稿议题数都是 <span>
     // <p>This action <span>cannot</span> be undone. This will permanently delete the <span>项目名</span> project, saved views, …</p>
     [
       'This action {} be undone. This will permanently delete the {} project, saved views, custom fields and associated values, and Insights data.',
-      '此動作{}復原。這將永久刪除 {} 專案、已儲存的檢視、自訂欄位和相關值，以及洞察資料。',
+      '此動作{}復原。這將永久刪除 {} 專案、已儲存的檢視、自訂欄位和相關值，以及洞察資料。'
     ],
     // <p>This will also delete <span>3 draft issues</span> that were created in this project.</p>
     [/^This will also delete \{\} that (?:were|was) created in this project\.$/, '這也會刪除在此專案中建立的 {}。'],
@@ -259,13 +246,13 @@ export default {
     // <p>Make this project a template that can be used by members of the <b>组织</b> organization when creating new projects.</p>
     [
       'Make this project a template that can be used by members of the {} organization when creating new projects.',
-      '將此專案設為範本供 {} 組織的成員在建立新專案時使用。',
+      '將此專案設為範本供 {} 組織的成員在建立新專案時使用。'
     ],
     // 经典项目迁移完成的说明（project-migration-overlay-description.tsx）：
     // <span>• <a>Your classic project</a> has been closed and is read-only.<br>• Users visiting the classic project will be linked to this one.</span>
     [
       '• {} has been closed and is read-only. {} • Users visiting the classic project will be linked to this one.',
-      '• {}已關閉且為唯讀。{}• 造訪傳統專案的使用者會被導向此專案。',
+      '• {}已關閉且為唯讀。{}• 造訪傳統專案的使用者會被導向此專案。'
     ],
     // <span><a>Your classic project</a> is still open, but future changes won't be synchronized.</span>
     ["{} is still open, but future changes won't be synchronized.", '{}仍處於開放狀態，但之後的變更不會同步。'],
@@ -273,7 +260,7 @@ export default {
     // 按片段翻译时链接前的空格会留在两个中文词之间；链接文字 owners 照常翻译
     [
       'Only those with direct access and {} can see this project. Owners are also admins of this project.',
-      '只有具備直接存取權的人和{}可以查看此專案。擁有者也是此專案的管理員。',
-    ],
-  ],
+      '只有具備直接存取權的人和{}可以查看此專案。擁有者也是此專案的管理員。'
+    ]
+  ]
 } satisfies PageDictionary

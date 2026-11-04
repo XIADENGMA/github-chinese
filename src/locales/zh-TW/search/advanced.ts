@@ -55,7 +55,7 @@ export default {
     'Working in this language': '使用此語言',
 
     // Wiki 选项
-    'Wiki options': 'Wiki 選項',
+    'Wiki options': 'Wiki 選項'
   },
   scoped: {
     // 语言下拉分组（Popular 由 common 收录）
@@ -71,12 +71,12 @@ export default {
     open: '開放中',
     closed: '已關閉',
     completed: '完成',
-    reopened: '重新開啟',
+    reopened: '重新開啟'
   },
   ignore: [
     // 语言、许可证下拉中的名称
     '#search_language optgroup > option',
     '#search_user_language optgroup > option',
-    '#search_license optgroup > option',
-  ],
+    '#search_license optgroup > option'
+  ]
 } satisfies PageDictionary

@@ -38,7 +38,7 @@ describe('initUiPreferences', () => {
   it.each([
     ['无缓存', null],
     ['内容损坏', 'not json'],
-    ['取值非法', JSON.stringify({ uiLanguage: 'ja', theme: 'neon' })],
+    ['取值非法', JSON.stringify({ uiLanguage: 'ja', theme: 'neon' })]
   ])('%s：自动（跟随浏览器）', async (_name, cached) => {
     if (cached !== null) localStorage.setItem(KEY, cached)
     const { initUiPreferences, useI18n, useUiPreferences } = await load()

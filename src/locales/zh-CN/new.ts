@@ -6,13 +6,13 @@ import plans from './new/plans'
 const VISIBILITY: Readonly<Record<string, string>> = {
   public: '公共',
   private: '专用',
-  internal: '内部',
+  internal: '内部'
 }
 
 /** 邀请页“所有者将能够 / 可能会看到”的语气 */
 const VISIBILITY_VERB: Readonly<Record<string, string>> = {
   will: '将能够看到',
-  may: '可能会看到',
+  may: '可能会看到'
 }
 
 /**
@@ -47,8 +47,7 @@ const base = {
       '存储库包含项目的文件和版本历史记录。项目托管在别处？导入存储库。',
     'Repositories contain a project’s files and version history. Have a project elsewhere? Import a repository.':
       '存储库包含项目的文件和版本历史记录。项目托管在别处？导入存储库。',
-    'A repository contains all project files, including the revision history.':
-      '存储库包含项目的所有文件，包括修订历史记录。',
+    'A repository contains all project files, including the revision history.': '存储库包含项目的所有文件，包括修订历史记录。',
     'Already have a project repository elsewhere?': '项目存储库托管在别处？',
     'Required fields are marked with an asterisk (*).': '带星号 (*) 的为必填字段。',
     'Switch back to classic experience': '切换回经典体验',
@@ -59,8 +58,7 @@ const base = {
     'Choose an owner': '选择所有者',
     'Repository owner and name': '存储库所有者和名称',
     'Great repository names are short and memorable. How about': '好的存储库名称简短易记。不妨试试',
-    'Great repository names are short and memorable. Need inspiration? How about':
-      '好的存储库名称简短易记。需要灵感？不妨试试',
+    'Great repository names are short and memorable. Need inspiration? How about': '好的存储库名称简短易记。需要灵感？不妨试试',
     'Checking availability…': '正在检查可用性…',
     'Checking availability...': '正在检查可用性...',
     'Your new repository will be created as': '你的新存储库将创建为',
@@ -68,8 +66,7 @@ const base = {
     'New repository name must not be blank.': '新存储库名称不能为空。',
     'The repository name can only contain ASCII letters, digits, and the characters ., -, and _.':
       '存储库名称只能包含 ASCII 字母、数字以及字符 .、- 和 _。',
-    'The repository name can only contain ASCII letters, digits, and the characters':
-      '存储库名称只能包含 ASCII 字母、数字以及字符',
+    'The repository name can only contain ASCII letters, digits, and the characters': '存储库名称只能包含 ASCII 字母、数字以及字符',
     'Name already exists on this account': '此帐户中已存在同名存储库',
     'Repository creation failed.': '存储库创建失败。',
 
@@ -80,8 +77,7 @@ const base = {
     'Anyone on the internet can see this repository. You choose who can commit.':
       '互联网上的任何人都可以查看此存储库。你可以选择谁能提交。',
     'You choose who can see and commit to this repository.': '你可以选择谁能查看此存储库并向其提交。',
-    'Enterprise members can see this repository. You choose who can commit.':
-      '企业成员可以查看此存储库。你可以选择谁能提交。',
+    'Enterprise members can see this repository. You choose who can commit.': '企业成员可以查看此存储库。你可以选择谁能提交。',
     'You may not create private repositories by organization policy.': '根据组织策略，你不能创建专用存储库。',
     'Start with a template': '从模板开始',
     'Templates pre-configure your repository with files.': '模板会用文件预先配置你的存储库。',
@@ -168,10 +164,8 @@ const base = {
     'You found a secret!': '你发现了一个秘密！',
     'is a ✨': '是一个 ✨',
     '✨ repository that you can use to add a': '✨ 存储库可用于将',
-    'to your GitHub profile. Make sure it’s public and initialize it with a':
-      '添加到你的 GitHub 个人资料。请确保它是公共的，并使用',
-    "to your GitHub profile. Make sure it's public and initialize it with a":
-      '添加到你的 GitHub 个人资料。请确保它是公共的，并使用',
+    'to your GitHub profile. Make sure it’s public and initialize it with a': '添加到你的 GitHub 个人资料。请确保它是公共的，并使用',
+    "to your GitHub profile. Make sure it's public and initialize it with a": '添加到你的 GitHub 个人资料。请确保它是公共的，并使用',
     "to your organization's GitHub profile. Make sure it’s public and initialize it with a":
       '添加到你组织的 GitHub 个人资料。请确保它是公共的，并使用',
     'to your organization’s GitHub profile. Make sure it’s public and initialize it with a':
@@ -195,8 +189,7 @@ const base = {
     'supported VCS': '支持的 VCS 类型',
     'supported VCS.': '支持的 VCS 类型。',
     'importing git repositories': '导入 Git 存储库',
-    'Please enter your credentials if required for cloning your remote repository.':
-      '如果克隆远程存储库需要凭据，请在此输入。',
+    'Please enter your credentials if required for cloning your remote repository.': '如果克隆远程存储库需要凭据，请在此输入。',
     'Your username for your source repository': '源存储库的用户名',
     'Your access token or password for your source repository': '源存储库的访问令牌或密码',
     'Your new repository details': '新存储库详细信息',
@@ -272,8 +265,7 @@ const base = {
     'This organization belongs to:': '此组织属于：',
     'My personal account': '我的个人帐户',
     'A business or institution': '企业或机构',
-    'For example: GitHub, Inc., Example Institute, American Red Cross':
-      '例如：GitHub, Inc.、Example Institute、American Red Cross',
+    'For example: GitHub, Inc., Example Institute, American Red Cross': '例如：GitHub, Inc.、Example Institute、American Red Cross',
     'Name of business or institution this organization belongs to': '此组织所属的企业或机构名称',
     // This business or institution — not <strong>user</strong> (your personal account) — will control this organization.
     'This business or institution — not': '将由此企业或机构而不是',
@@ -311,16 +303,13 @@ const base = {
     'New owner': '新所有者',
     'Select one of my organizations': '选择我的组织',
     'Specify an organization or username': '指定组织或用户名',
-    'and accepts the transfer, they will lose access to private repository features:':
-      '并接受转让，将无法再使用以下专用存储库功能：',
-    'Pulse, Contributors, Community, Traffic, Commits, Code Frequency, Network,':
-      '脉搏、贡献者、社区、流量、提交、代码频率、网络',
+    'and accepts the transfer, they will lose access to private repository features:': '并接受转让，将无法再使用以下专用存储库功能：',
+    'Pulse, Contributors, Community, Traffic, Commits, Code Frequency, Network,': '脉搏、贡献者、社区、流量、提交、代码频率、网络',
     'Multiple assignees': '多个受理人',
     'Multiple reviewers': '多个审查者',
     'Branch and tag protection rules': '分支和标签保护规则',
     'their plan before accepting the transfer to avoid losing access.': '其计划再接受转让，以免失去访问权限。',
-    'Individual users, teams, and apps will be removed from the following options:':
-      '个人用户、团队和应用将从以下选项中删除：',
+    'Individual users, teams, and apps will be removed from the following options:': '个人用户、团队和应用将从以下选项中删除：',
     'Repository ruleset bypassers': '存储库规则集绕过者',
     'Protected branch pull request bypassers': '受保护分支的拉取请求绕过者',
     'Protected branch authorized pull request review dismissers': '受保护分支中有权消除拉取请求审查的人员',
@@ -350,10 +339,8 @@ const base = {
     'invited you to be their account successor': '邀请你成为其帐户继任者',
     'Learn more about account successors': '了解帐户继任者',
     // 句首“我同意在使用和维护其帐户内容时遵守 GitHub 的”见 regexp，链接为 Terms of Service（common 翻译）
-    "and the user's written requests, if any, in my use and maintaining of their account's content.":
-      '以及该用户的书面请求（如有）。',
-    'and the user’s written requests, if any, in my use and maintaining of their account’s content.':
-      '以及该用户的书面请求（如有）。',
+    "and the user's written requests, if any, in my use and maintaining of their account's content.": '以及该用户的书面请求（如有）。',
+    'and the user’s written requests, if any, in my use and maintaining of their account’s content.': '以及该用户的书面请求（如有）。',
     "I understand that accepting this appointment as successor does not override legally binding next-of-kin rules or estate laws of any relevant jurisdiction, and does not create a binding will, and I agree to comply or assist with a valid request by an individual with legal authority over the user's property (such as next-of-kin, an estate's executor, and/or a beneficiary of their will).":
       '我了解，接受继任者任命并不凌驾于任何相关司法管辖区具有法律约束力的近亲规则或遗产法，也不构成有约束力的遗嘱；我同意遵守或协助对该用户财产拥有合法权力的个人（例如近亲、遗产执行人和/或其遗嘱受益人）提出的有效请求。',
     'I understand that accepting this appointment as successor does not override legally binding next-of-kin rules or estate laws of any relevant jurisdiction, and does not create a binding will, and I agree to comply or assist with a valid request by an individual with legal authority over the user’s property (such as next-of-kin, an estate’s executor, and/or a beneficiary of their will).':
@@ -369,7 +356,7 @@ const base = {
     'What do you want to move?': '要移动哪些内容？',
     'Select all repositories': '全选存储库',
     'You do not have any projects': '你没有任何项目',
-    'Return to your personal profile': '返回个人资料',
+    'Return to your personal profile': '返回个人资料'
   },
   scoped: {
     // 新版表单分区与字段（Owner、Visibility、Description、(required)、(optional) 由 common-ui 翻译）
@@ -408,8 +395,7 @@ const base = {
     'repository in your personal account.': '存储库将位于你的个人帐户。',
     'repository in the': '存储库将位于',
     // 企业名单独包在元素里时
-    'enterprise members can see this repository. You choose who can commit.':
-      '企业成员可以查看此存储库。你可以选择谁能提交。',
+    'enterprise members can see this repository. You choose who can commit.': '企业成员可以查看此存储库。你可以选择谁能提交。',
     // GitHub 应用：Connect this repository to apps <strong>owner</strong> is subscribed to
     'is subscribed to': '订阅的应用',
     // Copilot：Tell <a>Copilot cloud agent</a> what you want to build…
@@ -522,8 +508,7 @@ const base = {
     'FedRAMP Tailored Authority to Operate (ATO)': 'FedRAMP Tailored 运营授权 (ATO)',
     'Government users can host projects on GitHub Enterprise Cloud with the confidence that our platform meets the low impact software-as-a-service (SaaS) baseline of security standards set by our U.S. federal government partners.':
       '政府用户可以放心地在 GitHub 企业云上托管项目：平台满足美国联邦政府合作伙伴制定的低影响级软件即服务 (SaaS) 安全标准基线。',
-    'Use an identity provider to manage the identities of GitHub users and applications.':
-      '使用标识提供者管理 GitHub 用户和应用的身份。',
+    'Use an identity provider to manage the identities of GitHub users and applications.': '使用标识提供者管理 GitHub 用户和应用的身份。',
     'Advanced auditing': '高级审核',
     'Quickly review the actions performed by members of your organization. Keep copies of audit log data to ensure secure IP and maintain compliance for your organization.':
       '快速查看组织成员执行的操作。保留审核日志数据副本，以保护知识产权并维持组织合规。',
@@ -568,22 +553,19 @@ const base = {
     'If you have': '你的',
     'two-factor authentication': '双因素身份验证',
     'enabled or not': '启用状态',
-    'Opt out': '选择退出',
+    'Opt out': '选择退出'
   },
   regexp: [
     // 存储库名称可用性（React 拆分的名称与文字拼接后）；句号随原文
     [/^([\w.-]+) is available\.$/, '$1 可用。'],
     [
       /^The repository ([\w.-]+) already exists on this account(\.?)$/,
-      (_, name, period) => `此帐户中已存在存储库 ${name}${period ? '。' : ''}`,
+      (_, name, period) => `此帐户中已存在存储库 ${name}${period ? '。' : ''}`
     ],
-    [
-      /^Your new repository will be created as ([\w.-]+?)(\.?)$/,
-      (_, name, period) => `你的新存储库将创建为 ${name}${period ? '。' : ''}`,
-    ],
+    [/^Your new repository will be created as ([\w.-]+?)(\.?)$/, (_, name, period) => `你的新存储库将创建为 ${name}${period ? '。' : ''}`],
     [
       /^Great repository names are short and memorable\.( Need inspiration\?)? How about ([\w.-]+)\?$/,
-      (_, inspiration, name) => `好的存储库名称简短易记。${inspiration ? '需要灵感？' : ''}不妨试试 ${name}？`,
+      (_, inspiration, name) => `好的存储库名称简短易记。${inspiration ? '需要灵感？' : ''}不妨试试 ${name}？`
     ],
     // 所有者按钮与建议名称（无障碍标签）
     [/^([\w-]+), Owner \(Required\)$/, '$1，所有者（必填）'],
@@ -593,45 +575,39 @@ const base = {
     // 可见性按钮（无障碍标签）
     [
       /^Choose visibility: (Public|Private|Internal)$/,
-      (_, visibility) => `选择可见性：${VISIBILITY[visibility.toLowerCase()] ?? visibility}`,
+      (_, visibility) => `选择可见性：${VISIBILITY[visibility.toLowerCase()] ?? visibility}`
     ],
     // 可见性与默认分支提示
     [
       /^You are creating an? (public|private|internal) repository in the ([\w.-]+) organization\.$/,
-      (_, visibility, org) => `你正在 ${org} 组织中创建${VISIBILITY[visibility] ?? visibility}存储库。`,
+      (_, visibility, org) => `你正在 ${org} 组织中创建${VISIBILITY[visibility] ?? visibility}存储库。`
     ],
     [
       /^(.+?) enterprise members can see this repository\. You choose who can commit\.$/,
-      '$1 企业成员可以查看此存储库。你可以选择谁能提交。',
+      '$1 企业成员可以查看此存储库。你可以选择谁能提交。'
     ],
     [/^This will set (\S+) as the default branch\.$/, '这会将 $1 设为默认分支。'],
     [
       /^This will set (\S+) as the default branch\. Change the default name in your settings\.$/,
-      '这会将 $1 设为默认分支。可在你的设置中更改默认名称。',
+      '这会将 $1 设为默认分支。可在你的设置中更改默认名称。'
     ],
     // 模板与 GitHub 应用
-    [
-      /^Copy all branches from ([\w.-]+\/[\w.-]+) and not just the default branch\.$/,
-      '复制 $1 的所有分支，而不仅仅是默认分支。',
-    ],
+    [/^Copy all branches from ([\w.-]+\/[\w.-]+) and not just the default branch\.$/, '复制 $1 的所有分支，而不仅仅是默认分支。'],
     [
       /^Connect this repository to apps ([\w.-]+) is subscribed to(\.?)$/,
-      (_, owner, period) => `将此存储库连接到 ${owner} 订阅的应用${period ? '。' : ''}`,
+      (_, owner, period) => `将此存储库连接到 ${owner} 订阅的应用${period ? '。' : ''}`
     ],
-    [
-      /^You are subscribed to (\d+) Marketplace apps?(\.?)$/,
-      (_, count, period) => `你订阅了 ${count} 个市场应用${period ? '。' : ''}`,
-    ],
+    [/^You are subscribed to (\d+) Marketplace apps?(\.?)$/, (_, count, period) => `你订阅了 ${count} 个市场应用${period ? '。' : ''}`],
     [/^(\d+) apps? selected$/, '已选择 $1 个应用'],
     [/^Auto-installed by ([\w.-]+)$/, '由 $1 自动安装'],
     // 与用户名 / .github 同名的特殊存储库（整句渲染时）
     [
       /^([\w.-]+\/[\w.-]+) is a ✨special✨ repository that you can use to add a README\.md to your GitHub profile\. Make sure it[’']s public and initialize it with a README to get started\.$/,
-      '$1 是一个 ✨特殊✨ 存储库，可用于将 README.md 添加到你的 GitHub 个人资料。请确保它是公共的，并使用自述文件初始化即可开始。',
+      '$1 是一个 ✨特殊✨ 存储库，可用于将 README.md 添加到你的 GitHub 个人资料。请确保它是公共的，并使用自述文件初始化即可开始。'
     ],
     [
       /^([\w.-]+\/\.github) is a ✨special✨ repository that you can use to add a README\.md to your organization[’']s GitHub profile\. Make sure it[’']s public and initialize it with a README in the profile directory to get started\.$/,
-      '$1 是一个 ✨特殊✨ 存储库，可用于将 README.md 添加到你组织的 GitHub 个人资料。请确保它是公共的，并使用自述文件初始化 profile 目录即可开始。',
+      '$1 是一个 ✨特殊✨ 存储库，可用于将 README.md 添加到你组织的 GitHub 个人资料。请确保它是公共的，并使用自述文件初始化 profile 目录即可开始。'
     ],
     // 复刻
     [/^Copy the (\S+) branch only$/, '仅复制 $1 分支'],
@@ -643,67 +619,61 @@ const base = {
     [/^Updating branches and (\d+) commit authors?(…|\.\.\.)$/, '正在更新分支和 $1 个提交作者$2'],
     [
       /^No source repositories were detected at (\S+)\. Please check the URL and try again\.$/,
-      '在 $1 未检测到源存储库。请检查 URL 后重试。',
+      '在 $1 未检测到源存储库。请检查 URL 后重试。'
     ],
     [/^Importing complete! Your new repository ([\w.-]+\/[\w.-]+) is ready\.$/, '导入完成！你的新存储库 $1 已就绪。'],
     // 新建组织：名称校验、网址、Copilot Business 价格
     [/^The name '([^']+)' is already taken\.$/, '名称“$1”已被占用。'],
     [
       /^The name '(.+)' may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen\.$/,
-      '名称“$1”只能包含字母、数字或单个连字符，且不能以连字符开头或结尾。',
+      '名称“$1”只能包含字母、数字或单个连字符，且不能以连字符开头或结尾。'
     ],
     [/^Organization name '(.+)' is unavailable\.$/, '组织名称“$1”不可用。'],
     [/^Your URL will be: (https:\/\/github\.com\/\S*)$/, '你的 URL 将是：$1'],
     [/^I\.e\., ([\w-]+) \(your personal account\)$/, '即 $1（你的个人帐户）'],
     [
       /^Boost developer productivity for (\$\d+(?:\.\d+)?)\/user\/month\. Pay only for assigned seats after setup\.$/,
-      '以每用户每月 $1 的价格提升开发人员效率。设置后仅为已分配的席位付费。',
+      '以每用户每月 $1 的价格提升开发人员效率。设置后仅为已分配的席位付费。'
     ],
     // 新建组织：计划卡片中的使用量（与 settings-account 的 500MB / 2GB 静态词条同一译法）
     [/^([\d,]+) CI\/CD minutes\/month$/, '每月 $1 分钟 CI/CD'],
     [/^(\d+(?:\.\d+)? ?[MG]B) of Packages storage$/, '$1 软件包存储'],
     [
       /^Blazing fast cloud developer environments with flexible compute and pre-configured containers, developers can code, collaborate, and debug from any browser\. Pay only for what you use with compute fees starting at (\$[\d.]+)\/hr and storage fees at (\$[\d.]+)\/GB per month\.$/,
-      '极速云端开发环境，提供灵活的算力和预配置容器，开发人员可在任意浏览器中编码、协作和调试。按使用量付费，计算费用低至每小时 $1，存储费用为每月每 GB $2。',
+      '极速云端开发环境，提供灵活的算力和预配置容器，开发人员可在任意浏览器中编码、协作和调试。按使用量付费，计算费用低至每小时 $1，存储费用为每月每 GB $2。'
     ],
     // 转让与邀请页
     [/^Transfer repository: ([\w.-]+\/[\w.-]+)$/, '转让存储库：$1'],
-    [
-      /^There (?:is|are) (\d+) codespaces? that may be affected by this transfer\.$/,
-      '有 $1 个代码空间可能会受到此次转让的影响。',
-    ],
+    [/^There (?:is|are) (\d+) codespaces? that may be affected by this transfer\.$/, '有 $1 个代码空间可能会受到此次转让的影响。'],
     [/^There (?:is|are)$/, '当前有'],
     [/^(\d+) codespaces?$/, '$1 个代码空间'],
     [/^Type ([\w.-]+\/[\w.-]+) to confirm\.$/, '输入 $1 以确认。'],
     [/^([\w-]+) invited you to collaborate on ([\w.-]+\/[\w.-]+)$/, '$1 邀请你协作开发 $2'],
-    [
-      /^of ([\w.-]+(?:\/[\w.-]+)?) (will|may) be able to see:$/,
-      (_, owner, verb) => `(${owner}) ${VISIBILITY_VERB[verb] ?? verb}：`,
-    ],
+    [/^of ([\w.-]+(?:\/[\w.-]+)?) (will|may) be able to see:$/, (_, owner, verb) => `(${owner}) ${VISIBILITY_VERB[verb] ?? verb}：`],
     [/^Block ([\w-]+)$/, '阻止 $1'],
     [/^Join ([\w.-]+)$/, '加入 $1'],
     [
       /^As an account successor, you would be able to manage ([\w-]+)[’']s repositories if they[’']re not able to\.$/,
-      '作为帐户继任者，你可以在 $1 无法管理其存储库时代为管理。',
+      '作为帐户继任者，你可以在 $1 无法管理其存储库时代为管理。'
     ],
     [
       /^By clicking ["“]Accept invitation["”] below, I acknowledge that I agree to serve as the successor for ([\w-]+), in such ways authorized by their successor request\. I agree to abide by GitHub[’']s$/,
-      '单击下方的“接受邀请”，即表示我同意按照 $1 的继任者请求所授权的方式担任其继任者。我同意在使用和维护其帐户内容时遵守 GitHub 的',
+      '单击下方的“接受邀请”，即表示我同意按照 $1 的继任者请求所授权的方式担任其继任者。我同意在使用和维护其帐户内容时遵守 GitHub 的'
     ],
     // 将工作移至组织：进度
-    [/^(\d+)% complete$/, '已完成 $1%'],
+    [/^(\d+)% complete$/, '已完成 $1%']
   ],
   inline: [
     // 定价页营销页头的 Enterprise 栏目按钮：<button>Enterprise<svg/></button>（计划名元素里只有文字，不命中）。
     // 全局导航栏目仍译“企业”，不用本页 scoped 的计划名“企业版”
-    ['Enterprise {}', '企业{}'],
+    ['Enterprise {}', '企业{}']
   ],
   // 将工作移至组织：页头的帐户名，勾选项的存储库名、项目名（用户内容）
   ignore: [
     'move-work-container .flex-auto > p.h3:first-child',
     'move-work-container label[for^="repository-"]',
-    'move-work-container label[for^="project-"]',
-  ],
+    'move-work-container label[for^="project-"]'
+  ]
 } satisfies PageDictionary
 
 export default mergeDictionaries(base, plans) satisfies PageDictionary

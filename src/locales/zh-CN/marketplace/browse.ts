@@ -43,12 +43,12 @@ export const CATEGORIES: Readonly<Record<string, string>> = {
   'Time tracking': '时间跟踪',
   Utilities: '实用工具',
   'Game CI': '游戏 CI',
-  'GitHub Sponsors': 'GitHub 赞助',
+  'GitHub Sponsors': 'GitHub 赞助'
 }
 
 /** 类别名的正则片段（已转义） */
 const CATEGORY_NAMES = Object.keys(CATEGORIES)
-  .map((name) => name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+  .map(name => name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
   .join('|')
 
 /** 「<类别> apps / actions」标题：代码质量应用、IDE 应用、GitHub 赞助操作 */
@@ -58,17 +58,14 @@ function categoryHeading(name: string, kind: string): string {
 
 /** 首页与筛选用到的单词；Security、Support、Code review 与 common 的全局译文相同，不进 scoped */
 const CATEGORY_SCOPED = Object.fromEntries(
-  Object.entries(CATEGORIES).filter(
-    ([name, label]) => name !== label && !['Security', 'Support', 'Code review'].includes(name),
-  ),
+  Object.entries(CATEGORIES).filter(([name, label]) => name !== label && !['Security', 'Support', 'Code review'].includes(name))
 )
 
 export default {
   static: {
     // 头部
     'Enhance your workflow with extensions': '使用扩展增强你的工作流',
-    'Tools from the community and partners to simplify tasks and automate processes':
-      '来自社区和合作伙伴的任务简化与流程自动化工具',
+    'Tools from the community and partners to simplify tasks and automate processes': '来自社区和合作伙伴的任务简化与流程自动化工具',
     'Tools to improve your workflow': '改进工作流的工具',
 
     // 导航
@@ -107,8 +104,7 @@ export default {
 
     // 搜索结果
     'Copilot Extensions': 'Copilot 扩展',
-    'Extend Copilot capabilities using third party tools, services, and data':
-      '使用第三方工具、服务和数据扩展 Copilot 的能力',
+    'Extend Copilot capabilities using third party tools, services, and data': '使用第三方工具、服务和数据扩展 Copilot 的能力',
     'Automate your workflow from idea to production': '自动化从构想到生产的工作流',
     'Build on your workflow with apps that integrate with GitHub': '使用与 GitHub 集成的应用拓展工作流',
     'Try searching by different keywords.': '尝试使用其他关键词搜索。',
@@ -134,17 +130,13 @@ export default {
       '推送到 GitHub 时自动构建和测试代码，防止缺陷部署到生产环境。',
     'Secure and manage your third-party dependencies.': '保护和管理第三方依赖。',
     'Streamline your code deployment so you can focus on your product.': '简化代码部署以便专注于产品。',
-    'Enables custom protection rules to gate deployments with third-party services':
-      '启用自定义保护规则以借助第三方服务管控部署',
+    'Enables custom protection rules to gate deployments with third-party services': '启用自定义保护规则以借助第三方服务管控部署',
     'Developer tools that are run natively on your local machine.': '在本地计算机上原生运行的开发人员工具。',
     'Tools for building a CI pipeline for game development': '为游戏开发构建 CI 流水线的工具',
-    'Find the right interface to build, debug, and deploy your source code.':
-      '找到合适的界面来构建、调试和部署源代码。',
+    'Find the right interface to build, debug, and deploy your source code.': '找到合适的界面来构建、调试和部署源代码。',
     'Get the skills you need to level up.': '获取提升所需的技能。',
-    "Extend your software's reach. Localize and translate continuously from GitHub.":
-      '扩大软件的覆盖范围。在 GitHub 上持续本地化和翻译。',
-    'Extend your software’s reach. Localize and translate continuously from GitHub.':
-      '扩大软件的覆盖范围。在 GitHub 上持续本地化和翻译。',
+    "Extend your software's reach. Localize and translate continuously from GitHub.": '扩大软件的覆盖范围。在 GitHub 上持续本地化和翻译。',
+    'Extend your software’s reach. Localize and translate continuously from GitHub.': '扩大软件的覆盖范围。在 GitHub 上持续本地化和翻译。',
     'Improve your workflow for the small screen.': '改进面向小屏幕的工作流。',
     'Continuous integration for Mobile applications': '移动应用的持续集成',
     'Monitor the impact of your code changes. Measure performance, track errors, and analyze your application.':
@@ -154,17 +146,14 @@ export default {
     'Organize, manage, and track your project with tools that build on top of issues and pull requests.':
       '使用基于议题和拉取请求的工具组织、管理和跟踪项目。',
     'Get your site ready for production so you can get the word out.': '让网站做好上线准备以便广而告之。',
-    'The latest tools that help you and your team build software better, together.':
-      '帮助你和团队更好地协作构建软件的最新工具。',
+    'The latest tools that help you and your team build software better, together.': '帮助你和团队更好地协作构建软件的最新工具。',
     'Get insights into how your teams are developing software using GitHub.': '深入了解团队如何使用 GitHub 开发软件。',
-    'Find, fix, and prevent security vulnerabilities before they can be exploited.':
-      '在安全漏洞被利用前发现、修复和预防。',
+    'Find, fix, and prevent security vulnerabilities before they can be exploited.': '在安全漏洞被利用前发现、修复和预防。',
     'Get your team and customers the help they need.': '为团队和客户提供所需的帮助。',
     'Optimize your work to minimize impact on the environment.': '优化工作以减少对环境的影响。',
     'Eliminate bugs and ship with more confidence by adding these tools to your workflow.':
       '将这些工具加入工作流以消除缺陷并更放心地发布。',
-    'Track your progress, and predict how long a task will take based on your coding activity.':
-      '跟踪进度，并根据编码活动预测任务耗时。',
+    'Track your progress, and predict how long a task will take based on your coding activity.': '跟踪进度，并根据编码活动预测任务耗时。',
     'Auxiliary tools to enhance your experience on GitHub': '增强 GitHub 使用体验的辅助工具',
 
     // 上架新工具 /marketplace/new
@@ -181,8 +170,7 @@ export default {
     'How to create and list tools on the GitHub Marketplace, including guidelines for listing content, artwork, and screenshots.':
       '如何在 GitHub 市场创建和上架工具，包括上架内容、图片和截图的指南。',
     'Adding webhooks for a GitHub Marketplace listing': '为 GitHub 市场上架项添加 Web 钩子',
-    'Add webhooks for your app to notify you when specified events are triggered.':
-      '为应用添加 Web 钩子以在指定事件触发时通知你。',
+    'Add webhooks for your app to notify you when specified events are triggered.': '为应用添加 Web 钩子以在指定事件触发时通知你。'
   },
   scoped: {
     ...CATEGORY_SCOPED,
@@ -209,24 +197,21 @@ export default {
     'Best match': '最佳匹配',
     // 类别说明「Tools to manage your <GitHub Sponsors> community」
     'Tools to manage your': '管理',
-    community: '社区的工具',
+    community: '社区的工具'
   },
   regexp: [
     [/^Search results for “(.+)”$/, '“$1”的搜索结果'],
     // 原文末尾的句号照录
     [/^(\d[\d,]*) results?(\.?)$/, (_, count: string, period: string) => `${count} 个结果${period ? '。' : ''}`],
-    [
-      new RegExp(`^(${CATEGORY_NAMES}) (apps|actions)$`),
-      (_, name: string, kind: string) => categoryHeading(name, kind),
-    ],
+    [new RegExp(`^(${CATEGORY_NAMES}) (apps|actions)$`), (_, name: string, kind: string) => categoryHeading(name, kind)],
     // 分页：原文末尾的省略号照录
-    [/^Page (\d+)(\.\.\.|…)?$/, '第 $1 页$2'],
+    [/^Page (\d+)(\.\.\.|…)?$/, '第 $1 页$2']
   ],
   ignore: [
     // 列表条目：名称、描述
     '[data-testid="marketplace-item"] h3',
     '[data-testid="marketplace-item"] p',
     // 搜索框内的查询文本叠加层（用户输入）
-    '#marketplace-search-filter div[aria-hidden="true"]',
-  ],
+    '#marketplace-search-filter div[aria-hidden="true"]'
+  ]
 } satisfies PageDictionary

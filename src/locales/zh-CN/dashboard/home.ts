@@ -14,7 +14,7 @@ const SESSION_STATES: Readonly<Record<string, string>> = {
   Unknown: '未知',
   Merged: '已合并',
   Closed: '已关闭',
-  'Queued to merge': '已排队等待合并',
+  'Queued to merge': '已排队等待合并'
 }
 
 /** 新版首页的分区名（自定义分区对话框的“更多选项”“显示”按钮） */
@@ -23,7 +23,7 @@ const SECTIONS: Readonly<Record<string, string>> = {
   'Pull requests': '拉取请求',
   Issues: '议题',
   Repositories: '存储库',
-  Feed: '动态',
+  Feed: '动态'
 }
 
 /**
@@ -47,8 +47,7 @@ export default {
     'Your teams': '你的团队',
     'You don’t belong to any teams yet!': '你还不属于任何团队！',
     "You don't belong to any teams yet!": '你还不属于任何团队！',
-    'When you take actions across GitHub, we’ll provide links to that activity here.':
-      '你在 GitHub 上的操作会在这里显示链接。',
+    'When you take actions across GitHub, we’ll provide links to that activity here.': '你在 GitHub 上的操作会在这里显示链接。',
     'Create your first project': '创建你的第一个项目',
     'Ready to start building? Create a repository for a new idea or bring over an existing repository to keep contributing to it.':
       '准备好开始构建了吗？为新想法创建存储库，或导入现有存储库继续贡献。',
@@ -60,8 +59,7 @@ export default {
     'Explore more →': '探索更多 →',
 
     // 代理会话列表
-    'Start an agent session to create new work or iterate on an existing project.':
-      '启动代理会话以开始新工作或迭代现有项目。',
+    'Start an agent session to create new work or iterate on an existing project.': '启动代理会话以开始新工作或迭代现有项目。',
     'No sessions found. Create one by sending a prompt above.': '未找到会话。在上方发送提示即可创建。',
     // 名词 filter → 筛选器（分区菜单里的筛选选项）
     'No sessions found. Try a different filter, or': '未找到会话。请尝试其他筛选器，或',
@@ -127,7 +125,7 @@ export default {
     'See all owners': '查看所有所有者',
     'View your teams': '查看你的团队',
     'View and create teams': '查看和创建团队',
-    'Member statuses': '成员状态',
+    'Member statuses': '成员状态'
   },
   scoped: {
     // 左侧栏
@@ -165,7 +163,7 @@ export default {
 
     // 组织仪表板：Welcome to the / You’ve been added to the + <组织> + organization!
     'Welcome to the': '欢迎加入',
-    'organization!': '组织！',
+    'organization!': '组织！'
   },
   regexp: [
     // 上下文切换按钮
@@ -175,21 +173,18 @@ export default {
     // 拉取请求的动词 open → 创建（GLOSSARY pull request 行），议题条目随同句一致也作“创建”
     [
       /^(\S+#\d+) · Opened by (\S+) · (Updated|Created)$/,
-      (_, ref, author, label) => `${ref} · 由 ${author} 创建 · ${label === 'Updated' ? '更新于' : '创建于'}`,
+      (_, ref, author, label) => `${ref} · 由 ${author} 创建 · ${label === 'Updated' ? '更新于' : '创建于'}`
     ],
     // 代理会话条目说明：<relative-time> · 2 revisions · Ready for review
     [
       /^· (?:([\d,]+) revisions · )?(Working|Ready for review|Done|Failed|Idle|Needs attention|Timed out|Cancelled|Queued|Unknown|Merged|Closed|Queued to merge)$/,
-      (_, revisions, state) => `· ${revisions ? `${revisions} 次修订 · ` : ''}${SESSION_STATES[state] ?? state}`,
+      (_, revisions, state) => `· ${revisions ? `${revisions} 次修订 · ` : ''}${SESSION_STATES[state] ?? state}`
     ],
     [/^(\S+) · Initializing session\.\.\.$/, '$1 · 正在初始化会话...'],
     // 反馈字数
     [/^Please keep your feedback within ([\d,]+) characters or less\.$/, '反馈请控制在 $1 个字符以内。'],
     // 自定义分区对话框：More options for Agent sessions / Show Agent sessions
-    [
-      /^More options for (.+)$/,
-      (_, section) => (SECTIONS[section] ? `${SECTIONS[section]}的更多选项` : `${section} 的更多选项`),
-    ],
+    [/^More options for (.+)$/, (_, section) => (SECTIONS[section] ? `${SECTIONS[section]}的更多选项` : `${section} 的更多选项`)],
     [new RegExp(`^Show (${Object.keys(SECTIONS).join('|')})$`), (_, section) => `显示${SECTIONS[section] ?? section}`],
     // 组织仪表板
     [/^You[’']re an owner of the (\S+) organization!$/, '你是 $1 组织的所有者！'],
@@ -199,14 +194,11 @@ export default {
     // 顶部提示：删除存储库、接受 / 拒绝继任者邀请后跳转到首页
     [/^Your repository ["“]([^"”]+)["”] was successfully deleted\.$/, '存储库“$1”已删除。'],
     [/^You are now the designated successor for @?([\w-]+)[’']s account\.$/, '你已成为 $1 帐户的指定继任者。'],
-    [
-      /^You have declined to become the designated successor for @?([\w-]+)[’']s account\.$/,
-      '已拒绝成为 $1 帐户的指定继任者。',
-    ],
+    [/^You have declined to become the designated successor for @?([\w-]+)[’']s account\.$/, '已拒绝成为 $1 帐户的指定继任者。']
   ],
   ignore: [
     // 分区列表中的议题、拉取请求、会话标题，以及标题截断时显示完整标题的提示框
     'a[class*="ItemTitle__"] [class*="ItemTitleInner__"]',
-    'a[class*="ItemTitle__"] + [class*="prc-TooltipV2-Tooltip-"]',
-  ],
+    'a[class*="ItemTitle__"] + [class*="prc-TooltipV2-Tooltip-"]'
+  ]
 } satisfies PageDictionary

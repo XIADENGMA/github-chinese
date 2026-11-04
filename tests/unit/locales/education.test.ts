@@ -30,62 +30,62 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['5 million students', '500 万学生'],
-      ['120 million students', '1.2 亿学生'],
+      ['120 million students', '1.2 亿学生']
     ],
-    misses: ['million students', '5 million developers', '5 million students use GitHub'],
+    misses: ['million students', '5 million developers', '5 million students use GitHub']
   },
   {
     hits: [
       ['200K verified educators', '20 万已验证教育工作者'],
-      ['5K verified educators', '5000 已验证教育工作者'],
+      ['5K verified educators', '5000 已验证教育工作者']
     ],
-    misses: ['200 verified educators', '200K educators'],
+    misses: ['200 verified educators', '200K educators']
   },
   {
     hits: [
       ['+2K educational institutions', '超过 2000 所教育机构'],
-      ['+20K educational institutions', '超过 2 万所教育机构'],
+      ['+20K educational institutions', '超过 2 万所教育机构']
     ],
-    misses: ['2K educational institutions', '+2K institutions'],
+    misses: ['2K educational institutions', '+2K institutions']
   },
   // /education/students 权益
   {
     hits: [
       ['3K Actions minutes and 180 Codespaces hours per month.', '每月 3000 分钟操作和 180 小时代码空间。'],
-      ['10K Actions minutes and 60 Codespaces hours per month.', '每月 1 万分钟操作和 60 小时代码空间。'],
+      ['10K Actions minutes and 60 Codespaces hours per month.', '每月 1 万分钟操作和 60 小时代码空间。']
     ],
-    misses: ['3K Actions minutes per month.', '3K Actions minutes and 180 Codespaces hours per month'],
+    misses: ['3K Actions minutes per month.', '3K Actions minutes and 180 Codespaces hours per month']
   },
   {
     hits: [['2 GB Packages storage and 20 GB Codespaces storage.', '2 GB 软件包存储和 20 GB 代码空间存储。']],
-    misses: ['2 GB Packages storage.', '2 GB Packages storage and 20 GB Codespaces storage'],
+    misses: ['2 GB Packages storage.', '2 GB Packages storage and 20 GB Codespaces storage']
   },
   // /education/schools GitHub 课堂
   {
     hits: [
       [
         '2k+ universities, community colleges, secondary schools, and bootcamps use GitHub in the classroom.',
-        '超过 2000 所大学、社区学院、中学和训练营在课堂上使用 GitHub。',
-      ],
+        '超过 2000 所大学、社区学院、中学和训练营在课堂上使用 GitHub。'
+      ]
     ],
-    misses: ['2k universities, community colleges, secondary schools, and bootcamps use GitHub in the classroom.'],
+    misses: ['2k universities, community colleges, secondary schools, and bootcamps use GitHub in the classroom.']
   },
   // /education/partners 数据
   {
     hits: [['+50% of students will influence their workplaces', '超过 50% 的学生将影响其工作场所']],
-    misses: ['50% of students will influence their workplaces', '+50% of students'],
+    misses: ['50% of students will influence their workplaces', '+50% of students']
   },
   {
     hits: [['75% of student developers actively self-educate', '75% 的学生开发人员主动自学']],
-    misses: ['75% of students actively self-educate', 'student developers actively self-educate'],
+    misses: ['75% of students actively self-educate', 'student developers actively self-educate']
   },
   {
     hits: [
       ['5M students use GitHub Education', '500 万学生使用 GitHub 教育'],
-      ['100M students use GitHub Education', '1 亿学生使用 GitHub 教育'],
+      ['100M students use GitHub Education', '1 亿学生使用 GitHub 教育']
     ],
-    misses: ['5M students', '5 students use GitHub Education'],
-  },
+    misses: ['5M students', '5 students use GitHub Education']
+  }
 ]
 
 describe('education 正则', () => {
@@ -99,11 +99,11 @@ describe('education 正则', () => {
     }
   })
 
-  it.each(REGEXP_CASES.flatMap((item) => item.hits))('%s → %s', (source, expected) => {
+  it.each(REGEXP_CASES.flatMap(item => item.hits))('%s → %s', (source, expected) => {
     expect(translate(source)).toBe(expected)
   })
 
-  it.each(REGEXP_CASES.flatMap((item) => item.misses))('不命中：%s', (source) => {
+  it.each(REGEXP_CASES.flatMap(item => item.misses))('不命中：%s', source => {
     expect(translate(source)).toBeUndefined()
   })
 
@@ -144,7 +144,7 @@ describe('education 代表性词条', () => {
     ['Copilot for Business', 'Copilot 商业版'],
     ['GitHub Skills', 'GitHub 技能'],
     ['GitHub Desktop', 'GitHub 桌面版'],
-    ['Join GitHub Education', '加入 GitHub 教育'],
+    ['Join GitHub Education', '加入 GitHub 教育']
   ])('%s → %s', (source, expected) => {
     expect(translate(source)).toBe(expected)
   })
@@ -158,33 +158,29 @@ describe('education 代表性词条', () => {
     'Contact sales',
     'Unlimited repositories',
     'contact our sales team',
-    ', which is updated regularly.',
-  ])('短语与产品名只在教育页生效：%s', (source) => {
+    ', which is updated regularly.'
+  ])('短语与产品名只在教育页生效：%s', source => {
     expect(translate(source, ['common'])).toBeUndefined()
     expect(translate(source)).toBeDefined()
   })
 
   it.each(['GitHub Copilot', 'Copilot', 'GitHub CLI', 'Codio', 'Classroom 50', 'CEO'])(
     '品牌名、技术缩写、合作伙伴产品名不收录：%s',
-    (source) => {
+    source => {
       expect(translate(source)).toBeUndefined()
-    },
+    }
   )
 
   it('标签页标题：Students - GitHub Education → 学生 - GitHub 教育', () => {
     const translateSegment = (segment: string): string | undefined => translate(segment)
-    expect(translateTitleText('Students - GitHub Education', translateSegment, '/education/students')).toBe(
-      '学生 - GitHub 教育',
-    )
-    expect(translateTitleText('Partners - GitHub Education', translateSegment, '/education/partners')).toBe(
-      '合作伙伴 - GitHub 教育',
-    )
+    expect(translateTitleText('Students - GitHub Education', translateSegment, '/education/students')).toBe('学生 - GitHub 教育')
+    expect(translateTitleText('Partners - GitHub Education', translateSegment, '/education/partners')).toBe('合作伙伴 - GitHub 教育')
     expect(translateTitleText('GitHub Education', translateSegment, '/education')).toBe('GitHub 教育')
   })
 })
 
 describe('education 忽略选择器', () => {
-  it.each(dict.ignore ?? [])('%s 是合法选择器', (selector) => {
+  it.each(dict.ignore ?? [])('%s 是合法选择器', selector => {
     expect(() => document.createElement('div').querySelector(selector)).not.toThrow()
   })
 })
@@ -193,7 +189,7 @@ describe('education 页面（DOM）', () => {
   const pageMatcher = createMatcher([
     ['common', common],
     ['common', commonUi],
-    ['education', education],
+    ['education', education]
   ])
   let translator: Translator | undefined
 
@@ -235,14 +231,7 @@ describe('education 页面（DOM）', () => {
         </span>
       </span>
       <h1 id="hero-section-brand-heading">Empowering the next generation of developers</h1>`)
-    expect([...body.querySelectorAll('nav a, nav button')].map(text)).toEqual([
-      '教育',
-      '学生',
-      '教师',
-      '学校',
-      '合作伙伴',
-      '更多',
-    ])
+    expect([...body.querySelectorAll('nav a, nav button')].map(text)).toEqual(['教育', '学生', '教师', '学校', '合作伙伴', '更多'])
     expect(body.querySelector('#overflow')?.getAttribute('aria-label')).toBe('更多')
     expect(text(body.querySelector('[data-testid="EyebrowText"]'))).toBe('GitHub 教育')
     expect(text(body.querySelector('h1'))).toBe('赋能下一代开发人员')
@@ -284,7 +273,7 @@ describe('education 页面（DOM）', () => {
         <p>To access GitHub Education benefits, you need to be a currently employed educator at an accredited educational institution. Please apply by submitting proof of academic employment, such as a faculty ID or employment verification letter, using your institutional email address through our <a href="/settings/education/benefits">GitHub Education for Teachers</a> portal.</p>
       </div>`)
     expect(text(body.querySelector('p'))).toBe(
-      '要获得 GitHub 教育福利，你需要是经认证教育机构的在职教育工作者。请通过我们的面向教师的 GitHub 教育门户，使用你的机构电子邮件地址提交学术任职证明（如教职工 ID 或在职证明信）来申请。',
+      '要获得 GitHub 教育福利，你需要是经认证教育机构的在职教育工作者。请通过我们的面向教师的 GitHub 教育门户，使用你的机构电子邮件地址提交学术任职证明（如教职工 ID 或在职证明信）来申请。'
     )
     expect(text(body.querySelector('a'))).toBe('面向教师的 GitHub 教育')
   })
@@ -295,7 +284,7 @@ describe('education 页面（DOM）', () => {
         <p>This free benefit is available to teachers who qualify for GitHub Education. To apply, please provide proof of your current academic position using your official academic email address along with supplementary documents, such as a faculty ID or an employment verification letter, via our Teacher Application. You can find more information in our <a href="https://docs.github.com/en/education">GitHub Education for educators</a> documentation page.</p>
       </div>`)
     expect(text(body.querySelector('p'))).toBe(
-      '此免费福利面向符合 GitHub 教育资格的教师。要申请，请通过我们的教师申请，使用你的官方学术电子邮件地址提供当前学术职位证明，并附上补充文件（如教职工 ID 或在职证明信）。更多信息请参阅我们的 面向教育工作者的 GitHub 教育 文档页面。',
+      '此免费福利面向符合 GitHub 教育资格的教师。要申请，请通过我们的教师申请，使用你的官方学术电子邮件地址提供当前学术职位证明，并附上补充文件（如教职工 ID 或在职证明信）。更多信息请参阅我们的 面向教育工作者的 GitHub 教育 文档页面。'
     )
   })
 
@@ -305,7 +294,7 @@ describe('education 页面（DOM）', () => {
         <p>Our offering is intended as a <b>whole-school solution</b> to ensure every department benefits. It promotes an integrated learning and development environment throughout your entire institution. However, the adoption must be at the institutional level and cannot be implemented by individual departments.</p>
       </div>`)
     expect(text(body.querySelector('p'))).toBe(
-      '我们的方案旨在成为全校解决方案，确保每个部门都能受益。它在你的整个机构内推动一体化的学习和开发环境。但采用必须在机构层面进行，不能由单个部门实施。',
+      '我们的方案旨在成为全校解决方案，确保每个部门都能受益。它在你的整个机构内推动一体化的学习和开发环境。但采用必须在机构层面进行，不能由单个部门实施。'
     )
     expect(text(body.querySelector('b'))).toBe('全校解决方案')
   })
@@ -325,12 +314,12 @@ describe('education 页面（DOM）', () => {
         <p><b>If your institution does not fit this criteria, such as not granting formal degrees or certificates, please </b><b>contact our sales team</b><b> to discuss alternative options and available education discounts.</b></p>
       </div>`)
     expect(body.querySelector('p')?.textContent).toBe(
-      '如果你的机构不符合此标准，例如不授予正式学位或证书，请联系我们的销售团队，讨论其他选择和可用的教育折扣。',
+      '如果你的机构不符合此标准，例如不授予正式学位或证书，请联系我们的销售团队，讨论其他选择和可用的教育折扣。'
     )
-    expect([...body.querySelectorAll('b')].map((element) => element.textContent)).toEqual([
+    expect([...body.querySelectorAll('b')].map(element => element.textContent)).toEqual([
       '如果你的机构不符合此标准，例如不授予正式学位或证书，',
       '请联系我们的销售团队',
-      '，讨论其他选择和可用的教育折扣。',
+      '，讨论其他选择和可用的教育折扣。'
     ])
   })
 
@@ -344,11 +333,11 @@ describe('education 页面（DOM）', () => {
         <p id="period">Make it easier for students and educators to collaborate on projects and assignments<!-- -->.</p>
       </div>`)
     expect(text(body.querySelector('#leverage'))).toBe(
-      '在你的学校部署 GitHub 企业服务器和企业云，为教育工作者和学生解锁一整套高级工具。利用 GitHub 操作、代码空间和 Copilot 提升你的技术教育和协作水准。',
+      '在你的学校部署 GitHub 企业服务器和企业云，为教育工作者和学生解锁一整套高级工具。利用 GitHub 操作、代码空间和 Copilot 提升你的技术教育和协作水准。'
     )
     expect(text(body.querySelector('#terms'))).toBe('同意我们的条款和条件。')
     expect(text(body.querySelector('#copilot'))).toBe(
-      'GitHub Copilot 学生版是你的 AI 驱动编码伙伴。已验证的学生、教师和开源维护者可免费使用，Copilot 直接在你的编辑器中提供实时、感知上下文的代码建议——无论你是初学者还是经验丰富的开发人员。',
+      'GitHub Copilot 学生版是你的 AI 驱动编码伙伴。已验证的学生、教师和开源维护者可免费使用，Copilot 直接在你的编辑器中提供实时、感知上下文的代码建议——无论你是初学者还是经验丰富的开发人员。'
     )
     expect(text(body.querySelector('#period'))).toBe('让学生和教育工作者更轻松地协作完成项目和作业。')
   })
@@ -360,7 +349,7 @@ describe('education 页面（DOM）', () => {
         <p>Student Developer Pack partners are an essential part of our student’s learning experience. We seek out and onboard 5-10 new partners per year. Partner tools and resources must align with the developer lifecycle or related fields and be offered at no cost to the student. Please fill out <!-- -->our partnership application<!-- --> to have your company considered. Please note that not all who inquire are approved to join the Student Developer Pack.</p>
       </div>`)
     expect(text(body.querySelector('p'))).toBe(
-      '学生开发人员包合作伙伴是我们学生学习体验的重要组成部分。我们每年寻找并引入 5-10 个新合作伙伴。合作伙伴的工具和资源必须契合开发人员生命周期或相关领域，并免费提供给学生。请填写我们的合作申请表，以便我们考虑你的公司。请注意，并非所有咨询者都会获准加入学生开发人员包。',
+      '学生开发人员包合作伙伴是我们学生学习体验的重要组成部分。我们每年寻找并引入 5-10 个新合作伙伴。合作伙伴的工具和资源必须契合开发人员生命周期或相关领域，并免费提供给学生。请填写我们的合作申请表，以便我们考虑你的公司。请注意，并非所有咨询者都会获准加入学生开发人员包。'
     )
   })
 
@@ -385,7 +374,7 @@ describe('education 页面（DOM）', () => {
     expect(body.querySelector('figcaption')?.closest(selector)).not.toBeNull()
     // 引言里即使出现词典已收录的句子也不翻译
     expect(text(body.querySelector('blockquote'))).toBe(
-      'Join us today and take the first step towards transforming your tech education experience.',
+      'Join us today and take the first step towards transforming your tech education experience.'
     )
     expect(text(body.querySelector('figcaption'))).toBe('Sample Person Teachers')
     expect(text(body.querySelector('section h3'))).toBe('开启你的 GitHub 教育之旅')
@@ -414,7 +403,7 @@ describe('education 页面（DOM）', () => {
     expect(students?.querySelector('a')?.closest(selector)).toBeNull()
     expect(text(students?.querySelector('h3'))).toBe('学生')
     expect(text(students?.querySelector('p'))).toBe(
-      '加入一个学以致用的社区，免费使用专业开发人员使用的同款工具，包括 GitHub Copilot 学生版和代码空间。',
+      '加入一个学以致用的社区，免费使用专业开发人员使用的同款工具，包括 GitHub Copilot 学生版和代码空间。'
     )
     expect(text(students?.querySelector('[aria-hidden] span'))).toBe('了解学生相关信息')
   })
@@ -431,7 +420,7 @@ describe('education 页面（DOM）', () => {
     expect(text(body.querySelector('button'))).toBe('发挥 GitHub Copilot 专业版的 AI 力量')
     expect(text(body.querySelector('h4'))).toBe('作为教师，我如何获得 GitHub 教育福利的资格？')
     expect(text(body.querySelector('details p'))).toBe(
-      '免费使用工具：探索我们的学习路径，找到旨在引导你学习的结构化教育内容。这些路径提供贯穿不同技术主题的清晰进阶，帮助你按自己的节奏提升知识和技能。',
+      '免费使用工具：探索我们的学习路径，找到旨在引导你学习的结构化教育内容。这些路径提供贯穿不同技术主题的清晰进阶，帮助你按自己的节奏提升知识和技能。'
     )
   })
 })

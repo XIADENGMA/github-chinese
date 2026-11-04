@@ -73,7 +73,7 @@ const RESERVED_TOP = new Set([
   'trust-center',
   'users',
   'watching',
-  'why-github',
+  'why-github'
 ])
 
 /** 仓库二级路径段 → 页面类型 */
@@ -134,7 +134,7 @@ const REPO_SECTION: Readonly<Record<string, readonly PageKey[]>> = {
   copilot: ['copilot'],
   agents: ['copilot'],
   // Copilot 智能体会话页：/{owner}/{repo}/tasks/{id}
-  tasks: ['copilot'],
+  tasks: ['copilot']
 }
 
 /** 顶级保留路径 → 页面类型 */
@@ -184,7 +184,7 @@ const TOP_SECTION: Readonly<Record<string, readonly PageKey[]>> = {
   // MCP 服务器目录与服务器详情页
   mcp: ['mcp'],
   // 帐户页（创建组织除外）：升级计划、选择计划与个人设置的计划页同一组件，付款历史等计费页同 /settings/billing
-  account: ['settings'],
+  account: ['settings']
 }
 
 /** 顶级保留路径的前两段 → 页面类型（优先于 TOP_SECTION） */
@@ -195,7 +195,7 @@ const TOP_SUBSECTION: Readonly<Record<string, readonly PageKey[]>> = {
   // /sponsors 跳转到这里
   'open-source/sponsors': ['sponsors'],
   // 定价页（不含 /pricing/calculator 等子页）：计划卡片与比较表同新建组织的选择计划页
-  'pricing/': ['new'],
+  'pricing/': ['new']
 }
 
 /** orgs / users 下的三级路径段 → 页面类型 */
@@ -210,19 +210,19 @@ const OWNER_SECTION: Readonly<Record<string, readonly PageKey[]>> = {
   // 更改用户名的完成页：/users/<用户>/rename，与帐户设置（/settings/admin）同词典
   rename: ['settings'],
   // 组织安全概览：/orgs/<org>/security/overview、coverage、alerts/…、campaigns/…
-  security: ['security'],
+  security: ['security']
 }
 
 /** /enterprises/<企业>/ 下的三级路径段 → 页面类型 */
 const ENTERPRISE_SECTION: Readonly<Record<string, readonly PageKey[]>> = {
   // 企业安全概览：/enterprises/<企业>/security/coverage 等
-  security: ['security'],
+  security: ['security']
 }
 
 /** 个人主页 ?tab= 的取值 → 追加的页面类型 */
 const PROFILE_TAB: Readonly<Record<string, readonly PageKey[]>> = {
   // 项目标签页（/users/<用户>/projects 跳转到这里）：与组织项目列表同一列表组件
-  projects: ['projects'],
+  projects: ['projects']
 }
 
 /** 仓库子页：第三段/第五段 → 页面类型（优先于 REPO_SECTION，顺序即作用域顺序，靠后的优先） */
@@ -230,7 +230,7 @@ const REPO_SUBPAGE: Readonly<Record<string, readonly PageKey[]>> = {
   // 拉取请求的检查页：作业日志与运行详情由 actions 翻译；pulls 在后，同一原文以拉取请求页的译法为准
   'pull/checks': ['actions', 'pulls'],
   // 拉取请求下的 Copilot 智能体会话页
-  'pull/agent-sessions': ['pulls', 'copilot'],
+  'pull/agent-sessions': ['pulls', 'copilot']
 }
 
 /** /organizations/ 下不是组织名的二级段 */

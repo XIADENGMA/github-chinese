@@ -80,16 +80,14 @@ export default {
     'Require an approved review in pull requests including files with a designated code owner.':
       '拉取請求包含已指定程式碼擁有者的檔案時，要求取得核准的審查。',
     'Restrict who can dismiss pull request reviews': '限制誰可以駁回拉取請求審查',
-    'Specify people, teams, or apps allowed to dismiss pull request reviews.':
-      '指定允許駁回拉取請求審查的人員、團隊或應用程式。',
+    'Specify people, teams, or apps allowed to dismiss pull request reviews.': '指定允許駁回拉取請求審查的人員、團隊或應用程式。',
     'People, teams, or apps that can dismiss reviews.': '可以駁回審查的人員、團隊或應用程式。',
     'People, teams, or apps that can dismiss reviews': '可以駁回審查的人員、團隊或應用程式',
     'Organization and repository administrators': '組織和儲存庫管理員',
     'These members can always dismiss.': '這些成員一律可以駁回。',
     'These members cannot dismiss.': '這些成員無法駁回。',
     'Allow specified actors to bypass required pull requests': '允許指定的執行者繞過拉取請求要求',
-    'Specify people, teams, or apps who are allowed to bypass required pull requests.':
-      '指定允許繞過拉取請求要求的人員、團隊或應用程式。',
+    'Specify people, teams, or apps who are allowed to bypass required pull requests.': '指定允許繞過拉取請求要求的人員、團隊或應用程式。',
     'People, teams, or apps who can bypass required pull requests': '可以繞過拉取請求要求的人員、團隊或應用程式',
     'These members can always bypass required pull requests.': '這些成員一律可以繞過拉取請求要求。',
     'These members cannot bypass.': '這些成員無法繞過。',
@@ -105,16 +103,13 @@ export default {
     'This ensures pull requests targeting a matching branch have been tested with the latest code. This setting will not take effect unless at least one status check is enabled (see below).':
       '這可確保以相符分支為目標的拉取請求已使用最新程式碼測試。至少啟用一項狀態檢查（見下方）後，此設定才會生效。',
     'Do not require status checks on creation': '建立時不要求狀態檢查',
-    'Allow repositories and branches to be created if a check would otherwise prohibit it.':
-      '即使檢查會禁止，仍允許建立儲存庫和分支。',
+    'Allow repositories and branches to be created if a check would otherwise prohibit it.': '即使檢查會禁止，仍允許建立儲存庫和分支。',
     'Search for status checks in the last week for this repository': '搜尋此儲存庫最近一週的狀態檢查',
     'Status checks that are required.': '必要的狀態檢查。',
     'Status checks that are required': '必要的狀態檢查',
     'No status checks found': '找不到狀態檢查',
-    'Sorry, we couldn’t find any status checks in the last week for this repository.':
-      '找不到此儲存庫最近一週的狀態檢查。',
-    "Sorry, we couldn't find any status checks in the last week for this repository.":
-      '找不到此儲存庫最近一週的狀態檢查。',
+    'Sorry, we couldn’t find any status checks in the last week for this repository.': '找不到此儲存庫最近一週的狀態檢查。',
+    "Sorry, we couldn't find any status checks in the last week for this repository.": '找不到此儲存庫最近一週的狀態檢查。',
     'Learn more about status checks': '瞭解狀態檢查',
 
     // 对话解决、签署、线性历史记录
@@ -188,8 +183,7 @@ export default {
     'Users who can force push': '可以強制推送的使用者',
     'Only these people, teams, or apps are allowed to force push.': '只有這些人員、團隊或應用程式可以強制推送。',
     'Search for people, teams, or apps': '搜尋人員、團隊或應用程式',
-    'You have reached the maximum number of people, teams, and apps you can add.':
-      '已達到可新增的人員、團隊和應用程式數量上限。',
+    'You have reached the maximum number of people, teams, and apps you can add.': '已達到可新增的人員、團隊和應用程式數量上限。',
     'View the protected branches documentation': '查看受保護分支說明文件',
     'People, teams, or apps who can force push': '可以強制推送的人員、團隊或應用程式',
     'Organization and repository administrators (automatic)': '組織和儲存庫管理員（自動）',
@@ -206,8 +200,7 @@ export default {
       '受保護的標記即將淘汰。若要繼續保護標記，請在 8 月 30 日前移轉到標記規則集。你可以在我們的',
     'and can get started now by migrating to rulesets.': '中瞭解停用詳情並立即開始移轉到規則集。',
     'Protected tags': '受保護的標記',
-    'Protected tags are available to Pro, Team, and Enterprise users':
-      '專業版、團隊版和企業版使用者可以使用受保護的標記',
+    'Protected tags are available to Pro, Team, and Enterprise users': '專業版、團隊版和企業版使用者可以使用受保護的標記',
     'Protected tags can only be created or deleted by users with enhanced permissions defined by your organization owners.':
       '只有具有組織擁有者所定義之增強權限的使用者才能建立或刪除受保護的標記。',
     'Learn more about protected tags': '瞭解受保護的標記',
@@ -233,7 +226,7 @@ export default {
     // 删除对话框的确认按钮：Remove 按术语表作「移除」（标题、正文的 Delete 作「刪除」）
     'Yes, remove this tag protection rule': '是，移除此標記保護規則',
     'Tag name pattern': '標記名稱模式',
-    'to target tags named': '來針對名為',
+    'to target tags named': '來針對名為'
   },
   scoped: {
     'Choose which': '選擇哪些',
@@ -257,16 +250,15 @@ export default {
     'Add rule': '新增規則',
     // 「Example: You can use」+ <code>v*</code> +「to target tags named」+ <code>v1</code> +「,」+ <code>v2</code> +「, and so on.」
     'Example: You can use': '範例：你可以使用',
-    ', and so on.': '等的標記。',
+    ', and so on.': '等的標記。'
   },
   regexp: [
     // 规则列表与编辑器：相符的分支数
     [
       /^(Currently applies|Applies) to (\d+) branch(?:es)?(\.?)$/,
-      (_, verb: string, count: string, dot: string) =>
-        `${verb === 'Applies' ? '' : '目前'}適用於 ${count} 個分支${dot ? '。' : ''}`,
+      (_, verb: string, count: string, dot: string) => `${verb === 'Applies' ? '' : '目前'}適用於 ${count} 個分支${dot ? '。' : ''}`
     ],
     [/^Applies to (\d+) branch(?:es)?:$/, '適用於 $1 個分支：'],
-    [/^Applies to (\d+) tags?(\.?)$/, (_, count: string, dot: string) => `適用於 ${count} 個標記${dot ? '。' : ''}`],
-  ],
+    [/^Applies to (\d+) tags?(\.?)$/, (_, count: string, dot: string) => `適用於 ${count} 個標記${dot ? '。' : ''}`]
+  ]
 } satisfies PageDictionary

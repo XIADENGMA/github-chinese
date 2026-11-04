@@ -15,8 +15,7 @@ export default {
       '交付出色的作品後，真正的魔法才正要開始。繼續查看教學課程、最佳做法和說明文件，充分運用 GitHub。',
     'Remove from dashboard': '從儀表板移除',
     'Create your first code project': '建立你的第一個程式碼專案',
-    'It’s your own space to experiment, learn, and share code with the world.':
-      '這是屬於你的空間，可以實驗、學習，並與全世界分享程式碼。',
+    'It’s your own space to experiment, learn, and share code with the world.': '這是屬於你的空間，可以實驗、學習，並與全世界分享程式碼。',
     'Introduction to GitHub tutorial': 'GitHub 入門教學',
     'Create a personal README.md': '建立個人 README.md',
     'Blank project': '空白專案',
@@ -74,8 +73,7 @@ export default {
     'Learn with a tutorial project': '用教學專案學習',
     'Introduction to GitHub': 'GitHub 入門',
     'Get started using GitHub in less than an hour.': '不到一小時就能開始使用 GitHub。',
-    'Create a site or blog from your GitHub repositories with GitHub Pages.':
-      '使用 GitHub 頁面，從你的 GitHub 儲存庫建立網站或部落格。',
+    'Create a site or blog from your GitHub repositories with GitHub Pages.': '使用 GitHub 頁面，從你的 GitHub 儲存庫建立網站或部落格。',
     'Code with Copilot': '使用 Copilot 撰寫程式碼',
     'Develop with AI-powered code suggestions using GitHub Copilot, Codespaces, and VS Code.':
       '使用 GitHub Copilot、程式碼空間和 VS Code，以 AI 驅動的程式碼建議來開發。',
@@ -92,8 +90,7 @@ export default {
     'Anyone on the internet can see this repository': '網際網路上的任何人都能看到此儲存庫',
     'You choose who can see and commit to this repository': '由你決定誰能查看並提交到此儲存庫',
     // 卡片显示原因：标点随原文，不加冒号
-    "You're seeing this because you haven't created a repository in a while.":
-      '你看到此內容是因為你有一段時間沒有建立儲存庫了。',
+    "You're seeing this because you haven't created a repository in a while.": '你看到此內容是因為你有一段時間沒有建立儲存庫了。',
     "You're seeing this because you haven't used repositories, issues, and pull requests recently.":
       '你看到此內容是因為你最近沒有使用儲存庫、議題和拉取請求。',
     'Repositories that need your help': '需要你協助的儲存庫',
@@ -101,8 +98,7 @@ export default {
 
     // 旧版首页：使用行业工具（拉取请求的动词 open → 建立）
     'Use tools of the trade': '使用專業工具',
-    "You're seeing this because you haven't opened a pull request in a while.":
-      '你看到此內容是因為你有一段時間沒有建立拉取請求了。',
+    "You're seeing this because you haven't opened a pull request in a while.": '你看到此內容是因為你有一段時間沒有建立拉取請求了。',
     'Simplify your development workflow with a GUI': '用圖形介面簡化開發工作流程',
     'Install GitHub Desktop': '安裝 GitHub 桌面版',
     'to visualize, commit, and push changes without ever touching the command line.':
@@ -123,8 +119,7 @@ export default {
 
     // 旧版首页：开始使用 GitHub
     'Get started on GitHub': '開始使用 GitHub',
-    "You're seeing this because you haven't used GitHub's core features, yet.":
-      '你看到此內容是因為你還沒有使用過 GitHub 的核心功能。',
+    "You're seeing this because you haven't used GitHub's core features, yet.": '你看到此內容是因為你還沒有使用過 GitHub 的核心功能。',
     'Introduce yourself with a profile README': '用個人檔案讀我檔案介紹自己',
     'Share information about yourself by creating a profile README, which appears at the top of your profile page.':
       '建立個人檔案讀我檔案來分享你的資訊，它會顯示在個人檔案頁面頂端。',
@@ -135,16 +130,13 @@ export default {
       'GitHub 的「Hello World」教學課程會教你基本知識，你將建立自己的儲存庫，並學習 GitHub 用來建立、審查程式碼的拉取請求工作流程。',
     'Try the GitHub flow': '體驗 GitHub 流程',
     'About version control and Git': '關於版本控制和 Git',
-    'Learn about the version control system, Git, and how it works with GitHub.':
-      '瞭解版本控制系統 Git，以及它如何與 GitHub 搭配運作。',
+    'Learn about the version control system, Git, and how it works with GitHub.': '瞭解版本控制系統 Git，以及它如何與 GitHub 搭配運作。',
     'The GitHub Flow': 'GitHub 流程',
-    "Adopt GitHub's lightweight, branch-based workflow to collaborate on projects.":
-      '採用 GitHub 以分支為基礎的輕量工作流程來協作專案。',
+    "Adopt GitHub's lightweight, branch-based workflow to collaborate on projects.": '採用 GitHub 以分支為基礎的輕量工作流程來協作專案。',
 
     // 旧版新手提示
     'Learn Git and GitHub without any code!': '不必寫程式碼也能學習 Git 和 GitHub！',
-    'Using the Hello World guide, you’ll create a repository, start a branch,':
-      '透過 Hello World 指南，你將建立儲存庫、新增分支、',
+    'Using the Hello World guide, you’ll create a repository, start a branch,': '透過 Hello World 指南，你將建立儲存庫、新增分支、',
     'write comments, and open a pull request.': '撰寫留言並建立拉取請求。',
     "Let's get started!": '開始吧！',
     'Hide this notice forever': '永久隱藏此通知',
@@ -163,7 +155,7 @@ export default {
     'Learn. Collaborate. Grow.': '學習。協作。成長。',
     'GitHub Education gives you the tools and community support to take on tech challenges and turn them into opportunities. Your future in tech starts here!':
       'GitHub 教育為你提供工具和社群支援，讓你迎接科技挑戰並化為機會。你的科技未來從這裡開始！',
-    'Go to GitHub Education': '前往 GitHub 教育',
+    'Go to GitHub Education': '前往 GitHub 教育'
   },
   scoped: {
     'Getting started': '入門',
@@ -172,13 +164,13 @@ export default {
     complete: '已完成',
     // 旧版首页：开始编写代码的表单标签；Use + <the github.dev web-based editor> + from your repository …
     'Repository name': '儲存庫名稱',
-    Use: '使用',
+    Use: '使用'
   },
   regexp: [
     // 入门清单进度：2/3 completed（新手清单）/ 2/3 complete（共享清单组件）
     [/^(\d+)\/(\d+) completed?$/, '已完成 $1/$2'],
     // 资源卡片：Read · Est. 5m / Watch · 9 videos
     [/^Read · Est\. (\d+)m$/, '閱讀 · 約 $1 分鐘'],
-    [/^Watch · (\d+) videos?$/, '觀看 · $1 部影片'],
-  ],
+    [/^Watch · (\d+) videos?$/, '觀看 · $1 部影片']
+  ]
 } satisfies PageDictionary

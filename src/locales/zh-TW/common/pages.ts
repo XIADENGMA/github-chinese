@@ -7,14 +7,14 @@ import { DATE_SOURCE, joinCjk, translateTime } from '../helpers'
  */
 const AGREE_BUTTONS: ReadonlyMap<string, string> = new Map([
   ['Upgrade to GitHub Pro', '升級到 GitHub 專業版'],
-  ['Sign up for GitHub', '註冊 GitHub'],
+  ['Sign up for GitHub', '註冊 GitHub']
 ])
 
 /** 营销同意复选框的示例字段 */
 const CONSENT_FIELD: Readonly<Record<string, string>> = {
   name: '姓名',
   'email address': '電子郵件地址',
-  country: '國家/地區',
+  country: '國家/地區'
 }
 
 /**
@@ -22,7 +22,7 @@ const CONSENT_FIELD: Readonly<Record<string, string>> = {
  * name, email address and country（en-GB）、name、email address和country（中文）；未收录的字段保留原文
  */
 function consentFields(list: string): string {
-  const fields = list.split(/,? and |, |、|和|及/).map((field) => {
+  const fields = list.split(/,? and |, |、|和|及/).map(field => {
     const name = field.trim()
     return Object.hasOwn(CONSENT_FIELD, name) ? (CONSENT_FIELD[name] ?? name) : name
   })
@@ -60,8 +60,7 @@ export default {
     'Drive operational efficiency': '提升營運效率',
     'and boost uptime with dedicated GitHub experts.': '並由專屬的 GitHub 專家協助提高正常運作時間。',
     'Empower your team': '強化你的團隊',
-    'and meet your goals with the resources to maximize your investment.':
-      '並運用各項資源達成目標，讓投資發揮最大價值。',
+    'and meet your goals with the resources to maximize your investment.': '並運用各項資源達成目標，讓投資發揮最大價值。',
     'Get a quote': '取得報價',
     'Looking for general support questions? Contact GitHub Support.': '有一般支援問題嗎？請聯絡 GitHub 支援。',
     'Already an existing customer?': '已經是客戶了嗎？',
@@ -70,8 +69,7 @@ export default {
     'Receive expert support in one central location': '在單一位置集中取得專家支援',
     'Get a dedicated engineer who knows your account': '獲得熟悉你帳號的專屬工程師',
     'Discover all features': '探索所有功能',
-    'Get GitHub Premium Support with your Microsoft Unified Support plan.':
-      '透過你的 Microsoft Unified Support 方案取得 GitHub 進階支援。',
+    'Get GitHub Premium Support with your Microsoft Unified Support plan.': '透過你的 Microsoft Unified Support 方案取得 GitHub 進階支援。',
     'Provide your team with convenient, self-service tools': '為團隊提供便利的自助式工具',
     'Ensure the reliability of your environment': '確保環境的可靠性',
     'Accelerate your goals with best-in-class support': '以一流的支援加速達成目標',
@@ -221,8 +219,7 @@ export default {
     'Please refer to our': '請參閱我們的',
     'plan comparison table': '方案比較表',
     'How do I contact GitHub Premium Support?': '如何聯絡 GitHub 進階支援？',
-    'If you are an existing GitHub Premium Support customer, please sign in to our':
-      '如果你已是 GitHub 進階支援客戶，請登入我們的',
+    'If you are an existing GitHub Premium Support customer, please sign in to our': '如果你已是 GitHub 進階支援客戶，請登入我們的',
     'support portal': '支援入口網站',
     '. If you don’t already have GitHub Premium Support, please': '。如果你還沒有 GitHub 進階支援，請',
     'contact sales': '聯絡銷售人員',
@@ -261,8 +258,7 @@ export default {
     'Premium Plus customers may use up to 12 technical advisory hours per quarter. Unused technical advisory hours may not be carried over into the next quarter.':
       '進階增強支援客戶每季最多可使用 12 小時的技術諮詢時數。未使用的技術諮詢時數不能累積到下一季。',
     'How can the technical advisory support hours be used?': '技術諮詢支援時數可以怎麼使用？',
-    'There are multiple ways you can use technical advisory hours, including but not limited to:':
-      '技術諮詢時數有多種用法，包括但不限於：',
+    'There are multiple ways you can use technical advisory hours, including but not limited to:': '技術諮詢時數有多種用法，包括但不限於：',
     'Consultations regarding GitHub best practices and general recommendations': 'GitHub 最佳做法和一般建議的諮詢',
     'GitHub Enterprise Server upgrade preparation and assistance': 'GitHub 企業伺服器升級準備和協助',
     'Does GitHub Premium Support provide service on weekends?': 'GitHub 進階支援在週末提供服務嗎？',
@@ -271,8 +267,7 @@ export default {
     'Upgrading your plan': '升級方案',
     'What virtual trainings are available with GitHub Premium Plus Support and who can participate?':
       'GitHub 進階增強支援提供哪些線上培訓？誰可以參加？',
-    'Customers get access to one virtual training class per year. Topics include:':
-      '客戶每年可參加一堂線上培訓課程。主題包括：',
+    'Customers get access to one virtual training class per year. Topics include:': '客戶每年可參加一堂線上培訓課程。主題包括：',
     'GitHub for developers': '適用於開發人員的 GitHub',
     // 课程名括号里的 Server / Cloud 指企业服务器 / 企业云（产品名译中文：伺服器 / 雲端），括号内有中文用全角
     'GitHub for admins (Server)': '適用於管理員的 GitHub（伺服器）',
@@ -314,8 +309,7 @@ export default {
     'A woman from behind coding on a laptop.': '一位女性在筆記型電腦上寫程式的背影。',
     'A man working on a laptop at his desk.': '一位男性在辦公桌前用筆記型電腦工作。',
     'Two men working on computers at neighboring desks.': '兩位男性在相鄰的辦公桌前用電腦工作。',
-    'A woman video calling with someone on a laptop while sitting at the table.':
-      '一位女性坐在桌前，用筆記型電腦和人視訊通話。',
+    'A woman video calling with someone on a laptop while sitting at the table.': '一位女性坐在桌前，用筆記型電腦和人視訊通話。',
     'Spotify logo': 'Spotify 標誌',
     'Slack logo': 'Slack 標誌',
     'Arm logo': 'Arm 標誌',
@@ -357,8 +351,7 @@ export default {
     'Advanced Security:': '進階安全性：',
     'Seamlessly plan, build, and ship great software with an extensible DevOps platform':
       '透過可擴充的 DevOps 平台，順暢地規劃、建置並交付優質軟體',
-    'Spend less time fixing security vulnerabilities with AI-powered AppSec tools':
-      '使用 AI 驅動的 AppSec 工具減少修正安全性漏洞的時間',
+    'Spend less time fixing security vulnerabilities with AI-powered AppSec tools': '使用 AI 驅動的 AppSec 工具減少修正安全性漏洞的時間',
 
     // 企业版试用计划选择 /organizations/enterprise_plan。产品名 Enterprise Cloud / Server 全站同译（new/plans.ts 同译）
     'Pick your trial plan': '選擇試用方案',
@@ -401,8 +394,7 @@ export default {
     // 创建企业：数据托管与企业信息
     'Data hosting': '資料託管',
     'Choose which geographical location to store your data': '選擇要儲存資料的地理位置',
-    'By default, GitHub stores data for GitHub.com in the United States.':
-      '預設情況下，GitHub 會將 GitHub.com 的資料儲存在美國。',
+    'By default, GitHub stores data for GitHub.com in the United States.': '預設情況下，GitHub 會將 GitHub.com 的資料儲存在美國。',
     // “With <GitHub Enterprise Cloud with Data Residency 链接>, you can choose …”，整句见 inline；
     // With 过短不收，此为整句未命中时的片段
     'GitHub Enterprise Cloud with Data Residency': '採用資料落地的 GitHub 企業雲端',
@@ -463,12 +455,10 @@ export default {
     'If my organization does not already have a customer agreement for GitHub services, I hereby accept the':
       '如果我的組織尚未簽訂 GitHub 服務客戶合約，我在此接受',
     'Corporate Terms of Service': '企業服務條款',
-    'and confirm that I have the authority to do so on behalf of my organization.':
-      '，並確認我有權代表我的組織這麼做。',
+    'and confirm that I have the authority to do so on behalf of my organization.': '，並確認我有權代表我的組織這麼做。',
     'Account verification.': '帳號驗證。',
     'Account has been verified. Please continue.': '帳號已驗證。請繼續。',
-    "Will take a few minutes to a few hours to process before it's available for use.":
-      '需要幾分鐘到幾小時的處理時間才能使用。',
+    "Will take a few minutes to a few hours to process before it's available for use.": '需要幾分鐘到幾小時的處理時間才能使用。',
 
     // 联系销售 /enterprise/contact（分页标题：Enterprise · A smarter way to work together · GitHub）
     'A smarter way to work together': '更聰明的協作方式',
@@ -548,8 +538,7 @@ export default {
     'You are about to remove the billing information for this organization.': '你即將移除此組織的帳單資訊。',
     'PayPal update': '更新 PayPal',
     'Credit Card Form': '信用卡表單',
-    'Prepaid debit and credit cards are not accepted as a valid form of payment.':
-      '不接受預付簽帳金融卡和預付信用卡作為有效的付款方式。',
+    'Prepaid debit and credit cards are not accepted as a valid form of payment.': '不接受預付簽帳金融卡和預付信用卡作為有效的付款方式。',
     'Note: Switching from monthly to yearly billing will also impact your other active subscriptions. Any necessary adjustments will be reflected on your invoice.':
       '注意：從按月計費切換為按年計費也會影響你其他有效的訂閱。任何必要的調整都會反映在你的發票上。',
     // GitHub Pro 权益：“Includes everything in <Free>, plus:”
@@ -607,8 +596,7 @@ export default {
     'Launch a full, cloud-based development environment in seconds.': '幾秒內即可啟動功能完整的雲端開發環境。',
     'Explore GitHub Codespaces': '探索 GitHub 程式碼空間',
     'Keep momentum on the go': '行動中也能保持節奏',
-    'Manage projects and assign tasks to Copilot, all from your mobile device.':
-      '在行動裝置上即可管理專案，並將任務指派給 Copilot。',
+    'Manage projects and assign tasks to Copilot, all from your mobile device.': '在行動裝置上即可管理專案，並將任務指派給 Copilot。',
     'Shape your toolchain': '打造你的工具鏈',
     'Extend your stack with apps, actions, and AI models.': '運用應用程式、動作和 AI 模型擴充你的技術堆疊。',
     'Explore GitHub Marketplace': '探索 GitHub 市集',
@@ -630,12 +618,10 @@ export default {
       '運用安全性活動和 Copilot 自動修正，減少應用程式漏洞。',
     'Learn about GitHub Code Security': '瞭解 GitHub 程式碼安全性',
     'Dependencies you can depend on.': '值得信賴的相依項目。',
-    'Update vulnerable dependencies with supported fixes for breaking changes.':
-      '更新有漏洞的相依項目，並針對破壞性變更提供受支援的修正。',
+    'Update vulnerable dependencies with supported fixes for breaking changes.': '更新有漏洞的相依項目，並針對破壞性變更提供受支援的修正。',
     'Learn about Dependabot': '瞭解 Dependabot',
     'Your secrets, your business.': '你的機密，由你作主。',
-    'Detect, prevent, and remediate leaked secrets across your organization.':
-      '在整個組織中偵測、預防並修復外洩的機密。',
+    'Detect, prevent, and remediate leaked secrets across your organization.': '在整個組織中偵測、預防並修復外洩的機密。',
     'Learn about GitHub Secret Protection': '瞭解 GitHub 機密保護',
 
     // 首页：协作分区与客户推荐语（省略号随原文）
@@ -673,14 +659,12 @@ export default {
     'Mercado Libre cuts coding time by 50%': 'Mercado Libre 將程式撰寫時間縮短 50%',
     'By size': '依規模',
     'Buffer enhances collaboration and control with GitHub Team': 'Buffer 透過 GitHub 團隊版強化協作和管控',
-    'Accenture customizes GitHub Copilot for its 12,000 developers':
-      'Accenture 為旗下 12,000 位開發人員自訂 GitHub Copilot',
+    'Accenture customizes GitHub Copilot for its 12,000 developers': 'Accenture 為旗下 12,000 位開發人員自訂 GitHub Copilot',
     'Philips reduces infrastructure costs by 80%': 'Philips 將基礎架構成本降低 80%',
     'By use case': '依使用情境',
     'TELUS saves $16.9M with GitHub': 'TELUS 透過 GitHub 節省 1690 萬美元',
     'Fullstory automates DevSecOps at scale with GitHub': 'Fullstory 透過 GitHub 大規模自動化 DevSecOps',
-    'EY leverages GitHub and Microsoft Azure DevOps to outpace the competition':
-      'EY 運用 GitHub 和 Microsoft Azure DevOps 超越競爭對手',
+    'EY leverages GitHub and Microsoft Azure DevOps to outpace the competition': 'EY 運用 GitHub 和 Microsoft Azure DevOps 超越競爭對手',
     'Explore customer stories': '探索客戶案例',
 
     // 首页：结尾与统计脚注
@@ -735,10 +719,8 @@ export default {
     'Dream it.': '構想。',
     'See it.': '預覽。',
     'Ship it.': '發布。',
-    'Transform ideas into full-stack intelligent apps in a snap. Publish with a click.':
-      '瞬間將構想化為全端智慧應用程式。一鍵發布。',
-    'Spark is currently only available to Copilot Pro+ and Enterprise users.':
-      'Spark 目前僅開放給 Copilot 專業增強版和企業版使用者。',
+    'Transform ideas into full-stack intelligent apps in a snap. Publish with a click.': '瞬間將構想化為全端智慧應用程式。一鍵發布。',
+    'Spark is currently only available to Copilot Pro+ and Enterprise users.': 'Spark 目前僅開放給 Copilot 專業增強版和企業版使用者。',
     'Upgrade now to access Spark': '立即升級以使用 Spark',
     'Create web apps with React and TypeScript to prototype ideas, build tools, and more':
       '使用 React 和 TypeScript 建立 Web 應用程式，製作構想原型、打造工具等',
@@ -818,7 +800,7 @@ export default {
     'Add AI capabilities by asking in the Iterate panel. View and edit the prompts powering those features here.':
       '在迭代面板中提出要求以新增 AI 功能。在此查看並編輯驅動這些功能的提示。',
     'Upload assets here or in the Iterate panel. Assets support images, documents, audio, and video. Ask in the Iterate panel to add them to your app.':
-      '在此處或迭代面板中上傳資產。資產支援圖片、文件、音訊和影片。在迭代面板中提出要求，將其加入你的應用程式。',
+      '在此處或迭代面板中上傳資產。資產支援圖片、文件、音訊和影片。在迭代面板中提出要求，將其加入你的應用程式。'
   },
   regexp: [
     // 电话号码区号选择器：Select country for phone number. Currently selected: US +1
@@ -828,13 +810,13 @@ export default {
     // 结账条款：By clicking “Upgrade to GitHub Pro”, you agree to our（弯引号、直引号均可）
     [
       /^By clicking ["“]([^"”]+)["”], you agree to our$/,
-      (_, label: string) => `按一下「${AGREE_BUTTONS.get(label) ?? label}」即表示你同意我們的`,
+      (_, label: string) => `按一下「${AGREE_BUTTONS.get(label) ?? label}」即表示你同意我們的`
     ],
     // 营销同意复选框（结账、联系表单共用的组件）的第二句：第一句见 static，相邻文本节点整段未命中时按句拆分后拼成一段
     [
       /^The information used includes, but is not limited to, (.+)\.$/,
-      (_, list: string) => `所使用的資訊包括但不限於${consentFields(list)}。`,
-    ],
+      (_, list: string) => `所使用的資訊包括但不限於${consentFields(list)}。`
+    ]
   ],
   inline: [
     // 窄屏方案选择（/pricing、/organizations/plan、/account/organizations/new，页面类型都是 new）：
@@ -845,16 +827,16 @@ export default {
     // <br>、<br>、<div>With three tiers…</div>；尾部 3 个槽位不动，<div> 里的句子照常翻译
     [
       "At {}, we're seeing technology leaders take an active role in helping their customers adopt new technologies. GitHub is demonstrating a thoughtful, deliberate approach to creating compelling service offerings. {}{}{}",
-      '在 {}，我們看到技術領導者正積極協助客戶採用新技術。GitHub 在打造具吸引力的服務方面，展現出深思熟慮、審慎周延的做法。{}{}{}',
+      '在 {}，我們看到技術領導者正積極協助客戶採用新技術。GitHub 在打造具吸引力的服務方面，展現出深思熟慮、審慎周延的做法。{}{}{}'
     ],
     // 创建企业表单的数据托管说明：With <GitHub Enterprise Cloud with Data Residency 链接>, you can choose …
     // 链接文字译成中文，{} 两侧不留空格。宿主按三段收录（表单需登录，结构未核对），
     // 另有元素子节点时不命中，各段照常翻译
     [
       'With {}, you can choose where your company’s code and data are stored. Your enterprise will be hosted on a dedicated subdomain of GHE.com.',
-      '透過{}，你可以選擇公司程式碼和資料的儲存位置。你的企業將託管在 GHE.com 的專屬子網域上。',
-    ],
+      '透過{}，你可以選擇公司程式碼和資料的儲存位置。你的企業將託管在 GHE.com 的專屬子網域上。'
+    ]
   ],
   // 功能页时间线条目（Primer Brand Timeline，类名带 CSS 模块哈希，按片段匹配）：<em> 拆开的句子整段合并
-  mergeText: ['[class*="Timeline__item-text"]'],
+  mergeText: ['[class*="Timeline__item-text"]']
 } satisfies PageDictionary

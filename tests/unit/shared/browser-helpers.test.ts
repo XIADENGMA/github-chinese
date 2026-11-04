@@ -30,7 +30,7 @@ describe('syncBadge', () => {
     ['en', [], 'OFF'],
     ['auto', ['zh-HK', 'en'], '關'],
     ['auto', ['zh-CN'], '关'],
-    ['auto', ['ja-JP'], 'OFF'],
+    ['auto', ['ja-JP'], 'OFF']
   ] as const)('徽标文字随界面语言：%s %j → %s', async (uiLanguage, languages, text) => {
     await syncBadge({ enabled: false, uiLanguage }, { languages })
     expect(await fakeBrowser.action.getBadgeText({})).toBe(text)

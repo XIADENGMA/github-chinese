@@ -17,7 +17,7 @@ const RELEASE_ERRORS: Readonly<Record<string, string>> = {
   "tag name can't be blank": '标签名称不能为空',
   'tag name can’t be blank': '标签名称不能为空',
   'tag name is not well-formed': '标签名称格式不正确',
-  'published releases must have a valid tag': '已发布的发行版必须有有效的标签',
+  'published releases must have a valid tag': '已发布的发行版必须有有效的标签'
 }
 const RELEASE_ERROR_SOURCE = Object.keys(RELEASE_ERRORS).join('|')
 const RELEASE_ERROR_LIST_SOURCE = `(?:${RELEASE_ERROR_SOURCE})(?:, (?:${RELEASE_ERROR_SOURCE}))*`
@@ -26,7 +26,7 @@ const RELEASE_ERROR_LIST_SOURCE = `(?:${RELEASE_ERROR_SOURCE})(?:, (?:${RELEASE_
 function joinReleaseErrors(list: string): string {
   return list
     .split(', ')
-    .map((reason) => RELEASE_ERRORS[reason] ?? reason)
+    .map(reason => RELEASE_ERRORS[reason] ?? reason)
     .join('，')
 }
 
@@ -35,10 +35,7 @@ const regexp: readonly RegExpRule[] = [
   [new RegExp(`^Releases: (${REPO})$`), '发行版：$1'],
   [new RegExp(`^Tags: (${REPO})$`), '标签：$1'],
   // 隐藏的页面标题（无刷新导航时用于更新标签页标题）
-  [
-    new RegExp(`^(Releases|Tags) · (${REPO})$`),
-    (_, page: string, repo: string) => `${page === 'Releases' ? '发行版' : '标签'} · ${repo}`,
-  ],
+  [new RegExp(`^(Releases|Tags) · (${REPO})$`), (_, page: string, repo: string) => `${page === 'Releases' ? '发行版' : '标签'} · ${repo}`],
   // 标签页标题段：Release v3.5.0（只处理以版本号命名的发行版）
   [/^Release (v?\d[\w.+-]*)$/, '发行版 $1'],
   // 发行版头部：<959 个提交> 在此发行版之后进入 main
@@ -51,12 +48,9 @@ const regexp: readonly RegExpRule[] = [
   [new RegExp(`^(${LOGIN}) and (${LOGIN})$`), '$1 和 $2'],
   [
     new RegExp(`^(${LOGIN_LIST}), and (\\d+) other contributors?$`),
-    (_, list: string, count: string) => `${joinLogins(list)} 和另外 ${count} 个贡献者`,
+    (_, list: string, count: string) => `${joinLogins(list)} 和另外 ${count} 个贡献者`
   ],
-  [
-    new RegExp(`^(${LOGIN_LIST}), and (${LOGIN})$`),
-    (_, list: string, last: string) => `${joinLogins(list)} 和 ${last}`,
-  ],
+  [new RegExp(`^(${LOGIN_LIST}), and (${LOGIN})$`), (_, list: string, last: string) => `${joinLogins(list)} 和 ${last}`],
   // 标签页：切换提交消息按钮的提示
   [/^Toggle (.+?)['’]s commit message$/, '切换 $1 的提交消息'],
   // 编辑 / 删除按钮的无障碍名称
@@ -76,8 +70,8 @@ const regexp: readonly RegExpRule[] = [
   // 发布表单：提交失败
   [
     new RegExp(`^There was an error creating your Release: (${RELEASE_ERROR_LIST_SOURCE})\\.$`),
-    (_, list: string) => `创建发行版时出错：${joinReleaseErrors(list)}。`,
-  ],
+    (_, list: string) => `创建发行版时出错：${joinReleaseErrors(list)}。`
+  ]
 ]
 
 /**
@@ -183,8 +177,7 @@ export default {
     // 创建新标签：<v1.0> 于发布时
     'on publish': '于发布时',
     'Choose an existing tag, or create a new tag on publish': '选择现有标签，或在发布时创建新标签',
-    'Choose an existing tag, or create a new tag when you publish this release.':
-      '选择现有标签，或在发布此发行版时创建新标签。',
+    'Choose an existing tag, or create a new tag when you publish this release.': '选择现有标签，或在发布此发行版时创建新标签。',
     'Loading tag information…': '正在加载标签信息…',
     'Loading tag information...': '正在加载标签信息...',
     'Existing tag': '现有标签',
@@ -194,20 +187,16 @@ export default {
     'edit them?': '编辑它们？',
     'edit the existing notes': '编辑现有说明',
     'Invalid tag name': '标签名称无效',
-    'We weren’t able to create the release for you. Make sure you have a valid tag.':
-      '无法创建发行版。请确保标签有效。',
-    "We weren't able to create the release for you. Make sure you have a valid tag.":
-      '无法创建发行版。请确保标签有效。',
+    'We weren’t able to create the release for you. Make sure you have a valid tag.': '无法创建发行版。请确保标签有效。',
+    "We weren't able to create the release for you. Make sure you have a valid tag.": '无法创建发行版。请确保标签有效。',
     'We can’t create a tag with this name. Take a look at the suggestions in the sidebar for example tag names.':
       '无法使用此名称创建标签。示例标签名称见侧边栏中的建议。',
     "We can't create a tag with this name. Take a look at the suggestions in the sidebar for example tag names.":
       '无法使用此名称创建标签。示例标签名称见侧边栏中的建议。',
-    'Excellent! This tag will be created from the target when you publish this release.':
-      '很好！发布此发行版时将基于目标创建此标签。',
+    'Excellent! This tag will be created from the target when you publish this release.': '很好！发布此发行版时将基于目标创建此标签。',
     // 新建标签对话框（标签选择器）
     'Tag cannot be blank': '标签不能为空',
-    'Contains invalid characters. Use safe special characters ., -, or _ instead':
-      '包含无效字符。请改用安全的特殊字符 .、- 或 _',
+    'Contains invalid characters. Use safe special characters ., -, or _ instead': '包含无效字符。请改用安全的特殊字符 .、- 或 _',
     // 「X. Please try again.」句号随原文（与 pulls、common-ui 一致）
     'Unable to validate tag name. Please try again.': '无法验证标签名称。请重试。',
     'Creating a tag with the same name as a branch can cause ambiguity when selecting refs':
@@ -245,8 +234,7 @@ export default {
       '自动添加此差异中所有已合并拉取请求和此发行版贡献者的 Markdown',
     'Clear existing notes to automatically add the Markdown for all the merged pull requests from this diff and contributors of this release':
       '清除现有说明以自动添加此差异中所有已合并拉取请求和此发行版贡献者的 Markdown',
-    'There were no pull requests associated with the commits included in this release.':
-      '此发行版包含的提交没有关联的拉取请求。',
+    'There were no pull requests associated with the commits included in this release.': '此发行版包含的提交没有关联的拉取请求。',
     'Describe this release': '描述此发行版',
     'Release description': '发行版描述',
 
@@ -339,7 +327,7 @@ export default {
     'A README exists.': '已有自述文件。',
     'Primary Category': '主要类别',
     'Another Category': '其他类别',
-    '— optional': '— 可选',
+    '— optional': '— 可选'
   },
   scoped: {
     'Pre-release': '预发行版',
@@ -369,11 +357,11 @@ export default {
     Ideas: '想法',
     Polls: '投票',
     'Q&A': '问答',
-    'Show and tell': '展示与分享',
+    'Show and tell': '展示与分享'
   },
   regexp,
   ignore: [
     // “跳转到发行版”菜单中的发行版名
-    'a[href^="#release-"]',
-  ],
+    'a[href^="#release-"]'
+  ]
 } satisfies PageDictionary

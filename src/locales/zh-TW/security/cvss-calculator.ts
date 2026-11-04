@@ -10,7 +10,7 @@ const METRIC: Readonly<Record<string, string>> = {
   Scope: '範圍',
   Confidentiality: '機密性',
   Integrity: '完整性',
-  Availability: '可用性',
+  Availability: '可用性'
 }
 
 /** CVSS 指标取值（Local 作「本機」，Physical 作「實體」，Changed / Unchanged 作「已變更」「未變更」） */
@@ -27,7 +27,7 @@ const VALUE: Readonly<Record<string, string>> = {
   Changed: '已變更',
   Present: '存在',
   Passive: '被動',
-  Active: '主動',
+  Active: '主動'
 }
 
 const METRIC_SOURCE = `(${Object.keys(METRIC).join('|')})`
@@ -98,8 +98,7 @@ export default {
       '：攻擊者需要的權限能對有漏洞的元件提供重大（例如管理層級的）控制權，可存取整個元件範圍的設定和檔案。',
     'This metric captures the requirement for a human user, other than the attacker, to participate in the successful compromise of the vulnerable component. This metric determines whether the vulnerability can be exploited solely at the will of the attacker, or whether a separate user (or user-initiated process) must participate in some manner. The Base Score is greatest when no user interaction is required.':
       '此指標衡量成功入侵有漏洞的元件時，是否需要攻擊者以外的人類使用者參與。此指標決定漏洞能否完全依攻擊者的意願加以利用，或是否必須有另一位使用者（或由使用者啟動的處理程序）以某種方式參與。不需要使用者互動時，基本分數最高。',
-    ': The vulnerable system can be exploited without interaction from any user.':
-      '：不需要任何使用者互動，就能利用有漏洞的系統。',
+    ': The vulnerable system can be exploited without interaction from any user.': '：不需要任何使用者互動，就能利用有漏洞的系統。',
     ': Successful exploitation of this vulnerability requires a user to take some action before the vulnerability can be exploited.':
       '：必須先由使用者採取某些動作，才能成功利用此漏洞。',
     ': An exploited vulnerability can only affect resources managed by the same security authority. In this case, the vulnerable component and the impacted component are either the same, or both are managed by the same security authority.':
@@ -214,29 +213,19 @@ export default {
     'This metric measures the impact to integrity of a successfully exploited vulnerability. Integrity refers to the trustworthiness and veracity of information. Integrity of the SUBSEQUENT SYSTEM is impacted when an attacker makes unauthorized modification of system data. Integrity is also impacted when a system user can repudiate critical actions taken in the context of the system (e.g. due to insufficient logging).':
       '此指標衡量漏洞遭成功利用時對完整性的影響。完整性是指資訊的可信度和真實性。攻擊者未經授權修改系統資料時，後續系統的完整性就會受到影響。系統使用者能否認在系統中執行過的關鍵動作時（例如因記錄不足），完整性也會受到影響。',
     'This metric measures the impact to the availability of the SUBSEQUENT SYSTEM resulting from a successfully exploited vulnerability. While the Confidentiality and Integrity impact metrics apply to the loss of confidentiality or integrity of data (e.g., information, files) used by the system, this metric refers to the loss of availability of the impacted system itself, such as a networked service (e.g., web, database, email). Since availability refers to the accessibility of information resources, attacks that consume network bandwidth, processor cycles, or disk space all impact the availability of a system.':
-      '此指標衡量漏洞遭成功利用時對後續系統可用性的影響。機密性和完整性影響指標適用於系統所使用資料（例如資訊、檔案）的機密性或完整性損失，而此指標是指受影響系統本身的可用性損失，例如網路服務（如網頁、資料庫、電子郵件）。由於可用性是指資訊資源的可存取性，因此消耗網路頻寬、處理器週期或磁碟空間的攻擊，都會影響系統的可用性。',
+      '此指標衡量漏洞遭成功利用時對後續系統可用性的影響。機密性和完整性影響指標適用於系統所使用資料（例如資訊、檔案）的機密性或完整性損失，而此指標是指受影響系統本身的可用性損失，例如網路服務（如網頁、資料庫、電子郵件）。由於可用性是指資訊資源的可存取性，因此消耗網路頻寬、處理器週期或磁碟空間的攻擊，都會影響系統的可用性。'
   },
   regexp: [
     // 取值按钮的 aria-label：Attack Vector - Network
-    [
-      new RegExp(`^${METRIC_SOURCE} - ${VALUE_SOURCE}$`),
-      (_, metric: string, value: string) => `${METRIC[metric]} - ${VALUE[value]}`,
-    ],
+    [new RegExp(`^${METRIC_SOURCE} - ${VALUE_SOURCE}$`), (_, metric: string, value: string) => `${METRIC[metric]} - ${VALUE[value]}`],
     // v4：Attack Vector (AV) - Network (N)
     [
       new RegExp(`^${METRIC_SOURCE} \\(${ABBR_SOURCE}\\) - ${VALUE_SOURCE} \\(([A-Z])\\)$`),
-      (_, metric: string, abbr: string, value: string, letter: string) =>
-        `${METRIC[metric]} (${abbr}) - ${VALUE[value]} (${letter})`,
+      (_, metric: string, abbr: string, value: string, letter: string) => `${METRIC[metric]} (${abbr}) - ${VALUE[value]} (${letter})`
     ],
     // v4 指标标题：Attack Vector (AV)
-    [
-      new RegExp(`^${METRIC_SOURCE} \\(${ABBR_SOURCE}\\)$`),
-      (_, metric: string, abbr: string) => `${METRIC[metric]} (${abbr})`,
-    ],
+    [new RegExp(`^${METRIC_SOURCE} \\(${ABBR_SOURCE}\\)$`), (_, metric: string, abbr: string) => `${METRIC[metric]} (${abbr})`],
     // v4 取值：Network (N)
-    [
-      new RegExp(`^${VALUE_SOURCE} \\(([A-Z])\\)$`),
-      (_, value: string, letter: string) => `${VALUE[value]} (${letter})`,
-    ],
-  ],
+    [new RegExp(`^${VALUE_SOURCE} \\(([A-Z])\\)$`), (_, value: string, letter: string) => `${VALUE[value]} (${letter})`]
+  ]
 } satisfies PageDictionary

@@ -15,14 +15,4 @@ import list from './issues/list'
  * 新建议题（模板选择、表单）、筛选栏、标签页、里程碑页、已保存视图。
  * 正则按合并顺序匹配：viewer / timeline / metadata 中更具体的规则排在 list / filter 之前。
  */
-export default mergeDictionaries(
-  viewer,
-  timeline,
-  metadata,
-  create,
-  filter,
-  labels,
-  milestones,
-  views,
-  list,
-) satisfies PageDictionary
+export default mergeDictionaries(viewer, timeline, metadata, create, filter, labels, milestones, views, list) satisfies PageDictionary

@@ -49,13 +49,7 @@ export interface RecordStore {
   /** 属性的原文（null 表示原本不存在）；与页面脚本互相覆盖时返回 CONTESTED */
   attributeSource(element: Element, name: string, current: string | null): string | null | Contested
   /** 写入期望值（null 表示移除）；期望值等于原文时清除记录 */
-  writeAttribute(
-    element: Element,
-    name: string,
-    current: string | null,
-    source: string | null,
-    desired: string | null,
-  ): void
+  writeAttribute(element: Element, name: string, current: string | null, source: string | null, desired: string | null): void
   ownAttribute(element: Element, name: string, current: string | null): boolean
   /** 还原元素属性（全部或指定名称）并清除记录 */
   restoreAttributes(element: Element, names?: readonly string[]): void
@@ -67,11 +61,7 @@ export interface RecordStore {
   clear(): void
 }
 
-function nextRecord<T extends string | null>(
-  previous: WriteRecord<T> | undefined,
-  original: T,
-  written: string,
-): WriteRecord<T> {
+function nextRecord<T extends string | null>(previous: WriteRecord<T> | undefined, original: T, written: string): WriteRecord<T> {
   const keep = previous !== undefined && previous.original === original
   return { original, written, reverts: keep ? previous.reverts : 0, since: keep ? previous.since : 0 }
 }
@@ -234,6 +224,6 @@ export function createRecordStore(clock: () => number): RecordStore {
     clear() {
       texts = new WeakMap()
       attributes = new WeakMap()
-    },
+    }
   }
 }

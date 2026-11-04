@@ -9,7 +9,7 @@ const TIMEFRAMES: Readonly<Record<string, string>> = {
   'This year': '今年',
   'Last year': '去年',
   Custom: '自定义',
-  'Custom range': '自定义范围',
+  'Custom range': '自定义范围'
 }
 
 /** 使用情况分组依据 */
@@ -27,7 +27,7 @@ const GROUPS: Readonly<Record<string, string>> = {
   Organizations: '组织',
   User: '用户',
   Users: '用户',
-  'Cost center': '成本中心',
+  'Cost center': '成本中心'
 }
 
 /** 图表标题中的分组说明：“按产品分组”，英文名两侧加空格“按 SKU 分组” */
@@ -50,7 +50,7 @@ const USAGE_PRODUCTS: Readonly<Record<string, string>> = {
   'Packages usage': '软件包使用情况',
   'Models usage': '模型使用情况',
   'Spark usage': 'Spark 使用情况',
-  'Advanced Security usage': '高级安全使用情况',
+  'Advanced Security usage': '高级安全使用情况'
 }
 
 /** 许可页的产品名（与 nav.ts 的 scoped、common/marketing.ts 的 static 一致） */
@@ -58,14 +58,14 @@ const PRODUCTS: Readonly<Record<string, string>> = {
   'Advanced Security': '高级安全',
   'Secret Protection': '机密保护',
   'Code Security': '代码安全',
-  'Code Quality': '代码质量',
+  'Code Quality': '代码质量'
 }
 
 /** 组织计划名（用户要求：计划名译成中文） */
 const PLANS: Readonly<Record<string, string>> = {
   Free: '免费版',
   Team: '团队版',
-  Enterprise: '企业版',
+  Enterprise: '企业版'
 }
 
 /** 成员请求页引用的计划名、产品名（带品牌前缀，与「Member requests for GitHub Add-Ons」同译）；其他名称原样保留 */
@@ -80,7 +80,7 @@ const PLAN_NAMES: Readonly<Record<string, string>> = {
   'GitHub Advanced Security': 'GitHub 高级安全',
   'GitHub Secret Protection': 'GitHub 机密保护',
   'GitHub Code Security': 'GitHub 代码安全',
-  ...PRODUCTS,
+  ...PRODUCTS
 }
 
 function translatePlan(name: string): string {
@@ -96,7 +96,7 @@ const INCLUDED_ITEMS: Readonly<Record<string, string>> = {
   'Git LFS storage': 'Git LFS 存储',
   'Packages data transfer': '软件包数据传输',
   'Packages storage': '软件包存储',
-  'Codespaces storage': '代码空间存储',
+  'Codespaces storage': '代码空间存储'
 }
 
 const PERIODS: Readonly<Record<string, string>> = {
@@ -104,7 +104,7 @@ const PERIODS: Readonly<Record<string, string>> = {
   'this month': '本月',
   'last month': '上个月',
   'this year': '今年',
-  'last year': '去年',
+  'last year': '去年'
 }
 
 const MONEY = '(\\$[\\d,]+(?:\\.\\d+)?)'
@@ -162,7 +162,7 @@ export default {
     'By clicking "Connect", you are confirming that you want to be billed for metered services via the selected Azure subscription':
       '单击“连接”即表示你确认通过所选 Azure 订阅支付按流量计费服务的费用',
     'By clicking “Connect”, you are confirming that you want to be billed for metered services via the selected Azure subscription':
-      '单击“连接”即表示你确认通过所选 Azure 订阅支付按流量计费服务的费用',
+      '单击“连接”即表示你确认通过所选 Azure 订阅支付按流量计费服务的费用'
   },
   scoped: {
     // 计费联系人
@@ -321,10 +321,8 @@ export default {
     'This will disable Advanced Security, including Secret Protection and Code Security for private and internal repositories.':
       '这将为专用和内部存储库禁用高级安全，包括机密保护和代码安全。',
     'Public repositories will remain protected for free': '公共存储库仍免费受保护',
-    'Advanced Security features will be disabled on all private and internal repositories':
-      '所有专用和内部存储库都将禁用高级安全功能',
-    'Any default security configurations that enable Advanced Security will be removed':
-      '启用高级安全的默认安全配置将被删除',
+    'Advanced Security features will be disabled on all private and internal repositories': '所有专用和内部存储库都将禁用高级安全功能',
+    'Any default security configurations that enable Advanced Security will be removed': '启用高级安全的默认安全配置将被删除',
     'To re-enable Advanced Security in the future, you can configure it under your organization security settings.':
       '以后如需重新启用高级安全，可在组织安全设置中配置。',
     'Start trial': '开始试用',
@@ -359,7 +357,7 @@ export default {
     'License usage and payment summaries cannot be loaded': '无法加载许可证使用情况和付款摘要',
     // 「…if the problem persists,」+「contact support」+「.」
     'The license usage and payment summaries are currently unavailable due to a system error. Try reloading the page, or if the problem persists,':
-      '由于系统错误，许可证使用情况和付款摘要暂不可用。请重新加载页面；如果问题仍然存在，请',
+      '由于系统错误，许可证使用情况和付款摘要暂不可用。请重新加载页面；如果问题仍然存在，请'
   },
   regexp: [
     // 成员请求：标题与升级横幅（「octo-org is on the」+「Free organization plan」）；计划名译成中文
@@ -368,16 +366,13 @@ export default {
     [/^([\w.-]+) is on the$/, '$1 当前使用'],
     [
       /^(GitHub )?(Free|Team|Enterprise) organization plan$/,
-      (_, github: string | undefined, plan: string) => `${github ? 'GitHub ' : ''}${PLANS[plan]}组织计划`,
+      (_, github: string | undefined, plan: string) => `${github ? 'GitHub ' : ''}${PLANS[plan]}组织计划`
     ],
     [/^View ([A-Z][\w .-]{0,59}) docs$/, (_, name: string) => joinCjk(joinCjk('查看', translatePlan(name)), '文档')],
     [
       new RegExp(`^Your request for ([\\w .-]{1,80}) was declined by an admin on (${DATE_SOURCE})\\.$`),
       (_, feature: string, date: string) =>
-        joinCjk(
-          joinCjk(joinCjk(joinCjk('你对', translatePlan(feature)), '的请求已于'), translateTime(date)),
-          '被管理员拒绝。',
-        ),
+        joinCjk(joinCjk(joinCjk(joinCjk('你对', translatePlan(feature)), '的请求已于'), translateTime(date)), '被管理员拒绝。')
     ],
     // 席位与账单管理员
     [/^(\d+) seats?$/, '$1 个席位'],
@@ -390,22 +385,20 @@ export default {
       (_, kind: string, start: string, end: string, dot: string) => {
         const label = kind === 'Gross metered usage' ? '按流量计费的使用情况总额' : '包含的使用量折扣'
         return `${joinCjk(dateRange(start, end), `的${label}`)}${dot ? '。' : ''}`
-      },
+      }
     ],
     [
-      new RegExp(
-        `^Current usage for (${DATE_SOURCE}) - (${DATE_SOURCE})\\. Monthly quota resets in (\\d+) day\\(s\\)\\.$`,
-      ),
+      new RegExp(`^Current usage for (${DATE_SOURCE}) - (${DATE_SOURCE})\\. Monthly quota resets in (\\d+) day\\(s\\)\\.$`),
       (_, start: string, end: string, days: string) =>
-        `${joinCjk(dateRange(start, end), '的当前使用情况。')}每月配额将在 ${days} 天后重置。`,
+        `${joinCjk(dateRange(start, end), '的当前使用情况。')}每月配额将在 ${days} 天后重置。`
     ],
     [
       new RegExp(`^Resets in (\\d+) days? on (${DATE_SOURCE})$`),
-      (_, days: string, date: string) => joinCjk(joinCjk(`${days} 天后于`, translateTime(date)), '重置'),
+      (_, days: string, date: string) => joinCjk(joinCjk(`${days} 天后于`, translateTime(date)), '重置')
     ],
     [
       /^Included usage limits reset in (\d+) days?(\.?)$/,
-      (_, days: string, dot: string) => `包含的使用量限制将在 ${days} 天后重置${dot ? '。' : ''}`,
+      (_, days: string, dot: string) => `包含的使用量限制将在 ${days} 天后重置${dot ? '。' : ''}`
     ],
     [/^(\d+) days?$/, '$1 天'],
 
@@ -413,52 +406,45 @@ export default {
     // 「~$3.00 off*」中的约数符号与脚注星号随原文（与个人计费一致）
     [
       new RegExp(`^(~?)${MONEY} off(\\*?)$`),
-      (_, tilde: string, amount: string, star: string) => `减免${tilde ? '约' : ''} ${amount}${star}`,
+      (_, tilde: string, amount: string, star: string) => `减免${tilde ? '约' : ''} ${amount}${star}`
     ],
     [new RegExp(`^${MONEY} off per month for (\\d+) years?$`), '$2 年内每月减免 $1'],
     [
       new RegExp(`^${MONEY} off per month until (${DATE_SOURCE})(\\.?)$`),
-      (_, amount: string, date: string, dot: string) =>
-        `${joinCjk(translateTime(date), '前每月减免')} ${amount}${dot ? '。' : ''}`,
+      (_, amount: string, date: string, dot: string) => `${joinCjk(translateTime(date), '前每月减免')} ${amount}${dot ? '。' : ''}`
     ],
     // 优惠券期限在单独元素中：“$4.00 off per month” + “until Dec 31, 2026.”
     [new RegExp(`^${MONEY} off per month$`), '每月减免 $1'],
     [
       new RegExp(`^until (${DATE_SOURCE})(\\.?)$`),
-      (_, date: string, dot: string) => `${joinCjk('至', translateTime(date))}${dot ? '。' : ''}`,
+      (_, date: string, dot: string) => `${joinCjk('至', translateTime(date))}${dot ? '。' : ''}`
     ],
     [new RegExp(`^${NUMBER} min used / ${NUMBER} min included$`), '已用 $1 分钟 / 包含 $2 分钟'],
     [new RegExp(`^${NUMBER} GB used / ${NUMBER} GB included$`), '已用 $1 GB / 包含 $2 GB'],
     [new RegExp(`^${NUMBER} included Actions minutes$`), '包含 $1 操作分钟数'],
     [
       new RegExp(`^${NUMBER} GB included (${Object.keys(INCLUDED_ITEMS).join('|')})$`),
-      (_, amount: string, item: string) => `包含 ${amount} GB ${INCLUDED_ITEMS[item] ?? item}`,
+      (_, amount: string, item: string) => `包含 ${amount} GB ${INCLUDED_ITEMS[item] ?? item}`
     ],
     [new RegExp(`^${NUMBER} included Codespaces core hours$`), '包含 $1 代码空间核心小时数'],
     [/^Discount for usage in public repositories \((\d+%) off\)$/, '公共存储库使用量折扣（减免 $1）'],
-    [
-      /^Based on (\d[\d,]*) additional premium requests? beyond your included usage\.$/,
-      '基于超出包含的使用量的 $1 个额外高级请求。',
-    ],
-    [
-      /^Based on (\d[\d,]*) additional AI credits? beyond your included usage\.$/,
-      '基于超出包含的使用量的 $1 个额外 AI 额度。',
-    ],
+    [/^Based on (\d[\d,]*) additional premium requests? beyond your included usage\.$/, '基于超出包含的使用量的 $1 个额外高级请求。'],
+    [/^Based on (\d[\d,]*) additional AI credits? beyond your included usage\.$/, '基于超出包含的使用量的 $1 个额外 AI 额度。'],
     [
       /^Cost calculated based on additional (\d[\d,]*) premium requests? for Copilot and Spark\.$/,
-      '费用按 Copilot 和 Spark 的 $1 个额外高级请求计算。',
+      '费用按 Copilot 和 Spark 的 $1 个额外高级请求计算。'
     ],
     [
       /^Cost calculated based on additional (\d[\d,]*) premium requests?(\.?)$/,
-      (_, count: string, dot: string) => `费用按 ${count} 个额外高级请求计算${dot ? '。' : ''}`,
+      (_, count: string, dot: string) => `费用按 ${count} 个额外高级请求计算${dot ? '。' : ''}`
     ],
     [
       /^Cost calculated based on additional (\d[\d,]*) token units?(\.?)$/,
-      (_, count: string, dot: string) => `费用按 ${count} 个额外令牌单位计算${dot ? '。' : ''}`,
+      (_, count: string, dot: string) => `费用按 ${count} 个额外令牌单位计算${dot ? '。' : ''}`
     ],
     [
       /^Cost calculated based on (\d[\d,]*) Spark premium requests? that exceed the premium request usage included with your Copilot licenses\.$/,
-      '费用按超出 Copilot 许可证包含的高级请求使用量的 $1 个 Spark 高级请求计算。',
+      '费用按超出 Copilot 许可证包含的高级请求使用量的 $1 个 Spark 高级请求计算。'
     ],
     [/^\/ (\d[\d,]*) AI credits$/, '/ $1 AI 额度'],
 
@@ -481,32 +467,26 @@ export default {
     // 按流量计费的使用情况：时间范围、分组、图表标题（年份括号内只有数字，用半角，前面加空格）
     [
       /^(?:Timeframe|Time [Ff]rame): (Today|Current month|Last month|Custom|Custom range|This year|Last year)(?: \((\d{4})\))?$/,
-      (_, period: string, year: string) => `时间范围：${TIMEFRAMES[period] ?? period}${year ? ` (${year})` : ''}`,
+      (_, period: string, year: string) => `时间范围：${TIMEFRAMES[period] ?? period}${year ? ` (${year})` : ''}`
     ],
-    [
-      /^(This year|Last year) \((\d{4})\)$/,
-      (_, period: string, year: string) => `${TIMEFRAMES[period] ?? period} (${year})`,
-    ],
+    [/^(This year|Last year) \((\d{4})\)$/, (_, period: string, year: string) => `${TIMEFRAMES[period] ?? period} (${year})`],
     // 分组按钮：Group: None、Group by: Product（Group by → 分组依据，与个人计费一致）
     [
       /^Group( by)?: (None|Products?|SKUs?|Repositor(?:y|ies)|Models?|Organizations?|Users?|Cost center)$/,
-      (_, by: string | undefined, group: string) => `${by ? '分组依据' : '分组'}：${GROUPS[group] ?? group}`,
+      (_, by: string | undefined, group: string) => `${by ? '分组依据' : '分组'}：${GROUPS[group] ?? group}`
     ],
     [
       /^(Metered usage|AI usage|Actions usage|Copilot usage|Codespaces usage|Git_lfs usage|Git LFS usage|Packages usage|Models usage|Spark usage|Advanced Security usage) grouped by (Products?|SKUs?|Repositor(?:y|ies)|Models?|Organizations?|Users?)$/,
-      (_, product: string, group: string) => joinCjk(`${groupedBy(group)}的`, USAGE_PRODUCTS[product] ?? product),
+      (_, product: string, group: string) => joinCjk(`${groupedBy(group)}的`, USAGE_PRODUCTS[product] ?? product)
     ],
     [
       /^Top (two|three|four|five) repositories (today|this month|last month|this year|last year)$/,
-      (_, count: string, period: string) => `${PERIODS[period] ?? period}排名前${ORDINALS[count] ?? count}的存储库`,
+      (_, count: string, period: string) => `${PERIODS[period] ?? period}排名前${ORDINALS[count] ?? count}的存储库`
     ],
-    [
-      new RegExp(`^(${DATE_SOURCE}) \\(All times in UTC\\)$`),
-      (_, date: string) => `${translateTime(date)}（UTC 时间）`,
-    ],
+    [new RegExp(`^(${DATE_SOURCE}) \\(All times in UTC\\)$`), (_, date: string) => `${translateTime(date)}（UTC 时间）`],
     [
       new RegExp(`^Usage for (${DATE_SOURCE})(\\.?)$`),
-      (_, date: string, dot: string) => `${joinCjk(translateTime(date), '的使用情况')}${dot ? '。' : ''}`,
+      (_, date: string, dot: string) => `${joinCjk(translateTime(date), '的使用情况')}${dot ? '。' : ''}`
     ],
     // 卡片中单独显示的日期范围：Oct 1 - Oct 31, 2025
     [new RegExp(`^(${DATE_SOURCE}) - (${DATE_SOURCE})$`), (_, start: string, end: string) => dateRange(start, end)],
@@ -520,15 +500,15 @@ export default {
     // 使用情况报告
     [
       /^We['’]re preparing your usage report\. It may take ~30 minutes to see usage in your report\. We['’]ll send an email to (\S+@\S+) when it['’]s ready\.$/,
-      '正在准备使用情况报告。使用情况可能约 30 分钟后才会出现在报告中。报告就绪后会发送电子邮件至 $1。',
+      '正在准备使用情况报告。使用情况可能约 30 分钟后才会出现在报告中。报告就绪后会发送电子邮件至 $1。'
     ],
     [
       /^We['’]re preparing your usage report\. We['’]ll send an email to (\S+@\S+) when it['’]s ready\.$/,
-      '正在准备使用情况报告。报告就绪后会发送电子邮件至 $1。',
+      '正在准备使用情况报告。报告就绪后会发送电子邮件至 $1。'
     ],
     [
       /^Your usage report request is already in progress\. Check (\S+@\S+) for the report when it['’]s ready\.$/,
-      '你的使用情况报告请求正在处理中。报告就绪后请查收 $1。',
+      '你的使用情况报告请求正在处理中。报告就绪后请查收 $1。'
     ],
     [/^The usage report will be emailed when it['’]s ready to (\S+@\S+)\.$/, '报告就绪后将通过电子邮件发送至 $1。'],
 
@@ -538,31 +518,28 @@ export default {
     [/^Start your free (\d+) day trial$/, '开始 $1 天免费试用'],
     [
       /^You can convert to a paid plan at any time\. If you don[’']t purchase by the end of (\d+) days, your trial will expire and all private repositories will lose access to Secret Protection and Code Security features\.$/,
-      '你可以随时转为付费计划。如果 $1 天内未购买，试用将过期，所有专用存储库都将无法使用机密保护和代码安全功能。',
+      '你可以随时转为付费计划。如果 $1 天内未购买，试用将过期，所有专用存储库都将无法使用机密保护和代码安全功能。'
     ],
     // 卡片底部的试用期限：Trial ends on October 31, 2026.
     [
       new RegExp(`^Trial (ends|ended) on (${DATE_SOURCE})\\.$`),
-      (_, verb: string, date: string) =>
-        joinCjk(joinCjk(verb === 'ends' ? '试用将于' : '试用已于', translateTime(date)), '结束。'),
+      (_, verb: string, date: string) => joinCjk(joinCjk(verb === 'ends' ? '试用将于' : '试用已于', translateTime(date)), '结束。')
     ],
     [/^([\d,]+) available$/, '$1 个可用'],
     [
       /^Amount based on ([\d,]+) (billable|purchased) licenses?\.$/,
-      (_, count: string, kind: string) =>
-        `金额按 ${count} 个${kind === 'billable' ? '可计费' : '已购买的'}许可证计算。`,
+      (_, count: string, kind: string) => `金额按 ${count} 个${kind === 'billable' ? '可计费' : '已购买的'}许可证计算。`
     ],
     [
       new RegExp(`^Amount based on ([\\d,]+) billable licenses?, due by (${DATE_SOURCE})\\.$`),
-      (_, count: string, date: string) =>
-        `金额按 ${count} 个可计费许可证计算，${joinCjk(joinCjk('应于', translateTime(date)), '前支付。')}`,
+      (_, count: string, date: string) => `金额按 ${count} 个可计费许可证计算，${joinCjk(joinCjk('应于', translateTime(date)), '前支付。')}`
     ],
     [/^(\$[\d,]+\.\d{2})\/month each$/, '每个 $1/月'],
     // 付款明细中各产品的许可证数：3 Secret Protection licenses、1 GitHub Advanced Security license
     [
       /^([\d,]+) (GitHub )?(Advanced Security|Secret Protection|Code Security|Code Quality) licenses?$/,
       (_, count: string, github: string | undefined, product: string) =>
-        `${count} 个${github ? ' GitHub ' : ''}${PRODUCTS[product] ?? product}许可证`,
-    ],
-  ],
+        `${count} 个${github ? ' GitHub ' : ''}${PRODUCTS[product] ?? product}许可证`
+    ]
+  ]
 } satisfies PageDictionary

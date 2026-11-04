@@ -7,7 +7,7 @@ const UNITS: Readonly<Record<string, string>> = { day: '天', month: '個月', y
 
 /** 教育权益申请失败的原因；用 Map 避免命中原型链键 */
 const DISCOUNT_ERRORS: ReadonlyMap<string, string> = new Map([
-  ['School email must be verified on your GitHub account', '學校電子郵件必須在你的 GitHub 帳號中完成驗證'],
+  ['School email must be verified on your GitHub account', '學校電子郵件必須在你的 GitHub 帳號中完成驗證']
 ])
 
 /**
@@ -24,7 +24,7 @@ const PLAN_NAMES: Readonly<Record<string, string>> = {
   'Copilot Pro+': 'Copilot 專業增強版',
   'Copilot Business': 'Copilot 商務版',
   'Copilot Enterprise': 'Copilot 企業版',
-  'Copilot Student': 'Copilot 學生版',
+  'Copilot Student': 'Copilot 學生版'
 }
 
 /** 方案名的译名；未收录的（如 Marketplace 应用的方案名）保留原文 */
@@ -98,8 +98,7 @@ export default {
     'Monthly payment': '按月付款',
     'Yearly payment': '按年付款',
     'Next payment': '下次付款',
-    'You can upgrade your subscription to yearly billing or cancel any time.':
-      '你可以隨時將訂閱升級為按年計費或取消訂閱。',
+    'You can upgrade your subscription to yearly billing or cancel any time.': '你可以隨時將訂閱升級為按年計費或取消訂閱。',
     'Read billing documentation': '閱讀帳務說明文件',
     'Compare Copilot plans': '比較 Copilot 方案',
     'Upgrade to Copilot Pro': '升級到 Copilot 專業版',
@@ -163,13 +162,11 @@ export default {
       '限制程式碼分支的合併方式，包括要求由選定的協作者審查，或只允許特定貢獻者在某個分支上工作。',
     'Automatically request reviews – or require approval – by selected contributors when changes are made to sections of code that they own.':
       '選定貢獻者擁有的程式碼區段有變更時，自動請求其審查或要求其核准。',
-    'Easily discuss and collaborate on pull requests before submitting to formal review.':
-      '在送交正式審查前輕鬆討論並協作處理拉取請求。',
+    'Easily discuss and collaborate on pull requests before submitting to formal review.': '在送交正式審查前輕鬆討論並協作處理拉取請求。',
     'Assign more than one person to a pull request.': '為一個拉取請求指派多人。',
     'See data about activity and contributions within your repositories, including trends. You can use this data to improve collaboration and make development faster and more effective.':
       '查看儲存庫中活動和貢獻的資料，包括趨勢。你可以運用這些資料改善協作，讓開發更快速、更有效。',
-    'Send scheduled messages to you or your team listing open pull requests.':
-      '依排定時間向你或你的團隊傳送列出開放中拉取請求的訊息。',
+    'Send scheduled messages to you or your team listing open pull requests.': '依排定時間向你或你的團隊傳送列出開放中拉取請求的訊息。',
     'Automatically assign code reviews to members of your team based on one of two algorithms.':
       '依兩種演算法之一自動將程式碼審查指派給團隊成員。',
     "When a workflow job references an environment, the job won't start until all of the environment's protection rules pass.":
@@ -194,8 +191,7 @@ export default {
     'Host documentation and simple websites for your project in a wiki format that contributors can easily edit either on the web or command line.':
       '以貢獻者可透過網頁或命令列輕鬆編輯的 Wiki 形式代管專案的說明文件和簡易網站。',
     'Assign more than one person to an issue.': '為一個議題指派多人。',
-    'GitHub organizations give you team-based access control and discussions.':
-      'GitHub 組織提供以團隊為單位的存取控制和討論。',
+    'GitHub organizations give you team-based access control and discussions.': 'GitHub 組織提供以團隊為單位的存取控制和討論。',
     'Learn more about organizations': '瞭解組織',
     'Enforce consistent code standards, security, and compliance across branches and tags.':
       '在各分支和標記中強制執行一致的程式碼標準、安全性和合規性。',
@@ -218,12 +214,10 @@ export default {
     'Enterprise Server customers create pre-receive hooks to automatically accept or reject a push.':
       '企業伺服器客戶可建立預先接收鉤子以自動接受或拒絕推送。',
     'Learn more about pre-receive hooks': '瞭解預先接收鉤子',
-    'Get help with most of your GitHub questions and issues in our Community Forum.':
-      '在我們的社群論壇取得大多數 GitHub 問題的協助。',
+    'Get help with most of your GitHub questions and issues in our Community Forum.': '在我們的社群論壇取得大多數 GitHub 問題的協助。',
     'GitHub Support can help you troubleshoot issues you run into while using GitHub. Get support via the web.':
       'GitHub 支援可協助你排除使用 GitHub 時遇到的問題。透過網頁取得支援。',
-    'Enterprises also get Premium Support, invoice billing, and self-hosted deployment.':
-      '企業還可獲得進階支援、發票付款和自架部署。',
+    'Enterprises also get Premium Support, invoice billing, and self-hosted deployment.': '企業還可獲得進階支援、發票付款和自架部署。',
 
     // 付款资讯：帐单资讯
     'Billing information': '帳單資訊',
@@ -258,8 +252,7 @@ export default {
     'Remove your billing information?': '要移除你的帳單資訊嗎？',
     'Remove billing information': '移除帳單資訊',
     'Successfully removed billing information.': '已移除帳單資訊。',
-    'Please confirm your billing details to continue. You only need to do this once.':
-      '請確認帳單詳細資料以繼續。只需確認一次。',
+    'Please confirm your billing details to continue. You only need to do this once.': '請確認帳單詳細資料以繼續。只需確認一次。',
 
     // 付款资讯：付款方式（credit or debit card 取 Apple 繁中「信用卡或金融卡」）
     'Payment method': '付款方式',
@@ -282,8 +275,7 @@ export default {
     'Sign in to PayPal to use a different account.': '登入 PayPal 以使用其他帳戶。',
     // 网路连线义 connect → 連線
     'Connecting to PayPal…': '正在連線到 PayPal…',
-    'Sorry, we’re having trouble with PayPal right now, please try again a bit later.':
-      '抱歉，PayPal 目前發生問題，請稍後再試。',
+    'Sorry, we’re having trouble with PayPal right now, please try again a bit later.': '抱歉，PayPal 目前發生問題，請稍後再試。',
     'You are currently paying with a credit card, but you can switch to using PayPal at any time.':
       '你目前使用信用卡付款，但可以隨時改用 PayPal。',
     'An error occurred while saving payment information.': '儲存付款資訊時發生錯誤。',
@@ -339,8 +331,7 @@ export default {
     'Full business name or address of record': '公司全名或登記地址',
     'Save contact information': '儲存聯絡資訊',
     'Saving contact information…': '正在儲存聯絡資訊…',
-    'Updated your optional contact information, it will show up on your next receipt.':
-      '已更新選填的聯絡資訊，將顯示在你的下一張收據上。',
+    'Updated your optional contact information, it will show up on your next receipt.': '已更新選填的聯絡資訊，將顯示在你的下一張收據上。',
 
     // 付款资讯：发票、Azure 订阅（「billing information section」为链接）
     'Receive an invoice for your GitHub purchases': '接收你在 GitHub 上消費的發票',
@@ -388,8 +379,7 @@ export default {
     'Complete a teacher or student application to unlock tools and resources for your educational journey.':
       '完成教師或學生申請，以取得教學或學習所需的工具和資源。',
     // 「You have a current student coupon applied. Find more information on your benefits <a>here</a>.」（here 见 billing 的 scoped）
-    'You have a current student coupon applied. Find more information on your benefits':
-      '你目前已套用學生優惠券。權益詳情請見',
+    'You have a current student coupon applied. Find more information on your benefits': '你目前已套用學生優惠券。權益詳情請見',
     'Start an application': '開始申請',
     'You have not submitted an application for education benefits.': '你尚未送出教育權益申請。',
     'Education Benefits Application': '教育權益申請',
@@ -430,10 +420,8 @@ export default {
     'GitHub user profile': 'GitHub 使用者個人檔案',
     // 教育权益：申请条件与未通过原因（学校名、电子邮件、链接在其他元素中）
     'We require applicants of': '我們要求',
-    'to use one of these school-issues email addresses to apply:':
-      '的申請人使用下列其中一個學校核發的電子郵件地址提出申請：',
-    'to use one of these school-issued email addresses to apply:':
-      '的申請人使用下列其中一個學校核發的電子郵件地址提出申請：',
+    'to use one of these school-issues email addresses to apply:': '的申請人使用下列其中一個學校核發的電子郵件地址提出申請：',
+    'to use one of these school-issued email addresses to apply:': '的申請人使用下列其中一個學校核發的電子郵件地址提出申請：',
     // 「<a>add and verify your</a> <a>school-issued email address</a> in your account settings -- or …」
     // →「在帳號設定中新增並驗證你的 學校核發的電子郵件地址——若沒有，…」：「在帳號設定中」移到第一段，
     // 第三段以破折号开头，引擎不保留其前的原文空白
@@ -474,8 +462,7 @@ export default {
     // 「… can be found <a>here</a>. You may also try …」（here 见 billing 的 scoped）
     'Please use your device camera to submit your academic affiliation documents. If you’re having trouble using your device camera, please allow camera access for the application website on your browser. The steps for this will vary depending on which browser you are using. Information on browsers supported by GitHub can be found':
       '請使用裝置的攝影機拍攝並送出你的學術身分證明文件。如果使用裝置的攝影機時遇到問題，請在瀏覽器中允許申請網站存取攝影機。實際步驟依你使用的瀏覽器而定。如需 GitHub 支援的瀏覽器相關資訊，請參閱',
-    '. You may also try applying from a different computer or mobile device.':
-      '。你也可以嘗試改用其他電腦或行動裝置申請。',
+    '. You may also try applying from a different computer or mobile device.': '。你也可以嘗試改用其他電腦或行動裝置申請。',
     // 「… exactly as it appears in your <a>GitHub billing information</a>. …」
     // →「請確保學術身分證明文件中的姓氏與你的 GitHub 帳單資訊中的完全一致。…」
     'Please ensure that your academic affiliation document contains your last name exactly as it appears in your':
@@ -488,7 +475,7 @@ export default {
       '請確保學術身分證明文件中的名字與你的',
     '. Variations of your name and nicknames are unacceptable.': '中的完全一致。不接受姓名的其他寫法或暱稱。',
     'The image you captured appears to be a screen display. Please take a clear, live photo of physical documentation confirming your academic enrollment.':
-      '你拍攝的圖片似乎是螢幕畫面。請為能證明你在學身分的實體文件現場拍攝一張清晰的相片。',
+      '你拍攝的圖片似乎是螢幕畫面。請為能證明你在學身分的實體文件現場拍攝一張清晰的相片。'
   },
   scoped: {
     Sponsorships: '贊助',
@@ -560,48 +547,38 @@ export default {
     'Copilot Enterprise': 'Copilot 企業版',
     // 帐务总览「訂閱」卡片的学生方案
     'Copilot Student': 'Copilot 學生版',
-    'Advanced Security': '進階安全性',
+    'Advanced Security': '進階安全性'
     // 付款方式「Sign in to <PayPal 标志>」：Sign in to 由 auth 的全站 static 收录
   },
   regexp: [
     // 其他帐务详细资料
     [/^In addition to your personal account, you manage (\d+) organizations?\.$/, '除了個人帳號，你還管理 $1 個組織。'],
     [
-      new RegExp(
-        `^You['’]ve cancelled your subscription to (.+?)\\. This plan change will take effect on (${DATE_SOURCE})\\.$`,
-      ),
+      new RegExp(`^You['’]ve cancelled your subscription to (.+?)\\. This plan change will take effect on (${DATE_SOURCE})\\.$`),
       (_, name: string, date: string) =>
-        joinCjk(joinCjk(joinCjk('你已取消訂閱', planName(name)), '。此方案變更將於'), translateTime(date)) + '生效。',
+        joinCjk(joinCjk(joinCjk('你已取消訂閱', planName(name)), '。此方案變更將於'), translateTime(date)) + '生效。'
     ],
     // 优惠券与教育权益（句号随原文；off 作「折抵」，与组织帐务一致）
     [
       new RegExp(`^(\\$[\\d,]+(?:\\.\\d{2})?) off per month until (${DATE_SOURCE})(\\.?)$`),
-      (_, amount: string, date: string, dot: string) =>
-        `${joinCjk(translateTime(date), '前每月折抵')} ${amount}${dot ? '。' : ''}`,
+      (_, amount: string, date: string, dot: string) => `${joinCjk(translateTime(date), '前每月折抵')} ${amount}${dot ? '。' : ''}`
     ],
     // 优惠券期限在单独元素中：“$4.00 off per month” + “until Dec 31, 2026.”
     [/^(\$[\d,]+(?:\.\d{2})?) off per month$/, '每月折抵 $1'],
     [
       new RegExp(`^until (${DATE_SOURCE})(\\.?)$`),
-      (_, date: string, dot: string) => `${joinCjk('至', translateTime(date))}${dot ? '。' : ''}`,
+      (_, date: string, dot: string) => `${joinCjk('至', translateTime(date))}${dot ? '。' : ''}`
     ],
-    [
-      /^· (\d+) (day|month|year)s? remaining$/,
-      (_, amount: string, unit: string) => `· 剩餘 ${amount} ${UNITS[unit] ?? unit}`,
-    ],
+    [/^· (\d+) (day|month|year)s? remaining$/, (_, amount: string, unit: string) => `· 剩餘 ${amount} ${UNITS[unit] ?? unit}`],
     // 申请的送出时间：3 天前送出、2025 年 10 月 1 日送出（submit 按术语表作「送出」）
     [new RegExp(`^Submitted (${TIME_SOURCE})$`), (_, time: string) => joinCjk(translateTime(time), '送出')],
     // 未来的到期用「到期」（同 org-settings/third-party.ts 的 Expires on）
     [
       /^Expires in (?:(about|almost|over) )?(\d+) (day|month|year)s?$/,
-      (_, qualifier: string, amount: string, unit: string) =>
-        `${QUALIFIERS[qualifier] ?? ''}${amount} ${UNITS[unit] ?? unit}後到期`,
+      (_, qualifier: string, amount: string, unit: string) => `${QUALIFIERS[qualifier] ?? ''}${amount} ${UNITS[unit] ?? unit}後到期`
     ],
     // 付款方式：卡号末四码与到期日（ending in 只跟四位数字，取台湾通行的「末四碼」）
-    [
-      /^(Visa|Mastercard|MasterCard|American Express|Amex|Discover|JCB|Diners Club|UnionPay) ending in (\d{4})$/,
-      '$1 末四碼 $2',
-    ],
+    [/^(Visa|Mastercard|MasterCard|American Express|Amex|Discover|JCB|Diners Club|UnionPay) ending in (\d{4})$/, '$1 末四碼 $2'],
     [/^Expires (\d{1,2}\/\d{2,4})$/, '到期日 $1'],
     // 方案价格
     [/^(\$[\d,]+(?:\.\d{2})?) ?\/ ?month$/, '$1/月'],
@@ -612,15 +589,11 @@ export default {
     // 取消 Copilot 订阅对话框：Cancel Copilot Pro / Pro+ / Max（方案名译成「X 版」，Max 保留）
     [/^Cancel (Copilot (?:Pro\+?|Max))$/, (_, name: string) => joinCjk('取消', planName(name))],
     // 其他帐务详细资料：Marketplace 应用的支持链接「Codecov | Code Coverage support」；常见的通用支持名称排除在外
-    [
-      /^(?!(?:Contact|Community|Web-based|Standard|Premium|Priority|Customer|Enterprise|Email) support$)([A-Z0-9].*) support$/,
-      '$1 支援',
-    ],
+    [/^(?!(?:Contact|Community|Web-based|Standard|Premium|Priority|Customer|Enterprise|Email) support$)([A-Z0-9].*) support$/, '$1 支援'],
     // 教育权益：送出申请失败（错误原因未收录时保留原文）
     [
       /^There was an error creating the discount request\. Errors: Discount request could not be created\. Discount request errors: (.+)$/,
-      (_, reason: string) =>
-        `建立折扣申請時發生錯誤。錯誤：無法建立折扣申請。折扣申請錯誤：${DISCOUNT_ERRORS.get(reason) ?? reason}`,
-    ],
-  ],
+      (_, reason: string) => `建立折扣申請時發生錯誤。錯誤：無法建立折扣申請。折扣申請錯誤：${DISCOUNT_ERRORS.get(reason) ?? reason}`
+    ]
+  ]
 } satisfies PageDictionary

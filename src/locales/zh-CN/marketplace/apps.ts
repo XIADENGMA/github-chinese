@@ -41,10 +41,8 @@ export default {
     // 安装后跳转
     "Next: you'll be redirected to": '下一步：你将被重定向到',
     'Next: you’ll be redirected to': '下一步：你将被重定向到',
-    'Next: you’ll be directed to the GitHub App’s site to complete setup.':
-      '下一步：你将前往 GitHub 应用的网站完成设置。',
-    "Next: you'll be directed to the GitHub App's site to complete setup.":
-      '下一步：你将前往 GitHub 应用的网站完成设置。',
+    'Next: you’ll be directed to the GitHub App’s site to complete setup.': '下一步：你将前往 GitHub 应用的网站完成设置。',
+    "Next: you'll be directed to the GitHub App's site to complete setup.": '下一步：你将前往 GitHub 应用的网站完成设置。',
 
     // 订单页 /marketplace/<name>/order/<id>
     'To complete this installation, you must': '要完成安装，必须',
@@ -79,8 +77,7 @@ export default {
       '你购买的部分应用尚未完成安装。可在下方查看并安装。',
     // 后接链接“计费概述页”+ 句号；原文没有标点，译文不加逗号
     'View or cancel any active subscriptions on the': '如需查看或取消有效订阅请前往',
-    'Grant this app access to your GitHub account to complete installation.':
-      '授予此应用访问你的 GitHub 帐户的权限以完成安装。',
+    'Grant this app access to your GitHub account to complete installation.': '授予此应用访问你的 GitHub 帐户的权限以完成安装。'
   },
   scoped: {
     Website: '网站',
@@ -102,7 +99,7 @@ export default {
     'Review your order': '查看订单',
     'Cancel this plan': '取消此计划',
     'billing overview page': '计费概述页',
-    '(current plan)': '（当前计划）',
+    '(current plan)': '（当前计划）'
   },
   regexp: [
     // 页面标题
@@ -118,33 +115,30 @@ export default {
     [/^Where do you want to install (.+)\?$/, '要将 $1 安装到哪里？'],
     [/^(.+) is installed\. Click to configure\.$/, '$1 已安装。单击进行配置。'],
     // 原文末尾的句号照录
-    [
-      /^Selected (\d+) repositor(?:y|ies)(\.?)$/,
-      (_, count: string, period: string) => `已选择 ${count} 个存储库${period ? '。' : ''}`,
-    ],
+    [/^Selected (\d+) repositor(?:y|ies)(\.?)$/, (_, count: string, period: string) => `已选择 ${count} 个存储库${period ? '。' : ''}`],
     [
       /^Installing and authorizing (.+) immediately grants these permissions on your account:$/,
-      '安装并授权 $1 会立即在你的帐户上授予以下权限：',
+      '安装并授权 $1 会立即在你的帐户上授予以下权限：'
     ],
     [
       /^(.+) can also request users['’] permission to the following resources\. These permissions will be requested and authorized on an individual-user basis\.$/,
-      '$1 还可以请求用户对以下资源的权限。这些权限将按单个用户请求和授权。',
+      '$1 还可以请求用户对以下资源的权限。这些权限将按单个用户请求和授权。'
     ],
-    [/^Install (.+)$/, '安装 $1'],
+    [/^Install (.+)$/, '安装 $1']
   ],
   inline: [
     // 订单页：首段 + 链接 signing + the + 链接 GitHub Customer Agreement + 句号；整句命中时去掉 the，
     // 显示为“…请签署 GitHub 客户协议。”。不命中时按 static 首段与 scoped 的 signing 逐段翻译
     [
       'An organization owner or billing manager must link their personal billing information with this organization account. You can switch to a business account to use your business’ billing information by {} the {}.',
-      '组织所有者或账单管理员必须将个人账单信息链接到此组织帐户。若要切换为企业帐户以使用企业账单信息请{} {}。',
-    ],
+      '组织所有者或账单管理员必须将个人账单信息链接到此组织帐户。若要切换为企业帐户以使用企业账单信息请{} {}。'
+    ]
   ],
   ignore: [
     // 应用页名称
     '.Layout-main h1.f1',
     // 侧栏：开发人员帐户名、第三方说明中的应用名
     '.Layout-sidebar img.avatar + a',
-    '.Layout-sidebar > ul + p > strong',
-  ],
+    '.Layout-sidebar > ul + p > strong'
+  ]
 } satisfies PageDictionary

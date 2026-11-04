@@ -13,8 +13,8 @@ export function useExcludedPaths(): UseExcludedPaths {
   const { settings, loaded, loadFailed, update } = useSettings()
   const list = useTextList({
     items: computed(() => settings.value.excludedPaths),
-    save: (next) => update({ excludedPaths: next }),
-    normalize: normalizeExcludedPath,
+    save: next => update({ excludedPaths: next }),
+    normalize: normalizeExcludedPath
   })
   return { ...list, loadFailed: computed(() => loadFailed.value && !loaded.value) }
 }

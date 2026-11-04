@@ -13,7 +13,7 @@ const ITEM_STATES: Readonly<Record<string, string>> = {
   closed: '已关闭',
   merged: '已合并',
   draft: '草稿',
-  queued: '已排队',
+  queued: '已排队'
 }
 
 /** 项状态图标的 aria-label */
@@ -27,12 +27,12 @@ const STATE_LABELS: Readonly<Record<string, string>> = {
   'Closed pull request': '已关闭的拉取请求',
   'Merged pull request': '已合并的拉取请求',
   'Queued pull request': '已排队的拉取请求',
-  'Draft pull request': '草稿拉取请求',
+  'Draft pull request': '草稿拉取请求'
 }
 
 /** scoped 展开的项状态：Closed as not planned issue 由 common-ui/status.ts 的全局词条翻译，不收 scoped 副本 */
 const SCOPED_STATE_LABELS: Readonly<Record<string, string>> = Object.fromEntries(
-  Object.entries(STATE_LABELS).filter(([label]) => label !== 'Closed as not planned issue'),
+  Object.entries(STATE_LABELS).filter(([label]) => label !== 'Closed as not planned issue')
 )
 
 /** 无后缀距离：about 2 months → 约 2 个月；less than a minute → 不到 1 分钟 */
@@ -43,19 +43,18 @@ const DISTANCE_UNITS: Readonly<Record<string, string>> = {
   day: '天',
   week: '周',
   month: '个月',
-  year: '年',
+  year: '年'
 }
 
 const DISTANCE_PREFIXES: Readonly<Record<string, string>> = {
   about: '约',
   almost: '将近',
   over: '超过',
-  'less than': '不到',
+  'less than': '不到'
 }
 
 /** 距离片段（不含捕获组） */
-export const DISTANCE_SOURCE =
-  '(?:(?:about|almost|over|less than) )?(?:\\d+|an?) (?:second|minute|hour|day|week|month|year)s?'
+export const DISTANCE_SOURCE = '(?:(?:about|almost|over|less than) )?(?:\\d+|an?) (?:second|minute|hour|day|week|month|year)s?'
 
 export function translateDistance(text: string): string {
   const match = /^(?:(about|almost|over|less than) )?(\d+|an?) (second|minute|hour|day|week|month|year)s?$/.exec(text)
@@ -73,7 +72,7 @@ const WEEKDAYS_LONG: Readonly<Record<string, string>> = {
   Thursday: '星期四',
   Friday: '星期五',
   Saturday: '星期六',
-  Sunday: '星期日',
+  Sunday: '星期日'
 }
 
 const DAY_NOTES: Readonly<Record<string, string>> = {
@@ -82,7 +81,7 @@ const DAY_NOTES: Readonly<Record<string, string>> = {
   'End of selected range': '所选范围结束',
   'Inside selected range': '在所选范围内',
   'Minimum allowed date': '允许的最早日期',
-  'Maximum allowed date': '允许的最晚日期',
+  'Maximum allowed date': '允许的最晚日期'
 }
 
 const DAY_NOTE_SOURCE = Object.keys(DAY_NOTES).join('|')
@@ -96,7 +95,7 @@ const CONTENT_NOUNS: Readonly<Record<string, string>> = {
   'an issue field': '议题字段',
   'issue fields': '议题字段',
   'issue field': '议题字段',
-  type: '类型',
+  type: '类型'
 }
 
 function contentNoun(noun: string): string {
@@ -124,7 +123,7 @@ const STATUS_OPTIONS: Readonly<Record<string, string>> = {
   'At risk': '存在风险',
   'Off track': '偏离计划',
   Inactive: '不活跃',
-  Complete: '已完成',
+  Complete: '已完成'
 }
 
 /** 字段类型名（不可清空单元格的提示“X cannot be deleted”），字段名之外的部分 */
@@ -136,12 +135,12 @@ const COLUMN_TYPE_TEXT: Readonly<Record<string, string>> = {
   Text: '文本',
   'Created at': '创建时间',
   'Updated at': '更新时间',
-  'Closed at': '关闭时间',
+  'Closed at': '关闭时间'
 }
 
 const COLUMN_TYPE_SOURCE = [...Object.keys(COLUMN_TYPE_TEXT), ...Object.keys(FIELD_NAMES)]
   .sort((a, b) => b.length - a.length)
-  .map((name) => name.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&'))
+  .map(name => name.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&'))
   .join('|')
 
 export default {
@@ -157,8 +156,7 @@ export default {
     'Click "Add Item" to get started or use the shortcut': '单击“添加项”或使用快捷方式',
     'Add items to project': '向项目添加项',
     'Pick a repository to add issues and pull requests from': '选择要从中添加议题和拉取请求的存储库',
-    'This repository is either empty or all items were already added to this project.':
-      '此存储库为空或所有项都已添加到此项目。',
+    'This repository is either empty or all items were already added to this project.': '此存储库为空或所有项都已添加到此项目。',
     'The new item has been added to the bottom of the column.': '新项已添加到列底部。',
     'The new item has been added to the bottom of the roadmap.': '新项已添加到路线图底部。',
     'The new item has been added to the bottom of the table.': '新项已添加到表格底部。',
@@ -187,8 +185,7 @@ export default {
     'Drafts can’t be added to milestones. Convert this draft to an issue to add it to a milestone.':
       '草稿无法添加到里程碑。将此草稿转换为议题后才能添加。',
     'Redacted item': '已隐藏的项',
-    'We are having trouble connecting to your project. Please try again or reload the page.':
-      '无法连接到项目。请重试或重新加载页面。',
+    'We are having trouble connecting to your project. Please try again or reload the page.': '无法连接到项目。请重试或重新加载页面。',
     'Labels can only be copied within the same repository': '标签只能在同一存储库内复制',
     'Assignees can only be copied within the same repository': '受理人只能在同一存储库内复制',
     'Milestones can only be copied within the same repository': '里程碑只能在同一存储库内复制',
@@ -218,10 +215,8 @@ export default {
     'PRs and Drafts can’t be added as sub-issues. Item was added to No Parent issue group':
       '拉取请求和草稿无法添加为子议题。项已添加到无父议题分组',
     'PRs and draft issues are not supported by sub-issues': '子议题不支持拉取请求和草稿议题',
-    'Drafts can’t be added with a milestone. Item was added to No milestone group':
-      '草稿无法设置里程碑。项已添加到无里程碑分组',
-    'Drafts can’t be added with an issue type. Item was added to No type group':
-      '草稿无法设置议题类型。项已添加到无类型分组',
+    'Drafts can’t be added with a milestone. Item was added to No milestone group': '草稿无法设置里程碑。项已添加到无里程碑分组',
+    'Drafts can’t be added with an issue type. Item was added to No type group': '草稿无法设置议题类型。项已添加到无类型分组',
 
     // 状态更新
     'Add a project status update': '添加项目状态更新',
@@ -248,8 +243,7 @@ export default {
     // 批量更新 / 复制 / 导入
     'An error occurred while copying draft issues.': '复制草稿议题时出错。',
     'Draft issues copied successfully.': '草稿议题已复制。',
-    'Copying draft issues to your new project. This may take a minute to complete.':
-      '正在将草稿议题复制到新项目。可能需要一分钟。',
+    'Copying draft issues to your new project. This may take a minute to complete.': '正在将草稿议题复制到新项目。可能需要一分钟。',
     'No items were added to this project.': '未向此项目添加任何项。',
 
     // 单元格校验与错误提示
@@ -257,7 +251,7 @@ export default {
     'This field must be a date': '此字段必须为日期',
     'This floating point value is too precise': '此浮点数精度过高',
     'Unable to refresh project data': '无法刷新项目数据',
-    'Copying is not supported in this browser': '此浏览器不支持复制',
+    'Copying is not supported in this browser': '此浏览器不支持复制'
   },
   scoped: {
     // 通用文本（仅项目页生效）
@@ -269,8 +263,7 @@ export default {
     'Side panel controls': '侧边面板控件',
     'Remove session from issue': '从议题中删除会话',
     'Session removed from issue': '已从议题中删除会话',
-    'This may take some time. This dialog will close when the job is complete.':
-      '可能需要一些时间。任务完成后此对话框会关闭。',
+    'This may take some time. This dialog will close when the job is complete.': '可能需要一些时间。任务完成后此对话框会关闭。',
     ...SCOPED_STATE_LABELS,
     // 添加项：侧边面板空状态的拆分句（Create a <a>repository</a> to get started.）整句由下方 inline 规则译出；
     // omnibar 的 You can use <kbd>…</kbd> to add an item 是 kbd 句子（快捷键文字随平台变化），按片段翻译
@@ -506,24 +499,24 @@ export default {
     'This page failed to load': '页面加载失败',
     'Stale cache warning': '缓存过期警告',
     'Failed to fetch data.': '数据获取失败。',
-    'Reload the page': '重新加载页面',
+    'Reload the page': '重新加载页面'
   },
   regexp: [
     // 添加项
     [/^Showing (\d+) most recent items$/, '显示最近 $1 个项'],
     [
       /^Showing (\d+) most recent items? that (?:has|have) not been added to this project(\. Use search to narrow down this list\.)?$/,
-      (_, count: string, hint?: string) => `显示最近 ${count} 个未添加到此项目的项${hint ? '。搜索可缩小范围。' : ''}`,
+      (_, count: string, hint?: string) => `显示最近 ${count} 个未添加到此项目的项${hint ? '。搜索可缩小范围。' : ''}`
     ],
 
     // 确认框
     [
       /^Are you sure you want to archive (this item|[\d,]+ items|these [\d,]+ items)\?$/,
-      (_, phrase: string) => `确定要存档${itemPhrase(phrase)}吗？`,
+      (_, phrase: string) => `确定要存档${itemPhrase(phrase)}吗？`
     ],
     [
       /^Are you sure you want to remove (this item|[\d,]+ items|these [\d,]+ items) from (?:the|this) project\?$/,
-      (_, phrase: string) => `确定要从项目中删除${itemPhrase(phrase)}吗？`,
+      (_, phrase: string) => `确定要从项目中删除${itemPhrase(phrase)}吗？`
     ],
     [/^Archive items?\?$/, '存档项？'],
     [/^Remove items?\?$/, '删除项？'],
@@ -531,28 +524,25 @@ export default {
     [/^Move items to (.+)\?$/, (_, target: string) => `${joinCjk('将项移到', target)}？`],
     [
       /^Are you sure you want to move (this item|[\d,]+ items) to "(.+)"\?$/,
-      (_, phrase: string, target: string) => `确定要将${itemPhrase(phrase)}移到“${target}”吗？`,
+      (_, phrase: string, target: string) => `确定要将${itemPhrase(phrase)}移到“${target}”吗？`
     ],
     [/^Cannot add (.+)$/, (_, noun: string) => pangu(`无法添加${contentNoun(noun)}`)],
     [/^Pull requests cannot have (.+)$/, (_, noun: string) => pangu(`拉取请求不能有${contentNoun(noun)}`)],
-    [
-      /^Convert this draft to an issue to add (.+)$/,
-      (_, noun: string) => pangu(`将此草稿转换为议题后才能添加${contentNoun(noun)}`),
-    ],
+    [/^Convert this draft to an issue to add (.+)$/, (_, noun: string) => pangu(`将此草稿转换为议题后才能添加${contentNoun(noun)}`)],
     [
       /^(.+) cannot be applied to (pull requests|draft issues)$/,
       (_, field: string, target: string) =>
-        pangu(`${pluralFieldName(field)}无法应用于${target === 'pull requests' ? '拉取请求' : '草稿议题'}`),
+        pangu(`${pluralFieldName(field)}无法应用于${target === 'pull requests' ? '拉取请求' : '草稿议题'}`)
     ],
     [
       /^More than (\d+) cells are selected\. Deselect some cells to perform bulk edits\.$/,
-      '已选择超过 $1 个单元格。取消选择部分单元格后才能批量编辑。',
+      '已选择超过 $1 个单元格。取消选择部分单元格后才能批量编辑。'
     ],
     [/^Unable to assign the following users to the converted issue: (.+)$/, '无法将以下用户分配给转换后的议题：$1'],
     [/^This value must be between (-?\d+) and (-?\d+)$/, '此值必须介于 $1 和 $2 之间'],
     [
       new RegExp(`^(${COLUMN_TYPE_SOURCE}) cannot be deleted$`),
-      (_, name: string) => `${COLUMN_TYPE_TEXT[name] ?? translateFieldName(name)}无法删除`,
+      (_, name: string) => `${COLUMN_TYPE_TEXT[name] ?? translateFieldName(name)}无法删除`
     ],
     [/^Invalid `(.+)`: (.+)\. (.+) are acceptable values for `(.+)`$/, '`$1` 无效：$2。`$4` 的可接受值为 $3'],
     [/^@(.+)'s untitled project$/, '@$1 的未命名项目'],
@@ -566,12 +556,9 @@ export default {
       (_, title: string, state: string, pr?: string, parent?: string, level?: string) => {
         const status = `状态：${ITEM_STATES[state.toLowerCase()] ?? state}${pr ? '的拉取请求' : ''}`
         return parent ? `${title}，${status}。${parent} 的子议题。第 ${level} 级` : `${title}，${status}`
-      },
+      }
     ],
-    [
-      new RegExp(`^(${Object.keys(STATE_LABELS).join('|')}), blocked$`),
-      (_, label: string) => `${STATE_LABELS[label] ?? label}，被阻止`,
-    ],
+    [new RegExp(`^(${Object.keys(STATE_LABELS).join('|')}), blocked$`), (_, label: string) => `${STATE_LABELS[label] ?? label}，被阻止`],
 
     // 子议题
     [/^(\d+) sub-issues? not in this project$/, '$1 个子议题不在此项目中'],
@@ -580,24 +567,21 @@ export default {
     [
       /^Sub-issues progress: (\d+) of (\d+) \((\d+)%\)\. Show sub-issues for: (.+)$/,
       (_, completed: string, total: string, percent: string, title: string) =>
-        `子议题进度：${completed}/${total} (${percent}%)。${joinCjk(joinCjk('显示', title), '的子议题')}`,
+        `子议题进度：${completed}/${total} (${percent}%)。${joinCjk(joinCjk('显示', title), '的子议题')}`
     ],
 
     // 里程碑与状态更新
-    [
-      new RegExp(`^Past due by (${DISTANCE_SOURCE})$`),
-      (_, distance: string) => joinCjk('已逾期', translateDistance(distance)),
-    ],
+    [new RegExp(`^Past due by (${DISTANCE_SOURCE})$`), (_, distance: string) => joinCjk('已逾期', translateDistance(distance))],
     [new RegExp(`^Due by (${DATE_SOURCE})$`), (_, date: string) => joinCjk('截止于', translateDate(date) ?? date)],
     // 项目头部状态徽章的 aria-label：原文没有引号、逗号，改语序代替标点
     [
       new RegExp(`^View latest (.+) status updated (${DATE_SOURCE})$`),
       (_, status: string, date: string) =>
-        pangu(`${joinCjk('查看更新于', translateDate(date) ?? date)}的最新${STATUS_OPTIONS[status] ?? status}状态`),
+        pangu(`${joinCjk('查看更新于', translateDate(date) ?? date)}的最新${STATUS_OPTIONS[status] ?? status}状态`)
     ],
     [
       new RegExp(`^Updated (less than a minute ago|${RELATIVE_SOURCE})$`),
-      (_, time: string) => joinCjk('更新于', time === 'less than a minute ago' ? '不到 1 分钟前' : translateTime(time)),
+      (_, time: string) => joinCjk('更新于', time === 'less than a minute ago' ? '不到 1 分钟前' : translateTime(time))
     ],
     [/^React with (.+) \((\d+) .+ reactions? so far\)$/, '添加 $1 反应（已有 $2 个）'],
 
@@ -617,27 +601,21 @@ export default {
     [/^Bulk update in progress (\d+)%$/, '批量更新进行中 $1%'],
     [
       /^Bulk update completed\.(?: (\d+) items? couldn’t be updated and (?:were|was) skipped\.)?$/,
-      (_, skipped?: string) => `批量更新已完成。${skipped ? `${skipped} 个项无法更新并已跳过。` : ''}`,
+      (_, skipped?: string) => `批量更新已完成。${skipped ? `${skipped} 个项无法更新并已跳过。` : ''}`
     ],
     // 原文没有括号：3 个项批量更新失败。
     [
       /^Bulk update failed(?: for (\d+) items)?\. Please refresh the page and try again\.$/,
-      (_, count?: string) => `${count ? `${count} 个项` : ''}批量更新失败。请刷新页面后重试。`,
+      (_, count?: string) => `${count ? `${count} 个项` : ''}批量更新失败。请刷新页面后重试。`
     ],
     [/^Error updating items: Cannot update more than (\d+) items at once$/, '更新项出错：一次最多更新 $1 个项'],
-    [
-      /^(\d+)% imported; you may leave this page while we work in the background\.$/,
-      '已导入 $1%；后台导入期间可离开此页面。',
-    ],
+    [/^(\d+)% imported; you may leave this page while we work in the background\.$/, '已导入 $1%；后台导入期间可离开此页面。'],
     [
       /^Import complete\.(?: (\d+) items? failed to import\.)?( Now running setup workflows – this may take a few minutes\.)?( Keep this project up to date by automatically adding new items matching your filters\.)?$/,
       (_, failed?: string, workflows?: string, hint?: string) =>
-        `导入完成。${failed ? `${failed} 个项导入失败。` : ''}${workflows ? '正在运行设置工作流——可能需要几分钟。' : ''}${hint ? '通过自动添加与筛选器匹配的新项保持项目最新。' : ''}`,
+        `导入完成。${failed ? `${failed} 个项导入失败。` : ''}${workflows ? '正在运行设置工作流——可能需要几分钟。' : ''}${hint ? '通过自动添加与筛选器匹配的新项保持项目最新。' : ''}`
     ],
-    [
-      /^Failed to add items from your repository\. (\d+) items? failed to import\.$/,
-      '无法从存储库添加项。$1 个项导入失败。',
-    ],
+    [/^Failed to add items from your repository\. (\d+) items? failed to import\.$/, '无法从存储库添加项。$1 个项导入失败。'],
 
     // 日期选择器与日期
     [/^Week (\d+)$/, '第 $1 周'],
@@ -645,19 +623,18 @@ export default {
     [/^Must be on or before (.+)$/, (_, date: string) => joinCjk('不能晚于', translateDate(date) ?? date)],
     [
       /^(.+) - Open date picker \(currently selected: (.+)\)$/,
-      (_, field: string, date: string) =>
-        `${translateFieldName(field)} - 打开日期选择器（当前：${translateDate(date) ?? date}）`,
+      (_, field: string, date: string) => `${translateFieldName(field)} - 打开日期选择器（当前：${translateDate(date) ?? date}）`
     ],
     [/^(.+) - Choose date\.\.\.$/, (_, field: string) => `${translateFieldName(field)} - 选择日期...`],
     [
       new RegExp(
-        `^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), (${MONTH_SOURCE} \\d{1,2})((?: \\((?:${DAY_NOTE_SOURCE})\\))*)$`,
+        `^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), (${MONTH_SOURCE} \\d{1,2})((?: \\((?:${DAY_NOTE_SOURCE})\\))*)$`
       ),
       (_, weekday: string, date: string, notes: string) =>
-        `${translateDate(date) ?? date}${WEEKDAYS_LONG[weekday] ?? ''}${translateDayNotes(notes)}`,
+        `${translateDate(date) ?? date}${WEEKDAYS_LONG[weekday] ?? ''}${translateDayNotes(notes)}`
     ],
     [new RegExp(`^(${DATE_SOURCE})$`), (_, date: string) => translateDate(date) ?? date],
-    [/^Please keep your feedback within (\d+) characters or less\.$/, '反馈请控制在 $1 个字符以内。'],
+    [/^Please keep your feedback within (\d+) characters or less\.$/, '反馈请控制在 $1 个字符以内。']
   ],
   inline: [
     // 拖入里程碑 / 议题类型分组的提示框（get-group-update-validation.tsx，宿主是 AlertDialog 正文 div）：
@@ -665,7 +642,7 @@ export default {
     // 槽位顺序不能变，改语序：<里程碑> 里程碑需先在 <存储库> 存储库中创建（原文没有逗号，译文不加）
     [
       'Please create the {} milestone in the {} repository before adding to this milestone group.',
-      '{} 里程碑需先在 {} 存储库中创建才能添加到此里程碑分组。',
+      '{} 里程碑需先在 {} 存储库中创建才能添加到此里程碑分组。'
     ],
     // There is no <code>类型</code> issue type in the <a>组织</a> organization.
     ['There is no {} issue type in the {} organization.', '{} 议题类型在 {} 组织中不存在。'],
@@ -674,6 +651,6 @@ export default {
     // 添加项建议列表的“Add items from <span>owner/repo</span>”槽位后没有文本节点，译文无法把存储库名移到句中，
     // 仍按 scoped 片段“从以下存储库添加项”翻译
     // 侧边面板没有存储库建议时的空状态（item-suggestions-list.tsx）：<p>Create a <a>repository</a> to get started.</p>
-    ['Create a {} to get started.', '创建{}以开始使用。'],
-  ],
+    ['Create a {} to get started.', '创建{}以开始使用。']
+  ]
 } satisfies PageDictionary

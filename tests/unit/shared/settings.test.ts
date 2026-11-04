@@ -21,7 +21,7 @@ import {
   updateSettings,
   watchCustomEntries,
   watchSearchBlockRules,
-  watchSettings,
+  watchSettings
 } from '../../../src/shared/settings'
 
 beforeEach(() => {
@@ -29,7 +29,7 @@ beforeEach(() => {
 })
 
 describe('mergeSettings', () => {
-  it.each([undefined, null, 'x', 1, true])('非对象 %s → 默认值', (input) => {
+  it.each([undefined, null, 'x', 1, true])('非对象 %s → 默认值', input => {
     expect(mergeSettings(input)).toEqual(DEFAULT_SETTINGS)
   })
 
@@ -37,7 +37,7 @@ describe('mergeSettings', () => {
     expect(mergeSettings({ enabled: false, excludedPaths: ['/settings'] })).toEqual({
       ...DEFAULT_SETTINGS,
       enabled: false,
-      excludedPaths: ['/settings'],
+      excludedPaths: ['/settings']
     })
   })
 
@@ -47,8 +47,8 @@ describe('mergeSettings', () => {
         enabled: 'no',
         translateTime: 0,
         translateTitle: false,
-        excludedPaths: ['/a', 1],
-      }),
+        excludedPaths: ['/a', 1]
+      })
     ).toEqual({ ...DEFAULT_SETTINGS, translateTitle: false })
   })
 
@@ -68,7 +68,7 @@ describe('mergeSettings', () => {
       ...DEFAULT_SETTINGS,
       language: 'zh-TW',
       uiLanguage: 'en',
-      theme: 'dark',
+      theme: 'dark'
     })
     expect(mergeSettings({ language: 'en', uiLanguage: 'ja', theme: 'neon' })).toEqual(DEFAULT_SETTINGS)
     expect(mergeSettings({ language: null, uiLanguage: 1, theme: ['dark'] })).toEqual(DEFAULT_SETTINGS)
@@ -83,7 +83,7 @@ describe('加速设置', () => {
       failover: false,
       accelerateSource: 'ghfast',
       customSources: [],
-      removedSources: [],
+      removedSources: []
     })
   })
 
@@ -96,19 +96,19 @@ describe('加速设置', () => {
         failover: 'yes',
         accelerateSource: 'custom-1',
         customSources: [mirror, { id: 'custom-2', name: 'HTTP', template: 'http://insecure.example/{url}' }],
-        removedSources: ['wget-la', 3],
-      }),
+        removedSources: ['wget-la', 3]
+      })
     ).toEqual({
       ...DEFAULT_SETTINGS,
       accelerate: true,
       accelerateImages: true,
       accelerateSource: 'custom-1',
       customSources: [mirror],
-      removedSources: ['wget-la'],
+      removedSources: ['wget-la']
     })
-    expect(
-      mergeSettings({ accelerateImages: 'yes', accelerateSource: 1, customSources: 'x', removedSources: {} }),
-    ).toEqual(DEFAULT_SETTINGS)
+    expect(mergeSettings({ accelerateImages: 'yes', accelerateSource: 1, customSources: 'x', removedSources: {} })).toEqual(
+      DEFAULT_SETTINGS
+    )
   })
 })
 
@@ -119,15 +119,12 @@ describe('搜索净化', () => {
     expect(mergeSettings({ purifySearch: 'no' }).purifySearch).toBe(true)
   })
 
-  it.each([undefined, null, 'x', { 0: '@octocat' }])('屏蔽规则不是数组 %s → 没有规则', (input) => {
+  it.each([undefined, null, 'x', { 0: '@octocat' }])('屏蔽规则不是数组 %s → 没有规则', input => {
     expect(sanitizeSearchBlockRules(input)).toEqual([])
   })
 
   it('屏蔽规则：过滤非字符串与空行，去掉首尾空白', () => {
-    expect(sanitizeSearchBlockRules([' @octocat ', '', '  ', 3, null, 'vuejs/core'])).toEqual([
-      '@octocat',
-      'vuejs/core',
-    ])
+    expect(sanitizeSearchBlockRules([' @octocat ', '', '  ', 3, null, 'vuejs/core'])).toEqual(['@octocat', 'vuejs/core'])
   })
 })
 
@@ -138,7 +135,7 @@ describe('增强设置', () => {
       imagePreview: false,
       newTab: false,
       newTabScopes: ['external', 'search'],
-      newTabPaths: [],
+      newTabPaths: []
     })
   })
 
@@ -149,19 +146,19 @@ describe('增强设置', () => {
         imagePreview: true,
         newTab: true,
         newTabScopes: ['issues', 'external', 'unknown'],
-        newTabPaths: ['/*/*/releases'],
-      }),
+        newTabPaths: ['/*/*/releases']
+      })
     ).toEqual({
       ...DEFAULT_SETTINGS,
       autoLoad: true,
       imagePreview: true,
       newTab: true,
       newTabScopes: ['external', 'issues'],
-      newTabPaths: ['/*/*/releases'],
+      newTabPaths: ['/*/*/releases']
     })
-    expect(
-      mergeSettings({ autoLoad: 'yes', imagePreview: 1, newTab: null, newTabScopes: 'search', newTabPaths: ['/a', 2] }),
-    ).toEqual(DEFAULT_SETTINGS)
+    expect(mergeSettings({ autoLoad: 'yes', imagePreview: 1, newTab: null, newTabScopes: 'search', newTabPaths: ['/a', 2] })).toEqual(
+      DEFAULT_SETTINGS
+    )
     expect(mergeSettings({ newTabScopes: [] }).newTabScopes).toEqual([])
   })
 })
@@ -173,7 +170,7 @@ describe('与内置源重复的自定义源', () => {
     expect(mergeSettings({ customSources: [copy, mirror], accelerateSource: 'custom-1' })).toEqual({
       ...DEFAULT_SETTINGS,
       customSources: [mirror],
-      accelerateSource: 'gh-proxy-com',
+      accelerateSource: 'gh-proxy-com'
     })
   })
 })
@@ -191,14 +188,14 @@ describe('matchesPathPattern', () => {
 })
 
 describe('sanitizeCustomEntries', () => {
-  it.each([undefined, null, 'x', ['a', 'b']])('非对象 %s → 空对象', (input) => {
+  it.each([undefined, null, 'x', ['a', 'b']])('非对象 %s → 空对象', input => {
     expect(sanitizeCustomEntries(input)).toEqual({})
   })
 
   it('过滤非字符串值与空键空值', () => {
     expect(sanitizeCustomEntries({ Issues: '议题', ' ': '空', Empty: '  ', Count: 3, Pulls: '拉取请求' })).toEqual({
       Issues: '议题',
-      Pulls: '拉取请求',
+      Pulls: '拉取请求'
     })
   })
 })
@@ -218,7 +215,7 @@ describe('isPathExcluded', () => {
     ['/settings', ['settings'], false],
     ['/a.b', ['/a.b'], true],
     ['/aXb', ['/a.b'], false],
-    ['/anything', [], false],
+    ['/anything', [], false]
   ])('%s 对 %j → %s', (pathname, patterns, expected) => {
     expect(isPathExcluded(pathname, patterns)).toBe(expected)
   })
@@ -253,10 +250,7 @@ describe('排除此页 / 取消排除', () => {
   })
 
   it('移除所有命中当前路径的规则', () => {
-    expect(removeExcludedPath(['/vuejs', '/*/*/wiki', '/settings', '/vuejs/core'], '/vuejs/core')).toEqual([
-      '/*/*/wiki',
-      '/settings',
-    ])
+    expect(removeExcludedPath(['/vuejs', '/*/*/wiki', '/settings', '/vuejs/core'], '/vuejs/core')).toEqual(['/*/*/wiki', '/settings'])
   })
 })
 
@@ -274,7 +268,7 @@ describe('存储读写', () => {
 
   it('updateSettings 传函数：按写入前存储中的最新设置计算', async () => {
     await settingsItem.setValue({ removedSources: ['wget-la'] })
-    const next = await updateSettings((current) => ({ removedSources: [...current.removedSources, 'ghfast'] }))
+    const next = await updateSettings(current => ({ removedSources: [...current.removedSources, 'ghfast'] }))
     expect(next.removedSources).toEqual(['wget-la', 'ghfast'])
     expect((await getSettings()).removedSources).toEqual(['wget-la', 'ghfast'])
   })
@@ -282,7 +276,7 @@ describe('存储读写', () => {
   it.each<[string, Record<string, unknown>]>([
     ['开启', { collectUntranslated: true }],
     ['关闭', { collectUntranslated: false }],
-    ['没有该字段', {}],
+    ['没有该字段', {}]
   ])(
     '旧版本的 collectUntranslated（%s）：读取时忽略；写入时固定为 false（设置会同步，未更新的旧版本读不到时按开启处理）',
     async (_name, legacy) => {
@@ -294,9 +288,9 @@ describe('存储读写', () => {
         ...DEFAULT_SETTINGS,
         enabled: false,
         translateTitle: false,
-        collectUntranslated: false,
+        collectUntranslated: false
       })
-    },
+    }
   )
 
   it('watchSettings 回调合并后的设置', async () => {

@@ -45,8 +45,7 @@ export default {
     'Authorizing will redirect to': '授权后将重定向到',
 
     // 选择授权帐户 /login/oauth/select_account
-    'From the options below, choose which account you would like to use to authorize this app.':
-      '从以下选项中选择用于授权此应用的帐户。',
+    'From the options below, choose which account you would like to use to authorize this app.': '从以下选项中选择用于授权此应用的帐户。',
     'Use a different account': '使用其他帐户',
     'has not been installed on any accounts you have access to.': '尚未安装在你有权访问的任何帐户上。',
 
@@ -59,7 +58,7 @@ export default {
     // 重新授权
     'Reauthorization required': '需要重新授权',
     'This application has made an unusually high number of requests to access your account. Please reauthorize the application to continue.':
-      '此应用访问你帐户的请求异常频繁。请重新授权以继续。',
+      '此应用访问你帐户的请求异常频繁。请重新授权以继续。'
   },
   scoped: {
     // 权限分组
@@ -94,7 +93,7 @@ export default {
     'Deploy keys': '部署密钥',
     'Webhooks and services': 'Web 钩子和服务',
     'Collaboration invites': '协作邀请',
-    'Organization access': '组织访问权限',
+    'Organization access': '组织访问权限'
   },
   regexp: [
     [/^Authorize (.+)$/, '授权 $1'],
@@ -105,6 +104,6 @@ export default {
     [/^More than ([\d.,]+[KkMm]?) GitHub users$/, '超过 $1 个 GitHub 用户'],
     [/^(?:Fewer|Less) than ([\d.,]+[KkMm]?) GitHub users$/, '少于 $1 个 GitHub 用户'],
     [/^Verify your GitHub identity \(([\w-]+)\)$/, '验证你的 GitHub 身份 ($1)'],
-    [new RegExp(`^Created (${TIME_SOURCE})$`), (_, time: string) => joinCjk('创建于', translateTime(time))],
-  ],
+    [new RegExp(`^Created (${TIME_SOURCE})$`), (_, time: string) => joinCjk('创建于', translateTime(time))]
+  ]
 } satisfies PageDictionary

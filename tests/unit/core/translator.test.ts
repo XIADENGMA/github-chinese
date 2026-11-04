@@ -87,21 +87,15 @@ describe('提示框可见文字 data-visible-text', () => {
 
   it('与 aria-label 一起翻译；外部改写后重译；stop 后还原', async () => {
     const t = start(`<div id="__primerPortalRoot__">${tooltip('pr', 'Open pull request')}</div>`, {
-      matcher: testMatcher({ custom }),
+      matcher: testMatcher({ custom })
     })
     const pr = $('#pr')
-    expect([pr.getAttribute('aria-label'), pr.getAttribute('data-visible-text')]).toEqual([
-      '打开的拉取请求',
-      '打开的拉取请求',
-    ])
+    expect([pr.getAttribute('aria-label'), pr.getAttribute('data-visible-text')]).toEqual(['打开的拉取请求', '打开的拉取请求'])
     pr.setAttribute('data-visible-text', 'Merged pull request')
     t.flush()
     expect(pr.getAttribute('data-visible-text')).toBe('已合并的拉取请求')
     t.stop()
-    expect([pr.getAttribute('aria-label'), pr.getAttribute('data-visible-text')]).toEqual([
-      'Open pull request',
-      'Merged pull request',
-    ])
+    expect([pr.getAttribute('aria-label'), pr.getAttribute('data-visible-text')]).toEqual(['Open pull request', 'Merged pull request'])
   })
 
   it('文件树名称提示与忽略区域内的提示不翻译', () => {
@@ -110,12 +104,12 @@ describe('提示框可见文字 data-visible-text', () => {
       ${tooltip('file', 'Docs', 'data-testid="Docs-item-tooltip"')}
       ${tooltip('settings', 'Settings', 'data-testid="Settings-directory-item-tooltip"')}
       <div class="markdown-body">${tooltip('md', 'Open pull request')}</div>`,
-      { matcher: testMatcher({ custom }) },
+      { matcher: testMatcher({ custom }) }
     )
     const cases: readonly (readonly [string, string])[] = [
       ['#dir', 'Docs'],
       ['#file', 'Docs'],
-      ['#settings', 'Settings'],
+      ['#settings', 'Settings']
     ]
     for (const [id, name] of cases) {
       expect([$(id).getAttribute('aria-label'), $(id).getAttribute('data-visible-text')]).toEqual([name, name])
@@ -133,7 +127,7 @@ describe('脚本原样显示的确认文字属性', () => {
     'Are you sure you want to discard your unsaved changes?': '确定要放弃未保存的更改吗？',
     'You have unsaved changes. Are you sure you want to discard them?': '有未保存的更改，确定放弃吗？',
     'Changes you made will not be saved.': '所做的更改不会保存。',
-    'Would you like to add a reaction instead?': '改为添加表情回应？',
+    'Would you like to add a reaction instead?': '改为添加表情回应？'
   }
 
   it('confirm 文字、未保存提醒、表情回应建议都翻译；stop 后还原', () => {
@@ -142,7 +136,7 @@ describe('脚本原样显示的确认文字属性', () => {
       <button id="b" data-confirm-cancel-text="You have unsaved changes. Are you sure you want to discard them?">Cancel</button>
       <form id="c" data-warn-unsaved-changes="Changes you made will not be saved."></form>
       <div id="d" class="js-reaction-suggestion" data-reaction-markup="Would you like to add a reaction instead?"></div>`,
-      { matcher: testMatcher({ custom }) },
+      { matcher: testMatcher({ custom }) }
     )
     expect($('#a').getAttribute('data-confirm-text')).toBe('确定要放弃未保存的更改吗？')
     expect($('#b').getAttribute('data-confirm-cancel-text')).toBe('有未保存的更改，确定放弃吗？')
@@ -154,13 +148,10 @@ describe('脚本原样显示的确认文字属性', () => {
   })
 
   it('外部改写后重译；未命中时按属性记入未翻译；空值不处理', () => {
-    const t = start(
-      '<form id="c" data-warn-unsaved-changes=""></form><button id="a" data-confirm-text="Discard?"></button>',
-      {
-        matcher: testMatcher({ custom }),
-        collectUntranslated: true,
-      },
-    )
+    const t = start('<form id="c" data-warn-unsaved-changes=""></form><button id="a" data-confirm-text="Discard?"></button>', {
+      matcher: testMatcher({ custom }),
+      collectUntranslated: true
+    })
     expect($('#c').getAttribute('data-warn-unsaved-changes')).toBe('')
     expect(t.drainUntranslated()).toEqual([['Discard?', 'issues', 2, 1, 1]])
     $('#a').setAttribute('data-confirm-text', 'Are you sure you want to discard your unsaved changes?')
@@ -321,13 +312,12 @@ describe('动态变化', () => {
 
 describe('与 React 共存', () => {
   it('不插入、删除、替换节点', () => {
-    const html =
-      '<div><span>Updated <!-- -->3<!-- --> days ago</span><b>Issues</b> Search<!-- --> <i title="Copy">x</i></div>'
+    const html = '<div><span>Updated <!-- -->3<!-- --> days ago</span><b>Issues</b> Search<!-- --> <i title="Copy">x</i></div>'
     document.body.innerHTML = html
-    const before = [...document.body.querySelectorAll('*')].map((el) => [...el.childNodes])
+    const before = [...document.body.querySelectorAll('*')].map(el => [...el.childNodes])
     translator = createTranslator({ matcher: testMatcher(), host: window })
     translator.start()
-    const after = [...document.body.querySelectorAll('*')].map((el) => [...el.childNodes])
+    const after = [...document.body.querySelectorAll('*')].map(el => [...el.childNodes])
     expect(after).toHaveLength(before.length)
     after.forEach((children, i) => {
       expect(children).toHaveLength(before[i]!.length)
@@ -465,9 +455,7 @@ describe('还原', () => {
 
 describe('统计', () => {
   it('translatedCount 统计已翻译的文本节点与属性', () => {
-    const t = start(
-      '<button aria-label="Copy" title="Close">Search</button><p>Unknown</p><span>Updated <!-- -->3 days ago</span>',
-    )
+    const t = start('<button aria-label="Copy" title="Close">Search</button><p>Unknown</p><span>Updated <!-- -->3 days ago</span>')
     // 文本：Search、Updated 组首节点；属性：aria-label、title
     expect(t.translatedCount()).toBe(4)
   })
@@ -495,10 +483,10 @@ describe('已译节点被追加文字（解析器分块到达）', () => {
         regexp: [
           [/^Showing (\d+) of (\d+)$/, '显示 $1 个，共 $2 个'],
           [/^Press \/ to open (.+)$/, '按 / 打开 $1'],
-          [/^Press \/ to search$/, '按 / 搜索'],
-        ],
-      },
-    ],
+          [/^Press \/ to search$/, '按 / 搜索']
+        ]
+      }
+    ]
   ]
 
   beforeEach(() => setReadyState('loading'))
@@ -523,7 +511,7 @@ describe('已译节点被追加文字（解析器分块到达）', () => {
   it.each([
     ['Showing 5 of 1', '2', '显示 5 个，共 12 个'],
     ['Opened by octocat', '-2', '由 octocat-2 打开'],
-    ['Opened by octocat', 'é', '由 octocaté 打开'],
+    ['Opened by octocat', 'é', '由 octocaté 打开']
   ])('追加数字、非 ASCII 字母：与整段一次到达相同，停止后还原（%s + %s）', async (source, extra, shown) => {
     start(`<span>${source}</span>`, { matcher: testMatcher({}, bundle) })
     append('span', extra)
@@ -626,7 +614,7 @@ describe('已译节点被追加文字（解析器分块到达）', () => {
 
   it('文本组的置空末节点被追加的文字以原文开头或等于原文：仍按追加处理，停止后还原', async () => {
     start('<span>Showing <!-- -->5<!-- --> of <!-- -->1</span><p>Opened by <!-- -->1</p>', {
-      matcher: testMatcher({}, bundle),
+      matcher: testMatcher({}, bundle)
     })
     expect($('span').textContent).toBe('显示 5 个，共 1 个')
     append('span', '12')
@@ -678,17 +666,14 @@ describe('已译节点被追加文字（解析器分块到达）', () => {
     expect($('p').textContent).toBe('Opened by hubot')
   })
 
-  it.each(['loading', 'complete'] as const)(
-    '译文是原文前缀：页面改写为原文加后缀时按新原文处理（%s）',
-    async (state) => {
-      setReadyState(state)
-      start('<p>Webhooks</p>', { matcher: testMatcher({ custom: { Webhooks: 'Webhook' } }) })
-      expect($('p').textContent).toBe('Webhook')
-      ;($('p').firstChild as Text).data = 'Webhooks (2)'
-      await settle()
-      expect($('p').textContent).toBe('Webhooks (2)')
-      translator!.stop()
-      expect($('p').textContent).toBe('Webhooks (2)')
-    },
-  )
+  it.each(['loading', 'complete'] as const)('译文是原文前缀：页面改写为原文加后缀时按新原文处理（%s）', async state => {
+    setReadyState(state)
+    start('<p>Webhooks</p>', { matcher: testMatcher({ custom: { Webhooks: 'Webhook' } }) })
+    expect($('p').textContent).toBe('Webhook')
+    ;($('p').firstChild as Text).data = 'Webhooks (2)'
+    await settle()
+    expect($('p').textContent).toBe('Webhooks (2)')
+    translator!.stop()
+    expect($('p').textContent).toBe('Webhooks (2)')
+  })
 })

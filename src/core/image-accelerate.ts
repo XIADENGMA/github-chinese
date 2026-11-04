@@ -42,7 +42,7 @@ function resolveUrl(url: string, base: string): string | undefined {
 /** 把 srcset 中解析后等于 failed 的地址换成 replacement；没有时返回 undefined */
 function replaceInSrcset(srcset: string, base: string, failed: string, replacement: string): string | undefined {
   let changed = false
-  const candidates = srcset.split(/,\s+/).map((candidate) => {
+  const candidates = srcset.split(/,\s+/).map(candidate => {
     const [url = '', ...descriptors] = candidate.trim().split(/\s+/)
     if (resolveUrl(url, base) !== failed) return candidate
     changed = true
@@ -103,11 +103,11 @@ export function createImageAccelerator(options: ImageAccelerateOptions): ImageAc
     const link = parseImageUrl(failed)
     if (!link || isPrivatePage(img.ownerDocument)) return
     load(link.url).then(
-      (dataUrl) => {
+      dataUrl => {
         // 等待期间页面换了图：不动
         if (currentUrl(img) === failed) replaceImage(img, failed, dataUrl)
       },
-      () => undefined,
+      () => undefined
     )
   }
 
@@ -119,6 +119,6 @@ export function createImageAccelerator(options: ImageAccelerateOptions): ImageAc
       for (const img of doc.querySelectorAll('img')) {
         if (img.complete && img.naturalWidth === 0 && img.naturalHeight === 0) retry(img)
       }
-    },
+    }
   }
 }

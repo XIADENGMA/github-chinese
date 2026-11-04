@@ -22,8 +22,7 @@ export default {
       '可以使用任何動作或可重複使用的工作流程，無論其作者是誰或定義於何處。',
     'Disable actions': '停用 GitHub 動作',
     'The Actions tab is hidden and no workflows can run.': '動作分頁將隱藏且無法執行任何工作流程。',
-    'Learn more about allowing specific actions and reusable workflows to run.':
-      '瞭解如何允許執行特定的動作和可重複使用的工作流程。',
+    'Learn more about allowing specific actions and reusable workflows to run.': '瞭解如何允許執行特定的動作和可重複使用的工作流程。',
     'Allow actions created by GitHub': '允許 GitHub 建立的動作',
     'Allow actions by Marketplace': '允許市集',
     'Allow specified actions and reusable workflows': '允許指定的動作和可重複使用的工作流程',
@@ -120,8 +119,7 @@ export default {
     'Choose the default permissions granted to the GITHUB_TOKEN when running workflows in this repository. You can specify more granular permissions in the workflow using YAML.':
       '選擇在此儲存庫中執行工作流程時授予 GITHUB_TOKEN 的預設權限。你可以在工作流程中使用 YAML 指定更精細的權限。',
     'Read and write permissions': '讀取和寫入權限',
-    'Workflows have read and write permissions in the repository for all scopes.':
-      '工作流程在儲存庫中對所有範圍都具有讀取和寫入權限。',
+    'Workflows have read and write permissions in the repository for all scopes.': '工作流程在儲存庫中對所有範圍都具有讀取和寫入權限。',
     'Read repository contents and packages permissions': '讀取儲存庫內容和套件權限',
     'Workflows have read permissions in the repository for the contents and packages scopes only.':
       '工作流程在儲存庫中僅對內容和套件範圍具有讀取權限。',
@@ -178,8 +176,7 @@ export default {
     'Forks of your public repository can potentially run dangerous code on your self-hosted runner by creating a pull request.':
       '公開儲存庫的分叉可能會透過建立拉取請求在你的自架執行器上執行危險程式碼。',
     'Learn more about security hardening for self-hosted runners': '瞭解自架執行器的安全性強化',
-    'Win-arm64 runners are currently in pre-release status and subject to change.':
-      'Win-arm64 執行器目前為發行前版本，可能會有所變更。',
+    'Win-arm64 runners are currently in pre-release status and subject to change.': 'Win-arm64 執行器目前為發行前版本，可能會有所變更。',
 
     // 模型
     'Models in this repository': '此儲存庫中的模型',
@@ -207,10 +204,9 @@ export default {
       '在主體宣告中包含唯一識別碼以提升安全性，確保同名的其他儲存庫或組織無法冒用信任政策。',
     'Learn more about immutable subject claims.': '瞭解不可變的主體宣告。',
     'Default subject claim prefix': '預設主體宣告前置詞',
-    'Use this prefix when configuring trust policies in your cloud provider.':
-      '在雲端提供者中設定信任政策時使用此前置詞。',
+    'Use this prefix when configuring trust policies in your cloud provider.': '在雲端提供者中設定信任政策時使用此前置詞。',
     'Copy subject claim prefix': '複製主體宣告前置詞',
-    'Save subject claim': '儲存主體宣告',
+    'Save subject claim': '儲存主體宣告'
   },
   scoped: {
     'Actions permissions': '動作權限',
@@ -244,52 +240,44 @@ export default {
     'Runners are the machines that execute GitHub Actions workflows.': '執行器是執行 GitHub 動作工作流程的機器。',
     'Standard GitHub-hosted runners': '標準 GitHub 代管的執行器',
     'Ready-to-use runners managed by GitHub.': '由 GitHub 管理的立即可用執行器。',
-    'Learn more about GitHub-hosted runners.': '瞭解 GitHub 代管的執行器。',
+    'Learn more about GitHub-hosted runners.': '瞭解 GitHub 代管的執行器。'
   },
   regexp: [
     // 操作权限：仅允许本组织 / 用户的动作
     [new RegExp(`^Allow ${OWNER} actions and reusable workflows$`), '允許 $1 的動作和可重複使用的工作流程'],
     [
       new RegExp(`^Allow ${OWNER}, and select non-${OWNER}, actions and reusable workflows$`),
-      '允許 $1 以及選定的非 $2 動作和可重複使用的工作流程',
+      '允許 $1 以及選定的非 $2 動作和可重複使用的工作流程'
     ],
     [
       new RegExp(`^Any action or reusable workflow defined in a repository within ${OWNER} can be used\\.$`),
-      '可以使用 $1 中任何儲存庫定義的動作或可重複使用的工作流程。',
+      '可以使用 $1 中任何儲存庫定義的動作或可重複使用的工作流程。'
     ],
     [
       new RegExp(
-        `^Any action or reusable workflow that matches the specified criteria, plus those defined in a repository within ${OWNER}, can be used\\.$`,
+        `^Any action or reusable workflow that matches the specified criteria, plus those defined in a repository within ${OWNER}, can be used\\.$`
       ),
-      '可以使用符合指定條件的動作或可重複使用的工作流程，以及 $1 中任何儲存庫定義的動作或可重複使用的工作流程。',
+      '可以使用符合指定條件的動作或可重複使用的工作流程，以及 $1 中任何儲存庫定義的動作或可重複使用的工作流程。'
     ],
     // 保留期上限
-    [
-      /^There is a maximum limit of (\d+) days(\.?)$/,
-      (_, days: string, dot: string) => `上限為 ${days} 天${dot ? '。' : ''}`,
-    ],
+    [/^There is a maximum limit of (\d+) days(\.?)$/, (_, days: string, dot: string) => `上限為 ${days} 天${dot ? '。' : ''}`],
     [
       /^Your organization has set a maximum limit of (\d+) days(\.?)$/,
-      (_, days: string, dot: string) => `你的組織設定的上限為 ${days} 天${dot ? '。' : ''}`,
+      (_, days: string, dot: string) => `你的組織設定的上限為 ${days} 天${dot ? '。' : ''}`
     ],
-    [
-      /^Retention can be set up to (\d+) days(\.?)$/,
-      (_, days: string, dot: string) => `保留期限最多可設為 ${days} 天${dot ? '。' : ''}`,
-    ],
+    [/^Retention can be set up to (\d+) days(\.?)$/, (_, days: string, dot: string) => `保留期限最多可設為 ${days} 天${dot ? '。' : ''}`],
     [
       /^Total cache size can be set up to (\d+) ?GB(\.?)$/,
-      (_, size: string, dot: string) => `快取總大小最多可設為 ${size} GB${dot ? '。' : ''}`,
+      (_, size: string, dot: string) => `快取總大小最多可設為 ${size} GB${dot ? '。' : ''}`
     ],
     // 保留期 / 缓存大小的输入校验
     [
       /^Retention period must be (?:less than or equal to (\d+) days|(\d+) days? or more)\.$/,
-      (_, max: string | undefined, min: string | undefined) =>
-        max ? `保留期限不得超過 ${max} 天。` : `保留期限不得少於 ${min ?? ''} 天。`,
+      (_, max: string | undefined, min: string | undefined) => (max ? `保留期限不得超過 ${max} 天。` : `保留期限不得少於 ${min ?? ''} 天。`)
     ],
     [
       /^Cache size must be (?:less than or equal to (\d+) ?GB|(\d+) ?GB or more)\.$/,
-      (_, max: string | undefined, min: string | undefined) =>
-        max ? `快取大小不得超過 ${max} GB。` : `快取大小不得少於 ${min ?? ''} GB。`,
+      (_, max: string | undefined, min: string | undefined) => (max ? `快取大小不得超過 ${max} GB。` : `快取大小不得少於 ${min ?? ''} GB。`)
     ],
     // 访问
     [/^Accessible from repositories owned by the user ['‘’"“”]?([\w.-]+)['‘’"“”]?$/, '可從使用者 $1 擁有的儲存庫存取'],
@@ -298,21 +286,18 @@ export default {
     // 策略：pull_request_target 限制公告（事件名在 <code> 中时由 static 匹配后半句）
     [
       new RegExp(`^On (${DATE_SOURCE}), GitHub will restrict$`),
-      (_, date: string) => `${joinCjk(translateDate(date) ?? date, '起')}，GitHub 將預設在公開儲存庫中限制`,
+      (_, date: string) => `${joinCjk(translateDate(date) ?? date, '起')}，GitHub 將預設在公開儲存庫中限制`
     ],
     [
       new RegExp(
-        `^On (${DATE_SOURCE}), GitHub will restrict ([\\w-]+) on public repositories by default\\. To continue allowing the event trigger, configure an Actions policy\\.$`,
+        `^On (${DATE_SOURCE}), GitHub will restrict ([\\w-]+) on public repositories by default\\. To continue allowing the event trigger, configure an Actions policy\\.$`
       ),
       (_, date: string, event: string) =>
-        `${joinCjk(translateDate(date) ?? date, '起')}，GitHub 將預設在公開儲存庫中限制 ${event} 事件。若要繼續允許此事件觸發條件，請設定動作政策。`,
+        `${joinCjk(translateDate(date) ?? date, '起')}，GitHub 將預設在公開儲存庫中限制 ${event} 事件。若要繼續允許此事件觸發條件，請設定動作政策。`
     ],
     // 运行器详细信息：把标签加入工作流 YAML
-    [
-      /^Add `([^`]{1,100})` to your workflow[’']s YAML to send jobs to this runner\.$/,
-      '將 `$1` 加入工作流程 YAML 以傳送作業至此執行器。',
-    ],
+    [/^Add `([^`]{1,100})` to your workflow[’']s YAML to send jobs to this runner\.$/, '將 `$1` 加入工作流程 YAML 以傳送作業至此執行器。'],
     // 新建自托管运行器：页面标题文本（含 owner/repo）
-    [/^Add new self-hosted runner · ([\w.-]+\/[\w.-]+)$/, '新增自架執行器 · $1'],
-  ],
+    [/^Add new self-hosted runner · ([\w.-]+\/[\w.-]+)$/, '新增自架執行器 · $1']
+  ]
 } satisfies PageDictionary

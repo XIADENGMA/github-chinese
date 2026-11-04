@@ -4,7 +4,7 @@ const PULL_STATES: Readonly<Record<string, string>> = {
   Open: '打开的',
   Closed: '已关闭的',
   Merged: '已合并的',
-  Draft: '草稿',
+  Draft: '草稿'
 }
 
 const regexp: readonly RegExpRule[] = [
@@ -13,7 +13,7 @@ const regexp: readonly RegExpRule[] = [
   // 分支行：关联拉取请求的无障碍名称
   [
     /^(Open|Closed|Merged|Draft) pull request #(\d+)$/,
-    (_, state: string, number: string) => `${PULL_STATES[state] ?? state}拉取请求 #${number}`,
+    (_, state: string, number: string) => `${PULL_STATES[state] ?? state}拉取请求 #${number}`
   ],
   // 分支菜单：重命名分支的无障碍名称
   [/^Rename branch ['‘](.+)['’]$/, '重命名分支“$1”'],
@@ -25,7 +25,7 @@ const regexp: readonly RegExpRule[] = [
   [/^(\d[\d,]*) results? found$/, '找到 $1 个结果'],
   // 重命名对话框：名称校验结果（服务器按规范化后的名称返回）、重命名成功提示
   [/^Your branch name will be (\S+)$/, '分支名称将为 $1'],
-  [/^Branch (\S+) will be renamed to (\S+) shortly\.$/, '分支 $1 即将重命名为 $2。'],
+  [/^Branch (\S+) will be renamed to (\S+) shortly\.$/, '分支 $1 即将重命名为 $2。']
 ]
 
 /**
@@ -122,7 +122,7 @@ export default {
     "Your members will have to manually update their local environments. We'll let them know when they visit the repository, or you can share the following commands.":
       '成员需要手动更新本地环境。他们访问存储库时会收到通知，你也可以分享以下命令。',
     'Your members will have to manually update their local environments. We’ll let them know when they visit the repository, or you can share the following commands.':
-      '成员需要手动更新本地环境。他们访问存储库时会收到通知，你也可以分享以下命令。',
+      '成员需要手动更新本地环境。他们访问存储库时会收到通知，你也可以分享以下命令。'
   },
   scoped: {
     // 标签页、表格列与行操作（All、Default、Pull request、Restore、Deleted 由 common-ui 收录）
@@ -158,17 +158,17 @@ export default {
     'Repository rule violations found': '发现违反存储库规则的情况',
     'Protect this branch from force pushing or deletion, or require status checks before merging.':
       '保护此分支免遭强制推送或删除，或要求合并前通过状态检查。',
-    'Protect this branch': '保护此分支',
+    'Protect this branch': '保护此分支'
   },
   regexp,
   ignore: [
     // 分支行更新者的用户名提示
-    '[class*="UserLink__"] + [data-component="Tooltip"]',
+    '[class*="UserLink__"] + [data-component="Tooltip"]'
   ],
   inline: [
     // 重命名对话框：Will update <span>3</span> pull requests targeting this <span>branch…</span>（宿主为 <div>）；
     // 按片段翻译时“以此”后的空白文本节点会留下空格，前半句整句收录，尾部 <span> 里的片段照常翻译
     ['Will update {} pull request targeting this {}', '将更新 {} 个以此{}'],
-    ['Will update {} pull requests targeting this {}', '将更新 {} 个以此{}'],
-  ],
+    ['Will update {} pull requests targeting this {}', '将更新 {} 个以此{}']
+  ]
 } satisfies PageDictionary

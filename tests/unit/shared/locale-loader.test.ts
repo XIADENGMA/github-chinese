@@ -7,7 +7,7 @@ import {
   registerLocale,
   takeLocale,
   waitForRegistration,
-  type LocaleLoaderDeps,
+  type LocaleLoaderDeps
 } from '../../../src/shared/locale-loader'
 
 const CN: LocaleBundle = [['common', { static: { Code: '代码' } }]]
@@ -16,20 +16,18 @@ const TW: LocaleBundle = [['common', { static: { Code: '程式碼' } }]]
 /** 模拟词典脚本：导入时登记语言包 */
 function deps(overrides: Partial<LocaleLoaderDeps> = {}): LocaleLoaderDeps {
   return {
-    resolveUrl: (path) => `chrome-extension://sample${path}`,
+    resolveUrl: path => `chrome-extension://sample${path}`,
     importScript: vi.fn(async (url: string) => {
       registerLocale(url.includes('zh-tw') ? 'zh-TW' : 'zh-CN', url.includes('zh-tw') ? TW : CN)
     }),
     requestInjection: vi.fn(async () => false),
-    ...overrides,
+    ...overrides
   }
 }
 
 /** 全局对象上的登记（语言 → 构建标识） */
 function registrations(): Record<string, string | undefined> {
-  const registry = (globalThis as unknown as Record<string, Record<string, { build: string }> | undefined>)[
-    '__githubChineseLocales'
-  ]
+  const registry = (globalThis as unknown as Record<string, Record<string, { build: string }> | undefined>)['__githubChineseLocales']
   return Object.fromEntries(Object.entries(registry ?? {}).map(([locale, entry]) => [locale, entry.build]))
 }
 
@@ -103,10 +101,10 @@ describe('createLocaleLoader', () => {
   it('同一页面里同一构建的模块已执行过（导入不再登记）：改请后台注入', async () => {
     const options = deps({
       importScript: vi.fn(async () => undefined),
-      requestInjection: vi.fn(async (locale) => {
+      requestInjection: vi.fn(async locale => {
         registerLocale(locale, CN)
         return true
-      }),
+      })
     })
     expect(await createLocaleLoader(options).load('zh-CN')).toBe(CN)
     expect(options.requestInjection).toHaveBeenCalledWith('zh-CN')
@@ -117,10 +115,10 @@ describe('createLocaleLoader', () => {
       importScript: vi.fn(async () => {
         throw new TypeError('Failed to fetch dynamically imported module')
       }),
-      requestInjection: vi.fn(async (locale) => {
+      requestInjection: vi.fn(async locale => {
         registerLocale(locale, TW)
         return true
-      }),
+      })
     })
     expect(await createLocaleLoader(options).load('zh-TW')).toBe(TW)
     expect(options.requestInjection).toHaveBeenCalledWith('zh-TW')
@@ -135,7 +133,7 @@ describe('createLocaleLoader', () => {
       }),
       requestInjection: vi.fn(async () => {
         throw new Error('no receiver')
-      }),
+      })
     })
     const loader = createLocaleLoader(options)
     await expect(loader.load('zh-CN')).rejects.toThrow('语言包加载失败：zh-CN')
@@ -157,18 +155,18 @@ describe('等待注册的词典脚本登记（Firefox）', () => {
   /** Firefox 的加载器：取不到登记时先等；不动态导入，请后台注入（注入的词典脚本执行时登记） */
   function firefoxDeps(): LocaleLoaderDeps {
     return {
-      resolveUrl: (path) => `moz-extension://sample${path}`,
-      requestInjection: vi.fn(async (locale) => {
+      resolveUrl: path => `moz-extension://sample${path}`,
+      requestInjection: vi.fn(async locale => {
         registerLocale(locale, locale === 'zh-TW' ? TW : CN)
         return true
       }),
-      waitForRegistration: () => waitForRegistration(document),
+      waitForRegistration: () => waitForRegistration(document)
     }
   }
 
   /** 让已就绪的微任务跑完 */
   async function flush(): Promise<void> {
-    await new Promise((resolve) => setTimeout(resolve, 0))
+    await new Promise(resolve => setTimeout(resolve, 0))
   }
 
   it('页面仍在解析：等词典脚本登记后取用，不请后台注入', async () => {
@@ -247,11 +245,11 @@ describe('等待注册的词典脚本登记（Firefox）', () => {
     let fail = true
     const options: LocaleLoaderDeps = {
       ...firefoxDeps(),
-      requestInjection: vi.fn(async (locale) => {
+      requestInjection: vi.fn(async locale => {
         if (fail) return false
         registerLocale(locale, CN)
         return true
-      }),
+      })
     }
     const loader = createLocaleLoader(options)
     await expect(loader.load('zh-CN')).rejects.toThrow('语言包加载失败：zh-CN')

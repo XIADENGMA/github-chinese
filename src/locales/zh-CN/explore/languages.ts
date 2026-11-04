@@ -190,6 +190,6 @@ export default {
     Yiddish: '意第绪语',
     Yoruba: '约鲁巴语',
     'Zhuang, Chuang': '壮语',
-    Zulu: '祖鲁语',
-  },
+    Zulu: '祖鲁语'
+  }
 } satisfies PageDictionary

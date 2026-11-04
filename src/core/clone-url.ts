@@ -74,13 +74,13 @@ export function createCloneUrlRewriter(doc: Document, options: CloneUrlOptions):
     if (candidateSources(settings, link).length === 0) return
     pending.set(element, original)
     options.resolve(original).then(
-      (accelerated) => {
+      accelerated => {
         pending.delete(element)
         if (element.isConnected && element.getAttribute('value') === original && isActive()) {
           apply(element, original, accelerated)
         }
       },
-      () => pending.delete(element),
+      () => pending.delete(element)
     )
   }
 
@@ -116,7 +116,7 @@ export function createCloneUrlRewriter(doc: Document, options: CloneUrlOptions):
     subtree: true,
     childList: true,
     attributes: true,
-    attributeFilter: ['value'],
+    attributeFilter: ['value']
   })
   const view = doc.defaultView
   view?.addEventListener('click', onClick)
@@ -128,6 +128,6 @@ export function createCloneUrlRewriter(doc: Document, options: CloneUrlOptions):
       observer.disconnect()
       view?.removeEventListener('click', onClick)
       for (const [element, state] of rewrites) restore(element, state)
-    },
+    }
   }
 }

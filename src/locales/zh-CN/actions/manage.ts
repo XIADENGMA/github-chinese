@@ -19,7 +19,7 @@ const PERIODS: Readonly<Record<string, string>> = {
   'last 30 days': '过去 30 天',
   'last 90 days': '过去 90 天',
   'last year': '去年',
-  custom: '自定义时段',
+  custom: '自定义时段'
 }
 
 function period(text: string): string {
@@ -35,7 +35,7 @@ const PERFORMANCE_METRICS: Readonly<Record<string, string>> = {
   'Average run time of': '作业的平均运行时间',
   'Average queue time of': '作业的平均排队时间',
   'Failure rate across': '作业的失败率',
-  'Total minutes used across failed': '失败作业使用的总分钟数',
+  'Total minutes used across failed': '失败作业使用的总分钟数'
 }
 
 const PERFORMANCE_SOURCE = Object.keys(PERFORMANCE_METRICS).join('|')
@@ -45,7 +45,7 @@ const ATTESTATION_FIELDS: Readonly<Record<string, string>> = {
   Created: '创建时间',
   Commit: '提交',
   'Build Summary': '构建摘要',
-  'Workflow File': '工作流文件',
+  'Workflow File': '工作流文件'
 }
 
 /** Created 的取值：Oct 23 (Fri, 23 Oct 2026 20:22:17 GMT) → 10 月 23 日 (Fri, 23 Oct 2026 20:22:17 GMT)；括号内的完整时间戳保留原文 */
@@ -113,8 +113,7 @@ export default {
     "You don't have any self-hosted runners for this repository": '此存储库暂无自托管运行器',
     'Unable to load runners': '无法加载运行器',
     'An error occurred while loading runners. Please try again.': '加载运行器时出错。请重试。',
-    'Unable to load runners. An error occurred while loading runners. Please try again.':
-      '无法加载运行器。加载时出错。请重试。',
+    'Unable to load runners. An error occurred while loading runners. Please try again.': '无法加载运行器。加载时出错。请重试。',
     'Repository runners': '存储库运行器',
     'GitHub-hosted runners list': 'GitHub 托管的运行器列表',
     'Self-hosted runners list': '自托管运行器列表',
@@ -178,7 +177,7 @@ export default {
     'Source Repository Owner URI': '源存储库所有者 URI',
     'Source Repository Ref': '源存储库引用',
     'Source Repository URI': '源存储库 URI',
-    'Source Repository Visibility': '源存储库可见性',
+    'Source Repository Visibility': '源存储库可见性'
   },
 
   scoped: {
@@ -218,7 +217,7 @@ export default {
     Issuer: '颁发者',
     // 排序按钮的读屏后缀：Sort by Newest, descending
     ', descending': '，降序',
-    ', ascending': '，升序',
+    ', ascending': '，升序'
   },
 
   regexp: [
@@ -230,14 +229,14 @@ export default {
     [/^Delete (.+) on ([^ ]+)$/, '删除 $2 上的缓存 $1'],
     [
       /^Least recently used caches will be automatically evicted to limit the total cache storage to ([\d.]+ [KMGT]B)\.$/,
-      '最久未使用的缓存将被自动清除以将缓存存储总量限制在 $1。',
+      '最久未使用的缓存将被自动清除以将缓存存储总量限制在 $1。'
     ],
     // 运行器
     [/^([\d,]+) available runners?$/, '$1 个可用运行器'],
     [
       /^(\d+)-cores · (\d+) GB RAM · (\d+) GB SSD Storage(?: · (.+))?$/,
       (_, cores: string, ram: string, ssd: string, systems: string) =>
-        `${cores} 核 · ${ram} GB 内存 · ${ssd} GB SSD 存储${systems ? ` · ${joinList(systems)}` : ''}`,
+        `${cores} 核 · ${ram} GB 内存 · ${ssd} GB SSD 存储${systems ? ` · ${joinList(systems)}` : ''}`
     ],
     [/^Copy ([\w.-]+-latest)( label)?$/, (_, name: string, label: string) => `复制 ${name}${label ? ' 标签' : ''}`],
     // 指标
@@ -246,13 +245,11 @@ export default {
     [/^Period: (.+)$/, (_, text: string) => `时段：${period(text)}`],
     [
       /^Total (minutes|job runs) across all workflows in this (organization|repository) for (.+)$/,
-      (_, metric: string, scope: string, text: string) =>
-        `${pick(SCOPES, scope)}所有工作流${period(text)}的${pick(USAGE_METRICS, metric)}`,
+      (_, metric: string, scope: string, text: string) => `${pick(SCOPES, scope)}所有工作流${period(text)}的${pick(USAGE_METRICS, metric)}`
     ],
     [
       new RegExp(`^(${PERFORMANCE_SOURCE}) jobs in this (organization|repository) for (.+)$`),
-      (_, metric: string, scope: string, text: string) =>
-        `${pick(SCOPES, scope)}${period(text)}${pick(PERFORMANCE_METRICS, metric)}`,
+      (_, metric: string, scope: string, text: string) => `${pick(SCOPES, scope)}${period(text)}${pick(PERFORMANCE_METRICS, metric)}`
     ],
     // 证明列表：主体名不含空格，避免误伤带“and N others”的运行标题
     [/^([\d,]+) subjects? ·$/, '$1 个主体 ·'],
@@ -262,17 +259,17 @@ export default {
     [
       /^(\S+?)(?: and ([\d,]+) others?)?\. (\S+)\. More information available below\.$/,
       (_, subject: string, count: string | undefined, workflow: string) =>
-        `${subject}${count ? ` 及另外 ${count} 个` : ''}。${workflow}。更多信息见下方。`,
+        `${subject}${count ? ` 及另外 ${count} 个` : ''}。${workflow}。更多信息见下方。`
     ],
     // 证明详情的摘要条目：Commit. 4f2cfe9….（标点随原文，名称与取值之间用句号；Created 的日期按通则译出）
     [
       new RegExp(`^(${Object.keys(ATTESTATION_FIELDS).join('|')})\\. (.+)\\.$`),
-      (_, field: string, value: string) => `${pick(ATTESTATION_FIELDS, field)}。${attestationValue(field, value)}。`,
-    ],
+      (_, field: string, value: string) => `${pick(ATTESTATION_FIELDS, field)}。${attestationValue(field, value)}。`
+    ]
   ],
 
   ignore: [
     // 运行器页自托管标签页：条目标题后的运行器标签（self-hosted、Linux、X64 等，runs-on 用的标识符），来源标签（accent）照常
-    '[class*="SelfHostedRunners__"] [data-listview-item-title-container] > [data-component="Label"]:not([data-variant="accent"])',
-  ],
+    '[class*="SelfHostedRunners__"] [data-listview-item-title-container] > [data-component="Label"]:not([data-variant="accent"])'
+  ]
 } satisfies PageDictionary

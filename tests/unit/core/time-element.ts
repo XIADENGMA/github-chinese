@@ -46,8 +46,7 @@ function formatTitle(time: number, lang: string, cycle?: string): string {
 /** 元素按哪种小时制渲染：自身或祖先、<html> 的 hour-cycle（h12 / h23），都没有时按语言默认 */
 function hourCycleOf(element: Element): string | undefined {
   const value =
-    element.closest('[hour-cycle]')?.getAttribute('hour-cycle') ||
-    element.ownerDocument.documentElement.getAttribute('hour-cycle')
+    element.closest('[hour-cycle]')?.getAttribute('hour-cycle') || element.ownerDocument.documentElement.getAttribute('hour-cycle')
   return value === 'h12' || value === 'h23' ? value : undefined
 }
 
@@ -81,8 +80,7 @@ export class FakeRelativeTime extends HTMLElement {
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
     if (oldValue === newValue) return
-    if (name === 'title')
-      this.customTitle = newValue !== null && formatTitle(this.time_(), this.lang_(), hourCycleOf(this)) !== newValue
+    if (name === 'title') this.customTitle = newValue !== null && formatTitle(this.time_(), this.lang_(), hourCycleOf(this)) !== newValue
     if (!this.updating && !(name === 'title' && this.customTitle)) {
       this.updating = true
       queueMicrotask(() => {
@@ -127,5 +125,5 @@ export function defineFakeRelativeTime(): void {
 
 /** 等元素的微任务渲染完成 */
 export function settleTime(): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, 0))
+  return new Promise(resolve => setTimeout(resolve, 0))
 }

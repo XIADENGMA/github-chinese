@@ -41,12 +41,7 @@ export function compileAttributeRules(rules: readonly AttributeRule[], probe: El
 /**
  * 属性原文按规则改写的结果：没有规则命中时返回 undefined；替换结果与规范化原文相同时返回原文。
  */
-export function applyAttributeRules(
-  set: AttributeRuleSet,
-  element: Element,
-  name: string,
-  source: string,
-): string | undefined {
+export function applyAttributeRules(set: AttributeRuleSet, element: Element, name: string, source: string): string | undefined {
   const list = set.get(name)
   if (!list || (name === 'value' && !isValueRuleTarget(element))) return undefined
   const text = normalizeText(source)

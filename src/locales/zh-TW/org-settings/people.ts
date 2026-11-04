@@ -34,8 +34,7 @@ export default {
     'Organization visibility': '組織可見度',
     'Your membership is visible to everyone and is displayed on your public profile.':
       '你的成員身分對所有人可見，並顯示在你的公開個人檔案中。',
-    'Your membership is only visible to other members of this organization.':
-      '只有此組織的其他成員能看到你的成員身分。',
+    'Your membership is only visible to other members of this organization.': '只有此組織的其他成員能看到你的成員身分。',
     'Owners have full access to teams, settings, and repositories.': '擁有者對團隊、設定和儲存庫具有完整存取權。',
     'Member settings': '成員設定',
     'Set role': '設定角色',
@@ -64,10 +63,8 @@ export default {
     "Their repository access will be preserved by making them collaborators on all repositories that their teams gave them access to. They will retain access to repositories that they were previously collaborators on, but all other access to this organization's repositories will be lost.":
       '對方將成為其團隊授予存取權之所有儲存庫的協作者，以保留儲存庫存取權。對方會保留原本已是協作者之儲存庫的存取權，但會失去此組織儲存庫的其他所有存取權。',
     'Convert to outside collaborator': '轉換為外部協作者',
-    "You can't remove yourself from the organization. Have another admin do this for you.":
-      '你無法將自己移出組織。請其他管理員代為處理。',
-    'You can’t remove yourself from the organization. Have another admin do this for you.':
-      '你無法將自己移出組織。請其他管理員代為處理。',
+    "You can't remove yourself from the organization. Have another admin do this for you.": '你無法將自己移出組織。請其他管理員代為處理。',
+    'You can’t remove yourself from the organization. Have another admin do this for you.': '你無法將自己移出組織。請其他管理員代為處理。',
     'The following members will be removed:': '將移除下列成員：',
     'Remove members': '移除成員',
     'Remove member': '移除成員',
@@ -132,6 +129,6 @@ export default {
     'Invite and start fresh': '邀請並重新開始',
 
     // 导出成员列表
-    'Export as JSON': '匯出為 JSON',
-  },
+    'Export as JSON': '匯出為 JSON'
+  }
 } satisfies PageDictionary

@@ -2,12 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest'
 import { createMatcher } from '../../../src/core/matcher'
 import { FIGHT_LIMIT } from '../../../src/core/records'
-import {
-  createTranslator,
-  type Translator,
-  type TranslatorHost,
-  type TranslatorOptions,
-} from '../../../src/core/translator'
+import { createTranslator, type Translator, type TranslatorHost, type TranslatorOptions } from '../../../src/core/translator'
 import type { LocaleBundle, PageKey } from '../../../src/core/types'
 import { $, settle, texts } from './helpers'
 
@@ -30,12 +25,12 @@ const BUNDLE: LocaleBundle = [
         Version: '版本',
         Remaining: '剩余',
         'There was an error while loading.': '加载时出错。',
-        'Please reload this page': '请重新加载此页面',
-      },
-    },
+        'Please reload this page': '请重新加载此页面'
+      }
+    }
   ],
   ['repo-settings', { scoped: { Type: '类型' } }],
-  ['issues', { scoped: { Type: '类型' } }],
+  ['issues', { scoped: { Type: '类型' } }]
 ]
 
 /** 页面范围内另有一条行内句规则（正式语言包 common 有行内句规则） */
@@ -43,10 +38,7 @@ const INLINE_BUNDLE: LocaleBundle = [...BUNDLE, ['common', { inline: [['{} merge
 
 /** 只收整句、不收片段：kbd 片段的组成变了以后，各段回到原文 */
 const SENTENCES: LocaleBundle = [
-  [
-    'common',
-    { static: { 'Type / to search': '按 / 搜索', 'Press CtrlShiftK now': '按 Ctrl Shift K 立即', Sample: '示例' } },
-  ],
+  ['common', { static: { 'Type / to search': '按 / 搜索', 'Press CtrlShiftK now': '按 Ctrl Shift K 立即', Sample: '示例' } }]
 ]
 
 let translator: Translator | undefined
@@ -56,7 +48,7 @@ const FIXED_CLOCK_HOST: TranslatorHost = {
   document,
   location: window.location,
   MutationObserver: window.MutationObserver,
-  performance: { now: () => 0 },
+  performance: { now: () => 0 }
 }
 
 function start(html: string, options: Partial<TranslatorOptions> = {}): Translator {
@@ -108,9 +100,7 @@ describe('被 kbd 拆开的句子', () => {
   })
 
   it('元素末尾是译出的全角标点：其后文本不留开头空白；不是全角标点时保留', () => {
-    start(
-      '<p id="a"><span>Tip:</span> Use</p><p id="b"><span>Use</span> Version</p><p id="c"><span>Tip:</span> Sample</p>',
-    )
+    start('<p id="a"><span>Tip:</span> Use</p><p id="b"><span>Use</span> Version</p><p id="c"><span>Tip:</span> Sample</p>')
     expect(text('#a')).toBe('提示：使用')
     expect(text('#b')).toBe('使用 版本')
     // 未翻译的文本不改
@@ -129,7 +119,7 @@ describe('被 kbd 拆开的句子', () => {
 
   it('首个 kbd 之前或末个 kbd 之后没有文字时逐段处理；只有快捷键时不处理', () => {
     start('<p id="a"><kbd>Tab</kbd> to search</p><span id="b"><kbd>g</kbd> <kbd>i</kbd></span>', {
-      collectUntranslated: true,
+      collectUntranslated: true
     })
     expect(texts($('#a'))).toEqual([' 搜索'])
     expect(text('#b')).toBe('g i')
@@ -138,7 +128,7 @@ describe('被 kbd 拆开的句子', () => {
 
   it('译文缺少 kbd 文字、或某段需写入但该处没有文本节点时逐段处理', () => {
     start('<span id="a">Type <kbd>/</kbd> to search</span><span id="b">Press <kbd>Ctrl</kbd><kbd>K</kbd> now</span>', {
-      matcher: createMatcher(BUNDLE, { custom: { 'Type / to search': '搜索' } }),
+      matcher: createMatcher(BUNDLE, { custom: { 'Type / to search': '搜索' } })
     })
     expect(texts($('#a'))).toEqual(['Type ', ' 搜索'])
     expect(texts($('#b'))).toEqual(['Press ', ' now'])
@@ -147,8 +137,8 @@ describe('被 kbd 拆开的句子', () => {
   it('kbd 文字也出现在译文的英文单词里时，按独立出现的位置切分；相邻 kbd 拼成的文字照常切分', () => {
     start('<p id="a">Press <kbd>C</kbd> to chat</p><p id="b">Press <kbd>Ctrl</kbd><kbd>K</kbd> now</p>', {
       matcher: createMatcher(BUNDLE, {
-        custom: { 'Press C to chat': '用 Copilot 聊天请按 C', 'Press CtrlK now': '立即按 CtrlK' },
-      }),
+        custom: { 'Press C to chat': '用 Copilot 聊天请按 C', 'Press CtrlK now': '立即按 CtrlK' }
+      })
     })
     expect(texts($('#a'))).toEqual(['用 Copilot 聊天请按 ', ''])
     expect(texts($('#b'))).toEqual(['立即按 ', ''])
@@ -156,7 +146,7 @@ describe('被 kbd 拆开的句子', () => {
 
   it('整句未命中：逐段处理，只记整句未翻译', () => {
     const t = start('<p id="a">Use <kbd>Control</kbd> to search</p><p id="b">Press <kbd>Enter</kbd> to confirm</p>', {
-      collectUntranslated: true,
+      collectUntranslated: true
     })
     expect(text('#a')).toBe('使用 Control 搜索')
     expect(text('#b')).toBe('Press Enter to confirm')
@@ -218,7 +208,7 @@ describe('被 kbd 拆开的句子', () => {
 
   it('kbd 两侧只有空白文本时，kbd 内文字变化后同样整句重算', async () => {
     start('<span id="p">Press <kbd>Ctrl</kbd> <kbd id="k">K</kbd> to open</span>', {
-      matcher: createMatcher(BUNDLE, { custom: { 'Press Ctrl K to open': '按 Ctrl K 打开' } }),
+      matcher: createMatcher(BUNDLE, { custom: { 'Press Ctrl K to open': '按 Ctrl K 打开' } })
     })
     expect(texts($('#p'))).toEqual(['按 ', ' ', ' 打开'])
     ;($('#k').firstChild as Text).data = 'J'
@@ -262,10 +252,10 @@ describe('kbd 句子里只有半角标点的段', () => {
 
   it.each([
     ['没有行内句规则', BUNDLE],
-    ['有行内句规则', INLINE_BUNDLE],
+    ['有行内句规则', INLINE_BUNDLE]
   ])('整句译文写入的全角标点不按孤立标点重算（页面范围内%s）：句号后紧跟元素、两个 kbd 之间的逗号', (_, bundle) => {
     start(`${PRESS}<p id="b">Use <kbd>Ctrl</kbd>, <kbd>Alt</kbd> to move</p>`, {
-      matcher: createMatcher(bundle, { custom: CUSTOM }),
+      matcher: createMatcher(bundle, { custom: CUSTOM })
     })
     expect(texts($('#a'))).toEqual(['按 ', '。'])
     expect(texts($('#b'))).toEqual(['用 ', '，', ' 移动'])
@@ -299,35 +289,32 @@ describe('kbd 句子里只有半角标点的段', () => {
       () => {
         ;($('#a').firstChild as Text).data = 'Hit '
       },
-      'Hit K.octocat',
+      'Hit K.octocat'
     ],
     [
       '首段被清空（不再构成整句）',
       () => {
         ;($('#a').firstChild as Text).data = ''
       },
-      'K.octocat',
+      'K.octocat'
     ],
     [
       'kbd 内文字变化',
       () => {
         ;($('#a kbd').firstChild as Text).data = 'J'
       },
-      'Press J.octocat',
-    ],
-  ])(
-    'kbd 仍在、%s后逐段处理：整句写入的全角标点按孤立标点重算，语境不是中文时写回半角，与全新处理相同',
-    async (_, change, shown) => {
-      const t = start(PRESS, { matcher: createMatcher(BUNDLE, { custom: CUSTOM }) })
-      expect(texts($('#a'))).toEqual(['按 ', '。'])
-      change()
-      await settle()
-      expect(text('#a')).toBe(shown)
-      t.stop()
-      t.start()
-      expect(text('#a')).toBe(shown)
-    },
-  )
+      'Press J.octocat'
+    ]
+  ])('kbd 仍在、%s后逐段处理：整句写入的全角标点按孤立标点重算，语境不是中文时写回半角，与全新处理相同', async (_, change, shown) => {
+    const t = start(PRESS, { matcher: createMatcher(BUNDLE, { custom: CUSTOM }) })
+    expect(texts($('#a'))).toEqual(['按 ', '。'])
+    change()
+    await settle()
+    expect(text('#a')).toBe(shown)
+    t.stop()
+    t.start()
+    expect(text('#a')).toBe(shown)
+  })
 
   it('页面反复把首段改回原文：有限次后逐段处理，不留整句切分出的全角标点', async () => {
     start(PRESS, { matcher: createMatcher(BUNDLE, { custom: CUSTOM }) })
@@ -348,7 +335,7 @@ describe('kbd 句子里只有半角标点的段', () => {
 
   it('其他段被外部改写、整句不再命中：整句写入的全角标点按孤立标点重算，与全新处理相同', async () => {
     const t = start(`${PRESS}<p id="b">Use <kbd>Ctrl</kbd>, <kbd>Alt</kbd> to move</p>`, {
-      matcher: createMatcher(BUNDLE, { custom: CUSTOM }),
+      matcher: createMatcher(BUNDLE, { custom: CUSTOM })
     })
     expect(texts($('#a'))).toEqual(['按 ', '。'])
     expect(texts($('#b'))).toEqual(['用 ', '，', ' 移动'])
@@ -358,7 +345,7 @@ describe('kbd 句子里只有半角标点的段', () => {
     // 语境不再是中文时写回半角；语境仍是中文（首段照常译出）时两个 kbd 之间的逗号转顿号
     const shown = [
       ['Tap ', '.'],
-      ['使用 ', '、', ' to jump'],
+      ['使用 ', '、', ' to jump']
     ]
     expect([texts($('#a')), texts($('#b'))]).toEqual(shown)
     t.stop()
@@ -369,7 +356,7 @@ describe('kbd 句子里只有半角标点的段', () => {
 
 describe.each([
   ['没有行内句规则', SENTENCES],
-  ['有行内句规则', [...SENTENCES, ['common', { inline: [['{} merged', '{} 已合并']] }]] satisfies LocaleBundle],
+  ['有行内句规则', [...SENTENCES, ['common', { inline: [['{} merged', '{} 已合并']] }]] satisfies LocaleBundle]
 ])('kbd 片段的组成变化（页面范围内%s）', (_, bundle) => {
   const TYPE = '<span id="k">Type <kbd>/</kbd> to search</span>'
   const PRESS = '<p id="k">Press <kbd>Ctrl</kbd><kbd id="m">Shift</kbd><kbd>K</kbd> now</p>'
@@ -383,7 +370,7 @@ describe.each([
       () => {
         ;($('#m').firstChild as Text).data = 'Alt'
       },
-      ['Press ', ' now'],
+      ['Press ', ' now']
     ],
     [
       '相邻 kbd 中间一个的文字被替换',
@@ -391,8 +378,8 @@ describe.each([
       () => {
         $('#m').textContent = 'Alt'
       },
-      ['Press ', ' now'],
-    ],
+      ['Press ', ' now']
+    ]
   ])('%s：片段整句重算，与全新处理相同', async (_, html, change, shown) => {
     const t = start(html, { matcher: createMatcher(bundle) })
     expect(text('#k')).toMatch(/^按 /)
@@ -407,9 +394,7 @@ describe.each([
 
 describe('行内元素旁的孤立标点', () => {
   it('紧贴包着标点的 span 插入元素：与全新处理结果相同', async () => {
-    const t = start(
-      '<p id="a">Learn more about <a>x</a><span>.</span></p><p id="b">Contributed to <a>a</a><span>, </span></p>',
-    )
+    const t = start('<p id="a">Learn more about <a>x</a><span>.</span></p><p id="b">Contributed to <a>a</a><span>, </span></p>')
     expect(text('#a')).toBe('了解 x。')
     expect(text('#b')).toBe('贡献于 a，')
     $('#a').append(element('b', 'octocat'))
@@ -423,12 +408,9 @@ describe('行内元素旁的孤立标点', () => {
   })
 
   it('行内句重判后整句写入：作为槽位的标点按整句语境转全角', async () => {
-    const bundle: LocaleBundle = [
-      ...BUNDLE,
-      ['common', { inline: [['Merged {#} commits into {}{}', '已合并 {#} 个提交到 {}{}']] }],
-    ]
+    const bundle: LocaleBundle = [...BUNDLE, ['common', { inline: [['Merged {#} commits into {}{}', '已合并 {#} 个提交到 {}{}']] }]]
     start('<p id="h">Merged <b>many</b> commits into <a>main</a><span>.</span></p>', {
-      matcher: createMatcher(bundle),
+      matcher: createMatcher(bundle)
     })
     expect(text('#h')).toBe('Merged many commits into main.')
     ;($('#h b').firstChild as Text).data = '3'
@@ -440,7 +422,7 @@ describe('行内元素旁的孤立标点', () => {
     start(
       '<p id="a">Learn more about <a>x</a>, <b>y</b><span class="branch-name">!</span></p>' +
         '<p id="b">Learn more about <a>x</a>, <b>y</b><span translate="no">;</span></p>' +
-        '<p id="c">Contributed to <a>x</a>, <b>y</b><span id="later">!</span></p>',
+        '<p id="c">Contributed to <a>x</a>, <b>y</b><span id="later">!</span></p>'
     )
     expect(text('#a')).toBe('了解 x、y!')
     expect(text('#b')).toBe('了解 x、y;')
@@ -484,7 +466,7 @@ describe('行内元素旁的孤立标点', () => {
 
   it('标点前后元素里的数字被改写（含更深层的文字）：标点随之重算，与全新处理相同', async () => {
     const t = start(
-      '<p id="a">Remaining <span>10</span>: <span><b>30</b></span></p><p id="b">Remaining <span><b>x</b></span>: <span>30</span></p>',
+      '<p id="a">Remaining <span>10</span>: <span><b>30</b></span></p><p id="b">Remaining <span><b>x</b></span>: <span>30</span></p>'
     )
     expect([text('#a'), text('#b')]).toEqual(['剩余 10: 30', '剩余 x：30'])
     ;($('#a b').firstChild as Text).data = 'x'
@@ -548,9 +530,7 @@ describe('行内元素旁的孤立标点', () => {
   })
 
   it('重译与忽略区域：换词典后按新语境重算；忽略区域内不处理', () => {
-    const t = start(
-      '<p id="a">Learn more about <a>x</a>.</p><div class="markdown-body"><p id="m">Learn more about <a>x</a>.</p></div>',
-    )
+    const t = start('<p id="a">Learn more about <a>x</a>.</p><div class="markdown-body"><p id="m">Learn more about <a>x</a>.</p></div>')
     expect(text('#m')).toBe('Learn more about x.')
     t.setMatcher(createMatcher([['common', { static: { Version: '版本' } }]]))
     expect(text('#a')).toBe('Learn more about x.')
@@ -560,7 +540,7 @@ describe('行内元素旁的孤立标点', () => {
 
   it('与语境同组（只隔注释）：整组命中时译文写入标点节点，整组不再命中后标点照常转换', () => {
     const t = start('<p id="d"><b>x</b>: <!-- -->Recently updated</p>', {
-      matcher: createMatcher(BUNDLE, { custom: { ': Recently updated': '：最近更新时间' } }),
+      matcher: createMatcher(BUNDLE, { custom: { ': Recently updated': '：最近更新时间' } })
     })
     expect(text('#d')).toBe('x：最近更新时间')
     t.setMatcher(createMatcher(BUNDLE))
@@ -572,7 +552,7 @@ describe('行内元素旁的孤立标点', () => {
   it('页面反复改回半角：未超上限时每次照常转全角，超过后保持半角；不记未翻译；stop 后还原', async () => {
     const t = start('<p id="a">Learn more about <a>octocat</a>.</p>', {
       host: FIXED_CLOCK_HOST,
-      collectUntranslated: true,
+      collectUntranslated: true
     })
     expect(text('#a')).toBe('了解 octocat。')
     const punct = $('#a').lastChild as Text
@@ -619,7 +599,7 @@ describe('行内元素旁的孤立标点', () => {
   it('单独包在 span 里的标点：span 外的语境变化、后补进或被移除时重算；stop 后还原', async () => {
     const t = start(
       '<p id="a">Learn more about <a>x</a><span>.</span></p><p id="b"><a>y</a><span>.</span></p>' +
-        '<p id="c">Learn more about <a>z</a><span>.</span></p>',
+        '<p id="c">Learn more about <a>z</a><span>.</span></p>'
     )
     expect(text('#a')).toBe('了解 x。')
     expect(text('#b')).toBe('y.')
@@ -649,10 +629,10 @@ describe('整句各段都包在元素里：包着标点的 span 没有直接文�
           'code of conduct': '行为准则',
           'You are viewing a previous version of this ruleset. This ruleset has been modified since this version. See the':
             '你正在查看此规则集的旧版本。此版本之后规则集已被修改。查看',
-          'latest version': '最新版本',
-        },
-      },
-    ],
+          'latest version': '最新版本'
+        }
+      }
+    ]
   ]
   const LINKS = ['contributing guidelines', 'security policy', 'code of conduct']
 
@@ -678,18 +658,13 @@ describe('整句各段都包在元素里：包着标点的 span 没有直接文�
   const spanned = (): Partial<TranslatorOptions> => ({ matcher: createMatcher(SPANNED) })
 
   it('贡献须知（三个、两个、一个链接）与规则集提示：分隔的逗号用顿号，句号转全角；stop 后还原', () => {
-    const t = start(
-      footer('three', LINKS) + footer('two', LINKS.slice(0, 2)) + footer('one', LINKS.slice(0, 1)) + RULESET,
-      spanned(),
-    )
+    const t = start(footer('three', LINKS) + footer('two', LINKS.slice(0, 2)) + footer('one', LINKS.slice(0, 1)) + RULESET, spanned())
     expect(text('#three')).toBe('请遵守此存储库的 贡献指南、安全策略 和 行为准则。')
     expect(text('#two')).toBe('请遵守此存储库的 贡献指南 和 安全策略。')
     expect(text('#one')).toBe('请遵守此存储库的 贡献指南。')
     expect(text('#ruleset')).toBe('你正在查看此规则集的旧版本。此版本之后规则集已被修改。查看 最新版本。')
     t.stop()
-    expect(text('#three')).toBe(
-      "Please follow this repository's contributing guidelines, security policy and code of conduct.",
-    )
+    expect(text('#three')).toBe("Please follow this repository's contributing guidelines, security policy and code of conduct.")
   })
 
   it('前一个元素里的文字不是本引擎写入的中文（话题、团队、仓库名等用户内容）：不转换', () => {
@@ -698,7 +673,7 @@ describe('整句各段都包在元素里：包着标点的 span 没有直接文�
         '<a href="/topics/octocat"><span>octocat</span></a></span>' +
         '<span id="teams"><span>Contributed to</span><span><a href="/octo-org">octo-org</a><span>, </span>' +
         '<a href="/vuejs/core">vuejs/core</a></span><span>.</span></span>',
-      spanned(),
+      spanned()
     )
     expect(text('#topics')).toBe('vue, octocat')
     expect(text('#teams')).toBe('贡献于octo-org, vuejs/core.')
@@ -709,20 +684,16 @@ describe('整句各段都包在元素里：包着标点的 span 没有直接文�
     const team = (name: string, last: boolean): string =>
       `<span class="nestedTeamList__abc12"><a data-hovercard-type="team" href="/orgs/octo-org/teams/${name}">` +
       `<span>${name}</span></a>${last ? '' : '<span class="separator__abc12">, </span>'}</span>`
-    const t = start(
-      `<span id="teams">on behalf of ${team('octo-team', false)}${team('Sample', false)}${team('web', true)}</span>`,
-      { matcher: createMatcher(bundle) },
-    )
+    const t = start(`<span id="teams">on behalf of ${team('octo-team', false)}${team('Sample', false)}${team('web', true)}</span>`, {
+      matcher: createMatcher(bundle)
+    })
     expect(text('#teams')).toBe('代表 octo-team, Sample, web')
     t.stop()
     expect(text('#teams')).toBe('on behalf of octo-team, Sample, web')
   })
 
   it('外层标点的语境在内层元素里、隔着内层末尾的分隔符：语境文字改写后两处都重算，与全新处理相同', async () => {
-    const t = start(
-      '<span id="nested"><span><b>Learn more about</b><span>, </span></span><span>.</span></span>',
-      spanned(),
-    )
+    const t = start('<span id="nested"><span><b>Learn more about</b><span>, </span></span><span>.</span></span>', spanned())
     expect(text('#nested')).toBe('了解，。')
     ;($('#nested b').firstChild as Text).data = 'Sample text'
     await settle()
@@ -739,10 +710,7 @@ describe('整句各段都包在元素里：包着标点的 span 没有直接文�
     ;($('#one a').firstChild as Text).data = 'Something else entirely'
     await settle()
     const changed = [text('#three'), text('#one')]
-    expect(changed).toEqual([
-      '请遵守此存储库的 Sample text, 安全策略 和 行为准则。',
-      '请遵守此存储库的 Something else entirely.',
-    ])
+    expect(changed).toEqual(['请遵守此存储库的 Sample text, 安全策略 和 行为准则。', '请遵守此存储库的 Something else entirely.'])
     t.stop()
     t.start()
     expect([text('#three'), text('#one')]).toEqual(changed)
@@ -756,12 +724,12 @@ describe('整句各段都包在元素里：包着标点的 span 没有直接文�
       footer('late', LINKS.slice(0, 1)).replace(/<a [^>]*>contributing guidelines<\/a>/, '') +
         footer('swap', LINKS.slice(0, 1)).replace('contributing guidelines', 'Sample text') +
         footer('gone', LINKS.slice(0, 1)),
-      spanned(),
+      spanned()
     )
     expect([text('#late'), text('#swap'), text('#gone')]).toEqual([
       '请遵守此存储库的 .',
       '请遵守此存储库的 Sample text.',
-      '请遵守此存储库的 贡献指南。',
+      '请遵守此存储库的 贡献指南。'
     ])
     const link = (): HTMLElement => Object.assign(element('a', 'contributing guidelines'), { href: '/octo-org/0' })
     $('#late > span:nth-child(2)').append(link())
@@ -778,7 +746,7 @@ describe('整句各段都包在元素里：包着标点的 span 没有直接文�
   it.each([
     ['translate', 'no'],
     ['contenteditable', 'true'],
-    ['data-gcn-ignore', ''],
+    ['data-gcn-ignore', '']
   ])('语境所在元素加上 %s="%s"、其中的译文还原：标点写回原文，与全新处理相同', async (name, value) => {
     const shown = (): string[] => ['#one', '#first', '#links'].map(text)
     const t = start(footer('one', LINKS.slice(0, 1)) + footer('first', LINKS) + footer('links', LINKS), spanned())
@@ -791,7 +759,7 @@ describe('整句各段都包在元素里：包着标点的 span 没有直接文�
     expect(changed).toEqual([
       '请遵守此存储库的 contributing guidelines.',
       '请遵守此存储库的 contributing guidelines, 安全策略 和 行为准则。',
-      '请遵守此存储库的 contributing guidelines, security policy and code of conduct.',
+      '请遵守此存储库的 contributing guidelines, security policy and code of conduct.'
     ])
     t.stop()
     t.start()
@@ -799,15 +767,12 @@ describe('整句各段都包在元素里：包着标点的 span 没有直接文�
   })
 
   it('语境是合并区域：整段写入后转全角，整段不再命中后写回原文；与全新处理相同', async () => {
-    const bundle: LocaleBundle = [
-      ...SPANNED,
-      ['common', { static: { 'Press K to search': '按 K 搜索' }, mergeText: ['.hint'] }],
-    ]
+    const bundle: LocaleBundle = [...SPANNED, ['common', { static: { 'Press K to search': '按 K 搜索' }, mergeText: ['.hint'] }]]
     const shown = (): string[] => ['#hit', '#miss'].map(text)
     const t = start(
       '<span id="hit"><span class="hint">Sample <b>K</b> text</span><span>.</span></span>' +
         '<span id="miss"><span class="hint">Press <b>K</b> to search</span><span>.</span></span>',
-      { matcher: createMatcher(bundle) },
+      { matcher: createMatcher(bundle) }
     )
     expect(shown()).toEqual(['Sample K text.', '按 K 搜索。'])
     ;($('#hit .hint').firstChild as Text).data = 'Press '
@@ -827,7 +792,7 @@ describe('整句各段都包在元素里：包着标点的 span 没有直接文�
     const t = start(
       '<span id="hit"><span><b>many</b> commits merged</span><span>.</span></span>' +
         '<span id="miss"><span><b>3</b> commits merged</span><span>.</span></span>',
-      { matcher: createMatcher(bundle) },
+      { matcher: createMatcher(bundle) }
     )
     expect(shown()).toEqual(['many commits merged.', '3 个提交已合并。'])
     ;($('#hit b').firstChild as Text).data = '3'

@@ -5,8 +5,8 @@ describe('parseGitHubUrl', () => {
     'https://github.com/',
     'https://github.com/vuejs/core/issues?q=is%3Aopen#top',
     'https://gist.github.com/octocat/123',
-    'https://www.githubstatus.com/incidents/abc123',
-  ])('%s 是 GitHub 页面', (url) => {
+    'https://www.githubstatus.com/incidents/abc123'
+  ])('%s 是 GitHub 页面', url => {
     expect(parseGitHubUrl(url)?.href).toBe(new URL(url).href)
   })
 
@@ -20,16 +20,12 @@ describe('parseGitHubUrl', () => {
     'https://eu.githubstatus.com/',
     'https://github.com.evil.example/',
     'https://example.com/github.com',
-    'chrome://extensions/',
-  ])('%s 不是 GitHub 页面', (url) => {
+    'chrome://extensions/'
+  ])('%s 不是 GitHub 页面', url => {
     expect(parseGitHubUrl(url)).toBeUndefined()
   })
 
   it('站点列表与 host_permissions 一致', () => {
-    expect(GITHUB_ORIGINS).toEqual([
-      'https://github.com/*',
-      'https://gist.github.com/*',
-      'https://www.githubstatus.com/*',
-    ])
+    expect(GITHUB_ORIGINS).toEqual(['https://github.com/*', 'https://gist.github.com/*', 'https://www.githubstatus.com/*'])
   })
 })

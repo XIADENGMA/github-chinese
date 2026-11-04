@@ -53,8 +53,7 @@ export default {
     'Your GitHub Free plan': '你的 GitHub 免费版计划',
     "Your organization's GitHub Free plan": '你的组织的 GitHub 免费版计划',
     'Your organization’s GitHub Free plan': '你的组织的 GitHub 免费版计划',
-    'can only enforce rules on its public repositories, like this one.':
-      '只能对公共存储库（例如此存储库）强制实施规则。',
+    'can only enforce rules on its public repositories, like this one.': '只能对公共存储库（例如此存储库）强制实施规则。',
     "Your rules won't be enforced on this private repository until you": '你的规则不会在此专用存储库上强制实施，除非你',
     'Your rules won’t be enforced on this private repository until you': '你的规则不会在此专用存储库上强制实施，除非你',
     'move to a GitHub Team or Enterprise organization account': '迁移到 GitHub 团队版或企业版组织帐户',
@@ -77,16 +76,14 @@ export default {
     'Require an approved review in pull requests including files with a designated code owner.':
       '拉取请求包含指定了代码所有者的文件时，需要获得批准审查。',
     'Restrict who can dismiss pull request reviews': '限制谁可以消除拉取请求审查',
-    'Specify people, teams, or apps allowed to dismiss pull request reviews.':
-      '指定允许消除拉取请求审查的人员、团队或应用。',
+    'Specify people, teams, or apps allowed to dismiss pull request reviews.': '指定允许消除拉取请求审查的人员、团队或应用。',
     'People, teams, or apps that can dismiss reviews.': '可以消除审查的人员、团队或应用。',
     'People, teams, or apps that can dismiss reviews': '可以消除审查的人员、团队或应用',
     'Organization and repository administrators': '组织和存储库管理员',
     'These members can always dismiss.': '这些成员始终可以消除。',
     'These members cannot dismiss.': '这些成员无法消除。',
     'Allow specified actors to bypass required pull requests': '允许指定的参与者绕过拉取请求要求',
-    'Specify people, teams, or apps who are allowed to bypass required pull requests.':
-      '指定允许绕过拉取请求要求的人员、团队或应用。',
+    'Specify people, teams, or apps who are allowed to bypass required pull requests.': '指定允许绕过拉取请求要求的人员、团队或应用。',
     'People, teams, or apps who can bypass required pull requests': '可以绕过拉取请求要求的人员、团队或应用',
     'These members can always bypass required pull requests.': '这些成员始终可以绕过拉取请求要求。',
     'These members cannot bypass.': '这些成员无法绕过。',
@@ -102,16 +99,13 @@ export default {
     'This ensures pull requests targeting a matching branch have been tested with the latest code. This setting will not take effect unless at least one status check is enabled (see below).':
       '这可确保以匹配分支为目标的拉取请求已使用最新代码测试。至少启用一项状态检查（见下方）后，此设置才会生效。',
     'Do not require status checks on creation': '创建时不要求状态检查',
-    'Allow repositories and branches to be created if a check would otherwise prohibit it.':
-      '即使检查会阻止，也允许创建存储库和分支。',
+    'Allow repositories and branches to be created if a check would otherwise prohibit it.': '即使检查会阻止，也允许创建存储库和分支。',
     'Search for status checks in the last week for this repository': '搜索此存储库最近一周的状态检查',
     'Status checks that are required.': '必需的状态检查。',
     'Status checks that are required': '必需的状态检查',
     'No status checks found': '未找到状态检查',
-    'Sorry, we couldn’t find any status checks in the last week for this repository.':
-      '未找到此存储库最近一周的状态检查。',
-    "Sorry, we couldn't find any status checks in the last week for this repository.":
-      '未找到此存储库最近一周的状态检查。',
+    'Sorry, we couldn’t find any status checks in the last week for this repository.': '未找到此存储库最近一周的状态检查。',
+    "Sorry, we couldn't find any status checks in the last week for this repository.": '未找到此存储库最近一周的状态检查。',
     'Learn more about status checks': '了解状态检查',
 
     // 对话解决、签名、线性历史记录
@@ -120,8 +114,7 @@ export default {
       '启用后，必须解决代码上的所有对话，拉取请求才能合并到与此规则匹配的分支。',
     'Learn more about requiring conversation completion before merging': '了解合并前要求完成对话',
     'Require signed commits': '要求签名提交',
-    'Commits pushed to matching branches must have verified signatures.':
-      '推送到匹配分支的提交必须带有经过验证的签名。',
+    'Commits pushed to matching branches must have verified signatures.': '推送到匹配分支的提交必须带有经过验证的签名。',
     'Require linear history': '要求线性历史记录',
     'Prevent merge commits from being pushed to matching branches.': '禁止将合并提交推送到匹配的分支。',
     'Select the squash or rebase method for the associated merge queue to use this rule.':
@@ -130,8 +123,7 @@ export default {
     // 合并队列
     'Require merge queue': '要求合并队列',
     'Merges to matching branches must be performed via a merge queue.': '必须通过合并队列合并到匹配的分支。',
-    'Make sure to configure your CI to build branches created by the queue.':
-      '请确保已配置 CI 构建合并队列创建的分支。',
+    'Make sure to configure your CI to build branches created by the queue.': '请确保已配置 CI 构建合并队列创建的分支。',
     'Method to use when merging changes from queued pull requests.': '合并队列中拉取请求的更改时使用的方式。',
     'Build concurrency': '构建并发数',
     'Limit the number of queued pull requests building at the same time.': '限制同时构建的排队拉取请求数量。',
@@ -187,8 +179,7 @@ export default {
     'Users who can force push': '可以强制推送的用户',
     'Only these people, teams, or apps are allowed to force push.': '只有这些人员、团队或应用可以强制推送。',
     'Search for people, teams, or apps': '搜索人员、团队或应用',
-    'You have reached the maximum number of people, teams, and apps you can add.':
-      '已达到可添加的人员、团队和应用数量上限。',
+    'You have reached the maximum number of people, teams, and apps you can add.': '已达到可添加的人员、团队和应用数量上限。',
     'View the protected branches documentation': '查看受保护分支文档',
     'People, teams, or apps who can force push': '可以强制推送的人员、团队或应用',
     'Organization and repository administrators (automatic)': '组织和存储库管理员（自动）',
@@ -231,7 +222,7 @@ export default {
     // 删除对话框的确认按钮：与标题「Delete tag protection rule?」、正文「…delete this tag protection rule?」是同一操作
     'Yes, remove this tag protection rule': '是，删除此标签保护规则',
     'Tag name pattern': '标签名称模式',
-    'to target tags named': '来匹配名为',
+    'to target tags named': '来匹配名为'
   },
   scoped: {
     'Choose which': '选择哪些',
@@ -253,16 +244,15 @@ export default {
     Import: '导入',
     'Add rule': '添加规则',
     'Example: You can use': '示例：可以使用',
-    ', and so on.': '等的标签。',
+    ', and so on.': '等的标签。'
   },
   regexp: [
     // 规则列表与编辑器：匹配的分支数
     [
       /^(Currently applies|Applies) to (\d+) branch(?:es)?(\.?)$/,
-      (_, verb: string, count: string, dot: string) =>
-        `${verb === 'Applies' ? '' : '当前'}适用于 ${count} 个分支${dot ? '。' : ''}`,
+      (_, verb: string, count: string, dot: string) => `${verb === 'Applies' ? '' : '当前'}适用于 ${count} 个分支${dot ? '。' : ''}`
     ],
     [/^Applies to (\d+) branch(?:es)?:$/, '适用于 $1 个分支：'],
-    [/^Applies to (\d+) tags?(\.?)$/, (_, count: string, dot: string) => `适用于 ${count} 个标签${dot ? '。' : ''}`],
-  ],
+    [/^Applies to (\d+) tags?(\.?)$/, (_, count: string, dot: string) => `适用于 ${count} 个标签${dot ? '。' : ''}`]
+  ]
 } satisfies PageDictionary

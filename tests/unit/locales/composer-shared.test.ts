@@ -15,7 +15,7 @@ import twDashboard from '../../../src/locales/zh-TW/dashboard'
 /** 任务创建失败横幅的说明文字 */
 const TASK_FAILURE_SAMPLES: readonly string[] = [
   "Unable to start task for 'Fix the bug'. Please try again.",
-  "Unable to start task for 'Fix the bug': Repository not found",
+  "Unable to start task for 'Fix the bug': Repository not found"
 ]
 
 /**
@@ -48,7 +48,7 @@ const COMPOSER_SAMPLES: readonly string[] = [
   '2 files could not be attached: a.zip, b.exe. Text and PDF files must be 10 MB or smaller, and you can attach up to 10 text, PDF, or image files at a time.',
   "The GPT-5 model doesn't support answering questions about images. Select a different model and try again.",
   'Block pasted, 2 total',
-  'Block removed, 1 left',
+  'Block removed, 1 left'
 ]
 
 interface LocaleCase {
@@ -61,12 +61,12 @@ interface LocaleCase {
 
 const LOCALES: readonly (readonly [string, LocaleCase])[] = [
   ['zh-CN', { dashboard: cnDashboard, copilot: cnCopilot, agents: cnAgents, chat: cnChat, skills: cnSkills }],
-  ['zh-TW', { dashboard: twDashboard, copilot: twCopilot, agents: twAgents, chat: twChat, skills: twSkills }],
+  ['zh-TW', { dashboard: twDashboard, copilot: twCopilot, agents: twAgents, chat: twChat, skills: twSkills }]
 ]
 
 /** 规则在列表中的位置（按同一对象查找） */
 function positions(rules: readonly RegExpRule[], list: readonly RegExpRule[]): number[] {
-  return rules.map((rule) => list.indexOf(rule))
+  return rules.map(rule => list.indexOf(rule))
 }
 
 describe.each(LOCALES)('%s 首页输入框沿用的 copilot 规则', (_, { dashboard, copilot, agents, chat, skills }) => {
@@ -74,7 +74,7 @@ describe.each(LOCALES)('%s 首页输入框沿用的 copilot 规则', (_, { dashb
   const copilotPage = createMatcher([['copilot', copilot]])
   const shared = [...agents.COMPOSER_SHARED_RULES, ...chat.COMPOSER_SHARED_RULES, ...skills.COMPOSER_SHARED_RULES]
 
-  it.each(COMPOSER_SAMPLES)('首页词典译出，与 Copilot 页同译：%s', (sample) => {
+  it.each(COMPOSER_SAMPLES)('首页词典译出，与 Copilot 页同译：%s', sample => {
     const result = home.translate(sample, ['common', 'dashboard'])
     expect(result).toBeDefined()
     expect(result).not.toBe(sample)
@@ -82,22 +82,17 @@ describe.each(LOCALES)('%s 首页输入框沿用的 copilot 规则', (_, { dashb
   })
 
   it('共用规则即 agents、chat、skills 中能译出示例的全部规则，先后不变，与 copilot 词典是同一对象', () => {
-    const copilotRules = [
-      ...(agents.default.regexp ?? []),
-      ...(chat.default.regexp ?? []),
-      ...(skills.default.regexp ?? []),
-    ]
-    const matched = copilotRules.filter(([pattern]) => COMPOSER_SAMPLES.some((sample) => pattern.test(sample)))
+    const copilotRules = [...(agents.default.regexp ?? []), ...(chat.default.regexp ?? []), ...(skills.default.regexp ?? [])]
+    const matched = copilotRules.filter(([pattern]) => COMPOSER_SAMPLES.some(sample => pattern.test(sample)))
     expect(shared.length).toBeGreaterThan(0)
     expect(positions(shared, copilotRules)).toEqual(positions(matched, copilotRules))
-    expect(positions(shared, dashboard.regexp ?? []).every((index) => index >= 0)).toBe(true)
+    expect(positions(shared, dashboard.regexp ?? []).every(index => index >= 0)).toBe(true)
   })
 
   it('任务创建失败横幅的说明规则即 agents 中能译出横幅示例的字符串替换规则', () => {
     const rules = agents.default.regexp ?? []
     const matched = rules.filter(
-      ([pattern, replacement]) =>
-        typeof replacement === 'string' && TASK_FAILURE_SAMPLES.some((sample) => pattern.test(sample)),
+      ([pattern, replacement]) => typeof replacement === 'string' && TASK_FAILURE_SAMPLES.some(sample => pattern.test(sample))
     )
     expect(positions(agents.TASK_FAILURE_RULES, rules)).toEqual(positions(matched, rules))
   })

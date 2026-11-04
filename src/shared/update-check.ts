@@ -27,17 +27,14 @@ export interface UpdateCheck {
 
 // 标为无副作用：Firefox 构建不检查新版本，用不到时打包去掉
 export const updateCheckItem = /* @__PURE__ */ storage.defineItem<UpdateCheck | null>('local:updateCheck', {
-  fallback: null,
+  fallback: null
 })
 
 /** 安装方式：商店、企业策略部署、手动（解压加载、宿主应用等） */
 export type InstallSource = 'store' | 'admin' | 'manual'
 
 /** manifest 带 update_url 的是商店安装；installType（management.getSelf）为 admin 的是企业策略部署 */
-export function installSource(
-  manifest: { readonly update_url?: unknown },
-  installType: string | undefined,
-): InstallSource {
+export function installSource(manifest: { readonly update_url?: unknown }, installType: string | undefined): InstallSource {
   if (typeof manifest.update_url === 'string' && manifest.update_url !== '') return 'store'
   return installType === 'admin' ? 'admin' : 'manual'
 }
@@ -94,7 +91,7 @@ export const UPDATE_CHECK_DEPS: UpdateCheckDeps = {
   now: () => Date.now(),
   manifest: () => browser.runtime.getManifest(),
   // getSelf 不需要 management 权限
-  installType: async () => (await browser.management?.getSelf?.())?.installType,
+  installType: async () => (await browser.management?.getSelf?.())?.installType
 }
 
 /**
@@ -110,7 +107,7 @@ export async function fetchLatestVersion(deps: UpdateCheckDeps = UPDATE_CHECK_DE
       cache: 'no-store',
       credentials: 'omit',
       referrerPolicy: 'no-referrer',
-      signal: controller.signal,
+      signal: controller.signal
     })
     return response.ok ? releaseVersion(response.url) : undefined
   } catch {
@@ -153,10 +150,7 @@ async function readInstallSource(deps: UpdateCheckDeps): Promise<InstallSource |
  * 取最新发行版的版本号，经 onLatest 回调：手动安装时先回调缓存的；缓存过期（或检查时间晚于当前）再请求，
  * 取到则回调并写入缓存，失败时缓存不变。商店安装、企业策略部署不读缓存、不请求
  */
-export async function checkLatestVersion(
-  onLatest: (version: string) => void,
-  deps: UpdateCheckDeps = UPDATE_CHECK_DEPS,
-): Promise<void> {
+export async function checkLatestVersion(onLatest: (version: string) => void, deps: UpdateCheckDeps = UPDATE_CHECK_DEPS): Promise<void> {
   if ((await readInstallSource(deps)) !== 'manual') return
   const now = deps.now()
   const cached = await readCache()

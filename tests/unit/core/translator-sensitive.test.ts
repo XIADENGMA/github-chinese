@@ -10,7 +10,7 @@ const HOME = '/vuejs/core/issues'
 const BUNDLE: LocaleBundle = [
   ...TEST_BUNDLE,
   ['settings', { scoped: { 'Panel title': '面板标题' }, regexp: [[/^Item (.+)$/, '条目 $1']] }],
-  ['issues', { scoped: { Labels: '标签' } }],
+  ['issues', { scoped: { Labels: '标签' } }]
 ]
 
 let translator: Translator | undefined
@@ -31,8 +31,7 @@ afterEach(() => {
 })
 
 /** 敏感页上的内容：作用域词条命中的文本与属性、整组未命中的文本组、单独未命中的文本 */
-const SENSITIVE_PAGE =
-  '<p>Item alpha</p><button aria-label="Panel title"></button><span>Labels<!-- -->beta gamma</span><p>Plain note</p>'
+const SENSITIVE_PAGE = '<p>Item alpha</p><button aria-label="Panel title"></button><span>Labels<!-- -->beta gamma</span><p>Plain note</p>'
 
 describe('离开不收集的页面', () => {
   it('旧正文还在时（先改地址再换正文）：该页已翻译、未命中的文字都不收集；换上的正文照常收集', async () => {
@@ -75,7 +74,7 @@ describe('页面类型不变的软导航', () => {
   it.each([
     // 仓库设置侧栏在 repo-content-turbo-frame 内导航，页面类型不变
     ['/vuejs/core/settings', '/vuejs/core/settings/secrets/actions', 'repo-settings'],
-    ['/settings/profile', '/settings/tokens', 'settings'],
+    ['/settings/profile', '/settings/tokens', 'settings']
   ])('%s → %s：进入后不收集，返回后新内容照常收集', async (from, to, page) => {
     history.replaceState(null, '', from)
     const t = start('<turbo-frame id="repo-content-turbo-frame"><p>General phrase</p></turbo-frame>')
@@ -112,7 +111,7 @@ describe('离开后新旧节点拼成一句', () => {
   it.each([
     ['非空白', '<p id="x">Sample text</p>', 'Label '],
     ['纯空白', '<p id="x">Sample text</p>', ' '],
-    ['隔注释', '<p id="x"><!-- -->Sample text</p>', 'Label '],
+    ['隔注释', '<p id="x"><!-- -->Sample text</p>', 'Label ']
   ])('旧文本节点前插入新文本节点（%s）：整句不收集', async (_, html, inserted) => {
     const t = leave(html)
     const host = $('#x')

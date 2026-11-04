@@ -39,5 +39,5 @@ export default mergeDictionaries(
   conflicts,
   dashboard,
   stacks,
-  list,
+  list
 ) satisfies PageDictionary

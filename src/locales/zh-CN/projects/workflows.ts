@@ -21,7 +21,7 @@ export const WORKFLOW_NAMES: Readonly<Record<string, string>> = {
   'Auto-add to project': '自动添加到项目',
   'Auto-close issue': '自动关闭议题',
   'Auto-add sub-issues to project': '自动将子议题添加到项目',
-  'Item added': '项已添加',
+  'Item added': '项已添加'
 }
 
 function workflowName(name: string): string {
@@ -31,7 +31,7 @@ function workflowName(name: string): string {
 const TIME_UNITS: Readonly<Record<string, string>> = {
   minute: '分钟',
   hour: '小时',
-  day: '天',
+  day: '天'
 }
 
 export default {
@@ -41,8 +41,7 @@ export default {
     'Save workflow': '保存工作流',
     'Viewing mode. Click edit to make changes to this workflow.': '查看模式。单击编辑以修改此工作流。',
     'A workflow with this name already exists': '已存在同名工作流',
-    'An empty filter will match all newly created and updated Issues and Pull Requests':
-      '筛选器为空时将匹配所有新建和更新的议题与拉取请求',
+    'An empty filter will match all newly created and updated Issues and Pull Requests': '筛选器为空时将匹配所有新建和更新的议题与拉取请求',
     'Workflow name cannot be empty': '工作流名称不能为空',
     'A valid field is required': '需要有效的字段',
     'A query or a field id is required': '需要查询或字段 ID',
@@ -63,8 +62,7 @@ export default {
       '之后所有与筛选器匹配的新建或更新项都会自动添加。当前匹配的项也可手动添加',
     'Link to GitHub Docs page about adding multiple issues or pull requests to a project':
       '关于向项目添加多个议题或拉取请求的 GitHub 文档链接',
-    'Enabling this workflow will automatically add sub-issues in the following scenarios:':
-      '启用此工作流会在以下情况下自动添加子议题：',
+    'Enabling this workflow will automatically add sub-issues in the following scenarios:': '启用此工作流会在以下情况下自动添加子议题：',
     'When a sub-issue is added to an issue in the project': '项目中的议题添加了子议题时',
     'When an issue with sub-issues is added to the project': '有子议题的议题添加到项目时',
     'Note: This workflow will initially add all existing sub-issues of issues in the project.':
@@ -90,15 +88,13 @@ export default {
     'Enabling this workflow will archive': '启用此工作流将存档',
     'items that currently meet the filter conditions.': '个当前满足筛选条件的项。',
     'item that currently meet the filter conditions.': '个当前满足筛选条件的项。',
-    'As future items match filter conditions, they will be automatically archived.':
-      '之后满足筛选条件的项也会自动存档。',
+    'As future items match filter conditions, they will be automatically archived.': '之后满足筛选条件的项也会自动存档。',
 
     // 删除 / 新建 / 复制工作流
     'Could not delete workflow, please try again': '无法删除工作流，请重试',
     'Workflow deleted': '工作流已删除',
     'Delete workflow': '删除工作流',
-    'Are you sure you want to delete this workflow? This action cannot be undone.':
-      '确定要删除此工作流吗？此操作无法撤销。',
+    'Are you sure you want to delete this workflow? This action cannot be undone.': '确定要删除此工作流吗？此操作无法撤销。',
     'New auto-add workflow': '新建自动添加工作流',
     'Duplicate workflow': '复制工作流',
     'New workflow': '新建工作流',
@@ -117,7 +113,7 @@ export default {
     'Auto-assign disabled': '自动分配已禁用',
     'Add auto-assign workflow': '添加自动分配工作流',
     'Pause auto-assign': '暂停自动分配',
-    'Enable auto-assign': '启用自动分配',
+    'Enable auto-assign': '启用自动分配'
   },
   scoped: {
     // 默认工作流名称
@@ -138,8 +134,7 @@ export default {
     'The AI model used by the agent to complete work': '代理完成工作所用的 AI 模型',
     'Select a repository to choose a specific model': '选择存储库后才能指定模型',
     'Filter models': '筛选模型',
-    'The repository the agent will work in. Set to auto-detect from the issue':
-      '代理工作的存储库。设为根据议题自动检测',
+    'The repository the agent will work in. Set to auto-detect from the issue': '代理工作的存储库。设为根据议题自动检测',
     'Set by issue': '由议题决定',
     'Additional instructions for this agent': '给此代理的附加说明',
     'Provide additional instructions for the agent': '为代理提供附加说明',
@@ -160,7 +155,7 @@ export default {
     Off: '关',
     Pause: '暂停',
     Enable: '启用',
-    Disabled: '已禁用',
+    Disabled: '已禁用'
   },
   regexp: [
     // 复制的工作流名：Duplicate of Item closed。只接大写或数字开头的名称，避开议题关闭菜单的 Duplicate of another issue
@@ -171,18 +166,17 @@ export default {
     [
       /^Using the (.+) operator means that your workflow will run every (\d+) (minutes?|hours?|days?)$/,
       (_, field: string, value: string, unit: string) =>
-        `使用 ${field} 运算符时工作流每 ${value} ${TIME_UNITS[unit.replace(/s$/, '')] ?? unit}运行一次`,
+        `使用 ${field} 运算符时工作流每 ${value} ${TIME_UNITS[unit.replace(/s$/, '')] ?? unit}运行一次`
     ],
     // 看板列上的工作流指示（strings.ts 的 columnWorkflowIndicator*，for 后都是列名）：列名原文没有引号，译文也不加
     [/^Workflows for (.+)$/, (_, column: string) => joinCjk(translateOptionName(column), '列的工作流')],
     [
       /^(\d+) workflows configured for (.+)$/,
-      (_, count: string, column: string) => joinCjk(translateOptionName(column), `列配置了 ${count} 个工作流`),
+      (_, count: string, column: string) => joinCjk(translateOptionName(column), `列配置了 ${count} 个工作流`)
     ],
     [
       /^Auto-assign (enabled|disabled) for (.+)$/,
-      (_, state: string, column: string) =>
-        joinCjk(translateOptionName(column), `列的自动分配${state === 'enabled' ? '已启用' : '已禁用'}`),
+      (_, state: string, column: string) => joinCjk(translateOptionName(column), `列的自动分配${state === 'enabled' ? '已启用' : '已禁用'}`)
     ],
     // 工作流名不含句末标点，且不以 is / are / been 等结尾，避免误配普通句子。
     // 两个译名相连无法断句，改语序并补“列”“工作流”：已为已完成列启用项已关闭工作流
@@ -191,13 +185,13 @@ export default {
       (_, name: string, state: string, column: string) =>
         joinCjk(
           joinCjk(joinCjk('已为', translateOptionName(column)), `列${state === 'enabled' ? '启用' : '禁用'}`),
-          joinCjk(workflowName(name), '工作流'),
-        ),
+          joinCjk(workflowName(name), '工作流')
+        )
     ],
     // 状态字段设置页：Item added to project: Active
     [
       /^(Item added to project|Item added): (Active|Disabled)$/,
-      (_, name: string, state: string) => `${workflowName(name)}：${state === 'Active' ? '已启用' : '已禁用'}`,
-    ],
-  ],
+      (_, name: string, state: string) => `${workflowName(name)}：${state === 'Active' ? '已启用' : '已禁用'}`
+    ]
+  ]
 } satisfies PageDictionary

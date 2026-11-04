@@ -21,7 +21,7 @@ const MIME_BY_FORMAT: Readonly<Record<string, string>> = {
   png: 'image/png',
   jpeg: 'image/jpeg',
   webp: 'image/webp',
-  gif: 'image/gif',
+  gif: 'image/gif'
 }
 
 export interface ShrinkResult {
@@ -42,7 +42,7 @@ async function resizeToPng(input: Buffer, maxSize: number): Promise<Buffer> {
   const resized = sharp(input).resize(maxSize, maxSize, { fit: 'inside', kernel: 'lanczos3' })
   const [palette, truecolor] = await Promise.all([
     resized.clone().png({ palette: true, quality: PALETTE_QUALITY, effort: 10, compressionLevel: 9 }).toBuffer(),
-    resized.clone().png({ compressionLevel: 9, adaptiveFiltering: true }).toBuffer(),
+    resized.clone().png({ compressionLevel: 9, adaptiveFiltering: true }).toBuffer()
   ])
   return palette.length <= truecolor.length ? palette : truecolor
 }
@@ -67,7 +67,7 @@ async function shrinkDataUri(mime: string, data: string, maxSize: number): Promi
 
 export async function shrinkEmbeddedRasters(svg: string, maxSize = MAX_RASTER_SIZE): Promise<ShrinkResult> {
   const matches = [...svg.matchAll(DATA_URI_RE)]
-  const replacements = await Promise.all(matches.map((match) => shrinkDataUri(match[3] ?? '', match[4] ?? '', maxSize)))
+  const replacements = await Promise.all(matches.map(match => shrinkDataUri(match[3] ?? '', match[4] ?? '', maxSize)))
   const parts: string[] = []
   let cursor = 0
   matches.forEach((match, index) => {
@@ -80,7 +80,7 @@ export async function shrinkEmbeddedRasters(svg: string, maxSize = MAX_RASTER_SI
   parts.push(svg.slice(cursor))
   return {
     svg: parts.join(''),
-    resized: replacements.filter((replacement) => replacement?.resized === true).length,
-    retyped: replacements.filter((replacement) => replacement?.resized === false).length,
+    resized: replacements.filter(replacement => replacement?.resized === true).length,
+    retyped: replacements.filter(replacement => replacement?.resized === false).length
   }
 }

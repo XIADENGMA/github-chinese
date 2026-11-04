@@ -17,7 +17,7 @@ const CHECK_STATE: Readonly<Record<string, string>> = {
   skipped: '已跳过',
   expected: '等待报告',
   successful: '成功',
-  'action required': '需要操作',
+  'action required': '需要操作'
 }
 
 const CHECK_STATE_SOURCE = Object.keys(CHECK_STATE).join('|')
@@ -30,7 +30,7 @@ const CHECK_PART_RE = new RegExp(`(\\d+) (${CHECK_STATE_SOURCE})`, 'g')
  */
 function checkSummary(list: string): string {
   const parts = [...list.matchAll(CHECK_PART_RE)].map(
-    ([, count, state], index) => `${count} 个${index === 0 ? '检查' : ''}${CHECK_STATE[state!] ?? state}`,
+    ([, count, state], index) => `${count} 个${index === 0 ? '检查' : ''}${CHECK_STATE[state!] ?? state}`
   )
   return list.includes(',') ? parts.join('、') : parts.join('和 ')
 }
@@ -54,27 +54,24 @@ const CHECK_CONCLUSION: Readonly<Record<string, string>> = {
   'Startup failure': '启动失败',
   Skipped: '跳过',
   Stale: '过时',
-  'Action required': '需要操作',
+  'Action required': '需要操作'
 }
 
 const CHECK_CONCLUSION_SOURCE = Object.keys(CHECK_CONCLUSION).join('|')
 
 const regexp: readonly RegExpRule[] = [
   // 检查对话框副标题：1 failing, 2 skipped, and 15 successful checks
-  [
-    new RegExp(`^(${CHECK_PART_SOURCE}(?:(?:, and |, | and )${CHECK_PART_SOURCE})*) checks?$`),
-    (_, list: string) => checkSummary(list),
-  ],
+  [new RegExp(`^(${CHECK_PART_SOURCE}(?:(?:, and |, | and )${CHECK_PART_SOURCE})*) checks?$`), (_, list: string) => checkSummary(list)],
   [/^(\d+) checks?$/, '$1 个检查'],
   // 检查运行耗时：Successful in 41s / Failing after 2m 5s（原文无标点，译文不加逗号）
   [
     new RegExp(`^(Successful|Success|Completed) in (${DURATION_SOURCE})$`),
-    (_, state: string, time: string) => joinCjk(`${state === 'Completed' ? '完成' : '成功'}用时`, duration(time)),
+    (_, state: string, time: string) => joinCjk(`${state === 'Completed' ? '完成' : '成功'}用时`, duration(time))
   ],
   [
     new RegExp(`^(${CHECK_CONCLUSION_SOURCE}) after (${DURATION_SOURCE})$`),
-    (_, state: string, time: string) => joinCjk(duration(time), `后${CHECK_CONCLUSION[state] ?? state}`),
-  ],
+    (_, state: string, time: string) => joinCjk(duration(time), `后${CHECK_CONCLUSION[state] ?? state}`)
+  ]
 ]
 
 /**

@@ -6,7 +6,7 @@ const ROW_ACTION: Readonly<Record<string, string>> = {
   Edit: '编辑',
   Delete: '删除',
   Update: '更新',
-  Remove: '移除',
+  Remove: '移除'
 }
 
 /**
@@ -33,8 +33,7 @@ export default {
       '也可以在组织级别创建变量，并授权此存储库使用。',
     'Manage organization secrets': '管理组织机密',
     'Manage organization variables': '管理组织变量',
-    'Organization secrets can only be used by public repositories on your plan.':
-      '你的计划仅允许公共存储库使用组织机密。',
+    'Organization secrets can only be used by public repositories on your plan.': '你的计划仅允许公共存储库使用组织机密。',
     'If you would like to use organization secrets in a private repository, you will need to upgrade your plan.':
       '如需在专用存储库中使用组织机密，需要升级计划。',
     'Yes, delete this secret': '是，删除此机密',
@@ -53,8 +52,7 @@ export default {
     'Repository development environment secrets': '存储库开发环境机密',
     'Organization development environment secrets': '组织开发环境机密',
     'This repository has no development environment secrets.': '此存储库暂无开发环境机密。',
-    'access to this repository can use these secrets for Dependabot.':
-      '权限的任何人都可以在 Dependabot 中使用这些机密。',
+    'access to this repository can use these secrets for Dependabot.': '权限的任何人都可以在 Dependabot 中使用这些机密。',
     'Encrypted secrets allow you to store private access tokens so that Dependabot can update dependencies from private registries.':
       '加密机密可用于存储私密访问令牌，以便 Dependabot 更新来自专用注册表的依赖项。',
     'No organization secrets have been authorized for this repository.': '尚未授权此存储库使用任何组织机密。',
@@ -86,7 +84,7 @@ export default {
     'Learn more about custom properties': '了解自定义属性',
     // 「Learn more about custom properties」链接 +「and how to set them at the organization level.」
     'and how to set them at the organization level.': '以及如何在组织级别设置。',
-    'Repository properties updated.': '存储库属性已更新。',
+    'Repository properties updated.': '存储库属性已更新。'
   },
   scoped: {
     'We recommend using': '建议改用',
@@ -97,8 +95,7 @@ export default {
     'Actions secrets and variables': '操作机密和变量',
     'Secrets or variables tab': '机密或变量标签页',
     'New secret': '新建机密',
-    'Secrets and variables allow you to manage reusable configuration data. Secrets are':
-      '机密和变量可用于管理可复用的配置数据。机密经过',
+    'Secrets and variables allow you to manage reusable configuration data. Secrets are': '机密和变量可用于管理可复用的配置数据。机密经过',
     encrypted: '加密',
     'and are used for sensitive data.': '并用于敏感数据。',
     'Learn more about encrypted secrets': '了解加密机密',
@@ -159,7 +156,7 @@ export default {
     push: '推送',
     cannot: '无法',
     'This action': '此操作',
-    'Never used': '从未使用',
+    'Never used': '从未使用'
   },
   regexp: [
     // 机密 / 变量列表：更新时间
@@ -168,16 +165,13 @@ export default {
     [new RegExp(`^Added on (${DATE_SOURCE})$`), (_, date: string) => joinCjk('添加于', translateDate(date) ?? date)],
     [
       /^Last used within the last (\d+) (week|month)s?$/,
-      (_, count: string, unit: string) => `最近 ${count} ${unit === 'week' ? '周' : '个月'}内使用过`,
+      (_, count: string, unit: string) => `最近 ${count} ${unit === 'week' ? '周' : '个月'}内使用过`
     ],
     // 部署密钥列表的权限标记：原文破折号不计入检查脚本的原文标点，用正则保留破折号
     [/^— Read(\/write)?$/, (_, write: string | undefined) => (write ? '— 读写' : '— 只读')],
     // 删除确认
     [/^Are you sure you want to delete ([A-Z_][A-Z0-9_]{0,99})\?$/, '确定要删除 $1 吗？'],
     // 机密 / 变量列表行按钮的读屏名称：Edit NPM_TOKEN、Delete NPM_TOKEN
-    [
-      /^(Edit|Delete|Update|Remove) ([A-Z_][A-Z0-9_]{1,99})$/,
-      (_, verb: string, name: string) => `${ROW_ACTION[verb] ?? verb} ${name}`,
-    ],
-  ],
+    [/^(Edit|Delete|Update|Remove) ([A-Z_][A-Z0-9_]{1,99})$/, (_, verb: string, name: string) => `${ROW_ACTION[verb] ?? verb} ${name}`]
+  ]
 } satisfies PageDictionary

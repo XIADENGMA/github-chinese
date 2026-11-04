@@ -15,8 +15,7 @@ export default {
   static: {
     // GitHub 应用列表
     'Job queued to revoke all user tokens': '已將撤銷所有使用者權杖的作業排入佇列',
-    'Want to build something that integrates with and extends GitHub?':
-      '想建置能與 GitHub 整合並擴充 GitHub 的工具嗎？',
+    'Want to build something that integrates with and extends GitHub?': '想建置能與 GitHub 整合並擴充 GitHub 的工具嗎？',
     'Register a new GitHub App': '註冊新的 GitHub 應用程式',
     'to get started developing on the GitHub API. You can also read more about building GitHub Apps in our':
       '以開始使用 GitHub API 開發。如需建置 GitHub 應用程式的詳細資訊請參閱我們的',
@@ -43,8 +42,7 @@ export default {
     'Expire user authorization tokens': '使用者授權權杖自動到期',
     // 「This will provide a <code>refresh_token</code> which can be used to …」：原文无逗号，用「用於」接续
     'This will provide a': '這會提供',
-    'which can be used to request an updated access token when this access token expires.':
-      '用於在此存取權杖到期時請求新的存取權杖。',
+    'which can be used to request an updated access token when this access token expires.': '用於在此存取權杖到期時請求新的存取權杖。',
     'Request user authorization (OAuth) during installation': '安裝期間請求使用者授權 (OAuth)',
     'Requests that the installing user grants access to their identity during installation of your App':
       '安裝你的應用程式時請求安裝者授權存取其身分',
@@ -84,16 +82,14 @@ export default {
     'Where can this GitHub App be installed?': '此 GitHub 應用程式可以安裝在哪裡？',
     'Only on this account': '僅限此帳號',
     'Any account': '任何帳號',
-    'Allow this GitHub App to be installed by any user or organization.':
-      '允許任何使用者或組織安裝此 GitHub 應用程式。',
+    'Allow this GitHub App to be installed by any user or organization.': '允許任何使用者或組織安裝此 GitHub 應用程式。',
     'Create GitHub App': '建立 GitHub 應用程式',
     'Registration successful. You must': '註冊成功。你必須',
     'generate a private key': '產生私密金鑰',
     'in order to install your GitHub App.': '才能安裝你的 GitHub 應用程式。',
     'Got it. Your GitHub App has been updated.': '你的 GitHub 應用程式已更新。',
     'The GitHub App is now public. Anyone is free to install it.': '此 GitHub 應用程式現已設為公開。任何人都可以安裝。',
-    'The GitHub App is now private. It can only be installed on this account.':
-      '此 GitHub 應用程式現已設為私人。只能安裝在此帳號上。',
+    'The GitHub App is now private. It can only be installed on this account.': '此 GitHub 應用程式現已設為私人。只能安裝在此帳號上。',
 
     // GitHub 应用设置：侧边栏、常规
     'Permissions & events': '權限和事件',
@@ -124,8 +120,7 @@ export default {
     'Client secrets': '用戶端密碼',
     'Client secret': '用戶端密碼',
     'Generate a new client secret': '產生新的用戶端密碼',
-    'You need a client secret to authenticate as the application to the API.':
-      '你需要用戶端密碼才能以應用程式的身分向 API 驗證。',
+    'You need a client secret to authenticate as the application to the API.': '你需要用戶端密碼才能以應用程式的身分向 API 驗證。',
     'Make sure to copy your new client secret now. You won’t be able to see it again.':
       '請務必立即複製新的用戶端密碼。之後將無法再次查看。',
     "Make sure to copy your new client secret now. You won't be able to see it again.":
@@ -160,18 +155,15 @@ export default {
     'Private key': '私密金鑰',
     // 「Enter the IP addresses … with <a>IP allow lists</a> to selectively inherit …」
     'Enter the IP addresses of your GitHub App to allow organizations with': '輸入 GitHub 應用程式的 IP 位址可讓啟用',
-    "to selectively inherit the App's IP allow list when installed.":
-      '的組織在安裝時選擇性繼承該應用程式的 IP 允許清單。',
-    'to selectively inherit the App’s IP allow list when installed.':
-      '的組織在安裝時選擇性繼承該應用程式的 IP 允許清單。',
+    "to selectively inherit the App's IP allow list when installed.": '的組織在安裝時選擇性繼承該應用程式的 IP 允許清單。',
+    'to selectively inherit the App’s IP allow list when installed.': '的組織在安裝時選擇性繼承該應用程式的 IP 允許清單。',
     'Learn more about App IP allow lists': '瞭解應用程式 IP 允許清單',
     'There are no IP addresses on the allow list yet.': '允許清單中尚無 IP 位址。',
 
     // 权限更新
     'Add a note to users': '為使用者新增附註',
     'This note will be displayed on the permissions update approval page.': '此附註會顯示在權限更新核准頁面上。',
-    'Add a note to your users explaining why you are requesting these changes.':
-      '新增附註向使用者說明你請求這些變更的原因。',
+    'Add a note to your users explaining why you are requesting these changes.': '新增附註向使用者說明你請求這些變更的原因。',
     'Are you sure you want to update permissions?': '確定要更新權限嗎？',
     'Current users will be prompted to accept these changes and enable the new permissions on their installation.':
       '系統會提示現有使用者接受這些變更並在其安裝中啟用新權限。',
@@ -209,8 +201,7 @@ export default {
     // Copilot 配置
     'A Copilot configuration allows your GitHub App to integrate with Copilot. Learn more about building GitHub Copilot Extensions in the':
       'Copilot 設定可讓你的 GitHub 應用程式與 Copilot 整合。如需建置 GitHub Copilot 擴充功能的詳細資訊請參閱',
-    'Accept the Marketplace Developer agreement to create your Copilot Extension':
-      '接受市集開發人員協議以建立你的 Copilot 擴充功能',
+    'Accept the Marketplace Developer agreement to create your Copilot Extension': '接受市集開發人員協議以建立你的 Copilot 擴充功能',
     // 「By clicking "Accept Terms" below, you agree to the <a>…Policy</a> and <a>Pre-release License terms</a>. …」
     'By clicking "Accept Terms" below, you agree to the': '按一下下方的「接受條款」即表示你同意',
     'By clicking “Accept Terms” below, you agree to the': '按一下下方的「接受條款」即表示你同意',
@@ -274,8 +265,7 @@ export default {
     'You can edit how': '你可以編輯',
     'is presented on': '在',
     ', including description, screenshots, and pricing information.': '上的呈現方式，包括描述、螢幕截圖和定價資訊。',
-    'You cannot delete the only client secret. Generate a new client secret first.':
-      '無法刪除唯一的用戶端密碼。請先產生新的用戶端密碼。',
+    'You cannot delete the only client secret. Generate a new client secret first.': '無法刪除唯一的用戶端密碼。請先產生新的用戶端密碼。',
     'Label: Client secret': '標籤：用戶端密碼',
     'Redirect URIs': '重新導向 URI',
     'Redirect URI': '重新導向 URI',
@@ -291,15 +281,14 @@ export default {
       '存取權杖會在 8 小時後到期。同時會提供可用來請求新存取權杖的重新整理權杖。現有權杖不受影響。',
     'Transfer this application': '轉移此應用程式',
     'Type the name of the application to confirm': '輸入應用程式名稱以確認',
-    'Type in the name of the application to confirm that you want to transfer this repository.':
-      '輸入應用程式名稱以確認轉移。',
+    'Type in the name of the application to confirm that you want to transfer this repository.': '輸入應用程式名稱以確認轉移。',
     'Type in the username of the new owner.': '輸入新擁有者的使用者名稱。',
     'Delete application?': '刪除應用程式？',
     'Delete OAuth application': '刪除 OAuth 應用程式',
     'Fewer than 10 users are currently using this application. It will not be able to be used after deletion.':
       '目前使用此應用程式的使用者少於 10 位。刪除後將無法再使用。',
     'Please note that deleting the OAuth application will invalidate any access tokens authorized by users.':
-      '請注意刪除 OAuth 應用程式會讓使用者授權的所有存取權杖失效。',
+      '請注意刪除 OAuth 應用程式會讓使用者授權的所有存取權杖失效。'
   },
   scoped: {
     // 列表（与组织开发人员设置共用；Developer settings 菜单项由 settings-account 收录）
@@ -339,8 +328,7 @@ export default {
       '輸入 IP 位址以檢查 IP 允許清單中已啟用的項目是否允許該位址。',
     'Crop your new avatar': '裁切新頭像',
     'Set new avatar': '設定新頭像',
-    'Your avatar has been updated. It may take a few minutes to update across the site.':
-      '頭像已更新。全站更新可能需要幾分鐘。',
+    'Your avatar has been updated. It may take a few minutes to update across the site.': '頭像已更新。全站更新可能需要幾分鐘。',
     'This avatar has been deleted.': '已刪除此頭像。',
     'Uploading...': '上傳中...',
     'Uploading…': '上傳中…',
@@ -350,42 +338,33 @@ export default {
     'This cannot be undone. Please be certain.': '此動作無法復原。請務必確定。',
     'Opt-out': '選擇退出',
     'Opt-in': '選擇加入',
-    'Installed on': '安裝於',
+    'Installed on': '安裝於'
   },
   regexp: [
-    [
-      /^Only allow this GitHub App to be installed on the (@[\w-]+) account\.$/,
-      '只允許將此 GitHub 應用程式安裝在 $1 帳號上。',
-    ],
+    [/^Only allow this GitHub App to be installed on the (@[\w-]+) account\.$/, '只允許將此 GitHub 應用程式安裝在 $1 帳號上。'],
     [/^Choose an account to install (.+) on:$/, '選擇要安裝 $1 的帳號：'],
     [/^Install (.+) on this account\.$/, '將 $1 安裝到此帳號。'],
     [/^(.+) is installed on this account\.$/, '$1 已安裝在此帳號上。'],
     [/^Where should we transfer (.+)\?$/, '要將 $1 轉移給誰？'],
     [
       /^Any user or organization will be able to install this GitHub App\. Are you sure you want to make (.+) public\?$/,
-      '任何使用者或組織都將能安裝此 GitHub 應用程式。確定要將 $1 設為公開嗎？',
+      '任何使用者或組織都將能安裝此 GitHub 應用程式。確定要將 $1 設為公開嗎？'
     ],
     [
       /^This GitHub [Aa]pp will only be installable on the (\S+) account\. Are you sure you want to make (.+) private\?$/,
-      '此 GitHub 應用程式將只能安裝在 $1 帳號上。確定要將 $2 設為私人嗎？',
+      '此 GitHub 應用程式將只能安裝在 $1 帳號上。確定要將 $2 設為私人嗎？'
     ],
     [/^(\d+) accounts?$/, '$1 個帳號'],
     [/^(\d+) users?$/, '$1 位使用者'],
     // 客户端密钥：「Added 3 days ago by octocat」
     [
       new RegExp(`^Added (${TIME_SOURCE}) by ([\\w-]+)$`),
-      (_, time: string, user: string) => joinCjk(translateTime(time), `由 ${user} 新增`),
+      (_, time: string, user: string) => joinCjk(translateTime(time), `由 ${user} 新增`)
     ],
-    [
-      /^This will also uninstall the GitHub App from (\d+) accounts?\.$/,
-      '這也會從 $1 個帳號解除安裝此 GitHub 應用程式。',
-    ],
+    [/^This will also uninstall the GitHub App from (\d+) accounts?\.$/, '這也會從 $1 個帳號解除安裝此 GitHub 應用程式。'],
     [/^Activate optional features for (.+)$/, '為 $1 啟用選用功能'],
     [/^Choose a feature to activate for (.+):$/, '選擇要為 $1 啟用的功能：'],
     // 最近传递：传递耗时（与存储库 Web 钩子一致）
-    [
-      /^Completed in ([\d.]+) seconds?(\.?)$/,
-      (_, seconds: string, dot: string) => `耗時 ${seconds} 秒${dot ? '。' : ''}`,
-    ],
-  ],
+    [/^Completed in ([\d.]+) seconds?(\.?)$/, (_, seconds: string, dot: string) => `耗時 ${seconds} 秒${dot ? '。' : ''}`]
+  ]
 } satisfies PageDictionary

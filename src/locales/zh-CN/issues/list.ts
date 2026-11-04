@@ -12,11 +12,11 @@ const ITEM_STATUS: Readonly<Record<string, string>> = {
   'Open (in progress)': '打开（正在进行）',
   'Closed (abandoned)': '已关闭（已放弃）',
   'Draft (not ready)': '草稿（未就绪）',
-  'Archived (abandoned)': '已存档（已放弃）',
+  'Archived (abandoned)': '已存档（已放弃）'
 }
 
 const ITEM_STATUS_SOURCE = Object.keys(ITEM_STATUS)
-  .map((status) => status.replace(/[()]/g, '\\$&'))
+  .map(status => status.replace(/[()]/g, '\\$&'))
   .join('|')
 
 /** 排序字段（按钮文字与菜单项） */
@@ -38,7 +38,7 @@ const SORT_FIELD: Readonly<Record<string, string>> = {
   Confused: '😕',
   Rocket: '🚀',
   Eyes: '👀',
-  Heart: '❤️',
+  Heart: '❤️'
 }
 
 const SORT_FIELD_SOURCE = Object.keys(SORT_FIELD).join('|')
@@ -62,8 +62,7 @@ export function joinName(left: string, right: string): string {
   const end = left.at(-1)
   const start = right.at(0)
   const spaced =
-    (end !== undefined && CJK_LETTER_RE.test(end) && apart(start)) ||
-    (start !== undefined && CJK_LETTER_RE.test(start) && apart(end))
+    (end !== undefined && CJK_LETTER_RE.test(end) && apart(start)) || (start !== undefined && CJK_LETTER_RE.test(start) && apart(end))
   return spaced ? `${left} ${right}` : `${left}${right}`
 }
 
@@ -82,7 +81,7 @@ const UNIT: Readonly<Record<string, string>> = {
   'issues and pull requests': '议题和拉取请求',
   // 与通用词典的 list item → 列表项一致
   'list item': '列表项',
-  'list items': '列表项',
+  'list items': '列表项'
 }
 
 const UNIT_SOURCE = Object.keys(UNIT)
@@ -93,7 +92,7 @@ const UNIT_SOURCE = Object.keys(UNIT)
 const SELECT_ALL_UNIT: Readonly<Record<string, string>> = {
   issues: '议题',
   'pull requests': '拉取请求',
-  'list items': '列表项',
+  'list items': '列表项'
 }
 
 /** 链接的拉取请求的状态 */
@@ -102,7 +101,7 @@ const PR_STATE: Readonly<Record<string, string>> = {
   Closed: '已关闭',
   Merged: '已合并',
   Draft: '草稿',
-  'State unavailable': '状态不可用',
+  'State unavailable': '状态不可用'
 }
 
 const PR_STATE_SOURCE = Object.keys(PR_STATE).join('|')
@@ -119,7 +118,7 @@ const BOARD_FIELD: Readonly<Record<string, string>> = {
   Project: '项目',
   Priority: '优先级',
   Repository: '存储库',
-  Author: '作者',
+  Author: '作者'
 }
 
 const BOARD_FIELD_SOURCE = Object.keys(BOARD_FIELD).join('|')
@@ -133,7 +132,7 @@ const PARENT_STATE: Readonly<Record<string, string>> = {
   Closed: '已关闭',
   Completed: '已完成',
   'Not planned': '未计划',
-  Duplicate: '重复',
+  Duplicate: '重复'
 }
 
 /** 代理会话耗时单位 */
@@ -328,8 +327,7 @@ export default {
     'Move selected items': '移动所选条目',
     'Move selected item': '移动所选条目',
     'Missing selection': '未选择条目',
-    'The first item you selected cannot be deselected when performing a move.':
-      '执行移动时，无法取消选择第一个选中的条目。',
+    'The first item you selected cannot be deselected when performing a move.': '执行移动时，无法取消选择第一个选中的条目。',
     'I understand': '我已了解',
     'First item in list.': '列表中的第一项。',
     'Last item in list.': '列表中的最后一项。',
@@ -341,7 +339,7 @@ export default {
     'Entry is invalid.': '输入值无效。',
     'Move item before': '将条目移到前面',
     'Move item after': '将条目移到后面',
-    'Move to position': '移动到指定位置',
+    'Move to position': '移动到指定位置'
   },
   scoped: {
     // 头部与侧栏
@@ -456,7 +454,7 @@ export default {
     Item: '条目',
     'Item(s)': '条目',
     'To pick up a draggable item, press the space bar. While dragging, use the arrow keys to move the item. Press space again to drop the item in its new position, or press escape to cancel.':
-      '按空格键拿起可拖动的条目。拖动时用方向键移动条目。再按空格键将条目放到新位置，或按 Esc 取消。',
+      '按空格键拿起可拖动的条目。拖动时用方向键移动条目。再按空格键将条目放到新位置，或按 Esc 取消。'
   },
   regexp: [
     // 全选读屏：3 issues of 25 selected（与通用词典的“25 个列表项中已选择 3 个”同一写法；
@@ -464,23 +462,23 @@ export default {
     [
       new RegExp(`^([\\d,]+) (${UNIT_SOURCE}) (?:of ([\\d,]+) )?selected$`),
       (_, count, unit, total) =>
-        total ? `${total} 个${UNIT[unit] ?? unit}中已选择 ${count} 个` : `已选择 ${count} 个${UNIT[unit] ?? unit}`,
+        total ? `${total} 个${UNIT[unit] ?? unit}中已选择 ${count} 个` : `已选择 ${count} 个${UNIT[unit] ?? unit}`
     ],
     // 计数在独立节点中时的后半段：<3> of 25 selected（原文无标点，不加逗号）
     [/^of ([\d,]+) selected$/, '/$1 已选择'],
     // 排序按钮：Sort by Newest descending → 按最新降序排序（与 pulls、organization 同一写法）
     [
       new RegExp(`^Sort by (${SORT_FIELD_SOURCE}) (ascending|descending)$`),
-      (_, field, direction) => sortBy(field, direction === 'ascending' ? '升序' : '降序'),
+      (_, field, direction) => sortBy(field, direction === 'ascending' ? '升序' : '降序')
     ],
     [new RegExp(`^Sort by (${SORT_FIELD_SOURCE})$`), (_, field) => sortBy(field, '')],
     // 读屏摘要：12 issues found. List is sorted by Last updated in descending order.
     [
       new RegExp(
-        `^([\\d.,]+k?) (issues?|pull requests?|results?) found\\. List is sorted by (${SORT_FIELD_SOURCE}) in (ascending|descending) order\\.$`,
+        `^([\\d.,]+k?) (issues?|pull requests?|results?) found\\. List is sorted by (${SORT_FIELD_SOURCE}) in (ascending|descending) order\\.$`
       ),
       (_, count, noun, field, direction) =>
-        `找到 ${count} 个${/^issue/.test(noun) ? '议题' : /^pull/.test(noun) ? '拉取请求' : '结果'}。${sortBy(field, direction === 'ascending' ? '升序' : '降序', '排列')}。`,
+        `找到 ${count} 个${/^issue/.test(noun) ? '议题' : /^pull/.test(noun) ? '拉取请求' : '结果'}。${sortBy(field, direction === 'ascending' ? '升序' : '降序', '排列')}。`
     ],
     // 分页播报（原文无标点，译文不加括号、逗号）
     [/^Page (\d+) of (\d+) loaded with (\d+) items$/, '第 $1/$2 页已加载 $3 个条目'],
@@ -490,37 +488,26 @@ export default {
     // （原文状态后是句号，不改冒号；与 pulls 的“已选择。<标题>。”同一写法）
     [
       /^(Selected\. )?(.+?)(\. New activity)?\. More information available below\.$/,
-      (_, selected, title, activity) =>
-        `${selected ? '已选择。' : ''}${title}${activity ? '。有新动态' : ''}。更多信息见下方。`,
+      (_, selected, title, activity) => `${selected ? '已选择。' : ''}${title}${activity ? '。有新动态' : ''}。更多信息见下方。`
     ],
     [/^Select: (.+)$/, '选择：$1'],
     [/^Selected\. (.+)\.$/, '已选择。$1。'],
     [/^Unselected\. (.+)\.$/, '未选择。$1。'],
     // 全选勾选框的标签（读屏）：Select all issues: <列表标题>
-    [
-      /^Select all (issues|pull requests|list items):(?: (.+))?$/,
-      (_, unit, title) => `全选${SELECT_ALL_UNIT[unit] ?? unit}：${title}`,
-    ],
+    [/^Select all (issues|pull requests|list items):(?: (.+))?$/, (_, unit, title) => `全选${SELECT_ALL_UNIT[unit] ?? unit}：${title}`],
     // 列表项元数据（12 comments 由通用词典处理）
     [
       /^([\d,]+) (Total reactions|Thumbs up|Thumbs down|Laugh|Hooray|Confused|Rocket|Eyes|Heart) reactions?$/,
-      (_, count, label) =>
-        label === 'Total reactions' ? `${count} 个反应` : `${count} 个 ${SORT_FIELD[label] ?? label} 反应`,
+      (_, count, label) => (label === 'Total reactions' ? `${count} 个反应` : `${count} 个 ${SORT_FIELD[label] ?? label} 反应`)
     ],
-    [
-      /^(\d+) \/ (\d+) sub-issues completed, filter by parent issue ([\w.-]+\/[\w.-]+#\d+)$/,
-      '已完成 $1/$2 个子议题，按父议题 $3 筛选',
-    ],
+    [/^(\d+) \/ (\d+) sub-issues completed, filter by parent issue ([\w.-]+\/[\w.-]+#\d+)$/, '已完成 $1/$2 个子议题，按父议题 $3 筛选'],
     [/^Filter by author (\S+)$/, '按作者 $1 筛选'],
     [/^Filter by assignee (\S+)$/, '按受理人 $1 筛选'],
     // 标签名是用户内容，两侧不加引号
     [/^Filter by label (.+)$/, (_, name) => joinName(joinName('按标签', name), '筛选')],
     [/^Filter by repository ([\w.-]+\/[\w.-]+)$/, '按存储库 $1 筛选'],
     // 议题字段徽章：Filter by Priority: High → 按 Priority 为 High 筛选（字段名、取值不加引号）
-    [
-      /^Filter by ([^:]+): (.+)$/,
-      (_, field, value) => joinName(joinName(joinName(joinName('按', field), '为'), value), '筛选'),
-    ],
+    [/^Filter by ([^:]+): (.+)$/, (_, field, value) => joinName(joinName(joinName(joinName('按', field), '为'), value), '筛选')],
     [/^Show (\d+) more issue field values?$/, '再显示 $1 个议题字段值'],
     [/^\+(\d+), show all (\d+) assignees$/, '+$1，显示全部 $2 个受理人'],
     [/^Milestone: (.+)$/, '里程碑：$1'],
@@ -528,17 +515,13 @@ export default {
     // 链接的拉取请求
     [
       new RegExp(`^1 linked pull request (\\S*#\\d+)(?:: (.+))?, (${PR_STATE_SOURCE})$`),
-      (_, reference, title, state) =>
-        `1 个链接的拉取请求 ${reference}${title ? `：${title}` : ''}，${PR_STATE[state] ?? state}`,
+      (_, reference, title, state) => `1 个链接的拉取请求 ${reference}${title ? `：${title}` : ''}，${PR_STATE[state] ?? state}`
     ],
     [/^([\d,]+) linked pull requests?$/, '$1 个链接的拉取请求'],
     [/^([\d,]+) linked pull requests, showing first (\d+)$/, '$1 个链接的拉取请求，显示前 $2 个'],
     [/^([\d,]+) linked PRs$/, '$1 个链接的拉取请求'],
     [/^Only the first (\d+) of ([\d,]+) linked pull requests are shown\.$/, '仅显示 $2 个链接的拉取请求中的前 $1 个。'],
-    [
-      new RegExp(`^(\\S*#\\d+) · (${PR_STATE_SOURCE})$`),
-      (_, reference, state) => `${reference} · ${PR_STATE[state] ?? state}`,
-    ],
+    [new RegExp(`^(\\S*#\\d+) · (${PR_STATE_SOURCE})$`), (_, reference, state) => `${reference} · ${PR_STATE[state] ?? state}`],
     [/^link to the pull request #(.+)$/, '指向拉取请求 #$1 的链接'],
     [/^link to the issue #(.+)$/, '指向议题 #$1 的链接'],
     // 结果上限横幅
@@ -547,12 +530,12 @@ export default {
       (_, count, noun) => {
         const name = noun === 'issues' ? '议题' : '拉取请求'
         return `仅显示前 ${count} 个${name}。如需查看更多${name}，请细化搜索条件。`
-      },
+      }
     ],
     // /issues 仪表板收件箱空状态
     [
       /^When an? (issue|pull request) needs your review or attention, it[’']ll appear here\.$/,
-      (_, noun) => `需要你审查或关注的${noun === 'issue' ? '议题' : '拉取请求'}会显示在这里。`,
+      (_, noun) => `需要你审查或关注的${noun === 'issue' ? '议题' : '拉取请求'}会显示在这里。`
     ],
     // 置顶议题
     [/^Pinned issue #(\d+) options$/, '置顶议题 #$1 的选项'],
@@ -563,20 +546,14 @@ export default {
     // 批量更新
     [
       /^Bulk update is in progress (\d+) %(?: \((\d+) issues failing to update\))?$/,
-      (_, percent, failed) => `批量更新进行中 ${percent}%${failed ? `（${failed} 个议题更新失败）` : ''}`,
+      (_, percent, failed) => `批量更新进行中 ${percent}%${failed ? `（${failed} 个议题更新失败）` : ''}`
     ],
     [/^\((\d+) issues failing to update\)$/, '（$1 个议题更新失败）'],
     [/^Could not update (\d+) of (\d+) issues$/, '$2 个议题中有 $1 个无法更新'],
     [/^(\d+) issues? updated$/, '已更新 $1 个议题'],
     [/^Updating (\d+) issues?$/, '正在更新 $1 个议题'],
-    [
-      /^(\d+) issues? marked as (read|unread)$/,
-      (_, count, state) => `已将 ${count} 个议题标记为${READ_STATE[state] ?? state}`,
-    ],
-    [
-      /^Marking (\d+) issues? as (read|unread)$/,
-      (_, count, state) => `正在将 ${count} 个议题标记为${READ_STATE[state] ?? state}`,
-    ],
+    [/^(\d+) issues? marked as (read|unread)$/, (_, count, state) => `已将 ${count} 个议题标记为${READ_STATE[state] ?? state}`],
+    [/^Marking (\d+) issues? as (read|unread)$/, (_, count, state) => `正在将 ${count} 个议题标记为${READ_STATE[state] ?? state}`],
     [/^Select at most (\d+) issues to change read state$/, '最多选择 $1 个议题以更改已读状态'],
     [/^Select between 1 and ([\d,]+) issues$/, '请选择 1 到 $1 个议题'],
     // 看板卡片
@@ -594,21 +571,18 @@ export default {
     [
       new RegExp(`^(.+?) · Updated (${ELAPSED_SOURCE}) ago · (Running|Ran|Active) for (${ELAPSED_SOURCE})$`),
       (_, head, updated, verb, duration) =>
-        `${head} · ${joinCjk(elapsed(updated), '前更新')} · ${joinCjk(SESSION_VERB[verb] ?? verb, elapsed(duration))}`,
+        `${head} · ${joinCjk(elapsed(updated), '前更新')} · ${joinCjk(SESSION_VERB[verb] ?? verb, elapsed(duration))}`
     ],
     // 拖放播报（条目标题是用户内容，原文无引号，译文不加；标题与中文之间按 joinName 留空格）
     [/^Moving (.+)\.$/, (_, title) => `${joinName('正在移动', title)}。`],
     [/^Between (.+) and (.+)\.$/, (_, first, second) => `${between('位于', first, second)}。`],
-    [
-      /^Cancel moving (.+) and (\d+) other items$/,
-      (_, title, count) => joinName(joinName('取消移动', title), `及其他 ${count} 个条目`),
-    ],
+    [/^Cancel moving (.+) and (\d+) other items$/, (_, title, count) => joinName(joinName('取消移动', title), `及其他 ${count} 个条目`)],
     [/^Cancel moving (.+)$/, (_, title) => joinName('取消移动', title)],
     [/^(.+) successfully moved to first item in list\.$/, (_, title) => `${joinName(title, '已移到列表第一项')}。`],
     [/^(.+) successfully moved to last item in list\.$/, (_, title) => `${joinName(title, '已移到列表最后一项')}。`],
     [
       /^(.+) successfully moved between (.+) and (.+)\.$/,
-      (_, title, first, second) => `${between(joinName(title, '已移到'), first, second)}。`,
+      (_, title, first, second) => `${between(joinName(title, '已移到'), first, second)}。`
     ],
     [/^(.+) (?:did not move|not moved)\.$/, (_, title) => `${joinName(title, '未移动')}。`],
     [/^Entry must be less than or equal to (\d+)\.$/, '输入值必须小于或等于 $1。'],
@@ -616,17 +590,14 @@ export default {
     [/^(.+) will not be moved\.$/, (_, title) => `${joinName(title, '不会被移动')}。`],
     [/^(.+) will be first item in the list\.$/, (_, title) => `${joinName(title, '将成为列表第一项')}。`],
     [/^(.+) will be last item in the list\.$/, (_, title) => `${joinName(title, '将成为列表最后一项')}。`],
-    [
-      /^(.+) will be between (.+) and (.+)\.$/,
-      (_, title, first, second) => `${between(joinName(title, '将位于'), first, second)}。`,
-    ],
+    [/^(.+) will be between (.+) and (.+)\.$/, (_, title, first, second) => `${between(joinName(title, '将位于'), first, second)}。`],
     [/^(.+) cannot be moved to an invalid position\.$/, (_, title) => `${joinName(title, '无法移到无效位置')}。`],
     // 兜底（放在最后，具体规则优先）：已存档标签的无障碍名称、看板泳道的折叠按钮、看板卡片的操作菜单
     // （标签名、分组值、卡片标题是用户内容，原文无标点，译文不加冒号、引号）
     [/^Archived (.+)$/, (_, name) => joinName('已存档', name)],
     [/^(Collapse|Expand) (.+)$/, (_, action, name) => joinName(action === 'Collapse' ? '折叠' : '展开', name)],
     // 评论的操作按钮（Actions for octocat's comment, …）由通用词典处理
-    [/^Actions for (?!.*['’]s (?:comment|reply), )(.+)$/, (_, name) => joinName(name, '的操作')],
+    [/^Actions for (?!.*['’]s (?:comment|reply), )(.+)$/, (_, name) => joinName(name, '的操作')]
   ],
   attributeRules: [
     // 置顶议题卡片的标题链接：aria-label="View <议题标题>"（PinnedIssueCard：
@@ -636,7 +607,7 @@ export default {
       '[class*="PinnedIssueContainer__"] [class*="titleOptionsContainer__"] > a',
       'aria-label',
       /^View (.+)$/,
-      (_, title) => joinName('查看', title),
-    ],
-  ],
+      (_, title) => joinName('查看', title)
+    ]
+  ]
 } satisfies PageDictionary

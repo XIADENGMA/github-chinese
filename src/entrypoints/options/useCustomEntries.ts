@@ -13,7 +13,7 @@ import {
   removeEntry,
   serializeEntries,
   type EntryEditResult,
-  type EntryPair,
+  type EntryPair
 } from '../../shared/custom-entries'
 import { getCustomEntries, setCustomEntries, watchCustomEntries, type CustomEntries } from '../../shared/settings'
 import { sendToBackground } from '../../shared/tab-messages'
@@ -39,7 +39,7 @@ export interface UseCustomEntries {
 
 const RESULT_MESSAGE: Readonly<Record<'invalid' | 'exists', MessageKey>> = {
   invalid: 'invalidFormat',
-  exists: 'exists',
+  exists: 'exists'
 }
 
 /** 请后台通知已打开的 GitHub 页面重新读取词条；失败时这些页面刷新后才用上新词条 */
@@ -58,7 +58,7 @@ export function useCustomEntries(): UseCustomEntries {
   const toast = createToastSource()
   let changed = false
 
-  const stopWatch = watchCustomEntries((next) => {
+  const stopWatch = watchCustomEntries(next => {
     changed = true
     loadFailed.value = false
     entries.value = next
@@ -66,12 +66,12 @@ export function useCustomEntries(): UseCustomEntries {
   onScopeDispose(stopWatch)
 
   getCustomEntries().then(
-    (value) => {
+    value => {
       if (!changed) entries.value = value
     },
     () => {
       if (!changed) loadFailed.value = true
-    },
+    }
   )
 
   const rows = computed(() => filterEntries(entries.value, query.value))

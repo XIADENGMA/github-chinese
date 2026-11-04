@@ -22,11 +22,11 @@ export interface InstanceMark {
 
 /** 生成实例 id：只含小写字母与数字，可直接用作属性名 */
 export function createInstanceId(): string {
-  return Array.from(crypto.getRandomValues(new Uint32Array(2)), (value) => value.toString(36).padStart(7, '0')).join('')
+  return Array.from(crypto.getRandomValues(new Uint32Array(2)), value => value.toString(36).padStart(7, '0')).join('')
 }
 
 function marksOn(root: Element): string[] {
-  return root.getAttributeNames().filter((attr) => attr.startsWith(INSTANCE_MARK_PREFIX))
+  return root.getAttributeNames().filter(attr => attr.startsWith(INSTANCE_MARK_PREFIX))
 }
 
 export function createInstanceMark(doc: Document, id: string = createInstanceId()): InstanceMark {
@@ -61,8 +61,8 @@ export function createInstanceMark(doc: Document, id: string = createInstanceId(
 
     clearOthers() {
       if (!root) return false
-      const others = marksOn(root).filter((attr) => attr !== name)
-      const found = others.some((attr) => stale.has(attr))
+      const others = marksOn(root).filter(attr => attr !== name)
+      const found = others.some(attr => stale.has(attr))
       for (const attr of others) root.removeAttribute(attr)
       stale.clear()
       return found
@@ -70,6 +70,6 @@ export function createInstanceMark(doc: Document, id: string = createInstanceId(
 
     disconnect() {
       observer.disconnect()
-    },
+    }
   }
 }

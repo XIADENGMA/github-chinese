@@ -11,7 +11,7 @@ const PICKER_SUBJECT: Readonly<Record<string, string>> = {
   milestones: '里程碑',
   projects: '项目',
   'issue type': '议题类型',
-  'issue types': '议题类型',
+  'issue types': '议题类型'
 }
 
 /** 依赖关系上限提示中的关系名 */
@@ -28,7 +28,7 @@ const SECTION_NAME: Readonly<Record<string, string>> = {
   Relationships: '关系',
   Development: '开发',
   Fields: '字段',
-  Participants: '参与者',
+  Participants: '参与者'
 }
 
 const SECTION_NAME_SOURCE = Object.keys(SECTION_NAME).join('|')
@@ -40,7 +40,7 @@ const SECTION_NAME_SOURCE = Object.keys(SECTION_NAME).join('|')
 const ISSUE_TYPE_NAMES: Readonly<Record<string, string>> = {
   Task: '任务',
   Bug: '缺陷',
-  Feature: '功能',
+  Feature: '功能'
 }
 
 /** 看板卡片存储库按钮中的存储库状态 */
@@ -48,7 +48,7 @@ const REPOSITORY_STATUS: Readonly<Record<string, string>> = {
   public: '公共',
   private: '专用',
   fork: '复刻',
-  archived: '已存档',
+  archived: '已存档'
 }
 
 /**
@@ -67,8 +67,7 @@ export default {
     'Hide project fields': '隐藏项目字段',
     'Could not update projects': '无法更新项目',
     'Projects are currently unavailable': '项目暂不可用',
-    'You may only link 10 pull requests to this issue across all repositories.':
-      '此议题在所有存储库中最多只能链接 10 个拉取请求。',
+    'You may only link 10 pull requests to this issue across all repositories.': '此议题在所有存储库中最多只能链接 10 个拉取请求。',
     'This project has reached the maximum of 50,000 items. To add more, please delete existing items from the project.':
       '此项目已达到 50,000 个项的上限。如需添加，请先从项目中删除现有项。',
     'Project items limit reached dialog': '项目项上限对话框',
@@ -140,8 +139,7 @@ export default {
     'Edit the pull request description to unlink': '编辑拉取请求描述以取消链接',
     'Create a branch for this issue': '为此议题创建分支',
     'Shows branches and pull requests linked to this issue.': '显示链接到此议题的分支和拉取请求。',
-    'When branches are created from issues, their pull requests are automatically linked.':
-      '从议题创建分支时，其拉取请求会自动链接。',
+    'When branches are created from issues, their pull requests are automatically linked.': '从议题创建分支时，其拉取请求会自动链接。',
     'Link a pull request from this repository': '链接此存储库中的拉取请求',
     'Search for branches or pull requests': '搜索分支或拉取请求',
     // 产品名按用户要求译成中文（product-names.md）：codespace → 代码空间
@@ -165,8 +163,7 @@ export default {
     'Failed to reorder sub-issue': '调整子议题顺序失败',
     'Closed sub-issues hidden': '已隐藏已关闭的子议题',
     'All sub-issues shown': '已显示全部子议题',
-    'Sub-issues are limited to one parent. Confirm you want to proceed with this change.':
-      '子议题只能有一个父议题。请确认是否继续此更改。',
+    'Sub-issues are limited to one parent. Confirm you want to proceed with this change.': '子议题只能有一个父议题。请确认是否继续此更改。',
     'Sub-issue added': '已添加子议题',
     'Failed to add sub-issue': '添加子议题失败',
     'Sub-issue limit reached': '已达到子议题上限',
@@ -180,7 +177,7 @@ export default {
     'An error occured while loading items': '加载条目时出错',
     'An error occurred while loading items': '加载条目时出错',
     'There was an issue loading Sub issues': '加载子议题时出错',
-    'Manage this item': '管理此条目',
+    'Manage this item': '管理此条目'
   },
   scoped: {
     // 分区标题与空状态
@@ -379,7 +376,7 @@ export default {
     Releases: '发行版',
     Latest: '最新',
     'Pre-release': '预发行版',
-    'No releases found': '未找到发行版',
+    'No releases found': '未找到发行版'
   },
   regexp: [
     // 分区标题旁的编辑按钮（读屏）：Edit Assignees
@@ -390,10 +387,7 @@ export default {
     [/^Removed label: (.+)\.$/, '已删除标签：$1。'],
     // 删除按钮的提示文字（常态下按钮没有 aria-label，名称取自提示）：默认标签名与令牌同译，已存档的 Archived 译出，
     // 自定义标签名保持原文（见 issues/labels.ts 的 archivedLabelName）
-    [
-      /^Remove label: (?:(Archived) )?(.+)$/,
-      (_, archived: string, name: string) => `删除标签：${archivedLabelName(archived, name)}`,
-    ],
+    [/^Remove label: (?:(Archived) )?(.+)$/, (_, archived: string, name: string) => `删除标签：${archivedLabelName(archived, name)}`],
     // 项目分区展开（Show 5 more 由通用词典处理）
     [/^Show (\d+) closed projects?$/, '显示 $1 个已关闭的项目'],
     [/^Show (\d+) more \((\d+) closed\)$/, '再显示 $1 个（$2 个已关闭的）'],
@@ -423,7 +417,7 @@ export default {
     [/^The branch (.+) already exists\.$/, '分支 $1 已存在。'],
     [
       /^Repository: ([\w.-]+\/[\w.-]+)(?: \((public|private|fork|archived)\))?$/,
-      (_, repo, status) => `存储库：${repo}${status ? `（${REPOSITORY_STATUS[status] ?? status}）` : ''}`,
+      (_, repo, status) => `存储库：${repo}${status ? `（${REPOSITORY_STATUS[status] ?? status}）` : ''}`
     ],
     [/^Change destination, current repository: ([\w.-]+\/[\w.-]+)$/, '更改目标，当前存储库：$1'],
     // 开发
@@ -434,7 +428,7 @@ export default {
     [
       /^Issues have a limit of (\d+) (?:"(blocked by|blocking)" )?relationships\. To add more, an existing one must be removed\.$/,
       (_, limit, relation) =>
-        `每个议题最多有 ${limit} 个${relation ? `“${RELATION_NAME[relation] ?? relation}”` : ''}关系。如需添加，请先删除现有关系。`,
+        `每个议题最多有 ${limit} 个${relation ? `“${RELATION_NAME[relation] ?? relation}”` : ''}关系。如需添加，请先删除现有关系。`
     ],
     [/^Failed to save (\d+) issues?$/, '$1 个议题保存失败'],
     [/^Failed to save (\d+) alerts?$/, '$1 个警报保存失败'],
@@ -449,11 +443,11 @@ export default {
     [/^(.+), blocked$/, '$1，被阻止'],
     [
       /^Parents have a limit of (\d+) sub-issues\. To add more, an existing one must be removed\.$/,
-      '每个父议题最多有 $1 个子议题。如需添加，请先删除现有子议题。',
+      '每个父议题最多有 $1 个子议题。如需添加，请先删除现有子议题。'
     ],
     [
       /^You can[’'`]t add more than (\d+) layers of sub-issues\. To add a sub-issue, remove a parent issue at any level\.$/,
-      '子议题最多 $1 层。如需添加子议题，请删除任一层级的父议题。',
+      '子议题最多 $1 层。如需添加子议题，请删除任一层级的父议题。'
     ],
     [/^You can[’'`]t add more than (\d+) layers of sub-issues$/, '子议题最多 $1 层'],
     [/^(\d+) tasks?$/, '$1 个任务'],
@@ -463,11 +457,11 @@ export default {
     // 子议题列表项的无障碍名称（标题、状态等在前，以句号结尾）：Fix bug. Press Control, Shift, U for more actions.
     [
       /^(?:(.+)\. )?Press (Command|Control), Shift, U for more actions(\.?)$/,
-      (_, head, key, dot) => `${head ? `${head}。` : ''}按 ${key}、Shift、U 查看更多操作${dot ? '。' : ''}`,
+      (_, head, key, dot) => `${head ? `${head}。` : ''}按 ${key}、Shift、U 查看更多操作${dot ? '。' : ''}`
     ],
     // 正文任务清单项（清单文字是用户内容，原文无标点，译文不加冒号、引号）
     [/^Open (.+) task options$/, (_, title) => joinName(joinName('打开', title), '的任务选项')],
-    [/^(.+) checklist item$/, (_, title) => joinName(title, '清单项')],
+    [/^(.+) checklist item$/, (_, title) => joinName(title, '清单项')]
   ],
-  issueTypes: ISSUE_TYPE_NAMES,
+  issueTypes: ISSUE_TYPE_NAMES
 } satisfies PageDictionary

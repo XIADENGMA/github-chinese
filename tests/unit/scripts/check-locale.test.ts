@@ -34,7 +34,7 @@ afterEach(() => {
 function dictionarySource(rules: readonly Rule[]): string {
   const items = rules.map(
     ([pattern, replacement]) =>
-      `[new RegExp(${JSON.stringify(pattern.source)}, ${JSON.stringify(pattern.flags)}), ${JSON.stringify(replacement)}]`,
+      `[new RegExp(${JSON.stringify(pattern.source)}, ${JSON.stringify(pattern.flags)}), ${JSON.stringify(replacement)}]`
   )
   return `export default { regexp: [${items.join(', ')}] }\n`
 }
@@ -71,7 +71,7 @@ function checkSource(source: string, args: readonly string[] = []): CheckResult 
   const result = spawnSync(process.execPath, [TSX_CLI, SCRIPT, ...args, file], {
     cwd: ROOT,
     encoding: 'utf8',
-    timeout: CHECK_TIMEOUT_MS,
+    timeout: CHECK_TIMEOUT_MS
   })
   return { status: result.status, output: `${result.stdout}${result.stderr}${result.error?.message ?? ''}` }
 }
@@ -81,7 +81,7 @@ describe('check-locale 正则写法', { timeout: CHECK_TIMEOUT_MS * 2 }, () => {
     const rules: Rule[] = [
       [/^Sample (\d+)$/m, '示例 $1'],
       [/^Sample (\d+)$/u, '示例 $1'],
-      [new RegExp('^Sample (\\d+)$', 'v'), '示例 $1'],
+      [new RegExp('^Sample (\\d+)$', 'v'), '示例 $1']
     ]
 
     const { status, output } = check(rules)
@@ -102,7 +102,7 @@ describe('check-locale 正则写法', { timeout: CHECK_TIMEOUT_MS * 2 }, () => {
   it('备选放进分组、不带 m / u / v 标志：通过，退出码 0', () => {
     const { status, output } = check([
       [/^(?:Sample|Text)$/, '示例'],
-      [/^(?:Sample|Text) (\d+)$/i, '示例 $1'],
+      [/^(?:Sample|Text) (\d+)$/i, '示例 $1']
     ])
 
     expect(status, output).toBe(0)
@@ -125,7 +125,7 @@ describe('check-locale 正则写法', { timeout: CHECK_TIMEOUT_MS * 2 }, () => {
     [/^\\{\\} pushed (?<count>\\d+) commits$/, '{} 推送了 $<cnt> 个提交'],
     [/^\\{\\} merged (?<count>\\d+) commits$/, '{} 合并了 $<count> 个提交'],
   ],
-}\n`,
+}\n`
     )
 
     expect(status, output).toBe(1)
@@ -146,7 +146,7 @@ describe('check-locale 回溯检查', { timeout: CHECK_TIMEOUT_MS * 2 }, () => {
     [/^\\{\\} pushed (\\w+\\s?)+$/, '{} 推送了 $1'],
     [/^\\{\\} pushed (\\d+) commits?$/, '{} 推送了 $1 个提交'],
   ],
-}\n`,
+}\n`
     )
 
     expect(status, output).toBe(1)
@@ -162,7 +162,7 @@ describe('check-locale 回溯检查', { timeout: CHECK_TIMEOUT_MS * 2 }, () => {
     [/^(\\w+\\s?)+ pushed \\{\\}$/, '$1 推送了 {}'],
     [/^((\\{\\})+)+ pushed$/, '$1 推送了'],
   ],
-}\n`,
+}\n`
     )
 
     expect(status, output).toBe(1)
@@ -179,7 +179,7 @@ describe('check-locale 回溯检查', { timeout: CHECK_TIMEOUT_MS * 2 }, () => {
     [/^Sample${numbers} (\\w+)$/, '示例 $1'],
   ],
   inline: [[/^\\{\\}${numbers} (\\w+\\s?)+$/, '{} 示例 $1']],
-}\n`,
+}\n`
     )
 
     expect(status, output).toBe(1)
@@ -196,7 +196,7 @@ describe('check-locale 回溯检查', { timeout: CHECK_TIMEOUT_MS * 2 }, () => {
     [/^Took (\\d+[smhd]) and (\\w+)$/, '用时 $1，$2'],
   ],
   inline: [[/^\\{\\} took (\\d+[smhd]) [·•] (\\w+\\s?)+$/, '{} 用时 $1 $2']],
-}\n`,
+}\n`
     )
 
     expect(status, output).toBe(1)
@@ -210,7 +210,7 @@ describe('check-locale 回溯检查', { timeout: CHECK_TIMEOUT_MS * 2 }, () => {
       `export default {
   regexp: [[/^(\\{\\}+\\s?)+ pushed$/, '$1 推送了']],
   inline: [[/^(\\{\\}+\\s?)+ pushed$/, '$1 推送了']],
-}\n`,
+}\n`
     )
 
     expect(status, output).toBe(1)
@@ -224,7 +224,7 @@ describe('check-locale 回溯检查', { timeout: CHECK_TIMEOUT_MS * 2 }, () => {
       `export default {
   regexp: [[/^Sample (.+) (.+) (.+)!$/, '示例 $1 $2 $3！']],
   inline: [[/^\\{\\} (.+) (.+) (.+)!$/, '{} $1 $2 $3！']],
-}\n`,
+}\n`
     )
 
     expect(status, output).toBe(1)
@@ -269,9 +269,7 @@ describe('check-locale 标签表', { timeout: CHECK_TIMEOUT_MS * 3 }, () => {
   })
 
   it('条目检查同 static：译文为空、首尾空白，键未规范化、不含英文字母，不是对象：报错', () => {
-    const bad = checkSource(
-      labelsSource({ invalid: '', question: ' 疑问', ' bug': '缺陷', 'help  wanted': '需要帮助', 缺陷: '程序缺陷' }),
-    )
+    const bad = checkSource(labelsSource({ invalid: '', question: ' 疑问', ' bug': '缺陷', 'help  wanted': '需要帮助', 缺陷: '程序缺陷' }))
 
     expect(bad.status, bad.output).toBe(1)
     for (const message of [
@@ -279,7 +277,7 @@ describe('check-locale 标签表', { timeout: CHECK_TIMEOUT_MS * 3 }, () => {
       'labels "question"：译文首尾有空白',
       'labels " bug"：键未规范化',
       'labels "help  wanted"：键未规范化',
-      'labels "缺陷"：键不含英文字母，不会被匹配',
+      'labels "缺陷"：键不含英文字母，不会被匹配'
     ]) {
       expect(bad.output).toContain(message)
     }
@@ -306,9 +304,7 @@ describe('check-locale 标签表', { timeout: CHECK_TIMEOUT_MS * 3 }, () => {
     expect(output).toContain('1 条词条')
     expect(output).not.toContain('未知字段')
 
-    const bad = checkSource(
-      descriptionsSource({ 'Good for newcomers': '', ' Extra attention is needed': '需要额外关注' }),
-    )
+    const bad = checkSource(descriptionsSource({ 'Good for newcomers': '', ' Extra attention is needed': '需要额外关注' }))
 
     expect(bad.status, bad.output).toBe(1)
     expect(bad.output).toContain('labelDescriptions "Good for newcomers"：译文为空或不是字符串')
@@ -322,7 +318,7 @@ describe('check-locale 标签表', { timeout: CHECK_TIMEOUT_MS * 3 }, () => {
 
   it('标签正则：合法时通过，按 labelRegexp 计数', () => {
     const { status, output } = checkSource(
-      "export default { labelRegexp: [[/^Pull requests that update ([\\w.#+ -]{1,40}) code$/, '更新 $1 代码的拉取请求']] }\n",
+      "export default { labelRegexp: [[/^Pull requests that update ([\\w.#+ -]{1,40}) code$/, '更新 $1 代码的拉取请求']] }\n"
     )
 
     expect(status, output).toBe(0)
@@ -339,7 +335,7 @@ describe('check-locale 标签表', { timeout: CHECK_TIMEOUT_MS * 3 }, () => {
     [/^Sample (\\d+)$/g, '示例 $1'],
     ['bug', '缺陷'],
   ],
-}\n`,
+}\n`
     )
 
     expect(bad.status, bad.output).toBe(1)
@@ -354,9 +350,7 @@ describe('check-locale 标签表', { timeout: CHECK_TIMEOUT_MS * 3 }, () => {
   })
 
   it('星标列表名表：合法时通过，按 listNames 计数；条目检查同 static', () => {
-    const { status, output } = checkSource(
-      `export default { listNames: ${JSON.stringify({ '✨ Inspiration': '✨ 灵感' })} }\n`,
-    )
+    const { status, output } = checkSource(`export default { listNames: ${JSON.stringify({ '✨ Inspiration': '✨ 灵感' })} }\n`)
 
     expect(status, output).toBe(0)
     expect(output).toContain('listNames 1')
@@ -364,7 +358,7 @@ describe('check-locale 标签表', { timeout: CHECK_TIMEOUT_MS * 3 }, () => {
     expect(output).not.toContain('未知字段')
 
     const bad = checkSource(
-      `export default { listNames: ${JSON.stringify({ '✨ Inspiration': '', ' 🚀 My stack': '🚀 我的技术栈', '✨': '灵感' })} }\n`,
+      `export default { listNames: ${JSON.stringify({ '✨ Inspiration': '', ' 🚀 My stack': '🚀 我的技术栈', '✨': '灵感' })} }\n`
     )
 
     expect(bad.status, bad.output).toBe(1)
@@ -386,36 +380,28 @@ describe('check-locale 标签表', { timeout: CHECK_TIMEOUT_MS * 3 }, () => {
       `export default { labels: ${JSON.stringify(labels)}, labelDescriptions: ${JSON.stringify(descriptions)} }\n`
     writeFileSync(
       join(root, 'a.ts'),
-      tablesSource(
-        { bug: '缺陷', question: '疑问' },
-        { 'Good for newcomers': '适合新手', 'Extra attention is needed': '需要额外关注' },
-      ),
+      tablesSource({ bug: '缺陷', question: '疑问' }, { 'Good for newcomers': '适合新手', 'Extra attention is needed': '需要额外关注' })
     )
     writeFileSync(
       join(root, 'b.ts'),
-      tablesSource(
-        { bug: '错误', question: '疑问' },
-        { 'Good for newcomers': '新手友好', 'Extra attention is needed': '需要额外关注' },
-      ),
+      tablesSource({ bug: '错误', question: '疑问' }, { 'Good for newcomers': '新手友好', 'Extra attention is needed': '需要额外关注' })
     )
     writeFileSync(
       join(root, 'index.ts'),
-      "import a from './a'\nimport b from './b'\n\nexport const zhCN = [\n  ['common', a],\n  ['issues', b],\n]\n",
+      "import a from './a'\nimport b from './b'\n\nexport const zhCN = [\n  ['common', a],\n  ['issues', b],\n]\n"
     )
 
     const result = spawnSync(process.execPath, [TSX_CLI, SCRIPT], {
       cwd: dir,
       encoding: 'utf8',
-      timeout: CHECK_TIMEOUT_MS,
+      timeout: CHECK_TIMEOUT_MS
     })
     const output = `${result.stdout}${result.stderr}${result.error?.message ?? ''}`
 
     expect(result.status, output).toBe(1)
     expect(output).toContain('labels "bug" 冲突：src/locales/zh-CN/a.ts「缺陷」≠ 本文件「错误」')
     expect(output).toContain('labels "question" 与 src/locales/zh-CN/a.ts 重复')
-    expect(output).toContain(
-      'labelDescriptions "Good for newcomers" 冲突：src/locales/zh-CN/a.ts「适合新手」≠ 本文件「新手友好」',
-    )
+    expect(output).toContain('labelDescriptions "Good for newcomers" 冲突：src/locales/zh-CN/a.ts「适合新手」≠ 本文件「新手友好」')
     expect(output).toContain('labelDescriptions "Extra attention is needed" 与 src/locales/zh-CN/a.ts 重复')
     expect(output).toContain('共 2 个文件，8 条词条，2 个错误')
   })
@@ -423,19 +409,18 @@ describe('check-locale 标签表', { timeout: CHECK_TIMEOUT_MS * 3 }, () => {
   it('全量检查：不同文件的星标列表名表里同一原文译文不同时报冲突，译文相同时记重复', () => {
     const root = join(dir, 'src/locales/zh-CN')
     mkdirSync(root, { recursive: true })
-    const listSource = (names: Readonly<Record<string, string>>) =>
-      `export default { listNames: ${JSON.stringify(names)} }\n`
+    const listSource = (names: Readonly<Record<string, string>>) => `export default { listNames: ${JSON.stringify(names)} }\n`
     writeFileSync(join(root, 'a.ts'), listSource({ '✨ Inspiration': '✨ 灵感', '🚀 My stack': '🚀 我的技术栈' }))
     writeFileSync(join(root, 'b.ts'), listSource({ '✨ Inspiration': '✨ 启发', '🚀 My stack': '🚀 我的技术栈' }))
     writeFileSync(
       join(root, 'index.ts'),
-      "import a from './a'\nimport b from './b'\n\nexport const zhCN = [\n  ['common', a],\n  ['profile', b],\n]\n",
+      "import a from './a'\nimport b from './b'\n\nexport const zhCN = [\n  ['common', a],\n  ['profile', b],\n]\n"
     )
 
     const result = spawnSync(process.execPath, [TSX_CLI, SCRIPT], {
       cwd: dir,
       encoding: 'utf8',
-      timeout: CHECK_TIMEOUT_MS,
+      timeout: CHECK_TIMEOUT_MS
     })
     const output = `${result.stdout}${result.stderr}${result.error?.message ?? ''}`
 
@@ -449,16 +434,14 @@ describe('check-locale 标签表', { timeout: CHECK_TIMEOUT_MS * 3 }, () => {
 describe('check-locale 属性规则', { timeout: CHECK_TIMEOUT_MS * 3 }, () => {
   it('合法规则：通过，退出码 0', () => {
     const { status, output } = checkSource(
-      `export default { attributeRules: [['.sample a', 'aria-label', /^View (.+)$/, '查看 $1'], ['.sample input[disabled]', 'value', /^Sample (.+)$/, '示例 $1']] }\n`,
+      `export default { attributeRules: [['.sample a', 'aria-label', /^View (.+)$/, '查看 $1'], ['.sample input[disabled]', 'value', /^Sample (.+)$/, '示例 $1']] }\n`
     )
 
     expect(status, output).toBe(0)
   })
 
   it('属性名不是可翻译属性：报错', () => {
-    const { status, output } = checkSource(
-      `export default { attributeRules: [['.sample a', 'href', /^View (.+)$/, '查看 $1']] }\n`,
-    )
+    const { status, output } = checkSource(`export default { attributeRules: [['.sample a', 'href', /^View (.+)$/, '查看 $1']] }\n`)
 
     expect(status, output).toBe(1)
     expect(output).toContain('属性名必须是可翻译属性')
@@ -466,7 +449,7 @@ describe('check-locale 属性规则', { timeout: CHECK_TIMEOUT_MS * 3 }, () => {
 
   it('结构不对、选择器为空、正则未锚定：报错', () => {
     const { status, output } = checkSource(
-      `export default { attributeRules: [['.sample a', 'aria-label', /^View/], ['', 'title', /View (.+)$/, '查看 $1']] }\n`,
+      `export default { attributeRules: [['.sample a', 'aria-label', /^View/], ['', 'title', /View (.+)$/, '查看 $1']] }\n`
     )
 
     expect(status, output).toBe(1)
@@ -487,7 +470,7 @@ describe('check-locale 行内句与整段合并', { timeout: CHECK_TIMEOUT_MS * 
     [/^Allow this (GitHub|OAuth) App via the \\{\\}\\.$/, '允许此 $1 应用通过 {}。'],
   ],
   mergeText: ['h3 > span[data-sr-feedback]'],
-}\n`,
+}\n`
     )
 
     expect(status, output).toBe(0)
@@ -504,7 +487,7 @@ describe('check-locale 行内句与整段合并', { timeout: CHECK_TIMEOUT_MS * 
     [/\\{\\} pushed$/, '{} 推送了'],
     ['{} only'],
   ],
-}\n`,
+}\n`
     )
 
     expect(status, output).toBe(1)
@@ -516,9 +499,7 @@ describe('check-locale 行内句与整段合并', { timeout: CHECK_TIMEOUT_MS * 
   })
 
   it('原文无标点而译文有标点、整段合并选择器为空：报错', () => {
-    const { status, output } = checkSource(
-      `export default { inline: [['{} merged', '{} 已合并。']], mergeText: [''] }\n`,
-    )
+    const { status, output } = checkSource(`export default { inline: [['{} merged', '{} 已合并。']], mergeText: [''] }\n`)
 
     expect(status, output).toBe(1)
     expect(output).toContain('原文无标点，译文不应有标点')
@@ -531,8 +512,8 @@ describe('check-locale 行内句与整段合并', { timeout: CHECK_TIMEOUT_MS * 
         ['Sample text from {}: {}', '来自 {} 的示例文本：{}'],
         ['Sample text. {}', '示例文本。{}'],
         ['See {}: {}', '见 {}：{}。'],
-        ['Sample text from {}: {}!', '来自 {} 的示例文本:{}！'],
-      ]),
+        ['Sample text from {}: {}!', '来自 {} 的示例文本:{}！']
+      ])
     )
 
     expect(status, output).toBe(1)
@@ -551,7 +532,7 @@ describe('check-locale 行内句与整段合并', { timeout: CHECK_TIMEOUT_MS * 
     [/^Allow this (GitHub|OAuth) App via the ?(\\{\\})\\.$/, '允许此 $1 应用通过 $2。'],
     [/^Allow this (GitHub|OAuth) App via the ?(\\{\\})\\.$/, '允许此 $1 应用通过 $2 和 $2。'],
   ],
-}\n`,
+}\n`
     )
 
     expect(status, output).toBe(1)
@@ -575,7 +556,7 @@ describe('check-locale 行内句与整段合并', { timeout: CHECK_TIMEOUT_MS * 
     [/^Sample text by ?(\\{\\})$/, '示例文本 $$1 {}'],
     [/^Sample text by ?(\\{\\})$/, '示例文本 $10'],
   ],
-}\n`,
+}\n`
     )
 
     expect(status, output).toBe(1)
@@ -597,8 +578,8 @@ describe('check-locale 行内句与整段合并', { timeout: CHECK_TIMEOUT_MS * 
         [`${words(299)} {}.`, '示例文本，见 {}。'],
         [`Sample ${slots(19, ' and ')} done.`, `示例 ${slots(19, ' 和 ')} 完成。`],
         [`Sample ${slots(20, ' and ')} done.`, `示例 ${slots(20, ' 和 ')} 完成。`],
-        [slots(20, ' and '), slots(20, ' 和 ')],
-      ]),
+        [slots(20, ' and '), slots(20, ' 和 ')]
+      ])
     )
 
     expect(status, output).toBe(1)
@@ -627,9 +608,9 @@ describe('check-locale 繁体检查', { timeout: CHECK_TIMEOUT_MS * 2 }, () => {
         '    [/^Actor: (.+)$/, (_: string, v: string) => `${LABELS.Actor}：${v}`],',
         '  ],',
         '}',
-        '',
+        ''
       ].join('\n'),
-      TW,
+      TW
     )
     expect(result.status).toBe(1)
     expect(result.output).toContain('第 1 行：含简体字「参与」')
@@ -644,9 +625,9 @@ describe('check-locale 繁体检查', { timeout: CHECK_TIMEOUT_MS * 2 }, () => {
         '  throw new Error(`无法解析时间：${text}`)',
         '}',
         "export default { static: { Milestones: '里程碑', Employer: '雇主' } }",
-        '',
+        ''
       ].join('\n'),
-      TW,
+      TW
     )
     expect(result.status).toBe(0)
   })

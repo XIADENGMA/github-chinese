@@ -16,7 +16,7 @@ const CHECK_STATE: Readonly<Record<string, string>> = {
   skipped: '已略過',
   expected: '等待回報',
   successful: '成功',
-  'action required': '需要採取動作',
+  'action required': '需要採取動作'
 }
 
 const CHECK_STATE_SOURCE = Object.keys(CHECK_STATE).join('|')
@@ -29,7 +29,7 @@ const CHECK_PART_RE = new RegExp(`(\\d+) (${CHECK_STATE_SOURCE})`, 'g')
  */
 function checkSummary(list: string): string {
   const parts = [...list.matchAll(CHECK_PART_RE)].map(
-    ([, count, state], i) => `${count} 項${i === 0 ? '檢查' : ''}${CHECK_STATE[state!] ?? state}`,
+    ([, count, state], i) => `${count} 項${i === 0 ? '檢查' : ''}${CHECK_STATE[state!] ?? state}`
   )
   return list.includes(',') ? parts.join('、') : parts.join('和 ')
 }
@@ -41,9 +41,7 @@ export const DURATION_SOURCE = '\\d+[smhd](?: \\d+[smhd]){0,2}'
 export function duration(text: string): string {
   return text
     .split(' ')
-    .map((part) =>
-      part.replace(/^(\d+)([smhd])$/, (_, amount: string, unit: string) => `${amount} ${DURATION_UNIT[unit]}`),
-    )
+    .map(part => part.replace(/^(\d+)([smhd])$/, (_, amount: string, unit: string) => `${amount} ${DURATION_UNIT[unit]}`))
     .join(' ')
 }
 
@@ -62,7 +60,7 @@ const CHECK_CONCLUSION: Readonly<Record<string, string>> = {
   Neutral: '結果為中性',
   Skipped: '略過',
   Stale: '過時',
-  'Action required': '需要採取動作',
+  'Action required': '需要採取動作'
 }
 
 const CHECK_CONCLUSION_SOURCE = Object.keys(CHECK_CONCLUSION).join('|')
@@ -74,7 +72,7 @@ const REVIEW_GROUP: Readonly<Record<string, string>> = {
   'requested changes': '個變更要求',
   'requested change': '個變更要求',
   'pending reviews': '個待處理的審查',
-  'pending review': '個待處理的審查',
+  'pending review': '個待處理的審查'
 }
 
 const REVIEW_GROUP_SOURCE = Object.keys(REVIEW_GROUP).join('|')
@@ -83,7 +81,7 @@ const REVIEW_GROUP_SOURCE = Object.keys(REVIEW_GROUP).join('|')
 const REVIEW_STATUS: Readonly<Record<string, string>> = {
   'approved these changes': '核准了這些變更',
   'requested changes': '要求了變更',
-  commented: '發表了留言',
+  commented: '發表了留言'
 }
 
 /** 合并要求摘要（审查部分副标题；审查者是人，量词作「位」） */
@@ -91,7 +89,7 @@ const REVIEW_REQUIREMENT: Readonly<Record<string, string>> = {
   'At least 1 approving review is required': '至少需要 1 位具有寫入權限的審查者核准。',
   'An approval on the most recent push is required': '最近一次推送需要具有寫入權限的審查者核准。',
   'Code owner review required': '需要具有寫入權限的程式碼擁有者審查。',
-  'A review from a compliance team is required': '需要具有寫入權限的合規團隊審查。',
+  'A review from a compliance team is required': '需要具有寫入權限的合規團隊審查。'
 }
 
 const REVIEW_REQUIREMENT_SOURCE = Object.keys(REVIEW_REQUIREMENT).join('|')
@@ -101,18 +99,14 @@ const REQUIRED_CHECK_STATE: Readonly<Record<string, string>> = {
   expected: '尚未回報',
   failing: '失敗',
   'in progress': '進行中',
-  pending: '擱置中',
+  pending: '擱置中'
 }
 
 /** 1 change requested, 2 approving reviews → 1 個變更要求、2 個核准審查 */
 function reviewSummary(text: string): string {
   return text
     .split(', ')
-    .map((part) =>
-      part
-        .replace(/^(\d+) changes? requested$/, '$1 個變更要求')
-        .replace(/^(\d+) approving reviews?$/, '$1 個核准審查'),
-    )
+    .map(part => part.replace(/^(\d+) changes? requested$/, '$1 個變更要求').replace(/^(\d+) approving reviews?$/, '$1 個核准審查'))
     .join('、')
 }
 
@@ -147,7 +141,7 @@ const MERGE_STATUS_MESSAGE: Readonly<Record<string, string>> = {
   'Ready to merge. Some optional checks have not passed.': '可以合併。部分選用檢查未通過。',
   'Some optional checks have not passed.': '部分選用檢查未通過。',
   'Some optional checks are failing.': '部分選用檢查失敗。',
-  'An authorized user must authenticate to merge.': '必須由獲得授權的使用者驗證身分才能合併。',
+  'An authorized user must authenticate to merge.': '必須由獲得授權的使用者驗證身分才能合併。'
 }
 
 /** 2 checks are failing and need attention. */
@@ -157,9 +151,7 @@ const FAILING_CHECKS_RE = /^(\d+) checks? (?:is|are) failing and needs? attentio
 function mergeStatusHint(message: string): string {
   const failing = FAILING_CHECKS_RE.exec(message)
   const translated = failing ? `${failing[1]} 項檢查失敗且需要處理。` : MERGE_STATUS_MESSAGE[message]
-  return translated
-    ? `${translated}按一下可在合併面板中查看詳細資料。`
-    : `${message} 按一下可在合併面板中查看詳細資料。`
+  return translated ? `${translated}按一下可在合併面板中查看詳細資料。` : `${message} 按一下可在合併面板中查看詳細資料。`
 }
 
 /**
@@ -186,8 +178,7 @@ export default {
     'An approval on the most recent push is required': '最近一次推送需要獲得核准',
     'Code owner review required': '需要程式碼擁有者審查',
     'A review from a compliance team is required': '需要合規團隊審查',
-    'Review has been requested on this pull request. It is not required to merge.':
-      '已請求審查此拉取請求。此審查不是合併的必要條件。',
+    'Review has been requested on this pull request. It is not required to merge.': '已請求審查此拉取請求。此審查不是合併的必要條件。',
     'Learn more about requesting a pull request review.': '瞭解如何請求拉取請求審查。',
     'Learn more about pull request reviews.': '瞭解拉取請求審查。',
     'At least 1 approving review is required to merge this pull request.': '合併此拉取請求至少需要 1 個核准審查。',
@@ -225,8 +216,7 @@ export default {
       '一或多個工作流程因建立於一個多月前而無法重新執行。',
     'Learn more about approving workflows.': '瞭解如何核准工作流程。',
     'This workflow requires approval from a maintainer.': '此工作流程需要維護者核准。',
-    'First-time contributors need a maintainer to approve running workflows.':
-      '首次貢獻者需要維護者核准才能執行工作流程。',
+    'First-time contributors need a maintainer to approve running workflows.': '首次貢獻者需要維護者核准才能執行工作流程。',
     'Copilot failure analysis': 'Copilot 失敗分析',
     'is analyzing CI failures': '正在分析 CI 失敗',
     'View failure analysis': '查看失敗分析',
@@ -258,8 +248,7 @@ export default {
     'Use the command line to resolve conflicts before continuing.': '請先使用命令列解決衝突再繼續。',
     'or the command line to resolve conflicts before continuing.': '或命令列解決衝突後再繼續。',
     'Use the web editor or the command line to resolve conflicts.': '使用網頁編輯器或命令列解決衝突。',
-    'Use the command line to resolve conflicts within the stack before continuing.':
-      '請先使用命令列解決堆疊中的衝突再繼續。',
+    'Use the command line to resolve conflicts within the stack before continuing.': '請先使用命令列解決堆疊中的衝突再繼續。',
     'Changes can be cleanly merged.': '變更可以無衝突合併。',
     'Conflicting files': '有衝突的檔案',
     'Retry loading Agent Merge': '重試載入代理合併',
@@ -300,15 +289,13 @@ export default {
     'If you cannot merge a pull request automatically here, you have the option of checking it out via command line to resolve conflicts and perform a manual merge.':
       '如果無法在此自動合併拉取請求，你可以透過命令列簽出以解決衝突並手動合併。',
     // clone 按术语表作「複製」，补宾语「儲存庫」，避免读成 copy
-    'Clone the repository or update your local repository with the latest changes.':
-      '複製儲存庫或以最新變更更新本機儲存庫。',
+    'Clone the repository or update your local repository with the latest changes.': '複製儲存庫或以最新變更更新本機儲存庫。',
     'Switch to the base branch of the pull request.': '切換到拉取請求的基底分支。',
     'Switch to the head branch of the pull request.': '切換到拉取請求的來源分支。',
     'Merge the head branch into the base branch.': '將來源分支合併到基底分支。',
     'Merge the base branch into the head branch.': '將基底分支合併到來源分支。',
     'Fix the conflicts and commit the result.': '修正衝突並提交結果。',
-    'From your project repository, check out a new branch and test the changes.':
-      '在你的專案儲存庫中簽出新分支並測試變更。',
+    'From your project repository, check out a new branch and test the changes.': '在你的專案儲存庫中簽出新分支並測試變更。',
     'Merge the changes and update on GitHub.': '合併變更並在 GitHub 上更新。',
     // 旧版合并框的命令行说明与冲突提示
     'Checkout via the command line': '透過命令列簽出',
@@ -356,11 +343,9 @@ export default {
     'Confirm bypass rules and merge (squash)': '確認繞過規則並合併（壓縮）',
     'Confirm bypass rules and merge (rebase)': '確認繞過規則並合併（重定基底）',
     'Select merge method': '選擇合併方式',
-    'All commits from this branch will be added to the base branch via a merge commit.':
-      '此分支的所有提交將透過合併提交加入基底分支。',
+    'All commits from this branch will be added to the base branch via a merge commit.': '此分支的所有提交將透過合併提交加入基底分支。',
     'The 1 commit from this branch will be added to the base branch.': '此分支的 1 個提交將加入基底分支。',
-    'The 1 commit from this branch will be rebased and added to the base branch.':
-      '此分支的 1 個提交將重定基底後加入基底分支。',
+    'The 1 commit from this branch will be rebased and added to the base branch.': '此分支的 1 個提交將重定基底後加入基底分支。',
     'Merge commits are not allowed on this repository.': '此儲存庫不允許合併提交。',
     'Squash merges are not allowed on this repository.': '此儲存庫不允許壓縮合併。',
     'Rebase merges are not allowed on this repository.': '此儲存庫不允許重定基底合併。',
@@ -371,8 +356,7 @@ export default {
     'You can also merge this with the command line.': '你也可以透過命令列合併。',
     'View command line instructions.': '查看命令列說明。',
     'to this repository can merge pull requests.': '的使用者才能合併拉取請求。',
-    'to this repository can mark a draft pull request as ready for review.':
-      '的使用者才能將草稿拉取請求標示為可供審查。',
+    'to this repository can mark a draft pull request as ready for review.': '的使用者才能將草稿拉取請求標示為可供審查。',
 
     // 确认合并（表单字段的 optional 作「選填」）
     'Add an optional extended description…': '新增選填的詳細描述…',
@@ -387,8 +371,7 @@ export default {
 
     // 绕过规则
     'Merge without waiting for requirements to be met (bypass rules)': '不等待符合要求即合併（繞過規則）',
-    'Merge without waiting for requirements to be met (bypass branch protections)':
-      '不等待符合要求即合併（繞過分支保護）',
+    'Merge without waiting for requirements to be met (bypass branch protections)': '不等待符合要求即合併（繞過分支保護）',
     'Skip the queue and merge directly.': '略過佇列直接合併。',
     'Use the selected merge method without waiting.': '立即使用選取的合併方式。',
 
@@ -396,8 +379,7 @@ export default {
     'Merging is blocked': '合併受阻',
     'The base branch restricts merging to authorized users.': '基底分支僅允許獲得授權的使用者合併。',
     'Learn more about protected branches.': '瞭解受保護的分支。',
-    'Merging can be performed automatically once the requested changes are addressed.':
-      '處理所要求的變更後就能自動合併。',
+    'Merging can be performed automatically once the requested changes are addressed.': '處理所要求的變更後就能自動合併。',
     'The base branch requires all commits to be signed.': '基底分支要求所有提交都必須簽署。',
     'Commits must have verified signatures.': '提交必須有已驗證的簽章。',
     'Learn more about signing commits.': '瞭解如何簽署提交。',
@@ -421,7 +403,7 @@ export default {
     'Merge is not an allowed merge method in this repository.': '合併不是此儲存庫允許的合併方式。',
     'Squash is not an allowed merge method in this repository.': '壓縮不是此儲存庫允許的合併方式。',
     'Rebase is not an allowed merge method in this repository.': '重定基底不是此儲存庫允許的合併方式。',
-    'User does not have push access to the repository.': '使用者沒有此儲存庫的推送權限。',
+    'User does not have push access to the repository.': '使用者沒有此儲存庫的推送權限。'
   },
   scoped: {
     // 合并框里的短词与句子片段（被链接、分支名拆开）
@@ -512,32 +494,26 @@ export default {
     'Confirming...': '確認中...',
     'Confirming…': '確認中…',
     'Merging...': '合併中...',
-    'Merging…': '合併中…',
+    'Merging…': '合併中…'
   },
   regexp: [
     // 检查汇总：1 failing, 2 skipped, 15 successful checks（经典版：… and 3 successful checks）
-    [
-      new RegExp(`^(${CHECK_PART_SOURCE}(?:(?:, and |, | and )${CHECK_PART_SOURCE})*) checks?$`),
-      (_, list) => checkSummary(list),
-    ],
+    [new RegExp(`^(${CHECK_PART_SOURCE}(?:(?:, and |, | and )${CHECK_PART_SOURCE})*) checks?$`), (_, list) => checkSummary(list)],
     [/^(\d+) checks?$/, '$1 項檢查'],
     [
       new RegExp(`^(Collapse|Expand) (${CHECK_PART_SOURCE}) checks? group$`),
-      (_, action, part) => `${collapseOrExpand(action)}分組 ${checkSummary(part)}`,
+      (_, action, part) => `${collapseOrExpand(action)}分組 ${checkSummary(part)}`
     ],
-    [
-      /^(Collapse|Expand) (\d+) checks? group$/,
-      (_, action, count) => `${collapseOrExpand(action)}分組 ${count} 項檢查`,
-    ],
+    [/^(Collapse|Expand) (\d+) checks? group$/, (_, action, count) => `${collapseOrExpand(action)}分組 ${count} 項檢查`],
     // 检查耗时：Successful in 2m → 2 分鐘內成功；Failing after 30s → 30 秒後失敗
     // （原文无标点，译文不加逗号；与 commits/check-summary.ts 同一写法）
     [
       new RegExp(`^(Successful|Success|Completed) in (${DURATION_SOURCE})$`),
-      (_, state, time) => `${duration(time)}內${state === 'Completed' ? '完成' : '成功'}`,
+      (_, state, time) => `${duration(time)}內${state === 'Completed' ? '完成' : '成功'}`
     ],
     [
       new RegExp(`^(${CHECK_CONCLUSION_SOURCE}) after (${DURATION_SOURCE})$`),
-      (_, state, time) => `${duration(time)}後${CHECK_CONCLUSION[state] ?? state}`,
+      (_, state, time) => `${duration(time)}後${CHECK_CONCLUSION[state] ?? state}`
     ],
     [FAILING_CHECKS_RE, '$1 項檢查失敗且需要處理。'],
     [/^(\d+) workflows? awaiting approval$/, '$1 個工作流程等待核准'],
@@ -546,53 +522,44 @@ export default {
     [new RegExp(`^(\\d+) (${REVIEW_GROUP_SOURCE})$`), (_, count, group) => `${count} ${REVIEW_GROUP[group] ?? group}`],
     [
       new RegExp(`^(Collapse|Expand) (\\d+) (${REVIEW_GROUP_SOURCE}) group$`),
-      (_, action, count, group) => `${collapseOrExpand(action)}分組 ${count} ${REVIEW_GROUP[group] ?? group}`,
+      (_, action, count, group) => `${collapseOrExpand(action)}分組 ${count} ${REVIEW_GROUP[group] ?? group}`
     ],
-    [
-      /^list of (approvals|requested changes|pending reviews)$/,
-      (_, group) => `${(REVIEW_GROUP[group] ?? group).replace(/^個/, '')}清單`,
-    ],
+    [/^list of (approvals|requested changes|pending reviews)$/, (_, group) => `${(REVIEW_GROUP[group] ?? group).replace(/^個/, '')}清單`],
     // 审查者状态：Approved these changes [with read-only permissions] [for org/team]
     // 合并框审查者列表的状态不带时间：commented 作「發表了留言」；后接时间的 commented 作「留言於」
     // （审查头部的状态标签见 common-ui，评论头部的读屏标题 <用户名> commented <时间> 见 comments.ts 的行内句）
     [
       /^(Approved these changes|Requested changes|Commented)( with read-only permissions)?(?: for (.+))?$/,
-      (_, status, readOnly, teams) => reviewStatus(status, readOnly, teams),
+      (_, status, readOnly, teams) => reviewStatus(status, readOnly, teams)
     ],
     // 排除 previously：评论列表审查头部的已驳回审查标签（previously commented 等）由 timeline.ts 收录
     [
       /^(?!previously )([\w-]+(?:\[bot\])?) (approved these changes|requested changes|commented)( with read-only permissions)?(?: for (.+))?$/,
-      (_, login, status, readOnly, teams) => `${login} ${reviewStatus(status, readOnly, teams)}`,
+      (_, login, status, readOnly, teams) => `${login} ${reviewStatus(status, readOnly, teams)}`
     ],
     [
       /^([\w-]+(?:\[bot\])?) was requested for review( as a codeowner)?$/,
-      (_, login, owner) => `${login} ${owner ? '被請求以程式碼擁有者身分審查' : '被請求審查'}`,
+      (_, login, owner) => `${login} ${owner ? '被請求以程式碼擁有者身分審查' : '被請求審查'}`
     ],
     [/^([\w-]+(?:\[bot\])?)['’]s avatar image$/, '$1 的頭像'],
     // 审查要求
     [/^At least (\d+) approving reviews are required$/, '至少需要 $1 個核准審查'],
     [
       /^At least (\d+) approving reviews? (?:is|are) required by reviewers with write access\.$/,
-      '至少需要 $1 位具有寫入權限的審查者核准。',
+      '至少需要 $1 位具有寫入權限的審查者核准。'
     ],
-    [
-      /^At least (\d+) approving reviews are required to merge this pull request\.$/,
-      '合併此拉取請求至少需要 $1 個核准審查。',
-    ],
+    [/^At least (\d+) approving reviews are required to merge this pull request\.$/, '合併此拉取請求至少需要 $1 個核准審查。'],
     [
       new RegExp(`^(${REVIEW_REQUIREMENT_SOURCE}) by reviewers with write access\\.$`),
-      (_, summary) => REVIEW_REQUIREMENT[summary] ?? summary,
+      (_, summary) => REVIEW_REQUIREMENT[summary] ?? summary
     ],
     [/^No applicable reviews submitted by reviewers with write access\.$/, '具有寫入權限的審查者尚未送出適用的審查。'],
     // 原文无冒号：改语序
     [
       /^(\d+ changes? requested(?:, \d+ approving reviews?)?|\d+ approving reviews?) by reviewers with write access\.$/,
-      (_, summary) => `具有寫入權限的審查者送出了 ${reviewSummary(summary)}。`,
+      (_, summary) => `具有寫入權限的審查者送出了 ${reviewSummary(summary)}。`
     ],
-    [
-      /^(\d+) reviews? requesting changes by reviewers with write access\.$/,
-      '具有寫入權限的審查者送出了 $1 個要求變更的審查。',
-    ],
+    [/^(\d+) reviews? requesting changes by reviewers with write access\.$/, '具有寫入權限的審查者送出了 $1 個要求變更的審查。'],
     [/^(\d+) changes? requested$/, '$1 個變更要求'],
     [/^(\d+) approving reviews?$/, '$1 個核准審查'],
     [/^(\d+) pending reviewers?$/, '$1 位尚未審查的審查者'],
@@ -600,7 +567,7 @@ export default {
     // 冲突与更新分支
     [
       /^Merge the latest changes from (.+) into this branch\. This merge commit will be associated with ([\w-]+)\.$/,
-      '將 $1 的最新變更合併到此分支。此合併提交將與 $2 關聯。',
+      '將 $1 的最新變更合併到此分支。此合併提交將與 $2 關聯。'
     ],
     [/^Merge the latest changes from (.+) into this branch\.$/, '將 $1 的最新變更合併到此分支。'],
     [/^Merge the latest changes from$/, '將'],
@@ -610,28 +577,25 @@ export default {
     // 合并方式说明
     [
       /^The (\d+) commits from this branch will be combined into one commit in the base branch\.$/,
-      '此分支的 $1 個提交將壓縮為基底分支中的一個提交。',
+      '此分支的 $1 個提交將壓縮為基底分支中的一個提交。'
     ],
-    [
-      /^The (\d+) commits from this branch will be rebased and added to the base branch\.$/,
-      '此分支的 $1 個提交將重定基底後加入基底分支。',
-    ],
+    [/^The (\d+) commits from this branch will be rebased and added to the base branch\.$/, '此分支的 $1 個提交將重定基底後加入基底分支。'],
     [/^The (\d+) commits from this branch will be added to the base branch\.$/, '此分支的 $1 個提交將加入基底分支。'],
     [
       /^All commits from these (\d+) branches will be added to the base branch via merge commits\.$/,
-      '這 $1 個分支的所有提交將透過合併提交加入基底分支。',
+      '這 $1 個分支的所有提交將透過合併提交加入基底分支。'
     ],
     [
       /^The commits from these (\d+) branches will be combined into one commit per branch in the base branch\.$/,
-      '這 $1 個分支的提交將各自壓縮為基底分支中的一個提交。',
+      '這 $1 個分支的提交將各自壓縮為基底分支中的一個提交。'
     ],
     [
       /^All commits from these (\d+) branches will be rebased and added to the base branch\.$/,
-      '這 $1 個分支的所有提交將重定基底後加入基底分支。',
+      '這 $1 個分支的所有提交將重定基底後加入基底分支。'
     ],
     [
       /^Merging is blocked due to (failing|pending) merge requirements$/,
-      (_, verb) => (verb === 'pending' ? '因合併要求尚未完成而無法合併' : '因未符合合併要求而無法合併'),
+      (_, verb) => (verb === 'pending' ? '因合併要求尚未完成而無法合併' : '因未符合合併要求而無法合併')
     ],
     [/^This commit will be authored by (\S+)\.$/, '此提交的作者將為 $1。'],
     [/^This will rebase your changes and merge them into (.+)\.$/, '這會將你的變更重定基底並合併到 $1。'],
@@ -639,21 +603,15 @@ export default {
     // 服务端下发的规则失败原因（检查量词作「項」）
     [
       /^Required status check "(.+)" is (expected|failing|in progress|pending)\.$/,
-      (_, name, state) => `必要狀態檢查「${name}」${REQUIRED_CHECK_STATE[state] ?? state}。`,
+      (_, name, state) => `必要狀態檢查「${name}」${REQUIRED_CHECK_STATE[state] ?? state}。`
     ],
-    [
-      /^(\d+) of (\d+) required status checks? (?:has|have) not succeeded: (.+)\.$/,
-      '$2 項必要狀態檢查中有 $1 項未成功：$3。',
-    ],
+    [/^(\d+) of (\d+) required status checks? (?:has|have) not succeeded: (.+)\.$/, '$2 項必要狀態檢查中有 $1 項未成功：$3。'],
     [/^(\d+) of (\d+) required status checks? (?:is|are) expected\.$/, '$2 項必要狀態檢查中有 $1 項尚未回報。'],
     [
       /^(\d+) of (\d+) required status checks? (?:is|are) (pending|in progress)\.$/,
-      (_, count, total, state) => `${total} 項必要狀態檢查中有 ${count} 項${REQUIRED_CHECK_STATE[state] ?? state}。`,
+      (_, count, total, state) => `${total} 項必要狀態檢查中有 ${count} 項${REQUIRED_CHECK_STATE[state] ?? state}。`
     ],
     // 网址为纯文本时整句（链接时的前半见 static）
-    [
-      /^You['’]re not authorized to push to this branch\. Visit (\S+) for more information\.$/,
-      '你無權推送到此分支。請造訪 $1 以瞭解詳情。',
-    ],
-  ],
+    [/^You['’]re not authorized to push to this branch\. Visit (\S+) for more information\.$/, '你無權推送到此分支。請造訪 $1 以瞭解詳情。']
+  ]
 } satisfies PageDictionary

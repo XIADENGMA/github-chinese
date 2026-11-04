@@ -1,11 +1,6 @@
 // @vitest-environment-options { "url": "https://github.com/vuejs/core/issues/1" }
 import { afterEach, describe, expect, it } from 'vitest'
-import {
-  createTranslator,
-  type Translator,
-  type TranslatorHost,
-  type TranslatorOptions,
-} from '../../../src/core/translator'
+import { createTranslator, type Translator, type TranslatorHost, type TranslatorOptions } from '../../../src/core/translator'
 import { FIGHT_LIMIT, FIGHT_WINDOW_MS } from '../../../src/core/records'
 import type { LocaleBundle, PageKey } from '../../../src/core/types'
 import { mergeDictionaries } from '../../../src/locales/zh-CN/helpers'
@@ -27,7 +22,7 @@ function sentenceBundle(tip = true): LocaleBundle {
           'Type / to search': '按 / 搜索',
           'Press / to search': '按下 / 搜索',
           'Use the app': '使用应用',
-          ...(tip ? { 'Tip:': '提示：' } : {}),
+          ...(tip ? { 'Tip:': '提示：' } : {})
         },
         inline: [
           ['Are you sure you want to unblock {} from {}?', '确定要取消阻止 {} 访问 {} 吗？'],
@@ -52,11 +47,11 @@ function sentenceBundle(tip = true): LocaleBundle {
           [`{} ${LONG}.`, '{} 长句。'],
           [/^\{\} deleted a comment from \{\} \{\}$/, '{} 删除了 {} 的评论 {}'],
           // 英文写在备选里：不含英文字母的「{} & {}」也能被正则命中
-          [/^\{\} (?:and|&) \{\}$/, '{} 和 {}'],
-        ],
-      },
+          [/^\{\} (?:and|&) \{\}$/, '{} 和 {}']
+        ]
+      }
     ],
-    ['pulls', { inline: [['{} changed the base branch from {} to {}', '{} 将基础分支从 {} 更改为 {}']] }],
+    ['pulls', { inline: [['{} changed the base branch from {} to {}', '{} 将基础分支从 {} 更改为 {}']] }]
   ]
 }
 
@@ -73,7 +68,7 @@ const CLOCK_HOST: TranslatorHost = {
   document,
   location: window.location,
   MutationObserver: window.MutationObserver,
-  performance: { now: () => now },
+  performance: { now: () => now }
 }
 
 let translator: Translator | undefined
@@ -86,7 +81,7 @@ function start(html: string, options: Partial<TranslatorOptions> = {}, pages = I
     host: window,
     collectUntranslated: true,
     resolvePages: () => pages,
-    ...options,
+    ...options
   })
   translator.start()
   return translator
@@ -165,7 +160,7 @@ describe('行内句：整句命中', () => {
     start(
       '<span id="n"><span>3</span> merged</span><span id="u"><a href="/octocat">octocat</a> merged</span>' +
         '<span id="k"><span>1,234</span> merged</span><span id="v"><span><b>3</b></span> merged</span>' +
-        '<div id="d"><a>octocat</a> deleted a comment from <a>monalisa</a> <span>12</span></div>',
+        '<div id="d"><a>octocat</a> deleted a comment from <a>monalisa</a> <span>12</span></div>'
     )
     expect(texts($('#n'))).toEqual([' 个已合并'])
     expect(texts($('#u'))).toEqual([' 已合并'])
@@ -207,12 +202,12 @@ describe('行内句：mergeDictionaries 合并的词典', () => {
       { static: { Sample: '示例' } },
       { inline: [['{} merged {} into {}', '{} 将 {} 合并到 {}']] },
       {},
-      { inline: [['{} closed this', '{} 关闭了此项']] },
+      { inline: [['{} closed this', '{} 关闭了此项']] }
     )
     const t = start(
       '<p id="m"><a>octocat</a> merged <b>Sample</b> into <b>main</b></p><p id="c"><a>octocat</a> closed this</p>',
       { matcher: testMatcher(undefined, [['pulls', pulls]]) },
-      ['common', 'pulls'],
+      ['common', 'pulls']
     )
     expect(text('#m')).toBe('octocat 将 示例 合并到 main')
     expect(text('#c')).toBe('octocat 关闭了此项')
@@ -254,8 +249,7 @@ describe('行内句：不构成或未命中', () => {
 })
 
 describe('行内句：变动', () => {
-  const FILTERED =
-    '<div id="p">This response has been filtered because it violates <a href="/site-policy">Sample policies</a>.</div>'
+  const FILTERED = '<div id="p">This response has been filtered because it violates <a href="/site-policy">Sample policies</a>.</div>'
 
   it('页面改写其中一段后整句重算；不再命中时各段照常处理并记未翻译', async () => {
     const t = start(FILTERED)
@@ -266,7 +260,7 @@ describe('行内句：变动', () => {
     expect(t.drainUntranslated().map(([source]) => source)).toEqual([
       'Sample policies',
       'This response has been filtered because it violates',
-      'rule.',
+      'rule.'
     ])
   })
 
@@ -363,8 +357,8 @@ describe('行内句：变动', () => {
         translateInline: (key, pages) => {
           keys.push(key)
           return matcher.translateInline(key, pages)
-        },
-      },
+        }
+      }
     })
     const queried = keys.length
     expect(queried).toBeGreaterThan(0)
@@ -378,7 +372,7 @@ describe('行内句：变动', () => {
 
   it.each([
     ['插入后构成整句', '<span>today</span>', [' 发布了 ', ' ']],
-    ['插入后仍不构成整句', '<span>today</span><span>Sample</span>', [' published ', ' ']],
+    ['插入后仍不构成整句', '<span>today</span><span>Sample</span>', [' published ', ' ']]
   ])('子节点有增删且其中文字同批处理（%s）：宿主只判断一次，查句型与全新页面相同', async (_, added, shown) => {
     const matcher = testMatcher(undefined, BUNDLE)
     const keys: string[] = []
@@ -388,8 +382,8 @@ describe('行内句：变动', () => {
         translateInline: (key: string, pages: readonly PageKey[]) => {
           keys.push(key)
           return matcher.translateInline(key, pages)
-        },
-      },
+        }
+      }
     }
     const html = '<div id="p"><span>octocat</span> published <span>GHSA-1</span></div>'
     // 全新页面首次翻译时查过的句型键
@@ -414,8 +408,8 @@ describe('行内句：变动', () => {
         translateRaw: (raw, pages) => {
           sources.push(raw)
           return matcher.translateRaw(raw, pages)
-        },
-      },
+        }
+      }
     })
     expect(texts($('#k'))).toEqual(['按 ', ' 搜索 '])
     sources.length = 0
@@ -434,8 +428,8 @@ describe('行内句：变动', () => {
         translateRaw: (raw, pages) => {
           sources.push(raw)
           return matcher.translateRaw(raw, pages)
-        },
-      },
+        }
+      }
     })
     t.stop()
     // 停止期间宿主换入 kbd：重新开始后按 kbd 句子处理，不按行内句判断
@@ -538,24 +532,21 @@ describe('行内句：整句宿主里无字母、无记录的段被原地改写'
 
 describe('行内句：原文与译文都只有空白的段紧邻全角标点', () => {
   /** 两个槽位之间只有空白 */
-  const SPACED: LocaleBundle = [
-    ...BUNDLE,
-    ['common', { static: { '(optional)': '（可选）' }, inline: [['Note {} {}', '注意 {} {}']] }],
-  ]
+  const SPACED: LocaleBundle = [...BUNDLE, ['common', { static: { '(optional)': '（可选）' }, inline: [['Note {} {}', '注意 {} {}']] }]]
 
   it.each([
     [
       '前一槽位末尾是全角标点',
       '<p id="h">Note <span>Tip:</span> <span>Use the app</span></p>',
       '注意 提示：使用应用',
-      'Note Tip: Use the app',
+      'Note Tip: Use the app'
     ],
     [
       '后一槽位开头是全角标点',
       '<p id="h">Note <span>Use the app</span> <span>(optional)</span></p>',
       '注意 使用应用（可选）',
-      'Note Use the app (optional)',
-    ],
+      'Note Use the app (optional)'
+    ]
   ])('%s：该段置空；同词典全量重译、重新开启收集、宿主追加注释（整句重算）后仍置空', async (_, html, shown, source) => {
     const t = start(html, { matcher: testMatcher(undefined, SPACED) })
     expect(text('#h')).toBe(shown)
@@ -583,10 +574,10 @@ describe('行内句：曾按整句写入的宿主换入 kbd 后按 kbd 句子处
       {
         inline: [
           ['Sample {} {}.', '示例 {} {}。'],
-          ['Edit {}, {}', '编辑 {}，{}'],
-        ],
-      },
-    ],
+          ['Edit {}, {}', '编辑 {}，{}']
+        ]
+      }
+    ]
   ]
 
   /** 页面把槽位元素换成 kbd：宿主改按 kbd 句子处理（整句命中，换入当轮不记未翻译） */
@@ -662,32 +653,23 @@ describe('行内句：曾按整句写入的宿主换入 kbd 后按 kbd 句子处
       '<p id="h">Sample <i>octocat</i> <b>main</b>.</p>',
       ['示例 ', ' ', '。'],
       'Sample octocat main.',
-      'Sample octocat main.',
+      'Sample octocat main.'
     ],
-    [
-      '两侧都是元素时用顿号',
-      '<p id="h">Edit <b>octocat</b>, <b>main</b></p>',
-      ['编辑 ', '，'],
-      '编辑 octocat、main',
-      'Edit octocat, main',
-    ],
-  ])(
-    '紧邻 kbd 的标点段：整句写入的全角标点按孤立标点重算（%s），与全新处理相同；停止后还原',
-    async (_, html, written, shown, source) => {
-      const t = start(html, { matcher: testMatcher(undefined, PUNCT) })
-      expect(texts($('#h'))).toEqual(written)
-      // 页面把第一个 b 槽位换成 kbd
-      const slot = $('#h b')
-      slot.replaceWith(element('kbd', slot.textContent ?? ''))
-      await settleAll()
-      expect(text('#h')).toBe(shown)
-      t.stop()
-      expect(text('#h')).toBe(source)
-      // 重新开始：按全新页面处理
-      t.start()
-      expect(text('#h')).toBe(shown)
-    },
-  )
+    ['两侧都是元素时用顿号', '<p id="h">Edit <b>octocat</b>, <b>main</b></p>', ['编辑 ', '，'], '编辑 octocat、main', 'Edit octocat, main']
+  ])('紧邻 kbd 的标点段：整句写入的全角标点按孤立标点重算（%s），与全新处理相同；停止后还原', async (_, html, written, shown, source) => {
+    const t = start(html, { matcher: testMatcher(undefined, PUNCT) })
+    expect(texts($('#h'))).toEqual(written)
+    // 页面把第一个 b 槽位换成 kbd
+    const slot = $('#h b')
+    slot.replaceWith(element('kbd', slot.textContent ?? ''))
+    await settleAll()
+    expect(text('#h')).toBe(shown)
+    t.stop()
+    expect(text('#h')).toBe(source)
+    // 重新开始：按全新页面处理
+    t.start()
+    expect(text('#h')).toBe(shown)
+  })
 })
 
 describe('行内句：曾按整句写入的宿主不再构成行内句', () => {
@@ -979,21 +961,18 @@ describe('行内句：整段不含英文字母的宿主', () => {
   it('直接文字没有英文的宿主（含只有空白的容器）不拆组建键：只有直接文字含英文的宿主查句型', () => {
     const matcher = testMatcher(undefined, BUNDLE)
     const keys: string[] = []
-    start(
-      `<div id="layout"><span>1</span> <span>2</span></div><p id="zh"><a>示例甲</a> 与 <a>示例乙</a></p>${ENGLISH}`,
-      {
-        matcher: {
-          ...matcher,
-          translateInline: (key, pages) => {
-            keys.push(key)
-            return matcher.translateInline(key, pages)
-          },
-        },
-      },
-    )
+    start(`<div id="layout"><span>1</span> <span>2</span></div><p id="zh"><a>示例甲</a> 与 <a>示例乙</a></p>${ENGLISH}`, {
+      matcher: {
+        ...matcher,
+        translateInline: (key, pages) => {
+          keys.push(key)
+          return matcher.translateInline(key, pages)
+        }
+      }
+    })
     // 英文宿主的句型键（预判与取得原文后各查一次）；其余宿主不查
     expect(keys.length).toBeGreaterThan(0)
-    expect(keys.filter((key) => !key.includes('and'))).toEqual([])
+    expect(keys.filter(key => !key.includes('and'))).toEqual([])
     expect(texts($('#en'))).toEqual([' 和 '])
   })
 })
@@ -1010,16 +989,16 @@ describe('行内句：文档解析中句子分两块到达，此前未按整句�
           'more words': '更多文字',
           'Tip:': '提示：',
           // 产品名保留英文
-          'GitHub Marketplace': 'GitHub Marketplace',
+          'GitHub Marketplace': 'GitHub Marketplace'
         },
         inline: [
           // 两个槽位之间是可变的标签名（捕获后原样带入译文）
           [/^Sample text \{\} (.+) \{\} more words$/, '示例文本 {} $1 {} 更多文字'],
           ['GitHub Marketplace: {} Sample text', 'GitHub Marketplace：{} 示例文本'],
-          ['{} GitHub Marketplace: {} Sample text', '{} GitHub Marketplace：{} 示例文本'],
-        ],
-      },
-    ],
+          ['{} GitHub Marketplace: {} Sample text', '{} GitHub Marketplace：{} 示例文本']
+        ]
+      }
+    ]
   ]
   const link = (label: string): HTMLElement => Object.assign(element('a', label), { href: '/octocat' })
 
@@ -1052,8 +1031,8 @@ describe('行内句：文档解析中句子分两块到达，此前未按整句�
     [
       '产品名紧跟在译出全角标点的元素后',
       '<p id="p"><span>Tip:</span> GitHub Marketplace</p>',
-      'Tip: GitHub Marketplace: octocat Sample text',
-    ],
+      'Tip: GitHub Marketplace: octocat Sample text'
+    ]
   ])(
     '保留英文的译文与原文只差空白、仍留下写入记录（%s）：被追加标点后插入的后续文字照常翻译，停止后还原原文',
     async (_, html, restored) => {
@@ -1070,7 +1049,7 @@ describe('行内句：文档解析中句子分两块到达，此前未按整句�
       t.stop()
       translator = undefined
       expect(p.textContent).toBe(restored)
-    },
+    }
   )
 
   it('已按整句写入的宿主：末段被追加标点、同一解析任务又插入槽位与后续文字：已写入的显示不变，各组照常重算，后续文字照常翻译', async () => {
@@ -1092,7 +1071,7 @@ describe('行内句：文档解析中句子分两块到达，此前未按整句�
 
 describe.each([
   ['没有行内句规则', PLAIN_BUNDLE, false],
-  ['有行内句规则', BUNDLE, true],
+  ['有行内句规则', BUNDLE, true]
 ] as const)('行内句：子节点不多的容器增删子节点、改写条目文字（页面范围内%s）', (_, bundle, inline) => {
   function startWith(html: string): Translator {
     return start(html, { matcher: testMatcher(undefined, bundle), host: CLOCK_HOST })
@@ -1109,8 +1088,8 @@ describe.each([
       '末尾条目的文字由数字改为非数字',
       (list: Element) => {
         ;(list.lastElementChild!.firstChild as Text).data = '9+'
-      },
-    ],
+      }
+    ]
   ])('页面坚持显示原文、已暂停翻译：统计窗口过后%s，不重算不相邻的文字，不再与页面互相覆盖', async (_, change) => {
     const t = startWith('<div id="list">Newest<span>1</span><span>2</span></div>')
     const list = $('#list')

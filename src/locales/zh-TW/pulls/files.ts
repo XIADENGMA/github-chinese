@@ -4,7 +4,7 @@ import { joinCjk, RELATIVE_SOURCE, translateTime } from '../helpers'
 /** 评论入口：Add comment / Suggest change */
 const LINE_ACTION: Readonly<Record<string, string>> = {
   'Add comment': '新增留言',
-  'Suggest change': '建議變更',
+  'Suggest change': '建議變更'
 }
 
 /** 行范围前缀：修改后 / 原始（与 commits 词典的行操作菜单同译） */
@@ -14,7 +14,7 @@ const LINE_SIDE: Readonly<Record<string, string>> = { modified: '修改後的', 
 const ANNOTATION_LEVEL: Readonly<Record<string, string>> = {
   warning: '警告',
   notice: '提示',
-  failure: '失敗',
+  failure: '失敗'
 }
 
 /** 面板名称（Close comments panel 等） */
@@ -27,7 +27,7 @@ const PANEL_NAME: Readonly<Record<string, string>> = {
   overview: '總覽',
   activity: '活動',
   side: '側邊',
-  'manage batch': '批次管理',
+  'manage batch': '批次管理'
 }
 
 const PANEL_SOURCE = Object.keys(PANEL_NAME).join('|')
@@ -49,7 +49,7 @@ const PAGE_LIMIT_UNIT: Readonly<Record<string, string>> = { files: '個檔案', 
  */
 function pageLimits(list: string): string {
   const parts = [...list.matchAll(PAGE_LIMIT_RE)].map(
-    ([, which, count, unit]) => `${which === 'latest' ? '最新' : '前'} ${count} ${PAGE_LIMIT_UNIT[unit!] ?? unit}`,
+    ([, which, count, unit]) => `${which === 'latest' ? '最新' : '前'} ${count} ${PAGE_LIMIT_UNIT[unit!] ?? unit}`
   )
   return list.includes(',') ? parts.join('、') : parts.join('和')
 }
@@ -218,8 +218,7 @@ export default {
     'Loading Dependency Review...': '正在載入相依性審查...',
     'Loading Dependency Review…': '正在載入相依性審查…',
     'This rich diff is not supported at the moment.': '目前不支援此豐富差異。',
-    'This diff could not be loaded automatically because of too many other changes.':
-      '此差異因其他變更過多而無法自動載入。',
+    'This diff could not be loaded automatically because of too many other changes.': '此差異因其他變更過多而無法自動載入。',
     'This diff could not be loaded automatically because of too many other files to display.':
       '此差異因要顯示的其他檔案過多而無法自動載入。',
     'maximum diff size exceeded.': '超出差異大小上限。',
@@ -244,7 +243,7 @@ export default {
     'Collapse comments': '摺疊留言',
     'Expand comments': '展開留言',
     'Selection Cleared': '已清除選取範圍',
-    'Return to code': '返回程式碼',
+    'Return to code': '返回程式碼'
   },
   scoped: {
     // 工具栏与面板（短词）
@@ -343,7 +342,7 @@ export default {
     'View comments': '查看留言',
     'Suggest change': '建議變更',
     Submodule: '子模組',
-    'Single file mode': '單一檔案模式',
+    'Single file mode': '單一檔案模式'
   },
   regexp: [
     // 已查看文件进度：1 of 3 files viewed（经典版：1 / 3 files viewed）
@@ -356,31 +355,26 @@ export default {
     [/^Commits (\d+) to (\d+) selected$/, '已選取第 $1 至 $2 個提交'],
     [
       new RegExp(`^([\\w-]+(?:\\[bot\\])?) committed (${RELATIVE_SOURCE})$`),
-      (_, login, time) => `${login} ${joinCjk('提交於', translateTime(time))}`,
+      (_, login, time) => `${login} ${joinCjk('提交於', translateTime(time))}`
     ],
     [/^All (\d+) file types? selected$/, '已選取全部 $1 種檔案類型'],
     // 侧边面板
     [
       new RegExp(`^(Open|Close) (${PANEL_SOURCE}) panel$`),
-      (_, action, name) => `${action === 'Open' ? '開啟' : '關閉'}${panelName(name)}面板`,
+      (_, action, name) => `${action === 'Open' ? '開啟' : '關閉'}${panelName(name)}面板`
     ],
-    [
-      new RegExp(`^The (${PANEL_SOURCE}) panel cannot currently be opened\\.$`),
-      (_, name) => `目前無法開啟${panelName(name)}面板。`,
-    ],
+    [new RegExp(`^The (${PANEL_SOURCE}) panel cannot currently be opened\\.$`), (_, name) => `目前無法開啟${panelName(name)}面板。`],
     [/^(\d+) alerts?$/, '$1 個警示'],
     // 页面上限提示：Only the first 300 files and latest 100 comments are currently being shown.
     [
-      new RegExp(
-        `^Only the (${PAGE_LIMIT_ITEM}(?:(?:, and |, | and )${PAGE_LIMIT_ITEM}){0,2}) are currently being shown\\.$`,
-      ),
-      (_, list) => `目前僅顯示${pageLimits(list)}。`,
+      new RegExp(`^Only the (${PAGE_LIMIT_ITEM}(?:(?:, and |, | and )${PAGE_LIMIT_ITEM}){0,2}) are currently being shown\\.$`),
+      (_, list) => `目前僅顯示${pageLimits(list)}。`
     ],
     // 文件头（路径不含空白，避免误伤标题）
     [/^(\S+) renamed to (\S+)$/, '$1 重新命名為 $2'],
     [
       /^(Collapse non-diff lines|Expand all lines): (.+)$/,
-      (_, action, path) => `${action === 'Expand all lines' ? '展開所有行' : '摺疊無差異的行'}：${path}`,
+      (_, action, path) => `${action === 'Expand all lines' ? '展開所有行' : '摺疊無差異的行'}：${path}`
     ],
     [/^\(from CODEOWNERS line (\d+)\)$/, '（來自 CODEOWNERS 第 $1 行）'],
     [/^Owned by (.+) \(from CODEOWNERS line (\d+)\)$/, '擁有者為 $1（來自 CODEOWNERS 第 $2 行）'],
@@ -390,12 +384,9 @@ export default {
     // 文件树：src/app.ts has 3 comments and has warning annotations
     [
       /^(\S+) has (\d+|9\+) comments?(?: and has (warning|notice|failure) annotations)?$/,
-      (_, file, count, level) => `${file} ${fileTreeHint(count, level)}`,
+      (_, file, count, level) => `${file} ${fileTreeHint(count, level)}`
     ],
-    [
-      /^(\S+) has (warning|notice|failure) annotations$/,
-      (_, file, level) => `${file} ${fileTreeHint(undefined, level)}`,
-    ],
+    [/^(\S+) has (warning|notice|failure) annotations$/, (_, file, level) => `${file} ${fileTreeHint(undefined, level)}`],
     // 展开隐藏行（与 commits 词典同译）
     [/^Expand file from line (\d+) to line (\d+)$/, '展開檔案第 $1 至 $2 行'],
     [/^Expand file down from line (\d+)$/, '從第 $1 行向下展開檔案'],
@@ -403,18 +394,17 @@ export default {
     // 行操作菜单：Add comment on line R12 / Suggest change, modified lines R3-R5（行范围与 commits 词典同译「第 R3 至 R5 行」）
     [
       /^(Add comment|Suggest change)(?: on lines? |, (modified|original) lines? )([LR]\d+(?:-[LR]\d+)?)$/,
-      (_, action, side, range) =>
-        `在${side ? LINE_SIDE[side] : ''}第 ${range.replace('-', ' 至 ')} 行${LINE_ACTION[action] ?? action}`,
+      (_, action, side, range) => `在${side ? LINE_SIDE[side] : ''}第 ${range.replace('-', ' 至 ')} 行${LINE_ACTION[action] ?? action}`
     ],
     [/^([LR]\d+) selected\.$/, '已選取 $1。'],
     [/^([LR]\d+) to ([LR]\d+) selected\.$/, '已選取 $1 至 $2。'],
     // pending indicator 作「待處理指示器」（不用「標記」，与 tag 的译名分开）
-    [/^([\w-]+(?:\[bot\])?)'s avatar image with pending indicator$/, '$1 的頭像帶有待處理指示器'],
+    [/^([\w-]+(?:\[bot\])?)'s avatar image with pending indicator$/, '$1 的頭像帶有待處理指示器']
   ],
   inline: [
     // 依赖项审查富差异底部：Give feedback on <a>dependency review</a>（同 commits/diff.ts，整句未命中时按其 static 片段翻译）
-    ['Give feedback on {}', '提供{}的意見回饋'],
+    ['Give feedback on {}', '提供{}的意見回饋']
   ],
   // 单文件模式提示的段落（Popover 内容区的类名是 CSS 模块哈希，按前缀匹配）
-  mergeText: ['[class*="PopoverContent__"] > p'],
+  mergeText: ['[class*="PopoverContent__"] > p']
 } satisfies PageDictionary

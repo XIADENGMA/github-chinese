@@ -36,9 +36,9 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Follow octocat', '关注 octocat'],
-      ['Follow 123456', '关注 123456'],
+      ['Follow 123456', '关注 123456']
     ],
-    misses: ['Follow', 'Follow the organization'],
+    misses: ['Follow', 'Follow the organization']
   },
   { hits: [['Unfollow mona-lisa', '取消关注 mona-lisa']], misses: ['Unfollow all users'] },
 
@@ -47,36 +47,31 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['Showing 10 of 124 repositories', '显示 124 个存储库中的 10 个'],
       ['Showing 1 of 1 repository', '显示 1 个存储库中的 1 个'],
-      ['Showing 10 of 8,396 repositories', '显示 8,396 个存储库中的 10 个'],
+      ['Showing 10 of 8,396 repositories', '显示 8,396 个存储库中的 10 个']
     ],
-    misses: ['Showing all repositories'],
+    misses: ['Showing all repositories']
   },
   {
     hits: [
       ['(3 issues need help)', '（3 个议题需要帮助）'],
-      ['(1 issue needs help)', '（1 个议题需要帮助）'],
+      ['(1 issue needs help)', '（1 个议题需要帮助）']
     ],
-    misses: ['(issues need help)'],
+    misses: ['(issues need help)']
   },
   {
     hits: [
       ['vuejs doesn’t have any pinned public repositories yet.', 'vuejs 还没有置顶的公共存储库。'],
-      ["octo-org doesn't have any pinned public repositories yet.", 'octo-org 还没有置顶的公共存储库。'],
+      ["octo-org doesn't have any pinned public repositories yet.", 'octo-org 还没有置顶的公共存储库。']
     ],
-    misses: ['vuejs has no pinned repositories.'],
+    misses: ['vuejs has no pinned repositories.']
   },
 
   // 项目列表
   { hits: [['vuejs projects', 'vuejs 的项目']], misses: ['Open projects', 'closed projects', '5 projects'] },
   { hits: [['#21 updated', '#21 更新于']], misses: ['#21 created'] },
   {
-    hits: [
-      [
-        'Your project "@octocat\'s untitled project" was successfully deleted.',
-        "项目“@octocat's untitled project”已删除。",
-      ],
-    ],
-    misses: ['Your project was successfully deleted.'],
+    hits: [['Your project "@octocat\'s untitled project" was successfully deleted.', "项目“@octocat's untitled project”已删除。"]],
+    misses: ['Your project was successfully deleted.']
   },
 
   // 人员 / 团队计数
@@ -84,45 +79,45 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['12 people in the octo-org organization', 'octo-org 组织中的 12 个成员'],
-      ['1 person in the octo-org organization', 'octo-org 组织中的 1 个成员'],
+      ['1 person in the octo-org organization', 'octo-org 组织中的 1 个成员']
     ],
-    misses: ['People in the octo-org organization'],
+    misses: ['People in the octo-org organization']
   },
   {
     hits: [
       ['2 security managers in the octo-org organization', 'octo-org 组织中的 2 个安全管理员'],
-      ['1 security manager in the octo-org organization', 'octo-org 组织中的 1 个安全管理员'],
+      ['1 security manager in the octo-org organization', 'octo-org 组织中的 1 个安全管理员']
     ],
-    misses: ['Security managers in the octo-org organization'],
+    misses: ['Security managers in the octo-org organization']
   },
   {
     hits: [
       ['5 teams in the octo-org organization', 'octo-org 组织中的 5 个团队'],
-      ['1 team in the octo-org organization', 'octo-org 组织中的 1 个团队'],
+      ['1 team in the octo-org organization', 'octo-org 组织中的 1 个团队']
     ],
-    misses: ['Teams in the octo-org organization'],
+    misses: ['Teams in the octo-org organization']
   },
   {
     hits: [
       ['3 child team members', '3 个子团队成员'],
-      ['1 child team member', '1 个子团队成员'],
+      ['1 child team member', '1 个子团队成员']
     ],
-    misses: ['Child team members'],
+    misses: ['Child team members']
   },
   // 团队同步不一致页标题
   {
     hits: [
       ['5 group members not in team', '5 个组成员不在团队中'],
-      ['1 group member not in team', '1 个组成员不在团队中'],
+      ['1 group member not in team', '1 个组成员不在团队中']
     ],
-    misses: ['group members not in team'],
+    misses: ['group members not in team']
   },
   {
     hits: [
       ['3 team members not in group', '3 个团队成员不在组中'],
-      ['1 team member not in group', '1 个团队成员不在组中'],
+      ['1 team member not in group', '1 个团队成员不在组中']
     ],
-    misses: ['team members not in group', '3 team members'],
+    misses: ['team members not in group', '3 team members']
   },
   {
     hits: [
@@ -130,9 +125,9 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['1 member selected…', '已选择 1 个成员…'],
       ['3 collaborators selected...', '已选择 3 个协作者...'],
       ['2 teams selected', '已选择 2 个团队'],
-      ['1 team selected…', '已选择 1 个团队…'],
+      ['1 team selected…', '已选择 1 个团队…']
     ],
-    misses: ['members selected...', '2 repositories selected'],
+    misses: ['members selected...', '2 repositories selected']
   },
 
   // 人员：邀请、转换、移除、公开成员身份
@@ -141,29 +136,29 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ["You've invited octocat to octo-org!", '已邀请 octocat 加入 octo-org！'],
       [
         'You’ve invited @octocat to octo-org! They’ll be receiving an email shortly.',
-        '已邀请 octocat 加入 octo-org！对方很快会收到电子邮件。',
+        '已邀请 octocat 加入 octo-org！对方很快会收到电子邮件。'
       ],
       [
         "You've invited octocat to octo-org! They'll be receiving an email shortly. They can also visit https://github.com/orgs/octo-org/invitation to accept the invitation.",
-        '已邀请 octocat 加入 octo-org！对方很快会收到电子邮件。对方也可以访问 https://github.com/orgs/octo-org/invitation 接受邀请。',
-      ],
+        '已邀请 octocat 加入 octo-org！对方很快会收到电子邮件。对方也可以访问 https://github.com/orgs/octo-org/invitation 接受邀请。'
+      ]
     ],
-    misses: ["You've invited members to octo-org!"],
+    misses: ["You've invited members to octo-org!"]
   },
   { hits: [['Invite a member to octo-org', '邀请成员加入 octo-org']], misses: ['Invite a member'] },
   {
     hits: [
       ['Invite octocat to octo-org', '邀请 octocat 加入 octo-org'],
-      ['Invite @mona-lisa to octo-org', '邀请 mona-lisa 加入 octo-org'],
+      ['Invite @mona-lisa to octo-org', '邀请 mona-lisa 加入 octo-org']
     ],
-    misses: ['Invite members to octo-org', 'Invite the team to octo-org'],
+    misses: ['Invite members to octo-org', 'Invite the team to octo-org']
   },
   {
     hits: [
       ['Cancel invitation from octocat', '取消 octocat 的邀请'],
-      ['Cancel invitation from @mona-lisa', '取消 mona-lisa 的邀请'],
+      ['Cancel invitation from @mona-lisa', '取消 mona-lisa 的邀请']
     ],
-    misses: ['Cancel invitation from the organization'],
+    misses: ['Cancel invitation from the organization']
   },
   {
     // 时间由 helpers 生成，后接中文不加空格
@@ -171,56 +166,56 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Invited on Oct 20, 2025', '2025 年 10 月 20 日邀请'],
       ['Invited 3 days ago', '3 天前邀请'],
       ['Invited about 1 year ago', '约 1 年前邀请'],
-      ['Invited yesterday', '昨天邀请'],
+      ['Invited yesterday', '昨天邀请']
     ],
-    misses: ['Invited by octocat'],
+    misses: ['Invited by octocat']
   },
   {
     hits: [
       ["You've successfully updated octocat's invitation.", '已更新 octocat 的邀请。'],
-      ['You’ve successfully updated mona-lisa’s invitation.', '已更新 mona-lisa 的邀请。'],
+      ['You’ve successfully updated mona-lisa’s invitation.', '已更新 mona-lisa 的邀请。']
     ],
-    misses: ["You've successfully updated the invitation."],
+    misses: ["You've successfully updated the invitation."]
   },
   {
     hits: [
       [
         "You've canceled 2 invitations from octo-org. It may take a few minutes to process.",
-        '已取消 octo-org 的 2 个邀请。处理可能需要几分钟。',
-      ],
+        '已取消 octo-org 的 2 个邀请。处理可能需要几分钟。'
+      ]
     ],
-    misses: ["You've canceled the invitation."],
+    misses: ["You've canceled the invitation."]
   },
   { hits: [['You are now a member of octo-org!', '你已成为 octo-org 的成员！']], misses: ['You are now a member!'] },
   // 邀请页：Sorry, <strong>用户</strong> is already a member of <组织>.
   {
     hits: [
       ['is already a member of octo-org.', '已是 octo-org 的成员。'],
-      ['is already a member of octo.org.', '已是 octo.org 的成员。'],
+      ['is already a member of octo.org.', '已是 octo.org 的成员。']
     ],
-    misses: ['is already a member of the organization.', 'is already a member of octo-org', 'is already a member.'],
+    misses: ['is already a member of the organization.', 'is already a member of octo-org', 'is already a member.']
   },
   {
     hits: [
       ['Convert octocat to outside collaborator?', '要将 octocat 转换为外部协作者吗？'],
       ['Convert 2 members to outside collaborators?', '要将 2 个成员转换为外部协作者吗？'],
-      ['Convert 1 member to an outside collaborator?', '要将 1 个成员转换为外部协作者吗？'],
+      ['Convert 1 member to an outside collaborator?', '要将 1 个成员转换为外部协作者吗？']
     ],
-    misses: ['Convert members to outside collaborators?'],
+    misses: ['Convert members to outside collaborators?']
   },
   {
     hits: [
       ['Removing 2 members from octo-org', '将 2 个成员移出 octo-org'],
-      ['Removing 1 member from', '将 1 个成员移出'],
+      ['Removing 1 member from', '将 1 个成员移出']
     ],
-    misses: ['Removing members from octo-org'],
+    misses: ['Removing members from octo-org']
   },
   {
     hits: [
       ['You publicized 2 memberships.', '你已公开 2 个成员身份。'],
-      ['You concealed 3 memberships.', '你已隐藏 3 个成员身份。'],
+      ['You concealed 3 memberships.', '你已隐藏 3 个成员身份。']
     ],
-    misses: ['You publicized your membership.'],
+    misses: ['You publicized your membership.']
   },
 
   // 赞助
@@ -228,27 +223,27 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ["microsoft's sponsorships", 'microsoft 的赞助'],
-      ['microsoft’s sponsorships', 'microsoft 的赞助'],
+      ['microsoft’s sponsorships', 'microsoft 的赞助']
     ],
-    misses: ['sponsorships of microsoft'],
+    misses: ['sponsorships of microsoft']
   },
 
   // 成员视角切换
   {
     hits: [
       ['View as: Public', '查看身份：公开'],
-      ['View as: Member', '查看身份：成员'],
+      ['View as: Member', '查看身份：成员']
     ],
-    misses: ['View as: Owner'],
+    misses: ['View as: Owner']
   },
   {
     hits: [
       [
         'You are viewing the README and pinned repositories as a member of the vuejs organization.',
-        '你正以 vuejs 组织成员的身份查看自述文件和置顶存储库。',
-      ],
+        '你正以 vuejs 组织成员的身份查看自述文件和置顶存储库。'
+      ]
     ],
-    misses: ['You are viewing the README and pinned repositories as an owner.'],
+    misses: ['You are viewing the README and pinned repositories as an owner.']
   },
 
   // 见解：Actions 指标
@@ -256,19 +251,16 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Total minutes across all workflows in this organization for current month', '此组织所有工作流本月的总分钟数'],
-      [
-        'Total job runs across all workflows in this organization for Last 30 days',
-        '此组织所有工作流过去 30 天的作业运行总数',
-      ],
+      ['Total job runs across all workflows in this organization for Last 30 days', '此组织所有工作流过去 30 天的作业运行总数']
     ],
-    misses: ['Total minutes across all workflows in this repository for current month'],
+    misses: ['Total minutes across all workflows in this repository for current month']
   },
   {
     hits: [
       ['Average run time of jobs in this organization for current month', '此组织本月作业的平均运行时间'],
-      ['Failure rate across jobs in this organization for last month', '此组织上个月作业的失败率'],
+      ['Failure rate across jobs in this organization for last month', '此组织上个月作业的失败率']
     ],
-    misses: ['Average run time of jobs'],
+    misses: ['Average run time of jobs']
   },
 
   // 标签页标题
@@ -276,31 +268,25 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['vuejs repositories', 'vuejs 的存储库'],
       ['microsoft repositories', 'microsoft 的存储库'],
-      ['SAP repositories', 'SAP 的存储库'],
+      ['SAP repositories', 'SAP 的存储库']
     ],
-    misses: [
-      'Popular repositories',
-      'Public repositories',
-      'other repositories',
-      '124 repositories',
-      '1.2k repositories',
-    ],
+    misses: ['Popular repositories', 'Public repositories', 'other repositories', '124 repositories', '1.2k repositories']
   },
 
   // 存储库列表（React）
   {
     hits: [
       ['Sort by Last pushed descending', '按最近推送降序排序'],
-      ['Sort by Name ascending', '按名称升序排序'],
+      ['Sort by Name ascending', '按名称升序排序']
     ],
-    misses: ['Sort by Last pushed'],
+    misses: ['Sort by Last pushed']
   },
   {
     hits: [
       ['Show 2 more topics', '再显示 2 个主题'],
-      ['Show 1 more topic', '再显示 1 个主题'],
+      ['Show 1 more topic', '再显示 1 个主题']
     ],
-    misses: ['Show more topics'],
+    misses: ['Show more topics']
   },
   {
     hits: [
@@ -308,101 +294,95 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['55k stars in vuejs/core', 'vuejs/core 中的 55k 个星标'],
       ['546 issues in vuejs/core', 'vuejs/core 中的 546 个议题'],
       ['1 pull request in vuejs/tsconfig', 'vuejs/tsconfig 中的 1 个拉取请求'],
-      ['5,000+ issues in microsoft/vscode', 'microsoft/vscode 中的 5,000+ 个议题'],
+      ['5,000+ issues in microsoft/vscode', 'microsoft/vscode 中的 5,000+ 个议题']
     ],
-    misses: ['9.3k forks in core'],
+    misses: ['9.3k forks in core']
   },
   {
     hits: [
       ['vuejs/core’s past year of commit activity', 'vuejs/core 过去一年的提交活动'],
-      ["vuejs/devtools's past year of commit activity", 'vuejs/devtools 过去一年的提交活动'],
+      ["vuejs/devtools's past year of commit activity", 'vuejs/devtools 过去一年的提交活动']
     ],
-    misses: ['past year of commit activity'],
+    misses: ['past year of commit activity']
   },
 
   // 存储库列表（/repos 与组织存储库页）
   {
     hits: [
       ['Topics for octocat/hello-world', 'octocat/hello-world 的主题'],
-      ['Topics for vuejs/core', 'vuejs/core 的主题'],
+      ['Topics for vuejs/core', 'vuejs/core 的主题']
     ],
-    misses: ['Topics for', 'Topics for octocat', 'Topics for octocat/hello-world now'],
+    misses: ['Topics for', 'Topics for octocat', 'Topics for octocat/hello-world now']
   },
   {
     hits: [
-      [
-        '124 repositories found. List is sorted by Last pushed in descending order.',
-        '找到 124 个存储库。列表按最近推送降序排列。',
-      ],
+      ['124 repositories found. List is sorted by Last pushed in descending order.', '找到 124 个存储库。列表按最近推送降序排列。'],
       ['1 repository found. List is sorted by Name in ascending order.', '找到 1 个存储库。列表按名称升序排列。'],
-      [
-        '1.2k repositories found. List is sorted by Stars in descending order.',
-        '找到 1.2k 个存储库。列表按星标降序排列。',
-      ],
+      ['1.2k repositories found. List is sorted by Stars in descending order.', '找到 1.2k 个存储库。列表按星标降序排列。']
     ],
     misses: [
       '124 repositories found.',
       '124 repositories found. List is sorted by Size in descending order.',
-      'List is sorted by Name in ascending order.',
-    ],
+      'List is sorted by Name in ascending order.'
+    ]
   },
   {
     hits: [["Are you sure you want to delete view 'My view'?", '确定要删除视图“My view”吗？']],
-    misses: ['Are you sure you want to delete view?', "Are you sure you want to delete 'My view'?"],
+    misses: ['Are you sure you want to delete view?', "Are you sure you want to delete 'My view'?"]
   },
   {
     hits: [
       ['Gray color', '灰色'],
-      ['Purple color', '紫色'],
+      ['Purple color', '紫色']
     ],
-    misses: ['Gray', 'Teal color', 'Gray colour'],
+    misses: ['Gray', 'Teal color', 'Gray colour']
   },
   {
     hits: [
       ['People icon', '人群图标'],
       ['Repo locked icon', '锁定的存储库图标'],
-      ['Copilot icon', 'Copilot 图标'],
+      ['Copilot icon', 'Copilot 图标']
     ],
-    misses: ['Unknown icon', 'People icons', 'icon'],
+    misses: ['Unknown icon', 'People icons', 'icon']
   },
 
   // 存储库筛选框：高级筛选对话框
   {
     hits: [
       ['Advanced filter dialog: 1 valid filter', '高级筛选器对话框：1 个有效筛选器'],
-      ['Advanced filter dialog: 3 valid filters', '高级筛选器对话框：3 个有效筛选器'],
+      ['Advanced filter dialog: 3 valid filters', '高级筛选器对话框：3 个有效筛选器']
     ],
-    misses: ['Advanced filter dialog: valid filters', 'Advanced filter dialog: 1 filter'],
+    misses: ['Advanced filter dialog: valid filters', 'Advanced filter dialog: 1 filter']
   },
   { hits: [['Row 1', '第 1 行']], misses: ['Row one', 'Rows 1'] },
   {
     hits: [['Delete filter 1: Language, is one of, Go,Ruby', '删除筛选器 1：Language, is one of, Go,Ruby']],
-    misses: ['Delete filter: Language', 'Delete filter 1'],
+    misses: ['Delete filter: Language', 'Delete filter 1']
   },
   {
     hits: [
       ['Qualifier 1', '限定符 1'],
       ['Created, Qualifier 2', '创建日期，限定符 2'],
       // 自定义属性子键：排在 Property: 规则之前，不会被整个当成属性名
-      ['Property: team, Qualifier 1', '属性：team，限定符 1'],
+      ['Property: team, Qualifier 1', '属性：team，限定符 1']
     ],
-    misses: ['Qualifier one', ', Qualifier 1'],
+    misses: ['Qualifier one', ', Qualifier 1']
   },
   {
     hits: [
       ['Operator 1', '运算符 1'],
       ['is, Operator 1', '是，运算符 1'],
       ['between, Operator 2', '介于，运算符 2'],
-      ['greater than or equal to, Operator 3', '大于或等于，运算符 3'],
+      ['greater than or equal to, Operator 3', '大于或等于，运算符 3']
     ],
-    misses: ['Operator one', 'Operators 1'],
+    misses: ['Operator one', 'Operators 1']
   },
   {
     hits: [
       ['Value 1 From', '值 1 起始'],
-      ['Value 2 To', '值 2 结束'],
+      ['Value 2 To', '值 2 结束']
     ],
-    misses: ['Value 1 Between'],
+    misses: ['Value 1 Between']
   },
   {
     hits: [
@@ -410,18 +390,18 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['True, Value 1', '是，值 1'],
       ['Public, Value 2', '公共，值 2'],
       // 语言名等数据保留原文
-      ['Go, Value 1', 'Go，值 1'],
+      ['Go, Value 1', 'Go，值 1']
     ],
-    misses: ['Value one', 'Values 1'],
+    misses: ['Value one', 'Values 1']
   },
   // 取值框的占位文字（Enter a number 由 pages.ts 的 scoped 收录）
   {
     hits: [
       ['Enter a text', '输入文本'],
       ['Enter a value', '输入值'],
-      ['Enter a date', '输入日期'],
+      ['Enter a date', '输入日期']
     ],
-    misses: ['Enter a color', 'Enter a search term'],
+    misses: ['Enter a color', 'Enter a search term']
   },
 
   // 存储库筛选框
@@ -430,9 +410,9 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Total stars (ascending)', '星标总数（升序）'],
       ['Recently pushed (descending)', '最近推送（降序）'],
       ['Help-wanted issues (ascending)', '需要帮助的议题（升序）'],
-      ['Name (descending)', '名称（降序）'],
+      ['Name (descending)', '名称（降序）']
     ],
-    misses: ['Total stars (asc)', 'Stars (ascending)', 'Total stars ascending'],
+    misses: ['Total stars (asc)', 'Stars (ascending)', 'Total stars ascending']
   },
   {
     hits: [
@@ -443,9 +423,9 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Size (Kb), Filter', '大小 (Kb)，筛选器'],
       // 自定义属性子键作为筛选键；未收录的键保留原文
       ['Property: team, Filter', '属性：team，筛选器'],
-      ['Unknown key, Filter', 'Unknown key，筛选器'],
+      ['Unknown key, Filter', 'Unknown key，筛选器']
     ],
-    misses: ['Visibility, Filter,', ', Filter', 'Visibility Filter'],
+    misses: ['Visibility, Filter,', ', Filter', 'Visibility Filter']
   },
   {
     hits: [
@@ -461,41 +441,41 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['TypeScript, Language', 'TypeScript，语言'],
       ['MIT License, License', 'MIT License，许可证'],
       ['octo-org, Organization', 'octo-org，组织'],
-      ['Property: team, Custom properties', '属性：team，自定义属性'],
+      ['Property: team, Custom properties', '属性：team，自定义属性']
     ],
-    misses: ['Me, Member', 'octocat, Collaborator', ', Visibility', 'Public, visibility'],
+    misses: ['Me, Member', 'octocat, Collaborator', ', Visibility', 'Public, visibility']
   },
   {
     hits: [
       ['Has property: team', '有属性：team'],
       ['No property: cost center', '无属性：cost center'],
       ['Has Property: team, Property: team', '有属性：team，属性：team'],
-      ['No Property: team, Property: team', '无属性：team，属性：team'],
+      ['No Property: team, Property: team', '无属性：team，属性：team']
     ],
-    misses: ['Has property:', 'Has property team', 'Has label'],
+    misses: ['Has property:', 'Has property team', 'Has label']
   },
   {
     hits: [
       ['True, Property: team', '是，属性：team'],
       ['False, Property: team', '否，属性：team'],
       // 组织自定义的取值保留原文
-      ['Production, Property: environment', 'Production，属性：environment'],
+      ['Production, Property: environment', 'Production，属性：environment']
     ],
-    misses: [', Property: team', 'True, Property:'],
+    misses: [', Property: team', 'True, Property:']
   },
   {
     hits: [
       ['Property: team', '属性：team'],
-      ['Property: cost center', '属性：cost center'],
+      ['Property: cost center', '属性：cost center']
     ],
-    misses: ['Property:', 'Properties: team'],
+    misses: ['Property:', 'Properties: team']
   },
   {
     hits: [
       ['Exclude props.team', '排除属性：team'],
-      ['Exclude props.cost_center', '排除属性：cost_center'],
+      ['Exclude props.cost_center', '排除属性：cost_center']
     ],
-    misses: ['Exclude props.', 'Exclude Props.team'],
+    misses: ['Exclude props.', 'Exclude Props.team']
   },
   {
     hits: [
@@ -505,21 +485,21 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Exclude created', '排除创建日期'],
       ['Exclude pushed', '排除最后更新'],
       ['Exclude runtime-risk', '排除运行时风险'],
-      ['Exclude unknown', '排除 unknown'],
+      ['Exclude unknown', '排除 unknown']
     ],
-    misses: ['Exclude Language', 'Exclude language visibility', 'Excluded language'],
+    misses: ['Exclude Language', 'Exclude language visibility', 'Excluded language']
   },
   {
     hits: [
       ['Filter contains 1 issue:', '筛选器有 1 处错误：'],
-      ['Filter contains 2 issues:', '筛选器有 2 处错误：'],
+      ['Filter contains 2 issues:', '筛选器有 2 处错误：']
     ],
-    misses: ['Filter contains issues:', 'Filter contains 2 issues'],
-  },
+    misses: ['Filter contains issues:', 'Filter contains 2 issues']
+  }
 ]
 
-const HITS = REGEXP_CASES.flatMap((item) => item.hits)
-const MISSES = REGEXP_CASES.flatMap((item) => item.misses)
+const HITS = REGEXP_CASES.flatMap(item => item.hits)
+const MISSES = REGEXP_CASES.flatMap(item => item.misses)
 
 describe('organization 正则词条', () => {
   it.each(HITS)('%s → %s', (input, expected) => {
@@ -528,7 +508,7 @@ describe('organization 正则词条', () => {
     expect(translate(input)).toBe(expected)
   })
 
-  it.each(MISSES)('不命中：%s', (input) => {
+  it.each(MISSES)('不命中：%s', input => {
     expect(translate(input)).toBeUndefined()
   })
 
@@ -540,9 +520,7 @@ describe('organization 正则词条', () => {
   })
 
   it('React 拆分的相邻文本节点拼接后命中', () => {
-    expect(translate(normalizeText(['Showing ', '10', ' of ', '124', ' repositories'].join('')))).toBe(
-      '显示 124 个存储库中的 10 个',
-    )
+    expect(translate(normalizeText(['Showing ', '10', ' of ', '124', ' repositories'].join('')))).toBe('显示 124 个存储库中的 10 个')
     expect(translate(normalizeText(['(', '3', ' issues need help)'].join('')))).toBe('（3 个议题需要帮助）')
   })
 })
@@ -558,10 +536,7 @@ describe('organization 静态词条', () => {
     ['Most used topics', '最常用的主题'],
     ['This organization has no public repositories.', '此组织没有公共存储库。'],
     ['Edit pinned repositories', '编辑置顶存储库'],
-    [
-      'You are viewing the README and pinned repositories as a public user.',
-      '你正以公开用户身份查看自述文件和置顶存储库。',
-    ],
+    ['You are viewing the README and pinned repositories as a public user.', '你正以公开用户身份查看自述文件和置顶存储库。'],
     ['Switch profile context', '切换个人资料视角'],
     ['Last pushed', '最近推送'],
     ['Repository filters', '存储库筛选器'],
@@ -580,10 +555,7 @@ describe('organization 静态词条', () => {
     ['Set up discussions to engage with your community!', '设置讨论来与社区互动！'],
     // 头部：关注按钮旁的提示框
     ['You can now follow organizations', '现在可以关注组织了'],
-    [
-      'Organization activity like new discussions, sponsorships, and repositories will appear in',
-      '新讨论、赞助和存储库等组织活动将显示在',
-    ],
+    ['Organization activity like new discussions, sponsorships, and repositories will appear in', '新讨论、赞助和存储库等组织活动将显示在'],
     // 概述：存储库筛选无结果，直撇号与弯撇号同译
     ['This organization doesn’t have any repositories that match.', '此组织没有匹配的存储库。'],
     ["This organization doesn't have any repositories that match.", '此组织没有匹配的存储库。'],
@@ -592,14 +564,14 @@ describe('organization 静态词条', () => {
     ["We think you're gonna like it here.", '我们相信你会喜欢这里。'],
     [
       "We’ve suggested some tasks here in your organization's overview to help you get started.",
-      '我们在组织概述中推荐了一些任务来帮助你上手。',
+      '我们在组织概述中推荐了一些任务来帮助你上手。'
     ],
     ['Find people by their GitHub username or email address.', '按 GitHub 用户名或电子邮件地址查找人员。'],
     ['Set everyone’s base permissions for your code.', '为所有人设置代码的基本权限。'],
     ['Propose and collaborate on changes to a repository.', '对存储库提出更改并共同协作。'],
     ['Enforce certain workflows for one or more branches.', '为一个或多个分支强制实施特定工作流。'],
     ['Try automatically assigning work with GitHub Actions.', '试试使用 GitHub 操作自动分配工作。'],
-    ['Validate your code using a CI workflow.', '使用 CI 工作流验证代码。'],
+    ['Validate your code using a CI workflow.', '使用 CI 工作流验证代码。']
   ])('%s → %s', (input, expected) => {
     expect(translate(input)).toBe(expected)
   })
@@ -636,7 +608,7 @@ describe('organization 页面词条', () => {
     ["hide the tasks we've suggested", '隐藏我们推荐的任务'],
     ['your dashboard feed', '你的仪表板动态中'],
     ['OK, got it!', '好的，知道了！'],
-    ['Sorry,', '抱歉，'],
+    ['Sorry,', '抱歉，']
   ])('%s → %s', (input, expected) => {
     expect(translate(input)).toBe(expected)
   })
@@ -656,12 +628,12 @@ describe('organization 页面词条', () => {
 
   it('赞助摘要片段按顺序读通', () => {
     const parts = ['github', 'has', '24', 'current sponsorships and', '1070', 'past sponsorships']
-    expect(parts.map((part) => translate(part) ?? part).join(' ')).toBe('github 有 24 个当前赞助和 1070 个过往赞助')
+    expect(parts.map(part => translate(part) ?? part).join(' ')).toBe('github 有 24 个当前赞助和 1070 个过往赞助')
   })
 
   it('概述提示片段按顺序读通', () => {
     const parts = ['create a README file', 'or', 'pin repositories', 'visible to anyone.']
-    expect(parts.map((part) => translate(part) ?? part).join(' ')).toBe('创建自述文件 or 置顶存储库 对所有人可见。')
+    expect(parts.map(part => translate(part) ?? part).join(' ')).toBe('创建自述文件 or 置顶存储库 对所有人可见。')
   })
 })
 
@@ -670,7 +642,7 @@ describe('删除的冗余词条由 common-ui 提供', () => {
     ['common', actions],
     ['common', status],
     ['common', counts],
-    ['organization', organization],
+    ['organization', organization]
   ])
 
   it.each([
@@ -686,7 +658,7 @@ describe('删除的冗余词条由 common-ui 提供', () => {
     ['Least recently updated', '最久未更新'],
     ['124 repositories', '124 个存储库'],
     ['5 projects', '5 个项目'],
-    ['12 members', '12 个成员'],
+    ['12 members', '12 个成员']
   ])('%s → %s', (input, expected) => {
     expect(withCommon.translate(input, ['common', 'organization'])).toBe(expected)
   })
@@ -698,11 +670,11 @@ describe('organization 忽略选择器', () => {
 
   /** 文本完全相同的最内层元素是否落在忽略区域内 */
   function ignored(text: string): boolean {
-    const element = [...document.querySelectorAll('*')].filter((node) => node.textContent?.trim() === text).at(-1)
+    const element = [...document.querySelectorAll('*')].filter(node => node.textContent?.trim() === text).at(-1)
     return Boolean(element?.closest(selector))
   }
 
-  it.each(organization.ignore ?? [])('%s 是合法选择器', (rule) => {
+  it.each(organization.ignore ?? [])('%s 是合法选择器', rule => {
     expect(() => document.createElement('div').querySelector(rule)).not.toThrow()
   })
 
@@ -774,17 +746,11 @@ const full = createMatcher(zhCN)
 describe('存储库列表与筛选框（完整语言包）', () => {
   it.each([
     // ProTip 被 <code> 拆成两段
-    [
-      'Using a comma within certain filters will aggregate the results. For example:',
-      '在某些筛选器中使用逗号会合并结果。例如：',
-    ],
-    [
-      'will show all repositories that have either Go or Ruby as their primary language.',
-      '会显示主要语言为 Go 或 Ruby 的所有存储库。',
-    ],
+    ['Using a comma within certain filters will aggregate the results. For example:', '在某些筛选器中使用逗号会合并结果。例如：'],
+    ['will show all repositories that have either Go or Ruby as their primary language.', '会显示主要语言为 Go 或 Ruby 的所有存储库。'],
     [
       "Don't forget that you can create saved views to keep track of your most important repositories!",
-      '别忘了可以创建已保存的视图来跟踪你最重要的存储库！',
+      '别忘了可以创建已保存的视图来跟踪你最重要的存储库！'
     ],
     ['Repository settings', '存储库设置'],
     ['Change the repository type filter', '切换存储库视图'],
@@ -792,10 +758,7 @@ describe('存储库列表与筛选框（完整语言包）', () => {
     ["Your teams don't have access to any repositories.", '你的团队没有任何存储库的访问权限。'],
     ['No repositories matched your search. Try a different search query.', '没有匹配的存储库。请尝试其他搜索词。'],
     ['More repository actions', '更多存储库操作'],
-    [
-      'Filter "is:" is deprecated, use "visibility:" or "sponsorable:" instead',
-      '筛选器“is:”已弃用，请改用“visibility:”或“sponsorable:”',
-    ],
+    ['Filter "is:" is deprecated, use "visibility:" or "sponsorable:" instead', '筛选器“is:”已弃用，请改用“visibility:”或“sponsorable:”'],
     // 侧栏与已保存视图
     ['Views', '视图'],
     ['Icon', '图标'],
@@ -849,7 +812,7 @@ describe('存储库列表与筛选框（完整语言包）', () => {
     ['Sponsorable', '可赞助'],
     ['No saved views', '没有已保存的视图'],
     ['Create view', '创建视图'],
-    ['Private mirror', '专用镜像'],
+    ['Private mirror', '专用镜像']
   ])('%s → %s', (input, expected) => {
     expect(full.translate(input, REPOS)).toBe(expected)
   })
@@ -882,8 +845,8 @@ describe('存储库列表与筛选框（完整语言包）', () => {
     'before and including',
     'after and including',
     'between',
-    'Filter values',
-  ])('短词只在 organization 生效：%s', (input) => {
+    'Filter values'
+  ])('短词只在 organization 生效：%s', input => {
     expect(full.translate(input, ['common'])).toBeUndefined()
   })
 
@@ -919,13 +882,13 @@ describe('存储库列表与筛选框（完整语言包）', () => {
     ['Value 1 To', ['common', 'repository', 'issues']],
     ['True, Value 1', ['common', 'repository', 'issues']],
     ['Enter a text', ['common', 'repository', 'issues']],
-    ['Enter a value', ['common', 'repository', 'issues']],
+    ['Enter a value', ['common', 'repository', 'issues']]
   ] as const)('与其他页面同句同译：%s', (input, scope) => {
     expect(full.translate(input, REPOS)).toBeDefined()
     expect(full.translate(input, REPOS)).toBe(full.translate(input, scope))
   })
 
-  it.each(['MIT License', 'TypeScript', '+ 2'])('数据与技术词不收录：%s', (input) => {
+  it.each(['MIT License', 'TypeScript', '+ 2'])('数据与技术词不收录：%s', input => {
     expect(full.translate(input, REPOS)).toBeUndefined()
   })
 
@@ -942,12 +905,12 @@ describe('存储库列表与筛选框（完整语言包）', () => {
 
   it.each([
     ['Created {}', '创建于 {}'],
-    ['Invalid value {} for {}', '无效值 {} 用于筛选器 {}'],
+    ['Invalid value {} for {}', '无效值 {} 用于筛选器 {}']
   ])('行内句：%s → %s', (pattern, expected) => {
     expect(full.translateInline(patternKey(pattern), REPOS)).toBe(expected)
   })
 
-  it.each(['Updated {}', 'Invalid value {} for', 'Empty value for {}'])('行内句不命中：%s', (pattern) => {
+  it.each(['Updated {}', 'Invalid value {} for', 'Empty value for {}'])('行内句不命中：%s', pattern => {
     expect(full.translateInline(patternKey(pattern), REPOS)).toBeUndefined()
   })
 })
@@ -980,16 +943,16 @@ describe('存储库列表与筛选框（繁体）', () => {
     ['Created', '建立日期'],
     ['Created, Filter, Creation date', '建立日期，篩選器，建立日期'],
     ['This month, Created', '本月，建立日期'],
-    ['Exclude created', '排除建立日期'],
+    ['Exclude created', '排除建立日期']
   ])('%s → %s', (input, expected) => {
     expect(tw.translate(input, REPOS)).toBe(expected)
   })
 
   it.each(['Qualifier', 'Operator', 'From', 'is one of', 'is not', 'between', 'Filter values', 'Row 1', 'Value 1 To'])(
     '与议题页筛选框同译：%s',
-    (input) => {
+    input => {
       expect(tw.translate(input, REPOS)).toBe(tw.translate(input, ['common', 'repository', 'issues']))
-    },
+    }
   )
 
   it('个人主页（同时套用 organization 词典）同样生效，其他页面不生效', () => {
@@ -1009,7 +972,7 @@ describe('存储库列表与筛选框（繁体）', () => {
   it('带方向的排序取值（全局 /pulls 按词条收录）与本页正则同译（简繁）', () => {
     for (const [locale, table] of [
       [full, SORT_VALUE],
-      [tw, SORT_VALUE_TW],
+      [tw, SORT_VALUE_TW]
     ] as const) {
       const entries = Object.entries(table)
       expect(entries).toHaveLength(10)
@@ -1074,9 +1037,7 @@ describe('存储库列表与筛选框（DOM）', () => {
     render(`
       <div id="tip"><strong>ProTip!</strong> Using a comma within certain filters will aggregate the results. For example:&nbsp;<code>language:Go,Ruby</code> will show all repositories that have either Go or Ruby as their primary language.</div>
       <div id="saved-tip"><strong>ProTip!</strong> Don't forget that you can create saved views to keep track of your most important repositories!</div>`)
-    expect(text('#tip')).toBe(
-      '提示！在某些筛选器中使用逗号会合并结果。例如：language:Go,Ruby 会显示主要语言为 Go 或 Ruby 的所有存储库。',
-    )
+    expect(text('#tip')).toBe('提示！在某些筛选器中使用逗号会合并结果。例如：language:Go,Ruby 会显示主要语言为 Go 或 Ruby 的所有存储库。')
     expect(text('#tip code')).toBe('language:Go,Ruby')
     expect(text('#saved-tip')).toBe('提示！别忘了可以创建已保存的视图来跟踪你最重要的存储库！')
   })
@@ -1241,8 +1202,8 @@ describe('组织概述与邀请页', () => {
         '开始完成任务，大多数成功的组织都会完成这些任务。',
         '你可以 隐藏我们推荐的任务，以后还能在此页面重新显示。',
         '现在可以关注组织了',
-        '新讨论、赞助和存储库等组织活动将显示在 你的仪表板动态中。',
-      ],
+        '新讨论、赞助和存储库等组织活动将显示在 你的仪表板动态中。'
+      ]
     ],
     [
       '繁体',
@@ -1251,9 +1212,9 @@ describe('组织概述与邀请页', () => {
         '開始完成任務，大多數成功的組織都會完成這些任務。',
         '你可以 隱藏我們推薦的任務，之後還能在此頁面重新顯示。',
         '現在可以追蹤組織了',
-        '新討論、贊助和儲存庫等組織活動將顯示在 你的儀表板動態中。',
-      ],
-    ],
+        '新討論、贊助和儲存庫等組織活動將顯示在 你的儀表板動態中。'
+      ]
+    ]
   ] as const)('%s：入门任务提示与关注提示框按片段连读，全角逗号前不留空白', (_, using, expected) => {
     render(OVERVIEW_HTML, using, OVERVIEW)
     expect([text('#restore'), text('#hide'), text('#tip h3'), text('#tip p')]).toEqual(expected)
@@ -1261,21 +1222,18 @@ describe('组织概述与邀请页', () => {
 
   it.each([
     ['简体', full, '抱歉，octocat 已是 octo-org 的成员。'],
-    ['繁体', tw, '抱歉，octocat 已是 octo-org 的成員。'],
-  ] as const)(
-    '%s：邀请页 Sorry, <用户> is already a member of <组织>. 按片段连读，用户名不变',
-    (_, using, expected) => {
-      render('<p id="sorry">Sorry, <strong>octocat</strong> is already a member of octo-org.</p>', using, INVITATION)
-      expect(text('#sorry')).toBe(expected)
-      expect(text('#sorry strong')).toBe('octocat')
-    },
-  )
+    ['繁体', tw, '抱歉，octocat 已是 octo-org 的成員。']
+  ] as const)('%s：邀请页 Sorry, <用户> is already a member of <组织>. 按片段连读，用户名不变', (_, using, expected) => {
+    render('<p id="sorry">Sorry, <strong>octocat</strong> is already a member of octo-org.</p>', using, INVITATION)
+    expect(text('#sorry')).toBe(expected)
+    expect(text('#sorry strong')).toBe('octocat')
+  })
 
   it.each([
     ['We think you’re gonna like it here.', '我們相信你會喜歡這裡。'],
     [
       "We’ve suggested some tasks here in your organization's overview to help you get started.",
-      '我們在組織總覽中推薦了一些任務來協助你開始使用。',
+      '我們在組織總覽中推薦了一些任務來協助你開始使用。'
     ],
     ['Find people by their GitHub username or email address.', '依 GitHub 使用者名稱或電子郵件地址尋找人員。'],
     ['Set everyone’s base permissions for your code.', '為所有人設定程式碼的基本權限。'],
@@ -1293,7 +1251,7 @@ describe('组织概述与邀请页', () => {
     ['Client apps', '用戶端應用程式'],
     ['Project management', '專案管理'],
     ['Team administration', '團隊管理'],
-    ['OK, got it!', '好，我知道了！'],
+    ['OK, got it!', '好，我知道了！']
   ])('繁体：%s → %s', (input, expected) => {
     expect(tw.translate(input, OVERVIEW)).toBe(expected)
   })
@@ -1304,13 +1262,13 @@ describe('组织概述与邀请页', () => {
     ['Create a pull request', '创建拉取请求', '建立拉取請求'],
     ['Create a branch protection rule', '创建分支保护规则', '建立分支保護規則'],
     ['Auto-assign new issues', '自动分配新议题', '自動指派新議題'],
-    ['Run a continuous integration test', '运行持续集成测试', '執行持續整合測試'],
+    ['Run a continuous integration test', '运行持续集成测试', '執行持續整合測試']
   ])('入门任务名（actions 词典的全局词条）：%s', (input, cn, twText) => {
     expect(full.translate(input, OVERVIEW)).toBe(cn)
     expect(tw.translate(input, OVERVIEW)).toBe(twText)
   })
 
-  it.each(['Client apps', 'Project management', 'Team administration'])('与 actions 入门引导卡片同译：%s', (input) => {
+  it.each(['Client apps', 'Project management', 'Team administration'])('与 actions 入门引导卡片同译：%s', input => {
     const actionsPage: readonly PageKey[] = ['common', 'repository', 'actions']
     expect(full.translate(input, OVERVIEW)).toBeDefined()
     expect(full.translate(input, OVERVIEW)).toBe(full.translate(input, actionsPage))
@@ -1319,12 +1277,8 @@ describe('组织概述与邀请页', () => {
   })
 
   it('概述的空状态不被个人主页的正则抢占；片段与邀请页正则不在其他页面生效', () => {
-    expect(full.translate('This organization doesn’t have any repositories that match.', OVERVIEW)).toBe(
-      '此组织没有匹配的存储库。',
-    )
-    expect(full.translate('torvalds doesn’t have any repositories that match.', OVERVIEW)).toBe(
-      'torvalds 没有匹配的存储库。',
-    )
+    expect(full.translate('This organization doesn’t have any repositories that match.', OVERVIEW)).toBe('此组织没有匹配的存储库。')
+    expect(full.translate('torvalds doesn’t have any repositories that match.', OVERVIEW)).toBe('torvalds 没有匹配的存储库。')
     for (const input of ['Sorry,', 'Loading tasks', 'See all features', 'is already a member of octo-org.']) {
       expect(full.translate(input, ['common', 'repository'])).toBeUndefined()
       expect(tw.translate(input, ['common', 'repository'])).toBeUndefined()

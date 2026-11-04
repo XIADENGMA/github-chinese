@@ -48,9 +48,9 @@ const LABEL_BUNDLE: LocaleBundle = [
     'common',
     {
       labels: { bug: '缺陷', question: '疑问' },
-      labelDescriptions: { 'Further information is requested': '需要更多信息' },
-    },
-  ],
+      labelDescriptions: { 'Further information is requested': '需要更多信息' }
+    }
+  ]
 ]
 
 /**
@@ -180,7 +180,7 @@ describe('性能', () => {
       }
       expect(document.querySelector('button')!.textContent).toBe('未解决')
       expect(Math.min(...codeTimings) / Math.min(...baseTimings)).toBeLessThan(CODE_RATIO_BUDGET)
-    },
+    }
   )
 
   it(`有大量行内句规则时首轮耗时为无规则时的 ${INLINE_RATIO_BUDGET} 倍以内`, { timeout: HEAVY_TIMEOUT_MS }, () => {
@@ -202,28 +202,24 @@ describe('性能', () => {
     expect(Math.min(...inlineTimings) / Math.min(...baseTimings)).toBeLessThan(INLINE_RATIO_BUDGET)
   })
 
-  it(
-    `${LABEL_ROWS} 行带标签的列表：有标签表时首轮耗时为无标签表时的 ${LABEL_RATIO_BUDGET} 倍以内`,
-    { timeout: HEAVY_TIMEOUT_MS },
-    () => {
-      const page = `<ul class="js-navigation-container">${Array.from({ length: LABEL_ROWS }, (_, i) => labelRow(i)).join('')}</ul>`
-      const labelTimings: number[] = []
-      const baseTimings: number[] = []
-      const timeLabels = (): void => {
-        labelTimings.push(timeStart(page, LABEL_BUNDLE))
-        expect(document.querySelector('.IssueLabel')!.textContent).toBe('疑问')
-      }
-      const timeBase = (): void => {
-        baseTimings.push(timeStart(page))
-        expect(document.querySelector('.IssueLabel')!.textContent).toBe('question')
-      }
-      // 两边交替先后，减少负载起伏带来的偏差
-      for (let round = 0; round < LABEL_RATIO_ROUNDS; round++) {
-        for (const time of round % 2 === 0 ? [timeLabels, timeBase] : [timeBase, timeLabels]) time()
-      }
-      expect(Math.min(...labelTimings) / Math.min(...baseTimings)).toBeLessThan(LABEL_RATIO_BUDGET)
-    },
-  )
+  it(`${LABEL_ROWS} 行带标签的列表：有标签表时首轮耗时为无标签表时的 ${LABEL_RATIO_BUDGET} 倍以内`, { timeout: HEAVY_TIMEOUT_MS }, () => {
+    const page = `<ul class="js-navigation-container">${Array.from({ length: LABEL_ROWS }, (_, i) => labelRow(i)).join('')}</ul>`
+    const labelTimings: number[] = []
+    const baseTimings: number[] = []
+    const timeLabels = (): void => {
+      labelTimings.push(timeStart(page, LABEL_BUNDLE))
+      expect(document.querySelector('.IssueLabel')!.textContent).toBe('疑问')
+    }
+    const timeBase = (): void => {
+      baseTimings.push(timeStart(page))
+      expect(document.querySelector('.IssueLabel')!.textContent).toBe('question')
+    }
+    // 两边交替先后，减少负载起伏带来的偏差
+    for (let round = 0; round < LABEL_RATIO_ROUNDS; round++) {
+      for (const time of round % 2 === 0 ? [timeLabels, timeBase] : [timeBase, timeLabels]) time()
+    }
+    expect(Math.min(...labelTimings) / Math.min(...baseTimings)).toBeLessThan(LABEL_RATIO_BUDGET)
+  })
 })
 
 /**
@@ -241,9 +237,7 @@ const LIST_BUNDLE: LocaleBundle = [['common', { static: { 'Contributed to': '贡
 /** n 个链接：wrapped 为 <span>, </span> 分隔（各段都包在元素里），否则为带译文标签、直接文字 ", " 分隔 */
 function linkList(n: number, wrapped: boolean): string {
   const links = Array.from({ length: n }, (_, i) => `<a href="/u${i}"><span>user${i}</span></a>`)
-  const list = wrapped
-    ? `<span id="list">${links.join('<span>, </span>')}</span>`
-    : `<p id="list">Contributed to ${links.join(', ')}</p>`
+  const list = wrapped ? `<span id="list">${links.join('<span>, </span>')}</span>` : `<p id="list">Contributed to ${links.join(', ')}</p>`
   return `<main><div><div>${list}</div></div></main>`
 }
 
@@ -290,13 +284,11 @@ function listReads(n: number, wrapped: boolean): { start: ReadCounts; batch: Rea
 describe('孤立标点轮末重算', () => {
   it.each([
     ['各段都包在元素里（<span>, </span> 分隔）', true],
-    ['带译文标签、直接文字分隔', false],
+    ['带译文标签、直接文字分隔', false]
   ])('%s的长列表：首轮与改一个链接的文字后，读取兄弟节点的次数随列表长度线性增长', (_, wrapped) => {
     const small = listReads(LIST_SMALL, wrapped)
     const large = listReads(LIST_LARGE, wrapped)
-    expect(document.querySelector('#list')!.textContent).toMatch(
-      wrapped ? /^user0x, user1, / : /^贡献于 user0x、user1、/,
-    )
+    expect(document.querySelector('#list')!.textContent).toMatch(wrapped ? /^user0x, user1, / : /^贡献于 user0x、user1、/)
     expect(large.start.siblings).toBeLessThan(small.start.siblings * LIST_GROWTH_BUDGET)
     expect(large.batch.siblings).toBeLessThan(small.batch.siblings * LIST_GROWTH_BUDGET)
   })
@@ -339,7 +331,7 @@ const REGEXP_STAGE_TEXTS = [
   '1 of 2 tasks',
   'Opened by octocat',
   'Reproduction link',
-  'Vue version 3.5.12',
+  'Vue version 3.5.12'
 ]
 
 describe('正则阶段执行条数', () => {
@@ -353,15 +345,13 @@ describe('正则阶段执行条数', () => {
           const counting = new TriedRegExp(pattern.source, pattern.flags)
           rules.push(counting)
           return [counting, replacement]
-        }),
-      },
+        })
+      }
     ])
     const scope: PageKey[] = ['common', 'repository', 'issues']
     const matcher = createMatcher(bundle)
     for (const text of REGEXP_STAGE_TEXTS) matcher.translate(text, scope)
-    const inScope = bundle
-      .filter(([key]) => scope.includes(key))
-      .reduce((sum, [, dict]) => sum + (dict.regexp?.length ?? 0), 0)
+    const inScope = bundle.filter(([key]) => scope.includes(key)).reduce((sum, [, dict]) => sum + (dict.regexp?.length ?? 0), 0)
     const tried = rules.reduce((sum, rule) => sum + rule.tried.size, 0)
     expect(inScope).toBeGreaterThan(0)
     expect(tried).toBeLessThan((REGEXP_STAGE_TEXTS.length * inScope) / 3)
@@ -440,6 +430,6 @@ describe('时间元素定时刷新', () => {
       }
       expect(times[TIME_COUNT - 1]!.renderedText).toBe('3 天前')
       expect(Math.min(...extraTimings) / Math.min(...baseTimings)).toBeLessThan(TIME_RATIO_BUDGET)
-    },
+    }
   )
 })

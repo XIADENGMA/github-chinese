@@ -4,3 +4,5 @@
 coverage
 bun.lock
 .vitest
+# e2e 夹具模拟 GitHub 页面 DOM：空白文本节点影响翻译结果，不按 htmlWhitespaceSensitivity: ignore 重排
+tests/e2e/fixtures/*.html

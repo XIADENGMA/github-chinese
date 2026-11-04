@@ -172,6 +172,6 @@ export default {
     'Snippet format': '代码片段格式',
     'URL snippet': 'URL 代码片段',
     'HTML snippet': 'HTML 代码片段',
-    'MARKDOWN snippet': 'Markdown 代码片段',
-  },
+    'MARKDOWN snippet': 'Markdown 代码片段'
+  }
 } satisfies PageDictionary

@@ -2,15 +2,12 @@ import { describe, expect, it } from 'vitest'
 import { createUntranslatedBuffer, isCollectable, isSensitivePath, kindBit } from '../../../src/core/untranslated'
 
 describe('isCollectable', () => {
-  it.each([
-    'Open issues',
-    'Sign in to GitHub',
-    'Updated 3 days ago',
-    'Filter by label',
-    'No results matched your search.',
-  ])('收集界面文字：%s', (text) => {
-    expect(isCollectable(text)).toBe(true)
-  })
+  it.each(['Open issues', 'Sign in to GitHub', 'Updated 3 days ago', 'Filter by label', 'No results matched your search.'])(
+    '收集界面文字：%s',
+    text => {
+      expect(isCollectable(text)).toBe(true)
+    }
+  )
 
   it.each([
     ['', '空串'],
@@ -47,8 +44,8 @@ describe('isCollectable', () => {
     ['10:30 AM', '时刻'],
     ['10:30 PM PST', '时刻'],
     ['由 octocat 打开', '含汉字的译文'],
-    ['新建代码片段', '含汉字的译文'],
-  ])('排除 %s（%s）', (text) => {
+    ['新建代码片段', '含汉字的译文']
+  ])('排除 %s（%s）', text => {
     expect(isCollectable(text)).toBe(false)
   })
 
@@ -83,8 +80,8 @@ describe('isCollectable', () => {
     ['Visa •••• 0000', '卡号尾号（圆点）'],
     ['Card ••••0000', '卡号尾号（圆点）'],
     ['Visa •• 0000', '卡号尾号（2 个圆点）'],
-    ['Card •••0000', '卡号尾号（3 个圆点）'],
-  ])('排除密钥与个人信息 %s（%s）', (text) => {
+    ['Card •••0000', '卡号尾号（3 个圆点）']
+  ])('排除密钥与个人信息 %s（%s）', text => {
     expect(isCollectable(text)).toBe(false)
   })
 
@@ -96,8 +93,8 @@ describe('isCollectable', () => {
     'Mention @octocat',
     'a b',
     // 单个圆点是分隔符，不是卡号掩码
-    'Sample text • 2026',
-  ])('相关界面文字照常收集：%s', (text) => {
+    'Sample text • 2026'
+  ])('相关界面文字照常收集：%s', text => {
     expect(isCollectable(text)).toBe(true)
   })
 })
@@ -177,8 +174,8 @@ describe('isSensitivePath', () => {
     '/password_reset',
     '/signup',
     '/join',
-    '/account_verifications',
-  ])('不收集：%s', (pathname) => {
+    '/account_verifications'
+  ])('不收集：%s', pathname => {
     expect(isSensitivePath(pathname)).toBe(true)
   })
 
@@ -202,8 +199,8 @@ describe('isSensitivePath', () => {
     '/settings%2Ftokens',
     // 任意格式后缀
     '/account/upgrade.json',
-    '/settings/tokens.atom',
-  ])('地址变体按规范化后的路径判断，不收集：%s', (pathname) => {
+    '/settings/tokens.atom'
+  ])('地址变体按规范化后的路径判断，不收集：%s', pathname => {
     expect(isSensitivePath(pathname)).toBe(true)
   })
 
@@ -242,8 +239,8 @@ describe('isSensitivePath', () => {
     '/%76uejs/core',
     '/vuejs/core/blob/main/login.html',
     '/vuejs/core.json',
-    '/login-help.json',
-  ])('照常收集：%s', (pathname) => {
+    '/login-help.json'
+  ])('照常收集：%s', pathname => {
     expect(isSensitivePath(pathname)).toBe(false)
   })
 })
@@ -262,7 +259,7 @@ describe('createUntranslatedBuffer', () => {
     buffer.add('Filter by label', 'text', 'issues')
     expect(buffer.drain()).toEqual([
       ['Open issues', 'issues', 3, 2, 1],
-      ['Filter by label', 'issues', 1, 1, 1],
+      ['Filter by label', 'issues', 1, 1, 1]
     ])
     expect(buffer.drain()).toEqual([])
   })
@@ -302,7 +299,7 @@ describe('createUntranslatedBuffer', () => {
     buffer.add('First text', 'attr', 'code')
     expect(buffer.drain()).toEqual([
       ['First text', 'code', 3, 2, 1],
-      ['Second text', 'code', 1, 1, 1],
+      ['Second text', 'code', 1, 1, 1]
     ])
     // 满时被丢弃的文本不占用本次访问的页面计数
     buffer.add('Third text', 'text', 'code')

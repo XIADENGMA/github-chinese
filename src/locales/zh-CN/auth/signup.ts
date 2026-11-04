@@ -90,7 +90,7 @@ export default {
     "Make sure it's at least 15 characters OR at least 8 characters including a number and a lowercase letter.":
       '至少 15 个字符，或至少 8 个字符且包含数字和小写字母。',
     'Make sure it’s at least 15 characters OR at least 8 characters including a number and a lowercase letter.':
-      '至少 15 个字符，或至少 8 个字符且包含数字和小写字母。',
+      '至少 15 个字符，或至少 8 个字符且包含数字和小写字母。'
   },
   scoped: {
     Username: '用户名',
@@ -105,15 +105,15 @@ export default {
     'Automated workflows': '自动化工作流',
     'Community support': '社区支持',
     "See what's included": '查看包含内容',
-    'See what’s included': '查看包含内容',
+    'See what’s included': '查看包含内容'
   },
   regexp: [
     [
       /^Username (\S+) is not available\. (.+) are available\.$/,
-      (_, name: string, list: string) => `用户名 ${name} 不可用。${joinNames(list)} 可用。`,
+      (_, name: string, list: string) => `用户名 ${name} 不可用。${joinNames(list)} 可用。`
     ],
     [/^Username (\S+) is not available\.$/, '用户名 $1 不可用。'],
     [/^(\S+) is available\.$/, '$1 可用。'],
-    [/^Change password for @?([\w-]+)$/, '更改 @$1 的密码'],
-  ],
+    [/^Change password for @?([\w-]+)$/, '更改 @$1 的密码']
+  ]
 } satisfies PageDictionary

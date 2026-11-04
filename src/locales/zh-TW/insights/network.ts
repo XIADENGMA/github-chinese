@@ -6,7 +6,7 @@ const FORK_TYPE: Readonly<Record<string, string>> = {
   Inactive: '不活躍',
   Network: '網路',
   Archived: '已封存',
-  Starred: '已加星號',
+  Starred: '已加星號'
 }
 
 /**
@@ -33,10 +33,8 @@ export default {
     'Sorry, your browser doesn’t support the <canvas> element.': '你的瀏覽器不支援 <canvas> 元素。',
     "Sorry, your browser doesn't support the <canvas> element.": '你的瀏覽器不支援 <canvas> 元素。',
     'switch to list view': '切換到清單檢視',
-    'Woah, this network is huge! We’re showing only some of this network’s repositories.':
-      '這個網路非常龐大！我們只顯示其中部分儲存庫。',
-    "Woah, this network is huge! We're showing only some of this network's repositories.":
-      '這個網路非常龐大！我們只顯示其中部分儲存庫。',
+    'Woah, this network is huge! We’re showing only some of this network’s repositories.': '這個網路非常龐大！我們只顯示其中部分儲存庫。',
+    "Woah, this network is huge! We're showing only some of this network's repositories.": '這個網路非常龐大！我們只顯示其中部分儲存庫。',
     'Loading network graph data': '正在載入網路圖表資料',
     'Loading network graph data.': '正在載入網路圖表資料。',
     'Couldn’t load the network graph data.': '無法載入網路圖表資料。',
@@ -58,8 +56,7 @@ export default {
     Forks: '分叉',
     'Switch to tree view': '切換到樹狀檢視',
     'Filter by period': '依期間篩選',
-    'Any repository that has not been created or updated during this period will be excluded.':
-      '將排除此期間內未建立或更新的任何儲存庫。',
+    'Any repository that has not been created or updated during this period will be excluded.': '將排除此期間內未建立或更新的任何儲存庫。',
     'Repository type:': '儲存庫類型：',
     'Filter by repository type': '依儲存庫類型篩選',
     'Repositories with push activity': '有推送活動的儲存庫',
@@ -82,7 +79,7 @@ export default {
     'Defaults Saved': '已儲存預設值',
     'Never updated': '從未更新',
     'Try changing your filters, or search for': '試著變更篩選器，或搜尋',
-    'active forked repositories': '活躍的分叉儲存庫',
+    'active forked repositories': '活躍的分叉儲存庫'
   },
   scoped: {
     // 其他区域也出现的同形文字，本区域内单独生效
@@ -94,13 +91,10 @@ export default {
     Active: '活躍',
     Created: '建立於',
     Updated: '更新於',
-    'pull request': '拉取請求',
+    'pull request': '拉取請求'
   },
   regexp: [
-    [
-      /^The repository network shows the ([\d,]+) most recently pushed forks\.$/,
-      '儲存庫網路顯示最近推送的 $1 個分叉。',
-    ],
+    [/^The repository network shows the ([\d,]+) most recently pushed forks\.$/, '儲存庫網路顯示最近推送的 $1 個分叉。'],
     // 数据表「領先/落後」列
     [/^([\d,]+) ahead, ([\d,]+) behind$/, '領先 $1，落後 $2'],
     [/^([\d,]+) (ahead|behind)$/, (_, count, direction) => `${direction === 'ahead' ? '領先' : '落後'} ${count}`],
@@ -113,14 +107,14 @@ export default {
       (_, types) =>
         types
           .split(', ')
-          .map((type) => FORK_TYPE[type] ?? type)
-          .join('、'),
-    ],
+          .map(type => FORK_TYPE[type] ?? type)
+          .join('、')
+    ]
   ],
   ignore: [
     // 数据表分支名
     '[class*="branchCell"]',
     // 复刻列表存储库名
-    'li.Box-row h2.f4 > a.Link',
-  ],
+    'li.Box-row h2.f4 > a.Link'
+  ]
 } satisfies PageDictionary

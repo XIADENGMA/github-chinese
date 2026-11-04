@@ -12,7 +12,7 @@ import { joinCjk } from '../helpers'
 const LIST_NOUNS: Readonly<Record<string, string>> = {
   projects: '项目',
   'project templates': '项目模板',
-  templates: '模板',
+  templates: '模板'
 }
 
 export default {
@@ -69,14 +69,13 @@ export default {
 
     // 复制项目对话框
     'Copy project': '复制项目',
-    'Make a copy of this project that can be used as a starting point for another project.':
-      '创建此项目的副本作为其他项目的起点。',
+    'Make a copy of this project that can be used as a starting point for another project.': '创建此项目的副本作为其他项目的起点。',
     'Views, custom fields, insights, and workflows will be copied.': '将复制视图、自定义字段、见解和工作流。',
     'Issues and pull requests will not be copied.': '不会复制议题和拉取请求。',
     'Draft issues will be copied if selected': '勾选后将复制草稿议题',
     'Owner for the new project': '新项目的所有者',
     'New project name': '新项目名称',
-    'Failed to copy project. Please try again.': '项目复制失败。请重试。',
+    'Failed to copy project. Please try again.': '项目复制失败。请重试。'
   },
   scoped: {
     // 通用文本（仅项目页生效）；产品名 GitHub Projects 按 product-names.md 译“GitHub 项目”，见 settings.ts 项目菜单
@@ -130,40 +129,31 @@ export default {
     'Something went wrong. Please try again.': '出错了。请重试。',
     // 存储库项目页（Rails 版）：空状态按钮；行菜单的 Remove project 是从存储库取消链接、不删除项目（React 版为 Unlink project）
     'Create a project': '创建项目',
-    'Remove project': '移除项目',
+    'Remove project': '移除项目'
   },
   regexp: [
     [/^(All|Templates), Project type$/, (_, type: string) => `${type === 'All' ? '全部' : '模板'}，项目类型`],
     [/^#(\d+) updated$/, '#$1 更新于'],
     [/^(\d[\d,]*) projects?$/, '$1 个项目'],
     [/^(\d[\d,]*) templates?$/, '$1 个模板'],
-    [
-      /^No (projects|project templates) matched your search$/,
-      (_, noun: string) => `没有匹配的${LIST_NOUNS[noun] ?? noun}`,
-    ],
+    [/^No (projects|project templates) matched your search$/, (_, noun: string) => `没有匹配的${LIST_NOUNS[noun] ?? noun}`],
     [
       /^Try a different search term or clear the search to see all (projects|project templates)\.$/,
-      (_, noun: string) => `换个搜索词或清除搜索以查看所有${LIST_NOUNS[noun] ?? noun}。`,
+      (_, noun: string) => `换个搜索词或清除搜索以查看所有${LIST_NOUNS[noun] ?? noun}。`
     ],
-    [
-      /^No (projects|templates) matched “(.+)”$/,
-      (_, noun: string, query: string) => `没有与“${query}”匹配的${LIST_NOUNS[noun] ?? noun}`,
-    ],
+    [/^No (projects|templates) matched “(.+)”$/, (_, noun: string, query: string) => `没有与“${query}”匹配的${LIST_NOUNS[noun] ?? noun}`],
     [/^No (projects|templates) matched$/, (_, noun: string) => `没有匹配的${LIST_NOUNS[noun] ?? noun}`],
     [/^No (projects|templates) found$/, (_, noun: string) => `未找到${LIST_NOUNS[noun] ?? noun}`],
-    [
-      /^No (projects|templates) are available to link\.$/,
-      (_, noun: string) => `没有可链接的${LIST_NOUNS[noun] ?? noun}。`,
-    ],
+    [/^No (projects|templates) are available to link\.$/, (_, noun: string) => `没有可链接的${LIST_NOUNS[noun] ?? noun}。`],
     // 项目名是用户内容，原文没有引号，译文也不加；两句之间随原文用句号
     [/^Couldn't unlink (.+)\. Please try again\.$/, (_, name: string) => `${joinCjk('无法取消链接', name)}。请重试。`],
     // 原文只有 and、没有逗号：译文用“和”，不加顿号（与 profile/tabs.ts 同译）
-    [/^(\d+) open and (\d+) closed projects? found\.$/, '找到 $1 个打开和 $2 个已关闭的项目。'],
+    [/^(\d+) open and (\d+) closed projects? found\.$/, '找到 $1 个打开和 $2 个已关闭的项目。']
   ],
   ignore: [
     // 存储库项目页的项目描述、组织项目列表中的项目标题与描述
     'p[class*="projectDescription__"]',
     '#memexes-results a[id^="project_"]',
-    '#memexes-results span.text-normal',
-  ],
+    '#memexes-results span.text-normal'
+  ]
 } satisfies PageDictionary

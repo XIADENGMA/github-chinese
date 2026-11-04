@@ -29,8 +29,7 @@ export default {
       '开发环境机密是加密的环境变量。使用有权访问该机密的存储库创建的任何代码空间都可以使用它们。',
     'There are no Codespace secrets.': '暂无代码空间机密。',
     'There are no Codespaces secrets.': '暂无代码空间机密。',
-    'Secrets created at the user level can be shared with specified repositories.':
-      '在用户级别创建的机密可以与指定存储库共享。',
+    'Secrets created at the user level can be shared with specified repositories.': '在用户级别创建的机密可以与指定存储库共享。',
     '/ New secret': '/ 新建机密',
     '/ Update secret': '/ 更新机密',
     'Secret name is required and must not start with GITHUB': '机密名称必填且不能以 GITHUB 开头',
@@ -49,8 +48,7 @@ export default {
       '启用后，你会在代码空间因长期未使用即将被删除时收到电子邮件。',
     'Warning notifications for codespace deletions will be enabled': '将启用代码空间删除警告通知',
     'Trusted repositories': '可信存储库',
-    'The following repositories will be referenced by GPG verification and Settings Sync.':
-      'GPG 验证和设置同步将使用以下存储库。',
+    'The following repositories will be referenced by GPG verification and Settings Sync.': 'GPG 验证和设置同步将使用以下存储库。',
     'GPG signing and VS Code Settings Sync will be available for codespaces for all repositories':
       '所有存储库的代码空间都将可以使用 GPG 签名和 VS Code 设置同步',
     'GPG signing and VS Code Settings Sync will be available for codespaces from the selected repositories':
@@ -62,8 +60,7 @@ export default {
     'Access and security': '访问与安全',
     'Codespaces you create for your personal account can either be restricted to accessing the repository it was opened for, or granted read access to other repositories you own.':
       '你为个人帐户创建的代码空间可以仅限访问打开它的存储库，也可以获得你拥有的其他存储库的读取访问权限。',
-    'Limit access of personal Codespaces to the repository they were opened for':
-      '将个人代码空间的访问限制为打开它的存储库',
+    'Limit access of personal Codespaces to the repository they were opened for': '将个人代码空间的访问限制为打开它的存储库',
     'All Codespaces can access other repositories I own': '所有代码空间都可以访问我拥有的其他存储库',
     'Personal Codespaces created for specific repositories can access other repositories I own':
       '为特定存储库创建的个人代码空间可以访问我拥有的其他存储库',
@@ -107,7 +104,7 @@ export default {
     'We will determine the closest available region based on your location (IP address) at codespace creation time.':
       '我们将在创建代码空间时根据你的位置（IP 地址）确定最近的可用区域。',
     'Set manually': '手动设置',
-    'Choose your default region': '选择默认区域',
+    'Choose your default region': '选择默认区域'
   },
   scoped: {
     // Dotfiles、机密（与存储库、组织设置共用的短语；Secrets 见 permissions.ts，Select repository 由 common-ui 收录）
@@ -139,17 +136,14 @@ export default {
     Stable: '稳定版',
     Beta: '测试版',
     Region: '区域',
-    'Asia Pacific': '亚太',
+    'Asia Pacific': '亚太'
   },
   regexp: [
     [/^(\d+) repositor(?:y|ies)$/, '$1 个存储库'],
-    [
-      /^Selected (\d+) repositor(?:y|ies)(\.?)$/,
-      (_, count: string, dot: string) => `已选择 ${count} 个存储库${dot ? '。' : ''}`,
-    ],
+    [/^Selected (\d+) repositor(?:y|ies)(\.?)$/, (_, count: string, dot: string) => `已选择 ${count} 个存储库${dot ? '。' : ''}`],
     // 机密名为大写标识符
     [/^Are you sure you want to delete ([A-Z][A-Z0-9_]*)\?$/, '确定要删除 $1 吗？'],
     [/^Remove ([A-Z][A-Z0-9_]*)$/, '删除 $1'],
-    [/^Update ([A-Z][A-Z0-9_]*)$/, '更新 $1'],
-  ],
+    [/^Update ([A-Z][A-Z0-9_]*)$/, '更新 $1']
+  ]
 } satisfies PageDictionary

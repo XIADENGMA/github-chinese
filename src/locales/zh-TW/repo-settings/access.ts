@@ -76,8 +76,7 @@ export default {
     'Select a member above': '在上方選取成員',
     'Select a team above': '在上方選取團隊',
     'Choose a role': '選擇角色',
-    'Recommended for non-code contributors who want to view or discuss your project':
-      '適合想要查看或討論專案的非程式碼貢獻者',
+    'Recommended for non-code contributors who want to view or discuss your project': '適合想要查看或討論專案的非程式碼貢獻者',
     'Recommended for contributors who need to proactively manage issues and pull requests without write access':
       '適合需要主動管理議題和拉取請求但沒有寫入權限的貢獻者',
     'Recommended for contributors who need to proactively manage issues, discussions, and pull requests without write access':
@@ -120,10 +119,8 @@ export default {
     'Enable interaction limit to repository collaborators': '啟用僅限儲存庫協作者的互動限制',
     'Users that are not': '不是',
     'will not be able to interact with the repository.': '的使用者將無法與此儲存庫互動。',
-    'of one of your repositories will not be able to interact with that repository.':
-      '的使用者將無法與你的相應儲存庫互動。',
-    'Users that are not collaborators will not be able to interact with the repository.':
-      '不是協作者的使用者將無法與此儲存庫互動。',
+    'of one of your repositories will not be able to interact with that repository.': '的使用者將無法與你的相應儲存庫互動。',
+    'Users that are not collaborators will not be able to interact with the repository.': '不是協作者的使用者將無法與此儲存庫互動。',
     'Enable interaction limits for:': '啟用互動限制的期間：',
     // 「已儲存儲存庫…」两个「儲存」相连，改作「…設定已儲存」（同 nav.ts 的 Repository settings saved.）
     'Repository interaction limit settings saved.': '儲存庫互動限制設定已儲存。',
@@ -135,21 +132,16 @@ export default {
     'Currently, users without write access can open an unlimited number of pull requests.':
       '目前，沒有寫入權限的使用者可以建立不限數量的拉取請求。',
     'Currently, users without write access can have up to': '目前，沒有寫入權限的使用者同時最多可有',
-    'open pull request at a time. Draft pull requests do not count toward this limit.':
-      '個開放中的拉取請求。草稿拉取請求不計入此限制。',
-    'open pull requests at a time. Draft pull requests do not count toward this limit.':
-      '個開放中的拉取請求。草稿拉取請求不計入此限制。',
-    'open pull request at a time. Draft pull requests count toward this limit.':
-      '個開放中的拉取請求。草稿拉取請求計入此限制。',
-    'open pull requests at a time. Draft pull requests count toward this limit.':
-      '個開放中的拉取請求。草稿拉取請求計入此限制。',
+    'open pull request at a time. Draft pull requests do not count toward this limit.': '個開放中的拉取請求。草稿拉取請求不計入此限制。',
+    'open pull requests at a time. Draft pull requests do not count toward this limit.': '個開放中的拉取請求。草稿拉取請求不計入此限制。',
+    'open pull request at a time. Draft pull requests count toward this limit.': '個開放中的拉取請求。草稿拉取請求計入此限制。',
+    'open pull requests at a time. Draft pull requests count toward this limit.': '個開放中的拉取請求。草稿拉取請求計入此限制。',
     'Limit open pull requests from users without write access': '限制沒有寫入權限之使用者的開放中拉取請求數量',
     'Maximum open pull requests per user': '每位使用者的開放中拉取請求上限',
     'Enter a number from 1 to 1000': '輸入 1 到 1000 之間的數字',
     'Enter a number from 1 to 1000. Users who have more open PRs than the above limit will not be able to create new PRs.':
       '輸入 1 到 1000 之間的數字。開放中 PR 數量超過上述限制的使用者將無法建立新的 PR。',
-    'Users listed here can open pull requests regardless of the configured limit.':
-      '此處列出的使用者建立拉取請求時不受設定的限制。',
+    'Users listed here can open pull requests regardless of the configured limit.': '此處列出的使用者建立拉取請求時不受設定的限制。',
     'Add users to bypass list': '將使用者加入繞過清單',
     'No users can bypass the open pull request limit': '沒有可以繞過開放中拉取請求數量限制的使用者',
 
@@ -167,8 +159,7 @@ export default {
     // 已检举的内容
     'Prior contributors and collaborators': '先前的貢獻者和協作者',
     // 已检举的内容页（/<owner>/<repo>/reported_content，只有 repository 作用域）；原文拼写 distruptive 照录
-    'Users can report abusive or distruptive content for review and moderation.':
-      '使用者可以檢舉濫用或干擾性內容以供審查和內容審核。',
+    'Users can report abusive or distruptive content for review and moderation.': '使用者可以檢舉濫用或干擾性內容以供審查和內容審核。',
     'Learn more about reported content': '瞭解已檢舉的內容',
     'Report content setting': '檢舉內容設定',
     'Any user on GitHub is able to report content': 'GitHub 上的任何使用者都可以檢舉內容',
@@ -180,7 +171,7 @@ export default {
     'The following content has been reported by users:': '使用者檢舉了以下內容：',
     'Reported Content': '已檢舉的內容',
     "There aren't any unresolved content reports for this repository.": '此儲存庫沒有未解決的內容檢舉。',
-    "There aren't any resolved content reports for this repository.": '此儲存庫沒有已解決的內容檢舉。',
+    "There aren't any resolved content reports for this repository.": '此儲存庫沒有已解決的內容檢舉。'
   },
   scoped: {
     'Once canceled,': '取消後，',
@@ -216,18 +207,18 @@ export default {
     'No limit': '無限制',
     'Add users': '新增使用者',
     // 添加对话框按钮的屏幕阅读器文字「Add selection」
-    selection: '選取項目',
+    selection: '選取項目'
   },
   regexp: [
     // 谁有访问权限：数量与文字可能被 <strong> 拆开（片段由 static 匹配）
     [
       /^(\d+) collaborators? ha(?:s|ve) access to this repository\. Only you can contribute to this repository\.$/,
-      '$1 位協作者可以存取此儲存庫。只有你可以為此儲存庫做出貢獻。',
+      '$1 位協作者可以存取此儲存庫。只有你可以為此儲存庫做出貢獻。'
     ],
     [/^(\d+) collaborators? ha(?:s|ve) access to this repository\.$/, '$1 位協作者可以存取此儲存庫。'],
     [
       /^(\d+) teams? or members? ha(?:s|ve) access to this repository(\.?)$/,
-      (_, count: string, dot: string) => `${count} 個團隊或成員可以存取此儲存庫${dot ? '。' : ''}`,
+      (_, count: string, dot: string) => `${count} 個團隊或成員可以存取此儲存庫${dot ? '。' : ''}`
     ],
     [/^(\d+) collaborators?$/, '$1 位協作者'],
     [/^(\d+) members?$/, '$1 位成員'],
@@ -237,7 +228,7 @@ export default {
     [/^(\d+) members? selected(…|\.\.\.)$/, '已選取 $1 位成員$2'],
     [
       new RegExp(`^All members of ${NAME} can access this repository(\\.?)$`),
-      (_, name: string, dot: string) => `${name} 的所有成員都可以存取此儲存庫${dot ? '。' : ''}`,
+      (_, name: string, dot: string) => `${name} 的所有成員都可以存取此儲存庫${dot ? '。' : ''}`
     ],
     // 添加人员 / 团队
     [new RegExp(`^Add people to ${NAME}$`), '將人員加入 $1'],
@@ -248,7 +239,7 @@ export default {
     // 搜索结果中的用户状态：octocat • Collaborator
     [
       new RegExp(`^${USER} • (Collaborator|Invite collaborator)$`),
-      (_, user: string, state: string) => `${user} • ${state === 'Collaborator' ? '協作者' : '邀請協作者'}`,
+      (_, user: string, state: string) => `${user} • ${state === 'Collaborator' ? '協作者' : '邀請協作者'}`
     ],
     // 对邀请的回应（接受或拒绝），不是 reply（回覆）
     [new RegExp(`^Awaiting ${USER}[’']s response$`), '等待 $1 回應'],
@@ -257,30 +248,27 @@ export default {
     [new RegExp(`^${USER} is no longer invited to this repository\\.$`), '$1 已不再受邀加入此儲存庫。'],
     [
       new RegExp(`^Remove ${USER} from this repository(\\??)$`),
-      (_, user: string, mark: string) => `從此儲存庫移除 ${user}${mark ? '？' : ''}`,
+      (_, user: string, mark: string) => `從此儲存庫移除 ${user}${mark ? '？' : ''}`
     ],
     [
       new RegExp(`^Removed ${USER} as a collaborator of ([\\w.-]+/[\\w.-]+?)(\\.?)$`),
-      (_, user: string, repo: string, dot: string) => `已將 ${user} 從 ${repo} 的協作者中移除${dot ? '。' : ''}`,
+      (_, user: string, repo: string, dot: string) => `已將 ${user} 從 ${repo} 的協作者中移除${dot ? '。' : ''}`
     ],
     // 临时交互限制（后接链接「organization settings」：原文无逗号，改语序不加标点）
-    [
-      new RegExp(`^You can restrict repository interactions across the ${NAME} organization in your$`),
-      '整個 $1 組織的儲存庫互動限制位於',
-    ],
+    [new RegExp(`^You can restrict repository interactions across the ${NAME} organization in your$`), '整個 $1 組織的儲存庫互動限制位於'],
     [
       /^to the (\S+) branch of this repository will be unable to interact with the repository\.$/,
-      '到此儲存庫 $1 分支的使用者將無法與此儲存庫互動。',
+      '到此儲存庫 $1 分支的使用者將無法與此儲存庫互動。'
     ],
     [
       /^Users that have not previously committed to the (\S+) branch of this repository will be unable to interact with the repository\.$/,
-      '從未向此儲存庫 $1 分支提交過的使用者將無法與此儲存庫互動。',
+      '從未向此儲存庫 $1 分支提交過的使用者將無法與此儲存庫互動。'
     ],
     // 拉取请求限制：数量与文字被 <strong> 拆开时由 static 分别匹配
     [
       /^Currently, users without write access can have up to (\d+) open pull requests? at a time\. Draft pull requests (do not count|count) toward this limit\.$/,
       (_, count: string, rule: string) =>
-        `目前，沒有寫入權限的使用者同時最多可有 ${count} 個開放中的拉取請求。草稿拉取請求${rule === 'count' ? '計入' : '不計入'}此限制。`,
-    ],
-  ],
+        `目前，沒有寫入權限的使用者同時最多可有 ${count} 個開放中的拉取請求。草稿拉取請求${rule === 'count' ? '計入' : '不計入'}此限制。`
+    ]
+  ]
 } satisfies PageDictionary

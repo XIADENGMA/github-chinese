@@ -17,7 +17,7 @@ const RELEASE_ERRORS: Readonly<Record<string, string>> = {
   "tag name can't be blank": '標記名稱不可空白',
   'tag name can’t be blank': '標記名稱不可空白',
   'tag name is not well-formed': '標記名稱格式不正確',
-  'published releases must have a valid tag': '已發布的發行版本必須有有效的標記',
+  'published releases must have a valid tag': '已發布的發行版本必須有有效的標記'
 }
 const RELEASE_ERROR_SOURCE = Object.keys(RELEASE_ERRORS).join('|')
 const RELEASE_ERROR_LIST_SOURCE = `(?:${RELEASE_ERROR_SOURCE})(?:, (?:${RELEASE_ERROR_SOURCE}))*`
@@ -26,7 +26,7 @@ const RELEASE_ERROR_LIST_SOURCE = `(?:${RELEASE_ERROR_SOURCE})(?:, (?:${RELEASE_
 function joinReleaseErrors(list: string): string {
   return list
     .split(', ')
-    .map((reason) => RELEASE_ERRORS[reason] ?? reason)
+    .map(reason => RELEASE_ERRORS[reason] ?? reason)
     .join('，')
 }
 
@@ -37,7 +37,7 @@ const regexp: readonly RegExpRule[] = [
   // 隐藏的页面标题（无刷新导航时用于更新标签页标题）
   [
     new RegExp(`^(Releases|Tags) · (${REPO})$`),
-    (_, page: string, repo: string) => `${page === 'Releases' ? '發行版本' : '標記'} · ${repo}`,
+    (_, page: string, repo: string) => `${page === 'Releases' ? '發行版本' : '標記'} · ${repo}`
   ],
   // 标签页标题段：Release v3.5.0（只处理以版本号命名的发行版）
   [/^Release (v?\d[\w.+-]*)$/, '發行版本 $1'],
@@ -51,12 +51,9 @@ const regexp: readonly RegExpRule[] = [
   [new RegExp(`^(${LOGIN}) and (${LOGIN})$`), '$1 和 $2'],
   [
     new RegExp(`^(${LOGIN_LIST}), and (\\d+) other contributors?$`),
-    (_, list: string, count: string) => `${joinLogins(list)} 和另外 ${count} 位貢獻者`,
+    (_, list: string, count: string) => `${joinLogins(list)} 和另外 ${count} 位貢獻者`
   ],
-  [
-    new RegExp(`^(${LOGIN_LIST}), and (${LOGIN})$`),
-    (_, list: string, last: string) => `${joinLogins(list)} 和 ${last}`,
-  ],
+  [new RegExp(`^(${LOGIN_LIST}), and (${LOGIN})$`), (_, list: string, last: string) => `${joinLogins(list)} 和 ${last}`],
   // 标记页：切换提交消息按钮的提示
   [/^Toggle (.+?)['’]s commit message$/, '切換 $1 的提交訊息'],
   // 编辑 / 删除按钮的无障碍名称
@@ -76,8 +73,8 @@ const regexp: readonly RegExpRule[] = [
   // 发布表单：提交失败
   [
     new RegExp(`^There was an error creating your Release: (${RELEASE_ERROR_LIST_SOURCE})\\.$`),
-    (_, list: string) => `建立發行版本時發生錯誤：${joinReleaseErrors(list)}。`,
-  ],
+    (_, list: string) => `建立發行版本時發生錯誤：${joinReleaseErrors(list)}。`
+  ]
 ]
 
 /**
@@ -183,8 +180,7 @@ export default {
     // 建立新標記：<v1.0> 於發布時
     'on publish': '於發布時',
     'Choose an existing tag, or create a new tag on publish': '選擇現有標記，或在發布時建立新標記',
-    'Choose an existing tag, or create a new tag when you publish this release.':
-      '選擇現有標記，或在發布此發行版本時建立新標記。',
+    'Choose an existing tag, or create a new tag when you publish this release.': '選擇現有標記，或在發布此發行版本時建立新標記。',
     'Loading tag information…': '正在載入標記資訊…',
     'Loading tag information...': '正在載入標記資訊...',
     'Existing tag': '現有標記',
@@ -194,20 +190,16 @@ export default {
     'edit them?': '加以編輯？',
     'edit the existing notes': '編輯現有的版本資訊',
     'Invalid tag name': '標記名稱無效',
-    'We weren’t able to create the release for you. Make sure you have a valid tag.':
-      '無法建立發行版本。請確認標記有效。',
-    "We weren't able to create the release for you. Make sure you have a valid tag.":
-      '無法建立發行版本。請確認標記有效。',
+    'We weren’t able to create the release for you. Make sure you have a valid tag.': '無法建立發行版本。請確認標記有效。',
+    "We weren't able to create the release for you. Make sure you have a valid tag.": '無法建立發行版本。請確認標記有效。',
     'We can’t create a tag with this name. Take a look at the suggestions in the sidebar for example tag names.':
       '無法使用此名稱建立標記。標記名稱範例請參閱側邊欄中的建議。',
     "We can't create a tag with this name. Take a look at the suggestions in the sidebar for example tag names.":
       '無法使用此名稱建立標記。標記名稱範例請參閱側邊欄中的建議。',
-    'Excellent! This tag will be created from the target when you publish this release.':
-      '很好！發布此發行版本時將從目標建立此標記。',
+    'Excellent! This tag will be created from the target when you publish this release.': '很好！發布此發行版本時將從目標建立此標記。',
     // 新建标记对话框（标记选择器）
     'Tag cannot be blank': '標記不可空白',
-    'Contains invalid characters. Use safe special characters ., -, or _ instead':
-      '包含無效字元。請改用安全的特殊字元 .、- 或 _',
+    'Contains invalid characters. Use safe special characters ., -, or _ instead': '包含無效字元。請改用安全的特殊字元 .、- 或 _',
     // 「X. Please try again.」句号随原文（与 pulls、common-ui 一致）
     'Unable to validate tag name. Please try again.': '無法驗證標記名稱。請再試一次。',
     'Creating a tag with the same name as a branch can cause ambiguity when selecting refs':
@@ -217,8 +209,7 @@ export default {
     'Creating a tag with the same name as a branch can cause ambiguity when selecting refs. The tag will still be created when this release is published.':
       '建立與分支同名的標記可能會在選擇參考時造成混淆。發布此發行版本時仍會建立此標記。',
     'Tag name unavailable': '標記名稱無法使用',
-    'Tags previously bound to immutable releases can never be reused.':
-      '曾與不可變發行版本綁定的標記永遠無法重複使用。',
+    'Tags previously bound to immutable releases can never be reused.': '曾與不可變發行版本綁定的標記永遠無法重複使用。',
 
     // 发布表单：目标
     'Target:': '目標：',
@@ -246,8 +237,7 @@ export default {
       '自動加入此差異中所有已合併拉取請求和此發行版本貢獻者的 Markdown',
     'Clear existing notes to automatically add the Markdown for all the merged pull requests from this diff and contributors of this release':
       '清除現有的版本資訊以自動加入此差異中所有已合併拉取請求和此發行版本貢獻者的 Markdown',
-    'There were no pull requests associated with the commits included in this release.':
-      '此發行版本包含的提交沒有關聯的拉取請求。',
+    'There were no pull requests associated with the commits included in this release.': '此發行版本包含的提交沒有關聯的拉取請求。',
     'Describe this release': '描述此發行版本',
     'Release description': '發行版本描述',
 
@@ -340,7 +330,7 @@ export default {
     'A README exists.': '已有讀我檔案。',
     'Primary Category': '主要類別',
     'Another Category': '另一個類別',
-    '— optional': '— 選填',
+    '— optional': '— 選填'
   },
   scoped: {
     'Pre-release': '發行前版本',
@@ -370,11 +360,11 @@ export default {
     Ideas: '想法',
     Polls: '投票',
     'Q&A': '問與答',
-    'Show and tell': '成果分享',
+    'Show and tell': '成果分享'
   },
   regexp,
   ignore: [
     // “跳至發行版本”菜单中的发行版名
-    'a[href^="#release-"]',
-  ],
+    'a[href^="#release-"]'
+  ]
 } satisfies PageDictionary

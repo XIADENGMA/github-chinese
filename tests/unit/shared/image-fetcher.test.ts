@@ -25,15 +25,11 @@ function fakeFetch(replies: Readonly<Record<string, Reply>>): ImageFetchDeps & {
         })
       }
       return Promise.resolve(reply)
-    },
+    }
   }
 }
 
-function image(
-  type = 'image/png',
-  body: Uint8Array<ArrayBuffer> = PNG,
-  headers: Record<string, string> = {},
-): Response {
+function image(type = 'image/png', body: Uint8Array<ArrayBuffer> = PNG, headers: Record<string, string> = {}): Response {
   return new Response(body, { status: 200, headers: { 'content-type': type, ...headers } })
 }
 
@@ -69,23 +65,18 @@ describe('fetchImage', () => {
       [`https://ghfast.top/${RAW}`]: 'error',
       [`https://wget.la/${RAW}`]: new Response('<html></html>', {
         status: 200,
-        headers: { 'content-type': 'text/html' },
+        headers: { 'content-type': 'text/html' }
       }),
-      [`https://cdn.gh-proxy.org/${RAW}`]: image('image/svg+xml'),
+      [`https://cdn.gh-proxy.org/${RAW}`]: image('image/svg+xml')
     })
     expect(await fetchImage(RAW, { ...SETTINGS, failover: true }, deps)).toBe('data:image/svg+xml;base64,iVBORw==')
-    expect(deps.calls.map(([url]) => new URL(url).hostname)).toEqual([
-      'ghfast.top',
-      'wget.la',
-      'hk.gh-proxy.org',
-      'cdn.gh-proxy.org',
-    ])
+    expect(deps.calls.map(([url]) => new URL(url).hostname)).toEqual(['ghfast.top', 'wget.la', 'hk.gh-proxy.org', 'cdn.gh-proxy.org'])
   })
 
   it.each([
     ['声明的大小超出上限', image('image/png', PNG, { 'content-length': String(MAX_IMAGE_BYTES + 1) })],
     ['实际大小超出上限', image('image/png', new Uint8Array(MAX_IMAGE_BYTES + 1))],
-    ['类型不能放进 data: 地址', image('image/png,evil')],
+    ['类型不能放进 data: 地址', image('image/png,evil')]
   ])('%s：不用', async (_name, reply) => {
     const deps = fakeFetch({ [`https://ghfast.top/${RAW}`]: reply })
     expect(await fetchImage(RAW, SETTINGS, deps)).toBeUndefined()

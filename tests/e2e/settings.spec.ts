@@ -1,14 +1,4 @@
-import {
-  CJK,
-  expect,
-  extractTitle,
-  FIXTURE_URL,
-  fx,
-  offlineTest as test,
-  readFixture,
-  repoTab,
-  waitForSimulation,
-} from './fixtures'
+import { CJK, expect, extractTitle, FIXTURE_URL, fx, offlineTest as test, readFixture, repoTab, waitForSimulation } from './fixtures'
 
 /** 全局标记：页面主世界上确认未被刷新，后台上确认已重新启动 */
 interface MarkedGlobal {
@@ -121,9 +111,7 @@ test.describe('设置联动', () => {
     await page.bringToFront()
     await expect(repoTab(page, 'pull-requests')).toHaveText('拉取请求列表')
     // 转发来自被消息唤醒的新后台
-    await expect
-      .poll(() => extension.serviceWorker().evaluate(() => (globalThis as MarkedGlobal).__fxMarker))
-      .toBeUndefined()
+    await expect.poll(() => extension.serviceWorker().evaluate(() => (globalThis as MarkedGlobal).__fxMarker)).toBeUndefined()
 
     await extension.setCustomEntries({})
     await page.bringToFront()

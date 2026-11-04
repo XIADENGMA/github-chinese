@@ -8,7 +8,7 @@ const DURATION_UNIT: Readonly<Record<string, string>> = {
   day: '天',
   week: '周',
   month: '个月',
-  year: '年',
+  year: '年'
 }
 
 const DURATION_QUALIFIER: Readonly<Record<string, string>> = { about: '约 ', almost: '将近 ', over: '超过 ' }
@@ -16,8 +16,7 @@ const DURATION_QUALIFIER: Readonly<Record<string, string>> = { about: '约 ', al
 const DURATION_RE = /^(?:(about|almost|over) )?(\d+|an?|one) (second|minute|hour|day|week|month|year)s?$/
 
 /** 剩余时长片段（不含捕获组）：less than a minute、about 23 hours、1 day 等 */
-const DURATION_SOURCE =
-  '(?:less than a minute|(?:(?:about|almost|over) )?(?:\\d+|an?|one) (?:second|minute|hour|day|week|month|year)s?)'
+const DURATION_SOURCE = '(?:less than a minute|(?:(?:about|almost|over) )?(?:\\d+|an?|one) (?:second|minute|hour|day|week|month|year)s?)'
 
 /** 剩余时长：“about 23 hours” → 约 23 小时；无法识别时原样返回 */
 export function translateDuration(text: string): string {
@@ -54,8 +53,7 @@ export default {
     'Your personal account cannot be converted to an organization. You must create a new organization and transfer your repositories and projects to it instead. You can then rename your personal account and the organization if you want your organization to have the same name that you are currently using for your personal account.':
       '个人帐户无法转换为组织。你需要新建组织并将存储库和项目转让给该组织。如果希望组织使用你个人帐户当前的名称则可以随后重命名个人帐户和组织。',
     'Account Transformation Warning': '帐户转换警告',
-    'What you are about to do is an irreversible and destructive process. Please be aware:':
-      '你即将执行的操作不可逆且具有破坏性。请注意：',
+    'What you are about to do is an irreversible and destructive process. Please be aware:': '你即将执行的操作不可逆且具有破坏性。请注意：',
     'Any user-specific information (OAuth tokens, SSH keys, Job Profile, etc) will be erased':
       '所有用户特定信息（OAuth 令牌、SSH 密钥、求职个人资料等）都将被清除',
     'You will no longer be able to create or modify gists owned by the converted personal account':
@@ -85,8 +83,7 @@ export default {
     'invite you as a collaborator to their repositories': '邀请你成为其存储库的协作者',
     'follow your account’s public activity': '关注你帐户的公开活动',
     "follow your account's public activity": '关注你帐户的公开活动',
-    'send you notifications by @mentioning your username in public repositories':
-      '在公共存储库中通过 @提及你的用户名向你发送通知',
+    'send you notifications by @mentioning your username in public repositories': '在公共存储库中通过 @提及你的用户名向你发送通知',
     'Warn me when a blocked user is a prior contributor to a repository': '被阻止的用户曾为某存储库做出贡献时提醒我',
     'Warn me when blocked users have contributed to a repository': '被阻止的用户曾为某存储库做出贡献时提醒我',
     'We will show this warning each time you visit a repository where someone you blocked has committed code, unless you own the repository or have also contributed a commit. This warning does not restrict your access.':
@@ -122,7 +119,7 @@ export default {
       '。只有被明确授予这些存储库访问权限的用户才能提交“批准”或“请求更改”审查。能够提交评论审查的用户仍可继续提交。',
     'for all repositories. All users are able to submit pull request reviews, including those that "approve" or "request changes". Limit reviews to only permit users who have explicitly been granted access to each repository to submit reviews that "approve" or "request changes".':
       '。所有用户都可以提交拉取请求审查，包括“批准”或“请求更改”审查。将审查限制为只允许被明确授予各存储库访问权限的用户提交“批准”或“请求更改”审查。',
-    'Code review limit settings saved.': '已保存代码审查限制设置。',
+    'Code review limit settings saved.': '已保存代码审查限制设置。'
   },
   scoped: {
     // 组织（Leave 由 common-ui 收录，Billing manager 由 org-settings 收录）
@@ -184,17 +181,17 @@ export default {
     // 代码审查限制
     enabled: '已启用',
     disabled: '已禁用',
-    Unset: '取消设置',
+    Unset: '取消设置'
   },
   regexp: [
     // 组织：退出确认、外部协作者身份
     [
       /^Are you positive you want to leave (\S+)\? You will lose access to all repositories and teams\.$/,
-      '确定要退出 $1 吗？你将失去对其所有存储库和团队的访问权限。',
+      '确定要退出 $1 吗？你将失去对其所有存储库和团队的访问权限。'
     ],
     [
       /^Are you positive you want to leave (\S+)\? You will lose access to all repositories\.$/,
-      '确定要退出 $1 吗？你将失去对其所有存储库的访问权限。',
+      '确定要退出 $1 吗？你将失去对其所有存储库的访问权限。'
     ],
     [/^You left (\S+)\. It may take a few minutes to process\.$/, '你已退出 $1。处理可能需要几分钟。'],
     [/^Outside collaborator on (\d+) repositor(?:y|ies)$/, '$1 个存储库的外部协作者'],
@@ -203,11 +200,11 @@ export default {
     [/^Turn (\S+) into an organization$/, '将 $1 转换为组织'],
     [
       /^You will no longer be able to sign in to (\S+) \(all administrative privileges will be bestowed upon the owners you choose\)$/,
-      '你将无法再登录 $1（所有管理权限将授予你选择的所有者）',
+      '你将无法再登录 $1（所有管理权限将授予你选择的所有者）'
     ],
     [
       /^Any commits and comments credited to (\S+) will no longer be linked to this GitHub account$/,
-      '归属于 $1 的提交和评论将不再关联到此 GitHub 帐户',
+      '归属于 $1 的提交和评论将不再关联到此 GitHub 帐户'
     ],
     [/^Any GitHub Apps installed on (\S+) will be uninstalled$/, '安装在 $1 上的所有 GitHub 应用都将被卸载'],
     [/^If you are using (\S+) as a personal account, you should$/, '如果你将 $1 用作个人帐户，应先'],
@@ -235,12 +232,12 @@ export default {
     // 交互限制：剩余时间（原文无逗号，译文不加；句号随原文）
     [
       new RegExp(`^Enabled with (${DURATION_SOURCE}) remaining(\\.?)$`),
-      (_, remaining: string, dot: string) => `${joinCjk('已启用剩余', translateDuration(remaining))}${dot ? '。' : ''}`,
-    ],
+      (_, remaining: string, dot: string) => `${joinCjk('已启用剩余', translateDuration(remaining))}${dot ? '。' : ''}`
+    ]
   ],
   ignore: [
     // 单一登录组织列表：组织登录名、显示名是用户内容
     '[data-testid^="sso-org-link-"]',
-    '[data-testid^="sso-org-row-"] [class*="profileName__"]',
-  ],
+    '[data-testid^="sso-org-row-"] [class*="profileName__"]'
+  ]
 } satisfies PageDictionary

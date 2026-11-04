@@ -12,7 +12,7 @@ const FILTER_STATES: ReadonlyMap<string, string> = new Map([
   ['Answered', '已回答'],
   ['Unanswered', '未回答'],
   ['Verified', '已驗證'],
-  ['All', '全部'],
+  ['All', '全部']
 ])
 
 const FILTER_STATE_SOURCE = `(?:${[...FILTER_STATES.keys()].join('|')})`
@@ -21,7 +21,7 @@ const FILTER_STATE_SOURCE = `(?:${[...FILTER_STATES.keys()].join('|')})`
 function filterStates(states: string): string {
   return states
     .split(', ')
-    .map((state) => FILTER_STATES.get(state) ?? state)
+    .map(state => FILTER_STATES.get(state) ?? state)
     .join('、')
 }
 
@@ -48,20 +48,14 @@ const regexp: readonly RegExpRule[] = [
   [new RegExp(`^${NOT_OWNER}([\\w.-]+) ${NOT_REPO}([\\w.-]+) Discussions$`), '$1/$2 的討論'],
   [
     new RegExp(`^${NOT_OWNER}([\\w.-]+) ${NOT_REPO}([\\w.-]+) (.+) Discussions$`),
-    (_, owner, repo, category) => `${owner}/${repo} ${withCategory('的', category, '討論')}`,
+    (_, owner, repo, category) => `${owner}/${repo} ${withCategory('的', category, '討論')}`
   ],
   // 类别页的页面标题段：octo-org/hello-world Polls（只有默认类别名需要翻译）
-  [
-    new RegExp(`^([\\w.-]+/[\\w.-]+) (${DEFAULT_CATEGORY_SOURCE})$`),
-    (_, repo, category) => `${repo} ${categoryName(category)}`,
-  ],
+  [new RegExp(`^([\\w.-]+/[\\w.-]+) (${DEFAULT_CATEGORY_SOURCE})$`), (_, repo, category) => `${repo} ${categoryName(category)}`],
   // 类别页的固定讨论标题：Pinned to Announcements（状态用「已＋动词」）
   [/^Pinned to (.+)$/, (_, name) => withCategory('已釘選到', name)],
   // 列表筛选：Filter: Open / Filter: Open, Answered
-  [
-    new RegExp(`^Filter: (${FILTER_STATE_SOURCE}(?:, ${FILTER_STATE_SOURCE})*)$`),
-    (_, states) => `篩選器：${filterStates(states)}`,
-  ],
+  [new RegExp(`^Filter: (${FILTER_STATE_SOURCE}(?:, ${FILTER_STATE_SOURCE})*)$`), (_, states) => `篩選器：${filterStates(states)}`],
   // 列表项无障碍名称（类别、作者链接由全局 ignore 排除；参与者头像是 <img>）
   [/^(.+) \(category\)$/, (_, name) => `${categoryName(name)}（類別）`],
   [/^([^\s()]+) \(author\)$/, '$1（作者）'],
@@ -73,18 +67,18 @@ const regexp: readonly RegExpRule[] = [
     (_, category, number, user, date, clock: string) => {
       const [hour, minute] = clock.split(':')
       return `${categoryName(category)} · #${number} 由 ${user} ${joinCjk('於', translateTime(date))} ${formatClock(hour!, minute!)} 建立`
-    },
+    }
   ],
   // 评论数链接：12 comments: octocat, 11:34PM on September 06
   [
     new RegExp(`^(\\d[\\d,]*) comments?: ([^\\s,]+), (${COMMENT_TIME_SOURCE})$`),
-    (_, count, user, time) => `${count} 則留言：${user}，${commentTime(time)}`,
+    (_, count, user, time) => `${count} 則留言：${user}，${commentTime(time)}`
   ],
   // 计数（N comments、N replies、N participants 由 common-ui 的通用计数翻译）
   [/^(\d[\d,]*) new comments?$/, '$1 則新留言'],
   [/^(\d[\d,]*) upvotes?$/, '$1 票贊成'],
   [/^(\d[\d,]*) answers?$/, '$1 個回答'],
-  [/^(\d[\d,]*) (new )?suggested answers?$/, (_, count, isNew) => `${count} 個${isNew ? '新的' : ''}建議答案`],
+  [/^(\d[\d,]*) (new )?suggested answers?$/, (_, count, isNew) => `${count} 個${isNew ? '新的' : ''}建議答案`]
 ]
 
 /**
@@ -99,17 +93,13 @@ export default {
     'Discussions is a central gathering space for your community to ask questions, share ideas, and build connections with each other—all right next to your code.':
       '討論是社群提問、分享想法和彼此建立聯繫的集中交流空間——就在你的程式碼旁邊。',
     'Only maintainers can see this page and enable Discussions': '只有維護者能看到此頁面並啟用討論',
-    "Create custom categories and discussion types to suit your community's unique needs.":
-      '建立符合社群獨特需求的自訂類別和討論類型。',
-    'Create custom categories and discussion types to suit your community’s unique needs.':
-      '建立符合社群獨特需求的自訂類別和討論類型。',
+    "Create custom categories and discussion types to suit your community's unique needs.": '建立符合社群獨特需求的自訂類別和討論類型。',
+    'Create custom categories and discussion types to suit your community’s unique needs.': '建立符合社群獨特需求的自訂類別和討論類型。',
     'Mark the most helpful answer': '標示最有幫助的回答',
     'Highlight quality responses and make the best answer super discoverable.': '突顯優質回覆並讓最佳答案一目了然。',
     'Pin big announcements': '釘選重要公告',
-    'Direct the community’s attention to important announcements or popular discussions.':
-      '引導社群關注重要公告或熱門討論。',
-    "Direct the community's attention to important announcements or popular discussions.":
-      '引導社群關注重要公告或熱門討論。',
+    'Direct the community’s attention to important announcements or popular discussions.': '引導社群關注重要公告或熱門討論。',
+    "Direct the community's attention to important announcements or popular discussions.": '引導社群關注重要公告或熱門討論。',
     'Label your discussions': '為討論加上標籤',
     'Organize and triage discussions to keep your space tidy and help contributors filter to areas of interest.':
       '整理並分類討論以保持空間整潔，同時協助貢獻者篩選出感興趣的領域。',
@@ -119,8 +109,7 @@ export default {
     'Integrate with your existing workflows and GitHub Actions via the GraphQL API and webhooks.':
       '透過 GraphQL API 和 Web 鉤子整合現有的工作流程和 GitHub 動作。',
     'Thread your conversations': '以討論串整理對話',
-    'Keep conversations on track and encourage collaboration with threaded comments.':
-      '透過討論串留言讓對話不離題並促進協作。',
+    'Keep conversations on track and encourage collaboration with threaded comments.': '透過討論串留言讓對話不離題並促進協作。',
     'Monitor community insights': '監控社群洞察',
     'Track the health and growth of your community with a dashboard full of actionable data.':
       '透過充滿實用資料的儀表板，追蹤社群的健康狀況和成長。',
@@ -154,10 +143,8 @@ export default {
       '組織討論可用於發布新聞、在社群中發起對話、解答問題和分享想法。首先，你可以',
     'create a new discussion.': '建立新討論。',
     // 组织讨论源存储库：This is a ✨special✨ repository containing … for <a>org</a>. Everything posted here …
-    'This is a ✨special✨ repository containing the organization level discussions for':
-      '這個✨特殊✨儲存庫包含以下組織的組織層級討論',
-    '. Everything posted here will also be visible at the organization level.':
-      '。在此發布的所有內容也會在組織層級顯示。',
+    'This is a ✨special✨ repository containing the organization level discussions for': '這個✨特殊✨儲存庫包含以下組織的組織層級討論',
+    '. Everything posted here will also be visible at the organization level.': '。在此發布的所有內容也會在組織層級顯示。',
     'View organization discussions': '查看組織討論',
 
     // 列表
@@ -191,7 +178,7 @@ export default {
 
     // 全局讨论页（/discussions）
     'No discussions match the selected filters.': '沒有符合所選篩選器的討論。',
-    'Discussions are used to ask questions and have open-ended conversations.': '討論用於提問和展開開放式對話。',
+    'Discussions are used to ask questions and have open-ended conversations.': '討論用於提問和展開開放式對話。'
   },
   scoped: {
     // 介绍页按钮
@@ -257,7 +244,7 @@ export default {
 
     // 全局讨论页（/discussions）的筛选标签页，与 /pulls 一致
     Created: '已建立',
-    Commented: '已留言',
+    Commented: '已留言'
   },
-  regexp,
+  regexp
 } satisfies PageDictionary

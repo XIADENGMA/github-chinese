@@ -49,9 +49,7 @@ describe('createPositionMemo', () => {
   })
 
   it('祖先移到别处：重新判断', () => {
-    const { memo } = setup(
-      '<main><section><p><span id="target"></span></p></section></main><aside data-region></aside>',
-    )
+    const { memo } = setup('<main><section><p><span id="target"></span></p></section></main><aside data-region></aside>')
     expect(memo.get($('#target'))).toBe(false)
     $('aside').append($('section'))
     expect(memo.get($('#target'))).toBe(true)

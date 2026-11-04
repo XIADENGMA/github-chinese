@@ -25,7 +25,7 @@ function normalizeEntries(entries: CustomEntries): CustomEntries {
     Object.entries(entries).flatMap(([source, target]) => {
       const pair = normalizeEntry(source, target)
       return pair ? [pair] : []
-    }),
+    })
   )
 }
 
@@ -79,9 +79,7 @@ export function filterEntries(entries: CustomEntries, query: string): EntryPair[
   const needle = query.trim().toLowerCase()
   const pairs = Object.entries(entries).reverse()
   if (needle === '') return pairs
-  return pairs.filter(
-    ([source, target]) => source.toLowerCase().includes(needle) || target.toLowerCase().includes(needle),
-  )
+  return pairs.filter(([source, target]) => source.toLowerCase().includes(needle) || target.toLowerCase().includes(needle))
 }
 
 export function serializeEntries(entries: CustomEntries): string {

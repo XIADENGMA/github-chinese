@@ -29,10 +29,8 @@ export default {
     // 「You can <@mention> your company’s GitHub organization to link it.」（@mention 由 org-settings/teams.ts 译「@提及」）
     'your company’s GitHub organization to link it.': '你公司的 GitHub 組織以連結到該組織。',
     "your company's GitHub organization to link it.": '你公司的 GitHub 組織以連結到該組織。',
-    'You can @mention your company’s GitHub organization to link it.':
-      '你可以 @提及你公司的 GitHub 組織以連結到該組織。',
-    "You can @mention your company's GitHub organization to link it.":
-      '你可以 @提及你公司的 GitHub 組織以連結到該組織。',
+    'You can @mention your company’s GitHub organization to link it.': '你可以 @提及你公司的 GitHub 組織以連結到該組織。',
+    "You can @mention your company's GitHub organization to link it.": '你可以 @提及你公司的 GitHub 組織以連結到該組織。',
     'Link to social profile': '社群帳號連結',
     'Other users will see the time difference from their local time.': '其他使用者會看到與其當地時間的時差。',
     "All of the fields on this page are optional and can be deleted at any time, and by filling them out, you're giving us consent to share this data wherever your user profile appears. Please see our":
@@ -57,8 +55,7 @@ export default {
     'Revert to Gravatar': '還原為 Gravatar 頭像',
     'Are you sure you want to reset your current avatar?': '確定要重設目前的頭像嗎？',
     // 句号随原文
-    'Your profile picture has been reset. It may take a few minutes to update across the site.':
-      '你的頭像已重設。全站更新可能需要幾分鐘。',
+    'Your profile picture has been reset. It may take a few minutes to update across the site.': '你的頭像已重設。全站更新可能需要幾分鐘。',
     'Your profile picture has been updated. It may take a few minutes to update across the site.':
       '你的頭像已更新。全站更新可能需要幾分鐘。',
     'Crop your new profile picture': '裁切新的頭像',
@@ -105,8 +102,7 @@ export default {
 
     // 开发人员计画（组织设定页的同名词条为 scoped）
     'GitHub Developer Program': 'GitHub 開發人員計畫',
-    'Building an application, service, or tool that integrates with GitHub?':
-      '正在建置與 GitHub 整合的應用程式、服務或工具嗎？',
+    'Building an application, service, or tool that integrates with GitHub?': '正在建置與 GitHub 整合的應用程式、服務或工具嗎？',
     // 「Building …? [Join the GitHub Developer Program], or read more about it at our [Developer site].」
     'Join the GitHub Developer Program': '加入 GitHub 開發人員計畫',
     ', or read more about it at our': '，詳情請參閱我們的',
@@ -116,11 +112,9 @@ export default {
     'has guides, API and webhook references, information about creating GitHub Apps and other resources for building applications that integrate with GitHub. Make sure your contact information is up-to-date below. Thanks for being a member!':
       '提供指南、API 和 Web 鉤子參考資料、建立 GitHub 應用程式的資訊，以及建置與 GitHub 整合的應用程式所需的其他資源。請確認下方的聯絡資訊是最新的。感謝你的加入！',
     'Support email address': '支援電子郵件地址',
-    'An email address where GitHub users can contact you for support.':
-      'GitHub 使用者可透過此電子郵件地址聯絡你以取得支援。',
+    'An email address where GitHub users can contact you for support.': 'GitHub 使用者可透過此電子郵件地址聯絡你以取得支援。',
     'Product or company website': '產品或公司網站',
-    'The URL for the product, company, or service that integrates with GitHub.':
-      '與 GitHub 整合的產品、公司或服務的 URL。',
+    'The URL for the product, company, or service that integrates with GitHub.': '與 GitHub 整合的產品、公司或服務的 URL。',
     'Update contact information': '更新聯絡資訊',
     'Leave the program': '退出計畫',
 
@@ -140,7 +134,7 @@ export default {
     "We'll use this language preference to filter the trending repository lists on": '此語言偏好將用於篩選',
     'We’ll use this language preference to filter the trending repository lists on': '此語言偏好將用於篩選',
     'Trending Repositories': '熱門儲存庫',
-    'Save Trending settings': '儲存熱門頁面設定',
+    'Save Trending settings': '儲存熱門頁面設定'
   },
   scoped: {
     // 与个人主页编辑个人档案表单、组织资料同名的字段（与 profile/sidebar.ts 一致）
@@ -164,11 +158,11 @@ export default {
     'email settings': '電子郵件設定',
     // 贡献设定说明后「Read more」链接（可见文字由 common-ui 收录）的无障碍名称
     'Read more about viewing contributions on your profile': '瞭解如何在個人檔案中查看貢獻',
-    our: '我們的',
+    our: '我們的'
     // 「page.」与帐号页共用，由 account.ts 收录
   },
   regexp: [
     // 社群帐号输入框的无障碍名称（与 profile/sidebar.ts 一致）
-    [/^Link to social profile (\d)$/, '社群帳號連結 $1'],
-  ],
+    [/^Link to social profile (\d)$/, '社群帳號連結 $1']
+  ]
 } satisfies PageDictionary

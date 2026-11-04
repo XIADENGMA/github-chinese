@@ -3,7 +3,7 @@ import type { PageDictionary } from '../../../core/types'
 /** AI 扫描类型（提示文案里的 {scanName}） */
 const SCAN_NAME: Readonly<Record<string, string>> = {
   'standard scan': '标准扫描',
-  'deep scan': '深度扫描',
+  'deep scan': '深度扫描'
 }
 
 /**
@@ -131,8 +131,7 @@ export default {
     'Cancel scan': '取消扫描',
     // Advanced AI security scan on <分支>. Powered by MDASH. Scans may take over an hour …
     'Advanced AI security scan on': '对以下分支进行高级 AI 安全扫描',
-    '. Scans can consume a large number of AI credits. Powered by MDASH.':
-      '。扫描可能消耗大量 AI 额度。由 MDASH 提供支持。',
+    '. Scans can consume a large number of AI credits. Powered by MDASH.': '。扫描可能消耗大量 AI 额度。由 MDASH 提供支持。',
     '. Scans may take over an hour and consume a large number of AI credits. Powered by MDASH.':
       '。扫描可能耗时超过一小时并消耗大量 AI 额度。由 MDASH 提供支持。',
     '. Powered by MDASH. Scans may take over an hour and consume a large number of AI credits.':
@@ -248,8 +247,7 @@ export default {
     'Manage rulesets': '管理规则集',
     'Agentic autofix encountered an error and was unable to start working on the alert. You have exceeded the maximum number of queued jobs. Please try again later.':
       '代理自动修复出错且无法开始处理此警报。排队作业已超过上限。请稍后重试。',
-    'Agentic autofix could not be started because you do not have access to Copilot.':
-      '因你无权使用 Copilot 而无法启动代理自动修复。',
+    'Agentic autofix could not be started because you do not have access to Copilot.': '因你无权使用 Copilot 而无法启动代理自动修复。',
     'Agentic autofix could not be started because Copilot cloud agent is not enabled for you or this repository. See':
       '因你或此存储库未启用 Copilot 云代理而无法启动代理自动修复。请参阅',
     'Copilot cloud agent access management': 'Copilot 云代理访问管理',
@@ -278,9 +276,8 @@ export default {
     'Link a branch or pull request': '链接分支或拉取请求',
     'Group selected': '已选择分组',
     'Pull request and branch search results': '拉取请求与分支搜索结果',
-    'Unable to complete the search for pull requests and branches. Try a moment later.':
-      '无法完成拉取请求与分支搜索。请稍后重试。',
-    'Invalid item type': '无效的项类型',
+    'Unable to complete the search for pull requests and branches. Try a moment later.': '无法完成拉取请求与分支搜索。请稍后重试。',
+    'Invalid item type': '无效的项类型'
   },
   scoped: {
     // 其他区域也出现的同形文字，本区域内单独生效
@@ -320,7 +317,7 @@ export default {
     'try again': '重试',
     Issue: '议题',
     // 「在 GitHub Desktop 中打开」对话框里的链接文字；产品名按用户规定译出
-    'GitHub Desktop': 'GitHub 桌面版',
+    'GitHub Desktop': 'GitHub 桌面版'
   },
   regexp: [
     // 受影响分支的修复位置：Fixed <时间> via pull request #12
@@ -331,28 +328,24 @@ export default {
     [
       /^\+ (at least )?([\d,]+|more) branches \(not shown\)$/,
       (_, atLeast: string | undefined, count: string) =>
-        count === 'more' ? '+ 更多分支（未显示）' : `+ ${atLeast ? '至少 ' : ''}${count} 个分支（未显示）`,
+        count === 'more' ? '+ 更多分支（未显示）' : `+ ${atLeast ? '至少 ' : ''}${count} 个分支（未显示）`
     ],
     // 开发区的拉取请求条目
     [/^#(\d+) was closed$/, '#$1 已关闭'],
     [/^#(\d+) was merged into$/, '#$1 已合并到'],
     // 自动修复
-    [
-      /^Commit autofix(?:es)? to (new )?branch$/,
-      (_, isNew: string | undefined) => `将自动修复提交到${isNew ? '新' : ''}分支`,
-    ],
+    [/^Commit autofix(?:es)? to (new )?branch$/, (_, isNew: string | undefined) => `将自动修复提交到${isNew ? '新' : ''}分支`],
     [/^Copilot failed to create a pull request\. (.+)\.$/, 'Copilot 创建拉取请求失败。$1。'],
     // 代理自动修复横幅：Failed to create pull request: <错误信息>.
     [/^Failed to create pull request: (.+)\.$/, '创建拉取请求失败：$1。'],
     // AI 扫描不可用的说明（{scanName} = standard scan / deep scan）
     [
       /^There are no AI credits available to start an? (standard scan|deep scan)\. This may be because the budget has been exceeded or because metered billing has not been set up by the repository owner\.$/,
-      (_, scan: string) =>
-        `没有可用于启动${SCAN_NAME[scan]}的 AI 额度。可能是预算已超出或存储库所有者尚未设置按流量计费。`,
+      (_, scan: string) => `没有可用于启动${SCAN_NAME[scan]}的 AI 额度。可能是预算已超出或存储库所有者尚未设置按流量计费。`
     ],
     [
       /^Before you can start an? (standard scan|deep scan), you need to pick a "Usage billed to" option in your$/,
-      (_, scan: string) => `启动${SCAN_NAME[scan]}前，需要在以下设置中选择“使用量计费对象”`,
+      (_, scan: string) => `启动${SCAN_NAME[scan]}前，需要在以下设置中选择“使用量计费对象”`
     ],
     // AI 深度扫描进度
     [/^([\d,]+) of ([\d,]+) functions scanned$/, '已扫描 $1/$2 个函数'],
@@ -362,7 +355,7 @@ export default {
     [/^([\d,]+)\/([\d,]+) files? scanned$/, '已扫描 $1/$2 个文件'],
     // 代码路径：3 steps in src/index.js、Step 2
     [/^([\d,]+) steps? in (\S+)$/, '$2 中的 $1 个步骤'],
-    [/^Step (\d+)$/, '步骤 $1'],
+    [/^Step (\d+)$/, '步骤 $1']
   ],
   // 被元素拆开的整句（结构见 code-scanning-shared、code-scanning-development-section 组件源码）
   inline: [
@@ -375,9 +368,6 @@ export default {
     [/^Fixed \{\} via commit ([0-9a-f]{7,40})$/, '于 {}通过提交 $1 修复'],
     ['Fixed {}', '修复于 {}'],
     // 在 GitHub Desktop 中打开分支：… make sure <a>GitHub Desktop</a> is installed …, then <a>try again</a>.
-    [
-      'If nothing happens, make sure {} is installed and set up properly, then {}.',
-      '如果没有反应，请确认 {}已正确安装并设置，然后{}。',
-    ],
-  ],
+    ['If nothing happens, make sure {} is installed and set up properly, then {}.', '如果没有反应，请确认 {}已正确安装并设置，然后{}。']
+  ]
 } satisfies PageDictionary

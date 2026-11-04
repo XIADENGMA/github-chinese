@@ -42,8 +42,7 @@ export default {
     'The Student Developer Pack': '學生開發人員套件',
     'Discover the Student Developer Pack': '探索學生開發人員套件',
     'Access professional developer tools and partner offers at no cost.': '免費使用專業開發人員工具和合作夥伴優惠。',
-    'Build skills with step-by-step Learning Paths for every experience level.':
-      '透過適合各種經驗程度、循序漸進的學習路徑培養技能。',
+    'Build skills with step-by-step Learning Paths for every experience level.': '透過適合各種經驗程度、循序漸進的學習路徑培養技能。',
     'Explore curated Experiences in Web Development, Data Science & Machine Learning, and more.':
       '探索網頁開發、資料科學和機器學習等領域的精選體驗。',
 
@@ -57,23 +56,20 @@ export default {
       '如果你是年滿 13 歲、就讀可授予學位或文憑課程的學生，GitHub 學生開發人員套件就是為你準備的。你只需要學校核發的電子郵件地址和/或註明日期的正式在學證明。如需瞭解申請流程和我們接受的文件，請閱讀我們的申請說明文件。',
     'If you’re a student aged 13+ and enrolled in a degree or diploma-granting course of study, the GitHub Student Developer Pack is for you. All you need is a school-issued email address and/or official, dated proof of enrollment. For more information about the application process and what documents we accept, please':
       '如果你是年滿 13 歲、就讀可授予學位或文憑課程的學生，GitHub 學生開發人員套件就是為你準備的。你只需要學校核發的電子郵件地址和/或註明日期的正式在學證明。如需瞭解申請流程和我們接受的文件，請',
-    'read our docs on applying': '閱讀我們的申請說明文件',
+    'read our docs on applying': '閱讀我們的申請說明文件'
   },
   scoped: {
     'Get verified': '取得驗證',
     // auth/signup 等页面另有本页译法，短标签放 scoped
-    'Unlimited repositories': '無限量儲存庫',
+    'Unlimited repositories': '無限量儲存庫'
   },
   regexp: [
     // 3K Actions minutes and 180 Codespaces hours per month.
     [
       /^(\d+)K Actions minutes and (\d+) Codespaces hours per month\.$/,
-      (_, minutes, hours) => joinCjk(`每月 ${thousands(minutes!)}`, `動作分鐘數和 ${hours} 程式碼空間時數。`),
+      (_, minutes, hours) => joinCjk(`每月 ${thousands(minutes!)}`, `動作分鐘數和 ${hours} 程式碼空間時數。`)
     ],
     // 2 GB Packages storage and 20 GB Codespaces storage.
-    [
-      /^(\d+) GB Packages storage and (\d+) GB Codespaces storage\.$/,
-      '$1 GB 套件儲存空間和 $2 GB 程式碼空間的儲存空間。',
-    ],
-  ],
+    [/^(\d+) GB Packages storage and (\d+) GB Codespaces storage\.$/, '$1 GB 套件儲存空間和 $2 GB 程式碼空間的儲存空間。']
+  ]
 } satisfies PageDictionary

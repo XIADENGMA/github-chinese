@@ -353,16 +353,16 @@ import { TIME_SOURCE, translateTime } from './helpers'
 export default {
   // 精确匹配，全站生效。键与简体同名文件完全相同，只改值
   static: {
-    'New issue': '新增議題',
+    'New issue': '新增議題'
   },
   // 仅本页面类型生效，优先于所有 static；键与简体相同
   scoped: {
-    Open: '開放中',
+    Open: '開放中'
   },
   // 正则、标志、顺序与简体相同；替换文本、替换函数的输出按英文原文重新翻译
   regexp: [
     [/^(\d+) Open$/, '$1 個開放中'],
-    [new RegExp(`^opened (${TIME_SOURCE})$`), (_, time) => `${translateTime(time)}建立`],
+    [new RegExp(`^opened (${TIME_SOURCE})$`), (_, time) => `${translateTime(time)}建立`]
   ],
   // 与简体相同；选择器里匹配本扩展译文的中文改成繁体译文
   ignore: ['.my-user-content'],
@@ -374,14 +374,14 @@ export default {
   mergeText: ['h3 > span[data-sr-feedback]'],
   // 名称表：键与简体相同，只改值
   labels: {
-    bug: '錯誤',
+    bug: '錯誤'
   },
   // 说明表：键与简体相同，只改值
   labelDescriptions: {
-    'Good for newcomers': '適合新手',
+    'Good for newcomers': '適合新手'
   },
   // 标签正则：正则、标志、顺序与简体相同；替换按英文原文重新翻译
-  labelRegexp: [[/^Pull requests that update ([\w.#+ -]{1,40}) code$/, '更新 $1 程式碼的拉取請求']],
+  labelRegexp: [[/^Pull requests that update ([\w.#+ -]{1,40}) code$/, '更新 $1 程式碼的拉取請求']]
 } satisfies PageDictionary
 ```
 

@@ -4,7 +4,7 @@ import {
   createNavigationWatcher,
   DOCUMENT_NAVIGATION_EVENTS,
   WINDOW_NAVIGATION_EVENTS,
-  type NavigationHost,
+  type NavigationHost
 } from '../../../src/core/location'
 import { settle } from './helpers'
 
@@ -29,7 +29,7 @@ afterEach(() => {
 })
 
 describe('createNavigationWatcher', () => {
-  it.each(DOCUMENT_NAVIGATION_EVENTS)('document 事件 %s 触发地址比较', (type) => {
+  it.each(DOCUMENT_NAVIGATION_EVENTS)('document 事件 %s 触发地址比较', type => {
     const { onChange } = watch()
     history.pushState(null, '', `/vuejs/core/${type.replace(':', '-')}`)
     document.dispatchEvent(new Event(type))
@@ -37,7 +37,7 @@ describe('createNavigationWatcher', () => {
     expect(onChange).toHaveBeenCalledWith(location.href)
   })
 
-  it.each(WINDOW_NAVIGATION_EVENTS)('window 事件 %s 触发地址比较', (type) => {
+  it.each(WINDOW_NAVIGATION_EVENTS)('window 事件 %s 触发地址比较', type => {
     const { onChange } = watch()
     history.pushState(null, '', `/vuejs/core/${type}`)
     window.dispatchEvent(new Event(type))
@@ -67,7 +67,7 @@ describe('createNavigationWatcher', () => {
       MutationObserver,
       navigation,
       addEventListener: (type, listener) => window.addEventListener(type, listener),
-      removeEventListener: (type, listener) => window.removeEventListener(type, listener),
+      removeEventListener: (type, listener) => window.removeEventListener(type, listener)
     }
     const { onChange, stop } = watch(host)
     history.pushState(null, '', '/vuejs/core/actions')

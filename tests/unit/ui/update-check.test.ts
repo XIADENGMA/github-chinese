@@ -17,7 +17,7 @@ enableAutoUnmount(afterEach)
 
 const PAGES = [
   ['弹出页', () => Popup],
-  ['设置页', () => Options],
+  ['设置页', () => Options]
 ] as const
 
 async function render(page: (typeof PAGES)[number][1]): Promise<VueWrapper> {
@@ -71,7 +71,7 @@ describe.skipIf(!Popup || !Options)('新版本提示', () => {
     it('商店安装（manifest 带 update_url）：不请求、不显示', async () => {
       vi.spyOn(fakeBrowser.runtime, 'getManifest').mockReturnValue({
         version: '1.2.0',
-        update_url: 'https://clients2.google.com/service/update2/crx',
+        update_url: 'https://clients2.google.com/service/update2/crx'
       } as never)
       const fetch = mockLatest()
       const wrapper = await render(page)

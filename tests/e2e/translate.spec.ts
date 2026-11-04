@@ -8,7 +8,7 @@ import {
   offlineTest as test,
   readFixture,
   repoTab,
-  waitForSimulation,
+  waitForSimulation
 } from './fixtures'
 
 /** 存储库标签页 → 期望译文（GLOSSARY 术语；产品名 Actions 按术语表译出） */
@@ -20,7 +20,7 @@ const REPO_TABS: ReadonlyArray<readonly [item: string, text: string]> = [
   ['projects', '项目'],
   ['security', '安全'],
   ['insights', '见解'],
-  ['settings', '设置'],
+  ['settings', '设置']
 ]
 
 test.describe('离线夹具：存储库首页', () => {
@@ -64,7 +64,7 @@ test.describe('离线夹具：存储库首页', () => {
     const html = await readFixture('repo.html')
     const scripts = await page
       .locator('script[type="application/json"]')
-      .evaluateAll((elements) => elements.map((element) => element.textContent))
+      .evaluateAll(elements => elements.map(element => element.textContent))
     expect(scripts).toEqual(extractJsonScripts(html))
   })
 
@@ -89,7 +89,7 @@ test.describe('离线夹具：存储库首页', () => {
     await expect(times).toHaveCount(3)
     await expect(page.locator('relative-time:not([lang="zh-CN"])')).toHaveCount(0)
     // 夹具中的 relative-time 按 lang 用 Intl 渲染 shadow DOM；中文与数字之间补空格
-    const rendered = (): Promise<string> => times.first().evaluate((element) => element.shadowRoot?.textContent ?? '')
+    const rendered = (): Promise<string> => times.first().evaluate(element => element.shadowRoot?.textContent ?? '')
     await expect.poll(rendered).toMatch(CJK)
     expect(await rendered()).not.toMatch(/\d[一-鿿]|[一-鿿]\d/)
   })

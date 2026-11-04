@@ -24,8 +24,7 @@ export default {
       'GitHub 教育致力于将技术和开源协作带给全球的学生和教育工作者。',
     // <b>Join us today</b> and take the first step …（整句见 inline）
     'Join us today': '立即加入我们',
-    'and take the first step towards transforming your tech education experience.':
-      '，迈出改变你的技术教育体验的第一步。',
+    'and take the first step towards transforming your tech education experience.': '，迈出改变你的技术教育体验的第一步。',
     // 「加入 GitHub 教育」链接的 aria-label
     'Enable GitHub Education': '启用 GitHub 教育',
 
@@ -44,19 +43,16 @@ export default {
     'Learn more about partners': '了解合作伙伴相关信息',
 
     // 「更进一步」
-    'Go further': '更进一步',
+    'Go further': '更进一步'
   },
   regexp: [
     // 数据：5 million students / 200K verified educators / +2K educational institutions
     [/^(\d+) million students$/, (_, count) => joinCjk(millions(count!), '学生')],
     [/^(\d+)K verified educators$/, (_, count) => joinCjk(thousands(count!), '已验证教育工作者')],
-    [/^\+(\d+)K educational institutions$/, (_, count) => joinCjk(`超过 ${thousands(count!)}`, '所教育机构')],
+    [/^\+(\d+)K educational institutions$/, (_, count) => joinCjk(`超过 ${thousands(count!)}`, '所教育机构')]
   ],
   inline: [
     // <b>Join us today</b> and take the first step towards transforming your tech education experience.
-    [
-      '{} and take the first step towards transforming your tech education experience.',
-      '{}，迈出改变你的技术教育体验的第一步。',
-    ],
-  ],
+    ['{} and take the first step towards transforming your tech education experience.', '{}，迈出改变你的技术教育体验的第一步。']
+  ]
 } satisfies PageDictionary

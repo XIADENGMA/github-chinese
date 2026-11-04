@@ -7,7 +7,7 @@ const EDITOR_KIND: Readonly<Record<string, string>> = {
   dependabot: 'Dependabot',
   devcontainer: 'devcontainer',
   'issue template': '议题模板',
-  'discussion template': '讨论模板',
+  'discussion template': '讨论模板'
 }
 
 const EDITOR_KIND_SOURCE = '(workflow|dependabot|devcontainer|issue template|discussion template)'
@@ -52,8 +52,7 @@ export default {
     'key moving focus. Alternatively, use': '键是否移动焦点。也可以按',
     'to move to the next interactive element on the page.': '移到页面上的下一个交互元素。',
     // 工作流编辑器底部的自动补全提示（含 kbd；macOS 多一个 Option + Space）
-    'Use Control + Space to trigger autocomplete in most situations.':
-      '使用 Control + Space 可在大多数情况下触发自动补全。',
+    'Use Control + Space to trigger autocomplete in most situations.': '使用 Control + Space 可在大多数情况下触发自动补全。',
     'Use Control + Space or Option + Space to trigger autocomplete in most situations.':
       '使用 Control + Space 或 Option + Space 可在大多数情况下触发自动补全。',
     'Use Tab to navigate to the next placeholder.': '使用 Tab 可跳到下一个占位符。',
@@ -72,8 +71,7 @@ export default {
     'There is no content to preview.': '无可预览内容。',
     'There has been an error generating the preview.': '生成预览时出错。',
     'But you can preview the whole file.': '但可以预览整个文件。',
-    'There has been an error generating the preview. But you can preview the whole file.':
-      '生成预览时出错。但可以预览整个文件。',
+    'There has been an error generating the preview. But you can preview the whole file.': '生成预览时出错。但可以预览整个文件。',
     'Error getting preview': '获取预览出错',
     'Unable to load this preview, sorry.': '无法加载此预览。',
 
@@ -102,8 +100,7 @@ export default {
       '存储库所有者已限制可提议更改的人员。如需帮助，请查看',
     'Pull requests cannot be created in this repository': '无法在此存储库中创建拉取请求',
     'The repository owner has disabled pull requests.': '存储库所有者已禁用拉取请求。',
-    'The repository owner has disabled pull requests. If you need help, view the':
-      '存储库所有者已禁用拉取请求。如需帮助，请查看',
+    'The repository owner has disabled pull requests. If you need help, view the': '存储库所有者已禁用拉取请求。如需帮助，请查看',
     'If you need help, view the': '如需帮助，请查看',
     'support resources': '支持资源',
     'This repository is currently being migrated.': '此存储库正在迁移。',
@@ -118,8 +115,7 @@ export default {
     'You’ll have to bring it up to date before you can propose changes.': '须先更新复刻才能提议更改。',
     'Binary file content is not editable.': '二进制文件内容不可编辑。',
     'But you can still rename or move it.': '但仍可重命名或移动。',
-    'Forking this .github repository affects default community health files':
-      '复刻此 .github 存储库会影响默认社区健康文件',
+    'Forking this .github repository affects default community health files': '复刻此 .github 存储库会影响默认社区健康文件',
     'This is a `.github` repository.': '这是一个 `.github` 存储库。',
     "Forking it to propose changes will use this repository's": '复刻以提议更改时将使用此存储库的',
     'community health files': '社区健康文件',
@@ -138,8 +134,7 @@ export default {
     ', so you can send a pull request.': '，之后可发送拉取请求。',
     'shows the community how to support this project. Please see our': '向社区展示支持此项目的方式。请参阅',
     'repository funding links documentation': '存储库赞助链接文档',
-    "for more information on formatting and what is and isn't allowed in this file.":
-      '以了解格式以及此文件中允许和禁止的内容。',
+    "for more information on formatting and what is and isn't allowed in this file.": '以了解格式以及此文件中允许和禁止的内容。',
     'Please note that funding links are currently': '请注意此存储库的赞助链接当前',
     'on this repository. Visit': '。请前往',
     'repository settings': '存储库设置',
@@ -149,10 +144,8 @@ export default {
     '. Need help? Check out the': '。需要帮助？请查看',
     'documentation.': '文档。',
     'Looks like this file is an issue template. Need help?': '此文件似乎是议题模板。需要帮助？',
-    'Looks like this file is a custom slash command. Need help? Check out the':
-      '此文件似乎是自定义斜杠命令。需要帮助？请查看',
-    'file helps users to easily cite your software from the repository overview.':
-      '文件可帮助用户从存储库概述引用你的软件。',
+    'Looks like this file is a custom slash command. Need help? Check out the': '此文件似乎是自定义斜杠命令。需要帮助？请查看',
+    'file helps users to easily cite your software from the repository overview.': '文件可帮助用户从存储库概述引用你的软件。',
     'Insert example': '插入示例',
     'Parent directory contains leading or trailing whitespace.': '父目录名称首尾包含空白。',
     'We’ve detected the file has mixed line endings. When you commit changes we will normalize them to':
@@ -189,8 +182,7 @@ export default {
     'Loading featured actions': '正在加载精选操作',
     'Browse all actions on the GitHub Marketplace': '在 GitHub 市场中浏览所有操作',
     // 后接 <devcontainer.json> 与「 file.」（文件。）
-    'Copy and paste the following snippet into the features attribute of your':
-      '将以下代码片段复制粘贴到以下文件的 features 属性中',
+    'Copy and paste the following snippet into the features attribute of your': '将以下代码片段复制粘贴到以下文件的 features 属性中',
     'Version:': '版本：',
     'Copy snippet to clipboard': '将代码片段复制到剪贴板',
     'Couldn’t load snippet.': '无法加载代码片段。',
@@ -206,8 +198,7 @@ export default {
     'Development containers': '开发容器',
     'are configuration files used by Codespaces and tools implementing the dev container specification.':
       '是代码空间及实现了开发容器规范的工具所使用的配置文件。',
-    'These files allow you to create a consistent, sharable development environment.':
-      '借助这些文件可以创建一致、可共享的开发环境。',
+    'These files allow you to create a consistent, sharable development environment.': '借助这些文件可以创建一致、可共享的开发环境。',
     "Dev Container Features are self-contained units of installation code and development container configuration. Features are designed to install atop a wide-range of base container images. Be sure to check a Feature's documentation to see which base images are supported.":
       '开发容器功能是独立的安装代码和开发容器配置单元。功能可安装在多种基础容器映像之上。请查看各功能的文档以确认支持哪些基础映像。',
     'To reference a Feature, add the desired Feature(s) to a': '要引用功能，请将所需功能添加到',
@@ -225,11 +216,9 @@ export default {
     'Add an optional extended description': '添加可选的扩展描述',
     'There was an error committing your changes:': '提交更改时出错：',
     // 提交出错（服务端下发）：<用户> has committed since you started editing. <See what changed>
-    'A file with the same name already exists. Please choose a different name and try again.':
-      '已存在同名文件。请换个名称重试。',
+    'A file with the same name already exists. Please choose a different name and try again.': '已存在同名文件。请换个名称重试。',
     'See what changed': '查看更改',
-    'Something went wrong. Please fork the project, then try from your fork.':
-      '出错了。请复刻此项目，然后在复刻中重试。',
+    'Something went wrong. Please fork the project, then try from your fork.': '出错了。请复刻此项目，然后在复刻中重试。',
     'Copilot is thinking...': 'Copilot 正在思考...',
     'Regenerate commit message': '重新生成提交消息',
     'Copilot commit message generated:': 'Copilot 已生成提交消息：',
@@ -269,8 +258,7 @@ export default {
       '分支在组织管理员将此组织帐户升级到 GitHub 团队版之前不会在此专用存储库中强制实施。',
     'targeting your': '针对你的',
     'The rulesets targeting your': '规则集针对你的',
-    "You've successfully submitted a request to your organization's admins for this feature.":
-      '已向组织管理员提交此功能的申请。',
+    "You've successfully submitted a request to your organization's admins for this feature.": '已向组织管理员提交此功能的申请。',
 
     // 推送保护（检测到机密）：Secret scanning found a custom pattern named <b>…</b>, defined by your admins, on <a>line 3</a>.
     // （逗号随原文，不改写成括号）
@@ -332,8 +320,7 @@ export default {
     "Blocked something we shouldn't have?": '误拦了内容？',
 
     // 删除页
-    "The diff you're trying to view is too large. We only load the first 1000 changed files.":
-      '差异过大。仅加载前 1000 个已更改的文件。',
+    "The diff you're trying to view is too large. We only load the first 1000 changed files.": '差异过大。仅加载前 1000 个已更改的文件。',
 
     // 上传页（Rails）
     'Drag files here to add them to your repository': '将文件拖到此处以添加到存储库',
@@ -350,7 +337,7 @@ export default {
     'Processing your files…': '正在处理文件…',
     'Uploads are disabled.': '上传已禁用。',
     'File uploads require push access to this repository.': '上传文件需要此存储库的推送权限。',
-    'Learn more about pull requests.': '了解拉取请求。',
+    'Learn more about pull requests.': '了解拉取请求。'
   },
 
   scoped: {
@@ -438,18 +425,18 @@ export default {
     'This file is': '此文件',
     empty: '为空',
     'branch.': '分支。',
-    'Add files via upload': '通过上传添加文件',
+    'Add files via upload': '通过上传添加文件'
   },
 
   regexp: [
     // 编辑器屏幕阅读器标题
     [
       new RegExp(`^Creating a new (?:${EDITOR_KIND_SOURCE} )?file in (\\S+)$`),
-      (_, kind: string, repo: string) => joinCjk(`在 ${repo} 中新建`, editorFile(kind)),
+      (_, kind: string, repo: string) => joinCjk(`在 ${repo} 中新建`, editorFile(kind))
     ],
     [
       new RegExp(`^Editing (?:${EDITOR_KIND_SOURCE} file )?(\\S.*) in (\\S+)$`),
-      (_, kind: string, name: string, repo: string) => `${joinCjk(`编辑 ${repo} 中的`, editorFile(kind))} ${name}`,
+      (_, kind: string, name: string, repo: string) => `${joinCjk(`编辑 ${repo} 中的`, editorFile(kind))} ${name}`
     ],
     [/^Editing (\S.*) file contents$/, '编辑 $1 文件内容'],
 
@@ -481,13 +468,13 @@ export default {
     // 删除页
     [
       /^Deleting (directory )?(\S.*)\. Commit changes to save\.$/,
-      (_, dir: string, path: string) => `正在删除${dir ? '目录' : ''} ${path}。提交更改后生效。`,
+      (_, dir: string, path: string) => `正在删除${dir ? '目录' : ''} ${path}。提交更改后生效。`
     ],
     [/^Failed to load diff: (\d+)$/, '差异加载失败：$1'],
 
     // 上传页：文件列表中的删除按钮（Remove <文件名>）、屏幕阅读器标题
     [/^Remove (\S+)$/, '删除 $1'],
-    [/^Uploading files to (\S+)$/, '上传文件到 $1'],
+    [/^Uploading files to (\S+)$/, '上传文件到 $1']
   ],
 
   inline: [
@@ -501,12 +488,12 @@ export default {
     // 不能创建拉取请求时没有「, so you can send a pull request」；复刻名提到「新分支」之前
     [
       'You’re making changes in a project you don’t have write access to. Submitting a change will write it to a new branch in your fork {}, so you can send a pull request.',
-      '你正在更改没有写入访问权限的项目。提交的更改将写入你的复刻 {} 中的新分支，之后可发送拉取请求。',
+      '你正在更改没有写入访问权限的项目。提交的更改将写入你的复刻 {} 中的新分支，之后可发送拉取请求。'
     ],
     [
       'You’re making changes in a project you don’t have write access to. Submitting a change will write it to a new branch in your fork {}.',
-      '你正在更改没有写入访问权限的项目。提交的更改将写入你的复刻 {} 中的新分支。',
-    ],
+      '你正在更改没有写入访问权限的项目。提交的更改将写入你的复刻 {} 中的新分支。'
+    ]
   ],
 
   ignore: [
@@ -528,6 +515,6 @@ export default {
     '[class*="envItem__"] > a',
     // 上传页：待提交文件名、上传进度中的文件名
     '.js-manifest-file-entry .js-filename',
-    '.js-upload-meter-filename',
-  ],
+    '.js-upload-meter-filename'
+  ]
 } satisfies PageDictionary

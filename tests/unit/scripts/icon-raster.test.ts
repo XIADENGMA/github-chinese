@@ -25,7 +25,7 @@ function wrap(href: string, quote = '"'): string {
   return [
     '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1254 1254">',
     `<image id="图层_1" width="1254" height="1254" xlink:href=${quote}${href}${quote}/>`,
-    '</svg>',
+    '</svg>'
   ].join('\n')
 }
 

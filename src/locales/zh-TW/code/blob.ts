@@ -5,7 +5,7 @@ import { DATE_SOURCE, joinCjk, translateTime } from '../helpers'
 const CODE_NAV_KIND: Readonly<Record<string, string>> = {
   Definitions: '定義',
   References: '參考',
-  Results: '結果',
+  Results: '結果'
 }
 
 /** 「啟用此功能」或「啟用 CODEOWNERS」（功能名由 GitHub 传入） */
@@ -16,20 +16,20 @@ function enableFeature(feature: string): string {
 /** 计划限制提示里的方案名（product-names.md：方案名译「X 版」） */
 const PLAN_NAMES: Readonly<Record<string, string>> = {
   Pro: '專業版',
-  Team: '團隊版',
+  Team: '團隊版'
 }
 
 /** 实验性代码视图：行号旁警告按钮的注释类型 */
 const ANNOTATION_KIND: Readonly<Record<string, string>> = {
   'Hidden Unicode': '隱藏的 Unicode',
-  'CODEOWNERS error': 'CODEOWNERS 錯誤',
+  'CODEOWNERS error': 'CODEOWNERS 錯誤'
 }
 
 /** 「Hidden Unicode, CODEOWNERS error」→「隱藏的 Unicode、CODEOWNERS 錯誤」 */
 function annotationKinds(list: string): string {
   return list
     .split(', ')
-    .map((kind) => ANNOTATION_KIND[kind] ?? kind)
+    .map(kind => ANNOTATION_KIND[kind] ?? kind)
     .join('、')
 }
 
@@ -176,8 +176,7 @@ export default {
     'Filter symbols': '篩選符號',
     'Clear input': '清除輸入',
     'Symbol outline not available for this file': '此檔案沒有符號大綱',
-    'To inspect a symbol, try clicking on the symbol directly in the code view.':
-      '若要檢查符號，請直接在程式碼檢視中按一下該符號。',
+    'To inspect a symbol, try clicking on the symbol directly in the code view.': '若要檢查符號，請直接在程式碼檢視中按一下該符號。',
     'Code navigation supports a limited number of languages.': '程式碼導覽僅支援部分語言。',
     'See which languages are supported.': '查看支援的語言。',
     'No symbols found': '找不到符號',
@@ -237,10 +236,8 @@ export default {
     'Symbol highlighting failed. Select the symbol again to retry.': '符號醒目提示失敗。請重新選取符號以重試。',
     'Source preparation failed. Original source text remains available.': '原始碼準備失敗。原本的原始碼文字仍可使用。',
     'Source preparation is still pending.': '原始碼仍在準備中。',
-    "Clipboard access failed. Select the code and use your browser's Copy command.":
-      '無法存取剪貼簿。請選取程式碼後使用瀏覽器的複製命令。',
-    'Clipboard access failed. Select the code and use your browser’s Copy command.':
-      '無法存取剪貼簿。請選取程式碼後使用瀏覽器的複製命令。',
+    "Clipboard access failed. Select the code and use your browser's Copy command.": '無法存取剪貼簿。請選取程式碼後使用瀏覽器的複製命令。',
+    'Clipboard access failed. Select the code and use your browser’s Copy command.': '無法存取剪貼簿。請選取程式碼後使用瀏覽器的複製命令。'
   },
 
   scoped: {
@@ -292,14 +289,14 @@ export default {
     'File not found': '找不到檔案',
 
     // Copilot 行菜单
-    'Suggest improvements': '建議改進',
+    'Suggest improvements': '建議改進'
   },
 
   regexp: [
     // 文件大小：117 lines (117 loc) · 5.03 KB；大文件的行数缩写为 12.3k
     [
       /^([\d,.]+k?) lines? \(([\d,.]+k?) loc\) · (\S.*)$/,
-      (_, lines: string, loc: string, size: string) => `${lines} 行（${loc} 行程式碼）· ${fileSize(size)}`,
+      (_, lines: string, loc: string, size: string) => `${lines} 行（${loc} 行程式碼）· ${fileSize(size)}`
     ],
     // 不可预览的文件（二进制等）只显示大小
     [/^([\d,.]+) Bytes?$/, '$1 位元組'],
@@ -308,11 +305,11 @@ export default {
     // 与 pulls/files.ts 差异视图的同一提示同译「擁有者為 X」）
     [
       /^Owned by you(?:null)?(?: along with (\S.*?))?(?: \(from CODEOWNERS line (\d+)\))?$/,
-      (_, others: string, line: string) => `擁有者為你${others ? `和 ${others}` : ''}${codeownersLine(line)}`,
+      (_, others: string, line: string) => `擁有者為你${others ? `和 ${others}` : ''}${codeownersLine(line)}`
     ],
     [
       /^Owned by (\S.*?)(?: \(from CODEOWNERS line (\d+)\))?$/,
-      (_, owners: string, line: string) => `擁有者為 ${owners}${codeownersLine(line)}`,
+      (_, owners: string, line: string) => `擁有者為 ${owners}${codeownersLine(line)}`
     ],
     [/^Code owners: You, (\S.*)$/, '程式碼擁有者：你、$1'],
     [/^Code owner: You$/, '程式碼擁有者：你'],
@@ -329,7 +326,7 @@ export default {
     // 追溯：Blame prior to change <SHA>, made on <日期>（原文只有逗号，译文不换成括号）
     [
       new RegExp(`^Blame prior to change ([0-9a-f]{7,40}), made on (${DATE_SOURCE})$`),
-      (_, sha: string, date: string) => `追溯 ${sha} 之前的版本，${joinCjk('該變更提交於', translateTime(date))}`,
+      (_, sha: string, date: string) => `追溯 ${sha} 之前的版本，${joinCjk('該變更提交於', translateTime(date))}`
     ],
 
     // 符号面板（播报文字末尾可能带零宽空格）
@@ -337,8 +334,7 @@ export default {
     [/^([\d,]+) References?$/, '$1 個參考'],
     [
       /^(Definitions|References|Results) in (\S.*)$/,
-      (_, kind: string, where: string) =>
-        `${where === 'this file' ? '此檔案' : `${where} `}中的${CODE_NAV_KIND[kind] ?? kind}`,
+      (_, kind: string, where: string) => `${where === 'this file' ? '此檔案' : `${where} `}中的${CODE_NAV_KIND[kind] ?? kind}`
     ],
 
     // 错误页：An unexpected 500 error occurred. Try（文本节点拼接后匹配）
@@ -347,26 +343,22 @@ export default {
     // 计划限制提示（方案名译「X 版」）
     [
       /^Upgrade to GitHub (Pro|Team) or make this repository public to enable (\S.*)\.$/,
-      (_, plan: string, feature: string) =>
-        `升級到 GitHub ${PLAN_NAMES[plan] ?? plan}或將此儲存庫設為公開以${enableFeature(feature)}。`,
+      (_, plan: string, feature: string) => `升級到 GitHub ${PLAN_NAMES[plan] ?? plan}或將此儲存庫設為公開以${enableFeature(feature)}。`
     ],
     // 复刻存储库：原文句末没有句号
     [
       /^This repository is a fork, and inherits the features of the parent repository\. Contact the owner of the root repository to enable (\S.*?)(\.?)$/,
       (_, feature: string, period: string) =>
-        `此儲存庫是分叉，繼承了父儲存庫的功能。聯絡根儲存庫的擁有者以${enableFeature(feature)}${period ? '。' : ''}`,
+        `此儲存庫是分叉，繼承了父儲存庫的功能。聯絡根儲存庫的擁有者以${enableFeature(feature)}${period ? '。' : ''}`
     ],
-    [
-      /^Contact the owner of the repository to enable (\S.*)\.$/,
-      (_, feature: string) => `聯絡儲存庫擁有者以${enableFeature(feature)}。`,
-    ],
+    [/^Contact the owner of the repository to enable (\S.*)\.$/, (_, feature: string) => `聯絡儲存庫擁有者以${enableFeature(feature)}。`],
 
     // 实验性代码视图（taillights）
     [/^Line (\d+) annotations$/, '第 $1 行標註'],
     // 行号旁警告按钮：Line 3 annotations: Hidden Unicode, CODEOWNERS error
     [
       /^Line (\d+) annotations: ((?:Hidden Unicode|CODEOWNERS error)(?:, (?:Hidden Unicode|CODEOWNERS error))*)$/,
-      (_, line: string, kinds: string) => `第 ${line} 行標註：${annotationKinds(kinds)}`,
+      (_, line: string, kinds: string) => `第 ${line} 行標註：${annotationKinds(kinds)}`
     ],
     [/^Line (\d+) actions$/, '第 $1 行的動作'],
     [/^Lines (\d+)[–-](\d+) actions$/, '第 $1–$2 行的動作'],
@@ -375,10 +367,7 @@ export default {
     [/^Expand row (\d+)$/, '展開第 $1 行'],
     [/^Line (\d+) highlighted\.$/, '已醒目提示第 $1 行。'],
     [/^Lines (\d+) to (\d+) highlighted\.$/, '已醒目提示第 $1 至 $2 行。'],
-    [
-      /^Find in file: (\d+) results\. Result (\d+) of \d+, line (\d+)\.$/,
-      '檔案內尋找：共 $1 項結果。第 $2 項，第 $3 行。',
-    ],
+    [/^Find in file: (\d+) results\. Result (\d+) of \d+, line (\d+)\.$/, '檔案內尋找：共 $1 項結果。第 $2 項，第 $3 行。'],
     // 原文只有一个逗号：不写成「第 N 項結果，共 M 項，第 L 行」
     [/^Result (\d+) of (\d+), line (\d+)\.$/, '共 $2 項結果中的第 $1 項，第 $3 行。'],
     [/^Line (\d+)$/, '第 $1 行'],
@@ -386,8 +375,7 @@ export default {
     [/^(\d+) text references? to (.+)\.$/, '$2 的 $1 處文字參考。'],
     [
       /^(\d+) sections? collapsed\. (\d+) of (\d+) source lines visible\.(?: Caret moved to visible line (\d+)\.)?$/,
-      (_, collapsed: string, visible: string, total: string, caret: string) =>
-        foldStatus(collapsed, visible, total, caret),
+      (_, collapsed: string, visible: string, total: string, caret: string) => foldStatus(collapsed, visible, total, caret)
     ],
     [/^Source preparation failed\. (.+)$/, '原始碼準備失敗。$1'],
     // 实验性代码视图：符号详细信息（符号名原样保留）
@@ -395,7 +383,7 @@ export default {
     [/^Unable to load symbol details for (.+)\.$/, '無法載入 $1 的符號詳細資料。'],
     [/^Loading references for (.+)\.$/, '正在載入 $1 的參考。'],
     [/^Unable to load references for (.+)\.$/, '無法載入 $1 的參考。'],
-    [/^(\d+) definitions? and (\d+) references? for (.+)\.$/, '$3 的 $1 個定義和 $2 個參考。'],
+    [/^(\d+) definitions? and (\d+) references? for (.+)\.$/, '$3 的 $1 個定義和 $2 個參考。']
   ],
 
   ignore: [
@@ -411,6 +399,6 @@ export default {
     '.react-csv-cell',
     // 议题 / 讨论表单模板预览：元数据值、输入项（标签、说明、占位符、选项）
     'td[class*="tableCell__"]',
-    '[class*="templateWrapper__"] > :not(table)',
-  ],
+    '[class*="templateWrapper__"] > :not(table)'
+  ]
 } satisfies PageDictionary

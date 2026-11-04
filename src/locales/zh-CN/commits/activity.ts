@@ -8,7 +8,7 @@ const TIME_PERIODS: Readonly<Record<string, string>> = {
   'Last month': '过去一个月',
   'Last quarter': '过去一个季度',
   'Last year': '过去一年',
-  'All time': '全部时间',
+  'All time': '全部时间'
 }
 
 /** 活动类型筛选项 */
@@ -19,7 +19,7 @@ const ACTIVITY_TYPES: Readonly<Record<string, string>> = {
   'Merge queue merges': '合并队列合并',
   'Force pushes': '强制推送',
   'Branch creations': '分支创建',
-  'Branch deletions': '分支删除',
+  'Branch deletions': '分支删除'
 }
 
 const COMMITS_SOURCE = '(\\d+) commits?'
@@ -39,11 +39,11 @@ const regexp: readonly RegExpRule[] = [
   // 筛选按钮的无障碍名称
   [
     /^Filter by time: (Last 24 hours|Last week|Last month|Last quarter|Last year|All time)$/,
-    (_, period: string) => `按时间筛选：${TIME_PERIODS[period] ?? period}`,
+    (_, period: string) => `按时间筛选：${TIME_PERIODS[period] ?? period}`
   ],
   [
     /^Filter by activity type: (All activity|Direct pushes|Pull request merges|Merge queue merges|Force pushes|Branch creations|Branch deletions)$/,
-    (_, type: string) => `按活动类型筛选：${ACTIVITY_TYPES[type] ?? type}`,
+    (_, type: string) => `按活动类型筛选：${ACTIVITY_TYPES[type] ?? type}`
   ],
   [/^Filter by branch: (\S.*)$/, (_, name: string) => `按分支筛选：${name === 'All branches' ? '所有分支' : name}`],
   [/^Filter by user: (\S.*)$/, (_, login: string) => `按用户筛选：${login === 'All users' ? '所有用户' : login}`],
@@ -56,9 +56,8 @@ const regexp: readonly RegExpRule[] = [
   // 按分支筛选后不显示分支名，动词与改动说明拼成一句（原文无标点，译文不加逗号）
   [
     new RegExp(`^(pushed|force pushed) (${CHANGE_SOURCE})$`),
-    (_, verb: string, change: string) =>
-      joinCjk(`${verb === 'pushed' ? '推送' : '强制推送'}时`, translateChange(change) ?? change),
-  ],
+    (_, verb: string, change: string) => joinCjk(`${verb === 'pushed' ? '推送' : '强制推送'}时`, translateChange(change) ?? change)
+  ]
 ]
 
 /**
@@ -101,11 +100,10 @@ export default {
     'Try expanding your search by selecting a different branch, activity type, user, or timeframe.':
       '请尝试选择其他分支、活动类型、用户或时间范围来扩大搜索。',
     'Failed to load activity data.': '加载活动数据失败。',
-    'Your request timed out. Try changing filters or choosing a shorter timeframe.':
-      '请求超时。请尝试更改筛选器或选择更短的时间范围。',
+    'Your request timed out. Try changing filters or choosing a shorter timeframe.': '请求超时。请尝试更改筛选器或选择更短的时间范围。',
     'Loading activity': '正在加载活动',
     'Failed to get activity': '获取活动失败',
-    'Share feedback about this page': '提供有关此页面的反馈',
+    'Share feedback about this page': '提供有关此页面的反馈'
   },
   scoped: {
     // 显示分支名时的动词：<用户> 删除了 / 创建了 <分支>
@@ -118,11 +116,11 @@ export default {
     'Last week': '过去一周',
     'Last month': '过去一个月',
     'Last quarter': '过去一个季度',
-    'Last year': '过去一年',
+    'Last year': '过去一年'
   },
   regexp,
   ignore: [
     // 事件描述中的分支名链接
-    '[data-testid="action-text"] > a',
-  ],
+    '[data-testid="action-text"] > a'
+  ]
 } satisfies PageDictionary

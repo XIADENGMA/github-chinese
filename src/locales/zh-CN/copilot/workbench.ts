@@ -3,7 +3,7 @@ import type { PageDictionary } from '../../../core/types'
 /** 差异预览中新增、删除文件的前缀 */
 const FILE_CHANGE: Readonly<Record<string, string>> = {
   Added: '已添加',
-  Deleted: '已删除',
+  Deleted: '已删除'
 }
 
 /** 预览工具栏的文件大小：「504 bytes」→「504 字节」，KB / MB 等单位原样保留 */
@@ -30,8 +30,7 @@ export default {
     'Content preview': '内容预览',
     'Content preview panel': '内容预览面板',
     'View files directly within Copilot': '直接在 Copilot 中查看文件',
-    'Ask to generate a file or app, or use the button below to try it yourself.':
-      '让 Copilot 生成文件或应用，或使用下方按钮亲自试试。',
+    'Ask to generate a file or app, or use the button below to try it yourself.': '让 Copilot 生成文件或应用，或使用下方按钮亲自试试。',
     'Files, diffs, and issues you open will appear here.': '你打开的文件、差异和议题会显示在这里。',
     'I’m feeling lucky': '手气不错',
     "I'm feeling lucky": '手气不错',
@@ -89,8 +88,7 @@ export default {
     'HTML preview settings': 'HTML 预览设置',
     'Show preview by default': '默认显示预览',
     'Automatically run HTML artifacts when you open them.': '打开 HTML 工件时自动运行。',
-    'Previewing runs this code, which may send its contents to external sites.':
-      '预览会运行此代码，可能会将其内容发送到外部网站。',
+    'Previewing runs this code, which may send its contents to external sites.': '预览会运行此代码，可能会将其内容发送到外部网站。',
     'Artifact HTML preview.': '工件 HTML 预览。',
     'Artifact HTML source': '工件 HTML 源码',
     'HTML rendering failed': 'HTML 渲染失败',
@@ -111,8 +109,7 @@ export default {
     'Review and create': '审查并创建',
     'Update existing issues?': '更新现有议题？',
     // 原文按钮名无引号，译文不加引号，后接“按钮”
-    'Clicking Update will update the relationships between the issues shown below.':
-      '单击更新按钮将更新下方议题之间的关系。',
+    'Clicking Update will update the relationships between the issues shown below.': '单击更新按钮将更新下方议题之间的关系。',
     'Update issues': '更新议题',
     'Create all linked draft issues?': '创建所有链接的草稿议题？',
     "Clicking Create will publish all Copilot draft issues shown below. Existing sub-issues aren't displayed and remain unchanged.":
@@ -142,8 +139,7 @@ export default {
     'You cannot create issues in this repository': '你无法在此存储库中创建议题',
     'You cannot update issues in this repository': '你无法更新此存储库中的议题',
     'Open issue in new tab': '在新标签页中打开议题',
-    'Please verify if the repository exists and is accessible before trying again.':
-      '请确认存储库存在且可访问后再重试。',
+    'Please verify if the repository exists and is accessible before trying again.': '请确认存储库存在且可访问后再重试。',
 
     // 起草议题：关系与模板
     'Newly blocked by': '新增被阻止关系',
@@ -170,19 +166,16 @@ export default {
     'Failed to update content': '更新内容失败',
     'Could not update issue title or body. Please try again.': '无法更新议题标题或正文。请重试。',
     'Permission Denied': '权限被拒绝',
-    "You don't have permission to update this issue. Please contact the repo owner.":
-      '你无权更新此议题。请联系存储库所有者。',
+    "You don't have permission to update this issue. Please contact the repo owner.": '你无权更新此议题。请联系存储库所有者。',
     'Issue Not Found': '未找到议题',
-    'The issue you are trying to update could not be found or no longer exists.':
-      '找不到要更新的议题，或该议题已不存在。',
+    'The issue you are trying to update could not be found or no longer exists.': '找不到要更新的议题，或该议题已不存在。',
     'Invalid issue title': '议题标题无效',
     'Invalid form inputs': '表单输入无效',
     'Issue Outdated': '议题已过时',
     'The issue you are editing has changed. Please copy your edits and have Copilot draft a new update.':
       '你正在编辑的议题已更改。请复制你的编辑内容，并让 Copilot 起草新的更新。',
     'Failed to update project assignment': '更新项目分配失败',
-    'The issue was updated successfully, but there were problems with project assignments.':
-      '议题已成功更新，但项目分配出错。',
+    'The issue was updated successfully, but there were problems with project assignments.': '议题已成功更新，但项目分配出错。',
     'An error has occurred': '发生错误',
     'Malformed draft issue': '草稿议题格式错误',
     'The drafted issue contains malformed data and the preview is not available. Please retry.':
@@ -216,7 +209,7 @@ export default {
     'Assignee avatar': '受理人头像',
     'Draft a PR comment': '起草 PR 评论',
     'Turn this PR review point into a comment.': '将此 PR 审查要点转为评论。',
-    'Insert into the input': '插入到输入框',
+    'Insert into the input': '插入到输入框'
   },
   scoped: {
     Unassigned: '未分配',
@@ -236,7 +229,7 @@ export default {
     'Back to issue': '返回议题',
     'Add link': '添加链接',
     'Edit link': '编辑链接',
-    'Link title': '链接标题',
+    'Link title': '链接标题'
   },
   regexp: [
     [/^Opened (.+) in Workbench\.$/, '已在工作台中打开 $1。'],
@@ -249,22 +242,22 @@ export default {
     [/^([\w.-]+\/[\w.-]+) is not found$/, '未找到 $1'],
     [
       /^You cannot create more than (\d+) new issues at a time\. Please remove some draft issues from the tree and try again\.$/,
-      '一次最多只能创建 $1 个新议题。请从树中删除部分草稿议题后重试。',
+      '一次最多只能创建 $1 个新议题。请从树中删除部分草稿议题后重试。'
     ],
     [
       /^You cannot add more than (\d+) levels of sub-issues\. Please remove some issues from the tree and try again\.$/,
-      '子议题最多只能有 $1 层。请从树中删除部分议题后重试。',
+      '子议题最多只能有 $1 层。请从树中删除部分议题后重试。'
     ],
     [
       /^The selected repository \(([\w.-]+\/[\w.-]+)\) doesn['’]t match the repository Copilot suggested \(([\w.-]+\/[\w.-]+)\)\. Please select a repository you have access to\.$/,
-      '所选存储库 ($1) 与 Copilot 建议的存储库 ($2) 不一致。请选择你有权访问的存储库。',
+      '所选存储库 ($1) 与 Copilot 建议的存储库 ($2) 不一致。请选择你有权访问的存储库。'
     ],
     [/^View file: (.+)$/, '查看文件：$1'],
     // 文件 / 差异预览工具栏：[Added: |Deleted: ]<12> lines · <1 KB>（相邻文本节点整段匹配；新增、删除的文件带前缀）
     [
       /^(?:(Added|Deleted): )?(\d+) lines? · (\S.*)$/,
       (_, change: string, count: string, size: string) =>
-        `${change ? `${FILE_CHANGE[change] ?? change}：` : ''}${count} 行 · ${previewSize(size)}`,
+        `${change ? `${FILE_CHANGE[change] ?? change}：` : ''}${count} 行 · ${previewSize(size)}`
     ],
     [/^Issue #(\d+)$/, '议题 #$1'],
     [/^(\d+) assignees?$/, '$1 个受理人'],
@@ -277,6 +270,6 @@ export default {
     [/^Send suggestion \(hold (Option|Alt) to insert\)$/, '发送建议（按住 $1 键插入）'],
     // 工件查看器
     [/^Version (\d+)$/, '版本 $1'],
-    [/^HTML preview: (.+)$/, 'HTML 预览：$1'],
-  ],
+    [/^HTML preview: (.+)$/, 'HTML 预览：$1']
+  ]
 } satisfies PageDictionary

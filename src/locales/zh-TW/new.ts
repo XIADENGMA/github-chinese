@@ -6,13 +6,13 @@ import plans from './new/plans'
 const VISIBILITY: Readonly<Record<string, string>> = {
   public: '公開',
   private: '私人',
-  internal: '內部',
+  internal: '內部'
 }
 
 /** 邀请页「擁有者將能看到 / 可能會看到」的语气 */
 const VISIBILITY_VERB: Readonly<Record<string, string>> = {
   will: '將能看到',
-  may: '可能會看到',
+  may: '可能會看到'
 }
 
 /**
@@ -47,8 +47,7 @@ const base = {
       '儲存庫包含專案的檔案和版本歷史記錄。在其他地方有專案嗎？匯入儲存庫。',
     'Repositories contain a project’s files and version history. Have a project elsewhere? Import a repository.':
       '儲存庫包含專案的檔案和版本歷史記錄。在其他地方有專案嗎？匯入儲存庫。',
-    'A repository contains all project files, including the revision history.':
-      '儲存庫包含專案的所有檔案，包括修訂歷史記錄。',
+    'A repository contains all project files, including the revision history.': '儲存庫包含專案的所有檔案，包括修訂歷史記錄。',
     'Already have a project repository elsewhere?': '在其他地方已有專案儲存庫嗎？',
     'Required fields are marked with an asterisk (*).': '必填欄位以星號 (*) 標示。',
     'Switch back to classic experience': '切換回傳統體驗',
@@ -59,8 +58,7 @@ const base = {
     'Choose an owner': '選擇擁有者',
     'Repository owner and name': '儲存庫擁有者和名稱',
     'Great repository names are short and memorable. How about': '好的儲存庫名稱簡短好記。不妨試試',
-    'Great repository names are short and memorable. Need inspiration? How about':
-      '好的儲存庫名稱簡短好記。需要靈感嗎？不妨試試',
+    'Great repository names are short and memorable. Need inspiration? How about': '好的儲存庫名稱簡短好記。需要靈感嗎？不妨試試',
     'Checking availability…': '正在檢查可用性…',
     'Checking availability...': '正在檢查可用性...',
     'Your new repository will be created as': '你的新儲存庫將建立為',
@@ -68,8 +66,7 @@ const base = {
     'New repository name must not be blank.': '新儲存庫名稱不能空白。',
     'The repository name can only contain ASCII letters, digits, and the characters ., -, and _.':
       '儲存庫名稱只能包含 ASCII 字母、數字和 .、-、_ 字元。',
-    'The repository name can only contain ASCII letters, digits, and the characters':
-      '儲存庫名稱只能包含 ASCII 字母、數字和字元',
+    'The repository name can only contain ASCII letters, digits, and the characters': '儲存庫名稱只能包含 ASCII 字母、數字和字元',
     'Name already exists on this account': '此帳號已有同名儲存庫',
     'Repository creation failed.': '儲存庫建立失敗。',
 
@@ -80,8 +77,7 @@ const base = {
     'Anyone on the internet can see this repository. You choose who can commit.':
       '網際網路上的任何人都可以查看此儲存庫。由你選擇誰可以提交。',
     'You choose who can see and commit to this repository.': '由你選擇誰可以查看並提交到此儲存庫。',
-    'Enterprise members can see this repository. You choose who can commit.':
-      '企業成員可以查看此儲存庫。由你選擇誰可以提交。',
+    'Enterprise members can see this repository. You choose who can commit.': '企業成員可以查看此儲存庫。由你選擇誰可以提交。',
     'You may not create private repositories by organization policy.': '依組織政策，你不能建立私人儲存庫。',
     'Start with a template': '從範本開始',
     'Templates pre-configure your repository with files.': '範本會以檔案預先設定你的儲存庫。',
@@ -122,10 +118,8 @@ const base = {
     'Search licenses': '搜尋授權條款',
     'No license': '無授權條款',
     'License:': '授權條款：',
-    "A license tells others what they can and can't do with your code.":
-      '授權條款會告訴他人可以用你的程式碼做什麼、不可以做什麼。',
-    'A license tells others what they can and can’t do with your code.':
-      '授權條款會告訴他人可以用你的程式碼做什麼、不可以做什麼。',
+    "A license tells others what they can and can't do with your code.": '授權條款會告訴他人可以用你的程式碼做什麼、不可以做什麼。',
+    'A license tells others what they can and can’t do with your code.': '授權條款會告訴他人可以用你的程式碼做什麼、不可以做什麼。',
     'Learn more about licenses.': '瞭解授權條款。',
 
     // 新建存储库：GitHub 应用（所有者名在 <strong> 中）
@@ -170,10 +164,8 @@ const base = {
     'You found a secret!': '你發現了一個祕密！',
     'is a ✨': '是一個 ✨',
     '✨ repository that you can use to add a': '✨ 儲存庫供你將',
-    'to your GitHub profile. Make sure it’s public and initialize it with a':
-      '新增到你的 GitHub 個人檔案。請確認它是公開的，並使用',
-    "to your GitHub profile. Make sure it's public and initialize it with a":
-      '新增到你的 GitHub 個人檔案。請確認它是公開的，並使用',
+    'to your GitHub profile. Make sure it’s public and initialize it with a': '新增到你的 GitHub 個人檔案。請確認它是公開的，並使用',
+    "to your GitHub profile. Make sure it's public and initialize it with a": '新增到你的 GitHub 個人檔案。請確認它是公開的，並使用',
     // 组织的 .github 存储库：README 放在 profile 目录，片段语序见 scoped 的 in the、directory to get started.
     "to your organization's GitHub profile. Make sure it’s public and initialize it with a":
       '新增到你的 GitHub 組織資料。請確認它是公開的，並在初始化時將',
@@ -198,8 +190,7 @@ const base = {
     'supported VCS': '支援的 VCS 類型',
     'supported VCS.': '支援的 VCS 類型。',
     'importing git repositories': '匯入 Git 儲存庫',
-    'Please enter your credentials if required for cloning your remote repository.':
-      '如果複製遠端儲存庫需要認證資訊，請在此輸入。',
+    'Please enter your credentials if required for cloning your remote repository.': '如果複製遠端儲存庫需要認證資訊，請在此輸入。',
     'Your username for your source repository': '你在來源儲存庫的使用者名稱',
     'Your access token or password for your source repository': '你在來源儲存庫的存取權杖或密碼',
     'Your new repository details': '新儲存庫詳細資料',
@@ -275,8 +266,7 @@ const base = {
     'This organization belongs to:': '此組織屬於：',
     'My personal account': '我的個人帳號',
     'A business or institution': '企業或機構',
-    'For example: GitHub, Inc., Example Institute, American Red Cross':
-      '例如：GitHub, Inc.、Example Institute、American Red Cross',
+    'For example: GitHub, Inc., Example Institute, American Red Cross': '例如：GitHub, Inc.、Example Institute、American Red Cross',
     'Name of business or institution this organization belongs to': '此組織所屬的企業或機構名稱',
     // This business or institution — not <strong>user</strong> (your personal account) — will control this organization.
     'This business or institution — not': '將由此企業或機構而非',
@@ -311,23 +301,19 @@ const base = {
     'To understand admin access, teams, issue assignments, and redirects after a repository is transferred, see':
       '若要瞭解儲存庫轉移後的管理員存取權、團隊、議題指派和重新導向，請參閱',
     'Transferring a repository': '轉移儲存庫',
-    'Transferring may be delayed until the new owner approves the transfer.':
-      '轉移可能會延遲，直到新擁有者核准轉移為止。',
+    'Transferring may be delayed until the new owner approves the transfer.': '轉移可能會延遲，直到新擁有者核准轉移為止。',
     'that may be affected by this transfer.': '可能會受到這次轉移影響。',
     'New owner': '新擁有者',
     'Select one of my organizations': '選擇我的組織',
     'Specify an organization or username': '指定組織或使用者名稱',
-    'and accepts the transfer, they will lose access to private repository features:':
-      '並接受轉移，將無法再使用下列私人儲存庫功能：',
+    'and accepts the transfer, they will lose access to private repository features:': '並接受轉移，將無法再使用下列私人儲存庫功能：',
     // 其后是 and <strong>Forks</strong>：「和」前不加顿号
-    'Pulse, Contributors, Community, Traffic, Commits, Code Frequency, Network,':
-      '脈動、貢獻者、社群、流量、提交、程式碼頻率、網路',
+    'Pulse, Contributors, Community, Traffic, Commits, Code Frequency, Network,': '脈動、貢獻者、社群、流量、提交、程式碼頻率、網路',
     'Multiple assignees': '多位負責人',
     'Multiple reviewers': '多位審查者',
     'Branch and tag protection rules': '分支和標記保護規則',
     'their plan before accepting the transfer to avoid losing access.': '其方案再接受轉移，以免失去存取權。',
-    'Individual users, teams, and apps will be removed from the following options:':
-      '個別使用者、團隊和應用程式將從下列選項中移除：',
+    'Individual users, teams, and apps will be removed from the following options:': '個別使用者、團隊和應用程式將從下列選項中移除：',
     'Repository ruleset bypassers': '可繞過儲存庫規則集的執行者',
     'Protected branch pull request bypassers': '受保護分支中可繞過拉取請求要求的執行者',
     'Protected branch authorized pull request review dismissers': '受保護分支中有權駁回拉取請求審查的執行者',
@@ -357,10 +343,8 @@ const base = {
     'invited you to be their account successor': '邀請你成為其帳號繼任者',
     'Learn more about account successors': '瞭解帳號繼任者',
     // 句首「我同意在使用和維護其帳號內容時遵守 GitHub 的」见 regexp，链接为 Terms of Service（common 翻译）
-    "and the user's written requests, if any, in my use and maintaining of their account's content.":
-      '和該使用者的書面請求（如有）。',
-    'and the user’s written requests, if any, in my use and maintaining of their account’s content.':
-      '和該使用者的書面請求（如有）。',
+    "and the user's written requests, if any, in my use and maintaining of their account's content.": '和該使用者的書面請求（如有）。',
+    'and the user’s written requests, if any, in my use and maintaining of their account’s content.': '和該使用者的書面請求（如有）。',
     "I understand that accepting this appointment as successor does not override legally binding next-of-kin rules or estate laws of any relevant jurisdiction, and does not create a binding will, and I agree to comply or assist with a valid request by an individual with legal authority over the user's property (such as next-of-kin, an estate's executor, and/or a beneficiary of their will).":
       '我瞭解，接受繼任者的指定並不會凌駕任何相關司法管轄區具有法律約束力的近親規定或遺產法，也不構成具有約束力的遺囑；我同意配合或協助處理對該使用者財產具有法定權限的個人（例如近親、遺囑執行人和/或其遺囑受益人）提出的有效請求。',
     'I understand that accepting this appointment as successor does not override legally binding next-of-kin rules or estate laws of any relevant jurisdiction, and does not create a binding will, and I agree to comply or assist with a valid request by an individual with legal authority over the user’s property (such as next-of-kin, an estate’s executor, and/or a beneficiary of their will).':
@@ -376,7 +360,7 @@ const base = {
     'What do you want to move?': '要移動哪些內容？',
     'Select all repositories': '全選儲存庫',
     'You do not have any projects': '你沒有任何專案',
-    'Return to your personal profile': '返回個人檔案',
+    'Return to your personal profile': '返回個人檔案'
   },
   scoped: {
     // 新版表单分区与字段（Owner、Visibility、Description、(required)、(optional) 由 common-ui 翻译）
@@ -415,8 +399,7 @@ const base = {
     'repository in your personal account.': '儲存庫將位於你的個人帳號中。',
     'repository in the': '儲存庫將位於',
     // 企业名单独包在元素里时
-    'enterprise members can see this repository. You choose who can commit.':
-      '企業成員可以查看此儲存庫。由你選擇誰可以提交。',
+    'enterprise members can see this repository. You choose who can commit.': '企業成員可以查看此儲存庫。由你選擇誰可以提交。',
     // GitHub 应用：Connect this repository to apps <strong>owner</strong> is subscribed to
     'is subscribed to': '訂閱的應用程式',
     // Copilot：Tell <a>Copilot cloud agent</a> what you want to build…
@@ -498,8 +481,7 @@ const base = {
       '確保拉取請求獲得指定數量的核准審查後，協作者才能變更受保護的分支。',
     'Pages and Wikis': '頁面和 Wiki',
     'Environment deployment branches and secrets': '環境部署分支和機密',
-    'GitHub Support can help you troubleshoot issues you run into while using GitHub.':
-      'GitHub 支援可協助你排除使用 GitHub 時遇到的問題。',
+    'GitHub Support can help you troubleshoot issues you run into while using GitHub.': 'GitHub 支援可協助你排除使用 GitHub 時遇到的問題。',
     'Ensure your secrets stay secure. Mitigate risk associated with exposed secrets in your repositories, while preventing new leaks before they happen with push protection.':
       '確保機密安全。降低儲存庫中機密外洩的風險，同時透過推送保護在新的外洩發生前加以防止。',
     'Find and fix vulnerabilities in your code before they reach production. Prioritize your Dependabot alerts with automated triage rules.':
@@ -575,22 +557,19 @@ const base = {
     'If you have': '你的',
     'two-factor authentication': '雙重驗證',
     'enabled or not': '啟用狀態',
-    'Opt out': '選擇不接收',
+    'Opt out': '選擇不接收'
   },
   regexp: [
     // 存储库名称可用性（React 拆分的名称与文字拼接后）；句号随原文
     [/^([\w.-]+) is available\.$/, '$1 可用。'],
     [
       /^The repository ([\w.-]+) already exists on this account(\.?)$/,
-      (_, name, period) => `此帳號已有名為 ${name} 的儲存庫${period ? '。' : ''}`,
+      (_, name, period) => `此帳號已有名為 ${name} 的儲存庫${period ? '。' : ''}`
     ],
-    [
-      /^Your new repository will be created as ([\w.-]+?)(\.?)$/,
-      (_, name, period) => `你的新儲存庫將建立為 ${name}${period ? '。' : ''}`,
-    ],
+    [/^Your new repository will be created as ([\w.-]+?)(\.?)$/, (_, name, period) => `你的新儲存庫將建立為 ${name}${period ? '。' : ''}`],
     [
       /^Great repository names are short and memorable\.( Need inspiration\?)? How about ([\w.-]+)\?$/,
-      (_, inspiration, name) => `好的儲存庫名稱簡短好記。${inspiration ? '需要靈感嗎？' : ''}不妨試試 ${name}？`,
+      (_, inspiration, name) => `好的儲存庫名稱簡短好記。${inspiration ? '需要靈感嗎？' : ''}不妨試試 ${name}？`
     ],
     // 所有者按钮与建议名称（无障碍标签）
     [/^([\w-]+), Owner \(Required\)$/, '$1，擁有者（必填）'],
@@ -600,45 +579,39 @@ const base = {
     // 可见性按钮（无障碍标签）
     [
       /^Choose visibility: (Public|Private|Internal)$/,
-      (_, visibility) => `選擇可見度：${VISIBILITY[visibility.toLowerCase()] ?? visibility}`,
+      (_, visibility) => `選擇可見度：${VISIBILITY[visibility.toLowerCase()] ?? visibility}`
     ],
     // 可见性与默认分支提示
     [
       /^You are creating an? (public|private|internal) repository in the ([\w.-]+) organization\.$/,
-      (_, visibility, org) => `你正在 ${org} 組織中建立${VISIBILITY[visibility] ?? visibility}儲存庫。`,
+      (_, visibility, org) => `你正在 ${org} 組織中建立${VISIBILITY[visibility] ?? visibility}儲存庫。`
     ],
     [
       /^(.+?) enterprise members can see this repository\. You choose who can commit\.$/,
-      '$1 企業成員可以查看此儲存庫。由你選擇誰可以提交。',
+      '$1 企業成員可以查看此儲存庫。由你選擇誰可以提交。'
     ],
     [/^This will set (\S+) as the default branch\.$/, '這會將 $1 設為預設分支。'],
     [
       /^This will set (\S+) as the default branch\. Change the default name in your settings\.$/,
-      '這會將 $1 設為預設分支。可在你的設定中變更預設名稱。',
+      '這會將 $1 設為預設分支。可在你的設定中變更預設名稱。'
     ],
     // 模板与 GitHub 应用
-    [
-      /^Copy all branches from ([\w.-]+\/[\w.-]+) and not just the default branch\.$/,
-      '複製 $1 的所有分支，而不只是預設分支。',
-    ],
+    [/^Copy all branches from ([\w.-]+\/[\w.-]+) and not just the default branch\.$/, '複製 $1 的所有分支，而不只是預設分支。'],
     [
       /^Connect this repository to apps ([\w.-]+) is subscribed to(\.?)$/,
-      (_, owner, period) => `將此儲存庫連接到 ${owner} 訂閱的應用程式${period ? '。' : ''}`,
+      (_, owner, period) => `將此儲存庫連接到 ${owner} 訂閱的應用程式${period ? '。' : ''}`
     ],
-    [
-      /^You are subscribed to (\d+) Marketplace apps?(\.?)$/,
-      (_, count, period) => `你訂閱了 ${count} 個市集應用程式${period ? '。' : ''}`,
-    ],
+    [/^You are subscribed to (\d+) Marketplace apps?(\.?)$/, (_, count, period) => `你訂閱了 ${count} 個市集應用程式${period ? '。' : ''}`],
     [/^(\d+) apps? selected$/, '已選取 $1 個應用程式'],
     [/^Auto-installed by ([\w.-]+)$/, '由 $1 自動安裝'],
     // 与用户名 / .github 同名的特殊存储库（整句渲染时）
     [
       /^([\w.-]+\/[\w.-]+) is a ✨special✨ repository that you can use to add a README\.md to your GitHub profile\. Make sure it[’']s public and initialize it with a README to get started\.$/,
-      '$1 是一個 ✨特殊✨ 儲存庫，可用來將 README.md 新增到你的 GitHub 個人檔案。請確認它是公開的，並使用讀我檔案初始化即可開始。',
+      '$1 是一個 ✨特殊✨ 儲存庫，可用來將 README.md 新增到你的 GitHub 個人檔案。請確認它是公開的，並使用讀我檔案初始化即可開始。'
     ],
     [
       /^([\w.-]+\/\.github) is a ✨special✨ repository that you can use to add a README\.md to your organization[’']s GitHub profile\. Make sure it[’']s public and initialize it with a README in the profile directory to get started\.$/,
-      '$1 是一個 ✨特殊✨ 儲存庫，可用來將 README.md 新增到你的 GitHub 組織資料。請確認它是公開的，並在初始化時將讀我檔案放在 profile 目錄中即可開始。',
+      '$1 是一個 ✨特殊✨ 儲存庫，可用來將 README.md 新增到你的 GitHub 組織資料。請確認它是公開的，並在初始化時將讀我檔案放在 profile 目錄中即可開始。'
     ],
     // 复刻
     [/^Copy the (\S+) branch only$/, '僅複製 $1 分支'],
@@ -650,67 +623,61 @@ const base = {
     [/^Updating branches and (\d+) commit authors?(…|\.\.\.)$/, '正在更新分支和 $1 位提交作者$2'],
     [
       /^No source repositories were detected at (\S+)\. Please check the URL and try again\.$/,
-      '在 $1 未偵測到來源儲存庫。請檢查 URL 後再試一次。',
+      '在 $1 未偵測到來源儲存庫。請檢查 URL 後再試一次。'
     ],
     [/^Importing complete! Your new repository ([\w.-]+\/[\w.-]+) is ready\.$/, '匯入完成！你的新儲存庫 $1 已就緒。'],
     // 新建组织：名称校验、网址、Copilot Business 价格
     [/^The name '([^']+)' is already taken\.$/, '名稱「$1」已被使用。'],
     [
       /^The name '(.+)' may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen\.$/,
-      '名稱「$1」只能包含英數字元或單一連字號，且不能以連字號開頭或結尾。',
+      '名稱「$1」只能包含英數字元或單一連字號，且不能以連字號開頭或結尾。'
     ],
     [/^Organization name '(.+)' is unavailable\.$/, '組織名稱「$1」無法使用。'],
     [/^Your URL will be: (https:\/\/github\.com\/\S*)$/, '你的 URL 將是：$1'],
     [/^I\.e\., ([\w-]+) \(your personal account\)$/, '即 $1（你的個人帳號）'],
     [
       /^Boost developer productivity for (\$\d+(?:\.\d+)?)\/user\/month\. Pay only for assigned seats after setup\.$/,
-      '以每位使用者每月 $1 的價格提升開發人員生產力。設定後只需為已指派的席次付費。',
+      '以每位使用者每月 $1 的價格提升開發人員生產力。設定後只需為已指派的席次付費。'
     ],
     // 新建组织：计划卡片中的使用量（与 settings-account 的 500MB / 2GB 静态词条、「每月 2,000 動作分鐘數」同一译法）
     [/^([\d,]+) CI\/CD minutes\/month$/, '每月 $1 CI/CD 分鐘數'],
     [/^(\d+(?:\.\d+)? ?[MG]B) of Packages storage$/, '$1 套件儲存空間'],
     [
       /^Blazing fast cloud developer environments with flexible compute and pre-configured containers, developers can code, collaborate, and debug from any browser\. Pay only for what you use with compute fees starting at (\$[\d.]+)\/hr and storage fees at (\$[\d.]+)\/GB per month\.$/,
-      '極速雲端開發環境，具備彈性運算和預先設定的容器，開發人員可在任何瀏覽器中撰寫程式碼、協作並偵錯。依使用量付費，運算費用每小時 $1 起，儲存費用為每月每 GB $2。',
+      '極速雲端開發環境，具備彈性運算和預先設定的容器，開發人員可在任何瀏覽器中撰寫程式碼、協作並偵錯。依使用量付費，運算費用每小時 $1 起，儲存費用為每月每 GB $2。'
     ],
     // 转让与邀请页
     [/^Transfer repository: ([\w.-]+\/[\w.-]+)$/, '轉移儲存庫：$1'],
-    [
-      /^There (?:is|are) (\d+) codespaces? that may be affected by this transfer\.$/,
-      '有 $1 個程式碼空間可能會受到這次轉移影響。',
-    ],
+    [/^There (?:is|are) (\d+) codespaces? that may be affected by this transfer\.$/, '有 $1 個程式碼空間可能會受到這次轉移影響。'],
     [/^There (?:is|are)$/, '目前有'],
     [/^(\d+) codespaces?$/, '$1 個程式碼空間'],
     [/^Type ([\w.-]+\/[\w.-]+) to confirm\.$/, '輸入 $1 以確認。'],
     [/^([\w-]+) invited you to collaborate on ([\w.-]+\/[\w.-]+)$/, '$1 邀請你協作開發 $2'],
-    [
-      /^of ([\w.-]+(?:\/[\w.-]+)?) (will|may) be able to see:$/,
-      (_, owner, verb) => `(${owner}) ${VISIBILITY_VERB[verb] ?? verb}：`,
-    ],
+    [/^of ([\w.-]+(?:\/[\w.-]+)?) (will|may) be able to see:$/, (_, owner, verb) => `(${owner}) ${VISIBILITY_VERB[verb] ?? verb}：`],
     [/^Block ([\w-]+)$/, '封鎖 $1'],
     [/^Join ([\w.-]+)$/, '加入 $1'],
     [
       /^As an account successor, you would be able to manage ([\w-]+)[’']s repositories if they[’']re not able to\.$/,
-      '身為帳號繼任者，你可以在 $1 無法管理其儲存庫時代為管理。',
+      '身為帳號繼任者，你可以在 $1 無法管理其儲存庫時代為管理。'
     ],
     [
       /^By clicking ["“]Accept invitation["”] below, I acknowledge that I agree to serve as the successor for ([\w-]+), in such ways authorized by their successor request\. I agree to abide by GitHub[’']s$/,
-      '按一下下方的「接受邀請」，即表示我同意依照 $1 的繼任者請求所授權的方式擔任其繼任者。我同意在使用和維護其帳號內容時遵守 GitHub 的',
+      '按一下下方的「接受邀請」，即表示我同意依照 $1 的繼任者請求所授權的方式擔任其繼任者。我同意在使用和維護其帳號內容時遵守 GitHub 的'
     ],
     // 将工作移至组织：进度
-    [/^(\d+)% complete$/, '已完成 $1%'],
+    [/^(\d+)% complete$/, '已完成 $1%']
   ],
   inline: [
     // 定价页营销页头的 Enterprise 栏目按钮：<button>Enterprise<svg/></button>（计划名元素里只有文字，不命中）。
     // 全局导航栏目仍译「企業」，不用本页 scoped 的计划名「企業版」
-    ['Enterprise {}', '企業{}'],
+    ['Enterprise {}', '企業{}']
   ],
   // 将工作移至组织：页头的帐户名，勾选项的存储库名、项目名（用户内容）
   ignore: [
     'move-work-container .flex-auto > p.h3:first-child',
     'move-work-container label[for^="repository-"]',
-    'move-work-container label[for^="project-"]',
-  ],
+    'move-work-container label[for^="project-"]'
+  ]
 } satisfies PageDictionary
 
 export default mergeDictionaries(base, plans) satisfies PageDictionary

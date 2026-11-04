@@ -27,7 +27,7 @@ const LOCALE_DIR = resolve(ROOT, 'src/locales')
 const SLOW_TIMEOUT = 180_000
 
 function listFiles(dir: string, extension: string): string[] {
-  return readdirSync(dir).flatMap((name) => {
+  return readdirSync(dir).flatMap(name => {
     const full = join(dir, name)
     if (statSync(full).isDirectory()) return listFiles(full, extension)
     return name.endsWith(extension) ? [full] : []
@@ -73,7 +73,7 @@ describe('改写函数：只改纯字符串的 static / scoped 对象字面量�
     "  outerComputed: { [s]: { a: '甲' } },",
     "  other: { other: { a: '甲' } },",
     "  nested: { static: { a: '甲' }, regexp: [{ scoped: { b: '乙' } }] },",
-    '}',
+    '}'
   ].join('\n')
   const packed = packTables(code, parse('sample.js', code), 'sample.js')
   const before = evaluate(code)
@@ -86,7 +86,7 @@ describe('改写函数：只改纯字符串的 static / scoped 对象字面量�
   it.each([
     ['duplicate', 'scoped'],
     ['integerKeys', 'static'],
-    ['quotedKey', 'static'],
+    ['quotedKey', 'static']
   ])('%s：改写成字符串，解码后同 Object.entries（重复的原文后者覆盖，整数样式的原文排在前面）', (name, key) => {
     expect(typeof field(after, name, key)).toBe('string')
     expect(tableEntries(asTable(field(after, name, key)))).toEqual(Object.entries(field(before, name, key) as object))
@@ -95,16 +95,9 @@ describe('改写函数：只改纯字符串的 static / scoped 对象字面量�
   it('解码结果', () => {
     expect(tableEntries(asTable(field(after, 'duplicate', 'scoped')))).toEqual([
       ['Open', '覆盖'],
-      ['Close', '关闭'],
+      ['Close', '关闭']
     ])
-    expect(tableEntries(asTable(field(after, 'integerKeys'))).map(([key]) => key)).toEqual([
-      '1',
-      '2',
-      'z',
-      '01',
-      '4294967295',
-      '-1',
-    ])
+    expect(tableEntries(asTable(field(after, 'integerKeys'))).map(([key]) => key)).toEqual(['1', '2', 'z', '01', '4294967295', '-1'])
   })
 
   it.each([
@@ -119,9 +112,9 @@ describe('改写函数：只改纯字符串的 static / scoped 对象字面量�
     'empty',
     'getter',
     'method',
-    'shorthand',
-  ])('%s：不改写', (name) => {
-    const line = code.split('\n').find((text) => text.startsWith(`  ${name}: `))
+    'shorthand'
+  ])('%s：不改写', name => {
+    const line = code.split('\n').find(text => text.startsWith(`  ${name}: `))
     expect(packed?.code.split('\n')).toContain(line)
     /** 条目（方法按源码比较） */
     const shape = (value: unknown): unknown[] =>
@@ -181,7 +174,7 @@ describe('全部词典模块', () => {
       // 简繁合计七百多张；骤减说明改写条件或词典写法变了
       expect(count).toBeGreaterThan(600)
     },
-    SLOW_TIMEOUT,
+    SLOW_TIMEOUT
   )
 })
 
@@ -195,8 +188,8 @@ async function bundleOf(entry: string, exportName: string, plugins: readonly Plu
     build: {
       write: false,
       minify: true,
-      lib: { entry, formats: ['iife'], name: '__packedBundle' },
-    },
+      lib: { entry, formats: ['iife'], name: '__packedBundle' }
+    }
   })
   const result = (Array.isArray(output) ? output[0] : output) as Rolldown.RolldownOutput
   const code = result.output[0].code
@@ -216,8 +209,8 @@ describe('合成词典经插件与压缩打包：合并表里自有的 __proto__
   const sample: Plugin = {
     name: 'test:proto-sample',
     enforce: 'pre',
-    resolveId: (source) => (source.replaceAll('\\', '/') === id ? id : null),
-    load: (source) =>
+    resolveId: source => (source.replaceAll('\\', '/') === id ? id : null),
+    load: source =>
       source === id
         ? [
             `import { mergeDictionaries } from ${JSON.stringify(helpers)}`,
@@ -226,9 +219,9 @@ describe('合成词典经插件与压缩打包：合并表里自有的 __proto__
             "  ['common', mergeDictionaries({ static: withProto }, { static: { Open: '打开', Close: '关闭' } })],",
             "  ['repository', mergeDictionaries({ scoped: { Fork: '复刻' } }, { scoped: { ['__proto__']: '仓库原型', Star: '星标' } })],",
             "  ['issues', mergeDictionaries({ static: { ['__proto__']: '都是普通对象' } }, { static: withProto })],",
-            ']',
+            ']'
           ].join('\n')
-        : null,
+        : null
   }
 
   it(
@@ -236,15 +229,13 @@ describe('合成词典经插件与压缩打包：合并表里自有的 __proto__
     async () => {
       const [plain, packed] = await Promise.all([
         bundleOf(id, 'bundle', [sample]),
-        bundleOf(id, 'bundle', [sample, packTablesPlugin(LOCALE_DIR)]),
+        bundleOf(id, 'bundle', [sample, packTablesPlugin(LOCALE_DIR)])
       ])
-      const forms = packed.map(([, dict]) =>
-        [dict.static, dict.scoped].map((table) => (Array.isArray(table) ? 'list' : typeof table)),
-      )
+      const forms = packed.map(([, dict]) => [dict.static, dict.scoped].map(table => (Array.isArray(table) ? 'list' : typeof table)))
       expect(forms).toEqual([
         ['list', 'object'],
         ['object', 'list'],
-        ['object', 'object'],
+        ['object', 'object']
       ])
 
       const expected = createMatcher(plain)
@@ -266,10 +257,10 @@ describe('合成词典经插件与压缩打包：合并表里自有的 __proto__
       // 子表都是普通对象的合并：先出现者优先
       expect(Object.entries(plain[2]![1].static ?? {})).toEqual([
         ['__proto__', '都是普通对象'],
-        ['Sibling', '同表'],
+        ['Sibling', '同表']
       ])
     },
-    SLOW_TIMEOUT,
+    SLOW_TIMEOUT
   )
 })
 
@@ -295,10 +286,10 @@ const SCOPES: readonly (readonly PageKey[])[] = [
         'https://github.com/octocat/hello-world/settings',
         'https://github.com/settings/profile',
         'https://gist.github.com/octocat/1',
-        'https://www.githubstatus.com/',
-      ].map((url) => detectPages(new URL(url))),
-    ].map((scope) => [scope.join('|'), scope] as const),
-  ).values(),
+        'https://www.githubstatus.com/'
+      ].map(url => detectPages(new URL(url)))
+    ].map(scope => [scope.join('|'), scope] as const)
+  ).values()
 ]
 
 /** 表中的全部原文 */
@@ -318,17 +309,17 @@ function replacerTexts(models: PageDictionary, regions: PageDictionary): string[
   const places = [...tableEntries(regions.static).map(([key]) => key), 'Mars']
   return [
     ...[...billing, "Unable to start task for 'Fix the bug'. Please try again.", 'Internal error'].map(
-      (description) => `Task creation failed. ${description}`,
+      description => `Task creation failed. ${description}`
     ),
-    ...places.map((place) => `View details of session from ${place} last accessed 3 days ago`),
-    ...places.map((place) => `${place} (+1)`),
-    `${places[0]}/${places[1]} (+61)`,
+    ...places.map(place => `View details of session from ${place} last accessed 3 days ago`),
+    ...places.map(place => `${place} (+1)`),
+    `${places[0]}/${places[1]} (+61)`
   ]
 }
 
 describe.each([
   ['zh-CN', 'src/locales/zh-CN/index.ts', 'zhCN', zhCN, cnModels, cnRegions],
-  ['zh-TW', 'src/locales/zh-TW/index.ts', 'zhTW', zhTW, twModels, twRegions],
+  ['zh-TW', 'src/locales/zh-TW/index.ts', 'zhTW', zhTW, twModels, twRegions]
 ] as const)('%s：带改写插件打包的语言包', (_, entry, exportName, source, models, regions) => {
   it(
     '表解码后与源码语言包相同；对全部原文在全部页面范围下 translate 逐条相同',
@@ -338,8 +329,8 @@ describe.each([
 
       // 改写生效：叶子词典的表是字符串，合并词典的表是子表数组
       const tables = packed.flatMap(([, dict]) => [dict.static, dict.scoped] as unknown[])
-      expect(tables.filter((table) => typeof table === 'string').length).toBeGreaterThan(0)
-      expect(tables.filter((table) => Array.isArray(table)).length).toBeGreaterThan(30)
+      expect(tables.filter(table => typeof table === 'string').length).toBeGreaterThan(0)
+      expect(tables.filter(table => Array.isArray(table)).length).toBeGreaterThan(30)
 
       packed.forEach(([key, dict], index) => {
         const [sourceKey, original] = source[index]!
@@ -348,13 +339,11 @@ describe.each([
         expect(tableEntries(dict.scoped), `${key} scoped`).toEqual(Object.entries(original.scoped ?? {}))
         // 名称表、说明表、预置列表名表不改写（含展开），条目与源码相同；标签正则逐条同源
         expect(tableEntries(dict.labels), `${key} labels`).toEqual(tableEntries(original.labels))
-        expect(tableEntries(dict.labelDescriptions), `${key} labelDescriptions`).toEqual(
-          tableEntries(original.labelDescriptions),
-        )
+        expect(tableEntries(dict.labelDescriptions), `${key} labelDescriptions`).toEqual(tableEntries(original.labelDescriptions))
         expect(tableEntries(dict.listNames), `${key} listNames`).toEqual(tableEntries(original.listNames))
         expect(
           (dict.labelRegexp ?? []).map(([pattern]) => String(pattern)),
-          `${key} labelRegexp`,
+          `${key} labelRegexp`
         ).toEqual((original.labelRegexp ?? []).map(([pattern]) => String(pattern)))
       })
 
@@ -362,29 +351,25 @@ describe.each([
       const labelTexts = [
         ...new Set(
           source.flatMap(([, dict]) =>
-            [
-              ...tableEntries(dict.labels),
-              ...tableEntries(dict.labelDescriptions),
-              ...tableEntries(dict.listNames),
-            ].map(([text]) => text),
-          ),
+            [...tableEntries(dict.labels), ...tableEntries(dict.labelDescriptions), ...tableEntries(dict.listNames)].map(([text]) => text)
+          )
         ),
         'Pull requests that update javascript code',
         'Pull requests that update GitHub Actions code',
         'scope: vapor',
         'Bug',
-        'Inspiration',
+        'Inspiration'
       ]
       const texts = [...tableTexts([source, packed]), ...replacerTexts(models, regions)]
       const expected = createMatcher(source)
       const actual = createMatcher(packed)
       const labelResults = (matcher: Matcher): (string | undefined)[] =>
-        labelTexts.flatMap((text) => [
+        labelTexts.flatMap(text => [
           matcher.translateLabel(text, 'name'),
           matcher.translateLabel(text, 'description'),
-          matcher.translateLabel(text, 'list'),
+          matcher.translateLabel(text, 'list')
         ])
-      expect(labelResults(expected).filter((result) => result !== undefined).length).toBeGreaterThan(20)
+      expect(labelResults(expected).filter(result => result !== undefined).length).toBeGreaterThan(20)
       expect(labelResults(actual)).toEqual(labelResults(expected))
 
       const mismatched: string[] = []
@@ -398,7 +383,7 @@ describe.each([
       expect(mismatched).toEqual([])
       expect(texts.length * SCOPES.length).toBeGreaterThan(500_000)
     },
-    SLOW_TIMEOUT,
+    SLOW_TIMEOUT
   )
 })
 
@@ -448,10 +433,7 @@ function tableReads(path: string, code: string): string[] {
       const inMergedList = parent?.type === 'ArrayExpression' && isTableCall(parents.at(-2))
       if (!asArgument && !inMergedList) reads.push(`${path}:${lineOf(node)} ${code.slice(node.start, node.end)}`)
     }
-    if (
-      node.type === 'ObjectPattern' &&
-      node.properties.some((item) => item.type === 'Property' && isTableName(item.key, item.computed))
-    ) {
+    if (node.type === 'ObjectPattern' && node.properties.some(item => item.type === 'Property' && isTableName(item.key, item.computed))) {
       reads.push(`${path}:${lineOf(node)} 解构`)
     }
   })
@@ -467,25 +449,25 @@ describe('运行时只经 core/table 读取 static / scoped', () => {
       'const y = { ...dict.scoped }',
       "Object.keys(dict['static'])",
       'const { static: table } = dict',
-      'const z = dict[scoped]',
+      'const z = dict[scoped]'
     ].join('\n')
     expect(tableReads('sample.ts', sample)).toEqual([
       'sample.ts:3 dict.static',
       'sample.ts:4 dict.scoped',
       "sample.ts:5 dict['static']",
-      'sample.ts:6 解构',
+      'sample.ts:6 解构'
     ])
   })
 
   it(
     'src 中没有直接按键读取、展开或解构词条表（构建产物中是压缩串）',
     () => {
-      const reads = listFiles(resolve(ROOT, 'src'), '.ts').flatMap((file) => {
+      const reads = listFiles(resolve(ROOT, 'src'), '.ts').flatMap(file => {
         const path = relative(ROOT, file).replaceAll('\\', '/')
         return TABLE_INTERNALS.has(path) ? [] : tableReads(path, readFileSync(file, 'utf8'))
       })
       expect(reads).toEqual([])
     },
-    SLOW_TIMEOUT,
+    SLOW_TIMEOUT
   )
 })

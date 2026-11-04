@@ -16,18 +16,15 @@ export default {
     'Select a verified email to display': '选择要显示的已验证电子邮件',
     'You can add or remove verified email addresses in your': '添加或删除已验证的电子邮件地址请前往',
     'personal email settings': '个人电子邮件设置',
-    'You have set your email address to private. To toggle email privacy, go to':
-      '你已将电子邮件地址设为私密。如需更改，请转到',
+    'You have set your email address to private. To toggle email privacy, go to': '你已将电子邮件地址设为私密。如需更改，请转到',
     // 结尾引号在句号之后：标点随原文，结尾不加句号
     'and uncheck "Keep my email address private."': '并取消勾选“对我的电子邮件地址保密”',
     'and uncheck “Keep my email address private.”': '并取消勾选“对我的电子邮件地址保密”',
     'Tell us a little bit about yourself': '简单介绍一下自己',
     'your company’s GitHub organization to link it.': '你公司的 GitHub 组织以链接到其主页。',
     "your company's GitHub organization to link it.": '你公司的 GitHub 组织以链接到其主页。',
-    'You can @mention your company’s GitHub organization to link it.':
-      '你可以 @提及 你公司的 GitHub 组织以链接到其主页。',
-    "You can @mention your company's GitHub organization to link it.":
-      '你可以 @提及 你公司的 GitHub 组织以链接到其主页。',
+    'You can @mention your company’s GitHub organization to link it.': '你可以 @提及 你公司的 GitHub 组织以链接到其主页。',
+    "You can @mention your company's GitHub organization to link it.": '你可以 @提及 你公司的 GitHub 组织以链接到其主页。',
     'Link to social profile': '社交帐户链接',
     'Other users will see the time difference from their local time.': '其他用户将看到与其本地时间的时差。',
     "All of the fields on this page are optional and can be deleted at any time, and by filling them out, you're giving us consent to share this data wherever your user profile appears. Please see our":
@@ -100,8 +97,7 @@ export default {
 
     // 开发人员计划（组织设置页的同名词条为 scoped）
     'GitHub Developer Program': 'GitHub 开发人员计划',
-    'Building an application, service, or tool that integrates with GitHub?':
-      '正在构建与 GitHub 集成的应用、服务或工具？',
+    'Building an application, service, or tool that integrates with GitHub?': '正在构建与 GitHub 集成的应用、服务或工具？',
     // 「Building …? [Join the GitHub Developer Program], or read more about it at our [Developer site].」
     'Join the GitHub Developer Program': '加入 GitHub 开发人员计划',
     ', or read more about it at our': '，详情请访问我们的',
@@ -111,11 +107,9 @@ export default {
     'has guides, API and webhook references, information about creating GitHub Apps and other resources for building applications that integrate with GitHub. Make sure your contact information is up-to-date below. Thanks for being a member!':
       '提供指南、API 和 Web 钩子参考、GitHub 应用创建说明以及构建与 GitHub 集成的应用所需的其他资源。请确保下方联系信息是最新的。感谢你的加入！',
     'Support email address': '支持电子邮件地址',
-    'An email address where GitHub users can contact you for support.':
-      'GitHub 用户可通过此电子邮件地址联系你获取支持。',
+    'An email address where GitHub users can contact you for support.': 'GitHub 用户可通过此电子邮件地址联系你获取支持。',
     'Product or company website': '产品或公司网站',
-    'The URL for the product, company, or service that integrates with GitHub.':
-      '与 GitHub 集成的产品、公司或服务的 URL。',
+    'The URL for the product, company, or service that integrates with GitHub.': '与 GitHub 集成的产品、公司或服务的 URL。',
     'Update contact information': '更新联系信息',
     'Leave the program': '退出计划',
 
@@ -133,7 +127,7 @@ export default {
     "We'll use this language preference to filter the trending repository lists on": '此语言首选项将用于筛选',
     'We’ll use this language preference to filter the trending repository lists on': '此语言首选项将用于筛选',
     'Trending Repositories': '趋势存储库',
-    'Save Trending settings': '保存趋势设置',
+    'Save Trending settings': '保存趋势设置'
   },
   scoped: {
     // 与个人主页编辑个人资料表单、组织个人资料同名的字段
@@ -156,11 +150,11 @@ export default {
     'email settings': '电子邮件设置',
     // 贡献设置说明后「Read more」链接（可见文字由 common-ui 收录）的无障碍名称
     'Read more about viewing contributions on your profile': '了解如何在个人资料中查看贡献',
-    our: '我们的',
+    our: '我们的'
     // 「page.」与帐户页共用，由 account.ts 收录
   },
   regexp: [
     // 社交帐户输入框的无障碍名称
-    [/^Link to social profile (\d)$/, '社交帐户链接 $1'],
-  ],
+    [/^Link to social profile (\d)$/, '社交帐户链接 $1']
+  ]
 } satisfies PageDictionary

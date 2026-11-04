@@ -131,7 +131,7 @@ export function applyRule(text: string, [pattern, replacement]: RegExpRule): str
   const match = pattern.exec(text)
   if (!match) return undefined
   if (typeof replacement === 'string') return text.replace(pattern, replacement)
-  return callReplacer(text, () => replacement(match[0], ...match.slice(1).map((group) => group ?? '')))
+  return callReplacer(text, () => replacement(match[0], ...match.slice(1).map(group => group ?? '')))
 }
 
 function addInline(page: CompiledPage, [pattern, translation]: InlineRule): void {
@@ -142,9 +142,9 @@ function addInline(page: CompiledPage, [pattern, translation]: InlineRule): void
   const key = patternKey(pattern)
   const general = generalizeKey(key)
   const group = page.inlineStrings.get(general) ?? []
-  if (group.some((entry) => entry.key === key)) return
+  if (group.some(entry => entry.key === key)) return
   const entry: InlineEntry = { key, numeric: key.split(NUM_SLOT).length - 1, translation }
-  const at = group.findIndex((other) => other.numeric < entry.numeric)
+  const at = group.findIndex(other => other.numeric < entry.numeric)
   page.inlineStrings.set(general, at < 0 ? [...group, entry] : [...group.slice(0, at), entry, ...group.slice(at)])
 }
 
@@ -162,7 +162,7 @@ function emptyPage(): CompiledPage {
     attributeRules: [],
     inlineStrings: new Map(),
     inlineRules: [],
-    mergeText: [],
+    mergeText: []
   }
 }
 
@@ -231,8 +231,7 @@ export function createMatcher(bundle: LocaleBundle, options: MatcherOptions = {}
     if (sentences.length < 2 || sentences.length > MAX_SENTENCES) return undefined
     let result = ''
     for (const sentence of sentences) {
-      const translated =
-        lookup(sentence, scope) ?? (EXTRA_PERIOD_RE.test(sentence) ? lookup(sentence.slice(0, -1), scope) : undefined)
+      const translated = lookup(sentence, scope) ?? (EXTRA_PERIOD_RE.test(sentence) ? lookup(sentence.slice(0, -1), scope) : undefined)
       if (translated === undefined) return undefined
       result += result && !FULL_PUNCT_END_RE.test(result) ? ` ${translated}` : translated
     }
@@ -261,11 +260,11 @@ export function createMatcher(bundle: LocaleBundle, options: MatcherOptions = {}
   }
 
   function ignoreSelectors(scope: readonly PageKey[]): readonly string[] {
-    return scope.flatMap((key) => pages.get(key)?.ignore ?? [])
+    return scope.flatMap(key => pages.get(key)?.ignore ?? [])
   }
 
   function attributeRules(scope: readonly PageKey[]): readonly AttributeRule[] {
-    return [...scope].reverse().flatMap((key) => pages.get(key)?.attributeRules ?? [])
+    return [...scope].reverse().flatMap(key => pages.get(key)?.attributeRules ?? [])
   }
 
   const inlineCaches = new Map<string, Map<string, string | null>>()
@@ -308,24 +307,19 @@ export function createMatcher(bundle: LocaleBundle, options: MatcherOptions = {}
   }
 
   function hasInline(scope: readonly PageKey[]): boolean {
-    return scope.some((key) => {
+    return scope.some(key => {
       const page = pages.get(key)
       return page !== undefined && (page.inlineStrings.size > 0 || page.inlineRules.length > 0)
     })
   }
 
   function mergeSelectors(scope: readonly PageKey[]): readonly string[] {
-    return scope.flatMap((key) => pages.get(key)?.mergeText ?? [])
+    return scope.flatMap(key => pages.get(key)?.mergeText ?? [])
   }
 
   /** 标签正则的索引：第一次用到时建立 */
   let labelRuleIndex: RegExpIndex | undefined
-  const hasLabels =
-    labelNames.size > 0 ||
-    labelDescriptions.size > 0 ||
-    labelRegexp.length > 0 ||
-    listNames.size > 0 ||
-    issueTypes.size > 0
+  const hasLabels = labelNames.size > 0 || labelDescriptions.size > 0 || labelRegexp.length > 0 || listNames.size > 0 || issueTypes.size > 0
 
   /** 规范化原文在说明表中的译文；表中没有时按顺序试标签正则 */
   function lookupLabelDescription(text: string): string | undefined {
@@ -369,6 +363,6 @@ export function createMatcher(bundle: LocaleBundle, options: MatcherOptions = {}
     hasInline,
     mergeSelectors,
     translateLabel,
-    hasLabels: () => hasLabels,
+    hasLabels: () => hasLabels
   }
 }

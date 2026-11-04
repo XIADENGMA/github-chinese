@@ -13,7 +13,7 @@ const ITEM_STATES: Readonly<Record<string, string>> = {
   closed: '已關閉',
   merged: '已合併',
   draft: '草稿',
-  queued: '已排入佇列',
+  queued: '已排入佇列'
 }
 
 /** 项状态图标的 aria-label */
@@ -27,12 +27,12 @@ const STATE_LABELS: Readonly<Record<string, string>> = {
   'Closed pull request': '已關閉的拉取請求',
   'Merged pull request': '已合併的拉取請求',
   'Queued pull request': '已排入佇列的拉取請求',
-  'Draft pull request': '草稿拉取請求',
+  'Draft pull request': '草稿拉取請求'
 }
 
 /** scoped 展开的项状态：Closed as not planned issue 由 common-ui/status.ts 的全局词条翻译，不收 scoped 副本 */
 const SCOPED_STATE_LABELS: Readonly<Record<string, string>> = Object.fromEntries(
-  Object.entries(STATE_LABELS).filter(([label]) => label !== 'Closed as not planned issue'),
+  Object.entries(STATE_LABELS).filter(([label]) => label !== 'Closed as not planned issue')
 )
 
 /** 无后缀距离：about 2 months → 約 2 個月；less than a minute → 不到 1 分鐘 */
@@ -43,19 +43,18 @@ const DISTANCE_UNITS: Readonly<Record<string, string>> = {
   day: '天',
   week: '週',
   month: '個月',
-  year: '年',
+  year: '年'
 }
 
 const DISTANCE_PREFIXES: Readonly<Record<string, string>> = {
   about: '約',
   almost: '將近',
   over: '超過',
-  'less than': '不到',
+  'less than': '不到'
 }
 
 /** 距离片段（不含捕获组） */
-export const DISTANCE_SOURCE =
-  '(?:(?:about|almost|over|less than) )?(?:\\d+|an?) (?:second|minute|hour|day|week|month|year)s?'
+export const DISTANCE_SOURCE = '(?:(?:about|almost|over|less than) )?(?:\\d+|an?) (?:second|minute|hour|day|week|month|year)s?'
 
 export function translateDistance(text: string): string {
   const match = /^(?:(about|almost|over|less than) )?(\d+|an?) (second|minute|hour|day|week|month|year)s?$/.exec(text)
@@ -73,7 +72,7 @@ const WEEKDAYS_LONG: Readonly<Record<string, string>> = {
   Thursday: '星期四',
   Friday: '星期五',
   Saturday: '星期六',
-  Sunday: '星期日',
+  Sunday: '星期日'
 }
 
 const DAY_NOTES: Readonly<Record<string, string>> = {
@@ -82,7 +81,7 @@ const DAY_NOTES: Readonly<Record<string, string>> = {
   'End of selected range': '選取範圍終點',
   'Inside selected range': '在選取範圍內',
   'Minimum allowed date': '允許的最早日期',
-  'Maximum allowed date': '允許的最晚日期',
+  'Maximum allowed date': '允許的最晚日期'
 }
 
 const DAY_NOTE_SOURCE = Object.keys(DAY_NOTES).join('|')
@@ -96,7 +95,7 @@ const CONTENT_NOUNS: Readonly<Record<string, string>> = {
   'an issue field': '議題欄位',
   'issue fields': '議題欄位',
   'issue field': '議題欄位',
-  type: '類型',
+  type: '類型'
 }
 
 function contentNoun(noun: string): string {
@@ -124,7 +123,7 @@ const STATUS_OPTIONS: Readonly<Record<string, string>> = {
   'At risk': '有風險',
   'Off track': '偏離計畫',
   Inactive: '閒置',
-  Complete: '已完成',
+  Complete: '已完成'
 }
 
 /** 字段类型名（不可清空单元格的提示“X cannot be deleted”），字段名之外的部分 */
@@ -136,12 +135,12 @@ const COLUMN_TYPE_TEXT: Readonly<Record<string, string>> = {
   Text: '文字',
   'Created at': '建立時間',
   'Updated at': '更新時間',
-  'Closed at': '關閉時間',
+  'Closed at': '關閉時間'
 }
 
 const COLUMN_TYPE_SOURCE = [...Object.keys(COLUMN_TYPE_TEXT), ...Object.keys(FIELD_NAMES)]
   .sort((a, b) => b.length - a.length)
-  .map((name) => name.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&'))
+  .map(name => name.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&'))
   .join('|')
 
 export default {
@@ -149,8 +148,7 @@ export default {
     // 添加项
     'Search or add items': '搜尋或新增項目',
     'Start typing to create an item, or type # to select a repository': '輸入內容以建立項目，或輸入 # 選擇儲存庫',
-    'Start typing to create an item, or type hashtag to select a repository':
-      '輸入內容以建立項目，或輸入井字號選擇儲存庫',
+    'Start typing to create an item, or type hashtag to select a repository': '輸入內容以建立項目，或輸入井字號選擇儲存庫',
     'Create new item or add existing item': '建立新項目或加入現有項目',
     'Add item from repository': '從儲存庫新增項目',
     'Add your first item': '新增第一個項目',
@@ -158,8 +156,7 @@ export default {
     'Click "Add Item" to get started or use the shortcut': '按一下「新增項目」或使用快速鍵開始',
     'Add items to project': '將項目加入專案',
     'Pick a repository to add issues and pull requests from': '選擇要從中新增議題和拉取請求的儲存庫',
-    'This repository is either empty or all items were already added to this project.':
-      '此儲存庫為空或所有項目都已加入此專案。',
+    'This repository is either empty or all items were already added to this project.': '此儲存庫為空或所有項目都已加入此專案。',
     'The new item has been added to the bottom of the column.': '新項目已新增到欄底部。',
     'The new item has been added to the bottom of the roadmap.': '新項目已新增到藍圖底部。',
     'The new item has been added to the bottom of the table.': '新項目已新增到表格底部。',
@@ -198,8 +195,7 @@ export default {
     'Cannot paste: value does not match any allowed option': '無法貼上：值與任何允許的選項都不相符',
     "You can't edit this field because this repository is archived": '無法編輯已封存儲存庫中的欄位',
     "We couldn't find any items matching that search query.": '找不到與該搜尋查詢相符的項目。',
-    'Could not copy items. Please check the page permissions and try again.':
-      '無法複製項目。請檢查頁面權限後再試一次。',
+    'Could not copy items. Please check the page permissions and try again.': '無法複製項目。請檢查頁面權限後再試一次。',
 
     // 侧边面板
     'Pull requests are not currently supported in the side panel.': '側邊面板目前不支援拉取請求。',
@@ -220,10 +216,8 @@ export default {
     'PRs and Drafts can’t be added as sub-issues. Item was added to No Parent issue group':
       'PR 和草稿無法新增為子議題。項目已加入無父議題群組',
     'PRs and draft issues are not supported by sub-issues': '子議題不支援 PR 和草稿議題',
-    'Drafts can’t be added with a milestone. Item was added to No milestone group':
-      '草稿無法設定里程碑。項目已加入無里程碑群組',
-    'Drafts can’t be added with an issue type. Item was added to No type group':
-      '草稿無法設定議題類型。項目已加入無類型群組',
+    'Drafts can’t be added with a milestone. Item was added to No milestone group': '草稿無法設定里程碑。項目已加入無里程碑群組',
+    'Drafts can’t be added with an issue type. Item was added to No type group': '草稿無法設定議題類型。項目已加入無類型群組',
 
     // 状态更新
     'Add a project status update': '新增專案狀態更新',
@@ -250,8 +244,7 @@ export default {
     // 批量更新 / 复制 / 导入
     'An error occurred while copying draft issues.': '複製草稿議題時發生錯誤。',
     'Draft issues copied successfully.': '已成功複製草稿議題。',
-    'Copying draft issues to your new project. This may take a minute to complete.':
-      '正在將草稿議題複製到新專案。可能需要一分鐘才能完成。',
+    'Copying draft issues to your new project. This may take a minute to complete.': '正在將草稿議題複製到新專案。可能需要一分鐘才能完成。',
     'No items were added to this project.': '沒有任何項目加入此專案。',
 
     // 单元格校验与错误提示
@@ -259,7 +252,7 @@ export default {
     'This field must be a date': '此欄位必須為日期',
     'This floating point value is too precise': '此浮點數值的精確度過高',
     'Unable to refresh project data': '無法重新整理專案資料',
-    'Copying is not supported in this browser': '此瀏覽器不支援複製',
+    'Copying is not supported in this browser': '此瀏覽器不支援複製'
   },
   scoped: {
     // 通用文本（仅项目页生效）
@@ -271,8 +264,7 @@ export default {
     'Side panel controls': '側邊面板控制項',
     'Remove session from issue': '從議題移除工作階段',
     'Session removed from issue': '已從議題移除工作階段',
-    'This may take some time. This dialog will close when the job is complete.':
-      '這可能需要一些時間。作業完成後此對話方塊會關閉。',
+    'This may take some time. This dialog will close when the job is complete.': '這可能需要一些時間。作業完成後此對話方塊會關閉。',
     ...SCOPED_STATE_LABELS,
     // 添加项：侧边面板空状态的拆分句（Create a <a>repository</a> to get started.）整句由下方 inline 规则译出；
     // omnibar 的 You can use <kbd>…</kbd> to add an item 是 kbd 句子（快捷键文字随平台变化），按片段翻译
@@ -508,25 +500,24 @@ export default {
     'This page failed to load': '此頁面載入失敗',
     'Stale cache warning': '快取過時警告',
     'Failed to fetch data.': '無法擷取資料。',
-    'Reload the page': '重新載入頁面',
+    'Reload the page': '重新載入頁面'
   },
   regexp: [
     // 添加项
     [/^Showing (\d+) most recent items$/, '顯示最近 $1 個項目'],
     [
       /^Showing (\d+) most recent items? that (?:has|have) not been added to this project(\. Use search to narrow down this list\.)?$/,
-      (_, count: string, hint?: string) =>
-        `顯示最近 ${count} 個未加入此專案的項目${hint ? '。使用搜尋縮小清單範圍。' : ''}`,
+      (_, count: string, hint?: string) => `顯示最近 ${count} 個未加入此專案的項目${hint ? '。使用搜尋縮小清單範圍。' : ''}`
     ],
 
     // 确认框
     [
       /^Are you sure you want to archive (this item|[\d,]+ items|these [\d,]+ items)\?$/,
-      (_, phrase: string) => `確定要封存${itemPhrase(phrase)}嗎？`,
+      (_, phrase: string) => `確定要封存${itemPhrase(phrase)}嗎？`
     ],
     [
       /^Are you sure you want to remove (this item|[\d,]+ items|these [\d,]+ items) from (?:the|this) project\?$/,
-      (_, phrase: string) => `確定要從專案中移除${itemPhrase(phrase)}嗎？`,
+      (_, phrase: string) => `確定要從專案中移除${itemPhrase(phrase)}嗎？`
     ],
     [/^Archive items?\?$/, '封存項目？'],
     [/^Remove items?\?$/, '移除項目？'],
@@ -534,28 +525,25 @@ export default {
     [/^Move items to (.+)\?$/, (_, target: string) => `${joinCjk('將項目移到', target)}？`],
     [
       /^Are you sure you want to move (this item|[\d,]+ items) to "(.+)"\?$/,
-      (_, phrase: string, target: string) => `確定要將${itemPhrase(phrase)}移到「${target}」嗎？`,
+      (_, phrase: string, target: string) => `確定要將${itemPhrase(phrase)}移到「${target}」嗎？`
     ],
     [/^Cannot add (.+)$/, (_, noun: string) => pangu(`無法新增${contentNoun(noun)}`)],
     [/^Pull requests cannot have (.+)$/, (_, noun: string) => pangu(`拉取請求不能有${contentNoun(noun)}`)],
-    [
-      /^Convert this draft to an issue to add (.+)$/,
-      (_, noun: string) => pangu(`將此草稿轉換為議題後才能新增${contentNoun(noun)}`),
-    ],
+    [/^Convert this draft to an issue to add (.+)$/, (_, noun: string) => pangu(`將此草稿轉換為議題後才能新增${contentNoun(noun)}`)],
     [
       /^(.+) cannot be applied to (pull requests|draft issues)$/,
       (_, field: string, target: string) =>
-        pangu(`${pluralFieldName(field)}無法套用於${target === 'pull requests' ? '拉取請求' : '草稿議題'}`),
+        pangu(`${pluralFieldName(field)}無法套用於${target === 'pull requests' ? '拉取請求' : '草稿議題'}`)
     ],
     [
       /^More than (\d+) cells are selected\. Deselect some cells to perform bulk edits\.$/,
-      '已選取超過 $1 個儲存格。取消選取部分儲存格後才能批次編輯。',
+      '已選取超過 $1 個儲存格。取消選取部分儲存格後才能批次編輯。'
     ],
     [/^Unable to assign the following users to the converted issue: (.+)$/, '無法將下列使用者指派給轉換後的議題：$1'],
     [/^This value must be between (-?\d+) and (-?\d+)$/, '此值必須介於 $1 和 $2 之間'],
     [
       new RegExp(`^(${COLUMN_TYPE_SOURCE}) cannot be deleted$`),
-      (_, name: string) => `${COLUMN_TYPE_TEXT[name] ?? translateFieldName(name)}無法刪除`,
+      (_, name: string) => `${COLUMN_TYPE_TEXT[name] ?? translateFieldName(name)}無法刪除`
     ],
     [/^Invalid `(.+)`: (.+)\. (.+) are acceptable values for `(.+)`$/, '`$1` 無效：$2。`$4` 的可接受值為 $3'],
     [/^@(.+)'s untitled project$/, '@$1 的未命名專案'],
@@ -569,12 +557,9 @@ export default {
       (_, title: string, state: string, pr?: string, parent?: string, level?: string) => {
         const status = `狀態：${ITEM_STATES[state.toLowerCase()] ?? state}${pr ? '的拉取請求' : ''}`
         return parent ? `${title}，${status}。${parent} 的子議題。第 ${level} 層` : `${title}，${status}`
-      },
+      }
     ],
-    [
-      new RegExp(`^(${Object.keys(STATE_LABELS).join('|')}), blocked$`),
-      (_, label: string) => `${STATE_LABELS[label] ?? label}，受阻擋`,
-    ],
+    [new RegExp(`^(${Object.keys(STATE_LABELS).join('|')}), blocked$`), (_, label: string) => `${STATE_LABELS[label] ?? label}，受阻擋`],
 
     // 子议题
     [/^(\d+) sub-issues? not in this project$/, '$1 個子議題不在此專案中'],
@@ -583,26 +568,21 @@ export default {
     [
       /^Sub-issues progress: (\d+) of (\d+) \((\d+)%\)\. Show sub-issues for: (.+)$/,
       (_, completed: string, total: string, percent: string, title: string) =>
-        `子議題進度：${completed}/${total} (${percent}%)。${joinCjk(joinCjk('顯示', title), '的子議題')}`,
+        `子議題進度：${completed}/${total} (${percent}%)。${joinCjk(joinCjk('顯示', title), '的子議題')}`
     ],
 
     // 里程碑与状态更新
-    [
-      new RegExp(`^Past due by (${DISTANCE_SOURCE})$`),
-      (_, distance: string) => joinCjk('已逾期', translateDistance(distance)),
-    ],
+    [new RegExp(`^Past due by (${DISTANCE_SOURCE})$`), (_, distance: string) => joinCjk('已逾期', translateDistance(distance))],
     [new RegExp(`^Due by (${DATE_SOURCE})$`), (_, date: string) => joinCjk('截止於', translateDate(date) ?? date)],
     // 项目头部状态徽章的 aria-label：原文没有引号、逗号，改语序代替标点（查看 2026 年 1 月 5 日更新為進度正常的最新狀態）
     [
       new RegExp(`^View latest (.+) status updated (${DATE_SOURCE})$`),
       (_, status: string, date: string) =>
-        pangu(
-          `${joinCjk(joinCjk('查看', translateDate(date) ?? date), '更新為')}${STATUS_OPTIONS[status] ?? status}的最新狀態`,
-        ),
+        pangu(`${joinCjk(joinCjk('查看', translateDate(date) ?? date), '更新為')}${STATUS_OPTIONS[status] ?? status}的最新狀態`)
     ],
     [
       new RegExp(`^Updated (less than a minute ago|${RELATIVE_SOURCE})$`),
-      (_, time: string) => joinCjk('更新於', time === 'less than a minute ago' ? '不到 1 分鐘前' : translateTime(time)),
+      (_, time: string) => joinCjk('更新於', time === 'less than a minute ago' ? '不到 1 分鐘前' : translateTime(time))
     ],
     [/^React with (.+) \((\d+) .+ reactions? so far\)$/, '新增 $1 表情回應（已有 $2 個）'],
 
@@ -622,30 +602,21 @@ export default {
     [/^Bulk update in progress (\d+)%$/, '批次更新進行中 $1%'],
     [
       /^Bulk update completed\.(?: (\d+) items? couldn’t be updated and (?:were|was) skipped\.)?$/,
-      (_, skipped?: string) => `批次更新已完成。${skipped ? `${skipped} 個項目無法更新並已略過。` : ''}`,
+      (_, skipped?: string) => `批次更新已完成。${skipped ? `${skipped} 個項目無法更新並已略過。` : ''}`
     ],
     // 原文没有括号：3 個項目批次更新失敗。
     [
       /^Bulk update failed(?: for (\d+) items)?\. Please refresh the page and try again\.$/,
-      (_, count?: string) => `${count ? `${count} 個項目` : ''}批次更新失敗。請重新整理頁面後再試一次。`,
+      (_, count?: string) => `${count ? `${count} 個項目` : ''}批次更新失敗。請重新整理頁面後再試一次。`
     ],
-    [
-      /^Error updating items: Cannot update more than (\d+) items at once$/,
-      '更新項目時發生錯誤：一次最多只能更新 $1 個項目',
-    ],
-    [
-      /^(\d+)% imported; you may leave this page while we work in the background\.$/,
-      '已匯入 $1%；在背景處理期間可以離開此頁面。',
-    ],
+    [/^Error updating items: Cannot update more than (\d+) items at once$/, '更新項目時發生錯誤：一次最多只能更新 $1 個項目'],
+    [/^(\d+)% imported; you may leave this page while we work in the background\.$/, '已匯入 $1%；在背景處理期間可以離開此頁面。'],
     [
       /^Import complete\.(?: (\d+) items? failed to import\.)?( Now running setup workflows – this may take a few minutes\.)?( Keep this project up to date by automatically adding new items matching your filters\.)?$/,
       (_, failed?: string, workflows?: string, hint?: string) =>
-        `匯入完成。${failed ? `${failed} 個項目匯入失敗。` : ''}${workflows ? '正在執行設定工作流程——可能需要幾分鐘。' : ''}${hint ? '自動新增與篩選器相符的新項目以保持專案最新。' : ''}`,
+        `匯入完成。${failed ? `${failed} 個項目匯入失敗。` : ''}${workflows ? '正在執行設定工作流程——可能需要幾分鐘。' : ''}${hint ? '自動新增與篩選器相符的新項目以保持專案最新。' : ''}`
     ],
-    [
-      /^Failed to add items from your repository\. (\d+) items? failed to import\.$/,
-      '無法從儲存庫新增項目。$1 個項目匯入失敗。',
-    ],
+    [/^Failed to add items from your repository\. (\d+) items? failed to import\.$/, '無法從儲存庫新增項目。$1 個項目匯入失敗。'],
 
     // 日期选择器与日期
     [/^Week (\d+)$/, '第 $1 週'],
@@ -653,19 +624,18 @@ export default {
     [/^Must be on or before (.+)$/, (_, date: string) => joinCjk('不得晚於', translateDate(date) ?? date)],
     [
       /^(.+) - Open date picker \(currently selected: (.+)\)$/,
-      (_, field: string, date: string) =>
-        `${translateFieldName(field)} - 開啟日期選擇器（目前選取：${translateDate(date) ?? date}）`,
+      (_, field: string, date: string) => `${translateFieldName(field)} - 開啟日期選擇器（目前選取：${translateDate(date) ?? date}）`
     ],
     [/^(.+) - Choose date\.\.\.$/, (_, field: string) => `${translateFieldName(field)} - 選擇日期...`],
     [
       new RegExp(
-        `^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), (${MONTH_SOURCE} \\d{1,2})((?: \\((?:${DAY_NOTE_SOURCE})\\))*)$`,
+        `^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), (${MONTH_SOURCE} \\d{1,2})((?: \\((?:${DAY_NOTE_SOURCE})\\))*)$`
       ),
       (_, weekday: string, date: string, notes: string) =>
-        `${translateDate(date) ?? date}${WEEKDAYS_LONG[weekday] ?? ''}${translateDayNotes(notes)}`,
+        `${translateDate(date) ?? date}${WEEKDAYS_LONG[weekday] ?? ''}${translateDayNotes(notes)}`
     ],
     [new RegExp(`^(${DATE_SOURCE})$`), (_, date: string) => translateDate(date) ?? date],
-    [/^Please keep your feedback within (\d+) characters or less\.$/, '意見回饋請控制在 $1 個字元以內。'],
+    [/^Please keep your feedback within (\d+) characters or less\.$/, '意見回饋請控制在 $1 個字元以內。']
   ],
   inline: [
     // 拖入里程碑 / 议题类型分组的提示框（get-group-update-validation.tsx，宿主是 AlertDialog 正文 div）：
@@ -673,7 +643,7 @@ export default {
     // 槽位顺序不能变，改语序：<里程碑> 里程碑需先在 <存储库> 儲存庫中建立（原文没有逗号，译文不加）
     [
       'Please create the {} milestone in the {} repository before adding to this milestone group.',
-      '{} 里程碑需先在 {} 儲存庫中建立才能加入此里程碑群組。',
+      '{} 里程碑需先在 {} 儲存庫中建立才能加入此里程碑群組。'
     ],
     // There is no <code>类型</code> issue type in the <a>组织</a> organization.
     ['There is no {} issue type in the {} organization.', '{} 議題類型在 {} 組織中不存在。'],
@@ -682,6 +652,6 @@ export default {
     // 添加项建议列表的“Add items from <span>owner/repo</span>”槽位后没有文本节点，译文无法把存储库名移到句中，
     // 仍按 scoped 片段「從以下儲存庫新增項目」翻译
     // 侧边面板没有存储库建议时的空状态（item-suggestions-list.tsx）：<p>Create a <a>repository</a> to get started.</p>
-    ['Create a {} to get started.', '建立{}以開始使用。'],
-  ],
+    ['Create a {} to get started.', '建立{}以開始使用。']
+  ]
 } satisfies PageDictionary

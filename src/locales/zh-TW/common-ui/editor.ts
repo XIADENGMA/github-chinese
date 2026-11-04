@@ -16,14 +16,14 @@ const SUBJECTS: Readonly<Record<string, string>> = {
   Release: '發行版本',
   Comment: '留言',
   Commit: '提交',
-  Gist: '程式碼片段',
+  Gist: '程式碼片段'
 }
 
 /** Markdown 编辑器视图模式 */
 const MODES: Readonly<Record<string, string>> = {
   edit: '編輯',
   preview: '預覽',
-  hybrid: '混合',
+  hybrid: '混合'
 }
 
 /** 经典 Markdown 工具栏按钮（aria-label 带快捷键：Add bold text, <Ctrl+b>） */
@@ -37,7 +37,7 @@ const TOOLBAR: Readonly<Record<string, string>> = {
   'Add a bulleted list': '新增項目符號清單',
   'Add a numbered list': '新增編號清單',
   'Add a task list': '新增工作清單',
-  'Add a suggestion': '新增建議',
+  'Add a suggestion': '新增建議'
 }
 const TOOLBAR_SOURCE = `(${Object.keys(TOOLBAR).join('|')})`
 
@@ -179,24 +179,15 @@ export default {
     // 自动补全建议
     'Autocomplete suggestions': '自動完成建議',
     'Loading autocomplete suggestions…': '正在載入自動完成建議…',
-    'Filter emoji': '篩選表情符號',
+    'Filter emoji': '篩選表情符號'
   },
   regexp: [
-    [
-      /^Markdown input: (edit|preview|hybrid) mode selected\.$/,
-      (_, mode: string) => `Markdown 輸入：已選擇${MODES[mode]!}模式。`,
-    ],
+    [/^Markdown input: (edit|preview|hybrid) mode selected\.$/, (_, mode: string) => `Markdown 輸入：已選擇${MODES[mode]!}模式。`],
     // 标题级别按 Word 繁中的样式名写作「標題 2」
     [/^Heading ([1-6])$/, '標題 $1'],
-    [
-      new RegExp(`^${TOOLBAR_SOURCE}, <([^<>]+)>$`),
-      (_, label: string, keys: string) => `${TOOLBAR[label]!}，<${keys}>`,
-    ],
+    [new RegExp(`^${TOOLBAR_SOURCE}, <([^<>]+)>$`), (_, label: string, keys: string) => `${TOOLBAR[label]!}，<${keys}>`],
     // 斜杠命令 /table 的行列数
-    [
-      /^([1-9]\d?) (columns?|rows?)$/,
-      (_, count: string, unit: string) => `${count} ${unit.startsWith('c') ? '欄' : '列'}`,
-    ],
+    [/^([1-9]\d?) (columns?|rows?)$/, (_, count: string, unit: string) => `${count} ${unit.startsWith('c') ? '欄' : '列'}`],
 
     // 上传进度与错误
     [/^Uploading your files\.\.\. \((\d+)\/(\d+)\)$/, '正在上傳檔案... ($1/$2)'],
@@ -205,25 +196,25 @@ export default {
     [/^File types? (.+) not supported\. See the$/, '不支援檔案類型 $1。請參閱'],
     [
       /^Try again with ([A-Z0-9, ]+) or ([A-Z0-9]+)\.$/,
-      (_, types: string, last: string) => `請改用 ${types.split(', ').join('、')} 或 ${last} 格式的檔案再試一次。`,
+      (_, types: string, last: string) => `請改用 ${types.split(', ').join('、')} 或 ${last} 格式的檔案再試一次。`
     ],
     // 附件类型错误：We don’t support that file type. <a>Try again</a> with a GIF, JPEG, or PNG.
     [
       /^with an? ((?:[A-Z0-9]+, )*[A-Z0-9]+,? or [A-Z0-9]+|[A-Z0-9]+)\.$/,
-      (_, list: string) => `並改用 ${list.replace(/,? or /, ' 或 ').replace(/, /g, '、')} 格式的檔案。`,
+      (_, list: string) => `並改用 ${list.replace(/,? or /, ' 或 ').replace(/, /g, '、')} 格式的檔案。`
     ],
     [/^Please upload a picture smaller than ([\d,]+x[\d,]+)\.$/, '請上傳小於 $1 的圖片。'],
     [
       /^There was an error creating your (Issue|PullRequest|Discussion|Release|Comment|Commit|Gist)\.$/,
       // 类型译文与中文之间按需补空格：建立程式碼片段時發生錯誤。
-      (_, subject: string) => joinCjk(joinCjk('建立', SUBJECTS[subject] ?? subject), '時發生錯誤。'),
+      (_, subject: string) => joinCjk(joinCjk('建立', SUBJECTS[subject] ?? subject), '時發生錯誤。')
     ],
     [
       /^(\d[\d,]*) attachments? in your text may not be visible to all the viewers of the repository due to being from a repository with restricted access\.$/,
-      '你文字中的 $1 個附件來自存取受限的儲存庫，可能並非此儲存庫的所有檢視者都看得到。',
+      '你文字中的 $1 個附件來自存取受限的儲存庫，可能並非此儲存庫的所有檢視者都看得到。'
     ],
 
     // 表情符号建议：smile emoji
-    [/^([a-z0-9_+-]+) emoji$/, '$1 表情符號'],
-  ],
+    [/^([a-z0-9_+-]+) emoji$/, '$1 表情符號']
+  ]
 } satisfies PageDictionary

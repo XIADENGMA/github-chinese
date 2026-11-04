@@ -9,23 +9,22 @@ const ITEM_TYPE: Readonly<Record<string, string>> = { comment: '评论', review:
 const RESOLUTION_REASON: Readonly<Record<string, string>> = {
   Addressed: '已处理',
   "Won't fix": '不予修复',
-  Incorrect: '不正确',
+  Incorrect: '不正确'
 }
 
 /** 批次无法提交的原因（横幅把前缀、原因、提示拼成一句） */
 const BATCH_PREFIX: Readonly<Record<string, string>> = {
   'This batch doesn’t contain any suggestions to commit': '此批次不包含可提交的建议',
-  'This batch contains items other than committable suggestions, so it can’t be committed':
-    '此批次包含可提交建议以外的项，无法提交',
+  'This batch contains items other than committable suggestions, so it can’t be committed': '此批次包含可提交建议以外的项，无法提交'
 }
 const BATCH_REASON: Readonly<Record<string, string>> = {
   'Fix with Copilot isn’t available on your account': '你的帐户不支持使用 Copilot 修复',
-  'Fix with Copilot isn’t available on pull requests from a fork': '来自复刻的拉取请求不支持使用 Copilot 修复',
+  'Fix with Copilot isn’t available on pull requests from a fork': '来自复刻的拉取请求不支持使用 Copilot 修复'
 }
 
 function escapeSource(texts: Readonly<Record<string, string>>): string {
   return Object.keys(texts)
-    .map((text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+    .map(text => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
     .join('|')
 }
 
@@ -78,15 +77,13 @@ export default {
     'Show AI and bot comments': '显示 AI 和机器人评论',
     'Filter comments by author': '按作者筛选评论',
     'Newest-first sort': '最新优先排序',
-    'The latest comments are now shown first, bringing the newest activity to the top.':
-      '现在最新的评论优先显示，最新动态位于顶部。',
+    'The latest comments are now shown first, bringing the newest activity to the top.': '现在最新的评论优先显示，最新动态位于顶部。',
     'If you prefer, you can use the sort menu to change back to showing the oldest comments first.':
       '如有需要，可使用排序菜单改回最早的评论优先显示。',
     'Open sort menu': '打开排序菜单',
     'Comments view mode': '评论视图模式',
     // 评论操作
-    'The comment editing form cannot be displayed. Please reload the page to try again.':
-      '无法显示评论编辑表单。请重新加载页面后重试。',
+    'The comment editing form cannot be displayed. Please reload the page to try again.': '无法显示评论编辑表单。请重新加载页面后重试。',
     'Open review comment': '展开审查评论',
     'Close review comment': '收起审查评论',
     'Jump to the comment in the diff': '跳转到差异中的评论',
@@ -134,8 +131,7 @@ export default {
     'Collapsed all batched comments': '已折叠所有批次评论',
     'Fix with Copilot isn’t available.': '使用 Copilot 修复不可用。',
     'This batch does not contain any suggestions that can be committed.': '此批次不包含可提交的建议。',
-    'This batch contains items other than committable suggestions, so it can’t be committed.':
-      '此批次包含可提交建议以外的项，无法提交。',
+    'This batch contains items other than committable suggestions, so it can’t be committed.': '此批次包含可提交建议以外的项，无法提交。',
     'Manage batch action mode': '批次操作模式',
 
     // 工件标签页
@@ -144,7 +140,7 @@ export default {
     'No artifacts yet': '暂无工件',
     'Artifacts created for this pull request will appear here': '为此拉取请求创建的工件将显示在这里',
     'Artifact not found': '未找到工件',
-    'Select an artifact from the sidebar': '从侧栏中选择一个工件',
+    'Select an artifact from the sidebar': '从侧栏中选择一个工件'
   },
   scoped: {
     'No comments yet': '暂无评论',
@@ -167,14 +163,13 @@ export default {
     'Batched comments': '批次中的评论',
     // <You> will be added as co-author …（取不到用户名时）
     You: '你',
-    Auto: '自动',
+    Auto: '自动'
   },
   regexp: [
     // 评论计数：Showing 3 of 10 loaded comments / Showing 3 of 10 review comments
     [
       /^Showing (\d+) of (\d+)( loaded)?( review)? comments$/,
-      (_, shown, total, loaded, review) =>
-        `显示 ${shown}/${total} 条${loaded ? '已加载的' : ''}${review ? '审查' : ''}评论`,
+      (_, shown, total, loaded, review) => `显示 ${shown}/${total} 条${loaded ? '已加载的' : ''}${review ? '审查' : ''}评论`
     ],
     [/^Only the (\d+) latest comments are being shown\.$/, '仅显示最新的 $1 条评论。'],
     [/^(\d+) earlier comments?$/, '$1 条更早的评论'],
@@ -184,19 +179,19 @@ export default {
     [/^(\d+) additional commits? by$/, '另外 $1 个提交来自'],
     [
       /^(\d+) additional commits?(?: by (.+))?, starting at commit ([0-9a-f]{7,40})$/,
-      (_, count, authors, sha) => `另外 ${count} 个提交${authors ? `来自 ${authors}` : ''}，从提交 ${sha} 开始`,
+      (_, count, authors, sha) => `另外 ${count} 个提交${authors ? `来自 ${authors}` : ''}，从提交 ${sha} 开始`
     ],
     [/^Commit: (.+)$/, '提交：$1'],
     // 条目加载失败：Failed to load comment / This review cannot be displayed. …
     [/^Failed to load (comment|review)$/, (_, kind) => `加载${ITEM_TYPE[kind]}失败`],
     [
       /^This (comment|review) cannot be displayed\. Please reload the page to try again\.$/,
-      (_, kind) => `无法显示此${ITEM_TYPE[kind]}。请重新加载页面后重试。`,
+      (_, kind) => `无法显示此${ITEM_TYPE[kind]}。请重新加载页面后重试。`
     ],
     [/^Failed to update (comment|review)$/, (_, kind) => `更新${ITEM_TYPE[kind]}失败`],
     [
       /^Review comment by ([\w-]+(?:\[bot\])?|unknown user)$/,
-      (_, login) => `${login === 'unknown user' ? '未知用户' : `${login} `}的审查评论`,
+      (_, login) => `${login === 'unknown user' ? '未知用户' : `${login} `}的审查评论`
     ],
     // 线程标题：Line 5 / Lines 3 - 5；Resolved as Won't fix（与审查线程“将此线程解决为”同译，不加冒号）
     [/^Line (\d+)$/, '第 $1 行'],
@@ -205,19 +200,19 @@ export default {
     // 带线程位置的读屏名称：… in src/app.ts, line 5
     [
       /^(Open|Close) review comment in (.+)$/,
-      (_, action, label) => `${action === 'Open' ? '展开' : '收起'} ${threadLabel(label, '的审查评论')}`,
+      (_, action, label) => `${action === 'Open' ? '展开' : '收起'} ${threadLabel(label, '的审查评论')}`
     ],
     [/^Jump to the comment in the diff for (.+)$/, (_, label) => `跳转到差异中 ${threadLabel(label, '的评论')}`],
     [
       /^(Resolve|Unresolve) (comment|conversation) in (.+)$/,
       (_, action, kind, label) =>
-        `${action === 'Resolve' ? '解决' : '取消解决'} ${threadLabel(label, kind === 'comment' ? '的评论' : '的对话')}`,
+        `${action === 'Resolve' ? '解决' : '取消解决'} ${threadLabel(label, kind === 'comment' ? '的评论' : '的对话')}`
     ],
     [/^Resolve with reason in (.+)$/, (_, label) => `附理由解决 ${threadLabel(label, '的评论')}`],
     [/^Write a reply in (.+)$/, (_, label) => `在 ${threadLabel(label, '中回复')}`],
     [
       /^View comment in diff for (.+), (\d+) previous comments?$/,
-      (_, label, count) => `在差异中查看 ${threadLabel(label, '的评论')}，之前有 ${count} 条评论`,
+      (_, label, count) => `在差异中查看 ${threadLabel(label, '的评论')}，之前有 ${count} 条评论`
     ],
     // 评论的读屏名称：More actions for octocat's comment, 3:45 PM today（原文无冒号）；编辑历史记录后的 for …
     [new RegExp(`^More actions for (${COMMENT_LABEL_SOURCE})$`), (_, label) => commentLabel(label, '的更多操作')],
@@ -231,14 +226,14 @@ export default {
     [/^Remove (.+) from batch$/, '从批次中删除 $1'],
     [
       new RegExp(
-        `^(${escapeSource(BATCH_PREFIX)}), and (${escapeSource(BATCH_REASON)})\\. You can still publish your review from the review menu\\.$`,
+        `^(${escapeSource(BATCH_PREFIX)}), and (${escapeSource(BATCH_REASON)})\\. You can still publish your review from the review menu\\.$`
       ),
-      (_, prefix, reason) => `${BATCH_PREFIX[prefix]}，且${BATCH_REASON[reason]}。你仍可在审查菜单中发布审查。`,
-    ],
+      (_, prefix, reason) => `${BATCH_PREFIX[prefix]}，且${BATCH_REASON[reason]}。你仍可在审查菜单中发布审查。`
+    ]
   ],
   inline: [
     // 评论头部的读屏标题（React 评论头部）：<h3 class="sr-only">octocat commented <relative-time></h3>。
     // 后接时间，与 common-ui 同译“评论于”；不按整句时会落到合并框审查者列表的读屏名称正则（不带时间，作“发表了评论”）
-    [/^([\w.-]+(?:\[bot\])?) commented \{\}$/, '$1 评论于 {}'],
-  ],
+    [/^([\w.-]+(?:\[bot\])?) commented \{\}$/, '$1 评论于 {}']
+  ]
 } satisfies PageDictionary

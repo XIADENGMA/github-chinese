@@ -4,16 +4,7 @@ import { createRequire } from 'node:module'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
-import {
-  APP_NAME,
-  appVersion,
-  buildArgs,
-  BUNDLE_ID,
-  converterArgs,
-  findHostPage,
-  packageName,
-  pickScheme,
-} from '../../../scripts/safari'
+import { APP_NAME, appVersion, buildArgs, BUNDLE_ID, converterArgs, findHostPage, packageName, pickScheme } from '../../../scripts/safari'
 
 const ROOT = fileURLToPath(new URL('../../../', import.meta.url))
 const TSX_CLI = createRequire(import.meta.url).resolve('tsx/cli')
@@ -58,7 +49,7 @@ describe('命令参数', () => {
       '--copy-resources',
       '--no-open',
       '--no-prompt',
-      '--force',
+      '--force'
     ])
   })
 
@@ -67,7 +58,7 @@ describe('命令参数', () => {
       project: '/tmp/a.xcodeproj',
       scheme: APP_NAME,
       derivedDataPath: '/tmp/b',
-      version: '1.1.0',
+      version: '1.1.0'
     })
     expect(args.slice(0, 11)).toEqual([
       '-quiet',
@@ -80,7 +71,7 @@ describe('命令参数', () => {
       '-destination',
       'generic/platform=macOS',
       '-derivedDataPath',
-      '/tmp/b',
+      '/tmp/b'
     ])
     expect(args).toEqual(
       expect.arrayContaining([
@@ -90,8 +81,8 @@ describe('命令参数', () => {
         'ONLY_ACTIVE_ARCH=NO',
         'MACOSX_DEPLOYMENT_TARGET=13.0',
         'MARKETING_VERSION=1.1.0',
-        'CURRENT_PROJECT_VERSION=1.1.0',
-      ]),
+        'CURRENT_PROJECT_VERSION=1.1.0'
+      ])
     )
     expect(args.at(-1)).toBe('build')
   })
@@ -119,30 +110,26 @@ describe('findHostPage', () => {
     'GitHub Chinese/Resources/Script.js',
     'GitHub Chinese/Resources/Style.css',
     'GitHub Chinese/Resources/Icon.png',
-    'GitHub Chinese Extension/Resources/manifest.json',
+    'GitHub Chinese Extension/Resources/manifest.json'
   ]
 
   it('Base.lproj/Main.html 与上一层的 Script.js、Style.css', () => {
     expect(findHostPage(MACOS_ONLY)).toEqual({
       html: 'GitHub Chinese/Resources/Base.lproj/Main.html',
       script: 'GitHub Chinese/Resources/Script.js',
-      style: 'GitHub Chinese/Resources/Style.css',
+      style: 'GitHub Chinese/Resources/Style.css'
     })
     expect(
-      findHostPage([
-        'Shared (App)/Resources/Base.lproj/Main.html',
-        'Shared (App)/Resources/Script.js',
-        'Shared (App)/Resources/Style.css',
-      ]),
+      findHostPage(['Shared (App)/Resources/Base.lproj/Main.html', 'Shared (App)/Resources/Script.js', 'Shared (App)/Resources/Style.css'])
     ).toEqual({
       html: 'Shared (App)/Resources/Base.lproj/Main.html',
       script: 'Shared (App)/Resources/Script.js',
-      style: 'Shared (App)/Resources/Style.css',
+      style: 'Shared (App)/Resources/Style.css'
     })
   })
 
   it('缺文件、页面不止一处、不在 Base.lproj 下：undefined', () => {
-    expect(findHostPage(MACOS_ONLY.filter((file) => !file.endsWith('Style.css')))).toBeUndefined()
+    expect(findHostPage(MACOS_ONLY.filter(file => !file.endsWith('Style.css')))).toBeUndefined()
     expect(findHostPage([...MACOS_ONLY, 'Other/Resources/Base.lproj/Main.html'])).toBeUndefined()
     expect(findHostPage(['A/Main.html', 'A/Script.js', 'A/Style.css'])).toBeUndefined()
   })
@@ -153,7 +140,7 @@ describe('命令行', () => {
     return spawnSync(process.execPath, [TSX_CLI, SCRIPT, ...args], {
       cwd: ROOT,
       encoding: 'utf8',
-      timeout: CLI_TIMEOUT_MS,
+      timeout: CLI_TIMEOUT_MS
     })
   }
 
@@ -164,7 +151,7 @@ describe('命令行', () => {
       expect(result.stderr).toContain('用法：bun run pack:safari')
       expect(result.status).toBe(1)
     },
-    CLI_TIMEOUT_MS,
+    CLI_TIMEOUT_MS
   )
 
   it.skipIf(process.platform === 'darwin')(
@@ -174,6 +161,6 @@ describe('命令行', () => {
       expect(result.stderr).toContain('仅支持 macOS')
       expect(result.status).toBe(1)
     },
-    CLI_TIMEOUT_MS,
+    CLI_TIMEOUT_MS
   )
 })

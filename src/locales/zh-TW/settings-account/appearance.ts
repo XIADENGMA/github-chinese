@@ -1,8 +1,7 @@
 import type { PageDictionary } from '../../../core/types'
 
 /** 键盘组合键片段：control + k、command + option + k */
-const KEY_COMBO =
-  '((?:control|command|ctrl|cmd|alt|option|shift) \\+ (?:(?:control|command|ctrl|cmd|alt|option|shift) \\+ )*\\S)'
+const KEY_COMBO = '((?:control|command|ctrl|cmd|alt|option|shift) \\+ (?:(?:control|command|ctrl|cmd|alt|option|shift) \\+ )*\\S)'
 
 /**
  * 外观（/settings/appearance）：布景主题偏好设定与布景主题名称、对比、表情符号肤色、定位字元宽度、Markdown 编辑器字型、时间戳记显示；
@@ -58,8 +57,7 @@ export default {
     'Dark dimmed': '深色柔和',
     'Soft dark': '柔和深色',
     // 布景主题说明（原文无逗号，译文用定语代替）
-    "GitHub's standard light theme with full color contrast and brightness.":
-      '具有完整色彩對比和亮度的 GitHub 標準淺色佈景主題。',
+    "GitHub's standard light theme with full color contrast and brightness.": '具有完整色彩對比和亮度的 GitHub 標準淺色佈景主題。',
     "GitHub's standard dark theme with full color contrast and brightness on a dark background.":
       '在深色背景上具有完整色彩對比和亮度的 GitHub 標準深色佈景主題。',
     'For people who may find it difficult to distinguish between reds and greens.': '適合難以區分紅色和綠色的人。',
@@ -153,8 +151,7 @@ export default {
     'Select if URLs should be formatted on paste. You can use': '選擇貼上 URL 時是否格式化。你可以使用',
     'to paste a link in the opposite way.': '以相反方式貼上連結。',
     'Formatted link': '格式化連結',
-    'Pasting a URL while having text selected will format to a Markdown link':
-      '選取文字時貼上 URL 會格式化為 Markdown 連結',
+    'Pasting a URL while having text selected will format to a Markdown link': '選取文字時貼上 URL 會格式化為 Markdown 連結',
     'Plain text': '純文字',
     'Pasting a URL while having text selected will replace the text': '選取文字時貼上 URL 會取代所選文字',
     'Save editor settings': '儲存編輯器設定',
@@ -166,7 +163,7 @@ export default {
     'Enable screen reader hint': '啟用螢幕閱讀器提示',
     'Disable screen reader hint': '停用螢幕閱讀器提示',
     'Save assistive technology hint preferences': '儲存輔助技術提示偏好設定',
-    'Hovercard assistive technology hint preferences successfully saved.': '已儲存暫留卡片輔助技術提示偏好設定。',
+    'Hovercard assistive technology hint preferences successfully saved.': '已儲存暫留卡片輔助技術提示偏好設定。'
   },
   scoped: {
     'Sync with system': '與系統同步',
@@ -186,13 +183,13 @@ export default {
     // 表情符号肤色：预设（无肤色修饰）
     Neutral: '中性',
     // <kbd> 中的读屏文字：按键名保留，只译连接词（与 common 的快速键提示一致）
-    'control shift and V': 'control shift 和 V',
+    'control shift and V': 'control shift 和 V'
   },
   regexp: [
     // 定位字元宽度选项：4 (Default)
     [/^(\d{1,2}) \(Default\)$/, '$1（預設）'],
     // 命令面板快速键选项：control + k or control + alt + k (default)
     [new RegExp(`^${KEY_COMBO} or ${KEY_COMBO} \\(default\\)$`), '$1 或 $2（預設）'],
-    [new RegExp(`^${KEY_COMBO} \\(default\\)$`), '$1（預設）'],
-  ],
+    [new RegExp(`^${KEY_COMBO} \\(default\\)$`), '$1（預設）']
+  ]
 } satisfies PageDictionary

@@ -124,7 +124,7 @@ describe.skipIf(!ToastHost)('ToastHost', () => {
   }
 
   function texts(wrapper: ReturnType<typeof render>): string[] {
-    return wrapper.findAll('.ui-toast').map((toast) => toast.text())
+    return wrapper.findAll('.ui-toast').map(toast => toast.text())
   }
 
   it('朗读区域一直在（没有提示时也在），有提示时读屏朗读', () => {

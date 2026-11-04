@@ -23,8 +23,7 @@ export default {
       '透過 Copilot 程式碼審查，你可以將 Copilot 新增為拉取請求（包括草稿）的審查者。你也可以在 Visual Studio Code 中選取程式碼行，請 Copilot 審查特定區段並留言。',
     'Learn more about Copilot code reviews.': '瞭解 Copilot 程式碼審查。',
     'Automated code reviews using rulesets': '使用規則集自動審查程式碼',
-    'Use rulesets to configure Copilot to review pull requests automatically.':
-      '使用規則集設定 Copilot 自動審查拉取請求。',
+    'Use rulesets to configure Copilot to review pull requests automatically.': '使用規則集設定 Copilot 自動審查拉取請求。',
     'Learn how to set up rulesets.': '瞭解如何設定規則集。',
     'Go to rulesets': '前往規則集',
     'No rulesets set up for automated reviews': '尚未設定用於自動審查的規則集',
@@ -122,8 +121,7 @@ export default {
     'Automation level': '自動化程度',
     'Set how much control the agent has to apply changes': '設定代理套用變更的自主程度',
     'Full control': '完全掌控',
-    'Every suggestion is held for your review. Nothing is applied automatically.':
-      '每項建議都會保留待你審查。不會自動套用任何內容。',
+    'Every suggestion is held for your review. Nothing is applied automatically.': '每項建議都會保留待你審查。不會自動套用任何內容。',
     Cautious: '謹慎',
     'Only high confidence changes are applied automatically. Everything else is held for your review.':
       '只會自動套用高信賴度的變更。其餘變更都會保留待你審查。',
@@ -207,12 +205,11 @@ export default {
     'See the GitHub Docs for syntax and examples.': '如需語法和範例，請參閱 GitHub 說明文件。',
     'e.g. https://example.com/a/path or example.com': '例如 https://example.com/a/path 或 example.com',
     'Rule must be a valid domain, IP address, or URL': '規則必須是有效的網域、IP 位址或 URL',
-    'Tip: Paste a list of rules into the input to add them all at once.':
-      '提示：將規則清單貼到輸入欄位，可一次全部新增。',
+    'Tip: Paste a list of rules into the input to add them all at once.': '提示：將規則清單貼到輸入欄位，可一次全部新增。',
     'Allowlist settings saved successfully!': '已成功儲存允許清單設定！',
     'Allow repository custom rules': '允許儲存庫自訂規則',
     'Let repositories decide': '由儲存庫決定',
-    'Organization custom allowlist': '組織自訂允許清單',
+    'Organization custom allowlist': '組織自訂允許清單'
   },
   scoped: {
     // 「With」+ 链接「Copilot in the cloud」+「, developers can …」（与 new.ts 的 With 同译「透過」）
@@ -248,6 +245,6 @@ export default {
     Use: '使用',
     'to toggle the': '切換',
     'key moving focus. Alternatively, use': '鍵是否移動焦點。也可以按',
-    'to move to the next interactive element on the page.': '移到頁面上的下一個互動元素。',
-  },
+    'to move to the next interactive element on the page.': '移到頁面上的下一個互動元素。'
+  }
 } satisfies PageDictionary

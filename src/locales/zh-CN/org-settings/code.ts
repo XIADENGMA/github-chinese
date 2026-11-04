@@ -25,8 +25,7 @@ export default {
       '选择存储库是否要求贡献者签署其通过 GitHub 网页界面所做的提交。签署是贡献者确认其提交符合存储库条款的一种方式，通常为',
     'Developer Certificate of Origin (DCO)': '开发者来源证书 (DCO)',
     'Learn more about signing off on commits': '了解提交签署',
-    'Require signoff on web-based commits for all repositories in this organization':
-      '为此组织中的所有存储库要求签署网页提交',
+    'Require signoff on web-based commits for all repositories in this organization': '为此组织中的所有存储库要求签署网页提交',
     'Each repository chooses whether to require signoff on web-based commits': '由各存储库自行选择是否要求签署网页提交',
     'Commit signoff settings were updated.': '已更新提交签署设置。',
     'Require contributors to sign off on web-based commits': '要求贡献者签署网页提交',
@@ -165,8 +164,7 @@ export default {
       '源存储库中的所有讨论都将显示在组织的讨论标签页中。',
     'Permissions from the repository will be applied to the organization Discussions. By default, all members of the organization will be able to create and comment on discussions.':
       '存储库的权限将应用于组织讨论。默认情况下，组织的所有成员都可以创建讨论并发表评论。',
-    'Members can now share updates or ask questions to the entire organization.':
-      '成员现在可以面向整个组织分享动态或提问。',
+    'Members can now share updates or ask questions to the entire organization.': '成员现在可以面向整个组织分享动态或提问。',
     'For more information, see our documentation.': '详情请参阅我们的文档。',
     'Choose a repository': '选择存储库',
     'Search for a repository': '搜索存储库',
@@ -177,8 +175,7 @@ export default {
       'GitHub 上的项目可以帮助你组织工作并安排优先级。你可以为特定功能、完整的路线图甚至发布检查清单创建项目。',
     'Enable Projects for the organization': '为组织启用项目',
     'This allows members to create projects for the': '这将允许成员为',
-    'organization. Members can create projects to organize and track issues from any':
-      '组织创建项目。成员可以创建项目来组织和跟踪任意',
+    'organization. Members can create projects to organize and track issues from any': '组织创建项目。成员可以创建项目来组织和跟踪任意',
     '-owned repository.': '所拥有存储库中的议题。',
     'Allow members to change project visibilities for this organization': '允许成员更改此组织的项目可见性',
     'If enabled, members with admin permissions on a project can make the project public or private. If disabled, only organization owners can make the project public or private. All projects are private by default.':
@@ -199,7 +196,7 @@ export default {
     'Add failover network': '添加故障转移网络',
     'Edit configuration': '编辑配置',
     'Network settings resource ID': '网络设置资源 ID',
-    'Failover network': '故障转移网络',
+    'Failover network': '故障转移网络'
   },
   scoped: {
     // 与个人设置、存储库设置共用
@@ -270,12 +267,12 @@ export default {
       '以下是此组织之前删除的软件包。你可以恢复最近 30 天内删除的软件包。',
 
     // Pages（与个人设置共用）
-    'There are no verified domains for this organization.': '此组织暂无已验证的域。',
+    'There are no verified domains for this organization.': '此组织暂无已验证的域。'
   },
   regexp: [
     [
       new RegExp(`^New repositories created in ${ORG} will use ${BRANCH} as their default branch\\.$`),
-      '在 $1 中创建的新存储库将使用 $2 作为默认分支。',
+      '在 $1 中创建的新存储库将使用 $2 作为默认分支。'
     ],
     [new RegExp(`^Your default branch name will be ${BRANCH}$`), '默认分支名称将为 $1'],
     [/^(\d+) labels?$/, '$1 个标签'],
@@ -289,9 +286,6 @@ export default {
     [/^(\d+) issue fields?$/, '$1 个议题字段'],
     [/^(\d+) network configurations?$/, '$1 个网络配置'],
     [new RegExp(`^No recoverable packages were found for ${ORG}\\.$`), '未找到 $1 中可恢复的软件包。'],
-    [
-      /^Successfully verified ([\w-]+(?:\.[\w-]+)+?)(\.?)$/,
-      (_, domain: string, dot: string) => `已成功验证 ${domain}${dot ? '。' : ''}`,
-    ],
-  ],
+    [/^Successfully verified ([\w-]+(?:\.[\w-]+)+?)(\.?)$/, (_, domain: string, dot: string) => `已成功验证 ${domain}${dot ? '。' : ''}`]
+  ]
 } satisfies PageDictionary

@@ -56,14 +56,14 @@ export interface Controller {
 function featuresOf(settings: Settings): Pick<TranslatorFeatures, 'translateTime' | 'translateTitle'> {
   return {
     translateTime: settings.translateTime,
-    translateTitle: settings.translateTitle,
+    translateTitle: settings.translateTitle
   }
 }
 
 /** 词条完全相同 */
 function sameEntries(a: CustomEntries, b: CustomEntries): boolean {
   const keys = Object.keys(a)
-  return keys.length === Object.keys(b).length && keys.every((key) => Object.hasOwn(b, key) && a[key] === b[key])
+  return keys.length === Object.keys(b).length && keys.every(key => Object.hasOwn(b, key) && a[key] === b[key])
 }
 
 export function createController(options: ControllerOptions): Controller {
@@ -92,7 +92,7 @@ export function createController(options: ControllerOptions): Controller {
     ...featuresOf(settings),
     onLocationChange: () => {
       if (isExcluded()) stopTranslator()
-    },
+    }
   })
 
   /** 停止并还原；之前在翻译时通知重置 */
@@ -180,7 +180,7 @@ export function createController(options: ControllerOptions): Controller {
       active: translator.active,
       excluded: isExcluded(),
       pages: translator.pages,
-      translatedCount: translator.translatedCount(),
+      translatedCount: translator.translatedCount()
     }),
 
     dispose() {
@@ -189,6 +189,6 @@ export function createController(options: ControllerOptions): Controller {
       watcher.stop()
       zoneWatcher.stop()
       stopTranslator('dispose')
-    },
+    }
   }
 }

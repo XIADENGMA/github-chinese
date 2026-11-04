@@ -9,7 +9,7 @@ const DURATION_UNIT: Readonly<Record<string, string>> = {
   day: '天',
   week: '週',
   month: '個月',
-  year: '年',
+  year: '年'
 }
 
 const DURATION_QUALIFIER: Readonly<Record<string, string>> = { about: '約', almost: '將近', over: '超過' }
@@ -42,8 +42,7 @@ export default {
     'All blocked users': '所有已封鎖的使用者',
     'Block user from organization': '在組織中封鎖使用者',
     'Block user from organization and send message': '在組織中封鎖使用者並傳送訊息',
-    'Close all open issues, pull requests, and discussions opened by this user':
-      '關閉此使用者建立的所有開放中的議題、拉取請求和討論',
+    'Close all open issues, pull requests, and discussions opened by this user': '關閉此使用者建立的所有開放中的議題、拉取請求和討論',
     'Hide this user’s comments': '隱藏此使用者的留言',
     "Hide this user's comments": '隱藏此使用者的留言',
     'Send a notification to this user': '傳送通知給此使用者',
@@ -51,8 +50,7 @@ export default {
       '請勿包含任何個人資訊，例如法定姓名或電子郵件地址。支援 Markdown。只有組織管理員能看到此備註。',
     "Please don't include any personal information such as legal names or email addresses. Markdown is supported. This note will only be visible to org admins.":
       '請勿包含任何個人資訊，例如法定姓名或電子郵件地址。支援 Markdown。只有組織管理員能看到此備註。',
-    'Markdown is supported. This note will only be visible to org admins.':
-      '支援 Markdown。只有組織管理員能看到此備註。',
+    'Markdown is supported. This note will only be visible to org admins.': '支援 Markdown。只有組織管理員能看到此備註。',
 
     // 交互限制（原文括号外无逗号，译文不加；与 repo-settings/access.ts 同句一致）
     'Temporarily restrict which external users can interact with your repositories (comment, open issues, or create pull requests) for a configurable period of time. Users who are members of this organization will not be affected by these limits.':
@@ -111,7 +109,7 @@ export default {
     'No attribution invitations have been sent': '尚未傳送歸屬邀請',
     Reattribute: '重新歸屬',
     'Reattribute contributions': '重新歸屬貢獻',
-    Mannequin: '佔位帳號',
+    Mannequin: '佔位帳號'
   },
   scoped: {
     // 阻止用户表格与对话框（与个人设置共用的短词）
@@ -168,7 +166,7 @@ export default {
     // 代码审查限制：「Code review limits are currently」+ 状态 +「for all repositories. …」
     enabled: '已啟用',
     disabled: '已停用',
-    Unset: '取消設定',
+    Unset: '取消設定'
   },
   regexp: [
     // 版主
@@ -196,11 +194,10 @@ export default {
     [/^Enabled with less than a minute remaining(\.?)$/, (_, dot: string) => `已啟用剩餘不到 1 分鐘${dot ? '。' : ''}`],
     [
       /^Enabled with (?:(about|almost|over) )?(\d+|an?|one) (second|minute|hour|day|week|month|year)s? remaining(\.?)$/,
-      (_, qualifier: string, amount: string, unit: string, dot: string) =>
-        enabledRemaining(qualifier, amount, unit, dot),
+      (_, qualifier: string, amount: string, unit: string, dot: string) => enabledRemaining(qualifier, amount, unit, dot)
     ],
 
     // 导入/导出
-    [/^(\d+) mannequins?$/, '$1 個佔位帳號'],
-  ],
+    [/^(\d+) mannequins?$/, '$1 個佔位帳號']
+  ]
 } satisfies PageDictionary

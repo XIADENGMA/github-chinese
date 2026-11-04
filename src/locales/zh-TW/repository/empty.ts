@@ -4,7 +4,7 @@ import { joinCjk } from '../helpers'
 /** 引导卡片申请的功能名：产品名译出，Copilot 等品牌词与未收录的名称原样保留（Map 查找不会命中原型链上的键） */
 const FEATURE_NAMES: ReadonlyMap<string, string> = new Map([
   ['Codespaces', '程式碼空間'],
-  ['GitHub Codespaces', 'GitHub 程式碼空間'],
+  ['GitHub Codespaces', 'GitHub 程式碼空間']
 ])
 
 /** 「<前缀><功能名><后缀>」：功能名为英文时与两侧中文之间补空格 */
@@ -16,19 +16,13 @@ const regexp: readonly RegExpRule[] = [
   // 正在创建存储库时的自动刷新提示（原文无逗号，译文不加）
   [
     /^This page will automatically refresh in (\d+) seconds to check if the repository is ready\.$/,
-    '此頁面將在 $1 秒後自動重新整理以檢查儲存庫是否已就緒。',
+    '此頁面將在 $1 秒後自動重新整理以檢查儲存庫是否已就緒。'
   ],
   // 空存储库的功能申请（引导卡片）：读屏播报
   [/^Request for (.+) submitted successfully$/, (_, name: string) => featureRequest('已送出', name, '的申請')],
-  [
-    /^Request for (.+) failed, please try again$/,
-    (_, name: string) => featureRequest('', name, '的申請送出失敗，請再試一次'),
-  ],
+  [/^Request for (.+) failed, please try again$/, (_, name: string) => featureRequest('', name, '的申請送出失敗，請再試一次')],
   [/^Request for (.+) removed$/, (_, name: string) => featureRequest('已撤回', name, '的申請')],
-  [
-    /^Removing request for (.+) failed, please try again$/,
-    (_, name: string) => featureRequest('無法撤回', name, '的申請，請再試一次'),
-  ],
+  [/^Removing request for (.+) failed, please try again$/, (_, name: string) => featureRequest('無法撤回', name, '的申請，請再試一次')]
 ]
 
 /**
@@ -90,12 +84,12 @@ export default {
       '撰寫程式碼時使用 GitHub 的 AI 結對程式設計師自動完成建議。',
     'Get started with GitHub Copilot': '開始使用 GitHub Copilot',
     'Add collaborators to this repository': '為此儲存庫新增協作者',
-    'Search for people using their GitHub username or email address.': '依 GitHub 使用者名稱或電子郵件地址搜尋人員。',
+    'Search for people using their GitHub username or email address.': '依 GitHub 使用者名稱或電子郵件地址搜尋人員。'
   },
   scoped: {
     // 快速设置：README、LICENSE，以及 .gitignore（逗号无英文，不翻译）
     ', and': '，以及',
-    'Invite collaborators': '邀請協作者',
+    'Invite collaborators': '邀請協作者'
   },
-  regexp,
+  regexp
 } satisfies PageDictionary

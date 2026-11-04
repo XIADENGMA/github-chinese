@@ -61,7 +61,7 @@
   /** 模拟 React 状态更新：覆盖扩展的译文 */
   function simulateReactRewrite(label) {
     // characterData：React 直接改写已有文本节点的 nodeValue
-    const textNode = [...label.childNodes].find((node) => node.nodeType === Node.TEXT_NODE)
+    const textNode = [...label.childNodes].find(node => node.nodeType === Node.TEXT_NODE)
     if (textNode) textNode.nodeValue = PR_TEXT
     else label.textContent = PR_TEXT
     // childList：React 重新渲染子节点（新建文本节点）
@@ -84,14 +84,14 @@
       '<h3 class="Overlay-title" data-fx="dynamic-title">Settings</h3>',
       '<button type="button" class="close-button" aria-label="Close" data-fx="dynamic-close">×</button>',
       '<button type="button" class="btn" data-fx="dynamic-cancel">Cancel</button>',
-      '<button type="submit" class="btn btn-primary" data-fx="dynamic-save">Save</button>',
+      '<button type="submit" class="btn btn-primary" data-fx="dynamic-save">Save</button>'
     ].join('')
     slot.append(dialog)
     document.body.dataset.fxDynamic = 'true'
   }
 
   function start() {
-    whenTranslated((label) => {
+    whenTranslated(label => {
       simulateReactRewrite(label)
       setTimeout(insertDynamicContent, DYNAMIC_DELAY_MS)
     })

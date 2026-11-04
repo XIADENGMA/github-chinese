@@ -5,21 +5,21 @@ const RULE_KIND: Readonly<Record<string, string>> = {
   branch: '分支',
   tag: '标签',
   push: '推送',
-  repository: '存储库',
+  repository: '存储库'
 }
 
 /** 强制实施状态：英文 → 中文 */
 const ENFORCEMENT: Readonly<Record<string, string>> = {
   Active: '活动',
   Evaluate: '评估',
-  Disabled: '已禁用',
+  Disabled: '已禁用'
 }
 
 /** 强制实施状态说明（只读页「Active - This ruleset will be enforced」）：英文 → 中文 */
 const ENFORCEMENT_DESCRIPTION: Readonly<Record<string, string>> = {
   'This ruleset will be enforced': '将强制实施此规则集',
   'Evaluate this ruleset to trial rules and view insights': '评估此规则集以试用规则并查看见解',
-  'This ruleset will not be enforced': '不会强制实施此规则集',
+  'This ruleset will not be enforced': '不会强制实施此规则集'
 }
 
 /** 绕过参与者分类：英文 → 中文 */
@@ -35,7 +35,7 @@ const ACTOR_CATEGORY: Readonly<Record<string, string>> = {
   apps: '应用',
   users: '用户',
   agents: '代理',
-  'other actors': '其他参与者',
+  'other actors': '其他参与者'
 }
 
 /** 条件缺失提示的对象：英文 → 中文 */
@@ -44,7 +44,7 @@ const CONDITION_OBJECT: Readonly<Record<string, string>> = {
   Tag: '标签',
   Repository: '存储库',
   Organization: '组织',
-  Workflow: '工作流',
+  Workflow: '工作流'
 }
 
 /** 计数对象：英文（单复数）→ 中文量词 + 名词 */
@@ -104,15 +104,12 @@ export default {
     'Export ruleset': '导出规则集',
     'Delete ruleset': '删除规则集',
     'Delete ruleset?': '删除规则集？',
-    'Are you sure you want to delete this ruleset? This action cannot be undone.':
-      '确定要删除此规则集吗？此操作无法撤销。',
+    'Are you sure you want to delete this ruleset? This action cannot be undone.': '确定要删除此规则集吗？此操作无法撤销。',
     'Open additional options': '打开更多选项',
     'Error deleting ruleset': '删除规则集时出错',
     'Error exporting ruleset': '导出规则集时出错',
-    'Cannot delete a ruleset while restoring. Save or cancel and try again.':
-      '恢复期间无法删除规则集。请保存或取消后重试。',
-    'Cannot export a ruleset while restoring. Save or cancel and try again.':
-      '恢复期间无法导出规则集。请保存或取消后重试。',
+    'Cannot delete a ruleset while restoring. Save or cancel and try again.': '恢复期间无法删除规则集。请保存或取消后重试。',
+    'Cannot export a ruleset while restoring. Save or cancel and try again.': '恢复期间无法导出规则集。请保存或取消后重试。',
     'Push rulesets apply to these repositories and their forks.': '推送规则集适用于这些存储库及其复刻。',
     'Push rulesets only apply to non-fork private or internal repositories and forks of those repositories.':
       '推送规则集仅适用于非复刻的专用或内部存储库，以及这些存储库的复刻。',
@@ -143,8 +140,7 @@ export default {
     "Organization rulesets won't be enforced until you upgrade this organization account to GitHub Team.":
       '在将此组织帐户升级到 GitHub 团队版之前，组织规则集不会强制实施。',
     // 升级链接与前文分属不同节点
-    "Your rulesets won't be enforced on this private repository until you":
-      '规则集不会在此专用存储库上强制实施，除非你',
+    "Your rulesets won't be enforced on this private repository until you": '规则集不会在此专用存储库上强制实施，除非你',
     'upgrade this organization account to GitHub Team.': '将此组织帐户升级到 GitHub 团队版。',
     'move to GitHub Team organization account.': '迁移到 GitHub 团队版组织帐户。',
     'until you upgrade this organization account to GitHub Enterprise.': '，除非将此组织帐户升级到 GitHub 企业版。',
@@ -188,18 +184,15 @@ export default {
       '将角色、团队、代理和应用添加到绕过列表，使其不受此规则集约束。',
     'Exempt roles, teams, agents, and apps from this ruleset by adding them to the allow list.':
       '将角色、团队、代理和应用添加到允许列表，使其不受此规则集约束。',
-    'Exempt roles or teams from this ruleset by adding them to the bypass list':
-      '添加到绕过列表的角色或团队不受此规则集约束',
+    'Exempt roles or teams from this ruleset by adding them to the bypass list': '添加到绕过列表的角色或团队不受此规则集约束',
     'Select the roles and teams that can bypass and also approve bypass requests. Add the bots and agents that can bypass this ruleset.':
       '选择可以绕过并审批绕过请求的角色和团队。添加可以绕过此规则集的机器人和代理。',
     'Select the roles that can bypass and also approve bypass requests.': '选择可以绕过并审批绕过请求的角色。',
     'Add bypass': '添加绕过',
     'Add actors': '添加参与者',
     'Choose which roles, teams, and apps can bypass this ruleset': '选择可以绕过此规则集的角色、团队和应用',
-    'Choose which roles, teams, agents, apps, and users can bypass this ruleset':
-      '选择可以绕过此规则集的角色、团队、代理、应用和用户',
-    'Choose which roles, teams, agents, and apps can bypass this ruleset':
-      '选择可以绕过此规则集的角色、团队、代理和应用',
+    'Choose which roles, teams, agents, apps, and users can bypass this ruleset': '选择可以绕过此规则集的角色、团队、代理、应用和用户',
+    'Choose which roles, teams, agents, and apps can bypass this ruleset': '选择可以绕过此规则集的角色、团队、代理和应用',
     'Filter actors': '筛选参与者',
     'Filter bypass actors': '筛选绕过参与者',
     'Filter actors by category': '按类别筛选参与者',
@@ -216,8 +209,7 @@ export default {
     'For pull requests only': '仅限拉取请求',
     'Select bypass mode': '选择绕过模式',
     'Bypass actor actions': '绕过参与者操作',
-    'The ruleset will be evaluated and the selected actor(s) will be prompted to bypass':
-      '将评估规则集并提示所选参与者绕过',
+    'The ruleset will be evaluated and the selected actor(s) will be prompted to bypass': '将评估规则集并提示所选参与者绕过',
     'The ruleset will not be evaluated and no bypass prompt will be shown': '不评估规则集也不显示绕过提示',
     'The ruleset will be enforced on command line changes and the selected actor(s) will be prompted to bypass only in a pull request':
       '对命令行更改强制实施规则集，仅在拉取请求中提示所选参与者绕过',
@@ -239,10 +231,8 @@ export default {
     'Target workflows': '目标工作流',
     'Repository targeting determines which repositories will be protected by this ruleset. Use inclusion patterns to expand the list of repositories under this ruleset. Use exclusion patterns to exclude repositories.':
       '存储库目标决定此规则集保护哪些存储库。使用包含模式扩展此规则集下的存储库列表，使用排除模式排除存储库。',
-    'Repository targeting determines which repositories will be protected by this ruleset.':
-      '存储库目标决定此规则集保护哪些存储库。',
-    'Organization targeting determines which repositories will be protected by this ruleset.':
-      '组织目标决定此规则集保护哪些存储库。',
+    'Repository targeting determines which repositories will be protected by this ruleset.': '存储库目标决定此规则集保护哪些存储库。',
+    'Organization targeting determines which repositories will be protected by this ruleset.': '组织目标决定此规则集保护哪些存储库。',
     'Target all repositories within the organization': '针对组织内的所有存储库',
     'Target all organizations within the enterprise': '针对企业内的所有组织',
     'Dynamic list by name': '按名称动态列表',
@@ -266,14 +256,10 @@ export default {
     'Prevent renaming of target repositories': '禁止重命名目标存储库',
     'When checked, target repositories can only be renamed by those with bypass permission.':
       '勾选后，只有拥有绕过权限的人才能重命名目标存储库。',
-    'Repositories that match the matching pattern will be targeted by this ruleset.':
-      '匹配此模式的存储库将成为此规则集的目标。',
-    'Repositories that do not match the matching pattern will be targeted by this ruleset.':
-      '不匹配此模式的存储库将成为此规则集的目标。',
-    'Organizations that match the matching pattern will be targeted by this ruleset.':
-      '匹配此模式的组织将成为此规则集的目标。',
-    'Organizations that do not match the matching pattern will be targeted by this ruleset.':
-      '不匹配此模式的组织将成为此规则集的目标。',
+    'Repositories that match the matching pattern will be targeted by this ruleset.': '匹配此模式的存储库将成为此规则集的目标。',
+    'Repositories that do not match the matching pattern will be targeted by this ruleset.': '不匹配此模式的存储库将成为此规则集的目标。',
+    'Organizations that match the matching pattern will be targeted by this ruleset.': '匹配此模式的组织将成为此规则集的目标。',
+    'Organizations that do not match the matching pattern will be targeted by this ruleset.': '不匹配此模式的组织将成为此规则集的目标。',
     'Target by repository properties': '按存储库属性选择目标',
     'Target by organization properties': '按组织属性选择目标',
     'Include by property': '按属性包含',
@@ -283,8 +269,7 @@ export default {
     'Include organizations by property': '按属性包含组织',
     'Exclude organizations by property': '按属性排除组织',
     'Include repositories by custom property': '按自定义属性包含存储库',
-    'Custom properties allow you to create your own metadata for repositories':
-      '自定义属性可用于为存储库创建自己的元数据',
+    'Custom properties allow you to create your own metadata for repositories': '自定义属性可用于为存储库创建自己的元数据',
     'Select property': '选择属性',
     'Search for properties': '搜索属性',
     'Please select a property': '请选择属性',
@@ -317,13 +302,10 @@ export default {
     'Targets have changed and organization match list will update on save.': '目标已更改，组织匹配列表将在保存时更新。',
     'Targets have changed and': '目标已更改并且',
     'match list will update on save.': '匹配列表将在保存时更新。',
-    'Branches that match the matching pattern will be targeted by this ruleset.':
-      '匹配此模式的分支将成为此规则集的目标。',
+    'Branches that match the matching pattern will be targeted by this ruleset.': '匹配此模式的分支将成为此规则集的目标。',
     'Tags that match the matching pattern will be targeted by this ruleset.': '匹配此模式的标签将成为此规则集的目标。',
-    'Branches that do not match the matching pattern will be targeted by this ruleset.':
-      '不匹配此模式的分支将成为此规则集的目标。',
-    'Tags that do not match the matching pattern will be targeted by this ruleset.':
-      '不匹配此模式的标签将成为此规则集的目标。',
+    'Branches that do not match the matching pattern will be targeted by this ruleset.': '不匹配此模式的分支将成为此规则集的目标。',
+    'Tags that do not match the matching pattern will be targeted by this ruleset.': '不匹配此模式的标签将成为此规则集的目标。',
     'Pattern cannot be empty': '模式不能为空',
     'Invalid pattern': '无效的模式',
     'Branch naming pattern': '分支命名模式',
@@ -337,14 +319,11 @@ export default {
 
     // 目标：工作流（组织、企业的操作规则集）
     'Workflow path pattern': '工作流路径模式',
-    'Workflows that match the matching pattern will be targeted by this ruleset.':
-      '匹配此模式的工作流将成为此规则集的目标。',
-    'Workflows that do not match the matching pattern will be targeted by this ruleset.':
-      '不匹配此模式的工作流将成为此规则集的目标。',
+    'Workflows that match the matching pattern will be targeted by this ruleset.': '匹配此模式的工作流将成为此规则集的目标。',
+    'Workflows that do not match the matching pattern will be targeted by this ruleset.': '不匹配此模式的工作流将成为此规则集的目标。',
     'Workflow targeting criteria': '工作流目标条件',
     'No workflow targets have been added yet': '尚未添加工作流目标',
-    'Add an include or exclude pattern to target workflow files with this ruleset.':
-      '添加包含或排除模式，使此规则集针对工作流文件。',
+    'Add an include or exclude pattern to target workflow files with this ruleset.': '添加包含或排除模式，使此规则集针对工作流文件。',
     'All workflows are targeted': '已针对所有工作流',
     'Target a centrally managed required workflow': '针对集中管理的必需工作流',
     'Choose a centrally managed required workflow without entering its internal execution path.':
@@ -388,7 +367,7 @@ export default {
     'Restore the ruleset to this version': '将规则集恢复到此版本',
     'No ruleset history available': '暂无规则集历史记录',
     'History menu': '历史记录菜单',
-    'View a diff of these changes': '查看这些更改的差异',
+    'View a diff of these changes': '查看这些更改的差异'
   },
   scoped: {
     Ruleset: '规则集',
@@ -439,7 +418,7 @@ export default {
     changes: '更改',
     // 历史记录：octocat edited <relative-time>
     edited: '编辑于',
-    Unauthorized: '未授权',
+    Unauthorized: '未授权'
   },
   regexp: [
     // 规则集列表：6 branch rules • targeting 1 branch（超过 100 显示 100+）
@@ -448,13 +427,12 @@ export default {
       (_, count: string, kind: string, targets: string, noun: string, all: string, many: string) => {
         const rules = `${count} 条${RULE_KIND[kind] ?? kind}规则`
         return targets || all || many ? `${rules} • ${targeting(targets, noun, all, many)}` : rules
-      },
+      }
     ],
     // 旧版列表：「• targeting 1 branch」单独成节点
     [
       new RegExp(String.raw`^[•·,] targeting ${COUNT} ${NOUN}$`),
-      (match: string, targets: string, noun: string) =>
-        `${match.startsWith(',') ? '，' : '• '}针对 ${targets} ${countNoun(noun)}`,
+      (match: string, targets: string, noun: string) => `${match.startsWith(',') ? '，' : '• '}针对 ${targets} ${countNoun(noun)}`
     ],
     // Copilot 代码审查页：3 Copilot code review rules • targeting 2 branches in this repository
     [
@@ -462,55 +440,49 @@ export default {
       (_, count: string, targets: string, noun: string, all: string, many: string, inRepo: string) => {
         const rules = `${count} 条 Copilot 代码审查规则`
         return targets || all || many ? `${rules} • ${targeting(targets, noun, all, many, inRepo)}` : rules
-      },
+      }
     ],
     [
       new RegExp(String.raw`^targeting ${TARGET}( in this repository)?$`),
-      (_, targets: string, noun: string, all: string, many: string, inRepo: string) =>
-        targeting(targets, noun, all, many, inRepo),
+      (_, targets: string, noun: string, all: string, many: string, inRepo: string) => targeting(targets, noun, all, many, inRepo)
     ],
     // 规则集计数：3 rulesets、1 organization ruleset
     [
       new RegExp(String.raw`^${COUNT} (?:(repository|organization) )?rulesets?$`),
-      (_, count: string, owner: string) =>
-        `${count} 个${owner === 'repository' ? '存储库' : owner === 'organization' ? '组织' : ''}规则集`,
+      (_, count: string, owner: string) => `${count} 个${owner === 'repository' ? '存储库' : owner === 'organization' ? '组织' : ''}规则集`
     ],
     [new RegExp(String.raw`^${COUNT} rules?$`), '$1 条规则'],
     // 编辑器：适用目标数（数量在链接中时由 scoped「Applies to」「including」与下一条分别匹配）
     [
       new RegExp(String.raw`^Applies to ${COUNT} targets?(:| including)?$`),
-      (_, count: string, tail: string) => `适用于 ${count} 个目标${tail === ':' ? '：' : tail ? '包括' : ''}`,
+      (_, count: string, tail: string) => `适用于 ${count} 个目标${tail === ':' ? '：' : tail ? '包括' : ''}`
     ],
     [
       new RegExp(String.raw`^${COUNT} targets?(:| including)?$`),
-      (_, count: string, tail: string) => `${count} 个目标${tail === ':' ? '：' : tail ? '包括' : ''}`,
+      (_, count: string, tail: string) => `${count} 个目标${tail === ':' ? '：' : tail ? '包括' : ''}`
     ],
     // 编辑器：强制实施状态、绕过参与者分类的读屏名称
-    [
-      /^(Active|Evaluate|Disabled), Enforcement status$/,
-      (_, status: string) => `${ENFORCEMENT[status] ?? status}，强制实施状态`,
-    ],
+    [/^(Active|Evaluate|Disabled), Enforcement status$/, (_, status: string) => `${ENFORCEMENT[status] ?? status}，强制实施状态`],
     [
       /^(All|Roles|Teams|Apps|Users|Others), Filter actors by category$/,
-      (_, category: string) => `${ACTOR_CATEGORY[category] ?? category}，按类别筛选参与者`,
+      (_, category: string) => `${ACTOR_CATEGORY[category] ?? category}，按类别筛选参与者`
     ],
     // 只读规则集页：Active - This ruleset will be enforced
     [
       /^- (This ruleset will be enforced|Evaluate this ruleset to trial rules and view insights|This ruleset will not be enforced)$/,
-      (_, description: string) => `- ${ENFORCEMENT_DESCRIPTION[description] ?? description}`,
+      (_, description: string) => `- ${ENFORCEMENT_DESCRIPTION[description] ?? description}`
     ],
     // 绕过列表按类别筛选后为空
     [
       /^No (roles|teams|apps|users|agents|other actors) in (bypass|allow) list$/,
-      (_, category: string, list: string) =>
-        `${list === 'allow' ? '允许列表' : '绕过列表'}中没有${ACTOR_CATEGORY[category] ?? category}`,
+      (_, category: string, list: string) => `${list === 'allow' ? '允许列表' : '绕过列表'}中没有${ACTOR_CATEGORY[category] ?? category}`
     ],
     // 添加绕过面板候选项的说明：Team • @devs、App • octo-org（团队名、应用所有者原样保留）
     [/^(Team|App) • (.{1,100})$/, (_, type: string, name: string) => `${type === 'Team' ? '团队' : '应用'} • ${name}`],
     // 列表：缺少目标条件
     [
       /^(Branch|Tag|Repository|Organization|Workflow) conditions missing$/,
-      (_, object: string) => `缺少${CONDITION_OBJECT[object] ?? object}条件`,
+      (_, object: string) => `缺少${CONDITION_OBJECT[object] ?? object}条件`
     ],
     // 添加目标对话框：Example patterns: "main", "releases/**/*", "users/**/*".
     [/^Example patterns: ("[^"]{1,80}"(?:, "[^"]{1,80}"){0,5})\.$/, '模式示例：$1。'],
@@ -519,7 +491,7 @@ export default {
     // 操作菜单读屏名称：View history for the ruleset named main-protection
     [
       /^View (history|insights) for the ruleset named (.{1,100})$/,
-      (_, kind: string, name: string) => `查看规则集 ${name} 的${kind === 'history' ? '历史记录' : '见解'}`,
+      (_, kind: string, name: string) => `查看规则集 ${name} 的${kind === 'history' ? '历史记录' : '见解'}`
     ],
     // 导入失败：Error importing ruleset: <服务端消息>
     [/^Error importing ruleset: (.{1,200})$/, '导入规则集时出错：$1'],
@@ -528,7 +500,7 @@ export default {
     [/^As an? ([\w.-]+) admin, you can$/, '作为 $1 管理员，你可以'],
     [
       /^manage ([\w.-]+) rulesets in (organization|enterprise) settings\.$/,
-      (_, name: string, owner: string) => `在${owner === 'enterprise' ? '企业' : '组织'}设置中管理 ${name} 规则集。`,
-    ],
-  ],
+      (_, name: string, owner: string) => `在${owner === 'enterprise' ? '企业' : '组织'}设置中管理 ${name} 规则集。`
+    ]
+  ]
 } satisfies PageDictionary

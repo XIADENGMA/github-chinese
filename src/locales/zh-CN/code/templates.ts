@@ -3,7 +3,7 @@ import type { PageDictionary } from '../../../core/types'
 /** 「Your license is ready」里的文件类型 */
 const COMMUNITY_FILE: Readonly<Record<string, string>> = {
   license: '许可证',
-  'code of conduct': '行为准则',
+  'code of conduct': '行为准则'
 }
 
 /**
@@ -37,7 +37,7 @@ export default {
     'what a code of conduct is': '什么是行为准则',
     'and how to enforce it.': '以及如何执行。',
     'Recommended for projects of all sizes': '推荐用于各种规模的项目',
-    'Suitable for large communities and events': '适合大型社区和活动',
+    'Suitable for large communities and events': '适合大型社区和活动'
   },
 
   scoped: {
@@ -49,15 +49,14 @@ export default {
     'Link to reporting guidelines': '举报指南链接',
     'Link to policy': '政策链接',
     'Contact info': '联系信息',
-    Note: '备注',
+    Note: '备注'
   },
 
   regexp: [
     // 选定模板后编辑器顶部的提示
     [
       /^Your (license|code of conduct) is ready\. Please review it below and either commit it to the (\S+) branch or to a new branch\.$/,
-      (_, kind: string, branch: string) =>
-        `${COMMUNITY_FILE[kind] ?? kind}已就绪。审查后提交到 ${branch} 分支或新分支。`,
-    ],
-  ],
+      (_, kind: string, branch: string) => `${COMMUNITY_FILE[kind] ?? kind}已就绪。审查后提交到 ${branch} 分支或新分支。`
+    ]
+  ]
 } satisfies PageDictionary

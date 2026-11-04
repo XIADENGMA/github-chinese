@@ -26,16 +26,13 @@ export default {
     Transitive: '間接',
     Direct: '直接',
     'Learn more about SBOMS.': '瞭解 SBOM。',
-    'Supported ecosystems will have transitivity labels on their packages.':
-      '受支援的生態系會在套件上顯示直接/間接相依標籤。',
+    'Supported ecosystems will have transitivity labels on their packages.': '受支援的生態系會在套件上顯示直接/間接相依標籤。',
     'View transitive paths': '查看間接相依路徑',
-    'You can view transitive paths for packages within supported ecosystems.':
-      '你可以查看受支援生態系中套件的間接相依路徑。',
+    'You can view transitive paths for packages within supported ecosystems.': '你可以查看受支援生態系中套件的間接相依路徑。',
     'Show dependency options': '顯示相依項目選項',
     'No dependencies found.': '找不到相依項目。',
     // To view your dependency graph, … define dependencies in <one of the supported manifest file types>, like …
-    'To view your dependency graph, your repository must define dependencies in':
-      '若要查看相依性圖表，儲存庫必須將相依項目定義在',
+    'To view your dependency graph, your repository must define dependencies in': '若要查看相依性圖表，儲存庫必須將相依項目定義在',
     'Detect additional dependencies with GitHub Actions': '使用 GitHub 動作偵測更多相依項目',
     // … GitHub Actions adds your dependencies using the <dependency submission API> so you can receive …
     'Not all dependencies are automatically detected for ecosystems like Gradle. GitHub Actions adds your dependencies using the':
@@ -52,8 +49,7 @@ export default {
     'Known security vulnerability in': '已知的安全性漏洞位於',
     'Known vulnerability found': '發現已知漏洞',
     'update suggested:': '建議更新：',
-    'Always verify the validity and compatibility of suggestions with your codebase.':
-      '務必確認建議有效且與你的程式碼庫相容。',
+    'Always verify the validity and compatibility of suggestions with your codebase.': '務必確認建議有效且與你的程式碼庫相容。',
     'What’s not been updated': '尚未更新的內容',
     "What's not been updated": '尚未更新的內容',
 
@@ -97,8 +93,7 @@ export default {
     "We haven't found any dependents for this repository yet.": '尚未發現此儲存庫的被相依項目。',
     'We’ll keep looking!': '我們會繼續尋找！',
     "We'll keep looking!": '我們會繼續尋找！',
-    'GitHub does not currently determine the dependents of private repositories':
-      'GitHub 目前不會判定私人儲存庫的被相依項目',
+    'GitHub does not currently determine the dependents of private repositories': 'GitHub 目前不會判定私人儲存庫的被相依項目',
 
     // Dependabot 更新（/network/updates）
     'Enable Dependabot': '啟用 Dependabot',
@@ -108,8 +103,7 @@ export default {
     'Dependabot isn’t enabled on forks by default': '分叉預設不啟用 Dependabot',
     "Dependabot version updates aren't configured yet": '尚未設定 Dependabot 版本更新',
     'Dependabot version updates aren’t configured yet': '尚未設定 Dependabot 版本更新',
-    'Dependabot creates pull requests to keep your dependencies up-to-date.':
-      'Dependabot 會建立拉取請求，讓你的相依項目保持最新。',
+    'Dependabot creates pull requests to keep your dependencies up-to-date.': 'Dependabot 會建立拉取請求，讓你的相依項目保持最新。',
     'Create config file': '建立設定檔',
     'Recent update jobs': '最近的更新作業',
     // <Dependabot version updates> automatically keep your application up-to-date …
@@ -118,7 +112,7 @@ export default {
     'can also help keep dependencies updated.': '也能協助讓相依項目保持最新。',
     'Monitored dependency files': '受監控的相依性檔案',
     'Check for updates': '檢查更新',
-    'Recent jobs': '最近的作業',
+    'Recent jobs': '最近的作業'
   },
   scoped: {
     // 链接文字含句末的「中」：…必須將相依項目定義在 <任一種支援的資訊清單檔案中>，例如 …
@@ -133,29 +127,26 @@ export default {
     'view logs': '查看記錄',
     'Secret scanning': '機密掃描',
     // 生态系统筛选项（与 npm 并列）；产品名按用户规定译出，同 security 公告的生态系统选项
-    'GitHub Actions': 'GitHub 動作',
+    'GitHub Actions': 'GitHub 動作'
   },
   regexp: [
     // 依赖条目元信息：· Detected automatically on Oct 18, 2026 · MIT
     [
       new RegExp(`^· Detected automatically on (${DATE_SOURCE})(?: · (.+))?$`),
-      (_, date, license) => `${joinCjk('· 自動偵測於', translateTime(date))}${license ? ` · ${license}` : ''}`,
+      (_, date, license) => `${joinCjk('· 自動偵測於', translateTime(date))}${license ? ` · ${license}` : ''}`
     ],
     // 依赖路径对话框
     [/^Paths for (.+)$/, '$1 的路徑'],
     [/^Showing ([\d,]+) paths?\. Export SBOM to view all paths\.$/, '顯示 $1 條路徑。匯出 SBOM 以查看所有路徑。'],
     // 计数
     [/^([\d,]+) Total$/, '共 $1 個'],
-    [
-      /^([\d,]+) (Repositor(?:y|ies)|Packages?)$/,
-      (_, count, kind) => `${count} 個${kind.startsWith('Repositor') ? '儲存庫' : '套件'}`,
-    ],
+    [/^([\d,]+) (Repositor(?:y|ies)|Packages?)$/, (_, count, kind) => `${count} 個${kind.startsWith('Repositor') ? '儲存庫' : '套件'}`],
     // 页面标题片段：Network Dependents · owner/repo · @scope/name repositories
     // 软件包名须像软件包名（@scope/name、小写开头，或含 . : /），避免误命中「12 repositories」「Public repositories」
     [
       /^(@[\w.-]+\/[\w.-]+|[a-z][\w.:/-]*|[A-Z0-9][\w-]*[.:/][\w.:/-]*) (repositories|packages)$/,
-      (_, name, kind) => `相依於 ${name} 的${kind === 'repositories' ? '儲存庫' : '套件'}`,
-    ],
+      (_, name, kind) => `相依於 ${name} 的${kind === 'repositories' ? '儲存庫' : '套件'}`
+    ]
   ],
   ignore: [
     // 软件包名、清单文件路径
@@ -163,6 +154,6 @@ export default {
     'a[data-hovercard-type="dependency_graph_package"]',
     'a[data-test-selector="dg-repo-pkg-manifest"]',
     '#dependents .select-menu-item-text',
-    '#dependents p[role="status"] > strong',
-  ],
+    '#dependents p[role="status"] > strong'
+  ]
 } satisfies PageDictionary

@@ -11,8 +11,7 @@ export default {
     'Try the new pull requests Overview page!': '试用新的拉取请求概述页面！',
     'Focus on what matters most and take action with confidence.': '专注于最重要的事项并从容采取行动。',
     'Welcome to the new pull requests Overview page!': '欢迎使用新的拉取请求概述页面！',
-    'You can learn more, turn it off, or send feedback anytime from here.':
-      '你可以随时在这里了解更多、关闭此功能或发送反馈。',
+    'You can learn more, turn it off, or send feedback anytime from here.': '你可以随时在这里了解更多、关闭此功能或发送反馈。',
     'Overview preview could not be turned on. Try again.': '无法开启概述预览。请重试。',
     'Try the Overview page': '试用概述页面',
     'Try the Overview page, try again': '试用概述页面，重试',
@@ -126,8 +125,7 @@ export default {
       '未找到此评论。它可能已被删除或你已无权查看。',
     'Skip comments': '跳过评论',
     'Copilot summary warning': 'Copilot 摘要警告',
-    'Copilot couldn’t regenerate this summary. The previous summary is shown.':
-      'Copilot 无法重新生成此摘要。显示的是之前的摘要。',
+    'Copilot couldn’t regenerate this summary. The previous summary is shown.': 'Copilot 无法重新生成此摘要。显示的是之前的摘要。'
   },
   scoped: {
     // 功能预览
@@ -207,7 +205,7 @@ export default {
     'None yet - feature coming soon': '暂无 - 功能即将推出',
     Prompt: '提示',
     'Failed to load comments': '加载评论失败',
-    'refresh the page': '刷新页面',
+    'refresh the page': '刷新页面'
   },
   regexp: [
     // 迷你合并状态
@@ -233,6 +231,6 @@ export default {
     // 参与者：+3 more
     [/^\+(\d+) more$/, '另外 $1 个'],
     // 反馈字数
-    [/^Feedback is too long\. Use (\d+) characters or fewer\.$/, '反馈过长。最多 $1 个字符。'],
-  ],
+    [/^Feedback is too long\. Use (\d+) characters or fewer\.$/, '反馈过长。最多 $1 个字符。']
+  ]
 } satisfies PageDictionary

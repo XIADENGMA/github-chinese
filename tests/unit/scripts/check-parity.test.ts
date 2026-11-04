@@ -49,7 +49,7 @@ function check(...args: string[]): CheckResult {
   const result = spawnSync(process.execPath, [TSX_CLI, SCRIPT, ...args], {
     cwd: dir,
     encoding: 'utf8',
-    timeout: CHECK_TIMEOUT_MS,
+    timeout: CHECK_TIMEOUT_MS
   })
   return { status: result.status, output: `${result.stdout}${result.stderr}${result.error?.message ?? ''}` }
 }
@@ -104,7 +104,7 @@ export default {
   inline: [['Sample text {}', '範例文字 {}']],
   mergeText: [],
 }
-`,
+`
     )
     const { status, output } = check()
     expect(status).toBe(1)
@@ -127,8 +127,7 @@ export default {
   })
 
   it('标签表：键相同、译文不同时通过；键不同时逐项报出', () => {
-    const withLabels = (source: string, labels: string): string =>
-      source.replace('  mergeText:', `  labels: ${labels},\n  mergeText:`)
+    const withLabels = (source: string, labels: string): string => source.replace('  mergeText:', `  labels: ${labels},\n  mergeText:`)
     const cn = withLabels(CN_ISSUES, "{ bug: '缺陷', question: '疑问' }")
     writePair(cn, withLabels(TW_ISSUES, "{ bug: '錯誤', question: '疑問' }"))
     expect(check().status).toBe(0)
@@ -153,8 +152,7 @@ export default {
   })
 
   it('星标列表名表：键相同、译文不同时通过；键不同时逐项报出', () => {
-    const withNames = (source: string, names: string): string =>
-      source.replace('  mergeText:', `  listNames: ${names},\n  mergeText:`)
+    const withNames = (source: string, names: string): string => source.replace('  mergeText:', `  listNames: ${names},\n  mergeText:`)
     const cn = withNames(CN_ISSUES, "{ '✨ Inspiration': '✨ 灵感' }")
     writePair(cn, withNames(TW_ISSUES, "{ '✨ Inspiration': '✨ 靈感' }"))
     expect(check().status).toBe(0)
@@ -166,8 +164,7 @@ export default {
   })
 
   it('标签正则：source、flags 相同时通过；数量、写法不同时逐项报出', () => {
-    const withRules = (source: string, rules: string): string =>
-      source.replace('  mergeText:', `  labelRegexp: ${rules},\n  mergeText:`)
+    const withRules = (source: string, rules: string): string => source.replace('  mergeText:', `  labelRegexp: ${rules},\n  mergeText:`)
     const cn = withRules(CN_ISSUES, "[[/^Sample (\\d+) code$/, '示例 $1 代码']]")
     writePair(cn, withRules(TW_ISSUES, "[[/^Sample (\\d+) code$/, '範例 $1 程式碼']]"))
     expect(check().status).toBe(0)
@@ -208,16 +205,16 @@ export default {
       'index.ts',
       indexSource('zhCN', [
         ['issues', 'issues'],
-        ['pulls', 'pulls'],
-      ]),
+        ['pulls', 'pulls']
+      ])
     )
     write(
       'zh-TW',
       'index.ts',
       indexSource('zhTW', [
         ['pulls', 'pulls'],
-        ['issues', 'issues'],
-      ]),
+        ['issues', 'issues']
+      ])
     )
     expect(check().output).toContain('index.ts 注册顺序不同')
     rmSync(join(dir, 'src/locales/zh-TW/index.ts'))

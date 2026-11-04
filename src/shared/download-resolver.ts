@@ -10,7 +10,7 @@ import {
   PROBE_TIMEOUT_MS,
   probeUrl,
   type AccelerateSource,
-  type ProbeDeps,
+  type ProbeDeps
 } from './accelerate'
 import type { Settings } from './settings'
 
@@ -63,7 +63,7 @@ export function createDownloadResolver(deps: ProbeDeps = PROBE_DEPS): DownloadRe
     if (cached !== undefined) return Promise.resolve(cached)
     const running = pending.get(url)
     if (running) return running
-    const task = probe(url, PROBE_TIMEOUT_MS, deps).then((result) => {
+    const task = probe(url, PROBE_TIMEOUT_MS, deps).then(result => {
       const expires = deps.now() + (result.ok ? HEALTHY_TTL_MS : FAILED_TTL_MS)
       health.set(url, result.ok ? { ok: true, ms: result.ms, expires } : { ok: false, expires })
       pending.delete(url)
@@ -80,17 +80,17 @@ export function createDownloadResolver(deps: ProbeDeps = PROBE_DEPS): DownloadRe
     if (url && known(url) === true) return preferred
     // 首选要探测（或已知不可用）时其余一并探测：首选不可用时不用再从头等
     const first = check(preferred)
-    const rest = others.map((source) => ({ source, available: check(source) }))
+    const rest = others.map(source => ({ source, available: check(source) }))
     if (await first) return preferred
     return firstAvailable(rest)
   }
 
   /** 最先探测成功的；都不可用时为 undefined */
   function firstAvailable(
-    probes: readonly { readonly source: AccelerateSource; readonly available: Promise<boolean> }[],
+    probes: readonly { readonly source: AccelerateSource; readonly available: Promise<boolean> }[]
   ): Promise<AccelerateSource | undefined> {
     const fallbacks = probes.map(({ source, available }) =>
-      available.then((ok) => (ok ? source : Promise.reject(new Error(`加速源不可用：${source.name}`)))),
+      available.then(ok => (ok ? source : Promise.reject(new Error(`加速源不可用：${source.name}`))))
     )
     return Promise.any(fallbacks).catch(() => undefined)
   }
@@ -109,7 +109,7 @@ export function createDownloadResolver(deps: ProbeDeps = PROBE_DEPS): DownloadRe
   function pickFastest(sources: readonly AccelerateSource[]): Promise<AccelerateSource | undefined> {
     const fastest = fastestKnown(sources)
     if (fastest) return Promise.resolve(fastest)
-    return firstAvailable(sources.map((source) => ({ source, available: check(source) })))
+    return firstAvailable(sources.map(source => ({ source, available: check(source) })))
   }
 
   function rank(sources: readonly AccelerateSource[]): readonly AccelerateSource[] {
@@ -133,6 +133,6 @@ export function createDownloadResolver(deps: ProbeDeps = PROBE_DEPS): DownloadRe
       const source = await (isAutoSource(settings) ? pickFastest(candidates) : pick(candidates))
       return (source && accelerateLink(source.template, link)) ?? href
     },
-    rank,
+    rank
   }
 }

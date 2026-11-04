@@ -8,7 +8,7 @@ const FEATURE_NAMES: Readonly<Record<string, string>> = {
   'GitHub Codespaces': 'GitHub 代码空间',
   Codespaces: '代码空间',
   'GitHub Actions': 'GitHub 操作',
-  Actions: '操作',
+  Actions: '操作'
 }
 
 function featureName(feature: string): string {
@@ -33,7 +33,7 @@ const CSV_ERRORS: readonly (readonly [RegExp, string])[] = [
   [/^Illegal quoting in line (\d+)\.$/, '第 $1 行的引号不合法。'],
   [/^Unclosed quoted field in line (\d+)\.$/, '第 $1 行有未闭合的引号字段。'],
   [/^Any value after quoted field isn't allowed in line (\d+)\.$/, '第 $1 行的引号字段后不允许有值。'],
-  [/^Field size exceeded in line (\d+)\.$/, '第 $1 行的字段过大。'],
+  [/^Field size exceeded in line (\d+)\.$/, '第 $1 行的字段过大。']
 ]
 
 function csvError(message: string): string {
@@ -190,8 +190,7 @@ export default {
     // 申请被拒：日期与句号通常与此句拼成一段，由 regexp 整句处理；此为未拼接时的片段
     'Your request for Copilot Business was declined by an admin on': '你的 Copilot 商业版申请被管理员拒绝于',
     'Click this link to contact your admin.': '单击此链接联系管理员。',
-    'Click this link to learn more about copilot. This action opens in a new tab.':
-      '单击此链接了解 Copilot。将在新标签页中打开。',
+    'Click this link to learn more about copilot. This action opens in a new tab.': '单击此链接了解 Copilot。将在新标签页中打开。',
     // 空存储库引导卡片：功能申请已提交（功能名之后的片段；通常与前文拼成整句，由 regexp 处理）
     '. An admin will need to approve your request before you can use this feature.': '。管理员批准后才能使用此功能。',
 
@@ -211,9 +210,8 @@ export default {
     'Only you will be able to see this space.': '仅你可见。',
     'Only visible to you and organization admins. You can share it later.': '仅你和组织管理员可见。之后可共享。',
     'Fetching owners…': '正在获取所有者…',
-    'An error occurred while loading owners. Please reopen the dialog to try again.':
-      '所有者加载失败。请重新打开对话框重试。',
-    'Unable to save space.': '无法保存空间。',
+    'An error occurred while loading owners. Please reopen the dialog to try again.': '所有者加载失败。请重新打开对话框重试。',
+    'Unable to save space.': '无法保存空间。'
   },
 
   scoped: {
@@ -259,7 +257,7 @@ export default {
     "Don't show again": '不再显示',
     'Contact your admin': '联系管理员',
     'for more details around their decision.': '了解此决定的详细信息。',
-    successfully: '中',
+    successfully: '中'
   },
 
   regexp: [
@@ -276,13 +274,13 @@ export default {
     // Copilot 推广弹层：申请被拒（相邻文本节点拼接后整句匹配）
     [
       /^Your request for (\S.*?) was declined by an admin(?: on (\S.*))?\.$/,
-      (_, feature: string, date: string | undefined) => declinedRequest(feature, date),
+      (_, feature: string, date: string | undefined) => declinedRequest(feature, date)
     ],
     // 空存储库引导卡片：功能申请已提交（相邻文本节点拼接后整句匹配）
     [
       /^You['’]ve successfully submitted a request to your organization['’]s admins for access to (\S.*?)\. An admin will need to approve your request before you can use this feature\.$/,
-      (_, feature: string) => submittedRequest(feature),
-    ],
+      (_, feature: string) => submittedRequest(feature)
+    ]
   ],
 
   inline: [
@@ -291,19 +289,19 @@ export default {
     // A permissive license similar to the <a>BSD 2-Clause License</a>, but with a 3rd clause …
     [
       'A permissive license similar to the {}, but with a 3rd clause that prohibits others from using the name of the copyright holder or its contributors to promote derived products without written consent.',
-      '一种类似于 {} 的宽松许可证，但增加的第三条禁止他人未经书面同意使用版权所有者或其贡献者的名义推广衍生产品。',
+      '一种类似于 {} 的宽松许可证，但增加的第三条禁止他人未经书面同意使用版权所有者或其贡献者的名义推广衍生产品。'
     ],
     // A variant of the <a>BSD 3-Clause License</a> that explicitly does not grant any patent rights.
     ['A variant of the {} that explicitly does not grant any patent rights.', '一种明确不授予任何专利权的 {} 变体。'],
     // … approved by the European Commission in <a>23 official languages</a> of the European Union.
     [
       'The European Union Public Licence (EUPL) is a copyleft free/open source software license created on the initiative of and approved by the European Commission in {} of the European Union.',
-      '欧盟公共许可证 (EUPL) 是由欧盟委员会发起并以欧盟 {}版本批准的 Copyleft 自由/开源软件许可证。',
+      '欧盟公共许可证 (EUPL) 是由欧盟委员会发起并以欧盟 {}版本批准的 Copyleft 自由/开源软件许可证。'
     ],
     // Similar to <a>CC-BY-4.0</a> but requires … a similar, <a>compatible</a> license. …
     [
       'Similar to {} but requires derivatives be distributed under the same or a similar, {} license. Frequently used for media assets and educational materials. A previous version is the default license for Wikipedia and other Wikimedia projects. Not recommended for software.',
-      '类似于 {} 但要求衍生作品以相同或类似的{}许可证分发。常用于媒体资源和教育材料。其旧版本是维基百科等维基媒体项目的默认许可证。不建议用于软件。',
-    ],
-  ],
+      '类似于 {} 但要求衍生作品以相同或类似的{}许可证分发。常用于媒体资源和教育材料。其旧版本是维基百科等维基媒体项目的默认许可证。不建议用于软件。'
+    ]
+  ]
 } satisfies PageDictionary

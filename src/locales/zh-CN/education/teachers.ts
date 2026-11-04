@@ -19,8 +19,7 @@ export default {
     'Manage class projects with unlimited private repos and advanced collaboration tools.':
       '使用无限专用存储库和高级协作工具管理课堂项目。',
     'Team organization and permissions': '团队组织和权限',
-    'Simplify classroom management with structured team roles and permission settings.':
-      '通过结构化的团队角色和权限设置简化课堂管理。',
+    'Simplify classroom management with structured team roles and permission settings.': '通过结构化的团队角色和权限设置简化课堂管理。',
     'Enhanced classroom security': '增强的课堂安全',
     'Keep your educational content secure with advanced security features like two-factor authentication.':
       '借助双因素身份验证等高级安全功能保护你的教育内容。',
@@ -42,8 +41,7 @@ export default {
       '加入我们仅限邀请的教师讨论，与全球教育工作者网络建立联系，分享创新教学策略并探索新想法。',
 
     // CTA
-    'Join us today and take the first step toward transforming the way you teach.':
-      '立即加入我们，迈出改变你教学方式的第一步。',
+    'Join us today and take the first step toward transforming the way you teach.': '立即加入我们，迈出改变你教学方式的第一步。',
     'Read GitHub Education blog posts': '阅读 GitHub 教育博客文章',
 
     // 「更进一步」卡片：Codio、Classroom 50 是合作伙伴的产品名，保留原文
@@ -74,18 +72,18 @@ export default {
     'What should I do if my application for GitHub Education benefits was not approved?':
       '如果我的 GitHub 教育福利申请未获批准，该怎么办？',
     'If your application was not approved, it may be due to insufficient proof of current academic employment or affiliation with a non-degree granting institution. Ensure your application includes a clear academic email address and proper employment documentation. You may update your information and reapply as needed.':
-      '如果你的申请未获批准，可能是因为当前学术任职证明不足，或所属机构不授予学位。请确保你的申请包含清晰的学术电子邮件地址和适当的任职文件。你可以根据需要更新信息并重新申请。',
+      '如果你的申请未获批准，可能是因为当前学术任职证明不足，或所属机构不授予学位。请确保你的申请包含清晰的学术电子邮件地址和适当的任职文件。你可以根据需要更新信息并重新申请。'
   },
   scoped: {
     'Teacher Toolbox': '教师工具箱',
     // 只用于「… through our <a>GitHub Education for Teachers</a> portal.」逐段回退，动词「申请」落在此段
-    'portal.': '门户申请。',
+    'portal.': '门户申请。'
   },
   inline: [
     // … using your institutional email address through our <a>GitHub Education for Teachers</a> portal.
     [
       'To access GitHub Education benefits, you need to be a currently employed educator at an accredited educational institution. Please apply by submitting proof of academic employment, such as a faculty ID or employment verification letter, using your institutional email address through our {} portal.',
-      '要获得 GitHub 教育福利，你需要是经认证教育机构的在职教育工作者。请通过我们的{}门户，使用你的机构电子邮件地址提交学术任职证明（如教职工 ID 或在职证明信）来申请。',
-    ],
-  ],
+      '要获得 GitHub 教育福利，你需要是经认证教育机构的在职教育工作者。请通过我们的{}门户，使用你的机构电子邮件地址提交学术任职证明（如教职工 ID 或在职证明信）来申请。'
+    ]
+  ]
 } satisfies PageDictionary

@@ -12,7 +12,7 @@ let accelerator: ImageAccelerator
 const fetchImage = vi.fn(async (url: string): Promise<string> => `${DATA}#${url}`)
 
 async function flush(): Promise<void> {
-  await new Promise((done) => setTimeout(done, 0))
+  await new Promise(done => setTimeout(done, 0))
 }
 
 function addImage(src: string, attributes: Readonly<Record<string, string>> = {}): HTMLImageElement {
@@ -37,7 +37,7 @@ beforeEach(() => {
 afterEach(() => {
   window.removeEventListener('error', accelerator.onError, { capture: true })
   fetchImage.mockReset()
-  fetchImage.mockImplementation(async (url) => `${DATA}#${url}`)
+  fetchImage.mockImplementation(async url => `${DATA}#${url}`)
   document.head.innerHTML = ''
   document.body.innerHTML = ''
 })
@@ -61,7 +61,7 @@ describe('createImageAccelerator', () => {
 
   it.each([
     ['未开启图片加速', { accelerateImages: false }],
-    ['总开关关闭', { enabled: false }],
+    ['总开关关闭', { enabled: false }]
   ] as const)('%s：不处理', (_name, overrides) => {
     settings = { ...settings, ...overrides }
     fail(addImage(AVATAR))
@@ -119,7 +119,7 @@ describe('createImageAccelerator', () => {
 
   it('同时最多请求 4 张，其余排队', async () => {
     const pending: (() => void)[] = []
-    fetchImage.mockImplementation((url) => new Promise((resolve) => pending.push(() => resolve(`${DATA}#${url}`))))
+    fetchImage.mockImplementation(url => new Promise(resolve => pending.push(() => resolve(`${DATA}#${url}`))))
     for (let index = 0; index < 6; index += 1) fail(addImage(`https://avatars.githubusercontent.com/u/${index}?v=4`))
     expect(fetchImage).toHaveBeenCalledTimes(4)
     pending.shift()!()
@@ -130,7 +130,7 @@ describe('createImageAccelerator', () => {
       await flush()
     }
     expect(fetchImage).toHaveBeenCalledTimes(6)
-    expect([...document.querySelectorAll('img')].every((img) => img.getAttribute('src')!.startsWith(DATA))).toBe(true)
+    expect([...document.querySelectorAll('img')].every(img => img.getAttribute('src')!.startsWith(DATA))).toBe(true)
   })
 
   it('开启时处理已加载失败的图片；加载成功的、还没加载完的不处理', async () => {

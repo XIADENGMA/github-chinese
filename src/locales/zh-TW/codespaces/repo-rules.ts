@@ -24,6 +24,6 @@ export default {
     [/^Create (?:a )?codespace on (\S+)$/, '在 $1 上建立程式碼空間'],
     [/^Open (.+) in editor$/, '在編輯器中開啟 $1'],
     // 评论操作菜单的名称（octocat's comment, Jan 5, 2024）由议题 / 拉取请求词典处理，这里排除
-    [/^More actions for (?!.*\b(?:comment|review), )(.+)$/, '$1 的更多動作'],
-  ],
+    [/^More actions for (?!.*\b(?:comment|review), )(.+)$/, '$1 的更多動作']
+  ]
 } satisfies PageDictionary

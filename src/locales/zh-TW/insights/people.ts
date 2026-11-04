@@ -13,7 +13,7 @@ export default {
     'Learn more about how starring works on GitHub.': '瞭解在 GitHub 上加星號的運作方式。',
     // Learn more <about how starring works on GitHub.>（Learn more 由 common-ui 译作「瞭解詳情」）：
     // 以全形冒号承接，拼成「瞭解詳情：在 GitHub 上加星號的運作方式。」
-    'about how starring works on GitHub.': '：在 GitHub 上加星號的運作方式。',
+    'about how starring works on GitHub.': '：在 GitHub 上加星號的運作方式。'
   },
   regexp: [
     // 关注按钮的 aria-label（关注用户按术语表作「追蹤」）
@@ -22,6 +22,6 @@ export default {
     // 用户卡片：Joined on Apr 13, 2014 / Works for @octo-org / Is from San Francisco（加入日期按中文语序前置：於 … 加入）
     [new RegExp(`^Joined on (${DATE_SOURCE})$`), (_, date: string) => `${joinCjk('於', translateTime(date))}加入`],
     [/^Works for (@?[\w.-]+)$/, '任職於 $1'],
-    [/^Is from (.+)$/, '來自 $1'],
-  ],
+    [/^Is from (.+)$/, '來自 $1']
+  ]
 } satisfies PageDictionary

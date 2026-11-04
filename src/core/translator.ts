@@ -38,7 +38,7 @@ import {
   REENTRY_CONTAINER_CLASS,
   REENTRY_SELECTORS,
   SKIP_TAG_RELEASE_SELECTORS,
-  TRANSLATABLE_ATTRIBUTES,
+  TRANSLATABLE_ATTRIBUTES
 } from './ignore'
 import {
   ELEMENT_NODE,
@@ -52,7 +52,7 @@ import {
   isRunNode,
   isTextNode,
   textRun,
-  titleElement,
+  titleElement
 } from './dom'
 import { createTextFit, SPACE_ONLY_RE } from './fit'
 import { besideKbd, createInlineFragments, isFullPunct, isHalfPunct, isKbd, kbdNeighbor } from './inline'
@@ -67,15 +67,9 @@ import {
   safeMatches,
   splitSelectorList,
   tagMatches,
-  type IgnoreIndex,
+  type IgnoreIndex
 } from './selectors'
-import {
-  applyAttributeRules,
-  compileAttributeRules,
-  EMPTY_ATTRIBUTE_RULES,
-  isButtonInput,
-  type AttributeRuleSet,
-} from './attribute-rules'
+import { applyAttributeRules, compileAttributeRules, EMPTY_ATTRIBUTE_RULES, isButtonInput, type AttributeRuleSet } from './attribute-rules'
 import { createTimeText } from './time-text'
 import { translateTitleText } from './title'
 import type { LabelPart, PageKey } from './types'
@@ -149,9 +143,7 @@ const HOUR_CYCLES: ReadonlySet<string> = new Set(['h11', 'h12', 'h23', 'h24'])
  */
 export function defaultHourCycle(locales: string | readonly string[]): string | undefined {
   try {
-    return new Intl.DateTimeFormat(locales as string | string[], { hour: 'numeric' }).resolvedOptions().hour12 === true
-      ? 'h12'
-      : 'h23'
+    return new Intl.DateTimeFormat(locales as string | string[], { hour: 'numeric' }).resolvedOptions().hour12 === true ? 'h12' : 'h23'
   } catch {
     return undefined
   }
@@ -161,7 +153,7 @@ const LATIN_RE = /[A-Za-z]/
 const NON_SPACE_RE = /\S/
 
 /** 跳过子树的标签（小写）；head 内只有标题需要处理，单独负责 */
-const SKIP_TAGS: ReadonlySet<string> = new Set([...[...IGNORE_TAGS].map((tag) => tag.toLowerCase()), 'head'])
+const SKIP_TAGS: ReadonlySet<string> = new Set([...[...IGNORE_TAGS].map(tag => tag.toLowerCase()), 'head'])
 const SKIP_TAG_SELECTOR = [...SKIP_TAGS, ...TIME_TAGS].join(', ')
 const REENTRY_SELECTOR = REENTRY_SELECTORS.join(', ')
 const RELEASE_SELECTOR = SKIP_TAG_RELEASE_SELECTORS.join(', ')
@@ -183,15 +175,15 @@ const OBSERVED_ATTRIBUTES = [
     'disabled',
     ...TIME_ATTRIBUTES,
     ...MIRROR_ATTRIBUTES,
-    ...EXIT_ATTRIBUTES,
-  ]),
+    ...EXIT_ATTRIBUTES
+  ])
 ]
 const OBSERVE_OPTIONS: MutationObserverInit = {
   childList: true,
   subtree: true,
   characterData: true,
   attributes: true,
-  attributeFilter: OBSERVED_ATTRIBUTES,
+  attributeFilter: OBSERVED_ATTRIBUTES
 }
 /** 依赖子节点、兄弟节点的忽略选择器（:has()、:empty、位置伪类、兄弟组合符）：子节点增删可能让它们改变命中 */
 const STRUCTURAL_RE = /:has\(|:empty|-child|-of-type|\+|~(?!=)/
@@ -212,7 +204,7 @@ function isInputValueChange(element: Element, name: string): boolean {
 
 /** 镜像文字属性白名单内的元素 */
 function isMirrorElement(element: Element): boolean {
-  return MIRROR_ATTRIBUTES.some((name) => element.hasAttribute(name)) && safeMatches(element, MIRROR_SELECTOR)
+  return MIRROR_ATTRIBUTES.some(name => element.hasAttribute(name)) && safeMatches(element, MIRROR_SELECTOR)
 }
 
 function meaningfulCount(sources: readonly string[]): number {
@@ -312,7 +304,7 @@ export function createTranslator(options: TranslatorOptions): Translator {
   let features: TranslatorFeatures = {
     translateTime: options.translateTime ?? true,
     translateTitle: options.translateTitle ?? true,
-    collectUntranslated: options.collectUntranslated ?? false,
+    collectUntranslated: options.collectUntranslated ?? false
   }
   let active = false
   let pages = resolvePages()
@@ -366,7 +358,7 @@ export function createTranslator(options: TranslatorOptions): Translator {
   /** 按中文渲染的时间元素（克隆体带着 lang，也算）：渲染后补空格 */
   const timeText = createTimeText(
     doc,
-    (element) => features.translateTime && element.getAttribute('lang') === timeLang && !timePositions.get(element),
+    element => features.translateTime && element.getAttribute('lang') === timeLang && !timePositions.get(element)
   )
 
   function compileIgnore(): void {
@@ -374,7 +366,7 @@ export function createTranslator(options: TranslatorOptions): Translator {
     ignore = compileIgnoreIndex([...IGNORE_SELECTORS, ...matcher.ignoreSelectors(pages)], probe)
     skipSelector = ignore.selector ? `${SKIP_TAG_SELECTOR}, ${ignore.selector}` : SKIP_TAG_SELECTOR
     structuralSelector = splitSelectorList(ignore.selector)
-      .filter((selector) => STRUCTURAL_RE.test(selector))
+      .filter(selector => STRUCTURAL_RE.test(selector))
       .join(', ')
     attributeRules = compileAttributeRules(matcher.attributeRules(pages), probe)
     mergeIndex = compileIgnoreIndex(matcher.mergeSelectors(pages), probe)
@@ -465,7 +457,7 @@ export function createTranslator(options: TranslatorOptions): Translator {
   function noteRunMiss(nodes: readonly Text[], source: string): void {
     const first = nodes[0]
     if (!first) return
-    if (!collectHere || nodes.some((node) => sensitiveNodes.has(node))) {
+    if (!collectHere || nodes.some(node => sensitiveNodes.has(node))) {
       for (const node of nodes) sensitiveNodes.add(node)
       return
     }
@@ -485,7 +477,7 @@ export function createTranslator(options: TranslatorOptions): Translator {
   // ---------- 文本 ----------
 
   /** 全角标点两侧的空白；只有空白的页面文字不在忽略、跳过区域内时才置空 */
-  const fitting = createTextFit(records, (node) => node.parentElement !== null && !insideSkipped(node.parentElement))
+  const fitting = createTextFit(records, node => node.parentElement !== null && !insideSkipped(node.parentElement))
 
   /**
    * 文本节点的原文：一轮内同一节点只取一次。没有记录、或当前为自身写入时取原文没有副作用，不必记下；
@@ -530,9 +522,7 @@ export function createTranslator(options: TranslatorOptions): Translator {
     if (sources.includes(CONTESTED) || meaningfulCount(sources as string[]) < 2) return false
     const translated = translate((sources as string[]).join(''))
     if (translated === undefined) return false
-    nodes.forEach((node, i) =>
-      records.writeText(node, sources[i] as string, i === 0 ? fitting.fit(node, translated) : ''),
-    )
+    nodes.forEach((node, i) => records.writeText(node, sources[i] as string, i === 0 ? fitting.fit(node, translated) : ''))
     return true
   }
 
@@ -574,10 +564,10 @@ export function createTranslator(options: TranslatorOptions): Translator {
     fit: (node, translated) => fitting.fit(node, translated),
     applyRun,
     noteRunMiss,
-    translateInline: (key) => matcher.translateInline(key, pages),
+    translateInline: key => matcher.translateInline(key, pages),
     inlineEnabled: () => inlineEnabled,
-    touch: (node) => fitting.touch(node),
-    skipped: (element) => insideSkipped(element),
+    touch: node => fitting.touch(node),
+    skipped: element => insideSkipped(element)
   })
 
   function beginRound(): void {
@@ -606,11 +596,7 @@ export function createTranslator(options: TranslatorOptions): Translator {
   /** 元素自身或祖先中的合并区域，从外到内 */
   function mergeChain(element: Element): Element[] {
     const chain: Element[] = []
-    for (
-      let region = closestMerge(element);
-      region;
-      region = region.parentElement && closestMerge(region.parentElement)
-    ) {
+    for (let region = closestMerge(element); region; region = region.parentElement && closestMerge(region.parentElement)) {
       chain.unshift(region)
     }
     return chain
@@ -625,8 +611,7 @@ export function createTranslator(options: TranslatorOptions): Translator {
     const walker = doc.createTreeWalker(region, SHOW_ELEMENT | SHOW_TEXT)
     for (let node = walker.nextNode(); node; node = walker.nextNode()) {
       if (node.nodeType === TEXT_NODE) texts.push(node as Text)
-      else if (UNMERGEABLE_TAGS.has((node as Element).localName) || elementMatches(ignore, node as Element))
-        return undefined
+      else if (UNMERGEABLE_TAGS.has((node as Element).localName) || elementMatches(ignore, node as Element)) return undefined
     }
     return texts
   }
@@ -692,7 +677,7 @@ export function createTranslator(options: TranslatorOptions): Translator {
       applyText(single, sourceOf(single), true)
       return
     }
-    const sources = run.map((node) => sourceOf(node))
+    const sources = run.map(node => sourceOf(node))
     applyRun(run, sources, true)
   }
 
@@ -741,7 +726,7 @@ export function createTranslator(options: TranslatorOptions): Translator {
       sources.push(source)
     }
     const textSource = normalizeText(sources.join(''))
-    const shown = normalizeText(texts.map((node) => node.data).join(''))
+    const shown = normalizeText(texts.map(node => node.data).join(''))
     for (const name of MIRROR_ATTRIBUTES) {
       const current = element.getAttribute(name)
       if (current === null) continue
@@ -792,8 +777,7 @@ export function createTranslator(options: TranslatorOptions): Translator {
 
   /** 元素按哪种小时制渲染：自身或最近祖先、<html> 的 hour-cycle，都没有（或不认可）时按浏览器默认（与元素的取法一致） */
   function hourCycleOf(element: Element): string {
-    const value =
-      element.closest('[hour-cycle]')?.getAttribute('hour-cycle') || doc.documentElement.getAttribute('hour-cycle')
+    const value = element.closest('[hour-cycle]')?.getAttribute('hour-cycle') || doc.documentElement.getAttribute('hour-cycle')
     if (value && HOUR_CYCLES.has(value)) return value
     browserHourCycle ??= defaultHourCycle([]) ?? 'h23'
     return browserHourCycle
@@ -813,7 +797,7 @@ export function createTranslator(options: TranslatorOptions): Translator {
     forceAttribute(element, 'lang', () => timeLang)
     if (cycle !== undefined) forceAttribute(element, 'hour-cycle', () => cycle)
     if (element.localName === 'relative-time') {
-      forceAttribute(element, 'prefix', (source) => timePrefix(element, source))
+      forceAttribute(element, 'prefix', source => timePrefix(element, source))
     }
     if (element.getAttribute('lang') !== timeLang) return
     // 原本就按 timeLang 与其小时制渲染时元素不会重新渲染：当前文字与 title 立即补空格
@@ -1011,17 +995,12 @@ export function createTranslator(options: TranslatorOptions): Translator {
     if (!title) return
     const texts = childTexts(title)
     if (texts.length === 0) return
-    const sources = texts.map((node) => records.textSource(node))
+    const sources = texts.map(node => records.textSource(node))
     if (sources.includes(CONTESTED)) return
     const originals = sources as string[]
     const normalized = normalizeText(originals.join(''))
     const translated = features.translateTitle
-      ? translateTitleText(
-          normalized,
-          (segment) => matcher.translate(segment, pages),
-          host.location.pathname,
-          host.location.hostname,
-        )
+      ? translateTitleText(normalized, segment => matcher.translate(segment, pages), host.location.pathname, host.location.hostname)
       : normalized
     const changed = translated !== normalized
     texts.forEach((node, i) => {
@@ -1167,10 +1146,7 @@ export function createTranslator(options: TranslatorOptions): Translator {
 
   /** 文本组是否可能需要处理：含英文，或有写入记录（已翻译 / 已置空），或只有空白（紧邻全角标点时置空，见 fit.ts） */
   function runNeedsWork(run: readonly Text[]): boolean {
-    return (
-      run.some((node) => LATIN_RE.test(node.data) || records.hasText(node)) ||
-      SPACE_ONLY_RE.test(run.map((node) => node.data).join(''))
-    )
+    return run.some(node => LATIN_RE.test(node.data) || records.hasText(node)) || SPACE_ONLY_RE.test(run.map(node => node.data).join(''))
   }
 
   /** kbd 内的文字变化、kbd 旁增删节点：改由 kbd 所在片段中的文本定位（见 kbdNeighbor） */
@@ -1240,13 +1216,13 @@ export function createTranslator(options: TranslatorOptions): Translator {
   /** 变动的属性中需要处理的名称；时间元素只看 lang / prefix / hour-cycle */
   function relevantAttributes(element: Element, names: ReadonlySet<string>): readonly string[] {
     const localName = element.localName
-    if (TIME_TAGS.has(localName)) return TIME_ATTRIBUTES.some((name) => names.has(name)) ? TIME_ATTRIBUTES : []
+    if (TIME_TAGS.has(localName)) return TIME_ATTRIBUTES.some(name => names.has(name)) ? TIME_ATTRIBUTES : []
     return [...names].filter(
-      (name) =>
+      name =>
         TRANSLATABLE.has(name) ||
         (name === 'value' && localName === 'input' && isButtonInput(element)) ||
         (isInputValueChange(element, name) && tracksInputValue(element)) ||
-        (MIRROR.has(name) && isMirrorElement(element)),
+        (MIRROR.has(name) && isMirrorElement(element))
     )
   }
 
@@ -1474,8 +1450,7 @@ export function createTranslator(options: TranslatorOptions): Translator {
     if (hasStrayAttributes(region)) return true
     const walker = doc.createTreeWalker(region, SHOW_ELEMENT | SHOW_TEXT)
     for (let node = walker.nextNode(); node; node = walker.nextNode()) {
-      const written =
-        node.nodeType === TEXT_NODE ? records.ownText(node as Text) : records.translatedAttributes(node as Element) > 0
+      const written = node.nodeType === TEXT_NODE ? records.ownText(node as Text) : records.translatedAttributes(node as Element) > 0
       if (written) return true
     }
     return false
@@ -1581,15 +1556,12 @@ export function createTranslator(options: TranslatorOptions): Translator {
     endRound()
   }
 
-  function processAttributeChanges(
-    changed: ReadonlyMap<Element, ReadonlySet<string>>,
-    roots: ReadonlySet<Element>,
-  ): void {
+  function processAttributeChanges(changed: ReadonlyMap<Element, ReadonlySet<string>>, roots: ReadonlySet<Element>): void {
     for (const [element, names] of changed) {
       if (!element.isConnected) continue
       // 退出标记变化：元素因此进入忽略区域时还原其中的译文（离开忽略区域不补译）。
       // 元素在同一批里被移动、插入（自身或祖先是变动根节点）时同样要还原：遍历变动根节点时命中忽略规则只拒绝、不还原
-      if (EXIT_ATTRIBUTES.some((name) => names.has(name))) {
+      if (EXIT_ATTRIBUTES.some(name => names.has(name))) {
         const region = ignoredRegion(element)
         if (region) restoreIfWritten(region)
       }
@@ -1614,7 +1586,7 @@ export function createTranslator(options: TranslatorOptions): Translator {
         if (isInputValueChange(element, name)) syncInputValue(element)
         else if (!MIRROR.has(name)) translateAttribute(element, name, element.getAttribute(name))
       }
-      if (relevant.some((name) => MIRROR.has(name))) syncMirror(element)
+      if (relevant.some(name => MIRROR.has(name))) syncMirror(element)
     }
   }
 
@@ -1773,6 +1745,6 @@ export function createTranslator(options: TranslatorOptions): Translator {
 
     drainUntranslated() {
       return untranslated.drain()
-    },
+    }
   }
 }

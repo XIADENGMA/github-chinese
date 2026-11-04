@@ -36,12 +36,7 @@ export type RegExpRule = readonly [RegExp, string | RegExpReplacer]
  * 非按钮类型只改带 disabled 属性的，不再禁用时还原原文），正则约束同 RegExpRule。
  * 规则选择器、忽略选择器都不能依赖被改写的属性值：改写后会失配
  */
-export type AttributeRule = readonly [
-  selector: string,
-  attribute: string,
-  pattern: RegExp,
-  replacement: string | RegExpReplacer,
-]
+export type AttributeRule = readonly [selector: string, attribute: string, pattern: RegExp, replacement: string | RegExpReplacer]
 
 /**
  * 行内句规则：[句型, 译文]。宿主的直接子节点中，每个元素是一个槽位，槽位之间的文字是一段。
@@ -152,7 +147,7 @@ export const PAGE_KEYS = [
   'education',
   'mcp',
   // GitHub 状态页（www.githubstatus.com）
-  'status',
+  'status'
 ] as const
 
 export type PageKey = (typeof PAGE_KEYS)[number]

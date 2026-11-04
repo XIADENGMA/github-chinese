@@ -72,8 +72,7 @@ export default {
     'Verified domains': '已驗證的網域',
     'Add a domain': '新增網域',
     'There are no verified domains.': '沒有已驗證的網域。',
-    'Verify domains to restrict who can publish GitHub Pages on them.':
-      '驗證網域，以限制誰可以在這些網域上發布 GitHub 頁面。',
+    'Verify domains to restrict who can publish GitHub Pages on them.': '驗證網域，以限制誰可以在這些網域上發布 GitHub 頁面。',
     'One of your domains is unverified. Please verify it to prevent others from claiming it for their Pages sites.':
       '你的某個網域尚未驗證。請驗證此網域，以免他人宣告擁有並用於自己的頁面網站。',
     'Please verify your domain': '請驗證你的網域',
@@ -95,8 +94,7 @@ export default {
     'Before we can verify': '在我們驗證',
     ", you'll need to complete these steps:": '之前，你需要完成以下步驟：',
     ', you’ll need to complete these steps:': '之前，你需要完成以下步驟：',
-    'Create a TXT record in your DNS configuration for the following hostname:':
-      '在 DNS 設定中為以下主機名稱建立 TXT 記錄：',
+    'Create a TXT record in your DNS configuration for the following hostname:': '在 DNS 設定中為以下主機名稱建立 TXT 記錄：',
     'Use this code for the value of the TXT record:': '使用以下驗證碼作為 TXT 記錄的值：',
     'Wait until your DNS configuration changes. This could take up to 24 hours to propagate.':
       '等待 DNS 設定變更生效。傳播最多可能需要 24 小時。',
@@ -132,7 +130,7 @@ export default {
       '啟用後，超出免費額度的使用量將依模型定價按權杖計費，並從你的模型預算中扣除。',
     'Models pricing': '模型定價',
     'To enable Models paid usage, a payment method is needed.': '啟用模型付費使用需要付款方式。',
-    '. Enable paid usage to avoid interruption and add tokens.': '。啟用付費使用可避免中斷並增加權杖額度。',
+    '. Enable paid usage to avoid interruption and add tokens.': '。啟用付費使用可避免中斷並增加權杖額度。'
   },
   scoped: {
     // 标签页标题（原文如此）
@@ -160,7 +158,7 @@ export default {
     'Add payment method': '新增付款方式',
     // 「You currently have <strong>free rate limits</strong>. Enable paid usage …」
     'You currently have': '你目前使用的是',
-    'free rate limits': '免費速率限制',
+    'free rate limits': '免費速率限制'
   },
   regexp: [
     // 人：量词作「位」
@@ -170,16 +168,13 @@ export default {
     // 已删除的存储库「Deleted <relative-time> by <login>」：整句见 inline，不命中时与 Deleted、by 按片段拼读
     [/^by ([\w-]+)$/, '由 $1'],
     [/^No recoverable packages were found for (\S+)\.$/, '找不到 $1 可還原的套件。'],
-    [
-      /^Successfully verified ([\w.-]+?)(\.?)$/,
-      (_, domain: string, dot: string) => `已成功驗證 ${domain}${dot ? '。' : ''}`,
-    ],
+    [/^Successfully verified ([\w.-]+?)(\.?)$/, (_, domain: string, dot: string) => `已成功驗證 ${domain}${dot ? '。' : ''}`]
   ],
   ignore: [
     // 已保存回复列表：回复标题与正文摘要是用户内容（行内带 /settings/replies/<id>/edit 编辑链接）
-    '.Box-row:has(a[href*="/settings/replies/"][href$="/edit"]) :is(strong, .css-truncate, .css-truncate-target)',
+    '.Box-row:has(a[href*="/settings/replies/"][href$="/edit"]) :is(strong, .css-truncate, .css-truncate-target)'
   ],
   // 已删除的存储库：「Deleted <relative-time> by <login>」调整语序，时间槽位后不留空格，
   // 拼读为「已於 3 天前由 octocat 刪除」；不可还原的条目只有「Deleted <relative-time>」，不命中，按片段拼读
-  inline: [[/^Deleted \{\} by ([\w-]+)$/, '已於 {}由 $1 刪除']],
+  inline: [[/^Deleted \{\} by ([\w-]+)$/, '已於 {}由 $1 刪除']]
 } satisfies PageDictionary

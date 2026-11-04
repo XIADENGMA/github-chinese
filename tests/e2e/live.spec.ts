@@ -17,7 +17,7 @@ const TARGETS: readonly LiveTarget[] = [
   { name: '存储库首页', slug: 'repo', path: REPO, readme: true },
   { name: '议题列表', slug: 'issues', path: `${REPO}/issues` },
   { name: '拉取请求列表', slug: 'pulls', path: `${REPO}/pulls` },
-  { name: '提交历史记录', slug: 'commits', path: `${REPO}/commits/main` },
+  { name: '提交历史记录', slug: 'commits', path: `${REPO}/commits/main` }
 ]
 
 test.describe('线上冒烟', () => {

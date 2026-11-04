@@ -5,7 +5,7 @@ const ENTITY: Readonly<Record<string, string>> = {
   alert: '警示',
   alerts: '警示',
   finding: '發現項目',
-  findings: '發現項目',
+  findings: '發現項目'
 }
 
 /** production code 作「正式環境程式碼」；compensating control 作「補償性控制措施」 */
@@ -13,7 +13,7 @@ const REASON: Readonly<Record<string, string>> = {
   'not valid': '無效',
   'not in production code': '不在正式環境程式碼中',
   'not relevant': '不相關',
-  'mitigated by a compensating control': '已由補償性控制措施緩解',
+  'mitigated by a compensating control': '已由補償性控制措施緩解'
 }
 
 /** 解除原因（小写形式出现在「requested to dismiss this as …」里；与 pulls/review.ts 的「誤報」「用於測試」「不予修正」同译） */
@@ -32,7 +32,7 @@ const RESOLUTION: Readonly<Record<string, string>> = {
   inaccurate: '不準確',
   'not used': '未使用',
   'fix started': '已開始修正',
-  'no bandwidth': '無暇修正',
+  'no bandwidth': '無暇修正'
 }
 
 /** 严重性：Critical 作「重大」；CodeQL 的 note 作「附註」 */
@@ -45,7 +45,7 @@ const SEVERITY_LABEL: Readonly<Record<string, string>> = {
   error: '錯誤',
   warning: '警告',
   note: '附註',
-  unknown: '未知',
+  unknown: '未知'
 }
 
 /** 警报状态（状态标签的 title） */
@@ -54,7 +54,7 @@ const ALERT_STATE: Readonly<Record<string, string>> = {
   Fixed: '已修正',
   Closed: '已關閉',
   Dismissed: '已解除',
-  'Auto-dismissed': '已自動解除',
+  'Auto-dismissed': '已自動解除'
 }
 
 function resolution(text: string): string {
@@ -137,17 +137,15 @@ export default {
     'Ensure a fix has been generated.': '請確認已產生修正。',
     'Unable to complete the search for assignees. Try again later.': '無法完成負責人搜尋。請稍後再試。',
     'Assignee search results': '負責人搜尋結果',
-    'Unable to save your selection due to server error. Try again later.':
-      '因伺服器錯誤而無法儲存你的選擇。請稍後再試。',
-    'Unable to save your selection due to server error. Try a moment later.':
-      '因伺服器錯誤而無法儲存你的選擇。請稍後再試。',
+    'Unable to save your selection due to server error. Try again later.': '因伺服器錯誤而無法儲存你的選擇。請稍後再試。',
+    'Unable to save your selection due to server error. Try a moment later.': '因伺服器錯誤而無法儲存你的選擇。請稍後再試。',
     'Learn more about alert assignees': '瞭解警示負責人',
 
     // 追踪议题
     'Link an issue to this alert.': '將議題連結到此警示。',
     'Add existing GitHub issue': '加入現有的 GitHub 議題',
     'Change or remove issue': '變更或移除議題',
-    Tracking: '追蹤',
+    Tracking: '追蹤'
   },
   scoped: {
     // 其他区域也出现的同形文字，本区域内单独生效
@@ -166,30 +164,27 @@ export default {
     Tags: '標記',
     Development: '開發',
     // 警示列表与详情的状态（Closed 由 common 译作「已關閉」）
-    Open: '未解決',
+    Open: '未解決'
   },
   regexp: [
     [/^Max ([\d,]+) characters$/, '最多 $1 個字元'],
     // 状态标签的 title：Status: Fixed、Status: Dismissed as false positive
     [/^Status: (Open|Fixed|Closed|Dismissed|Auto-dismissed)$/, (_, state: string) => `狀態：${ALERT_STATE[state]!}`],
-    [
-      /^Status: (Closed|Dismissed) as (.+)$/,
-      (_, state: string, reason: string) => `狀態：${ALERT_STATE[state]!}（${resolution(reason)}）`,
-    ],
+    [/^Status: (Closed|Dismissed) as (.+)$/, (_, state: string, reason: string) => `狀態：${ALERT_STATE[state]!}（${resolution(reason)}）`],
     // 解除对话框（单复数、警示 / 發現項目）
     [/^Dismiss (alerts?|findings?)$/, (_, entity) => `解除${ENTITY[entity]}`],
     [
       /^Select a reason to dismiss (this|these) (alerts?|findings?)\.$/,
-      (_, which, entity) => `選擇解除${which === 'this' ? '此' : '這些'}${ENTITY[entity]}的原因。`,
+      (_, which, entity) => `選擇解除${which === 'this' ? '此' : '這些'}${ENTITY[entity]}的原因。`
     ],
     [/^Request to dismiss (alerts?|findings?)$/, (_, entity) => `請求解除${ENTITY[entity]}`],
     [
       /^(?:This (alert|finding) needs|These (alerts|findings) need) approval before (?:it|they) can be dismissed\. Requests are sent to all approvers\.$/,
-      (_, one, many) => `${one ? '此' : '這些'}${ENTITY[one || many]}需經核准才能解除。請求會傳送給所有核准者。`,
+      (_, one, many) => `${one ? '此' : '這些'}${ENTITY[one || many]}需經核准才能解除。請求會傳送給所有核准者。`
     ],
     [
       /^(This|These) (alerts?|findings?) (?:is|are) (not valid|not in production code|not relevant|mitigated by a compensating control)$/,
-      (_, which, entity, reason) => `${which === 'This' ? '此' : '這些'}${ENTITY[entity]}${REASON[reason]}`,
+      (_, which, entity, reason) => `${which === 'This' ? '此' : '這些'}${ENTITY[entity]}${REASON[reason]}`
     ],
     // 负责人（人数作「人」，负责人计数作「位」）
     [/^Assign up to (\d+) people to this alert$/, '最多可為此警示指派 $1 人'],
@@ -201,11 +196,11 @@ export default {
       (_, quote, level, period) => {
         const label = SEVERITY_LABEL[level]
         return `篩選嚴重性為${quote ? `「${label}」` : label}的警示${period ? '。' : ''}`
-      },
+      }
     ],
     [/^Error fetching details for CWE-(\d+)\.$/, '擷取 CWE-$1 詳細資料時發生錯誤。'],
     // 警示页头部的解除请求说明（React 拆分后拼接）
     [/^Dismissal requested as (.+)$/, (_, reason) => `已請求以${resolution(reason)}為由解除`],
-    [/^requested to dismiss this as (.+)$/, (_, reason) => `請求以${resolution(reason)}為由解除此警示`],
-  ],
+    [/^requested to dismiss this as (.+)$/, (_, reason) => `請求以${resolution(reason)}為由解除此警示`]
+  ]
 } satisfies PageDictionary

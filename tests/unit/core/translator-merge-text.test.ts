@@ -1,12 +1,7 @@
 // @vitest-environment-options { "url": "https://github.com/vuejs/core/issues/1" }
 import { afterEach, describe, expect, it } from 'vitest'
 import { FIGHT_LIMIT, FIGHT_WINDOW_MS } from '../../../src/core/records'
-import {
-  createTranslator,
-  type Translator,
-  type TranslatorHost,
-  type TranslatorOptions,
-} from '../../../src/core/translator'
+import { createTranslator, type Translator, type TranslatorHost, type TranslatorOptions } from '../../../src/core/translator'
 import type { LocaleBundle, PageKey } from '../../../src/core/types'
 import { $, settle, TEST_BUNDLE, testMatcher, texts } from './helpers'
 
@@ -23,17 +18,17 @@ const BASE: LocaleBundle = [
         October: '十月',
         'Tip:': '提示：',
         'Press K to search': '按 K 搜索',
-        'Tip: Press K to search': '提示：按 K 搜索',
+        'Tip: Press K to search': '提示：按 K 搜索'
       },
       regexp: [
         [/^(\d[\d,]*) remaining items?$/, '还有 $1 项'],
-        [/^(October|November) (\d{4})$/, (_, month: string, year: string) => `${year} 年 ${MONTHS[month]} 月`],
+        [/^(October|November) (\d{4})$/, (_, month: string, year: string) => `${year} 年 ${MONTHS[month]} 月`]
       ],
       inline: [['{} starred {}', '{} 星标了 {}']],
-      mergeText: ['h3 > span[data-sr-feedback]', '[class*="shortcutHint__"]'],
-    },
+      mergeText: ['h3 > span[data-sr-feedback]', '[class*="shortcutHint__"]']
+    }
   ],
-  ['issues', { mergeText: ['[class*="remainingItemsHeading__"]'] }],
+  ['issues', { mergeText: ['[class*="remainingItemsHeading__"]'] }]
 ]
 
 /** 整段规则：「Updated 3 days ago by octocat」整段命中；其中的「Updated 3 days ago」另由 TEST_BUNDLE 的正则命中 */
@@ -67,7 +62,7 @@ const CLOCK_HOST: TranslatorHost = {
   document,
   location: loc as unknown as Location,
   MutationObserver: window.MutationObserver,
-  performance: { now: () => now },
+  performance: { now: () => now }
 }
 
 let translator: Translator | undefined
@@ -80,7 +75,7 @@ function start(html: string, pages = ISSUES, options: Partial<TranslatorOptions>
     host: window,
     collectUntranslated: true,
     resolvePages: () => pages,
-    ...options,
+    ...options
   })
   translator.start()
   return translator
@@ -91,7 +86,7 @@ function startAt(path: string, html: string): Translator {
   go(path)
   return start(html, ISSUES, {
     host: CLOCK_HOST,
-    resolvePages: (location) => (location.pathname.includes('/pull/') ? PULLS : ISSUES),
+    resolvePages: location => (location.pathname.includes('/pull/') ? PULLS : ISSUES)
   })
 }
 
@@ -169,7 +164,7 @@ describe('整段合并', () => {
   it('整段未命中：不写入，照常逐组处理、逐组记未翻译', () => {
     const t = start(
       `${REMAINING.replace('12', 'many').replace('id="h"', 'id="a"')}` +
-        '<h3 class="remainingItemsHeading__x" id="b"><span>Sample</span><span> text</span></h3>',
+        '<h3 class="remainingItemsHeading__x" id="b"><span>Sample</span><span> text</span></h3>'
     )
     expect(text('#a')).toBe('many 剩余 项')
     expect(text('#b')).toBe('Sample text')
@@ -194,9 +189,7 @@ describe('整段合并', () => {
   })
 
   it('区域内有时间元素：照常逐组处理，时间元素的文字不改', () => {
-    start(
-      REMAINING.replace('<span>items</span>', '<relative-time datetime="2026-01-01T00:00:00Z">items</relative-time>'),
-    )
+    start(REMAINING.replace('<span>items</span>', '<relative-time datetime="2026-01-01T00:00:00Z">items</relative-time>'))
     expect(text('#h')).toBe('12 剩余 items')
   })
 
@@ -222,11 +215,7 @@ describe('整段合并', () => {
   })
 
   it('只在所属页面类型生效；忽略区域内不处理', () => {
-    start(`${REMAINING}<div class="markdown-body">${REMAINING.replace('id="h"', 'id="u"')}</div>`, [
-      'common',
-      'repository',
-      'pulls',
-    ])
+    start(`${REMAINING}<div class="markdown-body">${REMAINING.replace('id="h"', 'id="u"')}</div>`, ['common', 'repository', 'pulls'])
     expect(text('#h')).toBe('12 剩余 项')
     expect(text('#u')).toBe('12 remaining items')
   })
@@ -235,10 +224,7 @@ describe('整段合并', () => {
     ['translate="no"', REMAINING.replace('id="h"', 'id="h" translate="no"')],
     ['data-gcn-ignore', REMAINING.replace('id="h"', 'id="h" data-gcn-ignore')],
     ['contenteditable="true"', REMAINING.replace('id="h"', 'id="h" contenteditable="true"')],
-    [
-      'notranslate 类名',
-      REMAINING.replace('class="remainingItemsHeading__x"', 'class="remainingItemsHeading__x notranslate"'),
-    ],
+    ['notranslate 类名', REMAINING.replace('class="remainingItemsHeading__x"', 'class="remainingItemsHeading__x notranslate"')]
   ])('区域根自身带 %s：全量遍历与动态插入都不处理', async (_, html) => {
     start(html).stop()
     expect(text('#h')).toBe('12 remaining items')
@@ -301,7 +287,7 @@ describe('整段合并：变动', () => {
     ['svg', '<svg><title>x</title></svg>', '12 剩余 项x'],
     ['kbd', '<kbd>K</kbd>', '12 剩余 项K'],
     ['时间元素', '<relative-time datetime="2026-01-01T00:00:00Z">Jan 1</relative-time>', '12 剩余 项Jan 1'],
-    ['忽略区域', '<span class="markdown-body">Sample</span>', '12 剩余 项Sample'],
+    ['忽略区域', '<span class="markdown-body">Sample</span>', '12 剩余 项Sample']
   ])('区域内插入%s（两侧没有文本）后照常逐组处理', async (_, html, shown) => {
     start(REMAINING)
     // 插在区域根末尾：根没有直接文字，不会按行内句宿主补种子
@@ -403,8 +389,7 @@ describe('整段合并：变动', () => {
   })
 
   it('整段写入过、变化后整段未命中：其中的镜像文字属性随文本组的译文同步', async () => {
-    const mirror =
-      '<span data-component="text" data-content="Updated 3 days ago">Updated <!-- -->3<!-- --> days ago</span>'
+    const mirror = '<span data-component="text" data-content="Updated 3 days ago">Updated <!-- -->3<!-- --> days ago</span>'
     start(heading('h', `${mirror} <em>by octocat</em>`))
     expect(text('#h')).toBe('3 天前由 octocat 更新')
     ;($('#h em').firstChild as Text).data = 'by octocat and hubot'
@@ -517,10 +502,7 @@ describe('整段合并：区域内换入 kbd', () => {
 
 describe('整段合并：区域内的行内句宿主', () => {
   /** 另收整段「12 starred vuejs/core」：BASE 的行内句「{} starred {}」同样命中区域根 */
-  const STARRED: LocaleBundle = [
-    ...BUNDLE,
-    ['common', { regexp: [[/^(\d+) starred ([\w./-]+)$/, '$2 获得 $1 个星标']] }],
-  ]
+  const STARRED: LocaleBundle = [...BUNDLE, ['common', { regexp: [[/^(\d+) starred ([\w./-]+)$/, '$2 获得 $1 个星标']] }]]
   const MERGED = 'vuejs/core 获得 12 个星标'
 
   function startFeed(count: string): Translator {
@@ -553,10 +535,7 @@ describe('整段合并：区域内的行内句宿主', () => {
 
 describe('整段合并：不能再合并时重新遍历区域', () => {
   /** 区域内有镜像文字属性的元素：整段写入时其中的文字置空，属性保持原文 */
-  const MIRRORED = REMAINING.replace(
-    '<span> remaining ',
-    '<span data-component="text" data-content="remaining"> remaining ',
-  )
+  const MIRRORED = REMAINING.replace('<span> remaining ', '<span data-component="text" data-content="remaining"> remaining ')
   const mirror = (): string | null => $('#h [data-component="text"]').getAttribute('data-content')
 
   it('插入跳过子树的元素（两侧没有文本）后，区域内的镜像文字属性随文字同步', async () => {
@@ -596,7 +575,7 @@ describe('整段合并：释放整段写入过的区域时，区域内忽略区�
     [
       '区域内插入含建议块的评论正文',
       REMAINING,
-      () => $('#h span:last-child').insertAdjacentHTML('beforeend', `<div class="comment-body">${BLOCK}</div>`),
+      () => $('#h span:last-child').insertAdjacentHTML('beforeend', `<div class="comment-body">${BLOCK}</div>`)
     ],
     [
       '区域内的外壳变为评论正文（类名不观察）后标题栏写入文字',
@@ -604,7 +583,7 @@ describe('整段合并：释放整段写入过的区域时，区域内忽略区�
       () => {
         $('#wrap').className = 'comment-body'
         $('#hdr').append('Copy')
-      },
+      }
     ],
     [
       '区域内的外壳变为评论正文（类名不观察）后向其中插入建议块',
@@ -612,8 +591,8 @@ describe('整段合并：释放整段写入过的区域时，区域内忽略区�
       () => {
         $('#wrap').className = 'comment-body'
         $('#wrap').insertAdjacentHTML('beforeend', BLOCK)
-      },
-    ],
+      }
+    ]
   ])('%s：区域照常逐组重算，标题栏照常翻译，与全新处理相同', async (_, html, change) => {
     const t = start(html)
     const shown = (): string[] => [text('#h [data-testid="count"]'), text('#hdr')]
@@ -657,11 +636,9 @@ describe('整段合并：文档解析中已译文字被追加标点', () => {
 
   it('整段未命中、区域根与后代的文字各自译出，后代末尾被追加标点：显示不改回英文，不记未翻译；停止后还原整段原文', async () => {
     parsing()
-    const t = start(
-      '<h3><span data-sr-feedback id="m">Sample text <span class="color-fg-muted">Edit</span></span></h3>',
-      ISSUES,
-      { matcher: testMatcher(undefined, SAMPLE_TEXT) },
-    )
+    const t = start('<h3><span data-sr-feedback id="m">Sample text <span class="color-fg-muted">Edit</span></span></h3>', ISSUES, {
+      matcher: testMatcher(undefined, SAMPLE_TEXT)
+    })
     expect(text('#m')).toBe('示例文本 编辑')
     expect(misses(t)).toEqual([])
     // 解析器把下一块到达的省略号追加到区域内最后一个文本节点
@@ -676,7 +653,7 @@ describe('整段合并：文档解析中已译文字被追加标点', () => {
 
   it.each([
     ['跳过子树的元素', 'code'],
-    ['不能合并的元素', 'a'],
+    ['不能合并的元素', 'a']
   ])('同一解析任务内又插入%s：区域只处理一次，显示不改回英文、不记未翻译；停止后还原', async (_, tag) => {
     parsing()
     const t = start('<h3><span data-sr-feedback id="m">Edit</span></h3>')
@@ -711,7 +688,7 @@ describe('整段合并：页面脚本重绘', () => {
     const steps: readonly (readonly [label: string, shown: string])[] = [
       [' open ', '12 open 项'],
       [' closed ', '12 closed 项'],
-      [' remaining ', '还有 12 项'],
+      [' remaining ', '还有 12 项']
     ]
     expect(steps.length).toBeLessThanOrEqual(FIGHT_LIMIT)
     for (const [label, shown] of steps) {
@@ -794,7 +771,7 @@ describe('整段合并：区域不能再合并后，区域内其他文字变化�
     const t = startAt(
       PULL_PATH,
       '<h3><span data-sr-feedback id="r"><span id="x" title="Close">Updated 3 days ago</span>' +
-        '<span class="issue-user-content"> by octocat</span></span></h3>',
+        '<span class="issue-user-content"> by octocat</span></span></h3>'
     )
     expect(text('#r')).toBe('3 天前由 octocat 更新')
     go(ISSUE_PATH)
@@ -822,7 +799,7 @@ describe('整段合并：区域不能再合并后，区域内其他文字变化�
   it('停用期间区域内多了链接、重新启用后：页面坚持显示原文、已暂停翻译的文字不重新翻译；停止后还原', async () => {
     const t = startAt(
       ISSUE_PATH,
-      '<h3><span data-sr-feedback id="r"><span id="x">12</span> remaining <span id="a">items</span></span></h3>',
+      '<h3><span data-sr-feedback id="r"><span id="x">12</span> remaining <span id="a">items</span></span></h3>'
     )
     expect(text('#r')).toBe('还有 12 项')
     t.stop()
@@ -849,7 +826,7 @@ describe('整段合并：区域不能再合并后，区域内其他文字变化�
   it('停用期间区域内多了链接、重新启用后：页面先改镜像属性、后改文字，文字译出后属性同步为同一译文', async () => {
     const t = startAt(
       ISSUE_PATH,
-      '<h3><span data-sr-feedback id="r"><span id="m" data-component="text" data-content="Edit">Edit</span><span> file</span></span></h3>',
+      '<h3><span data-sr-feedback id="r"><span id="m" data-component="text" data-content="Edit">Edit</span><span> file</span></span></h3>'
     )
     expect(text('#r')).toBe('编辑文件')
     t.stop()
@@ -877,7 +854,7 @@ describe('整段合并：区域不能再合并后，区域内其他文字变化�
     const t = startAt(
       PULL_PATH,
       '<h3><span data-sr-feedback id="r"><span id="x">Newest</span> ' +
-        '<span class="issue-user-content">octocat</span> <span id="a">Sample</span></span></h3>',
+        '<span class="issue-user-content">octocat</span> <span id="a">Sample</span></span></h3>'
     )
     expect(text('#r')).toBe('最新 octocat Sample')
     // 页面反复改回原文，超过上限后暂停翻译这段文字
@@ -905,7 +882,7 @@ describe('整段合并：区域不能再合并后，区域内其他文字变化�
   it('整段未命中的区域：停用期间多了链接、重新启用后，已暂停翻译的属性不重新翻译；停止后还原', async () => {
     const t = startAt(
       ISSUE_PATH,
-      '<h3><span data-sr-feedback id="r"><span id="x" title="Close">Newest</span> <span id="a">Sample</span></span></h3>',
+      '<h3><span data-sr-feedback id="r"><span id="x" title="Close">Newest</span> <span id="a">Sample</span></span></h3>'
     )
     const x = $('#x')
     expect(text('#r')).toBe('最新 Sample')

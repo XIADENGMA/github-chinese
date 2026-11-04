@@ -18,13 +18,13 @@ function fakeNetwork(initial: Readonly<Record<string, Behavior>> = {}) {
   const hanging: { readonly url: string; readonly resolve: () => void }[] = []
   const deps: ProbeDeps = {
     now: () => clock,
-    fetch: (url) => {
+    fetch: url => {
       requests.push(url)
       const behavior = behaviors.get(url) ?? 'ok'
       if (behavior === 'error') return Promise.reject(new TypeError('Failed to fetch'))
-      if (behavior === 'hang') return new Promise((resolve) => hanging.push({ url, resolve: () => resolve({}) }))
+      if (behavior === 'hang') return new Promise(resolve => hanging.push({ url, resolve: () => resolve({}) }))
       return Promise.resolve({})
-    },
+    }
   }
   return {
     deps,
@@ -40,11 +40,11 @@ function fakeNetwork(initial: Readonly<Record<string, Behavior>> = {}) {
     },
     /** 只放行这个站点挂起的请求 */
     releaseUrl(url: string) {
-      for (const item of hanging.filter((entry) => entry.url === url)) {
+      for (const item of hanging.filter(entry => entry.url === url)) {
         hanging.splice(hanging.indexOf(item), 1)
         item.resolve()
       }
-    },
+    }
   }
 }
 
@@ -53,8 +53,8 @@ const WGET = 'https://wget.la/'
 const HK = 'https://hk.gh-proxy.org/'
 const CDN = 'https://cdn.gh-proxy.org/'
 /** 内置源的探测地址，按列表顺序 */
-const PROBES = BUILTIN_SOURCES.map((source) => probeUrl(source.template)!)
-const BUILTIN_IDS = BUILTIN_SOURCES.map((source) => source.id)
+const PROBES = BUILTIN_SOURCES.map(source => probeUrl(source.template)!)
+const BUILTIN_IDS = BUILTIN_SOURCES.map(source => source.id)
 /** 支持 gist.github.com 的内置源 */
 const GIST_SOURCE_IDS = ['ghfast', 'wget-la', 'gh-monlor', 'hub-ddayh', 'ghproxy-053000']
 
@@ -103,7 +103,7 @@ describe('createDownloadResolver', () => {
   })
 
   it('全部不可用：返回原链接', async () => {
-    const network = fakeNetwork(Object.fromEntries(PROBES.map((url) => [url, 'error'])))
+    const network = fakeNetwork(Object.fromEntries(PROBES.map(url => [url, 'error'])))
     const resolver = createDownloadResolver(network.deps)
     expect(await resolver.resolve(RELEASE, SETTINGS)).toBe(RELEASE)
   })
@@ -123,7 +123,7 @@ describe('createDownloadResolver', () => {
     network.set(GHFAST, 'ok')
     network.advance(FAILED_TTL_MS - 1)
     expect(await resolver.resolve(RELEASE, SETTINGS)).toBe(`https://wget.la/${RELEASE}`)
-    expect(network.requests.filter((url) => url === GHFAST)).toHaveLength(1)
+    expect(network.requests.filter(url => url === GHFAST)).toHaveLength(1)
     network.advance(1)
     expect(await resolver.resolve(RELEASE, SETTINGS)).toBe(`https://ghfast.top/${RELEASE}`)
   })
@@ -134,7 +134,7 @@ describe('createDownloadResolver', () => {
     const tasks = [resolver.resolve(RELEASE, SETTINGS), resolver.resolve(RELEASE, SETTINGS)]
     network.release()
     expect(await Promise.all(tasks)).toEqual([`https://ghfast.top/${RELEASE}`, `https://ghfast.top/${RELEASE}`])
-    expect(network.requests.filter((url) => url === GHFAST)).toHaveLength(1)
+    expect(network.requests.filter(url => url === GHFAST)).toHaveLength(1)
   })
 
   it('自定义首选：按其模板加速', async () => {
@@ -143,11 +143,9 @@ describe('createDownloadResolver', () => {
     const settings: Settings = {
       ...SETTINGS,
       accelerateSource: 'custom-1',
-      customSources: [{ id: 'custom-1', name: 'Mirror', template: 'https://mirror.example/{path}' }],
+      customSources: [{ id: 'custom-1', name: 'Mirror', template: 'https://mirror.example/{path}' }]
     }
-    expect(await resolver.resolve(RELEASE, settings)).toBe(
-      'https://mirror.example/vuejs/core/releases/download/v3.5.0/vue.global.js',
-    )
+    expect(await resolver.resolve(RELEASE, settings)).toBe('https://mirror.example/vuejs/core/releases/download/v3.5.0/vue.global.js')
     expect(network.requests[0]).toBe('https://mirror.example/')
   })
 
@@ -169,7 +167,7 @@ describe('createDownloadResolver', () => {
     }
     // 故障转移关闭、首选不支持：用列表中第一个支持的
     expect(await resolver.resolve(gist, { ...SETTINGS, failover: false, accelerateSource: 'gh-proxy-hk' })).toBe(
-      `https://ghfast.top/${gist}`,
+      `https://ghfast.top/${gist}`
     )
   })
 
@@ -195,7 +193,7 @@ describe('createDownloadResolver', () => {
     })
 
     it('有效期内用已知耗时最短的，不再探测', async () => {
-      const network = fakeNetwork(Object.fromEntries(PROBES.map((url) => [url, 'hang'])))
+      const network = fakeNetwork(Object.fromEntries(PROBES.map(url => [url, 'hang'])))
       const resolver = createDownloadResolver(network.deps)
       const first = resolver.resolve(RELEASE, AUTO)
       network.advance(50)
@@ -210,7 +208,7 @@ describe('createDownloadResolver', () => {
     })
 
     it('都不可用：返回原链接', async () => {
-      const network = fakeNetwork(Object.fromEntries(PROBES.map((url) => [url, 'error'])))
+      const network = fakeNetwork(Object.fromEntries(PROBES.map(url => [url, 'error'])))
       const resolver = createDownloadResolver(network.deps)
       expect(await resolver.resolve(RELEASE, AUTO)).toBe(RELEASE)
     })
@@ -237,9 +235,9 @@ describe('createDownloadResolver', () => {
     await task
     await flush()
     const requests = network.requests.length
-    const order = resolver.rank(BUILTIN_SOURCES).map((source) => source.id)
+    const order = resolver.rank(BUILTIN_SOURCES).map(source => source.id)
     // 其余内置源立即连通（耗时 0），排在最前
-    expect(order.slice(0, -3)).toEqual(BUILTIN_IDS.filter((id) => !['ghfast', 'wget-la', 'gh-proxy-hk'].includes(id)))
+    expect(order.slice(0, -3)).toEqual(BUILTIN_IDS.filter(id => !['ghfast', 'wget-la', 'gh-proxy-hk'].includes(id)))
     expect(order.slice(-3)).toEqual(['gh-proxy-hk', 'wget-la', 'ghfast'])
     const fresh = createDownloadResolver(fakeNetwork().deps)
     expect(fresh.rank(BUILTIN_SOURCES)).toEqual(BUILTIN_SOURCES)

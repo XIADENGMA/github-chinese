@@ -18,12 +18,9 @@ const regexp: readonly RegExpRule[] = [
   [/^Reply (\d+)$/, '第 $1 条回复'],
   [/^Comment (\d+)$/, '第 $1 条评论'],
   // 过时评论线程的差异预览标题：Line +12, commit <0ff253b> / Line -3 to +5, commit <0ff253b>
-  [
-    /^Line ([+-]?\d+)(?: to ([+-]?\d+))?, commit$/,
-    (_, start: string, end: string) => `第 ${end ? `${start} 至 ${end}` : start} 行，提交`,
-  ],
+  [/^Line ([+-]?\d+)(?: to ([+-]?\d+))?, commit$/, (_, start: string, end: string) => `第 ${end ? `${start} 至 ${end}` : start} 行，提交`],
   // 应用建议对话框：提交失败（冒号后为服务器返回的原因）
-  [/^There was an error trying to commit changes: (\S.*)$/, '提交更改时出错：$1'],
+  [/^There was an error trying to commit changes: (\S.*)$/, '提交更改时出错：$1']
 ]
 
 /**
@@ -49,8 +46,7 @@ export default {
     'Please contact support for more information': '请联系支持了解详细信息',
     'Sorry, this diff is taking too long to generate.': '抱歉，生成此差异的时间过长。',
     'It may be too large to display on GitHub.': '它可能过大而无法在 GitHub 上显示。',
-    'Sorry, this diff is temporarily unavailable due to heavy server load.':
-      '抱歉，此差异因服务器负载过高而暂时不可用。',
+    'Sorry, this diff is temporarily unavailable due to heavy server load.': '抱歉，此差异因服务器负载过高而暂时不可用。',
     'Some content is hidden': '部分内容已隐藏',
     'Large Commits have some content hidden by default. Use the searchbox below for content that may be hidden.':
       '大型提交默认隐藏部分内容。请使用下方搜索框查找可能被隐藏的内容。',
@@ -98,7 +94,7 @@ export default {
     // 你和其他拥有此存储库 <写入访问权限> 的人员 仍可发表 其他人可见的评论。（write access 由 issues 词典全局收录）
     'You and other members of teams with': '你和其他拥有此存储库',
     'You can always unlock this commit again in the future.': '你以后随时可以解锁此提交。',
-    'You can always lock this commit again in the future.': '你以后随时可以再次锁定此提交。',
+    'You can always lock this commit again in the future.': '你以后随时可以再次锁定此提交。'
   },
   scoped: {
     // 页头父提交行：N 个父提交 <sha> 提交 <sha>（commit 是 <pre> 内的独立文本）
@@ -130,8 +126,7 @@ export default {
     'Unlock conversation': '解锁对话',
     // 原文无逗号，译文不加
     'The page is unavailable due to a system error.': '页面因系统错误而不可用。',
-    'Try reloading the page, or if the problem persists, contact support.':
-      '请重新加载页面；如果问题仍然存在，请联系支持。',
+    'Try reloading the page, or if the problem persists, contact support.': '请重新加载页面；如果问题仍然存在，请联系支持。'
   },
-  regexp,
+  regexp
 } satisfies PageDictionary

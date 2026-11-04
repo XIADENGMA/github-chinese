@@ -15,15 +15,14 @@ export default {
     // 拉取请求页面数据接口的错误信息：取消堆叠、创建堆栈失败时显示在对话框中
     'Unable to perform this operation. Please check your internet connection and try again later.':
       '无法执行此操作。请检查网络连接并稍后重试。',
-    'The server is currently unable to perform this operation. Please try again later.':
-      '服务器当前无法执行此操作。请稍后重试。',
+    'The server is currently unable to perform this operation. Please try again later.': '服务器当前无法执行此操作。请稍后重试。',
     'Unable to read response from the server. Please try again later.': '无法读取服务器的响应。请稍后重试。',
     'You need to sign in again to perform this action. Please refresh the page and try again.':
-      '你需要重新登录才能执行此操作。请刷新页面后重试。',
+      '你需要重新登录才能执行此操作。请刷新页面后重试。'
   },
   scoped: {
     // 列表项堆栈徽章打开的对话框：数据加载完成前标题只有 Stack（加载后为 Stack #N，见 header.ts）
-    Stack: '堆栈',
+    Stack: '堆栈'
   },
   inline: [
     // 可堆叠横幅：句号与“了解堆栈”链接之间的空格是单独的文本节点，按片段会在“。”后留空格
@@ -33,11 +32,11 @@ export default {
     // 预览堆栈对话框的说明：堆栈引用在 <span> 中（链接或文字）
     [
       'This pull request can be added to {}. Review and update the stack when you’re ready.',
-      '此拉取请求可添加到{}。准备好后审查并更新堆栈。',
+      '此拉取请求可添加到{}。准备好后审查并更新堆栈。'
     ],
     [
       'This pull request and other pull requests can be added to {}. Review and update the stack when you’re ready.',
-      '此拉取请求及其他拉取请求可添加到{}。准备好后审查并更新堆栈。',
-    ],
-  ],
+      '此拉取请求及其他拉取请求可添加到{}。准备好后审查并更新堆栈。'
+    ]
+  ]
 } satisfies PageDictionary

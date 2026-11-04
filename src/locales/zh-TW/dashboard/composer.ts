@@ -11,7 +11,7 @@ import { DATE_SOURCE, joinCjk, translateTime } from '../helpers'
 const GREETINGS: Readonly<Record<string, string>> = {
   morning: '早安',
   afternoon: '午安',
-  evening: '晚安',
+  evening: '晚安'
 }
 
 /** models 词典的全局词条（任务创建失败横幅的计费提示从这里取译文） */
@@ -43,8 +43,7 @@ export default {
     'Fetching repositories…': '正在擷取儲存庫…',
     // 空间选择与工具权限的出错提示（与 copilot 词典的“Tool permissions are not ready.”一致）
     'Authorize SSO for this space, then try again.': '請為此空間授權 SSO，然後再試一次。',
-    'Tool permissions are not ready. Wait for them to load before starting a session.':
-      '工具權限尚未就緒。等待載入完成後再開始工作階段。',
+    'Tool permissions are not ready. Wait for them to load before starting a session.': '工具權限尚未就緒。等待載入完成後再開始工作階段。'
   },
   // 本页词条在前，其后沿用 copilot 的 composer、models 词典：同一原文先出现者优先，本页的译法优先
   scoped: mergeTables([
@@ -81,10 +80,10 @@ export default {
       // 环境菜单中不可用环境的状态标签（Offline 由全局词条翻译；单独的进度动名词作“X中”，与 copilot/agents 一致）
       Degraded: '已降級',
       Waking: '喚醒中',
-      Draining: '排空中',
+      Draining: '排空中'
     },
     composer.scoped,
-    models.scoped,
+    models.scoped
   ]),
   regexp: [
     // 问候语：Good morning, Mona! / Welcome to GitHub, Mona!
@@ -95,10 +94,9 @@ export default {
     // 须排在 copilot 规则之前：后者的 (.+) 会把“暫時無法升級方案”尾句吞进日期
     [
       new RegExp(
-        `^You have reached your free plan limit\\. (?:Limit resets on|It will reset on) (${DATE_SOURCE})\\.( Plan upgrades are temporarily unavailable\\.)?$`,
+        `^You have reached your free plan limit\\. (?:Limit resets on|It will reset on) (${DATE_SOURCE})\\.( Plan upgrades are temporarily unavailable\\.)?$`
       ),
-      (_, date, freeze) =>
-        `已達免費方案上限。${joinCjk('限額將於', translateTime(date))}重設。${freeze ? '暫時無法升級方案。' : ''}`,
+      (_, date, freeze) => `已達免費方案上限。${joinCjk('限額將於', translateTime(date))}重設。${freeze ? '暫時無法升級方案。' : ''}`
     ],
     // 任务创建失败的读屏播报：Task creation failed. + 横幅说明
     [/^Task creation failed\. (.+)$/, (_, description) => `任務建立失敗。${translateTaskFailure(description)}`],
@@ -108,6 +106,6 @@ export default {
     // 环境条、图片附件、任务创建失败横幅、粘贴代码块的读屏播报（copilot 的 agents、chat、skills 导出的共用规则）
     ...AGENT_RULES,
     ...CHAT_RULES,
-    ...SKILL_RULES,
-  ],
+    ...SKILL_RULES
+  ]
 } satisfies PageDictionary

@@ -10,21 +10,21 @@ const REPO = '([\\w.-]+/[\\w.-]+)'
 const ITEM_KINDS: Readonly<Record<string, string>> = {
   issue: '议题',
   'pull request': '拉取请求',
-  discussion: '讨论',
+  discussion: '讨论'
 }
 
 /** Opened this …：拉取请求的 open 作“创建”（术语表），议题仍作“打开”，讨论与静态词条同作“发起” */
 const OPENED: Readonly<Record<string, string>> = {
   issue: '打开了',
   'pull request': '创建了',
-  discussion: '发起了',
+  discussion: '发起了'
 }
 
 const PERIODS: Readonly<Record<string, string>> = {
   day: '一天',
   week: '一周',
   month: '一个月',
-  year: '一年',
+  year: '一年'
 }
 
 export default {
@@ -92,28 +92,27 @@ export default {
     'Check-circle': '已回答',
     // 存储库卡片的星标、复刻图标
     star: '星标',
-    fork: '复刻',
+    fork: '复刻'
   },
   regexp: [
     [
       /^Committed to this repository in the past (day|week|month|year)$/,
-      (_, period: string) => `过去${PERIODS[period]!}内曾向此存储库提交代码`,
+      (_, period: string) => `过去${PERIODS[period]!}内曾向此存储库提交代码`
     ],
     [
       /^Opened this (issue|pull request|discussion) \(their first in @([\w.-]+)\)$/,
-      (_, kind: string, org: string) =>
-        `${OPENED[kind]!}此${ITEM_KINDS[kind]!}（在 @${org} 中的第一个${ITEM_KINDS[kind]!}）`,
+      (_, kind: string, org: string) => `${OPENED[kind]!}此${ITEM_KINDS[kind]!}（在 @${org} 中的第一个${ITEM_KINDS[kind]!}）`
     ],
     [new RegExp(`^Started (\\d[\\d,]*) discussions? in ${REPO}$`), '在 $2 中发起了 $1 个讨论'],
     [new RegExp(`^Answered (\\d[\\d,]*) discussions? in ${REPO}$`), '在 $2 中回答了 $1 个讨论'],
     [/^Sponsor @([\w-]+)$/, '赞助 @$1'],
-    [/^View all commits by ([\w.-]+(?:\[bot\])?)$/, '查看 $1 的所有提交'],
+    [/^View all commits by ([\w.-]+(?:\[bot\])?)$/, '查看 $1 的所有提交']
   ],
   // 用户简介、所在地、个人状态，议题 / 拉取请求 / 讨论的正文摘要与标题
   ignore: [
     '.markdown-body-short',
     '.js-hovercard-content .dashboard-break-word',
     '.js-hovercard-content address',
-    '.js-hovercard-content .user-status-message-wrapper',
-  ],
+    '.js-hovercard-content .user-status-message-wrapper'
+  ]
 } satisfies PageDictionary

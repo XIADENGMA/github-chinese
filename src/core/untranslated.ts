@@ -64,7 +64,7 @@ const EXCLUDED_PATTERNS: readonly RegExp[] = [
   /^[\da-f]{5}-[\da-f]{5}$/i,
   /^[A-Z2-7]{16,}=*$/,
   /^(?=.*[2-7])(?:[a-z2-7]{4} ){3,}[a-z2-7]{4}$/i,
-  /^(?=\S*\d)(?=\S*[a-z])\S{20,}$/i,
+  /^(?=\S*\d)(?=\S*[a-z])\S{20,}$/i
 ]
 
 /** 文本中只要出现就整条不收：令牌、密钥指纹、IP 地址、卡号尾号 */
@@ -77,7 +77,7 @@ const EXCLUDED_FRAGMENTS: readonly RegExp[] = [
   /\b[\da-f]{0,4}::[\da-f]{1,4}\b/i,
   // 卡号尾号：ending in 0000、•••• 0000
   /\bending in \d{4}\b/i,
-  /•{2,}\s?\d{4}\b/,
+  /•{2,}\s?\d{4}\b/
 ]
 
 /** 句中邮箱：先查有没有 @ 再跑正则 */
@@ -108,7 +108,7 @@ const SENSITIVE_PATHS: readonly RegExp[] = [
   /^\/[^/]+\/[^/]+\/security\/secret-scanning(?:\/|$)/i,
   /^\/(?:orgs|enterprises)\/[^/]+\/security\/alerts\/secret-scanning(?:\/|$)/i,
   // 登录、注册（含邮箱验证）、找回密码、会话
-  /^\/(?:login|logout|session|sessions|password_reset|signup|join|account_verifications)(?:\/|$)/i,
+  /^\/(?:login|logout|session|sessions|password_reset|signup|join|account_verifications)(?:\/|$)/i
 ]
 
 /** 末段的格式后缀：GitHub 按 /login(.:format) 这类路由应答，/login.html 也是登录页 */
@@ -119,9 +119,9 @@ const FORMAT_SUFFIX_RE = /\.[a-z\d]+$/
  * 然后去掉末段的格式后缀。原始路径也匹配。只会多判、不会漏判
  */
 export function isSensitivePath(pathname: string): boolean {
-  const segments = pathSegments(pathname).flatMap((segment) => segment.split('/').filter(Boolean))
+  const segments = pathSegments(pathname).flatMap(segment => segment.split('/').filter(Boolean))
   const normalized = `/${segments.join('/')}`.replace(FORMAT_SUFFIX_RE, '')
-  return SENSITIVE_PATHS.some((pattern) => pattern.test(normalized) || pattern.test(pathname))
+  return SENSITIVE_PATHS.some(pattern => pattern.test(normalized) || pattern.test(pathname))
 }
 
 /** 是否值得收集：含至少两个英文字母、不含汉字、不超长、不是技术记号、日期或密钥类内容 */
@@ -129,8 +129,8 @@ export function isCollectable(text: string, maxLength = DEFAULT_MAX_LENGTH): boo
   if (!text || text.length > maxLength) return false
   if (!TWO_LETTERS_RE.test(text) || HAN_RE.test(text)) return false
   return (
-    !EXCLUDED_PATTERNS.some((pattern) => pattern.test(text)) &&
-    !EXCLUDED_FRAGMENTS.some((pattern) => pattern.test(text)) &&
+    !EXCLUDED_PATTERNS.some(pattern => pattern.test(text)) &&
+    !EXCLUDED_FRAGMENTS.some(pattern => pattern.test(text)) &&
     !(text.includes('@') && EMAIL_FRAGMENT_RE.test(text))
   )
 }
@@ -196,7 +196,7 @@ export function createUntranslatedBuffer(options: BufferOptions = {}): Untransla
         entry.page,
         entry.kinds,
         entry.count,
-        entry.views,
+        entry.views
       ])
       pending.clear()
       return deltas
@@ -204,6 +204,6 @@ export function createUntranslatedBuffer(options: BufferOptions = {}): Untransla
     clear() {
       pending.clear()
       visit.clear()
-    },
+    }
   }
 }

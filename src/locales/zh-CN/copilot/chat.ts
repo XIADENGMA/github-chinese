@@ -2,15 +2,15 @@ import type { PageDictionary, RegExpRule } from '../../../core/types'
 
 const TOOL_CALL_LEAD: Readonly<Record<string, string>> = {
   'Running tool call': '正在运行工具调用',
-  'Ran tool call': '已运行工具调用',
+  'Ran tool call': '已运行工具调用'
 }
 
 /** 首页 Copilot 输入框（dashboard/composer）沿用的规则：展开在本词典的规则列表中，两处引用同一份 */
 export const COMPOSER_SHARED_RULES: readonly RegExpRule[] = [
   [
     /^The (.+) model doesn[’']t support answering questions about images\. Select a different model and try again\.$/,
-    '$1 模型不支持回答有关图片的问题。请选择其他模型后重试。',
-  ],
+    '$1 模型不支持回答有关图片的问题。请选择其他模型后重试。'
+  ]
 ]
 
 /**
@@ -125,8 +125,7 @@ export default {
     'Delete chat': '删除聊天',
     'Delete conversation': '删除对话',
     'Are you sure you want to delete this chat? This action cannot be undone.': '确定要删除此聊天吗？此操作无法撤销。',
-    'Are you sure you want to delete this conversation? This action cannot be undone.':
-      '确定要删除此对话吗？此操作无法撤销。',
+    'Are you sure you want to delete this conversation? This action cannot be undone.': '确定要删除此对话吗？此操作无法撤销。',
     'Deleting chat': '正在删除聊天',
     'Deleting conversation': '正在删除对话',
     'Failed to delete chat. Please try again.': '删除聊天失败。请重试。',
@@ -200,8 +199,7 @@ export default {
       '获得链接的任何人都能查看此对话及后续消息。如包含专用存储库内容，需具备存储库访问权限才能查看。',
     'This conversation may contain private content. Viewers must have access to all referenced content.':
       '此对话可能包含私密内容。查看者必须有权访问所有引用的内容。',
-    'Only users with access to referenced private content can view this conversation.':
-      '只有有权访问所引用私密内容的用户才能查看此对话。',
+    'Only users with access to referenced private content can view this conversation.': '只有有权访问所引用私密内容的用户才能查看此对话。',
     'This conversation is private and only visible to you. Share it to make it accessible to others with the link.':
       '此对话为私密对话，仅你可见。分享后，获得链接的其他人即可访问。',
     'This conversation is now shared. Anyone with the link can view it. Keep in mind that it is live and publicly accessible.':
@@ -259,8 +257,7 @@ export default {
     "You don't currently have access to this conversation.": '你目前无权访问此对话。',
     'Sign in to see this conversation': '登录后查看此对话',
     'This conversation is protected.': '此对话受保护。',
-    "This conversation is protected. Use your organization's single sign-on to continue.":
-      '此对话受保护。请使用组织的单一登录以继续。',
+    "This conversation is protected. Use your organization's single sign-on to continue.": '此对话受保护。请使用组织的单一登录以继续。',
 
     // 消息
     'Scroll to bottom': '滚动到底部',
@@ -441,8 +438,7 @@ export default {
     'Image…': '图片…',
     'Extension…': '扩展…',
     'Chat with your favorite tools and services': '与你常用的工具和服务聊天',
-    'Browse the marketplace to find extensions for the tools and services you rely on':
-      '浏览市场查找适用于你常用工具和服务的扩展',
+    'Browse the marketplace to find extensions for the tools and services you rely on': '浏览市场查找适用于你常用工具和服务的扩展',
     'Browse marketplace': '浏览市场',
     // 切换到不支持图片的模型：<图片> 不受此模型支持 切换回 <GPT-4o> 模型或开始新对话
     "aren't supported by this model": '不受此模型支持',
@@ -453,8 +449,7 @@ export default {
     // 错误
     'An unexpected error has occurred.': '发生意外错误。',
     'An error occurred uploading image attachments': '上传图片附件时出错',
-    'Image analysis is temporarily unavailable. Try sending your message without images.':
-      '图片分析暂不可用。请尝试发送不含图片的消息。',
+    'Image analysis is temporarily unavailable. Try sending your message without images.': '图片分析暂不可用。请尝试发送不含图片的消息。',
     'An unexpected error occurred during message streaming.': '消息流传输时发生意外错误。',
     // 错误横幅说明：Copilot 页由行内句整句翻译（见 inline），其他页面的停靠聊天按片段翻译：
     // ……而这受限于 <你的 Copilot 设置>。
@@ -467,8 +462,7 @@ export default {
     // 此回复被过滤的原因是违反了 <GitHub 的安全政策>。
     'This response has been filtered because it violates': '此回复被过滤的原因是违反了',
     "GitHub's safety policies": 'GitHub 的安全政策',
-    "This response has been filtered because it violates GitHub's safety policies.":
-      '此回复因违反 GitHub 的安全政策已被过滤。',
+    "This response has been filtered because it violates GitHub's safety policies.": '此回复因违反 GitHub 的安全政策已被过滤。',
     'Describe this image': '描述这张图片',
     "Only one agent is allowed per thread, and their context can't be shared. If you want to interact with another agent, please start a new thread and @ mention the new agent.":
       '每个对话只能使用一个代理，且上下文无法共享。如需与其他代理交互，请开始新对话并 @ 提及该代理。',
@@ -485,17 +479,14 @@ export default {
     'Failed to process file. Please try again.': '处理文件失败。请重试。',
     'Network error. Please check your connection and try again.': '网络错误。请检查网络连接后重试。',
     'The request was invalid. Please verify your input and try again.': '请求无效。请检查输入后重试。',
-    "You don't have permission to perform this action. Please sign in and try again.":
-      '你无权执行此操作。请登录后重试。',
+    "You don't have permission to perform this action. Please sign in and try again.": '你无权执行此操作。请登录后重试。',
     "This feature isn't available for this repository or organization.": '此存储库或组织无法使用此功能。',
     "The requested resource couldn't be found.": '找不到请求的资源。',
     'The request timed out. Please try again.': '请求超时。请重试。',
     'A conflict occurred. The resource may already exist.': '发生冲突。资源可能已存在。',
-    'The request was rejected. A repository rule may have blocked this action.':
-      '请求被拒绝。可能是存储库规则阻止了此操作。',
+    'The request was rejected. A repository rule may have blocked this action.': '请求被拒绝。可能是存储库规则阻止了此操作。',
     'Too many requests. Please wait a moment and try again.': '请求过多。请稍后重试。',
-    'Copilot is unavailable for this repository because of organization-specific policies.':
-      '由于组织策略，此存储库无法使用 Copilot。',
+    'Copilot is unavailable for this repository because of organization-specific policies.': '由于组织策略，此存储库无法使用 Copilot。',
     'Connection lost. Reconnect to continue.': '连接已断开。重新连接以继续。',
     'Connection is taking too long. Your message is still a draft. Submit it again when you are ready.':
       '连接耗时过长。消息仍为草稿。准备好后请重新提交。',
@@ -602,7 +593,7 @@ export default {
     'Role, domain, style, and focus areas': '角色、领域、风格和关注点',
     'Language, tone and format': '语言、语气和格式',
     'Code style, patterns, and conventions': '代码风格、模式和约定',
-    'Personal custom instructions': '个人自定义说明',
+    'Personal custom instructions': '个人自定义说明'
   },
   scoped: {
     Conversations: '对话',
@@ -644,7 +635,7 @@ export default {
     // 推广横幅正文（旧版空状态，只见于 Copilot 页；由 inline 整句翻译，片段兜底）：了解……的所有 <优势>。
     'Discover all the': '了解全球领先的 AI 开发人员工具的所有',
     benefits: '优势',
-    'of the world’s leading AI developer tool.': '。',
+    'of the world’s leading AI developer tool.': '。'
   },
   regexp: [
     [/^Delete conversation: "(.+)"$/, '删除对话：“$1”'],
@@ -653,34 +644,28 @@ export default {
     [/^You can add up to (\d+) image files per message\.$/, '每条消息最多可添加 $1 个图片文件。'],
     [/^An error occurred uploading the attachment (.+)$/, '上传附件 $1 时出错'],
     [/^Attached text files must be smaller than (\d+(?:\.\d+)?) ?KB$/, '附加的文本文件必须小于 $1 KB'],
-    [
-      /^"(.+)" has an unsupported file type\. Please try again with a plain text file$/,
-      '“$1”的文件类型不受支持。请改用纯文本文件重试',
-    ],
+    [/^"(.+)" has an unsupported file type\. Please try again with a plain text file$/, '“$1”的文件类型不受支持。请改用纯文本文件重试'],
     [/^Personal instructions must be (\d+) characters or fewer\.$/, '个人说明不能超过 $1 个字符。'],
     [
       /^The (.+) model currently doesn[’']t support external context from ongoing conversations\. Start a new conversation to chat with this model\.$/,
-      '$1 模型目前不支持来自进行中对话的外部上下文。开始新对话以使用此模型。',
+      '$1 模型目前不支持来自进行中对话的外部上下文。开始新对话以使用此模型。'
     ],
     [
       /^The (.+) model doesn[’']t support answering questions about images\. Start a new conversation without images to chat with this model\.$/,
-      '$1 模型不支持回答有关图片的问题。开始不含图片的新对话以使用此模型。',
+      '$1 模型不支持回答有关图片的问题。开始不含图片的新对话以使用此模型。'
     ],
     ...COMPOSER_SHARED_RULES,
     [/^Connect with (.+)$/, '连接 $1'],
     [
       /^To use the (.+) extension, you[’']ll need to connect your GitHub account to your (.+) account\.$/,
-      '要使用 $1 扩展，需要将你的 GitHub 帐户连接到 $2 帐户。',
+      '要使用 $1 扩展，需要将你的 GitHub 帐户连接到 $2 帐户。'
     ],
     [/^Click connect to be redirected to (\S+)$/, '单击连接后将跳转到 $1'],
     [/^Dismissed the connection with (.+)\.$/, '已取消与 $1 的连接。'],
-    [
-      /^I was unable to connect you to (.+) because you cancelled the authentication\.$/,
-      '你取消了身份验证，无法连接到 $1。',
-    ],
+    [/^I was unable to connect you to (.+) because you cancelled the authentication\.$/, '你取消了身份验证，无法连接到 $1。'],
     [
       /^(Running tool call|Ran tool call) and (\d+) other tool calls?$/,
-      (_, lead: string, count: string) => `${TOOL_CALL_LEAD[lead] ?? lead}及另外 ${count} 个`,
+      (_, lead: string, count: string) => `${TOOL_CALL_LEAD[lead] ?? lead}及另外 ${count} 个`
     ],
     [/^No sessions matching "(.+)"$/, '没有与“$1”匹配的会话'],
     [/^Recent sessions on (.+)$/, '$1 的最近会话'],
@@ -690,21 +675,21 @@ export default {
     [/^(\S+) accepted the action$/, '$1 允许了此操作'],
     [/^(\S+) dismissed the action$/, '$1 拒绝了此操作'],
     // 工具调用确认卡片的说明：未收录的工具名保持原文
-    [/^Are you sure you wish to execute the "(.+)" tool\?$/, '确定要执行“$1”工具吗？'],
+    [/^Are you sure you wish to execute the "(.+)" tool\?$/, '确定要执行“$1”工具吗？']
   ],
   // 错误横幅的说明（Banner.Description）：文字被链接拆开，整句翻译；槽位是链接
   inline: [
     ['This response has been filtered because it violates {}.', '此回复因违反 {}已被过滤。'],
     [
       'This response cannot be shown because it references public code, which is restricted by {}.',
-      '无法显示此回复，因为它引用了公共代码，而这受限于{}。',
+      '无法显示此回复，因为它引用了公共代码，而这受限于{}。'
     ],
     // 系统提示说明：槽位是名称元素
     [
       'The system prompt for {} is a set of instructions that guides the LLM to provide enhanced functionality and output quality based on user input.',
-      '{} 的系统提示是一组指令，用于引导 LLM 根据用户输入增强功能、提升输出质量。',
+      '{} 的系统提示是一组指令，用于引导 LLM 根据用户输入增强功能、提升输出质量。'
     ],
     // 推广横幅正文：槽位是链接 benefits
-    ['Discover all the {} of the world’s leading AI developer tool.', '了解全球领先的 AI 开发人员工具的所有{}。'],
-  ],
+    ['Discover all the {} of the world’s leading AI developer tool.', '了解全球领先的 AI 开发人员工具的所有{}。']
+  ]
 } satisfies PageDictionary

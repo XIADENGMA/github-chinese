@@ -188,16 +188,8 @@
       }
     }
   ],
-  "auth": [
-    "https://github.com/login",
-    "https://github.com/signup",
-    "https://github.com/password_reset",
-    "https://github.com/login/device"
-  ],
-  "common": [
-    "https://github.com/this-page-should-not-exist-gcn-404",
-    "https://github.com/vuejs/core/this-path-does-not-exist"
-  ],
+  "auth": ["https://github.com/login", "https://github.com/signup", "https://github.com/password_reset", "https://github.com/login/device"],
+  "common": ["https://github.com/this-page-should-not-exist-gcn-404", "https://github.com/vuejs/core/this-path-does-not-exist"],
   "marketplace": [
     "https://github.com/marketplace",
     "https://github.com/marketplace?type=actions",
@@ -206,9 +198,5 @@
     "https://github.com/apps/codecov",
     "https://github.com/marketplace/codecov"
   ],
-  "sponsors": [
-    "https://github.com/sponsors",
-    "https://github.com/sponsors/explore",
-    "https://github.com/sponsors/sindresorhus"
-  ]
+  "sponsors": ["https://github.com/sponsors", "https://github.com/sponsors/explore", "https://github.com/sponsors/sindresorhus"]
 }

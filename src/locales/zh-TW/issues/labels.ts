@@ -18,7 +18,7 @@ const COLOR_NAME: Readonly<Record<string, string>> = {
   'Light Teal': '淺藍綠色',
   'Light Blue': '淺藍色',
   'Light Indigo': '淺靛藍色',
-  Lavender: '薰衣草紫',
+  Lavender: '薰衣草紫'
 }
 
 const COLOR_NAME_SOURCE = Object.keys(COLOR_NAME)
@@ -42,7 +42,7 @@ const LABEL_NAMES: Readonly<Record<string, string>> = {
   question: '疑問',
   wontfix: '不予修正',
   dependencies: '相依項目',
-  accessibility: '無障礙',
+  accessibility: '無障礙'
 }
 
 /**
@@ -62,7 +62,7 @@ const LABEL_DESCRIPTIONS: Readonly<Record<string, string>> = {
   'This doesn’t seem right': '這似乎不對',
   'Further information is requested': '需要更多資訊',
   'This will not be worked on': '不會處理',
-  'Pull requests that update a dependency file': '更新相依性檔案的拉取請求',
+  'Pull requests that update a dependency file': '更新相依性檔案的拉取請求'
 }
 
 /**
@@ -70,7 +70,7 @@ const LABEL_DESCRIPTIONS: Readonly<Record<string, string>> = {
  * static 另收（令牌的 aria-label 不在标签区域里，两处译文相同）
  */
 const LABEL_PLACEHOLDERS: Readonly<Record<string, string>> = {
-  'Label preview': '標籤預覽',
+  'Label preview': '標籤預覽'
 }
 
 /** 名称表：默认标签名与名称区域里的占位文字 */
@@ -82,7 +82,7 @@ const LABEL_DESCRIPTION_MAP: ReadonlyMap<string, string> = new Map(Object.entrie
 
 /** 按字面匹配的正则备选 */
 function alternatives(texts: Iterable<string>): string {
-  return [...texts].map((text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')
+  return [...texts].map(text => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')
 }
 
 /** 默认标签名（正则备选）：无障碍名称里的标签名按它匹配 */
@@ -123,7 +123,7 @@ const ECOSYSTEM_NAMES: ReadonlyMap<string, string> = new Map([['GitHub Actions',
  */
 export const ECOSYSTEM_DESCRIPTION: RegExpRule = [
   /^Pull requests that update ([\w.#+ -]{1,40}) code$/,
-  (_, name: string) => joinName(joinName('更新', ECOSYSTEM_NAMES.get(name) ?? name), '程式碼的拉取請求'),
+  (_, name: string) => joinName(joinName('更新', ECOSYSTEM_NAMES.get(name) ?? name), '程式碼的拉取請求')
 ]
 
 /**
@@ -182,8 +182,7 @@ export default {
     'Permanently delete label': '永久刪除標籤',
     'Delete this label': '刪除此標籤',
     'Once you delete this label, you will not be able to see it again.': '刪除此標籤後，你將無法再看到它。',
-    'Deleting this label will remove it from all issues and pull requests.':
-      '刪除此標籤會將其從所有議題和拉取請求中移除。',
+    'Deleting this label will remove it from all issues and pull requests.': '刪除此標籤會將其從所有議題和拉取請求中移除。',
     'There was an error deleting the label. Please try again.': '刪除標籤時發生錯誤。請再試一次。',
     'Archive Label': '封存標籤',
     'There was an error archiving the label. Please try again.': '封存標籤時發生錯誤。請再試一次。',
@@ -201,8 +200,7 @@ export default {
     'Choose a category': '選擇類別',
     'I understand, convert issue to discussion': '我瞭解，將議題轉換為討論',
     'I understand, convert issues to discussions': '我瞭解，將議題轉換為討論',
-    'Future issues with this label will not be automatically converted into discussions.':
-      '之後加上此標籤的議題不會自動轉換為討論。',
+    'Future issues with this label will not be automatically converted into discussions.': '之後加上此標籤的議題不會自動轉換為討論。',
 
     // 默认标签的说明：筛选框的标签建议、标签选择器里显示（标签区域里的同一说明见 LABEL_DESCRIPTIONS，两处译文相同）
     'Barrier affecting people with disabilities': '影響身心障礙者使用的障礙',
@@ -217,7 +215,7 @@ export default {
     'This doesn’t seem right': '這似乎不對',
     'Further information is requested': '需要更多資訊',
     'This will not be worked on': '不會處理',
-    'Pull requests that update a dependency file': '更新相依性檔案的拉取請求',
+    'Pull requests that update a dependency file': '更新相依性檔案的拉取請求'
   },
   scoped: {
     // 标签页的 Active / Archived 切换、议题侧栏迭代字段的分组标题：「正在使用」义作「使用中」（术语表 Active 行）
@@ -225,7 +223,7 @@ export default {
     Color: '顏色',
     'Delete failed': '刪除失敗',
     // 按标签转换的对话框标题（多个议题）；组织设置页另有同名权限名
-    'Convert issues to discussions': '將議題轉換為討論',
+    'Convert issues to discussions': '將議題轉換為討論'
   },
   regexp: [
     // 计数提示：20 open pull requests / 4 open issues（标签总数 59 labels 由通用词典处理）
@@ -236,26 +234,20 @@ export default {
     [
       /^(.+?)\. (?=\d)(?:([\d,]+) open pull requests\2 open pull requests)?(?:([\d,]+) open issues\3 open issues)?\.$/,
       (_, name, pulls, issues) =>
-        `${labelName(name)}。${[pulls ? `${pulls} 個開放中的拉取請求` : '', issues ? `${issues} 個開放中的議題` : ''].filter(Boolean).join(' ')}。`,
+        `${labelName(name)}。${[pulls ? `${pulls} 個開放中的拉取請求` : '', issues ? `${issues} 個開放中的議題` : ''].filter(Boolean).join(' ')}。`
     ],
     // 存档确认（默认标签名与行里的标签令牌同译，自定义标签名原样保留）
     [
       /^Archiving hides "(.+)" so it can[’']t be added to discussions, issues, or pull requests\. It remains on anything that already uses it, and you can unarchive it any time\.$/,
       (_, name: string) =>
-        `封存會隱藏「${labelName(name)}」，使其無法再加入討論、議題或拉取請求。已使用此標籤的項目會保留它，你可以隨時取消封存。`,
+        `封存會隱藏「${labelName(name)}」，使其無法再加入討論、議題或拉取請求。已使用此標籤的項目會保留它，你可以隨時取消封存。`
     ],
     // 颜色选择器：Red (#b60205)、Color: Red (#b60205)、Color: #ab12cd（括号内是色值，用半角括号并与中文隔开）
-    [
-      new RegExp(`^(${COLOR_NAME_SOURCE}) \\((${HEX_SOURCE})\\)$`),
-      (_, name, hex) => `${COLOR_NAME[name] ?? name} (${hex})`,
-    ],
-    [
-      new RegExp(`^Color: (${COLOR_NAME_SOURCE}) \\((${HEX_SOURCE})\\)$`),
-      (_, name, hex) => `顏色：${COLOR_NAME[name] ?? name} (${hex})`,
-    ],
+    [new RegExp(`^(${COLOR_NAME_SOURCE}) \\((${HEX_SOURCE})\\)$`), (_, name, hex) => `${COLOR_NAME[name] ?? name} (${hex})`],
+    [new RegExp(`^Color: (${COLOR_NAME_SOURCE}) \\((${HEX_SOURCE})\\)$`), (_, name, hex) => `顏色：${COLOR_NAME[name] ?? name} (${hex})`],
     [new RegExp(`^Color: (${HEX_SOURCE})$`), '顏色：$1'],
     // 非预设颜色的色块按钮：Color: (#ab12cd)
-    [new RegExp(`^Color: \\((${HEX_SOURCE})\\)$`), '顏色：($1)'],
+    [new RegExp(`^Color: \\((${HEX_SOURCE})\\)$`), '顏色：($1)']
   ],
   attributeRules: [
     // 标签页列表行的标签链接（忽略区域根）：无障碍名称是标签名，已存档的前加 Archived；默认标签与链接里的标签令牌同译，
@@ -264,17 +256,12 @@ export default {
       '[class*="labelRowDescription__"] a[aria-label]',
       'aria-label',
       /^(?:(Archived) )?(.+)$/,
-      (_, archived: string, name: string) => archivedLabelName(archived, name),
+      (_, archived: string, name: string) => archivedLabelName(archived, name)
     ],
     // 标签页列表行的无障碍名称（没有打开的议题、拉取请求时只有标签名）：good first issue.（默认标签名同译）
-    [
-      'li[data-label-id]',
-      'aria-label',
-      new RegExp(`^(${LABEL_NAME_SOURCE})\\.$`),
-      (_, name: string) => `${labelName(name)}。`,
-    ],
+    ['li[data-label-id]', 'aria-label', new RegExp(`^(${LABEL_NAME_SOURCE})\\.$`), (_, name: string) => `${labelName(name)}。`]
   ],
   labels: LABEL_NAME_TABLE,
   labelDescriptions: LABEL_DESCRIPTIONS,
-  labelRegexp: [ECOSYSTEM_DESCRIPTION],
+  labelRegexp: [ECOSYSTEM_DESCRIPTION]
 } satisfies PageDictionary

@@ -23,7 +23,7 @@ function renderPage(dataUrl: string, size: number): string {
   return [
     '<!doctype html>',
     '<html><head><style>html,body{margin:0;background:transparent}img{display:block}</style></head>',
-    `<body><img id="icon" width="${size}" height="${size}" alt="" src="${dataUrl}"></body></html>`,
+    `<body><img id="icon" width="${size}" height="${size}" alt="" src="${dataUrl}"></body></html>`
   ].join('')
 }
 
@@ -61,8 +61,8 @@ async function main(): Promise<void> {
   const { values } = parseArgs({
     options: {
       source: { type: 'string', default: 'assets/icon.svg' },
-      out: { type: 'string', default: 'public/icon' },
-    },
+      out: { type: 'string', default: 'public/icon' }
+    }
   })
   const svg = await shrinkSource(resolve(values.source), values.source)
   const master = await renderMaster(svg)
@@ -71,10 +71,7 @@ async function main(): Promise<void> {
 
   for (const size of SIZES) {
     const target = resolve(outDir, `${size}.png`)
-    await sharp(master)
-      .resize(size, size, { kernel: 'lanczos3' })
-      .png({ compressionLevel: 9, adaptiveFiltering: true })
-      .toFile(target)
+    await sharp(master).resize(size, size, { kernel: 'lanczos3' }).png({ compressionLevel: 9, adaptiveFiltering: true }).toFile(target)
     process.stdout.write(`${size}px → ${target}\n`)
   }
 }

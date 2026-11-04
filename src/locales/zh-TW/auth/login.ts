@@ -62,8 +62,7 @@ export default {
     'Enter the code displayed on your device': '輸入裝置上顯示的驗證碼',
     'GitHub staff will never ask you to enter your code on this page.': 'GitHub 員工絕不會要求你在此頁面輸入驗證碼。',
     'This authorization was requested from': '此授權請求來自',
-    'Make sure you trust this device as it will get access to your account.':
-      '請確認你信任此裝置，因為它將取得你帳號的存取權。',
+    'Make sure you trust this device as it will get access to your account.': '請確認你信任此裝置，因為它將取得你帳號的存取權。',
     "Congratulations, you're all set!": '恭喜，一切就緒！',
     'Congratulations, you’re all set!': '恭喜，一切就緒！',
     // 设备授权后与帐户连接（GLOSSARY.zh-TW link 行：connect → 連接；网络连线才作「連線」）
@@ -79,17 +78,17 @@ export default {
 
     // 切换帐户 /switch_account
     'Signed out': '已登出',
-    'Add a different account': '新增其他帳號',
+    'Add a different account': '新增其他帳號'
   },
   scoped: {
     Continue: '繼續',
     Loading: '載入中',
     Or: '或',
     'to continue to': '以繼續使用',
-    'Requested from': '請求來源',
+    'Requested from': '請求來源'
   },
   regexp: [
     // 注册 / 登录表单：使用其他 Google / Apple 帐户
-    [/^Use a different (Google|Apple) account$/, '使用其他 $1 帳號'],
-  ],
+    [/^Use a different (Google|Apple) account$/, '使用其他 $1 帳號']
+  ]
 } satisfies PageDictionary

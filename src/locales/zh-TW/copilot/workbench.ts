@@ -3,7 +3,7 @@ import type { PageDictionary } from '../../../core/types'
 /** 差异预览中新增、删除文件的前缀 */
 const FILE_CHANGE: Readonly<Record<string, string>> = {
   Added: '已新增',
-  Deleted: '已刪除',
+  Deleted: '已刪除'
 }
 
 /** 预览工具栏的文件大小：「504 bytes」→「504 位元組」，KB / MB 等单位原样保留 */
@@ -30,8 +30,7 @@ export default {
     'Content preview': '內容預覽',
     'Content preview panel': '內容預覽面板',
     'View files directly within Copilot': '直接在 Copilot 中查看檔案',
-    'Ask to generate a file or app, or use the button below to try it yourself.':
-      '讓 Copilot 產生檔案或應用程式，或使用下方按鈕親自試試。',
+    'Ask to generate a file or app, or use the button below to try it yourself.': '讓 Copilot 產生檔案或應用程式，或使用下方按鈕親自試試。',
     'Files, diffs, and issues you open will appear here.': '你開啟的檔案、差異和議題會顯示在這裡。',
     // Google 繁中的「I'm Feeling Lucky」按钮
     'I’m feeling lucky': '好手氣',
@@ -91,8 +90,7 @@ export default {
     'HTML preview settings': 'HTML 預覽設定',
     'Show preview by default': '預設顯示預覽',
     'Automatically run HTML artifacts when you open them.': '開啟 HTML 成品時自動執行。',
-    'Previewing runs this code, which may send its contents to external sites.':
-      '預覽會執行此程式碼，可能會將其內容傳送到外部網站。',
+    'Previewing runs this code, which may send its contents to external sites.': '預覽會執行此程式碼，可能會將其內容傳送到外部網站。',
     'Artifact HTML preview.': '成品 HTML 預覽。',
     'Artifact HTML source': '成品 HTML 原始碼',
     'HTML rendering failed': 'HTML 轉譯失敗',
@@ -113,14 +111,12 @@ export default {
     'Review and create': '審查並建立',
     'Update existing issues?': '要更新現有議題嗎？',
     // 原文按钮名无引号，译文不加引号，后接「按鈕」
-    'Clicking Update will update the relationships between the issues shown below.':
-      '按一下更新按鈕將更新下方議題之間的關係。',
+    'Clicking Update will update the relationships between the issues shown below.': '按一下更新按鈕將更新下方議題之間的關係。',
     'Update issues': '更新議題',
     'Create all linked draft issues?': '要建立所有已連結的草稿議題嗎？',
     "Clicking Create will publish all Copilot draft issues shown below. Existing sub-issues aren't displayed and remain unchanged.":
       '按一下建立按鈕將發布下方所有 Copilot 草稿議題。現有子議題不會顯示，也不會變更。',
-    'Clicking Create will publish the Copilot draft issues shown below.':
-      '按一下建立按鈕將發布下方的 Copilot 草稿議題。',
+    'Clicking Create will publish the Copilot draft issues shown below.': '按一下建立按鈕將發布下方的 Copilot 草稿議題。',
     'These drafts are linked. Creating a sub-issue automatically publishes its parent and any nested drafts.':
       '這些草稿互相連結。建立子議題時會自動發布其父議題和所有巢狀草稿。',
     'Create 1 issue': '建立 1 個議題',
@@ -145,8 +141,7 @@ export default {
     'You cannot create issues in this repository': '你無法在此儲存庫中建立議題',
     'You cannot update issues in this repository': '你無法更新此儲存庫中的議題',
     'Open issue in new tab': '在新分頁中開啟議題',
-    'Please verify if the repository exists and is accessible before trying again.':
-      '請先確認儲存庫存在且可以存取，再重試。',
+    'Please verify if the repository exists and is accessible before trying again.': '請先確認儲存庫存在且可以存取，再重試。',
 
     // 起草议题：关系与模板
     'Newly blocked by': '新增的受阻於關係',
@@ -173,19 +168,16 @@ export default {
     'Failed to update content': '無法更新內容',
     'Could not update issue title or body. Please try again.': '無法更新議題標題或內文。請再試一次。',
     'Permission Denied': '權限遭拒',
-    "You don't have permission to update this issue. Please contact the repo owner.":
-      '你沒有更新此議題的權限。請聯絡儲存庫擁有者。',
+    "You don't have permission to update this issue. Please contact the repo owner.": '你沒有更新此議題的權限。請聯絡儲存庫擁有者。',
     'Issue Not Found': '找不到議題',
-    'The issue you are trying to update could not be found or no longer exists.':
-      '找不到你要更新的議題，或該議題已不存在。',
+    'The issue you are trying to update could not be found or no longer exists.': '找不到你要更新的議題，或該議題已不存在。',
     'Invalid issue title': '議題標題無效',
     'Invalid form inputs': '表單輸入無效',
     'Issue Outdated': '議題已過時',
     'The issue you are editing has changed. Please copy your edits and have Copilot draft a new update.':
       '你正在編輯的議題已變更。請複製你的編輯內容，並讓 Copilot 草擬新的更新。',
     'Failed to update project assignment': '無法更新專案指派',
-    'The issue was updated successfully, but there were problems with project assignments.':
-      '議題已成功更新，但專案指派發生問題。',
+    'The issue was updated successfully, but there were problems with project assignments.': '議題已成功更新，但專案指派發生問題。',
     'An error has occurred': '發生錯誤',
     'Malformed draft issue': '草稿議題格式錯誤',
     'The drafted issue contains malformed data and the preview is not available. Please retry.':
@@ -219,7 +211,7 @@ export default {
     'Assignee avatar': '負責人頭像',
     'Draft a PR comment': '草擬 PR 留言',
     'Turn this PR review point into a comment.': '將此 PR 審查要點轉為留言。',
-    'Insert into the input': '插入到輸入框',
+    'Insert into the input': '插入到輸入框'
   },
   scoped: {
     Unassigned: '未指派',
@@ -239,7 +231,7 @@ export default {
     'Back to issue': '返回議題',
     'Add link': '新增連結',
     'Edit link': '編輯連結',
-    'Link title': '連結標題',
+    'Link title': '連結標題'
   },
   regexp: [
     [/^Opened (.+) in Workbench\.$/, '已在工作台中開啟 $1。'],
@@ -252,22 +244,22 @@ export default {
     [/^([\w.-]+\/[\w.-]+) is not found$/, '找不到 $1'],
     [
       /^You cannot create more than (\d+) new issues at a time\. Please remove some draft issues from the tree and try again\.$/,
-      '一次最多只能建立 $1 個新議題。請從樹狀結構中移除部分草稿議題後再試一次。',
+      '一次最多只能建立 $1 個新議題。請從樹狀結構中移除部分草稿議題後再試一次。'
     ],
     [
       /^You cannot add more than (\d+) levels of sub-issues\. Please remove some issues from the tree and try again\.$/,
-      '子議題最多只能有 $1 層。請從樹狀結構中移除部分議題後再試一次。',
+      '子議題最多只能有 $1 層。請從樹狀結構中移除部分議題後再試一次。'
     ],
     [
       /^The selected repository \(([\w.-]+\/[\w.-]+)\) doesn['’]t match the repository Copilot suggested \(([\w.-]+\/[\w.-]+)\)\. Please select a repository you have access to\.$/,
-      '選取的儲存庫 ($1) 與 Copilot 建議的儲存庫 ($2) 不符。請選擇你有存取權的儲存庫。',
+      '選取的儲存庫 ($1) 與 Copilot 建議的儲存庫 ($2) 不符。請選擇你有存取權的儲存庫。'
     ],
     [/^View file: (.+)$/, '查看檔案：$1'],
     // 文件 / 差异预览工具栏：[Added: |Deleted: ]<12> lines · <1 KB>（相邻文本节点整段匹配；新增、删除的文件带前缀）
     [
       /^(?:(Added|Deleted): )?(\d+) lines? · (\S.*)$/,
       (_, change: string, count: string, size: string) =>
-        `${change ? `${FILE_CHANGE[change] ?? change}：` : ''}${count} 行 · ${previewSize(size)}`,
+        `${change ? `${FILE_CHANGE[change] ?? change}：` : ''}${count} 行 · ${previewSize(size)}`
     ],
     [/^Issue #(\d+)$/, '議題 #$1'],
     [/^(\d+) assignees?$/, '$1 位負責人'],
@@ -280,6 +272,6 @@ export default {
     [/^Send suggestion \(hold (Option|Alt) to insert\)$/, '傳送建議（按住 $1 鍵插入）'],
     // 工件查看器
     [/^Version (\d+)$/, '版本 $1'],
-    [/^HTML preview: (.+)$/, 'HTML 預覽：$1'],
-  ],
+    [/^HTML preview: (.+)$/, 'HTML 預覽：$1']
+  ]
 } satisfies PageDictionary

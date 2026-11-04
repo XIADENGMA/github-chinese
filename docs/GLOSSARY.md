@@ -236,17 +236,17 @@ import { TIME_SOURCE, translateTime } from './helpers'
 export default {
   // 精确匹配，全站生效。键是规范化原文：首尾去空白、连续空白合并为一个空格，区分大小写
   static: {
-    'New issue': '新建议题',
+    'New issue': '新建议题'
   },
   // 仅本页面类型生效，优先于所有 static；用于同一原文在本页面需要不同译法
   scoped: {
-    Open: '打开',
+    Open: '打开'
   },
   // 仅本页面类型生效（common 的规则全站生效）。必须 ^...$ 锚定，不得用 g / y / m / u / v 标志；
   // 顶层不得有 |，备选放进分组：/^(?:Open|Closed)$/
   regexp: [
     [/^(\d+) Open$/, '$1 个打开'],
-    [new RegExp(`^opened (${TIME_SOURCE})$`), (_, time) => `${translateTime(time)}打开`],
+    [new RegExp(`^opened (${TIME_SOURCE})$`), (_, time) => `${translateTime(time)}打开`]
   ],
   // 仅本页面类型生效的额外忽略选择器（整块用户内容）
   ignore: ['.my-user-content'],
@@ -258,18 +258,18 @@ export default {
   mergeText: ['h3 > span[data-sr-feedback]'],
   // 名称表：默认标签名，全站生效；只在标签名称区域里整段、区分大小写匹配（见下方规则）
   labels: {
-    bug: '缺陷',
+    bug: '缺陷'
   },
   // 说明表：默认标签的说明，全站生效；只在标签说明区域里整段、区分大小写匹配
   labelDescriptions: {
-    'Good for newcomers': '适合新手',
+    'Good for newcomers': '适合新手'
   },
   // 标签说明区域里说明表未命中时再试的正则（Dependabot 按生态生成的说明），约束同 regexp
   labelRegexp: [[/^Pull requests that update ([\w.#+ -]{1,40}) code$/, '更新 $1 代码的拉取请求']],
   // 预置列表名表：星标列表的预置名称，全站生效；只在星标列表名称区域里整段、区分大小写匹配
   listNames: {
-    '✨ Inspiration': '✨ 灵感',
-  },
+    '✨ Inspiration': '✨ 灵感'
+  }
 } satisfies PageDictionary
 ```
 

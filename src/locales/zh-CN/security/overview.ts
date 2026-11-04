@@ -12,7 +12,7 @@ const SEVERITY: Readonly<Record<string, string>> = {
   unknown: '未知',
   error: '错误',
   warning: '警告',
-  note: '注意',
+  note: '注意'
 }
 
 /** 「X severity」标签：用行业惯用的危害等级 */
@@ -22,7 +22,7 @@ const SEVERITY_LEVEL: Readonly<Record<string, string>> = {
   moderate: '中危',
   medium: '中危',
   low: '低危',
-  unknown: '未知严重性',
+  unknown: '未知严重性'
 }
 
 const SEVERITY_SOURCE = Object.keys(SEVERITY).join('|')
@@ -63,12 +63,9 @@ export default {
     'Code scanning alerts •': '代码扫描警报 •',
     'Secret scanning alerts •': '机密扫描警报 •',
     'Needs setup': '待设置',
-    'Define how users should report security vulnerabilities for this repository':
-      '定义用户应如何报告此存储库的安全漏洞',
-    'Define how users should report security vulnerabilities for this repository.':
-      '定义用户应如何报告此存储库的安全漏洞。',
-    'Suggest how users should report security vulnerabilities for this repository':
-      '建议用户应如何报告此存储库的安全漏洞',
+    'Define how users should report security vulnerabilities for this repository': '定义用户应如何报告此存储库的安全漏洞',
+    'Define how users should report security vulnerabilities for this repository.': '定义用户应如何报告此存储库的安全漏洞。',
+    'Suggest how users should report security vulnerabilities for this repository': '建议用户应如何报告此存储库的安全漏洞',
     'View how to securely report security vulnerabilities for this repository': '查看如何安全地报告此存储库的安全漏洞',
     'Set up a security policy': '设置安全策略',
     'View security policy': '查看安全策略',
@@ -94,16 +91,14 @@ export default {
     'Automatically detect common vulnerabilities and coding errors.': '自动检测常见漏洞和编码错误。',
     'Set up code scanning': '设置代码扫描',
     'Advanced Security is only available for Organizations': '高级安全仅适用于组织',
-    'Code scanning for private repositories is part of GitHub Advanced Security':
-      '专用存储库的代码扫描属于 GitHub 高级安全',
+    'Code scanning for private repositories is part of GitHub Advanced Security': '专用存储库的代码扫描属于 GitHub 高级安全',
     'Code scanning configuration error': '代码扫描配置错误',
     // CodeQL is reporting errors. Check the <status page> for help.
     'CodeQL is reporting errors. Check the': 'CodeQL 报告了错误。查看',
     'Checking code scanning status...': '正在检查代码扫描状态...',
     'Checking code scanning status…': '正在检查代码扫描状态…',
     'Code scanning is not enabled': '代码扫描未启用',
-    'Code scanning helps you find and fix vulnerabilities and coding errors.':
-      '代码扫描可帮助你发现并修复漏洞和编码错误。',
+    'Code scanning helps you find and fix vulnerabilities and coding errors.': '代码扫描可帮助你发现并修复漏洞和编码错误。',
     'Get notified when a secret is pushed to this repository': '有机密推送到此存储库时接收通知',
     'Get notified when a secret is pushed to this repository.': '有机密推送到此存储库时接收通知。',
     'View detected secrets': '查看检测到的机密',
@@ -129,7 +124,7 @@ export default {
     Fixed: '已修复',
     Dismissed: '已消除',
     'Auto-dismissed': '已自动消除',
-    Withdrawn: '已撤回',
+    Withdrawn: '已撤回'
   },
   scoped: {
     // 其他区域也出现的同形文字，本区域内单独生效
@@ -163,7 +158,7 @@ export default {
     'in the': '的相关公告请访问',
     in: '位于',
     Unknown: '未知',
-    ...SEVERITY,
+    ...SEVERITY
   },
   regexp: [
     // 页面 h1（屏幕阅读器）：Security: owner/repo
@@ -173,12 +168,9 @@ export default {
     // 严重性标签的 title 属性
     [new RegExp(`^Severity: (${SEVERITY_SOURCE})$`, 'i'), (_, level) => `严重性：${SEVERITY[level.toLowerCase()]}`],
     // 详情页的「Moderate severity」标签
-    [
-      /^(Critical|High|Moderate|Medium|Low|Unknown) severity$/,
-      (_, level) => SEVERITY_LEVEL[level.toLowerCase()] ?? level,
-    ],
+    [/^(Critical|High|Moderate|Medium|Low|Unknown) severity$/, (_, level) => SEVERITY_LEVEL[level.toLowerCase()] ?? level],
     // 组织安全概述表格：分页组件写入的全选文字（Select all 12 repositories）
-    [/^Select all (\d[\d,]*) repositories$/, '选择全部 $1 个存储库'],
+    [/^Select all (\d[\d,]*) repositories$/, '选择全部 $1 个存储库']
   ],
   ignore: [
     // 公告 / 警报列表的标题链接（公告摘要属于用户内容）
@@ -186,6 +178,6 @@ export default {
     // 存储库安全公告详情页标题
     '.js-repository-advisory-details h1.gh-header-title',
     // 警报详情页（React）标题
-    'h1.text-wrap-balance > span:first-child',
-  ],
+    'h1.text-wrap-balance > span:first-child'
+  ]
 } satisfies PageDictionary

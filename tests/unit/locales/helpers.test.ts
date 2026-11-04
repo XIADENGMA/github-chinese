@@ -10,7 +10,7 @@ import {
   spaceDigits,
   translateDate,
   translateRelativeTime,
-  translateTime,
+  translateTime
 } from '../../../src/locales/zh-CN/helpers'
 import { isLocalZone, zoneOffset } from '../../../src/locales/shared/helpers'
 
@@ -26,7 +26,7 @@ describe('translateRelativeTime', () => {
     ['now', '刚刚'],
     ['last week', '上周'],
     ['last month', '上个月'],
-    ['next year', '明年'],
+    ['next year', '明年']
   ])('%s → %s', (input, expected) => {
     expect(translateRelativeTime(input)).toBe(expected)
   })
@@ -35,7 +35,7 @@ describe('translateRelativeTime', () => {
     ['about 1 year ago', '约 1 年前'],
     ['about 1 day ago', '约 1 天前'],
     ['almost 2 years ago', '将近 2 年前'],
-    ['over 3 years ago', '超过 3 年前'],
+    ['over 3 years ago', '超过 3 年前']
   ])('带前缀时用数字格式：%s → %s', (input, expected) => {
     expect(translateRelativeTime(input)).toBe(expected)
   })
@@ -66,7 +66,7 @@ describe('translateDate', () => {
     ['January 2024', '2024 年 1 月'],
     ['5 Jan 2024', '2024 年 1 月 5 日'],
     ['on January 2024', '2024 年 1 月'],
-    ['on 5 January 2024', '2024 年 1 月 5 日'],
+    ['on 5 January 2024', '2024 年 1 月 5 日']
   ])('%s → %s', (input, expected) => {
     expect(translateDate(input)).toBe(expected)
   })
@@ -108,10 +108,10 @@ describe('*_SOURCE 片段', () => {
         {
           regexp: [
             [new RegExp(`^Updated (${TIME_SOURCE})$`), (_, time) => `${translateTime(time)}更新`],
-            [new RegExp(`^Due by (${DATE_SOURCE})$`), (_, date) => `截止于 ${translateTime(date)}`],
-          ],
-        },
-      ],
+            [new RegExp(`^Due by (${DATE_SOURCE})$`), (_, date) => `截止于 ${translateTime(date)}`]
+          ]
+        }
+      ]
     ])
     expect(matcher.translate('Updated 3 days ago', ['common'])).toBe('3 天前更新')
     expect(matcher.translate('Updated on Jan 5, 2024', ['common'])).toBe('2024 年 1 月 5 日更新')
@@ -123,7 +123,7 @@ describe('mergeDictionaries', () => {
   it('先出现的 static 优先，regexp / ignore 依次拼接', () => {
     const merged = mergeDictionaries(
       { static: { A: '甲' }, regexp: [[/^a$/, '1']], ignore: ['.x'] },
-      { static: { A: '乙', B: '丙' }, regexp: [[/^b$/, '2']], ignore: ['.y'] },
+      { static: { A: '乙', B: '丙' }, regexp: [[/^b$/, '2']], ignore: ['.y'] }
     )
     expect(merged.static).toEqual({ A: '甲', B: '丙' })
     expect(merged.regexp).toHaveLength(2)
@@ -135,14 +135,14 @@ describe('mergeDictionaries', () => {
       {
         attributeRules: [['a', 'title', /^a$/, '1']],
         inline: [['{} merged', '{} 已合并']],
-        mergeText: ['.a'],
+        mergeText: ['.a']
       },
       {},
       {
         attributeRules: [['b', 'title', /^b$/, '2']],
         inline: [['{} closed', '{} 已关闭']],
-        mergeText: ['.b'],
-      },
+        mergeText: ['.b']
+      }
     )
     expect(merged.attributeRules?.map(([selector]) => selector)).toEqual(['a', 'b'])
     expect(merged.inline?.map(([pattern]) => pattern)).toEqual(['{} merged', '{} closed'])
@@ -155,13 +155,13 @@ describe('mergeDictionaries', () => {
       {},
       {
         labels: { bug: '错误', question: '疑问' },
-        labelDescriptions: { 'Good for newcomers': '后收录', 'Extra attention is needed': '需要额外关注' },
-      },
+        labelDescriptions: { 'Good for newcomers': '后收录', 'Extra attention is needed': '需要额外关注' }
+      }
     )
     expect(merged.labels).toEqual({ bug: '缺陷', question: '疑问' })
     expect(merged.labelDescriptions).toEqual({
       'Good for newcomers': '适合新手',
-      'Extra attention is needed': '需要额外关注',
+      'Extra attention is needed': '需要额外关注'
     })
     const matcher = createMatcher([['common', merged]])
     expect(matcher.translateLabel('bug', 'name')).toBe('缺陷')
@@ -175,7 +175,7 @@ describe('mergeDictionaries', () => {
     const merged = mergeDictionaries(
       { listNames: { '✨ Inspiration': '✨ 灵感' } },
       {},
-      { listNames: { '✨ Inspiration': '后收录', '🚀 My stack': '🚀 我的技术栈' } },
+      { listNames: { '✨ Inspiration': '后收录', '🚀 My stack': '🚀 我的技术栈' } }
     )
     expect(merged.listNames).toEqual({ '✨ Inspiration': '✨ 灵感', '🚀 My stack': '🚀 我的技术栈' })
     const matcher = createMatcher([['common', merged]])
@@ -192,9 +192,7 @@ describe('mergeDictionaries', () => {
     expect(merged.labelRegexp).toEqual([first, second])
     expect(merged.labelRegexp?.[0]).toBe(first)
     const matcher = createMatcher([['common', merged]])
-    expect(matcher.translateLabel('Pull requests that update Ruby code', 'description')).toBe(
-      '更新 Ruby 代码的拉取请求',
-    )
+    expect(matcher.translateLabel('Pull requests that update Ruby code', 'description')).toBe('更新 Ruby 代码的拉取请求')
     expect(matcher.translateLabel('Sample 3', 'description')).toBe('示例 3')
     expect(matcher.translate('Sample 3', ['common'])).toBeUndefined()
   })
@@ -206,7 +204,7 @@ describe('spaceDigits', () => {
     ['约1年前', '约 1 年前'],
     ['2024年1月5日', '2024 年 1 月 5 日'],
     ['昨天', '昨天'],
-    ['just now', 'just now'],
+    ['just now', 'just now']
   ])('%s → %s', (input, expected) => {
     expect(spaceDigits(input)).toBe(expected)
   })
@@ -217,7 +215,7 @@ describe('joinCjk', () => {
     ['提交于', '3 天前', '提交于 3 天前'],
     ['提交于', '昨天', '提交于昨天'],
     ['updated', '3 天前', 'updated3 天前'],
-    ['updated', 'yesterday', 'updatedyesterday'],
+    ['updated', 'yesterday', 'updatedyesterday']
   ])('joinCjk(%s, %s) → %s', (left, right, expected) => {
     expect(joinCjk(left, right)).toBe(expected)
   })
@@ -234,12 +232,12 @@ describe('zoneOffset', () => {
     ['PDT', -420],
     ['HST', -600],
     ['HAST', -600],
-    ['HADT', -540],
+    ['HADT', -540]
   ])('%s → %i', (zone, expected) => {
     expect(zoneOffset(zone)).toBe(expected)
   })
 
-  it.each(['XST', 'GMT+', 'CET', 'constructor'])('不认识：%s', (zone) => {
+  it.each(['XST', 'GMT+', 'CET', 'constructor'])('不认识：%s', zone => {
     expect(zoneOffset(zone)).toBeUndefined()
   })
 })

@@ -12,7 +12,7 @@ const METHOD_ACTIONS: Readonly<Record<string, string>> = {
   Edit: '編輯',
   Show: '顯示',
   Hide: '隱藏',
-  View: '查看',
+  View: '查看'
 }
 const METHODS: Readonly<Record<string, string>> = {
   'Authenticator app': '驗證器應用程式',
@@ -20,7 +20,7 @@ const METHODS: Readonly<Record<string, string>> = {
   'Security keys': '安全金鑰',
   // 产品名按用户规定译成中文：GitHub Mobile → GitHub 行動版
   'GitHub Mobile': 'GitHub 行動版',
-  'Recovery codes': '復原碼',
+  'Recovery codes': '復原碼'
 }
 
 /** 动作与方法名相接，方法名是英文时中间加空格 */
@@ -40,7 +40,7 @@ const PASSWORD_PARTS: readonly (readonly [RegExp, string])[] = [
   [/^cannot include your login$/, '不能包含你的登入名稱'],
   [/^is in a list of passwords commonly used on other websites$/, '列於其他網站的常用密碼清單中'],
   [/^can['’]t be blank$/, '不能為空白'],
-  [/^is invalid$/, '無效'],
+  [/^is invalid$/, '無效']
 ]
 
 /**
@@ -49,7 +49,7 @@ const PASSWORD_PARTS: readonly (readonly [RegExp, string])[] = [
  * → “太短（至少 8 個字元），至少需要 1 個數字，且不能包含你的登入名稱”
  */
 export function passwordProblems(list: string): string {
-  const parts = list.split(/,? and |, /).map((part) => {
+  const parts = list.split(/,? and |, /).map(part => {
     const rule = PASSWORD_PARTS.find(([pattern]) => pattern.test(part))
     return rule ? part.replace(rule[0], rule[1]) : part
   })
@@ -164,12 +164,10 @@ export default {
     'Preferred 2FA method': '偏好的 2FA 方式',
     'Set your preferred method to use for two-factor authentication when signing into GitHub.':
       '設定登入 GitHub 時偏好使用的雙重驗證方式。',
-    'Passkeys should be used primarily for standalone, password-less authentication.':
-      '密碼金鑰應主要用於獨立的無密碼身分驗證。',
+    'Passkeys should be used primarily for standalone, password-less authentication.': '密碼金鑰應主要用於獨立的無密碼身分驗證。',
 
     // 身份验证器应用
-    'Use an authentication app or browser extension to generate one-time codes.':
-      '使用驗證應用程式或瀏覽器擴充功能產生一次性驗證碼。',
+    'Use an authentication app or browser extension to generate one-time codes.': '使用驗證應用程式或瀏覽器擴充功能產生一次性驗證碼。',
     'Manage Authenticator app': '管理驗證器應用程式',
     'Authenticator apps and browser extensions like': '驗證器應用程式和瀏覽器擴充功能如',
     ', etc. generate one-time passwords that are used as a second factor to verify your identity when prompted during sign-in.':
@@ -242,14 +240,12 @@ export default {
     'Keep your recovery codes as safe as your password. We recommend saving them with a password manager such as':
       '請像保護密碼一樣妥善保管復原碼。建議使用密碼管理工具儲存，例如',
     'Keep your recovery codes in a safe spot.': '請將復原碼存放在安全的地方。',
-    'These new codes have replaced your old codes. Save them in a safe spot.':
-      '這些新的復原碼已取代舊的復原碼。請存放在安全的地方。',
+    'These new codes have replaced your old codes. Save them in a safe spot.': '這些新的復原碼已取代舊的復原碼。請存放在安全的地方。',
     'These codes are the last resort for accessing your account in case you lose your password and second factors. If you cannot find these codes, you':
       '這些復原碼是你遺失密碼和第二因素時存取帳號的最後手段。如果找不到這些復原碼，你',
     'lose access to your account.': '無法再存取帳號。',
     'Generate new recovery codes': '產生新的復原碼',
-    'When you generate new recovery codes, you must download or print the new codes.':
-      '產生新的復原碼後，必須下載或列印新的復原碼。',
+    'When you generate new recovery codes, you must download or print the new codes.': '產生新的復原碼後，必須下載或列印新的復原碼。',
     "Your old codes won't work anymore.": '舊的復原碼將會失效。',
     'Your old codes won’t work anymore.': '舊的復原碼將會失效。',
     'Back to settings': '返回設定',
@@ -287,8 +283,7 @@ export default {
 
     // 2FA 复查
     'Verify your two-factor authentication (2FA) settings': '驗證你的雙重驗證 (2FA) 設定',
-    'This is a one-time verification of your recent configured 2FA credentials.':
-      '這是對你最近設定的 2FA 認證資訊所做的一次性驗證。',
+    'This is a one-time verification of your recent configured 2FA credentials.': '這是對你最近設定的 2FA 認證資訊所做的一次性驗證。',
     "Make sure that 2FA is correctly configured, and avoid a potential account lockout disaster. If you're having trouble verifying, you'll be able to reconfigure 2FA for your account.":
       '請確認 2FA 設定正確，以免日後無法存取帳號。如果驗證時遇到問題，你可以為帳號重新設定 2FA。',
     'Make sure that 2FA is correctly configured, and avoid a potential account lockout disaster. If you’re having trouble verifying, you’ll be able to reconfigure 2FA for your account.':
@@ -313,18 +308,15 @@ export default {
     'Two-factor authentication (2FA)': '雙重驗證 (2FA)',
     'is required for your GitHub account': '是你的 GitHub 帳號必須啟用的功能',
     'This will only take a minute.': '只需要一分鐘。',
-    "Enable 2FA now. You'll be able to continue on with your work right after.":
-      '立即啟用 2FA。完成後馬上就能繼續工作。',
-    'Enable 2FA now. You’ll be able to continue on with your work right after.':
-      '立即啟用 2FA。完成後馬上就能繼續工作。',
+    "Enable 2FA now. You'll be able to continue on with your work right after.": '立即啟用 2FA。完成後馬上就能繼續工作。',
+    'Enable 2FA now. You’ll be able to continue on with your work right after.': '立即啟用 2FA。完成後馬上就能繼續工作。',
     'Two-factor authentication adds an': '雙重驗證能為帳號增加一層',
     'additional layer of account security': '額外的安全保護',
     '. It is a proven method of keeping you safe from hackers and account takeover, even if your password is stolen or compromised.':
       '。這是經過證實的方法，即使密碼遭竊或外洩，也能保護你免受駭客入侵和帳號盜用。',
     'Enable 2FA now': '立即啟用 2FA',
-    'left to enable 2FA. Take action now to avoid additional interruptions.':
-      '可以啟用 2FA。請立即採取行動，以免再受到干擾。',
-    'Remind me tomorrow': '明天提醒我',
+    'left to enable 2FA. Take action now to avoid additional interruptions.': '可以啟用 2FA。請立即採取行動，以免再受到干擾。',
+    'Remind me tomorrow': '明天提醒我'
   },
   scoped: {
     // 更改密码
@@ -349,7 +341,7 @@ export default {
     // 按钮
     View: '查看',
     Print: '列印',
-    'You have': '你還有',
+    'You have': '你還有'
   },
   regexp: [
     [/^(\d+) devices?$/, '$1 部裝置'],
@@ -361,47 +353,42 @@ export default {
     [/^(\d+) accounts? connected$/, '已連接 $1 個帳號'],
     [
       new RegExp(`^Added (${TIME_SOURCE}) \\| Last used (${TIME_SOURCE}|never)$`),
-      (_, added: string, used: string) => `${joinCjk('新增於', translateTime(added))} | ${usedTime(used)}`,
+      (_, added: string, used: string) => `${joinCjk('新增於', translateTime(added))} | ${usedTime(used)}`
     ],
     [/^Delete [`'"“‘](.+?)[`'"”’] passkey$/, '刪除密碼金鑰「$1」'],
     [/^Are you sure you want to delete your [`'"“‘](.+?)[`'"”’] passkey\?$/, '確定要刪除密碼金鑰「$1」嗎？'],
     [/^You will receive one-time codes at this phone number: (.+)$/, '你會透過此電話號碼收到一次性驗證碼：$1'],
     // 更改密码的校验错误：各项组合多样，逐项翻译后拼接（句号随原文）
     [
-      new RegExp(
-        `^Password (${PASSWORD_PART_SOURCE}(?:, ${PASSWORD_PART_SOURCE})*(?:,? and ${PASSWORD_PART_SOURCE})?)(\\.?)$`,
-      ),
-      (_, list: string, dot: string) => `密碼${passwordProblems(list)}${dot ? '。' : ''}`,
+      new RegExp(`^Password (${PASSWORD_PART_SOURCE}(?:, ${PASSWORD_PART_SOURCE})*(?:,? and ${PASSWORD_PART_SOURCE})?)(\\.?)$`),
+      (_, list: string, dot: string) => `密碼${passwordProblems(list)}${dot ? '。' : ''}`
     ],
     // 强制启用 2FA：日期未被拆开时
     [
       new RegExp(
-        `^Because of your contributions on GitHub, two-factor authentication will be required for your account starting (${DATE_SOURCE})\\. Thank you for helping keep the ecosystem safe!$`,
+        `^Because of your contributions on GitHub, two-factor authentication will be required for your account starting (${DATE_SOURCE})\\. Thank you for helping keep the ecosystem safe!$`
       ),
       (_, date: string) =>
         joinCjk(
           joinCjk('由於你在 GitHub 上的貢獻，你的帳號將自', translateTime(date)),
-          '起必須啟用雙重驗證。感謝你協助維護生態系統的安全！',
-        ),
+          '起必須啟用雙重驗證。感謝你協助維護生態系統的安全！'
+        )
     ],
     // 禁用 2FA 确认对话框的后半句（前半句「Some GitHub users are <strong>now required</strong>」见 static / scoped）
     [
       new RegExp(
-        `^to enable two-factor authentication as an additional security measure\\. Your activity on GitHub includes you in this requirement\\. You will need to re-enable two-factor authentication on your account before (${DATE_SOURCE}), otherwise your account will be restricted on that date\\.$`,
+        `^to enable two-factor authentication as an additional security measure\\. Your activity on GitHub includes you in this requirement\\. You will need to re-enable two-factor authentication on your account before (${DATE_SOURCE}), otherwise your account will be restricted on that date\\.$`
       ),
       (_, date: string) =>
         joinCjk(
-          joinCjk(
-            '啟用雙重驗證作為額外的安全措施。根據你在 GitHub 上的活動，你也在此要求範圍內。你必須在',
-            translateTime(date),
-          ),
-          '之前為帳號重新啟用雙重驗證，否則你的帳號將在當天受到限制。',
-        ),
+          joinCjk('啟用雙重驗證作為額外的安全措施。根據你在 GitHub 上的活動，你也在此要求範圍內。你必須在', translateTime(date)),
+          '之前為帳號重新啟用雙重驗證，否則你的帳號將在當天受到限制。'
+        )
     ],
     // 双因素方法各行按钮的无障碍名称：Edit Authenticator app、Add SMS/Text message、View Recovery codes
     [
       new RegExp(`^(${Object.keys(METHOD_ACTIONS).join('|')}) (${Object.keys(METHODS).join('|')})$`),
-      (_, action: string, method: string) => methodAction(action, method),
-    ],
-  ],
+      (_, action: string, method: string) => methodAction(action, method)
+    ]
+  ]
 } satisfies PageDictionary

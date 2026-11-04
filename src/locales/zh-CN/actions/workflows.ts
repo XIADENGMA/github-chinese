@@ -18,7 +18,7 @@ const FILTER_KEYS: Readonly<Record<string, string>> = {
   event: '事件',
   status: '状态',
   branch: '分支',
-  actor: '参与者',
+  actor: '参与者'
 }
 
 const FILTER_KEY_SOURCE = Object.keys(FILTER_KEYS).join('|')
@@ -29,7 +29,7 @@ const FILTER_PROVIDERS: Readonly<Record<string, string>> = {
   Event: '事件',
   Status: '状态',
   Branch: '分支',
-  Actor: '参与者',
+  Actor: '参与者'
 }
 
 /** 排除建议的筛选键：Exclude workflow、Exclude is */
@@ -40,17 +40,16 @@ const USER_VALUE_PROVIDERS = ['Workflow', 'Event', 'Branch', 'Actor']
 const USER_VALUE_FILTERS = ['workflow', 'event', 'branch', 'actor']
 
 const SUGGESTION_VALUE_IGNORE =
-  `li[role="option"]:is(${USER_VALUE_PROVIDERS.flatMap((name) => [
+  `li[role="option"]:is(${USER_VALUE_PROVIDERS.flatMap(name => [
     `[aria-label$=", ${name}"]`,
-    `[aria-label$="，${FILTER_PROVIDERS[name]}"]`,
+    `[aria-label$="，${FILTER_PROVIDERS[name]}"]`
   ]).join(', ')})` + ' :is([class*="displayName__"], [data-component="ActionList.Description"])'
 
 const HEADER_FILTER_VALUE_IGNORE =
-  `[data-component="SelectPanel"]:has(input:is(${USER_VALUE_FILTERS.flatMap((key) => [
+  `[data-component="SelectPanel"]:has(input:is(${USER_VALUE_FILTERS.flatMap(key => [
     `[aria-label="Filter ${key} options"]`,
-    `[aria-label="筛选${FILTER_KEYS[key]}选项"]`,
-  ]).join(', ')}))` +
-  ' [role="option"] :is([data-component="ActionList.Item.Label"], [data-component="ActionList.Description"])'
+    `[aria-label="筛选${FILTER_KEYS[key]}选项"]`
+  ]).join(', ')}))` + ' [role="option"] :is([data-component="ActionList.Item.Label"], [data-component="ActionList.Description"])'
 
 /** 筛选建议项的 aria-label：ci, Workflow；Success, Status；main (default), Branch */
 function suggestionLabel(value: string, provider: string): string {
@@ -72,7 +71,7 @@ const ONBOARDING_TASKS: Readonly<Record<string, string>> = {
   'Customize members’ permissions': '自定义成员权限',
   'Create a pull request': '创建拉取请求',
   'Create a branch protection rule': '创建分支保护规则',
-  'Auto-assign new issues': '自动分配新议题',
+  'Auto-assign new issues': '自动分配新议题'
 }
 
 const DURATION_RE = new RegExp(`^${DURATION_SOURCE}$`)
@@ -114,15 +113,13 @@ export default {
     'Pin workflow': '置顶工作流',
     'Unpin workflow': '取消置顶工作流',
     'Unpin this workflow?': '取消置顶此工作流？',
-    'This action will unpin the workflow for all viewers of this repository.':
-      '这将为此存储库的所有查看者取消置顶该工作流。',
+    'This action will unpin the workflow for all viewers of this repository.': '这将为此存储库的所有查看者取消置顶该工作流。',
     'Yes, unpin': '是，取消置顶',
     'This workflow does not exist.': '此工作流不存在。',
     'The workflow may have been renamed or deleted.': '此工作流可能已被重命名或删除。',
     'View all workflows': '查看全部工作流',
     'Unable to load workflow runs': '无法加载工作流运行',
-    'There was a problem loading workflow runs. Reload the page to try again.':
-      '加载工作流运行时出错。请重新加载页面。',
+    'There was a problem loading workflow runs. Reload the page to try again.': '加载工作流运行时出错。请重新加载页面。',
     'Reload page': '重新加载页面',
 
     // 运行列表
@@ -153,14 +150,12 @@ export default {
     'You can narrow down the results and go further in time using the': '你可以使用',
     'filter or the other filters available.': '筛选器或其他可用筛选器缩小结果范围并查看更早的运行。',
     'Help us improve GitHub Actions': '帮助我们改进 GitHub 操作',
-    'Tell us how to make GitHub Actions work better for you with three quick questions.':
-      '通过三个简短问题告诉我们如何改进 GitHub 操作。',
+    'Tell us how to make GitHub Actions work better for you with three quick questions.': '通过三个简短问题告诉我们如何改进 GitHub 操作。',
     'Codespaces Prebuilds': '代码空间预生成',
     'Showing all prebuild configuration runs for Codespaces. Learn about': '显示代码空间的所有预生成配置运行。了解',
     'prebuilding your codespaces.': '如何预生成代码空间。',
     'Run duration': '运行时长',
-    'This is the workflow execution time which may be different than the billed time.':
-      '这是可能与计费时间不同的工作流执行时间。',
+    'This is the workflow execution time which may be different than the billed time.': '这是可能与计费时间不同的工作流执行时间。',
     'Disruptive workflow run': '破坏性工作流运行',
     'This workflow run has been marked as disruptive': '此工作流运行已被标记为破坏性运行',
     '(Unknown event)': '（未知事件）',
@@ -177,10 +172,8 @@ export default {
     'Workflow run deleted successfully.': '工作流运行已删除。',
     'Loading workflow run delete warning': '正在加载删除警告',
     'Invalid workflow run delete warning response': '删除警告响应无效',
-    'The following pull request may not be able to be merged if this run is deleted:':
-      '以下拉取请求可能在删除此运行后无法合并：',
-    'The following pull requests may not be able to be merged if this run is deleted:':
-      '以下拉取请求可能在删除此运行后无法合并：',
+    'The following pull request may not be able to be merged if this run is deleted:': '以下拉取请求可能在删除此运行后无法合并：',
+    'The following pull requests may not be able to be merged if this run is deleted:': '以下拉取请求可能在删除此运行后无法合并：',
     'Open pull request:': '打开的拉取请求：',
     'Closed pull request:': '已关闭的拉取请求：',
     'The workflow run action could not be completed.': '无法完成工作流运行操作。',
@@ -203,8 +196,7 @@ export default {
     'Filter by the workflow run branch': '按工作流运行的分支筛选',
     'Filter by the actor who triggered a workflow run': '按触发工作流运行的参与者筛选',
     'Filter menus are not available for complex queries.': '复杂查询不支持筛选器菜单。',
-    'Adding this filter would make your query too long. Use the filter input instead.':
-      '添加此筛选器会使查询过长。请改用筛选器输入框。',
+    'Adding this filter would make your query too long. Use the filter input instead.': '添加此筛选器会使查询过长。请改用筛选器输入框。',
     'No matching events.': '没有匹配的事件。',
     'Find an event': '查找事件',
     'Find a status': '查找状态',
@@ -226,8 +218,7 @@ export default {
     'More workflow actions': '更多工作流操作',
     'Create status badge': '创建状态徽章',
     'Disable workflow': '禁用工作流',
-    'Disabling this workflow prevents future runs until it is enabled again.':
-      '禁用此工作流将阻止其在重新启用前再次运行。',
+    'Disabling this workflow prevents future runs until it is enabled again.': '禁用此工作流将阻止其在重新启用前再次运行。',
     'Enable workflow': '启用工作流',
     'Enabling workflow': '正在启用工作流',
     'Continue running workflow': '继续运行工作流',
@@ -239,10 +230,8 @@ export default {
     'This scheduled workflow is disabled because scheduled workflows are disabled by default in forks.':
       '此计划工作流因复刻中默认禁用计划工作流而被禁用。',
     'This workflow was disabled manually.': '此工作流已被手动禁用。',
-    'This workflow will be disabled soon because there’s no recent activity in the repository.':
-      '此工作流因存储库近期没有活动即将被禁用。',
-    "This workflow will be disabled soon because there's no recent activity in the repository.":
-      '此工作流因存储库近期没有活动即将被禁用。',
+    'This workflow will be disabled soon because there’s no recent activity in the repository.': '此工作流因存储库近期没有活动即将被禁用。',
+    "This workflow will be disabled soon because there's no recent activity in the repository.": '此工作流因存储库近期没有活动即将被禁用。',
     'GitHub Actions is currently disabled for this workflow.': '此工作流当前已禁用 GitHub 操作。',
     'GitHub Actions is currently disabled for your account.': '你的帐户当前已禁用 GitHub 操作。',
     'GitHub Actions is currently disabled for this repository.': '此存储库当前已禁用 GitHub 操作。',
@@ -271,8 +260,7 @@ export default {
     'Loading workflow details.': '正在加载工作流详细信息。',
     'Workflow details could not be loaded.': '无法加载工作流详细信息。',
     'Try loading the workflow details again.': '重新加载工作流详细信息。',
-    'Workflow details could not be loaded. Try loading the workflow details again.':
-      '无法加载工作流详细信息。请重新加载。',
+    'Workflow details could not be loaded. Try loading the workflow details again.': '无法加载工作流详细信息。请重新加载。',
     'Workflow dispatch': '工作流调度',
     'Workflow inputs': '工作流输入',
     'Workflow dispatch failed': '工作流调度失败',
@@ -326,10 +314,8 @@ export default {
     'The billing plan for': '帐户',
     'does not include access to GitHub Actions. Please contact the organization owner or billing manager for questions about the current billing plan':
       '的计费计划不包含 GitHub 操作的访问权限。请联系组织所有者或账单管理员咨询当前计费计划',
-    'Your account’s billing is currently locked. Please update your payment information.':
-      '你的帐户计费已锁定。请更新付款信息。',
-    "Your account's billing is currently locked. Please update your payment information.":
-      '你的帐户计费已锁定。请更新付款信息。',
+    'Your account’s billing is currently locked. Please update your payment information.': '你的帐户计费已锁定。请更新付款信息。',
+    "Your account's billing is currently locked. Please update your payment information.": '你的帐户计费已锁定。请更新付款信息。',
     'GitHub Actions workflows can’t be executed on this repository.': '此存储库无法执行 GitHub 操作工作流。',
     "GitHub Actions workflows can't be executed on this repository.": '此存储库无法执行 GitHub 操作工作流。',
     'Learn more about GitHub Actions': '了解 GitHub 操作',
@@ -357,7 +343,7 @@ export default {
     'See all tasks': '查看所有任务',
     'You’ve completed all your tasks!': '你已完成所有任务！',
     "You've completed all your tasks!": '你已完成所有任务！',
-    'Discover more GitHub features or upgrade your plan.': '探索更多 GitHub 功能或升级计划。',
+    'Discover more GitHub features or upgrade your plan.': '探索更多 GitHub 功能或升级计划。'
   },
 
   scoped: {
@@ -418,74 +404,56 @@ export default {
     'Client apps': '客户端应用',
     'Project management': '项目管理',
     'Team administration': '团队管理',
-    'Talk to us': '联系我们',
+    'Talk to us': '联系我们'
   },
 
   regexp: [
     // 运行条目的无障碍名称
     [
       new RegExp(`^(${RUN_STATUS_LABEL_SOURCE}): Run (\\d+) of (.+?)\\.(?: (.+))?$`),
-      (_, status: string, number: string, workflow: string, title: string) => runLabel(status, number, workflow, title),
+      (_, status: string, number: string, workflow: string, title: string) => runLabel(status, number, workflow, title)
     ],
-    [
-      /^(More )?actions for workflow run (\d+)$/,
-      (_, more: string, number: string) => `工作流运行 ${number} 的${more ? '更多' : ''}操作`,
-    ],
+    [/^(More )?actions for workflow run (\d+)$/, (_, more: string, number: string) => `工作流运行 ${number} 的${more ? '更多' : ''}操作`],
     [/^View pull request #(\d+)$/, '查看拉取请求 #$1'],
     [/^#(\d+) \(comment\)$/, '#$1（评论）'],
     // 运行数量
-    [
-      /^([\d,]+\+?) workflow runs?( results?)?$/,
-      (_, count: string, results: string) => `${count} 个工作流运行${results ? '结果' : ''}`,
-    ],
+    [/^([\d,]+\+?) workflow runs?( results?)?$/, (_, count: string, results: string) => `${count} 个工作流运行${results ? '结果' : ''}`],
     [/^([\d,]+) workflow runs? loaded$/, '已加载 $1 个工作流运行'],
-    [
-      /^Workflow runs for (.+?)( results)?$/,
-      (_, name: string, results: string) => `${name} 的工作流运行${results ? '结果' : ''}`,
-    ],
+    [/^Workflow runs for (.+?)( results)?$/, (_, name: string, results: string) => `${name} 的工作流运行${results ? '结果' : ''}`],
     [/^([\d,]+) workflows? shown$/, '显示 $1 个工作流'],
     [/^Auto-refresh: (.+)$/, (_, label: string) => `自动刷新：${refreshInterval(label)}`],
     [
       new RegExp(`^(${DURATION_SOURCE})\\. Show run duration details$`),
-      (_, duration: string) => `${formatDuration(duration)}。显示运行时长详细信息`,
+      (_, duration: string) => `${formatDuration(duration)}。显示运行时长详细信息`
     ],
-    [
-      /^This workflow run has been marked as disruptive\. Workflow run ID (\d+)\.$/,
-      '此工作流运行已被标记为破坏性运行。工作流运行 ID $1。',
-    ],
+    [/^This workflow run has been marked as disruptive\. Workflow run ID (\d+)\.$/, '此工作流运行已被标记为破坏性运行。工作流运行 ID $1。'],
     [/^(\d+) pull requests? may be affected\.$/, '可能影响 $1 个拉取请求。'],
     // 筛选栏
     [
       new RegExp(`^Unable to load (${FILTER_KEY_SOURCE}) filters(\\. Try again\\.|\\.)?$`),
       (_, key: string, suffix: string) =>
-        `无法加载${pick(FILTER_KEYS, key) ?? key}筛选器${suffix ? (suffix === '.' ? '。' : '。请重试。') : ''}`,
+        `无法加载${pick(FILTER_KEYS, key) ?? key}筛选器${suffix ? (suffix === '.' ? '。' : '。请重试。') : ''}`
     ],
     [/^(.+) will be ignored since log searching is not yet available$/, '因暂不支持日志搜索而忽略 $1'],
     [/^(.+), Excluded$/, '$1，已排除'],
     // 筛选框建议项的 aria-label：ci, Workflow；Exclude workflow
     [
       new RegExp(`^(.+), (${Object.keys(FILTER_PROVIDERS).join('|')})$`),
-      (_, value: string, provider: string) => suggestionLabel(value, provider),
+      (_, value: string, provider: string) => suggestionLabel(value, provider)
     ],
-    [
-      new RegExp(`^Exclude (${Object.keys(EXCLUDE_KEYS).join('|')})$`),
-      (_, key: string) => `排除${pick(EXCLUDE_KEYS, key) ?? key}`,
-    ],
+    [new RegExp(`^Exclude (${Object.keys(EXCLUDE_KEYS).join('|')})$`), (_, key: string) => `排除${pick(EXCLUDE_KEYS, key) ?? key}`],
     // 计划工作流因不活跃被禁用
     [
       /^This scheduled workflow is disabled because there hasn['’]t been activity in this repository for at least (\d+) days\.( Enable this workflow to resume scheduled runs\.)?$/,
       (_, days: string, resume: string) =>
-        `此计划工作流因存储库已至少 ${days} 天没有活动而被禁用。${resume ? '启用此工作流以恢复计划运行。' : ''}`,
+        `此计划工作流因存储库已至少 ${days} 天没有活动而被禁用。${resume ? '启用此工作流以恢复计划运行。' : ''}`
     ],
     [
       /^Workflow (.+) (pinned|unpinned)\.$/,
-      (_, name: string, action: string) => `工作流 ${name} 已${action === 'pinned' ? '置顶' : '取消置顶'}。`,
+      (_, name: string, action: string) => `工作流 ${name} 已${action === 'pinned' ? '置顶' : '取消置顶'}。`
     ],
     // 入门引导：Up next: <任务名>
-    [
-      /^Up next:(?: (.+))?$/,
-      (_, task: string | undefined) => `下一步：${task ? (pick(ONBOARDING_TASKS, task) ?? task) : ''}`,
-    ],
+    [/^Up next:(?: (.+))?$/, (_, task: string | undefined) => `下一步：${task ? (pick(ONBOARDING_TASKS, task) ?? task) : ''}`],
     // 手动运行、状态徽章的引用选择器
     [/^Use workflow from: (.+)$/, '工作流来源：$1'],
     [/^(Branch|Tag): (.+)$/, (_, kind: string, name: string) => `${kind === 'Branch' ? '分支' : '标签'}：${name}`],
@@ -493,7 +461,7 @@ export default {
     // 宽泛规则：须在其他文件的具体规则之后
     [/^(Pin|Unpin) (.+)$/, (_, action: string, name: string) => `${action === 'Pin' ? '置顶' : '取消置顶'} ${name}`],
     [/^Download (.+?)(?: \(opens in a new tab\))?$/, '下载 $1'],
-    [/^Delete (.+)$/, '删除 $1'],
+    [/^Delete (.+)$/, '删除 $1']
   ],
 
   ignore: [
@@ -503,6 +471,6 @@ export default {
     '[data-component="PageHeader"]:has(a[href*="/.github/workflows/"]) [data-component="PH_Title"]',
     // 筛选框建议与表头筛选面板中的工作流名、事件标识符、分支名、用户名
     SUGGESTION_VALUE_IGNORE,
-    HEADER_FILTER_VALUE_IGNORE,
-  ],
+    HEADER_FILTER_VALUE_IGNORE
+  ]
 } satisfies PageDictionary

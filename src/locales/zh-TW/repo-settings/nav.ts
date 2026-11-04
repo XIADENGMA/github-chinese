@@ -64,7 +64,7 @@ export default {
       '已封存儲存庫的大多數設定都會隱藏。必須先取消封存此儲存庫才能變更這些設定。',
     "You don't have access to repository options": '你無權存取儲存庫選項',
     'You don’t have access to repository options': '你無權存取儲存庫選項',
-    'Check the sidebar for available repository settings.': '請在側邊欄查看可用的儲存庫設定。',
+    'Check the sidebar for available repository settings.': '請在側邊欄查看可用的儲存庫設定。'
   },
   scoped: {
     // 与组织设置、个人设置同名的菜单项
@@ -99,10 +99,10 @@ export default {
     'Private registries': '私人登錄庫',
     'GitHub Apps': 'GitHub 應用程式',
     'Rule insights': '規則洞察',
-    'Rule Insights': '規則洞察',
+    'Rule Insights': '規則洞察'
   },
   regexp: [
     // 侧栏标题（读屏）：Settings: owner/repo
-    [/^Settings: ([\w.-]+\/[\w.-]+)$/, '設定：$1'],
-  ],
+    [/^Settings: ([\w.-]+\/[\w.-]+)$/, '設定：$1']
+  ]
 } satisfies PageDictionary

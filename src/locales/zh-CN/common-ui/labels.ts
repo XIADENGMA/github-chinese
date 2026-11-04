@@ -6,7 +6,7 @@ import {
   LABEL_NAME_SOURCE,
   labelDescription,
   labelName,
-  labelTokenName,
+  labelTokenName
 } from '../issues/labels'
 import { joinName } from '../issues/list'
 
@@ -23,14 +23,14 @@ export default {
       'button[class*="filterLink__"]',
       'aria-label',
       new RegExp(`^Filter by label (${LABEL_NAME_SOURCE})$`),
-      (_, name: string) => joinName(joinName('按标签', labelName(name)), '筛选'),
+      (_, name: string) => joinName(joinName('按标签', labelName(name)), '筛选')
     ],
     // 项目卡片上的标签令牌（按钮本身是令牌）：Label: 加标签名，已存档的标签名前加 Archived；自定义标签名保持原文
     [
       'button[class*="prc-Token-IssueLabel-"]',
       'aria-label',
       /^Label: (?:(Archived) )?(.+)$/,
-      (_, archived: string, name: string) => `标签：${archivedLabelName(archived, name)}`,
+      (_, archived: string, name: string) => `标签：${archivedLabelName(archived, name)}`
     ],
     // 可删除的标签令牌旁的删除按钮（移除中按钮禁用，名称写在 aria-label 上；常态的名称取自提示文字，见 issues/metadata.ts）：
     // 同 issues/metadata.ts 的 Remove label: 规则；已存档的标签名前加 Archived
@@ -38,7 +38,7 @@ export default {
       'button',
       'aria-label',
       new RegExp(`^Remove label: (?:(Archived) )?(${LABEL_NAME_SOURCE})$`),
-      (_, archived: string, name: string) => `删除标签：${archivedLabelName(archived, name)}`,
+      (_, archived: string, name: string) => `删除标签：${archivedLabelName(archived, name)}`
     ],
     // 新建、编辑标签对话框的预览令牌（令牌本身带 aria-label，值是令牌里显示的名称）：与令牌同译，自定义名称保持原文
     // （命中后不再查词典：与词条同形的自定义名称不译）
@@ -48,8 +48,8 @@ export default {
       '[class*="labelDescriptionTooltip__"]',
       'aria-label',
       new RegExp(`^(${LABEL_DESCRIPTION_SOURCE})$`),
-      (_, description: string) => labelDescription(description),
+      (_, description: string) => labelDescription(description)
     ],
-    ['[class*="labelDescriptionTooltip__"]', 'aria-label', ...ECOSYSTEM_DESCRIPTION],
-  ],
+    ['[class*="labelDescriptionTooltip__"]', 'aria-label', ...ECOSYSTEM_DESCRIPTION]
+  ]
 } satisfies PageDictionary

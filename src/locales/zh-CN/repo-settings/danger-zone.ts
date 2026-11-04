@@ -7,7 +7,7 @@ const COUNT = '(\\d[\\d,]*)'
 const VISIBILITY: Readonly<Record<string, string>> = {
   private: '专用',
   public: '公共',
-  internal: '内部',
+  internal: '内部'
 }
 
 /**
@@ -33,8 +33,7 @@ export default {
     'I want to make this repository public': '我要将此存储库设为公共',
     'I want to make this repository private': '我要将此存储库设为专用',
     'I want to make this repository internal': '我要将此存储库设为内部',
-    'The code will be visible to everyone who can visit https://github.com':
-      '所有能访问 https://github.com 的人都能看到代码',
+    'The code will be visible to everyone who can visit https://github.com': '所有能访问 https://github.com 的人都能看到代码',
     "Attachments uploaded to this repository's issues and pull requests will not be accessible unless it is made private again.":
       '上传到此存储库议题和拉取请求的附件将无法访问，除非重新设为专用。',
     'Attachments uploaded to this repository’s issues and pull requests will not be accessible unless it is made private again.':
@@ -60,17 +59,14 @@ export default {
     'Any custom Dependabot alert rules will be disabled unless GitHub Advanced Security is enabled for this repository.':
       '除非此存储库启用了 GitHub 高级安全，否则所有自定义 Dependabot 警报规则都将被禁用。',
     'Code scanning will become unavailable.': '代码扫描将不可用。',
-    'Current forks will remain public and will be detached from this repository.':
-      '现有复刻仍为公共存储库，并与此存储库分离。',
+    'Current forks will remain public and will be detached from this repository.': '现有复刻仍为公共存储库，并与此存储库分离。',
     'Advanced Security will be disabled.': '高级安全将被禁用。',
     'I have read and understand these effects': '我已阅读并了解这些影响',
     'Warning: this is a destructive action': '警告：这是破坏性操作',
     'Warning: this is a destructive action.': '警告：这是破坏性操作。',
     'Warning: this is a potentially destructive action.': '警告：这可能是破坏性操作。',
-    'To confirm, type the number of stars on this repository in the box below':
-      '要确认，请在下方输入框中输入此存储库的星标数',
-    'To confirm, type the number of stars on this repository in the box below.':
-      '要确认，请在下方输入框中输入此存储库的星标数。',
+    'To confirm, type the number of stars on this repository in the box below': '要确认，请在下方输入框中输入此存储库的星标数',
+    'To confirm, type the number of stars on this repository in the box below.': '要确认，请在下方输入框中输入此存储库的星标数。',
 
     // 禁用 / 重新启用分支保护规则
     'Disable branch protection rules': '禁用分支保护规则',
@@ -100,12 +96,10 @@ export default {
     'Can’t leave the fork network because this fork has child forks.': '此复刻有子复刻，无法离开复刻网络。',
     "Can't detach forks larger than 1 GB.": '无法分离大于 1 GB 的复刻。',
     'Can’t detach forks larger than 1 GB.': '无法分离大于 1 GB 的复刻。',
-    'Unlink this repository from the fork network and make it standalone.':
-      '取消此存储库与复刻网络的链接，使其成为独立存储库。',
+    'Unlink this repository from the fork network and make it standalone.': '取消此存储库与复刻网络的链接，使其成为独立存储库。',
     'Detach is in progress.': '正在分离。',
     'Detaching this repository.': '正在分离此存储库。',
-    'This will permanently remove the fork relationship to the upstream repository':
-      '这将永久删除与上游存储库的复刻关系',
+    'This will permanently remove the fork relationship to the upstream repository': '这将永久删除与上游存储库的复刻关系',
     'will become a standalone repository and will no longer be able to fetch upstream updates or propose changes to the upstream repository':
       '将成为独立存储库且无法再获取上游更新或向上游存储库提议更改',
     'cannot rejoin the fork network.': '无法重新加入复刻网络。',
@@ -148,7 +142,7 @@ export default {
     'repository, wiki, issues, comments, packages, secrets, workflow runs, and remove all team associations.':
       '存储库及其 Wiki、议题、评论、软件包、机密和工作流运行，并移除所有团队关联。',
     'This will not change your billing plan. If you want to downgrade, you can do so in your Billing Settings.':
-      '这不会更改你的计费计划。如需降级，可在计费设置中操作。',
+      '这不会更改你的计费计划。如需降级，可在计费设置中操作。'
   },
   scoped: {
     'Danger Zone': '危险区域',
@@ -168,20 +162,19 @@ export default {
     'Please type': '请输入',
     'to confirm.': '以确认。',
     'This will make': '这将使',
-    'read-write.': '恢复读写。',
+    'read-write.': '恢复读写。'
   },
   regexp: [
     // 可见性对话框
     [
       new RegExp(`^Make ${REPO} (private|public|internal)$`),
-      (_, repo: string, visibility: string) => `将 ${repo} 设为${VISIBILITY[visibility] ?? visibility}`,
+      (_, repo: string, visibility: string) => `将 ${repo} 设为${VISIBILITY[visibility] ?? visibility}`
     ],
     [new RegExp(`^${COUNT} stars?$`), '$1 个星标'],
     [new RegExp(`^${COUNT} watchers?$`), '$1 个关注者'],
     [
       /^To confirm, type (?:"([^"]{1,200})"|“([^”]{1,200})”) in the box below(:?)$/,
-      (_, straight: string, curly: string, colon: string) =>
-        `要确认，请在下方输入框中输入“${straight || curly}”${colon ? '：' : ''}`,
+      (_, straight: string, curly: string, colon: string) => `要确认，请在下方输入框中输入“${straight || curly}”${colon ? '：' : ''}`
     ],
     // 禁用 / 重新启用分支保护规则
     [/^(\d+) branch protection rules?$/, '$1 条分支保护规则'],
@@ -194,10 +187,10 @@ export default {
     [/^Delete ([\w.-]+\/[\w.-]+)$/, '删除 $1'],
     [
       new RegExp(
-        `^This will permanently delete the ${REPO} repository, wiki, issues, comments, packages, secrets, workflow runs, and remove all (collaborator|team) associations\\.$`,
+        `^This will permanently delete the ${REPO} repository, wiki, issues, comments, packages, secrets, workflow runs, and remove all (collaborator|team) associations\\.$`
       ),
       (_, repo: string, kind: string) =>
-        `这将永久删除 ${repo} 存储库及其 Wiki、议题、评论、软件包、机密和工作流运行，并移除所有${kind === 'team' ? '团队' : '协作者'}关联。`,
-    ],
-  ],
+        `这将永久删除 ${repo} 存储库及其 Wiki、议题、评论、软件包、机密和工作流运行，并移除所有${kind === 'team' ? '团队' : '协作者'}关联。`
+    ]
+  ]
 } satisfies PageDictionary

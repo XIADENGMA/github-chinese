@@ -53,8 +53,7 @@ export default {
     'Asterisks (': '星號 (',
     ') and underscores (': ') 和底線 (',
     ') are treated as emphasis and are wrapped with an': ') 表示強調並會以',
-    'tag, which usually displays as italics in most browsers. Double asterisks (':
-      '標籤包住，大多數瀏覽器通常會將其顯示為斜體。雙星號 (',
+    'tag, which usually displays as italics in most browsers. Double asterisks (': '標籤包住，大多數瀏覽器通常會將其顯示為斜體。雙星號 (',
     ') or double underscores (': ') 或雙底線 (',
     ') are treated as bold using the': ') 表示粗體並使用',
     'tag. To create italic or bold text, simply wrap your words in single/double asterisks/underscores. For example,':
@@ -74,8 +73,7 @@ export default {
     'is easily produced by writing': '只要寫成',
     'If you want to use a special Markdown character in your document (such as displaying literal asterisks), you can escape the character with the backslash (':
       '如果要在文件中使用 Markdown 特殊字元（例如顯示星號本身），可以用反斜線 (',
-    '). Markdown will ignore the character directly after a backslash.':
-      ') 逸出該字元。Markdown 會忽略緊接在反斜線後面的字元。',
+    '). Markdown will ignore the character directly after a backslash.': ') 逸出該字元。Markdown 會忽略緊接在反斜線後面的字元。',
 
     // AsciiDoc 说明：文字格式
     'ASCIIDoc headers can be written in two ways: with differing underlines or with different indentation using':
@@ -92,19 +90,16 @@ export default {
     // AsciiDoc 说明：区块
     'ASCIIDoc allows paragraphs to have optional titles or icons to denote special sections. To make a normal paragraph, simply add a line between blocks and a new paragraph will start. If you want to title your paragraphs, adda line prefixed by':
       'ASCIIDoc 允許段落加上選用的標題或圖示來標示特殊區段。若要建立一般段落，只要在區塊之間加一個空行就會開始新段落。如果要為段落加上標題，請新增一行以',
-    '(full stop). An example paragraph with optional title is displayed below:':
-      '（句點）開頭的文字。下方是帶有選用標題的段落範例：',
+    '(full stop). An example paragraph with optional title is displayed below:': '（句點）開頭的文字。下方是帶有選用標題的段落範例：',
     'To create source blocks (long blocks of code), follow the same syntax as above but with an extra line denoting the inline source and lines of four dashes (':
       '若要建立原始碼區塊（較長的程式碼區塊），請沿用上方的語法並額外加上一行標明原始碼語言的文字和由四個連字號 (',
-    ') delimiting the source block.. An example of Python source is below:':
-      ') 組成的分隔線來界定原始碼區塊。下方是 Python 原始碼範例：',
+    ') delimiting the source block.. An example of Python source is below:': ') 組成的分隔線來界定原始碼區塊。下方是 Python 原始碼範例：',
     'Comment blocks are useful if you want to keep notes for yourself inline but do not want them displayed to the public. To create a comment block, simply wrap the paragraph in dividers with four slashes (':
       '想在內文中為自己留下附註又不想公開顯示時可以使用註解區塊。若要建立註解區塊，只要用由四個斜線 (',
     '). An example comment block is below:': ') 組成的分隔線包住段落。下方是註解區塊範例：',
     'Quote blocks work much like comment blocks — simply create dividers using four underscores (':
       '引用區塊的用法和註解區塊很像——只要用四個底線 (',
-    ') around your quote. An example quote block is displayed below:':
-      ') 在引用內容前後建立分隔線。下方是引用區塊範例：',
+    ') around your quote. An example quote block is displayed below:': ') 在引用內容前後建立分隔線。下方是引用區塊範例：',
 
     // AsciiDoc 说明：巨集
     'To create links to external pages, you can simply write the URI if you want the URI to link to itself. (i.e.,':
@@ -139,8 +134,7 @@ export default {
     'To create headings 1 through 4, begin your command paragraph with': '若要建立 1～4 級標題，請在命令段落開頭寫上',
     'is the number of the heading 1 through 4. For example, to make a first-order heading (the largest possible,) write':
       '是 1～4 的標題層級。例如，若要建立一級標題（最大的標題），請寫上',
-    ', then on the next line begin your paragraph that you want under the heading.':
-      '，然後在下一行開始撰寫該標題下的段落。',
+    ', then on the next line begin your paragraph that you want under the heading.': '，然後在下一行開始撰寫該標題下的段落。',
     'Perl pod blocks should begin with': 'Perl pod 區塊應以',
     ', signifying to Pod parsers that the pod block has begun and ended. These command paragraphs only signal the beginning and end of a pod block.':
       '結尾，藉此告知 Pod 剖析器 pod 區塊的開始和結束。這些命令段落只用來標示 pod 區塊的開始和結束。',
@@ -148,17 +142,13 @@ export default {
       'pod 也支援其他格式的區塊，例如 HTML 或純文字。若要建立這類區塊，請使用',
     '). At the end of your block, use the': '）。在區塊結尾，請使用',
     'If you are having encoding troubles, use the': '如果遇到編碼問題，請使用',
-    '). This will affect the entire document, not just the block below the command.':
-      '）。這會影響整份文件，而不只是命令下方的區塊。',
+    '). This will affect the entire document, not just the block below the command.': '）。這會影響整份文件，而不只是命令下方的區塊。',
 
     // Pod 说明：格式设定
-    'is an abbreviation for the type of text you are trying to create. For example,':
-      '是你要建立的文字類型的縮寫。例如，',
-    'Writing hyperlinks in pod is much like formatting text, using the same':
-      '在 pod 中撰寫超連結和設定文字格式很像，使用相同的',
+    'is an abbreviation for the type of text you are trying to create. For example,': '是你要建立的文字類型的縮寫。例如，',
+    'Writing hyperlinks in pod is much like formatting text, using the same': '在 pod 中撰寫超連結和設定文字格式很像，使用相同的',
     // man page 作「man 手冊頁」
-    'page, a Perl documentation page, or another web page. To link to a':
-      '手冊頁、Perl 說明文件頁面或其他網頁。若要連結到',
+    'page, a Perl documentation page, or another web page. To link to a': '手冊頁、Perl 說明文件頁面或其他網頁。若要連結到',
     'or Perl documentation page, simply include the page name in the link (e.g.':
       '手冊頁或 Perl 說明文件頁面，只要在連結中加入頁面名稱（例如',
     '). If you want to link to a web page, separate the URL and the link text with a pipe (e.g. to link to github.com, write':
@@ -181,12 +171,10 @@ export default {
     // Textile 说明：区块修饰
     'To display a heading in Textile, prefix your line of text with': '若要在 Textile 中顯示標題，請在文字行前面加上',
     'equals the heading size you want (1 is largest, 6 is smallest).': '代表你要的標題大小（1 最大，6 最小）。',
-    'To create a new paragraph, prefix your first line of a block of text with':
-      '若要建立新段落，請在文字區塊的第一行前面加上',
+    'To create a new paragraph, prefix your first line of a block of text with': '若要建立新段落，請在文字區塊的第一行前面加上',
     'To create a blockquote, make sure at least one blank line exists between your text and any surrounding text, and then prefix that block with':
       '若要建立區塊引用，請確認文字和周圍的文字之間至少有一個空行，然後在該區塊前面加上',
-    'If you need to extend a blockquote to more than one text block, write':
-      '如果區塊引用需要延續到多個文字區塊，請寫上',
+    'If you need to extend a blockquote to more than one text block, write': '如果區塊引用需要延續到多個文字區塊，請寫上',
     '(note the two periods) and prefix your next normal paragraph with': '（注意是兩個句點）並在下一個一般段落前面加上',
     'Code blocks in textile are simply prefixed like any other block. To create a code block, place the beginning of the block on a separate line and prefix it with':
       'Textile 中的程式碼區塊和其他區塊一樣只要在前面加上標記。若要建立程式碼區塊，請將區塊開頭單獨放在一行並在前面加上',
@@ -200,7 +188,7 @@ export default {
     '), then the URL after the colon. For example': ')，再在冒號後面寫上 URL。例如',
     'To display an image, simply wrap the image’s URL in': '若要顯示圖片，只要用',
     '(exclamation points). If you want to link the image to a URL, you can blend the image and link syntax: place your image URL in the exclamation points and suffix that with a colon and your URL. For example, an image at':
-      '（驚嘆號）包住圖片的 URL。如果要將圖片連結到某個 URL，可以結合圖片和連結語法：將圖片 URL 放在驚嘆號之間並在後面加上冒號和你的 URL。例如，位於',
+      '（驚嘆號）包住圖片的 URL。如果要將圖片連結到某個 URL，可以結合圖片和連結語法：將圖片 URL 放在驚嘆號之間並在後面加上冒號和你的 URL。例如，位於'
   },
   scoped: {
     // 新版编辑器工具列（登入后）；h1～h3 作「標題 1～3」（与 common-ui 编辑器的「標題 N」一致）
@@ -335,7 +323,7 @@ export default {
     'will appear as': '會顯示為',
     'will be displayed as': '會顯示為',
     'that should link to': '並要連結到',
-    'should be written as': '的圖片應寫成',
+    'should be written as': '的圖片應寫成'
   },
   // 分句之间单独的「 and 」文本节点按片段命中 common 的「和」，分句读成名词并列；整句收录，改作「而」
   // （同面板名词并列的 and 仍作「和」，不加 scoped）。上面的片段键保留作后备
@@ -345,7 +333,7 @@ export default {
     // 原文结尾无标点，译文不加
     [
       'To display edit marks such as deleted text (strikethrough) or inserted text (underlined text), wrap your text in {} (minuses) or {} (pluses). For example {} will be rendered as {} and {} will be rendered as {}',
-      '若要顯示刪除文字（刪除線）或插入文字（底線文字）等編輯標記，請用 {}（減號）或 {}（加號）包住文字。例如 {} 會轉譯為 {} 而 {} 會轉譯為 {}',
+      '若要顯示刪除文字（刪除線）或插入文字（底線文字）等編輯標記，請用 {}（減號）或 {}（加號）包住文字。例如 {} 會轉譯為 {} 而 {} 會轉譯為 {}'
     ],
     // Pod 说明：Formatting text as <strong>bold</strong>, <em>italic</em> or <code>code</code> works in the …
     // For example, <code>B…</code> becomes <strong>…</strong>,  <code>I…</code> becomes <em>…</em> and …
@@ -354,7 +342,7 @@ export default {
     // 例句后半：「……I<italic text> 會變成 italic text 而 C<code here()> 會變成 code here()。」
     [
       'Formatting text as {}, {} or {} works in the {} syntax, where {} is an abbreviation for the type of text you are trying to create. For example, {} becomes {}, {} becomes {} and {} becomes {}.',
-      '將文字格式設定為{}、{}或 {} 可使用 {} 語法，其中 {} 是你要建立的文字類型的縮寫。例如，{} 會變成 {}，{} 會變成 {} 而 {} 會變成 {}。',
-    ],
-  ],
+      '將文字格式設定為{}、{}或 {} 可使用 {} 語法，其中 {} 是你要建立的文字類型的縮寫。例如，{} 會變成 {}，{} 會變成 {} 而 {} 會變成 {}。'
+    ]
+  ]
 } satisfies PageDictionary

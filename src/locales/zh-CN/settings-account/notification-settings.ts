@@ -5,7 +5,7 @@ const CHANNELS: Readonly<Record<string, string>> = {
   'on GitHub': 'GitHub',
   'On GitHub': 'GitHub',
   Email: '电子邮件',
-  CLI: 'CLI',
+  CLI: 'CLI'
 }
 
 /** 自定义电子邮件更新摘要中的事件名（Reviews, Pushes, Comments, My own updates） */
@@ -13,7 +13,7 @@ const EMAIL_EVENTS: Readonly<Record<string, string>> = {
   Reviews: '审查',
   Pushes: '推送',
   Comments: '评论',
-  'My own updates': '我自己的更新',
+  'My own updates': '我自己的更新'
 }
 
 const CHANNEL_SOURCE = '(?:[oO]n GitHub|Email|CLI)'
@@ -22,7 +22,7 @@ const EVENT_SOURCE = '(?:Reviews|Pushes|Comments|My own updates)'
 function joinItems(list: string, names: Readonly<Record<string, string>>): string {
   return list
     .split(', ')
-    .map((item) => names[item] ?? item)
+    .map(item => names[item] ?? item)
     .join('、')
 }
 
@@ -44,8 +44,7 @@ export default {
     'add more email addresses': '添加更多电子邮件地址',
     '. Use': '。使用',
     'custom routes': '自定义路由',
-    'to specify different email addresses to be used for individual organizations.':
-      '为各个组织指定不同的电子邮件地址。',
+    'to specify different email addresses to be used for individual organizations.': '为各个组织指定不同的电子邮件地址。',
     'Custom routing': '自定义路由',
     'Custom Routing': '自定义路由',
 
@@ -60,10 +59,8 @@ export default {
       '每当你加入新团队，都会自动订阅其更新并在该团队被 @提及 时收到通知。',
 
     // 订阅：关注
-    "Notifications for all repositories, teams, or conversations you're watching.":
-      '你关注的所有存储库、团队或对话的通知。',
-    'Notifications for all repositories, teams, or conversations you’re watching.':
-      '你关注的所有存储库、团队或对话的通知。',
+    "Notifications for all repositories, teams, or conversations you're watching.": '你关注的所有存储库、团队或对话的通知。',
+    'Notifications for all repositories, teams, or conversations you’re watching.': '你关注的所有存储库、团队或对话的通知。',
     'View watched repositories': '查看已关注的存储库',
     'Select notification channels': '选择通知渠道',
     'On GitHub': '在 GitHub 上',
@@ -96,8 +93,7 @@ export default {
 
     // 系统：Actions（说明被 “GitHub Actions” 链接拆开；产品名按用户规定译成中文：GitHub Actions → GitHub 操作）
     'Notifications for workflow runs on repositories set up with': '已设置以下功能的存储库中的工作流运行通知',
-    'Notifications for workflow runs on repositories set up with GitHub Actions.':
-      '已设置 GitHub 操作的存储库中的工作流运行通知。',
+    'Notifications for workflow runs on repositories set up with GitHub Actions.': '已设置 GitHub 操作的存储库中的工作流运行通知。',
     'Only notify for failed workflows': '仅在工作流失败时通知',
     'Failed workflows only': '仅失败的工作流',
     'Agent tasks': '代理任务',
@@ -141,7 +137,7 @@ export default {
     'Add new route': '添加新路由',
     'Pick organization': '选择组织',
     'Search organizations': '搜索组织',
-    'Select Email': '选择电子邮件',
+    'Select Email': '选择电子邮件'
   },
   scoped: {
     // 订阅分组名；settings-developer 的权限名 Watching 同在 settings 页面类型，共用此条
@@ -153,7 +149,7 @@ export default {
     // 产品名按用户规定译成中文：系统分组的 Actions 标题、计费页的产品名、GitHub 应用权限名同用；
     // 说明中的 “GitHub Actions” 链接
     Actions: '操作',
-    'GitHub Actions': 'GitHub 操作',
+    'GitHub Actions': 'GitHub 操作'
   },
   regexp: [
     // “Notify me:” 下拉按钮的渠道摘要：on GitHub, Email, CLI
@@ -161,11 +157,11 @@ export default {
     // Actions 通知勾选“仅失败的工作流”时的摘要：Email. (Failed workflows only)
     [
       new RegExp(`^(${CHANNEL_SOURCE}(?:, ${CHANNEL_SOURCE})*)\\. \\(Failed workflows only\\)$`),
-      (_, list: string) => `${joinItems(list, CHANNELS)}（仅失败的工作流）`,
+      (_, list: string) => `${joinItems(list, CHANNELS)}（仅失败的工作流）`
     ],
     // 自定义电子邮件更新的事件摘要：Reviews, Pushes, Comments
     [new RegExp(`^(${EVENT_SOURCE}(?:, ${EVENT_SOURCE})*)$`), (_, list: string) => joinItems(list, EMAIL_EVENTS)],
     // 自定义路由：默认电子邮件未被拆开时
-    [/^(\S+@\S+) is your current default email for notifications\.$/, '$1 是你当前默认的通知电子邮件。'],
-  ],
+    [/^(\S+@\S+) is your current default email for notifications\.$/, '$1 是你当前默认的通知电子邮件。']
+  ]
 } satisfies PageDictionary

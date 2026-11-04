@@ -43,8 +43,7 @@ export default {
       '禁用依赖项关系图也会禁用 Dependabot 警报和 Dependabot 安全更新。',
     'Disabling the dependency graph will also disable Dependabot alerts.': '禁用依赖项关系图也会禁用 Dependabot 警报。',
     'Automatic dependency submission': '自动依赖项提交',
-    'Automatically detect and report build-time dependencies for select ecosystems.':
-      '自动检测并报告部分生态系统的构建时依赖项。',
+    'Automatically detect and report build-time dependencies for select ecosystems.': '自动检测并报告部分生态系统的构建时依赖项。',
     'Use standard GitHub runners': '使用标准 GitHub 运行器',
     'Enabled for labeled runners': '已为带标签的运行器启用',
     "Use runners labeled with 'dependency-submission'": '使用带有“dependency-submission”标签的运行器',
@@ -104,14 +103,12 @@ export default {
     'Learn more about configuring a dependabot.yml file': '了解如何配置 dependabot.yml 文件',
     'Learn more about configuring a dependabot.yml file.': '了解如何配置 dependabot.yml 文件。',
     'Learn more about Dependabot.': '了解 Dependabot。',
-    'Run Dependabot security and version updates on Actions runners.':
-      '在操作运行器上运行 Dependabot 安全更新和版本更新。',
+    'Run Dependabot security and version updates on Actions runners.': '在操作运行器上运行 Dependabot 安全更新和版本更新。',
     'Run Dependabot security and version updates on self-hosted Actions runners.':
       '在自托管的操作运行器上运行 Dependabot 安全更新和版本更新。',
 
     // 代码扫描
-    'Code scanning with GitHub Actions is not available for this repository.':
-      '此存储库无法使用基于 GitHub 操作的代码扫描。',
+    'Code scanning with GitHub Actions is not available for this repository.': '此存储库无法使用基于 GitHub 操作的代码扫描。',
     'GitHub Actions is disabled on this repository because it is a fork. To use code scanning please':
       '此存储库是复刻，已禁用 GitHub 操作。要使用代码扫描，请',
     'GitHub Actions is disabled on this repository by an enterprise or organization policy. To use code scanning, please ask your organization administrator to enable Actions, or':
@@ -121,17 +118,14 @@ export default {
     'Actors must submit requests to dismiss an alert. This can impact pull requests requiring code scanning dismissal to merge.':
       '参与者必须提交请求才能消除警报。这可能影响需要消除代码扫描警报才能合并的拉取请求。',
     'CodeQL analysis': 'CodeQL 分析',
-    'Identify vulnerabilities and errors with CodeQL for eligible repositories.':
-      '使用 CodeQL 识别符合条件的存储库中的漏洞和错误。',
+    'Identify vulnerabilities and errors with CodeQL for eligible repositories.': '使用 CodeQL 识别符合条件的存储库中的漏洞和错误。',
     'Last scan': '上次扫描',
     'CodeQL will automatically find the best configuration for your repository.': 'CodeQL 将自动为存储库找到最佳配置。',
     'Languages detected in this repository are not compatible with this setup type at this time. Use the advanced setup instead.':
       '此存储库中检测到的语言目前与此设置类型不兼容，请改用高级设置。',
-    'Customize your CodeQL configuration via a YAML file checked into the repository.':
-      '通过签入存储库的 YAML 文件自定义 CodeQL 配置。',
+    'Customize your CodeQL configuration via a YAML file checked into the repository.': '通过签入存储库的 YAML 文件自定义 CodeQL 配置。',
     'Not supported': '不支持',
-    'Languages on this repository are not compatible with this feature. Learn more about':
-      '此存储库中的语言与此功能不兼容。了解',
+    'Languages on this repository are not compatible with this feature. Learn more about': '此存储库中的语言与此功能不兼容。了解',
     'supported languages and frameworks': '支持的语言和框架',
     'CodeQL default configuration': 'CodeQL 默认配置',
     'These languages were detected on the default branch of this repository.': '在此存储库的默认分支上检测到这些语言。',
@@ -139,8 +133,7 @@ export default {
     'CodeQL will automatically perform the first scan when it detects': 'CodeQL 在默认分支上检测到',
     'a supported language': '受支持的语言',
     'CodeQL high-precision queries.': 'CodeQL 高精确度查询。',
-    'Queries from the default suite, plus lower severity and precision queries.':
-      '默认套件中的查询，外加较低严重性和精确度的查询。',
+    'Queries from the default suite, plus lower severity and precision queries.': '默认套件中的查询，外加较低严重性和精确度的查询。',
     'This is the runner default setup will use to run': '这是默认设置运行时将使用的运行器',
     'Loading runner info...': '正在加载运行器信息...',
     'Loading runner info…': '正在加载运行器信息…',
@@ -188,8 +181,7 @@ export default {
       '使用 AI 为第三方警报建议修复。请确保这些工具已正确配置或已上传分析结果，此功能才能工作。了解',
     'limitations of autofix code suggestions for third party tools': '第三方工具自动修复代码建议的局限性',
     'Check runs failure threshold': '检查运行失败阈值',
-    'Select the alert severity level for code scanning check runs to fail.':
-      '选择导致代码扫描检查运行失败的警报严重级别。',
+    'Select the alert severity level for code scanning check runs to fail.': '选择导致代码扫描检查运行失败的警报严重级别。',
     'Create a branch ruleset': '创建分支规则集',
     // 「Create a branch ruleset」链接 +「to prevent a branch from merging when these checks fail.」
     'to prevent a branch from merging when these checks fail.': '以在这些检查失败时阻止分支合并。',
@@ -214,8 +206,7 @@ export default {
     'This will enable Secret Protection for your repository.': '这将为你的存储库启用机密保护。',
     'Enable secret scanning alerts': '启用机密扫描警报',
     'No additional licenses will be consumed.': '不会额外占用许可证。',
-    'Receive alerts on GitHub for detected secrets, keys, or other tokens.':
-      '在 GitHub 上接收检测到的机密、密钥或其他令牌的警报。',
+    'Receive alerts on GitHub for detected secrets, keys, or other tokens.': '在 GitHub 上接收检测到的机密、密钥或其他令牌的警报。',
     'Custom patterns': '自定义模式',
 
     // 警报访问权限
@@ -231,7 +222,7 @@ export default {
     'Organization administrators, repository administrators, and teams with the security manager role':
       '组织管理员、存储库管理员和拥有安全管理员角色的团队',
     'These members always see code scanning, Dependabot, and secret scanning alerts.':
-      '这些成员始终可以看到代码扫描、Dependabot 和机密扫描警报。',
+      '这些成员始终可以看到代码扫描、Dependabot 和机密扫描警报。'
   },
   scoped: {
     // 代码扫描设置里单独出现的功能名（见 nav.ts 文件头）
@@ -279,8 +270,7 @@ export default {
     'Search for people or teams': '搜索人员或团队',
 
     // 推送保护绕过参与者（推送保护、规则集共用的绕过列表组件；译法同 org-settings/security.ts；原文无逗号，译文不加）
-    'Push Protection will run and the selected actor(s) will be prompted to bypass':
-      '推送保护会运行并向所选参与者显示绕过提示',
+    'Push Protection will run and the selected actor(s) will be prompted to bypass': '推送保护会运行并向所选参与者显示绕过提示',
     'Push Protection will not run and no bypass prompt will be shown': '推送保护不会运行也不显示绕过提示',
     'No actors have been selected': '尚未选择参与者',
     'At least one actor is required.': '至少需要一个参与者。',
@@ -296,7 +286,7 @@ export default {
     // Dependabot 规则页（与组织设置共用；New rule、/ New rule、Rules 由 branches.ts、nav.ts 收录）
     ...DEPENDABOT_RULES_SCOPED,
     // 「Dismiss alerts」的期限选项（组织设置由 moderation.ts 收录，不放进共用常量）
-    Indefinitely: '无限期',
+    Indefinitely: '无限期'
   },
   regexp: [
     // 代码扫描：上次扫描 / 下次扫描时间
@@ -309,6 +299,6 @@ export default {
     // 绕过列表每行菜单按钮的读屏名称：「<名称> Bypass actor actions」（与组织设置共用）
     BYPASS_ACTOR_ACTIONS_RULE,
     // Dependabot 规则（与组织设置共用）；「Managed by <组织>」由 rulesets.ts 收录
-    ...DEPENDABOT_RULES_REGEXP,
-  ],
+    ...DEPENDABOT_RULES_REGEXP
+  ]
 } satisfies PageDictionary

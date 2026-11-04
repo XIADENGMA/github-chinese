@@ -32,10 +32,8 @@ export default {
     'In-product messages': '产品内消息',
     'Notify account admins about exclusive GitHub products, services, offers, and events.':
       '向帐户管理员通知 GitHub 独家产品、服务、优惠和活动。',
-    'Allow members in your organization to request access to products, budget, or features.':
-      '允许组织成员申请使用产品、预算或功能。',
-    'Show your organization members tips about enabled products and features.':
-      '向组织成员显示已启用产品和功能的提示。',
+    'Allow members in your organization to request access to products, budget, or features.': '允许组织成员申请使用产品、预算或功能。',
+    'Show your organization members tips about enabled products and features.': '向组织成员显示已启用产品和功能的提示。',
     'Customer Research': '客户调研',
     'Allow GitHub to contact members in your organization for research and feedback surveys.':
       '允许 GitHub 联系组织成员参与调研和反馈问卷。',
@@ -79,8 +77,7 @@ export default {
     'set up redirects for your old profile page.': '为旧的个人资料页面设置重定向。',
     'set up redirects for Pages sites.': '为页面站点设置重定向。',
     'create redirects for your repositories (web and git access).': '为你的存储库创建重定向（网页和 Git 访问）。',
-    'You will need to update your local repositories to point to the new location.':
-      '你需要更新本地存储库，使其指向新位置。',
+    'You will need to update your local repositories to point to the new location.': '你需要更新本地存储库，使其指向新位置。',
     'Renaming may take a few minutes to complete.': '重命名可能需要几分钟才能完成。',
     'I understand, let’s rename my organization': '我已了解，重命名组织',
     "I understand, let's rename my organization": '我已了解，重命名组织',
@@ -93,13 +90,11 @@ export default {
 
     // 危险区域：存档
     'Archive this organization': '存档此组织',
-    'Mark this organization and all its repositories as archived and read-only.':
-      '将此组织及其所有存储库标记为已存档并设为只读。',
+    'Mark this organization and all its repositories as archived and read-only.': '将此组织及其所有存储库标记为已存档并设为只读。',
     'Archive organization': '存档组织',
     'Archive the organization': '存档组织',
     'This organization will be archived.': '此组织将被存档。',
-    'Modifying settings will be limited and creating new repositories will be blocked.':
-      '修改设置将受到限制，且无法创建新存储库。',
+    'Modifying settings will be limited and creating new repositories will be blocked.': '修改设置将受到限制，且无法创建新存储库。',
     'All repositories will be': '所有存储库都将',
     'and be read-only.': '并设为只读。',
     'Before you archive, please consider:': '存档前，请考虑：',
@@ -112,8 +107,7 @@ export default {
     'Unarchive organization': '取消存档组织',
     'Unarchive the organization': '取消存档组织',
     'This organization will be unarchived.': '此组织将取消存档。',
-    'Modifying settings will be possible and creating new repositories will be unblocked.':
-      '将可以修改设置，并可以创建新存储库。',
+    'Modifying settings will be possible and creating new repositories will be unblocked.': '将可以修改设置，并可以创建新存储库。',
     // 「Repositories will remain」+ <strong>archived</strong> +「and need to be unarchived separately.」：原文无逗号，译文不加
     'Repositories will be remain': '存储库将保持',
     'Repositories will remain': '存储库将保持',
@@ -136,7 +130,7 @@ export default {
     'Enter this organization’s name to confirm': '输入此组织的名称以确认',
     "Enter this organization's name to confirm": '输入此组织的名称以确认',
     'Cancel plan and delete the organization': '取消计划并删除组织',
-    'Delete organization': '删除组织',
+    'Delete organization': '删除组织'
   },
   scoped: {
     // 与个人设置共用的表单词（「Upload new picture」「Danger zone」团队设置页也用，由 teams 收录为 static）
@@ -186,7 +180,7 @@ export default {
     feedback: '反馈',
     'on this feature.': '。',
     'Please type': '请输入',
-    'to confirm.': '以确认。',
+    'to confirm.': '以确认。'
   },
   regexp: [
     [/^Link to social profile (\d+)$/, '社交帐户链接 $1'],
@@ -196,26 +190,23 @@ export default {
     [new RegExp(`^To confirm, type "${ORG}" in the box below$`), '要确认，请在下方输入框中输入“$1”'],
     [
       new RegExp(
-        `^Deleting the ${ORG} organization will delete all of its repositories\\. The ${ORG} username will be unavailable for 90 days\\.$`,
+        `^Deleting the ${ORG} organization will delete all of its repositories\\. The ${ORG} username will be unavailable for 90 days\\.$`
       ),
-      '删除 $1 组织将删除其所有存储库。$2 用户名将在 90 天内不可用。',
+      '删除 $1 组织将删除其所有存储库。$2 用户名将在 90 天内不可用。'
     ],
     [
       new RegExp(
-        `^Connect a Patreon account for ${ORG} to sponsor maintainers with\\. Get recognition on GitHub for sponsorships made on Patreon when the sponsored person has linked Patreon and GitHub, too, and has a public GitHub Sponsors profile\\.$`,
+        `^Connect a Patreon account for ${ORG} to sponsor maintainers with\\. Get recognition on GitHub for sponsorships made on Patreon when the sponsored person has linked Patreon and GitHub, too, and has a public GitHub Sponsors profile\\.$`
       ),
-      '为 $1 连接 Patreon 帐户以赞助维护者。如果被赞助者也链接了 Patreon 和 GitHub，并且拥有公开的 GitHub 赞助个人资料，你在 Patreon 上的赞助也会在 GitHub 上得到认可。',
-    ],
+      '为 $1 连接 Patreon 帐户以赞助维护者。如果被赞助者也链接了 Patreon 和 GitHub，并且拥有公开的 GitHub 赞助个人资料，你在 Patreon 上的赞助也会在 GitHub 上得到认可。'
+    ]
   ],
   // 重命名警告：「We」+ <strong>will</strong> / <strong>will not</strong> + 后半句，槽位里的 will / will not
   // 由 billing.ts 的 static 译成“将 / 不会”，拼读为“我们不会为旧的个人资料页面设置重定向。”
   inline: [
-    [
-      'We {} create redirects for your repositories (web and git access).',
-      '我们{}为你的存储库创建重定向（网页和 Git 访问）。',
-    ],
+    ['We {} create redirects for your repositories (web and git access).', '我们{}为你的存储库创建重定向（网页和 Git 访问）。'],
     ['We {} set up redirects for your old profile page.', '我们{}为旧的个人资料页面设置重定向。'],
     ['We {} set up redirects for Pages sites.', '我们{}为页面站点设置重定向。'],
-    ['We {} set up redirects for your Pages sites.', '我们{}为你的页面站点设置重定向。'],
-  ],
+    ['We {} set up redirects for your Pages sites.', '我们{}为你的页面站点设置重定向。']
+  ]
 } satisfies PageDictionary

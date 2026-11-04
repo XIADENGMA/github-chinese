@@ -17,7 +17,7 @@ import {
   settle,
   shownToasts,
   withScope,
-  type Scoped,
+  type Scoped
 } from './helpers'
 
 const REPO_URL = 'https://github.com/vuejs/core/issues'
@@ -107,7 +107,7 @@ describe('当前标签页状态', () => {
   it.each([
     [{ ...STATUS, active: true }, 'translated'],
     [{ ...STATUS, active: false, excluded: true }, 'excluded'],
-    [{ ...STATUS, active: false, excluded: false }, 'disabled'],
+    [{ ...STATUS, active: false, excluded: false }, 'disabled']
   ] as const)('状态 %j → %s', async (status, expected) => {
     await openTab('https://gist.github.com/octocat/1')
     mockContent(contentWith(status))
@@ -147,7 +147,7 @@ describe('轮询', () => {
     vi.useFakeTimers({ toFake: ['setInterval', 'clearInterval'] })
     await openTab(REPO_URL)
     let active = true
-    const send = mockContent((message) => (message.type === 'gcn:get-status' ? { ...STATUS, active } : undefined))
+    const send = mockContent(message => (message.type === 'gcn:get-status' ? { ...STATUS, active } : undefined))
     const popup = await setup()
     expect(popup.state.value).toBe('translated')
 
@@ -167,7 +167,7 @@ describe('轮询', () => {
     vi.useFakeTimers({ toFake: ['setInterval', 'clearInterval'] })
     await openTab(REPO_URL)
     let injected = false
-    mockContent((message) => (injected ? contentWith()(message) : contentMissing()))
+    mockContent(message => (injected ? contentWith()(message) : contentMissing()))
     const popup = await setup()
     expect(popup.state.value).toBe('not-ready')
 
@@ -305,7 +305,7 @@ describe('授权', () => {
     const pending = popup.authorize()
     // 首个 await 之前同步调用，保证处于用户手势内
     expect(request).toHaveBeenCalledWith({
-      origins: ['https://github.com/*', 'https://gist.github.com/*', 'https://www.githubstatus.com/*'],
+      origins: ['https://github.com/*', 'https://gist.github.com/*', 'https://www.githubstatus.com/*']
     })
     await pending
     await settle()

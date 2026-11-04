@@ -28,8 +28,7 @@ export default {
     // 新建 / 编辑
     '/ New prebuild configuration': '/ 新增預先建置設定',
     '/ Edit configuration': '/ 編輯設定',
-    'Prebuilds consume storage space that will incur a billable charge. Learn more about':
-      '預先建置會佔用儲存空間並產生費用。瞭解',
+    'Prebuilds consume storage space that will incur a billable charge. Learn more about': '預先建置會佔用儲存空間並產生費用。瞭解',
     'prebuild configurations': '預先建置設定',
     'Your prebuild will be built from the branch and configuration file selected below. Learn more about':
       '預先建置將根據下方選擇的分支和設定檔建置。瞭解',
@@ -79,7 +78,7 @@ export default {
     'Disable prebuild optimization': '停用預先建置最佳化',
     'This prevents codespaces from attempting to use an older image to speed up boot time. This could adversely affect performance.':
       '這會防止程式碼空間嘗試使用較舊的映像檔來縮短啟動時間。這可能會對效能造成不良影響。',
-    'Hide advanced options': '隱藏進階選項',
+    'Hide advanced options': '隱藏進階選項'
   },
   scoped: {
     // 排程触发条件：「Days」下拉框的选项是 Weekdays、Every day 与星期名，作「星期」；「Times」作「時間」
@@ -96,10 +95,10 @@ export default {
     Saturday: '星期六',
     versions: '個版本',
     'Find a branch': '尋找分支',
-    'Select branch': '選擇分支',
+    'Select branch': '選擇分支'
   },
   regexp: [
     // 范本历史记录：保留的版本数
-    [/^(\d+) versions?$/, '$1 個版本'],
-  ],
+    [/^(\d+) versions?$/, '$1 個版本']
+  ]
 } satisfies PageDictionary

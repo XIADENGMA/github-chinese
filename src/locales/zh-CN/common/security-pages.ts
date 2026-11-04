@@ -69,8 +69,7 @@ export default {
     // /security：客户案例与评价（客户名、人名保持原文）
     "Adopted by the world's leading organizations": '全球领先组织纷纷采用',
     'View all customer stories': '查看全部客户案例',
-    'Otto Group elevates developer engagement with GitHub Advanced Security':
-      'Otto Group 借助 GitHub 高级安全提升开发人员参与度',
+    'Otto Group elevates developer engagement with GitHub Advanced Security': 'Otto Group 借助 GitHub 高级安全提升开发人员参与度',
     'Read customer story': '阅读客户案例',
     'SPH Media tames tool sprawl and secures code with GitHub': 'SPH Media 借助 GitHub 整治工具泛滥并保护代码',
     'Postmates uses GitHub Advanced Security to catch vulnerabilities': 'Postmates 使用 GitHub 高级安全发现漏洞',
@@ -87,8 +86,7 @@ export default {
     // 资源卡片（三个子页共用；卡片标签 Demo 不收录）
     'Resources to get started': '入门资源',
     'Explore the DevSecOps guide': '探索 DevSecOps 指南',
-    'Learn how to write more secure code from the start with DevSecOps.':
-      '了解如何借助 DevSecOps 从一开始就编写更安全的代码。',
+    'Learn how to write more secure code from the start with DevSecOps.': '了解如何借助 DevSecOps 从一开始就编写更安全的代码。',
     'Read the whitepaper': '阅读白皮书',
     'Avoid AppSec pitfalls': '避开 AppSec 陷阱',
     'Explore common application security pitfalls and how to avoid them.': '了解常见的应用安全陷阱及其规避方法。',
@@ -121,8 +119,7 @@ export default {
       '将应用安全直接集成到 GitHub 中，实时发现并修复漏洞。',
     'Lead developer': '首席开发人员',
     'Two layers of powerful protection': '两层强大防护',
-    'Combine Secret Protection and Code Security to safeguard your code from every angle.':
-      '结合机密保护和代码安全，全方位保护你的代码。',
+    'Combine Secret Protection and Code Security to safeguard your code from every angle.': '结合机密保护和代码安全，全方位保护你的代码。',
     // 价格卡片：价格数字与货币代码 USD 照原文
     'For teams and organizations serious about stopping secret leaks.': '适合致力于阻止机密泄露的团队和组织。',
     'per active committer/month': '每个活跃提交者/月',
@@ -130,15 +127,12 @@ export default {
       '适合致力于在进入生产环境前修复漏洞的团队和组织。',
     'Get the most out of GitHub Advanced Security': '充分发挥 GitHub 高级安全的价值',
     'Maximize your defenses with industry-leading AppSec': '借助业界领先的 AppSec 全面加强防御',
-    'Discover how our security solution can benefit your organization.':
-      '了解我们的安全解决方案能为你的组织带来哪些益处。',
+    'Discover how our security solution can benefit your organization.': '了解我们的安全解决方案能为你的组织带来哪些益处。',
     'See how improved security drives business success': '了解提升安全性如何推动业务成功',
-    'Explore the benefits of improving software security standards in organizations.':
-      '了解在组织中提高软件安全标准的好处。',
+    'Explore the benefits of improving software security standards in organizations.': '了解在组织中提高软件安全标准的好处。',
     'Read the report': '阅读报告',
     'How top teams secure code while moving fast': '顶尖团队如何在快速推进的同时保障代码安全',
-    'Learn how industry experts protect their code without sacrificing productivity.':
-      '了解行业专家如何在不牺牲生产力的情况下保护代码。',
+    'Learn how industry experts protect their code without sacrificing productivity.': '了解行业专家如何在不牺牲生产力的情况下保护代码。',
     'Watch the videos': '观看视频',
 
     // /security/advanced-security：常见问题（被链接拆开的答案见 inline）
@@ -155,15 +149,13 @@ export default {
     'What is AppSec?': '什么是 AppSec？',
     'Application security (AppSec) is the process of finding, fixing, and preventing security vulnerabilities in applications. GitHub Advanced Security provides AppSec tools for static application security testing (SAST), which identifies vulnerabilities in the code itself.':
       '应用安全 (AppSec) 是发现、修复和预防应用中安全漏洞的过程。GitHub 高级安全提供用于静态应用安全测试 (SAST) 的 AppSec 工具，可识别代码本身的漏洞。',
-    'Can I use GitHub Advanced Security with Microsoft Azure DevOps?':
-      '我可以将 GitHub 高级安全与 Microsoft Azure DevOps 一起使用吗？',
+    'Can I use GitHub Advanced Security with Microsoft Azure DevOps?': '我可以将 GitHub 高级安全与 Microsoft Azure DevOps 一起使用吗？',
     // 答案中的链接文字（整句见 inline）
     'add-on': '附加组件',
     'Where can I find case studies and reference customers?': '在哪里可以找到案例研究和参考客户？',
     'customer stories': '客户案例',
     'Can I review documentation before purchase?': '购买前可以查看文档吗？',
-    'Does GitHub offer consulting, training, and other deployment services?':
-      'GitHub 是否提供咨询、培训和其他部署服务？',
+    'Does GitHub offer consulting, training, and other deployment services?': 'GitHub 是否提供咨询、培训和其他部署服务？',
     'Expert Services': '专家服务',
 
     // /security/advanced-security/code-security
@@ -172,8 +164,7 @@ export default {
       '借助 GitHub 代码安全，边构建边保护代码。及早发现漏洞，交由 Copilot 自动修复处理。',
     // 视频标题与播放按钮的 aria-label
     'What is GitHub code security?': '什么是 GitHub 代码安全？',
-    'Play video. Thumbnail description: What is GitHub code security?':
-      '播放视频。缩略图说明：什么是 GitHub 代码安全？',
+    'Play video. Thumbnail description: What is GitHub code security?': '播放视频。缩略图说明：什么是 GitHub 代码安全？',
     // 统计：大号数字 + 说明（数字与说明分两段显示）
     '28 min': '28 分钟',
     'From vulnerability detection to remediation': '从发现漏洞到完成修复',
@@ -239,12 +230,10 @@ export default {
     'GitHub Secret Protection continuously monitors your GitHub perimeter, helping prevent exposures, protect credentials, and ship securely.':
       'GitHub 机密保护持续监控你的 GitHub 边界，帮助防止泄露、保护凭据并安全交付。',
     'What is GitHub Secret Protection?': '什么是 GitHub 机密保护？',
-    'Play video. Thumbnail description: What is GitHub Secret Protection?':
-      '播放视频。缩略图说明：什么是 GitHub 机密保护？',
+    'Play video. Thumbnail description: What is GitHub Secret Protection?': '播放视频。缩略图说明：什么是 GitHub 机密保护？',
     // 统计说明（数字 4.4M、150+、39M 照原文）
     'Secrets prevented from leaking on GitHub in 2024': '2024 年在 GitHub 上阻止泄露的机密',
-    'Industry partners, working together to mitigate risk for the developer community':
-      '行业合作伙伴，携手为开发人员社区降低风险',
+    'Industry partners, working together to mitigate risk for the developer community': '行业合作伙伴，携手为开发人员社区降低风险',
     'Secret leaks detected with Secret Protection in 2024': '2024 年机密保护检测到的机密泄露',
     'Prevent accidental secret exposure across your repositories': '防止存储库中的机密意外泄露',
     'Block leaks before they happen': '在泄露发生前加以阻止',
@@ -260,8 +249,7 @@ export default {
     'Safer code for everyone': '让每个人的代码更安全',
     "Whether you're securing an open source project or strengthening your enterprise codebase, Secret Protection helps you keep secrets out of your code.":
       '无论你是在保护开源项目，还是在强化企业代码库，机密保护都能帮你让机密远离代码。',
-    'Learn how to build security into your code from day one with DevSecOps.':
-      '了解如何借助 DevSecOps 从第一天起就将安全融入代码。',
+    'Learn how to build security into your code from day one with DevSecOps.': '了解如何借助 DevSecOps 从第一天起就将安全融入代码。',
 
     // /security/advanced-security/secret-protection：常见问题（首问与视频标题同文）
     'GitHub Secret Protection detects and prevents secret leaks continuously in real-time, proactively blocking sensitive credentials from being pushed to a repository with push protection. With a remarkably low false positive rate and approximately 150 service provider integrations, it enables rapid credential revocation and rotation, enhancing developer productivity.':
@@ -291,8 +279,7 @@ export default {
     'Manage open source risks with GitHub’s supply chain security. Detect and fix threats early with automated scanning, updates, and policy enforcement—keeping your software resilient.':
       '借助 GitHub 的供应链安全管理开源风险。通过自动扫描、更新和策略强制实施，及早发现并修复威胁——让你的软件保持韧性。',
     'Secure your dependencies': '保护你的依赖项',
-    'Automatically detect vulnerabilities and get trusted updates with Dependabot.':
-      '借助 Dependabot 自动检测漏洞并获取可信更新。',
+    'Automatically detect vulnerabilities and get trusted updates with Dependabot.': '借助 Dependabot 自动检测漏洞并获取可信更新。',
     'Prioritize what matters': '优先处理重要事项',
     'Dependabot surfaces the top 10% of your most critical alerts first using exploitation likelihood, severity scores, and triage rules.':
       'Dependabot 根据被利用的可能性、严重性评分和分类规则，优先呈现最关键的前 10% 警报。',
@@ -321,8 +308,7 @@ export default {
       '无论你是在为开源项目做贡献，还是在为团队挑选新工具，GitHub 都能满足你的安全需求。',
     'Chat with GitHub Copilot': '与 GitHub Copilot 聊天',
     'Securing your end-to-end supply chain': '保护端到端供应链',
-    'Protect your entire GitHub workflow, from personal accounts to code and builds.':
-      '保护整个 GitHub 工作流，从个人帐户到代码和构建。',
+    'Protect your entire GitHub workflow, from personal accounts to code and builds.': '保护整个 GitHub 工作流，从个人帐户到代码和构建。',
     'Read the guide': '阅读指南',
 
     // /security/advanced-security/software-supply-chain：常见问题
@@ -341,8 +327,7 @@ export default {
       'GitHub 提供一系列功能，帮助你了解并保护环境中的依赖项，以及保护你的 GitHub 帐户和构建系统。',
     'GitHub offers a range of features to help you understand the dependencies and secure the dependencies in your environment, and to secure your GitHub accounts and build system':
       'GitHub 提供一系列功能，帮助你了解并保护环境中的依赖项，以及保护你的 GitHub 帐户和构建系统',
-    'Why choose GitHub’s supply chain features instead of third-party products?':
-      '为什么选择 GitHub 的供应链功能，而不是第三方产品？',
+    'Why choose GitHub’s supply chain features instead of third-party products?': '为什么选择 GitHub 的供应链功能，而不是第三方产品？',
     'Unlike third-party security add-ons, GitHub’s supply chain features operate entirely in the native GitHub workflows that developers already know and love. By making it easier for developers to remediate vulnerabilities as they go, GitHub frees time for security teams to focus on critical strategies that protect businesses, customers, and communities from application-based vulnerabilities.':
       '与第三方安全附加组件不同，GitHub 的供应链功能完全在开发人员早已熟悉和喜爱的原生 GitHub 工作流中运行。GitHub 让开发人员能够更轻松地边开发边修复漏洞，从而为安全团队腾出时间，专注于保护企业、客户和社区免受应用漏洞威胁的关键策略。',
     'What is SLSA and SLSA level 3?': '什么是 SLSA 和 SLSA 级别 3？',
@@ -364,8 +349,7 @@ export default {
     'SBOMs allow transparency into your open source usage and help expose supply chain vulnerabilities, reducing supply chain risks.':
       'SBOM 让你清楚了解开源组件的使用情况，并帮助发现供应链漏洞，降低供应链风险。',
     'Are GitHub’s supply chain features paid or free?': 'GitHub 的供应链功能是付费的还是免费的？',
-    'Most of GitHub’s supply chain features are available for free to all users.':
-      'GitHub 的大多数供应链功能对所有用户免费开放。',
+    'Most of GitHub’s supply chain features are available for free to all users.': 'GitHub 的大多数供应链功能对所有用户免费开放。',
     'A select few advanced features are available to private repos only in GitHub Code Security.':
       '少数高级功能仅在 GitHub 代码安全中面向专用存储库提供。',
     'See pricing.': '查看价格。',
@@ -384,8 +368,7 @@ export default {
     Included: '包含',
     'Not included': '不包含',
     'Push protection': '推送保护',
-    'Prevent secret exposures by proactively blocking secrets before they reach your code.':
-      '在机密进入代码前主动拦截，防止机密泄露。',
+    'Prevent secret exposures by proactively blocking secrets before they reach your code.': '在机密进入代码前主动拦截，防止机密泄露。',
     'Secret scanning': '机密扫描',
     'Detect and manage exposed secrets across git history, pull requests, issues, and wikis.':
       '在 Git 历史记录、拉取请求、议题和 Wiki 中检测并管理已泄露的机密。',
@@ -395,8 +378,7 @@ export default {
     'Providers get real-time alerts when their tokens appear in public code, enabling them to notify, quarantine, or revoke secrets.':
       '提供程序的令牌出现在公共代码中时，提供程序会实时收到警报，以便通知、隔离或撤销机密。',
     'Validity checks': '有效性检查',
-    'Prioritize active secrets with validity checks for provider patterns.':
-      '通过提供程序模式的有效性检查，优先处理仍有效的机密。',
+    'Prioritize active secrets with validity checks for provider patterns.': '通过提供程序模式的有效性检查，优先处理仍有效的机密。',
     'Copilot secret scanning': 'Copilot 机密扫描',
     // 原文漏了 secrets（unstructured like passwords），按原意译
     'Use AI to detect unstructured like passwords—without the noise.': '使用 AI 检测密码等非结构化机密——免受误报干扰。',
@@ -420,8 +402,7 @@ export default {
     'Uncover vulnerabilities in your code with our industry-leading semantic code analysis.':
       '借助业界领先的语义代码分析发现代码中的漏洞。',
     'Security campaigns': '安全活动',
-    'Reduce security debt and burn down your security backlog with security campaigns.':
-      '通过安全活动减少安全债务，清理安全积压。',
+    'Reduce security debt and burn down your security backlog with security campaigns.': '通过安全活动减少安全债务，清理安全积压。',
     'Get a clear view of your project’s dependencies with a summary of manifest, lock files, and submitted dependencies via the API.':
       '通过清单、锁定文件和经 API 提交的依赖项摘要，清楚了解项目的依赖项。',
     'Dependency review action': '依赖项审查操作',
@@ -431,25 +412,20 @@ export default {
     'Define alert-centric policies to control how Dependabot handles alerts and pull requests.':
       '定义以警报为中心的策略，控制 Dependabot 处理警报和拉取请求的方式。',
     'Dependabot security updates with grouped updates': '支持分组更新的 Dependabot 安全更新',
-    'Automated pull requests that batch dependency updates for known vulnerabilities.':
-      '自动创建拉取请求，批量更新存在已知漏洞的依赖项。',
+    'Automated pull requests that batch dependency updates for known vulnerabilities.': '自动创建拉取请求，批量更新存在已知漏洞的依赖项。',
     'Dependabot version updates': 'Dependabot 版本更新',
     'Automated pull requests that keep your dependencies up to date.': '自动创建拉取请求，使依赖项保持最新。',
-    'Get a clear view of risk distribution with security metrics and dashboards.':
-      '通过安全指标和仪表板清楚了解风险分布。',
+    'Get a clear view of risk distribution with security metrics and dashboards.': '通过安全指标和仪表板清楚了解风险分布。'
   },
   inline: [
     // 评价引言（/security）：<b><元素>GitHub Advanced Security</元素> empowers our developers</b>，产品名单独成元素时
     // 整句改写，产品名与译文之间不留空格（相邻文本节点时整段命中 static）
     ['{} empowers our developers', '{}为我们的开发人员提供有力支持'],
     // /security/advanced-security 常见问题：答案被链接拆开（p > a），链接文字由 static 翻译
-    [
-      'Yes. GitHub Advanced Security is available as an {} for Azure DevOps.',
-      '是的。GitHub 高级安全可作为 Azure DevOps 的{}使用。',
-    ],
+    ['Yes. GitHub Advanced Security is available as an {} for Azure DevOps.', '是的。GitHub 高级安全可作为 Azure DevOps 的{}使用。'],
     [
       'Yes. As with all GitHub products, {} for GitHub Advanced Security is publicly available.',
-      '是的。与所有 GitHub 产品一样，GitHub 高级安全的{}也是公开的。',
+      '是的。与所有 GitHub 产品一样，GitHub 高级安全的{}也是公开的。'
     ],
     ['Yes! Please visit {} to learn more.', '是的！请访问{}了解更多。'],
     // Read our <a>customer stories</a> to learn how customers like <a>客户</a>, <a>客户</a>, and <a>客户</a> use …：
@@ -457,7 +433,7 @@ export default {
     [
       /^Read our \{\} to learn how customers like \{\}((?:, \{\})*)(?:, )?and \{\} use GitHub Advanced Security to secure applications and accelerate the software development lifecycle\.$/,
       (_: string, middle: string) =>
-        `阅读我们的{}，了解 {}${middleCustomers(middle)} 和 {} 等客户如何使用 GitHub 高级安全保护应用并加快软件开发生命周期。`,
-    ],
-  ],
+        `阅读我们的{}，了解 {}${middleCustomers(middle)} 和 {} 等客户如何使用 GitHub 高级安全保护应用并加快软件开发生命周期。`
+    ]
+  ]
 } satisfies PageDictionary

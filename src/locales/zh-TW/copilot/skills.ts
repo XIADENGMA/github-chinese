@@ -12,7 +12,7 @@ const ACTIVE_SKILL: Readonly<Record<string, string>> = {
   'searching for file': '搜尋檔案',
   'searching for file changes': '搜尋檔案變更',
   'searching for support documents': '搜尋支援文件',
-  'analyzing Figma file': '分析 Figma 檔案',
+  'analyzing Figma file': '分析 Figma 檔案'
 }
 
 /** 日志对象名词 */
@@ -20,14 +20,14 @@ const LOG_NOUN: Readonly<Record<string, string>> = {
   job: '作業',
   'workflow run': '工作流程執行',
   'pull request': '拉取請求',
-  workflow: '工作流程',
+  workflow: '工作流程'
 }
 
 /** 粘贴内容的展开 / 折叠 / 删除 */
 const PASTED_ACTION: Readonly<Record<string, string>> = {
   Expand: '展開',
   Collapse: '摺疊',
-  Remove: '移除',
+  Remove: '移除'
 }
 
 /** 日志对象：job 123 / workflow run 456 / pull request 7 / workflow ci.yml */
@@ -42,7 +42,7 @@ const ACTIVE_SKILL_SOURCE = Object.keys(ACTIVE_SKILL).join('|')
 /** 首页 Copilot 输入框（dashboard/composer）沿用的规则：粘贴代码块的读屏播报，展开在本词典的规则列表末尾，两处引用同一份 */
 export const COMPOSER_SHARED_RULES: readonly RegExpRule[] = [
   [/^(?:Code block|Block) (?:pasted|added), (\d+) total$/, '已新增程式碼區塊，共 $1 個'],
-  [/^(?:Code block|Block) removed, (\d+) (?:left|remaining)$/, '已移除程式碼區塊，剩餘 $1 個'],
+  [/^(?:Code block|Block) removed, (\d+) (?:left|remaining)$/, '已移除程式碼區塊，剩餘 $1 個']
 ]
 
 /**
@@ -140,8 +140,7 @@ export default {
       '已超過 GitHub API 速率限制。請稍候再試。如需瞭解抓取 GitHub 資料的詳細資訊，以及這可能對你的權利造成什麼影響，請參閱我們的服務條款 (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)',
     'Resource not found. Please try again.': '找不到資源。請再試一次。',
     'Your network connection was interrupted. Please try again.': '網路連線已中斷。請再試一次。',
-    'Message too large. Please shorten it or remove some references and try again.':
-      '訊息過大。請縮短內容或移除部分參考後再試一次。',
+    'Message too large. Please shorten it or remove some references and try again.': '訊息過大。請縮短內容或移除部分參考後再試一次。',
     'Copilot extensions can’t be used in shared conversations. Please unshare the conversation and try again.':
       '分享的對話中無法使用 Copilot 擴充功能。請取消分享對話後再試一次。',
     "I'm sorry but there was an error. Please try again.": '很抱歉，發生錯誤。請再試一次。',
@@ -212,8 +211,7 @@ export default {
     'Summarize this discussion.': '摘要此討論。',
     'Summarize the comments made by user in a discussion.': '摘要討論中使用者發表的留言。',
     'What were some key decisions made in this discussion?': '此討論中做出了哪些關鍵決策？',
-    'Summarize this discussion. What were some key decisions made in this discussion?':
-      '摘要此討論。此討論中做出了哪些關鍵決策？',
+    'Summarize this discussion. What were some key decisions made in this discussion?': '摘要此討論。此討論中做出了哪些關鍵決策？',
     'Summarize the comments made on this discussion.': '摘要此討論中的留言。',
     'Suggest next steps based on this discussion': '根據此討論建議後續步驟',
     'Why did this job fail?': '此作業為什麼失敗？',
@@ -256,11 +254,11 @@ export default {
     'Create a PR to solve this issue.': '建立 PR 來解決此議題。',
     'List and define the functions and variables in this file': '列出並說明此檔案中的函式和變數',
     "What's new in Copilot?": 'Copilot 有哪些新功能？',
-    'What feedback is unresolved?': '哪些意見回饋尚未解決？',
+    'What feedback is unresolved?': '哪些意見回饋尚未解決？'
   },
   scoped: {
     Debug: '偵錯',
-    Changes: '變更',
+    Changes: '變更'
   },
   regexp: [
     // 网页 / 支持文档搜索
@@ -299,7 +297,7 @@ export default {
         if (lead === 'Using logs for') return `正在使用 ${target}`
         if (lead === 'Unable to fetch logs for') return `無法擷取 ${target}`
         return `擷取 ${target}時發生錯誤`
-      },
+      }
     ],
     [/^Fetching endpoint (\S+)$/, '正在擷取端點 $1'],
     [/^Using endpoint (\S+)$/, '正在使用端點 $1'],
@@ -314,15 +312,12 @@ export default {
         if (lead.startsWith('Using')) return `正在透過 GitHub API 執行 ${action}`
         if (lead.startsWith('Unable')) return `無法透過 GitHub API 執行 ${action}`
         return joinCjk(`透過 GitHub API 執行 ${action}`, '時發生錯誤')
-      },
+      }
     ],
-    [
-      /^Retrieving (.+) in ([\w.-]+\/[\w.-]+)$/,
-      (_, topic: string, repo: string) => `正在檢索 ${repo} ${joinCjk('中的', logTopic(topic))}`,
-    ],
+    [/^Retrieving (.+) in ([\w.-]+\/[\w.-]+)$/, (_, topic: string, repo: string) => `正在檢索 ${repo} ${joinCjk('中的', logTopic(topic))}`],
     [
       /^(Job|Workflow run|Pull request|Workflow) (.+) in ([\w.-]+\/[\w.-]+)$/,
-      (_, noun: string, id: string, repo: string) => `${repo} 中的${logTopic(`${noun.toLowerCase()} ${id}`)}`,
+      (_, noun: string, id: string, repo: string) => `${repo} 中的${logTopic(`${noun.toLowerCase()} ${id}`)}`
     ],
     [/^Get file (\S+)$/, '取得檔案 $1'],
     [/^Get file changes for (\S+)$/, '取得 $1 的檔案變更'],
@@ -340,16 +335,13 @@ export default {
     [/^Created agent task in ([\w.-]+\/[\w.-]+)$/, '已在 $1 中建立代理任務'],
     [/^Researching ([\w.-]+\/[\w.-]+)$/, '正在研究 $1'],
     [/^Research completed for ([\w.-]+\/[\w.-]+)$/, '已完成 $1 的研究'],
-    [
-      new RegExp(`^An error occurred while (${ACTIVE_SKILL_SOURCE})$`),
-      (_, skill: string) => `${ACTIVE_SKILL[skill] ?? skill}時發生錯誤`,
-    ],
+    [new RegExp(`^An error occurred while (${ACTIVE_SKILL_SOURCE})$`), (_, skill: string) => `${ACTIVE_SKILL[skill] ?? skill}時發生錯誤`],
 
     // 其他
     [/^Explain why job (\d+) failed\.$/, '說明作業 $1 失敗的原因。'],
     [
       /^([Pp]ositive|[Nn]egative) feedback submitted$/,
-      (_, kind: string) => `已送出${kind.toLowerCase() === 'positive' ? '正面' : '負面'}意見回饋`,
+      (_, kind: string) => `已送出${kind.toLowerCase() === 'positive' ? '正面' : '負面'}意見回饋`
     ],
     [/^Are you sure you want to unshare all (\d+) conversations\?$/, '確定要取消分享全部 $1 個對話嗎？'],
     [/^Authenticate with SSO to access ([\w.-]+)$/, '透過 SSO 驗證身分以存取 $1'],
@@ -359,9 +351,9 @@ export default {
     [/^Pasted Image (\d+)$/, '貼上的圖片 $1'],
     [
       /^(Expand|Collapse|Remove) Pasted content (\d+)$/,
-      (_, action: string, index: string) => `${PASTED_ACTION[action] ?? action}貼上的內容 ${index}`,
+      (_, action: string, index: string) => `${PASTED_ACTION[action] ?? action}貼上的內容 ${index}`
     ],
     [/^Attach Pasted content (\d+) as file$/, '將貼上的內容 $1 附加為檔案'],
-    ...COMPOSER_SHARED_RULES,
-  ],
+    ...COMPOSER_SHARED_RULES
+  ]
 } satisfies PageDictionary

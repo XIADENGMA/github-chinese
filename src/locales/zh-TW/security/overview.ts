@@ -12,7 +12,7 @@ const SEVERITY: Readonly<Record<string, string>> = {
   unknown: '未知',
   error: '錯誤',
   warning: '警告',
-  note: '附註',
+  note: '附註'
 }
 
 /** 「X severity」标签：等级词后接「嚴重性」（高嚴重性） */
@@ -22,7 +22,7 @@ const SEVERITY_LEVEL: Readonly<Record<string, string>> = {
   moderate: '中嚴重性',
   medium: '中嚴重性',
   low: '低嚴重性',
-  unknown: '未知嚴重性',
+  unknown: '未知嚴重性'
 }
 
 const SEVERITY_SOURCE = Object.keys(SEVERITY).join('|')
@@ -65,14 +65,10 @@ export default {
     'Code scanning alerts •': '程式碼掃描警示 •',
     'Secret scanning alerts •': '機密掃描警示 •',
     'Needs setup': '待設定',
-    'Define how users should report security vulnerabilities for this repository':
-      '定義使用者應如何回報此儲存庫的安全性漏洞',
-    'Define how users should report security vulnerabilities for this repository.':
-      '定義使用者應如何回報此儲存庫的安全性漏洞。',
-    'Suggest how users should report security vulnerabilities for this repository':
-      '建議使用者應如何回報此儲存庫的安全性漏洞',
-    'View how to securely report security vulnerabilities for this repository':
-      '查看如何安全地回報此儲存庫的安全性漏洞',
+    'Define how users should report security vulnerabilities for this repository': '定義使用者應如何回報此儲存庫的安全性漏洞',
+    'Define how users should report security vulnerabilities for this repository.': '定義使用者應如何回報此儲存庫的安全性漏洞。',
+    'Suggest how users should report security vulnerabilities for this repository': '建議使用者應如何回報此儲存庫的安全性漏洞',
+    'View how to securely report security vulnerabilities for this repository': '查看如何安全地回報此儲存庫的安全性漏洞',
     'Set up a security policy': '設定安全性政策',
     'View security policy': '查看安全性政策',
     'Edit security policy': '編輯安全性政策',
@@ -97,16 +93,14 @@ export default {
     'Automatically detect common vulnerabilities and coding errors.': '自動偵測常見漏洞和程式碼錯誤。',
     'Set up code scanning': '設定程式碼掃描',
     'Advanced Security is only available for Organizations': '進階安全性僅適用於組織',
-    'Code scanning for private repositories is part of GitHub Advanced Security':
-      '私人儲存庫的程式碼掃描屬於 GitHub 進階安全性',
+    'Code scanning for private repositories is part of GitHub Advanced Security': '私人儲存庫的程式碼掃描屬於 GitHub 進階安全性',
     'Code scanning configuration error': '程式碼掃描設定錯誤',
     // CodeQL is reporting errors. Check the <status page> for help.
     'CodeQL is reporting errors. Check the': 'CodeQL 回報了錯誤。查看',
     'Checking code scanning status...': '正在檢查程式碼掃描狀態...',
     'Checking code scanning status…': '正在檢查程式碼掃描狀態…',
     'Code scanning is not enabled': '未啟用程式碼掃描',
-    'Code scanning helps you find and fix vulnerabilities and coding errors.':
-      '程式碼掃描可協助你找出並修正漏洞和程式碼錯誤。',
+    'Code scanning helps you find and fix vulnerabilities and coding errors.': '程式碼掃描可協助你找出並修正漏洞和程式碼錯誤。',
     'Get notified when a secret is pushed to this repository': '有機密推送到此儲存庫時接收通知',
     'Get notified when a secret is pushed to this repository.': '有機密推送到此儲存庫時接收通知。',
     'View detected secrets': '查看偵測到的機密',
@@ -132,7 +126,7 @@ export default {
     Fixed: '已修正',
     Dismissed: '已解除',
     'Auto-dismissed': '已自動解除',
-    Withdrawn: '已撤回',
+    Withdrawn: '已撤回'
   },
   scoped: {
     // 其他区域也出现的同形文字，本区域内单独生效
@@ -167,7 +161,7 @@ export default {
     'in the': '的相關公告請參閱',
     in: '位於',
     Unknown: '未知',
-    ...SEVERITY,
+    ...SEVERITY
   },
   regexp: [
     // 页面 h1（屏幕阅读器）：Security: owner/repo
@@ -177,12 +171,9 @@ export default {
     // 严重性标签的 title 属性
     [new RegExp(`^Severity: (${SEVERITY_SOURCE})$`, 'i'), (_, level) => `嚴重性：${SEVERITY[level.toLowerCase()]}`],
     // 详情页的「Moderate severity」标签
-    [
-      /^(Critical|High|Moderate|Medium|Low|Unknown) severity$/,
-      (_, level) => SEVERITY_LEVEL[level.toLowerCase()] ?? level,
-    ],
+    [/^(Critical|High|Moderate|Medium|Low|Unknown) severity$/, (_, level) => SEVERITY_LEVEL[level.toLowerCase()] ?? level],
     // 组织安全性总览表格：分页组件写入的全选文字（Select all 12 repositories）
-    [/^Select all (\d[\d,]*) repositories$/, '選取全部 $1 個儲存庫'],
+    [/^Select all (\d[\d,]*) repositories$/, '選取全部 $1 個儲存庫']
   ],
   ignore: [
     // 公告 / 警示列表的标题链接（公告摘要属于用户内容）
@@ -190,6 +181,6 @@ export default {
     // 储存库安全性公告详情页标题
     '.js-repository-advisory-details h1.gh-header-title',
     // 警示详情页（React）标题
-    'h1.text-wrap-balance > span:first-child',
-  ],
+    'h1.text-wrap-balance > span:first-child'
+  ]
 } satisfies PageDictionary

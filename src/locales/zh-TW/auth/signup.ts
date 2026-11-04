@@ -23,8 +23,7 @@ export default {
     'Collaborate securely on public and private projects.': '在公開和私人專案上安全地協作。',
     'Boost code quality with built-in review tools.': '使用內建審查工具提升程式碼品質。',
     'Save time with CI/CD integrations and GitHub Actions.': '透過 CI/CD 整合和 GitHub 動作節省時間。',
-    'Connect with developers worldwide for instant feedback and insights.':
-      '與全球開發人員交流，即時取得意見回饋和洞察。',
+    'Connect with developers worldwide for instant feedback and insights.': '與全球開發人員交流，即時取得意見回饋和洞察。',
 
     // 注册表单
     'Already have an account?': '已有帳號？',
@@ -91,7 +90,7 @@ export default {
     "Make sure it's at least 15 characters OR at least 8 characters including a number and a lowercase letter.":
       '請確認密碼至少有 15 個字元，或至少 8 個字元且包含數字和小寫字母。',
     'Make sure it’s at least 15 characters OR at least 8 characters including a number and a lowercase letter.':
-      '請確認密碼至少有 15 個字元，或至少 8 個字元且包含數字和小寫字母。',
+      '請確認密碼至少有 15 個字元，或至少 8 個字元且包含數字和小寫字母。'
   },
   scoped: {
     Username: '使用者名稱',
@@ -106,15 +105,15 @@ export default {
     'Automated workflows': '自動化工作流程',
     'Community support': '社群支援',
     "See what's included": '查看包含內容',
-    'See what’s included': '查看包含內容',
+    'See what’s included': '查看包含內容'
   },
   regexp: [
     [
       /^Username (\S+) is not available\. (.+) are available\.$/,
-      (_, name: string, list: string) => `使用者名稱 ${name} 無法使用。${joinNames(list)} 可供使用。`,
+      (_, name: string, list: string) => `使用者名稱 ${name} 無法使用。${joinNames(list)} 可供使用。`
     ],
     [/^Username (\S+) is not available\.$/, '使用者名稱 $1 無法使用。'],
     [/^(\S+) is available\.$/, '$1 可供使用。'],
-    [/^Change password for @?([\w-]+)$/, '變更 @$1 的密碼'],
-  ],
+    [/^Change password for @?([\w-]+)$/, '變更 @$1 的密碼']
+  ]
 } satisfies PageDictionary

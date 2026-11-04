@@ -30,8 +30,8 @@ describe('不收集的页面：地址变体', () => {
     'https://github.com/settings/%74okens',
     'https://github.com/settings/tokens.html',
     'https://github.com/SETTINGS/TOKENS/',
-    'https://github.com//login',
-  ])('%s：不收集', (href) => {
+    'https://github.com//login'
+  ])('%s：不收集', href => {
     const t = startAt(href, '<p>Sample text</p>')
     expect(t.drainUntranslated()).toEqual([])
   })

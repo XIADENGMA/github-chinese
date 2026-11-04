@@ -50,7 +50,7 @@ const REPOSITORY_PERMISSIONS: Readonly<Record<string, string>> = {
   'Manage runners': '管理執行器',
   'Manage secrets': '管理機密',
   'Manage variables': '管理變數',
-  'Manage environments (including environment secrets and variables)': '管理環境（包括環境機密和變數）',
+  'Manage environments (including environment secrets and variables)': '管理環境（包括環境機密和變數）'
 }
 
 /** 自定义组织角色可选的组织权限（与 GitHub 应用权限说明有重名，放 scoped） */
@@ -75,14 +75,12 @@ const ORGANIZATION_PERMISSIONS: Readonly<Record<string, string>> = {
   'Manage organization OAuth app policies': '管理組織 OAuth 應用程式政策',
   'Access to the "OAuth app policy" settings for the organization.': '可存取組織的「OAuth 應用程式政策」設定。',
   'Edit custom properties values at the organization level': '在組織層級編輯自訂屬性值',
-  'Access to set custom property values on all repositories in the organization.':
-    '可為組織內所有儲存庫設定自訂屬性值。',
+  'Access to set custom property values on all repositories in the organization.': '可為組織內所有儲存庫設定自訂屬性值。',
   "Manage the organization's custom properties definitions": '管理組織的自訂屬性定義',
   'Manage the organization’s custom properties definitions': '管理組織的自訂屬性定義',
   'Access to create and edit custom property definitions for the organization.': '可為組織建立並編輯自訂屬性定義。',
   'Manage organization ref update rules and rulesets': '管理組織參考更新規則和規則集',
-  'Access to manage rulesets and view ruleset insights at the organization level.':
-    '可在組織層級管理規則集並查看規則集洞察。',
+  'Access to manage rulesets and view ruleset insights at the organization level.': '可在組織層級管理規則集並查看規則集洞察。',
   'View organization audit log': '查看組織稽核記錄',
   'Access to the audit log for the organization. The audit log may contain metadata for repositories in the organization.':
     '可存取組織的稽核記錄。稽核記錄可能包含組織內儲存庫的中繼資料。',
@@ -105,24 +103,21 @@ const ORGANIZATION_PERMISSIONS: Readonly<Record<string, string>> = {
   'Review and manage secret scanning bypass requests': '審查並管理機密掃描繞過請求',
   'Review and manage secret scanning bypass requests for your organization.': '審查並管理組織的機密掃描繞過請求。',
   'Review and manage secret scanning alert dismissal requests': '審查並管理機密掃描警示解除請求',
-  'Review and manage secret scanning alert dismissal requests for your organization.':
-    '審查並管理組織的機密掃描警示解除請求。',
+  'Review and manage secret scanning alert dismissal requests for your organization.': '審查並管理組織的機密掃描警示解除請求。',
   'Bypass code scanning alert dismissal requests': '繞過程式碼掃描警示解除請求',
   'Bypass code scanning alert dismissal requests for your organization.': '繞過組織的程式碼掃描警示解除請求。',
   'Review code scanning alert dismissal requests': '審查程式碼掃描警示解除請求',
-  'Review and manage code scanning alert dismissal requests for your organization.':
-    '審查並管理組織的程式碼掃描警示解除請求。',
+  'Review and manage code scanning alert dismissal requests for your organization.': '審查並管理組織的程式碼掃描警示解除請求。',
   'View code scanning alert dismissal requests': '查看程式碼掃描警示解除請求',
   'View code scanning alert dismissal requests for your organization.': '查看組織的程式碼掃描警示解除請求。',
   'Bypass Dependabot alert dismissal requests': '繞過 Dependabot 警示解除請求',
   'Bypass Dependabot alert dismissal requests for your organization.': '繞過組織的 Dependabot 警示解除請求。',
   'Review Dependabot alert dismissal requests': '審查 Dependabot 警示解除請求',
-  'Review and manage Dependabot alert dismissal requests for your organization.':
-    '審查並管理組織的 Dependabot 警示解除請求。',
+  'Review and manage Dependabot alert dismissal requests for your organization.': '審查並管理組織的 Dependabot 警示解除請求。',
   'View Dependabot alert dismissal requests': '查看 Dependabot 警示解除請求',
   'View Dependabot alert dismissal requests for your organization.': '查看組織的 Dependabot 警示解除請求。',
   'View organization Copilot metrics': '查看組織 Copilot 指標',
-  'View Copilot usage metrics for your organization.': '查看組織的 Copilot 使用量指標。',
+  'View Copilot usage metrics for your organization.': '查看組織的 Copilot 使用量指標。'
 }
 
 /**
@@ -182,8 +177,7 @@ export default {
     'No custom roles': '尚無自訂角色',
     "You haven't created any custom roles yet.": '你尚未建立任何自訂角色。',
     'You haven’t created any custom roles yet.': '你尚未建立任何自訂角色。',
-    'Organization roles are used to grant access and permissions to manage your organization.':
-      '組織角色用於授予管理組織的存取權和權限。',
+    'Organization roles are used to grant access and permissions to manage your organization.': '組織角色用於授予管理組織的存取權和權限。',
     'Adding a repository role and permissions to a custom organization role is currently in public preview and subject to change.':
       '將儲存庫角色和權限加入自訂組織角色的功能目前為公開預覽，可能會變更。',
     'If you delete an existing role, all teams and users with the role will be unassigned.':
@@ -211,14 +205,12 @@ export default {
     // 「You can」+「set the base role」+「for this organization from one of these roles.」：片段间原文无逗号，改语序不加
     'set the base role': '設定此組織的基本角色',
     'for this organization from one of these roles.': '為以下角色之一。',
-    'Read and clone repositories. Open and comment on issues and pull requests.':
-      '讀取並複製儲存庫。建立議題和拉取請求並留言。',
+    'Read and clone repositories. Open and comment on issues and pull requests.': '讀取並複製儲存庫。建立議題和拉取請求並留言。',
     'Read permissions plus manage issues and pull requests.': '讀取權限，外加管理議題和拉取請求。',
     'Triage permissions plus read, clone and push to repositories.': '分類權限，外加讀取、複製並推送到儲存庫。',
     'Write permissions plus manage issues, pull requests and some repository settings.':
       '寫入權限，外加管理議題、拉取請求和部分儲存庫設定。',
-    'Full access to repositories including sensitive and destructive actions.':
-      '儲存庫的完整存取權，包括敏感和破壞性操作。',
+    'Full access to repositories including sensitive and destructive actions.': '儲存庫的完整存取權，包括敏感和破壞性操作。',
     'Modify Admin Role': '修改管理員角色',
     'Custom roles': '自訂角色',
     'Create custom roles with GitHub Enterprise': '使用 GitHub 企業版建立自訂角色',
@@ -230,7 +222,7 @@ export default {
     'Organization members and collaborators who actively push to your project': '積極推送到專案的組織成員和協作者',
     'Project managers who need to manage the repository without access to sensitive or destructive actions':
       '需要管理儲存庫但無權執行敏感或破壞性操作的專案經理',
-    'Mixed roles': '混合角色',
+    'Mixed roles': '混合角色'
   },
   scoped: {
     ...REPOSITORY_PERMISSIONS,
@@ -284,7 +276,7 @@ export default {
     'Role assigned': '已指派角色',
     // 角色分配页的 Remove 按术语表作「移除」，与本节「移除角色指派」一致
     'Role removed': '已移除角色',
-    'Are you sure you want to remove this role assignment?': '確定要移除此角色指派嗎？',
+    'Are you sure you want to remove this role assignment?': '確定要移除此角色指派嗎？'
   },
   regexp: [
     [/^(\d+) roles?$/, '$1 個角色'],
@@ -296,7 +288,7 @@ export default {
     [/^You can create up to (\d+) custom roles\.$/, '最多可建立 $1 個自訂角色。'],
     [
       /^In addition to the available pre-defined roles, you can create up to (\d+) custom roles to fit your needs\.$/,
-      '除了可用的預先定義角色之外，你還可以視需要建立最多 $1 個自訂角色。',
-    ],
-  ],
+      '除了可用的預先定義角色之外，你還可以視需要建立最多 $1 個自訂角色。'
+    ]
+  ]
 } satisfies PageDictionary

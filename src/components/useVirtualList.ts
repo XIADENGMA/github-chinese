@@ -71,7 +71,7 @@ export function useVirtualList<T>(options: VirtualListOptions<T>): VirtualList<T
   const keyOf = (item: T, index: number): unknown => (options.keyOf ? options.keyOf(item) : index)
 
   // 范围不变时返回原对象：不触发重算，滚动不让父组件重渲染
-  const range = computed<Range>((previous) => {
+  const range = computed<Range>(previous => {
     const count = toValue(options.source).length
     const height = rowHeight.value
     const visible = Math.ceil((viewportHeight.value || window.innerHeight) / height) + 1
@@ -90,7 +90,7 @@ export function useVirtualList<T>(options: VirtualListOptions<T>): VirtualList<T
     if (target.index < source.length && keyOf(source[target.index]!, target.index) === target.key) return target.index
     const find = options.keyOf
     if (!find) return undefined
-    const index = source.findIndex((item) => find(item) === target.key)
+    const index = source.findIndex(item => find(item) === target.key)
     return index === -1 ? undefined : index
   })
 
@@ -101,9 +101,7 @@ export function useVirtualList<T>(options: VirtualListOptions<T>): VirtualList<T
     const inRange = Array.from({ length: end - start }, (_, offset) => start + offset)
     const pin = pinned.value
     if (pin === undefined || (pin >= start && pin < end)) return inRange
-    const near = [pin - 1, pin, pin + 1].filter(
-      (index) => index >= 0 && index < count && (index < start || index >= end),
-    )
+    const near = [pin - 1, pin, pin + 1].filter(index => index >= 0 && index < count && (index < start || index >= end))
     return pin < start ? [...near, ...inRange] : [...inRange, ...near]
   })
 
@@ -137,9 +135,7 @@ export function useVirtualList<T>(options: VirtualListOptions<T>): VirtualList<T
   /** 第 index 行的焦点记录；序号无效时为 undefined */
   function rowAt(index: number): FocusedRow | undefined {
     const source = toValue(options.source)
-    return Number.isInteger(index) && index >= 0 && index < source.length
-      ? { index, key: keyOf(source[index]!, index) }
-      : undefined
+    return Number.isInteger(index) && index >= 0 && index < source.length ? { index, key: keyOf(source[index]!, index) } : undefined
   }
 
   function pin(index: number): void {
@@ -183,7 +179,7 @@ export function useVirtualList<T>(options: VirtualListOptions<T>): VirtualList<T
         observer?.disconnect()
       })
     },
-    { flush: 'post' },
+    { flush: 'post' }
   )
 
   function scrollToTop(): void {

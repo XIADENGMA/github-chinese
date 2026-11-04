@@ -17,8 +17,7 @@ export default {
       '可以使用任何操作或可复用工作流，无论其作者是谁、定义在何处。',
     'Disable actions': '禁用 GitHub 操作',
     'The Actions tab is hidden and no workflows can run.': '操作标签页将被隐藏，任何工作流都无法运行。',
-    'Learn more about allowing specific actions and reusable workflows to run.':
-      '了解如何允许运行特定的操作和可复用工作流。',
+    'Learn more about allowing specific actions and reusable workflows to run.': '了解如何允许运行特定的操作和可复用工作流。',
     'Allow actions created by GitHub': '允许 GitHub 创建的操作',
     'Allow actions by Marketplace': '允许市场',
     'Allow specified actions and reusable workflows': '允许指定的操作和可复用工作流',
@@ -115,8 +114,7 @@ export default {
     'Choose the default permissions granted to the GITHUB_TOKEN when running workflows in this repository. You can specify more granular permissions in the workflow using YAML.':
       '选择在此存储库中运行工作流时授予 GITHUB_TOKEN 的默认权限。你可以在工作流中使用 YAML 指定更精细的权限。',
     'Read and write permissions': '读取和写入权限',
-    'Workflows have read and write permissions in the repository for all scopes.':
-      '工作流在存储库中对所有作用域都有读取和写入权限。',
+    'Workflows have read and write permissions in the repository for all scopes.': '工作流在存储库中对所有作用域都有读取和写入权限。',
     'Read repository contents and packages permissions': '读取存储库内容和软件包权限',
     'Workflows have read permissions in the repository for the contents and packages scopes only.':
       '工作流在存储库中仅对内容和软件包作用域有读取权限。',
@@ -172,8 +170,7 @@ export default {
     'Forks of your public repository can potentially run dangerous code on your self-hosted runner by creating a pull request.':
       '公共存储库的复刻可能通过创建拉取请求，在你的自托管运行器上运行危险代码。',
     'Learn more about security hardening for self-hosted runners': '了解自托管运行器的安全加固',
-    'Win-arm64 runners are currently in pre-release status and subject to change.':
-      'Win-arm64 运行器目前处于预发行阶段，可能会有变动。',
+    'Win-arm64 runners are currently in pre-release status and subject to change.': 'Win-arm64 运行器目前处于预发行阶段，可能会有变动。',
 
     // 模型
     'Models in this repository': '此存储库中的模型',
@@ -203,7 +200,7 @@ export default {
     'Default subject claim prefix': '默认主题声明前缀',
     'Use this prefix when configuring trust policies in your cloud provider.': '在云提供商中配置信任策略时使用此前缀。',
     'Copy subject claim prefix': '复制主题声明前缀',
-    'Save subject claim': '保存主题声明',
+    'Save subject claim': '保存主题声明'
   },
   scoped: {
     'Actions permissions': '操作权限',
@@ -237,52 +234,44 @@ export default {
     'Runners are the machines that execute GitHub Actions workflows.': '运行器是执行 GitHub 操作工作流的机器。',
     'Standard GitHub-hosted runners': '标准 GitHub 托管的运行器',
     'Ready-to-use runners managed by GitHub.': '由 GitHub 管理、开箱即用的运行器。',
-    'Learn more about GitHub-hosted runners.': '了解 GitHub 托管的运行器。',
+    'Learn more about GitHub-hosted runners.': '了解 GitHub 托管的运行器。'
   },
   regexp: [
     // 操作权限：仅允许本组织 / 用户的操作
     [new RegExp(`^Allow ${OWNER} actions and reusable workflows$`), '允许 $1 的操作和可复用工作流'],
     [
       new RegExp(`^Allow ${OWNER}, and select non-${OWNER}, actions and reusable workflows$`),
-      '允许 $1 以及选定的非 $2 的操作和可复用工作流',
+      '允许 $1 以及选定的非 $2 的操作和可复用工作流'
     ],
     [
       new RegExp(`^Any action or reusable workflow defined in a repository within ${OWNER} can be used\\.$`),
-      '可以使用 $1 中任何存储库定义的操作或可复用工作流。',
+      '可以使用 $1 中任何存储库定义的操作或可复用工作流。'
     ],
     [
       new RegExp(
-        `^Any action or reusable workflow that matches the specified criteria, plus those defined in a repository within ${OWNER}, can be used\\.$`,
+        `^Any action or reusable workflow that matches the specified criteria, plus those defined in a repository within ${OWNER}, can be used\\.$`
       ),
-      '可以使用符合指定条件的操作或可复用工作流，以及 $1 中任何存储库定义的操作或可复用工作流。',
+      '可以使用符合指定条件的操作或可复用工作流，以及 $1 中任何存储库定义的操作或可复用工作流。'
     ],
     // 保留期上限
-    [
-      /^There is a maximum limit of (\d+) days(\.?)$/,
-      (_, days: string, dot: string) => `上限为 ${days} 天${dot ? '。' : ''}`,
-    ],
+    [/^There is a maximum limit of (\d+) days(\.?)$/, (_, days: string, dot: string) => `上限为 ${days} 天${dot ? '。' : ''}`],
     [
       /^Your organization has set a maximum limit of (\d+) days(\.?)$/,
-      (_, days: string, dot: string) => `你的组织设置的上限为 ${days} 天${dot ? '。' : ''}`,
+      (_, days: string, dot: string) => `你的组织设置的上限为 ${days} 天${dot ? '。' : ''}`
     ],
-    [
-      /^Retention can be set up to (\d+) days(\.?)$/,
-      (_, days: string, dot: string) => `保留期最多可设为 ${days} 天${dot ? '。' : ''}`,
-    ],
+    [/^Retention can be set up to (\d+) days(\.?)$/, (_, days: string, dot: string) => `保留期最多可设为 ${days} 天${dot ? '。' : ''}`],
     [
       /^Total cache size can be set up to (\d+) ?GB(\.?)$/,
-      (_, size: string, dot: string) => `缓存总大小最多可设为 ${size} GB${dot ? '。' : ''}`,
+      (_, size: string, dot: string) => `缓存总大小最多可设为 ${size} GB${dot ? '。' : ''}`
     ],
     // 保留期 / 缓存大小的输入校验
     [
       /^Retention period must be (?:less than or equal to (\d+) days|(\d+) days? or more)\.$/,
-      (_, max: string | undefined, min: string | undefined) =>
-        max ? `保留期不能超过 ${max} 天。` : `保留期不能少于 ${min ?? ''} 天。`,
+      (_, max: string | undefined, min: string | undefined) => (max ? `保留期不能超过 ${max} 天。` : `保留期不能少于 ${min ?? ''} 天。`)
     ],
     [
       /^Cache size must be (?:less than or equal to (\d+) ?GB|(\d+) ?GB or more)\.$/,
-      (_, max: string | undefined, min: string | undefined) =>
-        max ? `缓存大小不能超过 ${max} GB。` : `缓存大小不能少于 ${min ?? ''} GB。`,
+      (_, max: string | undefined, min: string | undefined) => (max ? `缓存大小不能超过 ${max} GB。` : `缓存大小不能少于 ${min ?? ''} GB。`)
     ],
     // 访问
     [/^Accessible from repositories owned by the user ['‘’"“”]?([\w.-]+)['‘’"“”]?$/, '可从用户 $1 拥有的存储库访问'],
@@ -291,21 +280,21 @@ export default {
     // 策略：pull_request_target 限制公告（事件名在 <code> 中时由 static 匹配后半句）
     [
       new RegExp(`^On (${DATE_SOURCE}), GitHub will restrict$`),
-      (_, date: string) => `${joinCjk(translateDate(date) ?? date, '起')}，GitHub 将默认在公共存储库中限制`,
+      (_, date: string) => `${joinCjk(translateDate(date) ?? date, '起')}，GitHub 将默认在公共存储库中限制`
     ],
     [
       new RegExp(
-        `^On (${DATE_SOURCE}), GitHub will restrict ([\\w-]+) on public repositories by default\\. To continue allowing the event trigger, configure an Actions policy\\.$`,
+        `^On (${DATE_SOURCE}), GitHub will restrict ([\\w-]+) on public repositories by default\\. To continue allowing the event trigger, configure an Actions policy\\.$`
       ),
       (_, date: string, event: string) =>
-        `${joinCjk(translateDate(date) ?? date, '起')}，GitHub 将默认在公共存储库中限制 ${event} 事件。如需继续允许此事件触发器，请配置操作策略。`,
+        `${joinCjk(translateDate(date) ?? date, '起')}，GitHub 将默认在公共存储库中限制 ${event} 事件。如需继续允许此事件触发器，请配置操作策略。`
     ],
     // 运行器详细信息：把标签加入工作流 YAML
     [
       /^Add `([^`]{1,100})` to your workflow[’']s YAML to send jobs to this runner\.$/,
-      '将 `$1` 添加到工作流 YAML 即可将作业发送到此运行器。',
+      '将 `$1` 添加到工作流 YAML 即可将作业发送到此运行器。'
     ],
     // 新建自托管运行器：页面标题文本（含 owner/repo）
-    [/^Add new self-hosted runner · ([\w.-]+\/[\w.-]+)$/, '添加新的自托管运行器 · $1'],
-  ],
+    [/^Add new self-hosted runner · ([\w.-]+\/[\w.-]+)$/, '添加新的自托管运行器 · $1']
+  ]
 } satisfies PageDictionary

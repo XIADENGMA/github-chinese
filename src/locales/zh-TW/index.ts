@@ -71,5 +71,5 @@ export const zhTW: LocaleBundle = [
   ['sponsors', sponsors],
   ['education', education],
   ['mcp', mcp],
-  ['status', status],
+  ['status', status]
 ]

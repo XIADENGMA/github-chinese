@@ -61,10 +61,8 @@ export default {
     "Their repository access will be preserved by making them collaborators on all repositories that their teams gave them access to. They will retain access to repositories that they were previously collaborators on, but all other access to this organization's repositories will be lost.":
       '他们将成为其团队授权访问的所有存储库的协作者，以保留存储库访问权限。他们会保留对之前已是协作者的存储库的访问权限，但会失去对此组织存储库的其他所有访问权限。',
     'Convert to outside collaborator': '转换为外部协作者',
-    "You can't remove yourself from the organization. Have another admin do this for you.":
-      '无法将自己移出组织。请让其他管理员操作。',
-    'You can’t remove yourself from the organization. Have another admin do this for you.':
-      '无法将自己移出组织。请让其他管理员操作。',
+    "You can't remove yourself from the organization. Have another admin do this for you.": '无法将自己移出组织。请让其他管理员操作。',
+    'You can’t remove yourself from the organization. Have another admin do this for you.': '无法将自己移出组织。请让其他管理员操作。',
     'The following members will be removed:': '将删除以下成员：',
     'Remove members': '删除成员',
     'Remove member': '删除成员',
@@ -129,6 +127,6 @@ export default {
     'Invite and start fresh': '邀请并重新开始',
 
     // 导出成员列表
-    'Export as JSON': '导出为 JSON',
-  },
+    'Export as JSON': '导出为 JSON'
+  }
 } satisfies PageDictionary

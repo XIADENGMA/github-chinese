@@ -8,7 +8,7 @@ const FEATURE_NAMES: Readonly<Record<string, string>> = {
   'GitHub Codespaces': 'GitHub 程式碼空間',
   Codespaces: '程式碼空間',
   'GitHub Actions': 'GitHub 動作',
-  Actions: '動作',
+  Actions: '動作'
 }
 
 function featureName(feature: string): string {
@@ -33,7 +33,7 @@ const CSV_ERRORS: readonly (readonly [RegExp, string])[] = [
   [/^Illegal quoting in line (\d+)\.$/, '第 $1 行的引號不合法。'],
   [/^Unclosed quoted field in line (\d+)\.$/, '第 $1 行有未閉合的引號欄位。'],
   [/^Any value after quoted field isn't allowed in line (\d+)\.$/, '第 $1 行的引號欄位後不允許有值。'],
-  [/^Field size exceeded in line (\d+)\.$/, '第 $1 行的欄位過大。'],
+  [/^Field size exceeded in line (\d+)\.$/, '第 $1 行的欄位過大。']
 ]
 
 function csvError(message: string): string {
@@ -190,8 +190,7 @@ export default {
     // 申请被拒：日期与句号通常与此句拼成一段，由 regexp 整句处理；此为未拼接时的片段
     'Your request for Copilot Business was declined by an admin on': '你的 Copilot 商務版申請被管理員拒絕於',
     'Click this link to contact your admin.': '按一下此連結以聯絡管理員。',
-    'Click this link to learn more about copilot. This action opens in a new tab.':
-      '按一下此連結以瞭解 Copilot。將在新分頁中開啟。',
+    'Click this link to learn more about copilot. This action opens in a new tab.': '按一下此連結以瞭解 Copilot。將在新分頁中開啟。',
     // 空存储库引导卡片：功能申请已提交（功能名之后的片段；通常与前文拼成整句，由 regexp 处理）
     '. An admin will need to approve your request before you can use this feature.': '。管理員核准後才能使用此功能。',
 
@@ -209,12 +208,10 @@ export default {
     'Space owner. Required.': '空間擁有者。必填。',
     'Where we will store your space.': '空間的儲存位置。',
     'Only you will be able to see this space.': '只有你可以看到此空間。',
-    'Only visible to you and organization admins. You can share it later.':
-      '只有你和組織管理員可以看到。之後可以共用。',
+    'Only visible to you and organization admins. You can share it later.': '只有你和組織管理員可以看到。之後可以共用。',
     'Fetching owners…': '正在擷取擁有者…',
-    'An error occurred while loading owners. Please reopen the dialog to try again.':
-      '載入擁有者時發生錯誤。請重新開啟對話方塊再試一次。',
-    'Unable to save space.': '無法儲存此空間。',
+    'An error occurred while loading owners. Please reopen the dialog to try again.': '載入擁有者時發生錯誤。請重新開啟對話方塊再試一次。',
+    'Unable to save space.': '無法儲存此空間。'
   },
 
   scoped: {
@@ -260,7 +257,7 @@ export default {
     "Don't show again": '不再顯示',
     'Contact your admin': '聯絡管理員',
     'for more details around their decision.': '以瞭解此決定的詳情。',
-    successfully: '中',
+    successfully: '中'
   },
 
   regexp: [
@@ -277,13 +274,13 @@ export default {
     // Copilot 推广弹层：申请被拒（相邻文本节点拼接后整句匹配）
     [
       /^Your request for (\S.*?) was declined by an admin(?: on (\S.*))?\.$/,
-      (_, feature: string, date: string | undefined) => declinedRequest(feature, date),
+      (_, feature: string, date: string | undefined) => declinedRequest(feature, date)
     ],
     // 空存储库引导卡片：功能申请已提交（相邻文本节点拼接后整句匹配）
     [
       /^You['’]ve successfully submitted a request to your organization['’]s admins for access to (\S.*?)\. An admin will need to approve your request before you can use this feature\.$/,
-      (_, feature: string) => submittedRequest(feature),
-    ],
+      (_, feature: string) => submittedRequest(feature)
+    ]
   ],
 
   inline: [
@@ -292,19 +289,19 @@ export default {
     // A permissive license similar to the <a>BSD 2-Clause License</a>, but with a 3rd clause …
     [
       'A permissive license similar to the {}, but with a 3rd clause that prohibits others from using the name of the copyright holder or its contributors to promote derived products without written consent.',
-      '一種類似於 {} 的寬鬆授權條款，但增加的第三條禁止他人未經書面同意使用著作權人或其貢獻者的名義推廣衍生產品。',
+      '一種類似於 {} 的寬鬆授權條款，但增加的第三條禁止他人未經書面同意使用著作權人或其貢獻者的名義推廣衍生產品。'
     ],
     // A variant of the <a>BSD 3-Clause License</a> that explicitly does not grant any patent rights.
     ['A variant of the {} that explicitly does not grant any patent rights.', '一種明確不授予任何專利權的 {} 變體。'],
     // … approved by the European Commission in <a>23 official languages</a> of the European Union.
     [
       'The European Union Public Licence (EUPL) is a copyleft free/open source software license created on the initiative of and approved by the European Commission in {} of the European Union.',
-      '歐盟公共授權條款 (EUPL) 是由歐盟執委會發起並以歐盟 {}版本核准的 Copyleft 自由/開源軟體授權條款。',
+      '歐盟公共授權條款 (EUPL) 是由歐盟執委會發起並以歐盟 {}版本核准的 Copyleft 自由/開源軟體授權條款。'
     ],
     // Similar to <a>CC-BY-4.0</a> but requires … a similar, <a>compatible</a> license. …
     [
       'Similar to {} but requires derivatives be distributed under the same or a similar, {} license. Frequently used for media assets and educational materials. A previous version is the default license for Wikipedia and other Wikimedia projects. Not recommended for software.',
-      '類似於 {} 但要求衍生作品以相同或類似的{}授權條款散布。常用於媒體素材和教材。其舊版本是維基百科等維基媒體計畫的預設授權條款。不建議用於軟體。',
-    ],
-  ],
+      '類似於 {} 但要求衍生作品以相同或類似的{}授權條款散布。常用於媒體素材和教材。其舊版本是維基百科等維基媒體計畫的預設授權條款。不建議用於軟體。'
+    ]
+  ]
 } satisfies PageDictionary

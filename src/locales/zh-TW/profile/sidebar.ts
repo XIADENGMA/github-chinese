@@ -59,10 +59,8 @@ export default {
     'Customize your pins': '自訂釘選項目',
     'Customize pins': '自訂釘選項目',
     'Edit pinned items': '編輯釘選項目',
-    'Select up to six public repositories or gists you’d like to show to anyone.':
-      '最多選取六個要向所有人展示的公開儲存庫或程式碼片段。',
-    "Select up to six public repositories or gists you'd like to show to anyone.":
-      '最多選取六個要向所有人展示的公開儲存庫或程式碼片段。',
+    'Select up to six public repositories or gists you’d like to show to anyone.': '最多選取六個要向所有人展示的公開儲存庫或程式碼片段。',
+    "Select up to six public repositories or gists you'd like to show to anyone.": '最多選取六個要向所有人展示的公開儲存庫或程式碼片段。',
     'Select up to six public repositories you’d like to show to anyone.': '最多選取六個要向所有人展示的公開儲存庫。',
     "Select up to six public repositories you'd like to show to anyone.": '最多選取六個要向所有人展示的公開儲存庫。',
     'Select up to six public repositories you’d like to show.': '最多選取六個要展示的公開儲存庫。',
@@ -98,8 +96,7 @@ export default {
       '允許此使用者與你的儲存庫互動並向你傳送通知。瞭解',
     'blocking users': '封鎖使用者',
     'You must be logged in to block users.': '登入後才能封鎖使用者。',
-    'Close all issues, pull requests, and discussions opened by this user':
-      '關閉此使用者建立的所有議題、拉取請求和討論',
+    'Close all issues, pull requests, and discussions opened by this user': '關閉此使用者建立的所有議題、拉取請求和討論',
     'Content in all repositories owned by your account will be closed.': '你的帳號擁有的所有儲存庫中的內容都將關閉。',
     'Add an optional note': '新增選填備註',
     'Maximum 250 characters. Please don’t include any personal information such as legal names or email addresses. Markdown is supported. This note will only be visible to you.':
@@ -113,7 +110,7 @@ export default {
 
     // 编辑个人档案表单
     'You can @mention other users and organizations to link to them.': '你可以 @提及其他使用者和組織以連結到他們。',
-    'other users and organizations to link to them.': '其他使用者和組織以連結到他們。',
+    'other users and organizations to link to them.': '其他使用者和組織以連結到他們。'
   },
   scoped: {
     Followers: '追蹤者',
@@ -138,7 +135,7 @@ export default {
     'badge.': '徽章。',
     'Filter repositories': '篩選儲存庫',
     // 钉选对话框加载失败：Something went wrong. <Retry.>
-    'Retry.': '重試。',
+    'Retry.': '重試。'
   },
   regexp: [
     // 追踪人数（数字与文字拼接后）；N followers 由 common-ui 的通用计数规则翻译
@@ -152,7 +149,7 @@ export default {
     // 本地时间：- 1h ahead / - 7h behind / - 5h30m ahead（时与分之间不带空格；带空格的写法同样接受）
     [
       /^- (\d+(?:\.\d+)?h(?: ?\d+m)?|\d+m) (ahead|behind)$/,
-      (_, offset, direction) => `- ${direction === 'ahead' ? '快' : '慢'} ${formatOffset(offset)}`,
+      (_, offset, direction) => `- ${direction === 'ahead' ? '快' : '慢'} ${formatOffset(offset)}`
     ],
     // 组织头像溢出：+ 12 more
     [/^\+ (\d+) more$/, '另有 $1 個'],
@@ -160,7 +157,7 @@ export default {
     // 编辑个人档案：社群帐号输入框
     [/^Link to social profile (\d)$/, '社群帳號連結 $1'],
     // 钉选项目排序按钮：Move hello-world up
-    [/^Move (.+?) (up|down)$/, (_, name, direction) => `將 ${name} ${direction === 'up' ? '上移' : '下移'}`],
+    [/^Move (.+?) (up|down)$/, (_, name, direction) => `將 ${name} ${direction === 'up' ? '上移' : '下移'}`]
   ],
   ignore: [
     // 状态消息（姓名、简介、公司、所在地、已钉选的储存库由全局忽略规则处理）
@@ -168,8 +165,8 @@ export default {
     // 页头面包屑首项的使用者名称（today 这类使用者名称会被当成时间词翻译）
     'li:first-child > [class*="contextCrumb__"]',
     // 个人档案读我档案标题中的「使用者名称/使用者名称」
-    '.profile-readme .text-mono',
+    '.profile-readme .text-mono'
   ],
   // 追踪人数被 <span> 拆开：<a><span>31</span> following</a>（链接内没有图标）
-  inline: [['{} following', '追蹤 {} 人']],
+  inline: [['{} following', '追蹤 {} 人']]
 } satisfies PageDictionary

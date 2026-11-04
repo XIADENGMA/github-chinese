@@ -50,7 +50,7 @@ export function converterArgs(extensionDir: string, projectLocation: string): st
     '--copy-resources',
     '--no-open',
     '--no-prompt',
-    '--force',
+    '--force'
   ]
 }
 
@@ -86,7 +86,7 @@ export function buildArgs({ project, scheme, derivedDataPath, version }: BuildOp
     `MACOSX_DEPLOYMENT_TARGET=${MIN_MACOS}`,
     `MARKETING_VERSION=${version}`,
     `CURRENT_PROJECT_VERSION=${version}`,
-    'build',
+    'build'
   ]
 }
 
@@ -95,7 +95,7 @@ export function pickScheme(listJson: string): string {
   // 任何 JSON 值都可安全取属性：null、非对象取到 undefined
   const schemes = (JSON.parse(listJson) as { project?: { schemes?: unknown } } | null)?.project?.schemes
   const names = Array.isArray(schemes) ? schemes.filter((name): name is string => typeof name === 'string') : []
-  const scheme = [APP_NAME, `${APP_NAME} (macOS)`].find((name) => names.includes(name))
+  const scheme = [APP_NAME, `${APP_NAME} (macOS)`].find(name => names.includes(name))
   if (scheme === undefined) throw new Error(`Xcode 工程中没有宿主应用的方案：${names.join('、') || '（无）'}`)
   return scheme
 }
@@ -112,9 +112,7 @@ export interface HostPage {
  * 找不到或不止一处（Xcode 模板改了）时返回 undefined，沿用模板页面
  */
 export function findHostPage(files: readonly string[]): HostPage | undefined {
-  const pages = files.filter(
-    (file) => posix.basename(file) === 'Main.html' && posix.basename(posix.dirname(file)) === 'Base.lproj',
-  )
+  const pages = files.filter(file => posix.basename(file) === 'Main.html' && posix.basename(posix.dirname(file)) === 'Base.lproj')
   if (pages.length !== 1) return undefined
   const resources = posix.dirname(posix.dirname(pages[0]!))
   const script = posix.join(resources, 'Script.js')

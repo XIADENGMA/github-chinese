@@ -32,5 +32,5 @@ export default mergeDictionaries(
   security,
   sessions,
   plans,
-  billing,
+  billing
 ) satisfies PageDictionary

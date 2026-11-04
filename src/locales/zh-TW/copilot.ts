@@ -28,5 +28,5 @@ export default mergeDictionaries(
   code,
   composer,
   app,
-  plans,
+  plans
 ) satisfies PageDictionary

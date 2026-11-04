@@ -2,7 +2,7 @@ import type { PageDictionary } from '../../../core/types'
 
 const ORG_INVITE_VERB: Readonly<Record<string, string>> = {
   Invite: '邀请成员加入',
-  Add: '添加成员到',
+  Add: '添加成员到'
 }
 
 /** 登录后全局导航栏：头部按钮、全局导航侧栏、用户菜单、新建菜单、Copilot 与代理菜单、存储库标签导航 */
@@ -194,8 +194,7 @@ export default {
     'An error has occurred while switching accounts. Please try again.': '切换帐户时出错。请重试。',
     'An error occurred while switching accounts. Please try again.': '切换帐户时出错。请重试。',
     'Unable to switch to the selected account.': '无法切换到所选帐户。',
-    'Please try again. If the issue persists, try adding the account again.':
-      '请重试。如果问题仍然存在，请尝试重新添加该帐户。',
+    'Please try again. If the issue persists, try adding the account again.': '请重试。如果问题仍然存在，请尝试重新添加该帐户。',
 
     // 企业栏
     'Data residency:': '数据驻留：',
@@ -218,7 +217,7 @@ export default {
     Codespaces: '代码空间',
     Models: '模型',
     'Security and quality': '安全和质量',
-    Insights: '见解',
+    Insights: '见解'
   },
   regexp: [
     // 已登录头部搜索按钮的无障碍名称与按钮文字（快捷键不是 / 时）
@@ -235,6 +234,6 @@ export default {
     [/^Users managed by (.+)$/, '由 $1 托管的用户'],
     // 代理菜单：会话数播报、正在创建的任务
     [/^(\d+) recent sessions?$/, '$1 个最近的会话'],
-    [/^Creating task in ([\w.-]+\/[\w.-]+)$/, '正在 $1 中创建任务'],
-  ],
+    [/^Creating task in ([\w.-]+\/[\w.-]+)$/, '正在 $1 中创建任务']
+  ]
 } satisfies PageDictionary

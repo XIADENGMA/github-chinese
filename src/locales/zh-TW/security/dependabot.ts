@@ -7,14 +7,14 @@ const LIST_ACTION: Readonly<Record<string, string>> = {
   dismissed: '解除於',
   'auto-dismissed': '自動解除於',
   closed: '關閉於',
-  reopened: '重新開啟於',
+  reopened: '重新開啟於'
 }
 
 const REACHABILITY: Readonly<Record<string, string>> = {
   Reachable: '可達',
   'Potentially reachable': '可能可達',
   Unreachable: '不可達',
-  Unavailable: '無法取得',
+  Unavailable: '無法取得'
 }
 
 /**
@@ -139,8 +139,7 @@ export default {
     'Prioritize this alert with signals like': '依據以下訊號排定此警示的優先順序',
     'whether the code is deployed to production': '程式碼是否已部署到正式環境',
     'Your code reaches the vulnerable function.': '你的程式碼會觸及有漏洞的函式。',
-    "Analysis couldn't confirm whether your code reaches the vulnerable function.":
-      '分析無法確認你的程式碼是否會觸及有漏洞的函式。',
+    "Analysis couldn't confirm whether your code reaches the vulnerable function.": '分析無法確認你的程式碼是否會觸及有漏洞的函式。',
     "We couldn't determine reachability because of an error on our side. We're continually improving reachability analysis, so you should see fewer of these errors over time.":
       '我們這邊發生錯誤，因此無法判定可達性。我們持續改進可達性分析，此類錯誤會逐漸減少。',
     "We'll try again tomorrow as long as reachability analysis is enabled for this repository.":
@@ -153,12 +152,10 @@ export default {
       '我們在此資訊清單所在的目錄中找不到對有漏洞函式的呼叫，但在儲存庫的另一個目錄中找到了呼叫。',
     "Right now, reachability analysis supports only JavaScript and TypeScript languages, so this alert wasn't analyzed.":
       '目前可達性分析僅支援 JavaScript 和 TypeScript 語言，因此未分析此警示。',
-    "Reachability analysis didn't complete, so call paths aren't available.":
-      '可達性分析未完成，因此無法提供呼叫路徑。',
+    "Reachability analysis didn't complete, so call paths aren't available.": '可達性分析未完成，因此無法提供呼叫路徑。',
     'About reachability': '關於可達性',
     // … from the public npm registry and from <private registries configured for Dependabot>.
-    'Reachability analysis supports dependencies from the public npm registry and from':
-      '可達性分析支援的相依項目來自公開 npm 登錄庫和',
+    'Reachability analysis supports dependencies from the public npm registry and from': '可達性分析支援的相依項目來自公開 npm 登錄庫和',
     'private registries configured for Dependabot': '為 Dependabot 設定的私人登錄庫',
     // The <reachability analysis run> for this repository reached its time limit …
     'reachability analysis run': '可達性分析執行',
@@ -175,8 +172,7 @@ export default {
 
     // 导出 CSV 报告
     'Export CSV': '匯出 CSV',
-    'Generating your report. Stay on this page to automatically download the report.':
-      '正在產生報告。停留在此頁面將自動下載報告。',
+    'Generating your report. Stay on this page to automatically download the report.': '正在產生報告。停留在此頁面將自動下載報告。',
     "Your report is being generated. You will receive an email when it's ready. Stay on this page to automatically download the report.":
       '正在產生報告。完成後你會收到電子郵件。停留在此頁面將自動下載報告。',
     'Your report is being generated. You will receive an email when it’s ready. Stay on this page to automatically download the report.':
@@ -189,7 +185,7 @@ export default {
     'Your report is ready and the download has started. An email with the report has also been sent to you.':
       '報告已就緒，並已開始下載。報告也已透過電子郵件寄給你。',
     'Something went wrong while exporting your data. Please try again later. If the problem persists, please contact support.':
-      '匯出資料時發生錯誤。請稍後再試。如果問題持續發生，請聯絡支援團隊。',
+      '匯出資料時發生錯誤。請稍後再試。如果問題持續發生，請聯絡支援團隊。'
   },
   scoped: {
     // 其他区域也出现的同形文字，本区域内单独生效
@@ -207,14 +203,11 @@ export default {
     Opened: '建立於',
     // dependabot opened this <时间>
     'opened this': '建立於',
-    'View logs': '查看記錄',
+    'View logs': '查看記錄'
   },
   regexp: [
     // 列表条目：#38 opened 3 days ago • Detected in …
-    [
-      /^#(\d+) (opened|fixed|dismissed|auto-dismissed|closed|reopened)$/,
-      (_, number, action) => `#${number} ${LIST_ACTION[action]}`,
-    ],
+    [/^#(\d+) (opened|fixed|dismissed|auto-dismissed|closed|reopened)$/, (_, number, action) => `#${number} ${LIST_ACTION[action]}`],
     // 详情页修正建议
     [/^Upgrade (\S+) to fix (\d+) Dependabot alerts? in (\S+)$/, '升級 $1 以修正 $3 中的 $2 個 Dependabot 警示'],
     [/^Upgrade (\S+) to version (\S+) or later\. For example:$/, '將 $1 升級到 $2 或更新版本。例如：'],
@@ -224,12 +217,12 @@ export default {
     // 侧栏可达性标记的 aria-label（原文无引号）
     [
       /^Filter alerts by (Reachable|Potentially reachable|Unreachable|Unavailable) reachability$/,
-      (_, title) => `篩選可達性為${REACHABILITY[title]}的警示`,
-    ],
+      (_, title) => `篩選可達性為${REACHABILITY[title]}的警示`
+    ]
   ],
   // 被元素拆开的整句；整句未命中时由 static 的片段兜底
   inline: [
     // 可达性分析：Prioritize this alert with signals like <a>severity</a>, <a>EPSS score</a>, or <a>…</a>.
-    ['Prioritize this alert with signals like {}, {}, or {}.', '依據{}、{}或{}等訊號排定此警示的優先順序。'],
-  ],
+    ['Prioritize this alert with signals like {}, {}, or {}.', '依據{}、{}或{}等訊號排定此警示的優先順序。']
+  ]
 } satisfies PageDictionary

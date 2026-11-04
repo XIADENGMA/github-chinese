@@ -39,56 +39,56 @@ export const BUILTIN_SOURCES: readonly AccelerateSource[] = [
     id: 'ghfast',
     name: 'ghfast.top',
     template: 'https://ghfast.top/{url}',
-    unsupportedHosts: ['github.githubassets.com', 'avatars.githubusercontent.com'],
+    unsupportedHosts: ['github.githubassets.com', 'avatars.githubusercontent.com']
   },
   {
     id: 'wget-la',
     name: 'wget.la',
     template: 'https://wget.la/{url}',
-    unsupportedHosts: ['avatars.githubusercontent.com'],
+    unsupportedHosts: ['avatars.githubusercontent.com']
   },
   {
     id: 'gh-proxy-hk',
     name: 'hk.gh-proxy.org',
     template: 'https://hk.gh-proxy.org/{url}',
-    unsupportedHosts: ['gist.github.com'],
+    unsupportedHosts: ['gist.github.com']
   },
   {
     id: 'gh-proxy-cdn',
     name: 'cdn.gh-proxy.org',
     template: 'https://cdn.gh-proxy.org/{url}',
-    unsupportedHosts: ['gist.github.com'],
+    unsupportedHosts: ['gist.github.com']
   },
   {
     id: 'gh-proxy-edgeone',
     name: 'edgeone.gh-proxy.org',
     template: 'https://edgeone.gh-proxy.org/{url}',
-    unsupportedHosts: ['gist.github.com'],
+    unsupportedHosts: ['gist.github.com']
   },
   {
     id: 'gh-proxy-com',
     name: 'gh-proxy.com',
     template: 'https://gh-proxy.com/{url}',
-    unsupportedHosts: ['gist.github.com'],
+    unsupportedHosts: ['gist.github.com']
   },
   {
     id: 'gh-monlor',
     name: 'gh.monlor.com',
     template: 'https://gh.monlor.com/{url}',
-    unsupportedHosts: IMAGE_ONLY_HOSTS,
+    unsupportedHosts: IMAGE_ONLY_HOSTS
   },
   {
     id: 'hub-ddayh',
     name: 'hub.ddayh.com',
     template: 'https://hub.ddayh.com/{url}',
-    unsupportedHosts: IMAGE_ONLY_HOSTS,
+    unsupportedHosts: IMAGE_ONLY_HOSTS
   },
   {
     id: 'ghproxy-053000',
     name: 'ghproxy.053000.xyz',
     template: 'https://ghproxy.053000.xyz/{url}',
-    unsupportedHosts: IMAGE_ONLY_HOSTS,
-  },
+    unsupportedHosts: IMAGE_ONLY_HOSTS
+  }
 ]
 
 export const DEFAULT_SOURCE_ID = 'ghfast'
@@ -145,14 +145,14 @@ const GIST_CLONE_RE = /^\/[0-9a-f]+\.git$/
 const IMAGE_HOSTS: ReadonlySet<string> = new Set([
   'avatars.githubusercontent.com',
   'github.githubassets.com',
-  'user-images.githubusercontent.com',
+  'user-images.githubusercontent.com'
 ])
 
 const GITHUB_KINDS: Readonly<Record<string, LinkKind>> = {
   'releases/download': 'release',
   'releases/latest/download': 'release',
   archive: 'archive',
-  raw: 'raw',
+  raw: 'raw'
 }
 
 function tryParseUrl(text: string): URL | undefined {
@@ -182,9 +182,7 @@ function parseRawUrl(url: URL, kind: LinkKind): AccelerableLink | undefined {
   const { hostname, pathname, search } = url
   if (hostname === 'raw.githubusercontent.com') {
     const match = RAW_FILE_RE.exec(pathname)
-    return match
-      ? { kind, url: `${url.origin}${pathname}${search}`, path: `${match[1]}/raw/${match[2]}${search}` }
-      : undefined
+    return match ? { kind, url: `${url.origin}${pathname}${search}`, path: `${match[1]}/raw/${match[2]}${search}` } : undefined
   }
   if (hostname === 'gist.githubusercontent.com') {
     return GIST_RAW_RE.test(pathname) ? { kind, url: `${url.origin}${pathname}${search}` } : undefined
@@ -212,9 +210,7 @@ export function parseDownloadLink(href: string): AccelerableLink | undefined {
   if (hostname === 'gist.github.com') {
     const match = GIST_FILE_RE.exec(pathname)
     if (match?.[2] === 'archive') return { kind: 'gist', url: `${url.origin}${pathname}${search}` }
-    return match
-      ? { kind: 'raw', url: `https://gist.githubusercontent.com/${match[1]}/raw/${match[3]}${search}` }
-      : undefined
+    return match ? { kind: 'raw', url: `https://gist.githubusercontent.com/${match[1]}/raw/${match[3]}${search}` } : undefined
   }
   return parseRawUrl(url, 'raw')
 }
@@ -226,9 +222,7 @@ export function parseCloneUrl(href: string): AccelerableLink | undefined {
   if (url.hostname === 'github.com' && REPO_CLONE_RE.test(url.pathname)) {
     return githubLink('clone', url.pathname, '')
   }
-  return url.hostname === 'gist.github.com' && GIST_CLONE_RE.test(url.pathname)
-    ? { kind: 'clone', url: url.href }
-    : undefined
+  return url.hostname === 'gist.github.com' && GIST_CLONE_RE.test(url.pathname) ? { kind: 'clone', url: url.href } : undefined
 }
 
 /** 识别可经加速源取回的图片地址；不可加速时返回 undefined */
@@ -265,11 +259,11 @@ export function supportsLink(source: AccelerateSource, link: AccelerableLink): b
 const SAMPLE_LINK: AccelerableLink = {
   kind: 'release',
   url: 'https://github.com/octocat/hello-world/releases/download/v1.0/sample.zip',
-  path: 'octocat/hello-world/releases/download/v1.0/sample.zip',
+  path: 'octocat/hello-world/releases/download/v1.0/sample.zip'
 }
 
 function isGitHubHost(hostname: string): boolean {
-  return ['github.com', 'githubusercontent.com'].some((host) => hostname === host || hostname.endsWith(`.${host}`))
+  return ['github.com', 'githubusercontent.com'].some(host => hostname === host || hostname.endsWith(`.${host}`))
 }
 
 /** 模板所在的站点（去掉占位符后解析）：须为 https，且不是 GitHub 自己的域名 */
@@ -314,7 +308,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 function isBuiltinId(id: string): boolean {
-  return BUILTIN_SOURCES.some((source) => source.id === id)
+  return BUILTIN_SOURCES.some(source => source.id === id)
 }
 
 /** 读取存储中的自定义加速源：丢弃不合法、重复的项，超出上限的截掉 */
@@ -327,7 +321,7 @@ export function sanitizeCustomSources(value: unknown): readonly AccelerateSource
     const { id } = item
     const template = parseSourceTemplate(item.template)
     if (id === '' || isBuiltinId(id) || !template) continue
-    if (sources.some((source) => source.id === id || templateKey(source.template) === templateKey(template))) continue
+    if (sources.some(source => source.id === id || templateKey(source.template) === templateKey(template))) continue
     sources.push({ id, name: sourceName(typeof item.name === 'string' ? item.name : '', template), template })
   }
   return sources
@@ -341,7 +335,7 @@ export function sanitizeRemovedSources(value: unknown): readonly string[] {
 /** 生效的加速源：未删除的内置源在前，自定义源在后 */
 export function listSources(settings: AccelerateSettings): readonly AccelerateSource[] {
   const removed = new Set(settings.removedSources)
-  return [...BUILTIN_SOURCES.filter((source) => !removed.has(source.id)), ...settings.customSources]
+  return [...BUILTIN_SOURCES.filter(source => !removed.has(source.id)), ...settings.customSources]
 }
 
 /** 首选为自动选择 */
@@ -358,16 +352,14 @@ export function needsProbe(settings: AccelerateSettings & { readonly failover: b
 export function preferredSource(settings: AccelerateSettings): AccelerateSource | undefined {
   if (isAutoSource(settings)) return undefined
   const sources = listSources(settings)
-  return sources.find((source) => source.id === settings.accelerateSource) ?? sources[0]
+  return sources.find(source => source.id === settings.accelerateSource) ?? sources[0]
 }
 
 /** 候选：首选在前，其余按列表顺序（自动选择时按列表顺序）；给出地址时只留能加速它的 */
 export function candidateSources(settings: AccelerateSettings, link?: AccelerableLink): readonly AccelerateSource[] {
   const preferred = preferredSource(settings)
-  const sources = preferred
-    ? [preferred, ...listSources(settings).filter((source) => source !== preferred)]
-    : listSources(settings)
-  return link ? sources.filter((source) => supportsLink(source, link)) : sources
+  const sources = preferred ? [preferred, ...listSources(settings).filter(source => source !== preferred)] : listSources(settings)
+  return link ? sources.filter(source => supportsLink(source, link)) : sources
 }
 
 /** 不探测时的加速地址：首选加速源，它不支持该地址时用列表中第一个支持的；都不支持时为 undefined */
@@ -383,23 +375,23 @@ export function acceleratePreferred(settings: AccelerateSettings, link: Accelera
 export function dropBuiltinCopies(settings: AccelerateSettings): AccelerateSettings {
   const removed = new Set(settings.removedSources)
   const builtin = new Map(
-    BUILTIN_SOURCES.filter((source) => !removed.has(source.id)).map((source) => [templateKey(source.template), source.id]),
+    BUILTIN_SOURCES.filter(source => !removed.has(source.id)).map(source => [templateKey(source.template), source.id])
   )
-  const copies = settings.customSources.filter((source) => builtin.has(templateKey(source.template)))
+  const copies = settings.customSources.filter(source => builtin.has(templateKey(source.template)))
   if (copies.length === 0) return settings
-  const preferredCopy = copies.find((source) => source.id === settings.accelerateSource)
+  const preferredCopy = copies.find(source => source.id === settings.accelerateSource)
   return {
     ...settings,
-    customSources: settings.customSources.filter((source) => !copies.includes(source)),
+    customSources: settings.customSources.filter(source => !copies.includes(source)),
     accelerateSource: preferredCopy
       ? (builtin.get(templateKey(preferredCopy.template)) ?? settings.accelerateSource)
-      : settings.accelerateSource,
+      : settings.accelerateSource
   }
 }
 
 /** 已删除的内置源数 */
 export function countRemovedSources(settings: AccelerateSettings): number {
-  return BUILTIN_SOURCES.filter((source) => settings.removedSources.includes(source.id)).length
+  return BUILTIN_SOURCES.filter(source => settings.removedSources.includes(source.id)).length
 }
 
 /** 添加加速源的结果：成功时为要写入的设置；失败原因为格式错误、已存在、已达上限 */
@@ -412,10 +404,9 @@ export function addSource(settings: AccelerateSettings, name: string, template: 
   const parsed = parseSourceTemplate(template)
   if (!parsed) return { ok: false, reason: 'invalid' }
   const key = templateKey(parsed)
-  if (listSources(settings).some((source) => templateKey(source.template) === key))
-    return { ok: false, reason: 'exists' }
+  if (listSources(settings).some(source => templateKey(source.template) === key)) return { ok: false, reason: 'exists' }
   if (settings.customSources.length >= MAX_CUSTOM_SOURCES) return { ok: false, reason: 'limit' }
-  const ids = new Set(settings.customSources.map((source) => source.id))
+  const ids = new Set(settings.customSources.map(source => source.id))
   const base = `custom-${time.toString(36)}`
   let id = base
   for (let suffix = 2; ids.has(id); suffix += 1) id = `${base}-${suffix}`
@@ -425,22 +416,21 @@ export function addSource(settings: AccelerateSettings, name: string, template: 
 
 /** 删除加速源：内置源记入已删除，自定义源直接去掉 */
 export function removeSource(settings: AccelerateSettings, id: string): Partial<AccelerateSettings> {
-  if (!isBuiltinId(id)) return { customSources: settings.customSources.filter((source) => source.id !== id) }
+  if (!isBuiltinId(id)) return { customSources: settings.customSources.filter(source => source.id !== id) }
   return settings.removedSources.includes(id) ? {} : { removedSources: [...settings.removedSources, id] }
 }
 
 /** 恢复已删除的内置源；与内置源重复的自定义源一并去掉 */
 export function restoreSources(settings: AccelerateSettings): Partial<AccelerateSettings> {
-  const builtin = new Set(BUILTIN_SOURCES.map((source) => templateKey(source.template)))
+  const builtin = new Set(BUILTIN_SOURCES.map(source => templateKey(source.template)))
   return {
     removedSources: [],
-    customSources: settings.customSources.filter((source) => !builtin.has(templateKey(source.template))),
+    customSources: settings.customSources.filter(source => !builtin.has(templateKey(source.template)))
   }
 }
 
 /** 一次请求的结果：耗时（毫秒），或超时、出错 */
-export type ProbeResult =
-  { readonly ok: true; readonly ms: number } | { readonly ok: false; readonly reason: 'timeout' | 'error' }
+export type ProbeResult = { readonly ok: true; readonly ms: number } | { readonly ok: false; readonly reason: 'timeout' | 'error' }
 
 export interface ProbeDeps {
   fetch(url: string, init: RequestInit): Promise<unknown>
@@ -451,7 +441,7 @@ export interface ProbeDeps {
 export const PROBE_DEPS: ProbeDeps = {
   // 不把全局 fetch 直接挂到对象上：以对象为 this 调用会报 Illegal invocation
   fetch: (url, init) => fetch(url, init),
-  now: () => performance.now(),
+  now: () => performance.now()
 }
 
 /**
@@ -469,7 +459,7 @@ export async function probe(url: string, timeoutMs: number, deps: ProbeDeps = PR
       cache: 'no-store',
       credentials: 'omit',
       referrerPolicy: 'no-referrer',
-      signal: controller.signal,
+      signal: controller.signal
     })
     return { ok: true, ms: Math.round(deps.now() - start) }
   } catch {

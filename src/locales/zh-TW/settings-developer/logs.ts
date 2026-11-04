@@ -5,7 +5,7 @@ const TOKEN_ACTION: Readonly<Record<string, string>> = {
   Created: '建立了',
   Regenerated: '重新產生了',
   Updated: '更新了',
-  Revoked: '撤銷了',
+  Revoked: '撤銷了'
 }
 
 const TWO_FACTOR_METHOD: Readonly<Record<string, string>> = {
@@ -14,7 +14,7 @@ const TWO_FACTOR_METHOD: Readonly<Record<string, string>> = {
   'security key': '安全金鑰',
   passkey: '密碼金鑰',
   'GitHub Mobile': 'GitHub 行動版',
-  'recovery code': '復原碼',
+  'recovery code': '復原碼'
 }
 
 /**
@@ -29,7 +29,7 @@ const FILTER_TARGET: Readonly<Record<string, string>> = {
   operation: '操作類型',
   organization: '組織',
   repository: '儲存庫',
-  user: '使用者',
+  user: '使用者'
 }
 
 const FILTER_TARGET_SOURCE = '(action|actor|country|created date|operation|organization|repository|user)'
@@ -96,10 +96,8 @@ export default {
     'Created environment': '建立了環境',
     'Added deployment branch pattern with value': '新增的部署分支模式值為',
     'Created a deployment branch protection rule for': '為以下環境建立了部署分支保護規則',
-    'The environment can only deploy in branches matching a branch policy pattern.':
-      '該環境只能部署到與分支政策模式相符的分支。',
-    '. The environment can only deploy in branches matching a branch policy pattern.':
-      '。該環境只能部署到與分支政策模式相符的分支。',
+    'The environment can only deploy in branches matching a branch policy pattern.': '該環境只能部署到與分支政策模式相符的分支。',
+    '. The environment can only deploy in branches matching a branch policy pattern.': '。該環境只能部署到與分支政策模式相符的分支。',
     // 「Added the following repositories to the <組織> organization with <read> permission」：放进已有集合用「加入」
     'Added the following repositories to the': '已將以下儲存庫加入',
     'Removed the following repositories from the': '已將以下儲存庫移出',
@@ -148,14 +146,12 @@ export default {
     'Receive immediate Slack messages when certain events happen': '發生特定事件時立即接收 Slack 訊息',
     // 「… because the current plan for <strong>组织</strong> does not support reminders for private repositories.」
     // because 从句用“因…而…”，原文无逗号，译文不加
-    'You will only receive notifications from public repositories in this organization because the current plan for':
-      '你因組織',
-    'does not support reminders for private repositories.':
-      '的目前方案不支援私人儲存庫的提醒而只會收到此組織公開儲存庫的通知。',
+    'You will only receive notifications from public repositories in this organization because the current plan for': '你因組織',
+    'does not support reminders for private repositories.': '的目前方案不支援私人儲存庫的提醒而只會收到此組織公開儲存庫的通知。',
     'Upgrade to Team': '升級到團隊版',
     'Create reminder': '建立提醒',
     'Update reminder': '更新提醒',
-    'Delete reminder': '刪除提醒',
+    'Delete reminder': '刪除提醒'
   },
   scoped: {
     'Period:': '期間：',
@@ -198,7 +194,7 @@ export default {
     Friday: '星期五',
     Saturday: '星期六',
     Sunday: '星期日',
-    Times: '時間',
+    Times: '時間'
   },
   regexp: [
     [/^Found (\d+) events?$/, '找到 $1 個事件'],
@@ -206,33 +202,33 @@ export default {
     // 搜索建议的无障碍标签：「action: filter by action」（限定词与半角冒号原样保留）
     [
       new RegExp(`^([a-z_]+): filter by ${FILTER_TARGET_SOURCE}$`),
-      (_, qualifier: string, target: string) => `${qualifier}: 依${FILTER_TARGET[target] ?? target}篩選`,
+      (_, qualifier: string, target: string) => `${qualifier}: 依${FILTER_TARGET[target] ?? target}篩選`
     ],
     [
       /^Two-factor auth challenge solved with (authenticator app|SMS|security key|passkey|GitHub Mobile|recovery code)$/,
-      (_, method: string) => joinCjk(joinCjk('已透過', TWO_FACTOR_METHOD[method] ?? method), '完成雙重驗證挑戰'),
+      (_, method: string) => joinCjk(joinCjk('已透過', TWO_FACTOR_METHOD[method] ?? method), '完成雙重驗證挑戰')
     ],
     // 原文句中无标点，译文也不加：「Created a token for octocat ending in abcd for the Copilot GitHub App.」
     [
       /^(Created|Regenerated|Updated|Revoked) a token for ([\w-]+) ending in (\S+) for the (.+) (GitHub App|OAuth app)(\.?)$/,
       (_, action: string, owner: string, suffix: string, app: string, kind: string, dot: string) =>
-        `${joinCjk(`${TOKEN_ACTION[action] ?? action} ${owner} 的結尾為 ${suffix} 的`, app)} ${APP_KIND[kind] ?? kind}權杖${dot ? '。' : ''}`,
+        `${joinCjk(`${TOKEN_ACTION[action] ?? action} ${owner} 的結尾為 ${suffix} 的`, app)} ${APP_KIND[kind] ?? kind}權杖${dot ? '。' : ''}`
     ],
     [/^Added deployment branch pattern with value (.+) for (.+)\.$/, '為 $2 新增了值為 $1 的部署分支模式。'],
     [
       /^Created a deployment branch protection rule for (.+)\. The environment can only deploy in branches matching a branch policy pattern\.$/,
-      '為 $1 建立了部署分支保護規則。該環境只能部署到與分支政策模式相符的分支。',
+      '為 $1 建立了部署分支保護規則。該環境只能部署到與分支政策模式相符的分支。'
     ],
     [/^Changed GitHub Pages visibility to public (.+)$/, '將 $1 的 GitHub 頁面可見度變更為公開'],
     // 工作流令牌策略：句尾的存储库是链接
     [
       /^Set policy to default workflow token permission to (read|write) for$/,
-      (_, level: string) => `為以下儲存庫將預設工作流程權杖權限政策設為${WORKFLOW_PERMISSION[level] ?? level}`,
+      (_, level: string) => `為以下儲存庫將預設工作流程權杖權限政策設為${WORKFLOW_PERMISSION[level] ?? level}`
     ],
     // 原文用缩写 PR，按术语表保留
     [
       /^Set policy to default workflow token can create or approve PR to (true|false) for$/,
-      (_, value: string) => `為以下儲存庫${value === 'true' ? '允許' : '禁止'}預設工作流程權杖建立或核准 PR`,
-    ],
-  ],
+      (_, value: string) => `為以下儲存庫${value === 'true' ? '允許' : '禁止'}預設工作流程權杖建立或核准 PR`
+    ]
+  ]
 } satisfies PageDictionary

@@ -15,11 +15,11 @@ export {
   RELATIVE_SOURCE,
   spaceDigits,
   TIME_SOURCE,
-  translateDate,
+  translateDate
 } from '../shared/helpers'
 
 export const { relativeTime, translateRelativeTime, translateTime } = createTimeHelpers({
   locale: 'zh-TW',
   namedDays: { now: '剛剛', 'just now': '剛剛', yesterday: '昨天', today: '今天', tomorrow: '明天' },
-  qualifiers: { about: '約', almost: '將近', over: '超過' },
+  qualifiers: { about: '約', almost: '將近', over: '超過' }
 })

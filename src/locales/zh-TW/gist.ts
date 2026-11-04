@@ -7,7 +7,7 @@ const GIST_KIND: Readonly<Record<string, string>> = {
   public: '公開',
   secret: '祕密',
   starred: '已加星號的',
-  forked: '分叉的',
+  forked: '分叉的'
 }
 
 /** 12 小时制时刻按繁体 Intl 写法：02:10AM → 上午 2:10，12:46AM → 上午 12:46，04:55PM → 下午 4:55 */
@@ -102,8 +102,7 @@ export default {
     'Clone via HTTPS': '透過 HTTPS 複製儲存庫',
     'Clone via SSH': '透過 SSH 複製儲存庫',
     // passphrase 取微软繁中的「複雜密碼」
-    'Clone with an SSH key and passphrase from your GitHub settings.':
-      '使用 GitHub 設定中的 SSH 金鑰和複雜密碼複製儲存庫。',
+    'Clone with an SSH key and passphrase from your GitHub settings.': '使用 GitHub 設定中的 SSH 金鑰和複雜密碼複製儲存庫。',
 
     // 加星号的使用者与分叉
     'Be the first to star this gist.': '成為第一個為此程式碼片段加星號的人。',
@@ -113,7 +112,7 @@ export default {
 
     // 搜索
     'For an advanced search, use some of our prefixes.': '如需進階搜尋，可使用我們提供的前置詞。',
-    'Gist search cheat sheet': '程式碼片段搜尋速查表',
+    'Gist search cheat sheet': '程式碼片段搜尋速查表'
   },
   scoped: {
     // 头部与用户选单
@@ -212,7 +211,7 @@ export default {
 
     // 分叉列表
     Modified: '已修改',
-    'View fork': '查看分叉',
+    'View fork': '查看分叉'
   },
   regexp: [
     // 列表计数（N files / forks / comments / stars）由 common-ui 收录
@@ -225,11 +224,8 @@ export default {
     // 文件区的无障碍名称：LICENSE content, created by octocat on 02:10AM today.
     // 日期三种写法（on June 25, 2019 / on 25 June 2019 / on June 2019）的 on 前缀由 translateTime 去掉
     [
-      new RegExp(
-        `^(.+) content, created by ([\\w-]+) on (\\d{1,2}:\\d{2}[AP]M) (today|yesterday|on ${DATE_SOURCE})\\.$`,
-      ),
-      (_, file, user, clock, day) =>
-        `${file} 的內容，由 ${user} ${joinCjk('於', translateTime(day))} ${clockOf(clock)} 建立。`,
+      new RegExp(`^(.+) content, created by ([\\w-]+) on (\\d{1,2}:\\d{2}[AP]M) (today|yesterday|on ${DATE_SOURCE})\\.$`),
+      (_, file, user, clock, day) => `${file} 的內容，由 ${user} ${joinCjk('於', translateTime(day))} ${clockOf(clock)} 建立。`
     ],
     // 修订版本：差异统计（与 commits、wiki 词典一致：additions / deletions → 新增 / 刪除 N 行；& 译「和」，不加原文没有的逗号）
     [/^(\d[\d,]*) changes?: (\d[\d,]*) additions? & (\d[\d,]*) deletions?$/, '$1 處變更：新增 $2 行和刪除 $3 行'],
@@ -238,16 +234,13 @@ export default {
     [/^(\d[\d,]*) deletions?$/, '刪除 $1 行'],
     [
       /^(\d[\d,]*) additions?, (\d[\d,]*) deletions? not shown because the diff is too large\. Please use a local Git client to view these changes\.$/,
-      '新增 $1 行、刪除 $2 行未顯示，因為差異過大。請使用本機 Git 用戶端查看這些變更。',
+      '新增 $1 行、刪除 $2 行未顯示，因為差異過大。請使用本機 Git 用戶端查看這些變更。'
     ],
     // 搜索（结果量词用「項」）
     [/^(\d[\d,]*) gist results?$/, '$1 項程式碼片段結果'],
     [/^We couldn[’']t find any gists matching '(.+)'$/, '找不到與「$1」相符的程式碼片段'],
     // 空列表
-    [
-      /^([\w-]+) doesn[’']t have any (public |secret |starred |forked )?gists yet\.$/,
-      (_, owner, kind) => emptyGists(`${owner} `, kind),
-    ],
+    [/^([\w-]+) doesn[’']t have any (public |secret |starred |forked )?gists yet\.$/, (_, owner, kind) => emptyGists(`${owner} `, kind)],
     [/^You don[’']t have any (public |secret |starred |forked )?gists yet\.$/, (_, kind) => emptyGists('你', kind)],
     // 标签页标题：octocat’s gists
     [/^([\w-]+)[’']s gists$/, '$1 的程式碼片段'],
@@ -261,8 +254,8 @@ export default {
     // 本地时间：- 7h behind / - 5h30m ahead（时与分之间不带空格；带空格的写法同样接受，同 profile/sidebar.ts）
     [
       /^- (\d+(?:\.\d+)?h(?: ?\d+m)?|\d+m) (ahead|behind)$/,
-      (_, offset, direction) => `- ${direction === 'ahead' ? '快' : '慢'} ${formatOffset(offset)}`,
-    ],
+      (_, offset, direction) => `- ${direction === 'ahead' ? '快' : '慢'} ${formatOffset(offset)}`
+    ]
   ],
   // 用户内容：描述、文件名、全名、公司与所在地、状态消息、搜索语言列表
   ignore: [
@@ -275,6 +268,6 @@ export default {
     '.Box-row > em.text-normal',
     '.Truncate > .Truncate-text[aria-hidden="true"]',
     '.user-status-message-wrapper',
-    '.gistsearch-aside .filter-list',
-  ],
+    '.gistsearch-aside .filter-list'
+  ]
 } satisfies PageDictionary

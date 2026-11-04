@@ -31,7 +31,7 @@ function annotationCounts(text: string): string {
 const ATTEMPT_LABELS: Readonly<Record<string, string>> = {
   'Latest attempt': '最新嘗試',
   Attempt: '嘗試',
-  Latest: '最新',
+  Latest: '最新'
 }
 
 /** 作业标题的结论：succeeded <时间> in 1m 41s */
@@ -41,7 +41,7 @@ const JOB_CONCLUSIONS: Readonly<Record<string, string>> = {
   cancelled: '取消於',
   skipped: '略過於',
   completed: '完成於',
-  'timed out': '逾時於',
+  'timed out': '逾時於'
 }
 
 const JOB_CONCLUSION_SOURCE = Object.keys(JOB_CONCLUSIONS).join('|')
@@ -52,25 +52,18 @@ const JOB_FILTER_STATUS_SOURCE = Object.keys(RUN_STATUS)
   .join('|')
 
 /** 作业日志中由 GitHub 生成的步骤名以外的步骤，名称属于用户内容（Post 前缀的后置步骤同样保留原名） */
-const GENERATED_STEP_NAMES = [
-  'Set up job',
-  'Complete job',
-  'Initialize containers',
-  'Stop containers',
-  'Parallel group',
-]
+const GENERATED_STEP_NAMES = ['Set up job', 'Complete job', 'Initialize containers', 'Stop containers', 'Parallel group']
 
 /** 未命名的 uses 步骤：Run actions/checkout@v4、Run docker://…、Run ./…（及其 Post Run 后置步骤）照常翻译；run 命令步骤属于用户内容 */
-const ACTION_STEP_NAMES = ['Run ', 'Post Run '].flatMap((prefix) => [
+const ACTION_STEP_NAMES = ['Run ', 'Post Run '].flatMap(prefix => [
   `[data-name^="${prefix}"][data-name*="@"]`,
   `[data-name^="${prefix}docker://"]`,
-  `[data-name^="${prefix}./"]`,
+  `[data-name^="${prefix}./"]`
 ])
 
-const STEP_NAME_IGNORE = `check-step:not(${[
-  ...GENERATED_STEP_NAMES.map((name) => `[data-name="${name}"]`),
-  ...ACTION_STEP_NAMES,
-].join(', ')}) .CheckStep-titleName`
+const STEP_NAME_IGNORE = `check-step:not(${[...GENERATED_STEP_NAMES.map(name => `[data-name="${name}"]`), ...ACTION_STEP_NAMES].join(
+  ', '
+)}) .CheckStep-titleName`
 
 const RUNNER_KINDS: Readonly<Record<string, string>> = { hosted: '代管執行器', 'self-hosted': '自架執行器' }
 
@@ -144,8 +137,7 @@ export default {
     'View raw markdown': '查看原始 Markdown',
     'This workflow graph cannot be shown': '無法顯示此工作流程圖表',
     'A graph will be generated the next time this workflow is run.': '下次執行此工作流程時將產生圖表。',
-    'This run and associated checks have been archived and are scheduled for deletion.':
-      '此執行和相關檢查已封存並已排定刪除。',
+    'This run and associated checks have been archived and are scheduled for deletion.': '此執行和相關檢查已封存並已排定刪除。',
     'Learn more about checks retention': '瞭解檢查保留期限',
     'This workflow is waiting for': '此工作流程正在等待',
     'to complete before running.': '完成後才會執行。',
@@ -159,8 +151,7 @@ export default {
     'from a maintainer in': '所屬拉取請求',
 
     // 部署保护规则（标题见 scoped，与储存库设置的环境页共用）
-    'Reviewers, timers, and other rules protecting deployments in this run':
-      '保護此執行中部署的審查者、計時器和其他規則',
+    'Reviewers, timers, and other rules protecting deployments in this run': '保護此執行中部署的審查者、計時器和其他規則',
     'The deployment was rejected or didn’t satisfy other protection rules.': '部署遭到拒絕或未符合其他保護規則。',
     "The deployment was rejected or didn't satisfy other protection rules.": '部署遭到拒絕或未符合其他保護規則。',
 
@@ -183,16 +174,14 @@ export default {
     'This step was cancelled': '此步驟已取消',
     'This step timed out': '此步驟已逾時',
     'This step requires action with the application': '此步驟需要在應用程式中採取動作',
-    'This step has been truncated due to its large size. View the raw logs from the':
-      '此步驟因內容過大已截斷。工作流程執行完成後可從',
+    'This step has been truncated due to its large size. View the raw logs from the': '此步驟因內容過大已截斷。工作流程執行完成後可從',
     'menu once the workflow run has completed.': '選單查看原始記錄。',
     'This step has been truncated due to its large size. View the raw logs from the menu once the workflow run has completed.':
       '此步驟因內容過大已截斷。工作流程執行完成後可從選單查看原始記錄。',
     'The logs for this run have expired and are no longer available.': '此執行的記錄已過期且無法再取得。',
     // 步骤日志加载失败
     'We are currently unable to download the log. Please try again later.': '目前無法下載記錄。請稍後再試。',
-    'The log was not found. It may have been deleted based on retention settings.':
-      '找不到記錄。可能已依保留設定刪除。',
+    'The log was not found. It may have been deleted based on retention settings.': '找不到記錄。可能已依保留設定刪除。',
     'The logs for this run have expired and are no longer available. Logs may have been removed based on retention settings on the repo at the time the run was started.':
       '此執行的記錄已過期且無法再取得。記錄可能已依執行開始時儲存庫的保留設定移除。',
     'The operation was canceled.': '已取消操作。',
@@ -220,9 +209,8 @@ export default {
     'Edit workflow file': '編輯工作流程檔案',
     'Lockfile for this run': '此執行的鎖定檔',
     'Lockfile not found': '找不到鎖定檔',
-    'No lockfile was found for this workflow run. Lock your workflow dependencies by running':
-      '此工作流程執行沒有鎖定檔。在儲存庫中執行',
-    'in your repository.': '以鎖定工作流程的相依項目。',
+    'No lockfile was found for this workflow run. Lock your workflow dependencies by running': '此工作流程執行沒有鎖定檔。在儲存庫中執行',
+    'in your repository.': '以鎖定工作流程的相依項目。'
   },
 
   scoped: {
@@ -292,7 +280,7 @@ export default {
     'timed out': '已逾時',
     'action required': '需要採取動作',
     stale: '過時',
-    'startup failure': '啟動失敗',
+    'startup failure': '啟動失敗'
   },
 
   regexp: [
@@ -301,7 +289,7 @@ export default {
     // 标注数量：2 errors and 6 notices
     [
       /^\d+ (?:error|warning|notice)s?(?:(?:,| and|, and) \d+ (?:error|warning|notice)s?){0,2}$/,
-      (match: string) => annotationCounts(match),
+      (match: string) => annotationCounts(match)
     ],
     // 标注内容（GitHub 生成）
     [/^Process completed with exit code (-?\d+)\.$/, '處理程序以結束碼 $1 完成。'],
@@ -309,69 +297,66 @@ export default {
     [/^Canceling since a higher priority waiting request for (.+) exists$/, '因 $1 有優先順序更高的等待中請求而取消'],
     [
       /^Node\.js (\d+) is deprecated\. The following actions target Node\.js (\d+) but are being forced to run on Node\.js (\d+): (.+?)\. For more information see:$/,
-      'Node.js $1 已淘汰。下列動作以 Node.js $2 為目標，但被強制在 Node.js $3 上執行：$4。如需詳細資訊，請參閱：',
+      'Node.js $1 已淘汰。下列動作以 Node.js $2 為目標，但被強制在 Node.js $3 上執行：$4。如需詳細資訊，請參閱：'
     ],
     [
       /^Node\.js (\d+) actions are deprecated\. Please update the following actions to use Node\.js (\d+): (.+?)\. For more information see:$/,
-      'Node.js $1 動作已淘汰。請將下列動作更新為使用 Node.js $2：$3。如需詳細資訊，請參閱：',
+      'Node.js $1 動作已淘汰。請將下列動作更新為使用 Node.js $2：$3。如需詳細資訊，請參閱：'
     ],
     [
-      new RegExp(
-        `^("?)The (\\S+) label will migrate to (.+?) beginning (${DATE_SOURCE})\\. For more information, see$`,
-      ),
+      new RegExp(`^("?)The (\\S+) label will migrate to (.+?) beginning (${DATE_SOURCE})\\. For more information, see$`),
       (_, quote: string, label: string, target: string, date: string) =>
-        `${quote}${label} ${joinCjk(joinCjk('標籤將於', translateDate(date) ?? date), '開始移轉到')} ${target}。如需詳細資訊，請參閱`,
+        `${quote}${label} ${joinCjk(joinCjk('標籤將於', translateDate(date) ?? date), '開始移轉到')} ${target}。如需詳細資訊，請參閱`
     ],
     [
       new RegExp(`^The job has exceeded the maximum execution time of (\\d+[dhms](?: ?\\d+[dhms]){0,3})$`),
-      (_, duration: string) => `作業已超過最長執行時間 ${formatDuration(duration)}`,
+      (_, duration: string) => `作業已超過最長執行時間 ${formatDuration(duration)}`
     ],
     [
       /^The job running on runner (.+) has exceeded the maximum execution time of (\d+) minutes\.$/,
-      '在執行器 $1 上執行的作業已超過最長執行時間 $2 分鐘。',
+      '在執行器 $1 上執行的作業已超過最長執行時間 $2 分鐘。'
     ],
     [/^The job was canceled because "(.+)" failed\.$/, '作業因「$1」失敗而取消。'],
     [/^The strategy configuration was canceled because "(.+)" failed$/, '策略設定因「$1」失敗而取消'],
     [/^Input required and not supplied: (.+)$/, '缺少必要的輸入：$1'],
     [
       /^No files were found with the provided path: (.+)\. No artifacts will be uploaded\.$/,
-      '在提供的路徑中找不到檔案：$1。不會上傳任何成品。',
+      '在提供的路徑中找不到檔案：$1。不會上傳任何成品。'
     ],
     [
       /^Branch "(.+)" is not allowed to deploy to (.+) due to environment protection rules\.$/,
-      '分支「$1」因環境保護規則而不允許部署到 $2。',
+      '分支「$1」因環境保護規則而不允許部署到 $2。'
     ],
     [
       /^The (hosted|self-hosted) runner(?:: (.+?))? lost communication with the server\.( Verify the machine is running and has a healthy network connection\.)? Anything in your workflow that terminates the runner process, starves it for CPU\/Memory, or blocks its network access can cause this error\.$/,
-      (_, kind: string, name: string | undefined, verify: string | undefined) => lostCommunication(kind, name, verify),
+      (_, kind: string, name: string | undefined, verify: string | undefined) => lostCommunication(kind, name, verify)
     ],
     [
       /^This request was automatically failed because there were no enabled runners online to process the request for more than (\d+) days?\.$/,
-      '此請求因超過 $1 天沒有已啟用的線上執行器可處理而自動失敗。',
+      '此請求因超過 $1 天沒有已啟用的線上執行器可處理而自動失敗。'
     ],
     [
       /^The job was not acquired by Runner of type (hosted|self-hosted) even after multiple attempts$/,
-      (_, kind: string) => `作業經多次嘗試仍未被${kind === 'hosted' ? '代管' : '自架'}執行器取得`,
+      (_, kind: string) => `作業經多次嘗試仍未被${kind === 'hosted' ? '代管' : '自架'}執行器取得`
     ],
     // 平行群组标题：· 3 steps
     [/^· (\d+) steps$/, '· $1 個步驟'],
     // 步骤名：Run actions/checkout@v4、Post Run actions/checkout@v4
     [
       /^(Post )?Run ([\w.-]+\/[\w./-]+@[\w./-]+|docker:\/\/\S+|\.\/[\w./-]+)$/,
-      (_, post: string, action: string) => `${post ? '後置執行' : '執行'} ${action}`,
+      (_, post: string, action: string) => `${post ? '後置執行' : '執行'} ${action}`
     ],
     // 作业标题整段：succeeded 5 minutes ago in 1m 41s → 成功於 5 分鐘前 耗時 1 分鐘 41 秒
     // 原文无标点：结论与时间用 joinCjk 拼接（成功於昨天），时间与「耗時」之间以空格分隔
     [
       new RegExp(`^(${JOB_CONCLUSION_SOURCE}) (${TIME_SOURCE}) in (${DURATION_SOURCE})$`),
       (_, conclusion: string, time: string, duration: string) =>
-        `${joinCjk(pick(JOB_CONCLUSIONS, conclusion) ?? conclusion, translateTime(time))} 耗時 ${formatDuration(duration)}`,
+        `${joinCjk(pick(JOB_CONCLUSIONS, conclusion) ?? conclusion, translateTime(time))} 耗時 ${formatDuration(duration)}`
     ],
     // 进行中的作业：Started 5m ago、Started 5 minutes ago、Started just now
     [
       new RegExp(`^Started (?:(${DURATION_SOURCE}) ago|(${TIME_SOURCE}))$`),
-      (_, duration: string, time: string) =>
-        joinCjk('開始於', duration ? `${formatDuration(duration)}前` : translateTime(time)),
+      (_, duration: string, time: string) => joinCjk('開始於', duration ? `${formatDuration(duration)}前` : translateTime(time))
     ],
     // 作业标题：in 1m 41s
     [new RegExp(`^in (${DURATION_SOURCE})$`), (_, duration: string) => `耗時 ${formatDuration(duration)}`],
@@ -380,17 +365,14 @@ export default {
     [/^Matrix: (.+)$/, '矩陣：$1'],
     [
       /^(Latest attempt|Attempt|Latest) #(\d+)$/,
-      (_, label: string, number: string) => `${pick(ATTEMPT_LABELS, label) ?? label} #${number}`,
+      (_, label: string, number: string) => `${pick(ATTEMPT_LABELS, label) ?? label} #${number}`
     ],
     [/^Back to pull request #(\d+)$/, '返回拉取請求 #$1'],
-    [
-      new RegExp(`^(${JOB_FILTER_STATUS_SOURCE}) jobs$`),
-      (_, status: string) => `${pick(RUN_STATUS, status) ?? status}的作業`,
-    ],
+    [new RegExp(`^(${JOB_FILTER_STATUS_SOURCE}) jobs$`), (_, status: string) => `${pick(RUN_STATUS, status) ?? status}的作業`],
     // 部署保护规则：production 和其他 2 個
     [/^(\d+) more$/, '其他 $1 個'],
     // 时长：1m 44s → 1 分鐘 44 秒
-    [new RegExp(`^(${DURATION_SOURCE})$`), (_, duration: string) => formatDuration(duration)],
+    [new RegExp(`^(${DURATION_SOURCE})$`), (_, duration: string) => formatDuration(duration)]
   ],
 
   ignore: [
@@ -423,6 +405,6 @@ export default {
     // 成品文件浏览器的文件路径（下载时按此文本匹配文件，不能改动）
     '.js-artifact-files-list .flex-auto',
     // 部署保护规则中的环境名
-    'a[href*="/deployments/activity_log?environment="]',
-  ],
+    'a[href*="/deployments/activity_log?environment="]'
+  ]
 } satisfies PageDictionary

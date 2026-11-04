@@ -9,8 +9,7 @@ const ORG = '([\\w.-]+)'
  */
 export const DEPENDABOT_RULES_SCOPED: Readonly<Record<string, string>> = {
   'Rule created.': '规则已创建。',
-  'Rule saved. It may take a moment for this rule to be applied to matching alerts':
-    '规则已保存。可能需要一段时间才会应用到匹配的警报',
+  'Rule saved. It may take a moment for this rule to be applied to matching alerts': '规则已保存。可能需要一段时间才会应用到匹配的警报',
   'Rule saved.': '规则已保存。',
   'Rule was successfully deleted.': '规则已删除。',
   '/ Dependabot rules': '/ Dependabot 规则',
@@ -37,20 +36,18 @@ export const DEPENDABOT_RULES_SCOPED: Readonly<Record<string, string>> = {
   Scopes: '范围',
   'Rules will be applied for alerts matching all included metadata.': '规则将应用于匹配所有已包含元数据的警报。',
   'Select one or more rules to apply to matching alerts.': '选择一个或多个规则应用于匹配的警报。',
-  'Dependabot will automatically close or reopen alerts based on selected criteria.':
-    'Dependabot 将根据所选条件自动关闭或重新打开警报。',
+  'Dependabot will automatically close or reopen alerts based on selected criteria.': 'Dependabot 将根据所选条件自动关闭或重新打开警报。',
   'Until patch is available': '直到有可用补丁',
   // 拉取请求语境的动词 open → 创建（安全更新即 Dependabot 创建的拉取请求）
   'Open a pull request to resolve alerts': '创建拉取请求以解决警报',
-  'Dependabot will attempt to open security updates based on selected criteria.':
-    'Dependabot 将根据所选条件尝试创建安全更新。',
+  'Dependabot will attempt to open security updates based on selected criteria.': 'Dependabot 将根据所选条件尝试创建安全更新。',
   'Create rule': '创建规则',
   '/ Edit rule': '/ 编辑规则',
   'Save rule': '保存规则',
   'Delete this rule': '删除此规则',
   'Deleting this rule can potentially reopen associated alerts.': '删除此规则可能会重新打开相关警报。',
   'Are you sure you want to delete this rule?': '确定要删除此规则吗？',
-  '/ GitHub Preset rule': '/ GitHub 预设规则',
+  '/ GitHub Preset rule': '/ GitHub 预设规则'
 }
 
 /** Dependabot 规则的正则：安全设置页的已启用条数、删除确认（repo-settings/security.ts 同样取用） */
@@ -59,8 +56,8 @@ export const DEPENDABOT_RULES_REGEXP: readonly RegExpRule[] = [
   // 规则名两侧的引号随原文，原文无逗号，译文不加
   [
     /^This will permanently delete the rule "([^"]{1,200})" and potentially reopen associated alerts\.$/,
-    '这将永久删除规则“$1”并可能重新打开相关警报。',
-  ],
+    '这将永久删除规则“$1”并可能重新打开相关警报。'
+  ]
 ]
 
 /**
@@ -72,7 +69,7 @@ const BYPASS_ACTOR_NAMES: ReadonlyMap<string, string> = new Map([
   ['maintain', '维护'],
   ['write', '写入'],
   ['Organization admin', '组织管理员'],
-  ['Unknown', '未知'],
+  ['Unknown', '未知']
 ])
 
 /**
@@ -84,7 +81,7 @@ export const BYPASS_ACTOR_ACTIONS_RULE: RegExpRule = [
   (_, name: string) => {
     const builtin = BYPASS_ACTOR_NAMES.get(name)
     return builtin === undefined ? `绕过参与者 ${name} 的操作` : `绕过参与者${builtin}的操作`
-  },
+  }
 ]
 
 /**
@@ -107,8 +104,7 @@ export default {
     // 身份验证安全：SSH 证书颁发机构
     'SSH Certificate Authorities': 'SSH 证书颁发机构',
     'SSH certificate authorities': 'SSH 证书颁发机构',
-    'Provide SSH certificates that members can use to access your resources with Git':
-      '提供 SSH 证书供成员通过 Git 访问你的资源',
+    'Provide SSH certificates that members can use to access your resources with Git': '提供 SSH 证书供成员通过 Git 访问你的资源',
     'New CA': '新建 CA',
     'Add CA': '添加 CA',
     'Require SSH Certificates': '要求使用 SSH 证书',
@@ -184,8 +180,7 @@ export default {
     'Public and internal repositories only': '仅公共和内部存储库',
     'Grant a team permission to manage security alerts and settings across your organization. This team will also be granted read access to all repositories.':
       '授予团队管理整个组织安全警报和设置的权限。该团队还将获得所有存储库的读取访问权限。',
-    'Keep scheduled scans running every 30 days for inactive repositories':
-      '对不活跃存储库每 30 天继续运行一次计划扫描',
+    'Keep scheduled scans running every 30 days for inactive repositories': '对不活跃存储库每 30 天继续运行一次计划扫描',
 
     // Dependabot 规则（组织专用）
     'Rules will target all public repositories in this organization.': '规则将针对此组织中的所有公共存储库。',
@@ -214,7 +209,7 @@ export default {
     'Compliance reports': '合规报告',
     'ISO/IEC 27001:2022 certification': 'ISO/IEC 27001:2022 认证',
     'ISO/IEC 27001:2013 certification': 'ISO/IEC 27001:2013 认证',
-    'Cloud Security Alliance CAIQ self-assessment (CSA CAIQ - Level 1)': '云安全联盟 CAIQ 自评估 (CSA CAIQ - Level 1)',
+    'Cloud Security Alliance CAIQ self-assessment (CSA CAIQ - Level 1)': '云安全联盟 CAIQ 自评估 (CSA CAIQ - Level 1)'
   },
   scoped: {
     // 身份验证安全
@@ -248,8 +243,7 @@ export default {
     'Bypass privileges': '绕过权限',
 
     // 推送保护绕过参与者（安全配置、规则集共用的绕过列表组件）；原文无逗号，译文不加
-    'Push Protection will run and the selected actor(s) will be prompted to bypass':
-      '推送保护会运行并向所选参与者显示绕过提示',
+    'Push Protection will run and the selected actor(s) will be prompted to bypass': '推送保护会运行并向所选参与者显示绕过提示',
     'Push Protection will not run and no bypass prompt will be shown': '推送保护不会运行也不显示绕过提示',
     'No actors have been selected': '尚未选择参与者',
     'At least one actor is required.': '至少需要一个参与者。',
@@ -265,8 +259,7 @@ export default {
     // Advanced Security：全局设置（与个人、存储库“代码安全”设置共用）
     'Try our new settings': '试用新设置',
     'Security & analysis': '安全与分析',
-    'Security and analysis features help keep your repositories secure and updated.':
-      '安全与分析功能可帮助你的存储库保持安全和最新。',
+    'Security and analysis features help keep your repositories secure and updated.': '安全与分析功能可帮助你的存储库保持安全和最新。',
     'Disable all': '全部禁用',
     'Enable all': '全部启用',
     // 「全部启用 / 全部禁用」按钮的无障碍标签（与个人设置一致）
@@ -301,8 +294,7 @@ export default {
     '. Default CodeQL analysis will be set up on': '识别漏洞和错误。默认 CodeQL 分析将设置于',
     eligible: '符合条件的',
     'public repositories.': '公共存储库。',
-    'Recommend the extended query suite for repositories enabling default setup':
-      '为启用默认设置的存储库推荐扩展查询套件',
+    'Recommend the extended query suite for repositories enabling default setup': '为启用默认设置的存储库推荐扩展查询套件',
     'The extended query includes the default suite, plus lower severity and precision queries.':
       '扩展查询包含默认套件，外加较低严重性和精确度的查询。',
     'Enable code scanning default setup': '启用代码扫描默认设置',
@@ -319,16 +311,14 @@ export default {
     'Code scanning uses GitHub Actions. Also, repositories where code scanning is already enabled will not be re-enabled.':
       '代码扫描使用 GitHub 操作。此外，已启用代码扫描的存储库不会被重复启用。',
     'Disable code scanning default setup': '禁用代码扫描默认设置',
-    'This will disable CodeQL default setup on all repositories where it is enabled.':
-      '这将在所有已启用 CodeQL 默认设置的存储库中禁用它。',
+    'This will disable CodeQL default setup on all repositories where it is enabled.': '这将在所有已启用 CodeQL 默认设置的存储库中禁用它。',
     'Secret scanning': '机密扫描',
     'Push protection': '推送保护',
     'Block commits that contain': '阻止提交中出现',
     'supported secrets': '受支持的机密',
     'Automatically enable for repositories added to secret scanning': '为添加到机密扫描的存储库自动启用',
     'Add a resource link in the CLI and web UI when a commit is blocked': '提交被阻止时在 CLI 和网页界面中添加资源链接',
-    'Add a resource link in the CLI and the web UI when a commit is blocked':
-      '提交被阻止时在 CLI 和网页界面中添加资源链接',
+    'Add a resource link in the CLI and the web UI when a commit is blocked': '提交被阻止时在 CLI 和网页界面中添加资源链接',
     'Link will show in addition to': '链接将附加显示在',
     'the message GitHub displays': 'GitHub 显示的消息',
     'Save link': '保存链接',
@@ -337,8 +327,7 @@ export default {
     'This will turn on secret scanning for all public repositories.': '这将为所有公共存储库开启机密扫描。',
     'Enable for eligible repositories': '为符合条件的存储库启用',
     'Disable secret scanning?': '禁用机密扫描？',
-    'This will disable secret scanning on all repositories where it is enabled.':
-      '这将在所有已启用机密扫描的存储库中禁用它。',
+    'This will disable secret scanning on all repositories where it is enabled.': '这将在所有已启用机密扫描的存储库中禁用它。',
     'Disable secret scanning': '禁用机密扫描',
     'Enable push protection for eligible repositories?': '为符合条件的存储库启用推送保护？',
     'This will turn on push protection for all repositories that have secret scanning enabled.':
@@ -351,8 +340,7 @@ export default {
     'You can still enable push protection at the repository level.': '你仍可在存储库级别启用推送保护。',
     'Disable push protection': '禁用推送保护',
     'Enable push protection': '启用推送保护',
-    'This will disable push protection on all repositories where it is enabled.':
-      '这将在所有已启用推送保护的存储库中禁用它。',
+    'This will disable push protection on all repositories where it is enabled.': '这将在所有已启用推送保护的存储库中禁用它。',
     'Learn more about these security privileges': '了解这些安全权限',
     'Search for teams': '搜索团队',
     'Edit runner type for Dependabot': '编辑 Dependabot 的运行器类型',
@@ -393,73 +381,71 @@ export default {
     'Add team': '添加团队',
 
     // 已验证和批准的域
-    'Approve domain': '批准域',
+    'Approve domain': '批准域'
   },
   regexp: [
     // 句号随原文
     [
       new RegExp(`^Require two-factor authentication for everyone in the ${ORG} organization(\\.?)$`),
-      (_, org: string, dot: string) => `要求 ${org} 组织中的所有人启用双因素身份验证${dot ? '。' : ''}`,
+      (_, org: string, dot: string) => `要求 ${org} 组织中的所有人启用双因素身份验证${dot ? '。' : ''}`
     ],
     [
       new RegExp(`^Require SAML SSO authentication for all members of the ${ORG} organization(\\.?)$`),
-      (_, org: string, dot: string) => `要求 ${org} 组织的所有成员通过 SAML SSO 进行身份验证${dot ? '。' : ''}`,
+      (_, org: string, dot: string) => `要求 ${org} 组织的所有成员通过 SAML SSO 进行身份验证${dot ? '。' : ''}`
     ],
     [
       new RegExp(`^You[’']re about to enable private vulnerability reporting on all public repositories in ${ORG}\\.$`),
-      '你即将为 $1 中的所有公共存储库启用专用漏洞报告。',
+      '你即将为 $1 中的所有公共存储库启用专用漏洞报告。'
     ],
     [
-      new RegExp(
-        `^You[’']re about to disable private vulnerability reporting on all public repositories in ${ORG}\\.$`,
-      ),
-      '你即将为 $1 中的所有公共存储库禁用专用漏洞报告。',
+      new RegExp(`^You[’']re about to disable private vulnerability reporting on all public repositories in ${ORG}\\.$`),
+      '你即将为 $1 中的所有公共存储库禁用专用漏洞报告。'
     ],
     [
       new RegExp(`^You[’']re about to enable dependency graph on all private repositories in ${ORG}\\.$`),
-      '你即将为 $1 中的所有专用存储库启用依赖项关系图。',
+      '你即将为 $1 中的所有专用存储库启用依赖项关系图。'
     ],
     [
       new RegExp(
-        `^You[’']re about to disable dependency graph on all private repositories in ${ORG}\\. This will also disable Dependabot alerts and Dependabot security updates on those repositories\\.$`,
+        `^You[’']re about to disable dependency graph on all private repositories in ${ORG}\\. This will also disable Dependabot alerts and Dependabot security updates on those repositories\\.$`
       ),
-      '你即将为 $1 中的所有专用存储库禁用依赖项关系图。这也会禁用这些存储库的 Dependabot 警报和 Dependabot 安全更新。',
+      '你即将为 $1 中的所有专用存储库禁用依赖项关系图。这也会禁用这些存储库的 Dependabot 警报和 Dependabot 安全更新。'
     ],
     [
       new RegExp(
-        `^You[’']re about to enable Dependabot alerts on all repositories in ${ORG}\\. Alerts require the dependency graph, so we[’']ll also turn that on for all repositories\\. No notifications will be sent while Dependabot alerts are being enabled\\.$`,
+        `^You[’']re about to enable Dependabot alerts on all repositories in ${ORG}\\. Alerts require the dependency graph, so we[’']ll also turn that on for all repositories\\. No notifications will be sent while Dependabot alerts are being enabled\\.$`
       ),
-      '你即将为 $1 中的所有存储库启用 Dependabot 警报。警报需要依赖项关系图，因此我们也会为所有存储库开启它。启用 Dependabot 警报期间不会发送通知。',
+      '你即将为 $1 中的所有存储库启用 Dependabot 警报。警报需要依赖项关系图，因此我们也会为所有存储库开启它。启用 Dependabot 警报期间不会发送通知。'
     ],
     [
       new RegExp(
-        `^You[’']re about to disable Dependabot alerts on all repositories in ${ORG}\\. This will also disable Dependabot security updates on those repositories\\.$`,
+        `^You[’']re about to disable Dependabot alerts on all repositories in ${ORG}\\. This will also disable Dependabot security updates on those repositories\\.$`
       ),
-      '你即将为 $1 中的所有存储库禁用 Dependabot 警报。这也会禁用这些存储库的 Dependabot 安全更新。',
+      '你即将为 $1 中的所有存储库禁用 Dependabot 警报。这也会禁用这些存储库的 Dependabot 安全更新。'
     ],
     [
       new RegExp(
-        `^You[’']re about to enable Dependabot security updates on all repositories in ${ORG}\\. Dependabot security updates require the dependency graph and Dependabot alerts, so we[’']ll also turn that on for all repositories\\.$`,
+        `^You[’']re about to enable Dependabot security updates on all repositories in ${ORG}\\. Dependabot security updates require the dependency graph and Dependabot alerts, so we[’']ll also turn that on for all repositories\\.$`
       ),
-      '你即将为 $1 中的所有存储库启用 Dependabot 安全更新。Dependabot 安全更新需要依赖项关系图和 Dependabot 警报，因此我们也会为所有存储库开启它们。',
+      '你即将为 $1 中的所有存储库启用 Dependabot 安全更新。Dependabot 安全更新需要依赖项关系图和 Dependabot 警报，因此我们也会为所有存储库开启它们。'
     ],
     [
       new RegExp(`^You[’']re about to disable Dependabot security updates on all repositories in ${ORG}\\.$`),
-      '你即将为 $1 中的所有存储库禁用 Dependabot 安全更新。',
+      '你即将为 $1 中的所有存储库禁用 Dependabot 安全更新。'
     ],
     [
       new RegExp(
-        `^You[’']re about to enable grouped security updates on all repositories in ${ORG}\\. Grouped security updates require the dependency graph, Dependabot alerts, Dependabot security updates and Dependabot security updates, so we[’']ll also turn that on for all repositories\\.$`,
+        `^You[’']re about to enable grouped security updates on all repositories in ${ORG}\\. Grouped security updates require the dependency graph, Dependabot alerts, Dependabot security updates and Dependabot security updates, so we[’']ll also turn that on for all repositories\\.$`
       ),
-      '你即将为 $1 中的所有存储库启用分组安全更新。分组安全更新需要依赖项关系图、Dependabot 警报和 Dependabot 安全更新，因此我们也会为所有存储库开启它们。',
+      '你即将为 $1 中的所有存储库启用分组安全更新。分组安全更新需要依赖项关系图、Dependabot 警报和 Dependabot 安全更新，因此我们也会为所有存储库开启它们。'
     ],
     [
       new RegExp(`^You[’']re about to disable grouped security updates on all repositories in ${ORG}\\.$`),
-      '你即将为 $1 中的所有存储库禁用分组安全更新。',
+      '你即将为 $1 中的所有存储库禁用分组安全更新。'
     ],
     [
       /^This will disable push protection on (\d+) repositor(?:y|ies) where it is enabled\.$/,
-      '这将在 $1 个已启用推送保护的存储库中禁用它。',
+      '这将在 $1 个已启用推送保护的存储库中禁用它。'
     ],
     // Dependabot 规则（与存储库设置共用）；「Managed by <组织>」由合并进来的规则集词典收录
     ...DEPENDABOT_RULES_REGEXP,
@@ -467,6 +453,6 @@ export default {
     [/^(\d+) actors?$/, '$1 个参与者'],
     // 绕过列表每行菜单按钮的读屏名称：「<名称> Bypass actor actions」（与存储库设置共用）
     BYPASS_ACTOR_ACTIONS_RULE,
-    [/^Approve ([\w-]+(?:\.[\w-]+)+)$/, '批准 $1'],
-  ],
+    [/^Approve ([\w-]+(?:\.[\w-]+)+)$/, '批准 $1']
+  ]
 } satisfies PageDictionary

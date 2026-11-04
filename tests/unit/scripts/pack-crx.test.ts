@@ -29,12 +29,8 @@ function uint32LE(value: number): Buffer {
 describe('扩展 ID', () => {
   it('crx_id 是公钥 SHA-256 的前 16 字节；扩展 ID 是其十六进制写法，0-f 换成 a-p', () => {
     expect(crxIdOf(SPKI)).toEqual(createHash('sha256').update(SPKI).digest().subarray(0, 16))
-    expect(extensionIdOf(Buffer.from('000102030405060708090a0b0c0d0e0f', 'hex'))).toBe(
-      'aaabacadaeafagahaiajakalamanaoap',
-    )
-    expect(extensionIdOf(Buffer.from('ffeeddccbbaa99887766554433221100', 'hex'))).toBe(
-      'ppoonnmmllkkjjiihhggffeeddccbbaa',
-    )
+    expect(extensionIdOf(Buffer.from('000102030405060708090a0b0c0d0e0f', 'hex'))).toBe('aaabacadaeafagahaiajakalamanaoap')
+    expect(extensionIdOf(Buffer.from('ffeeddccbbaa99887766554433221100', 'hex'))).toBe('ppoonnmmllkkjjiihhggffeeddccbbaa')
   })
 })
 
@@ -64,7 +60,7 @@ describe('packCrx', () => {
       Buffer.from([0x12, 0x80, 0x02]), // 字段 2（签名），长度 256
       signature,
       Buffer.from([0x82, 0xf1, 0x04, 0x12]), // 字段 10000，长度 18
-      signedData,
+      signedData
     ])
     expect(header).toEqual(expected)
     expect(headerLength).toBe(581)
@@ -111,13 +107,13 @@ describe('pack-crx 命令', { timeout: CLI_TIMEOUT_MS * 4 }, () => {
       cwd: ROOT,
       encoding: 'utf8',
       env: { ...env, ...extra },
-      timeout: CLI_TIMEOUT_MS,
+      timeout: CLI_TIMEOUT_MS
     })
     return { status: result.status, output: `${result.stdout}${result.stderr}${result.error?.message ?? ''}` }
   }
 
   it('--key 指定 PKCS#8 私钥文件、环境变量给 PKCS#1 私钥：zip 旁生成同名 .crx，列出扩展 ID', () => {
-    const zips = ['sample-chrome.zip', 'sample-edge.zip'].map((name) => join(dir, name))
+    const zips = ['sample-chrome.zip', 'sample-edge.zip'].map(name => join(dir, name))
     for (const zip of zips) writeFileSync(zip, ZIP)
     const keyFile = join(dir, 'key.pem')
     writeFileSync(keyFile, privateKey.export({ type: 'pkcs8', format: 'pem' }))
@@ -144,7 +140,7 @@ describe('pack-crx 命令', { timeout: CLI_TIMEOUT_MS * 4 }, () => {
       [[], {}, '用法：bun run pack:crx'],
       [[zip], {}, '缺少私钥'],
       [[zip], { CRX_PRIVATE_KEY: 'Sample text' }, '私钥无法解析'],
-      [[join(dir, 'sample.txt')], {}, '不是 .zip 文件'],
+      [[join(dir, 'sample.txt')], {}, '不是 .zip 文件']
     ] as const) {
       const { status, output } = run(args, extra)
       expect(status, output).toBe(1)

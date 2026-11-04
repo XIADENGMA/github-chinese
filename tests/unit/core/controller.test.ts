@@ -27,12 +27,12 @@ const SETTINGS: Settings = {
   newTabPaths: [],
   accelerateSource: 'ghfast',
   customSources: [],
-  removedSources: [],
+  removedSources: []
 }
 
 /** 简化的排除规则：前缀匹配（正式实现见 shared/settings） */
 function isPathExcluded(pathname: string, patterns: readonly string[]): boolean {
-  return patterns.some((pattern) => pathname === pattern || pathname.startsWith(`${pattern}/`))
+  return patterns.some(pattern => pathname === pattern || pathname.startsWith(`${pattern}/`))
 }
 
 let controller: Controller | undefined
@@ -43,7 +43,7 @@ function create(
   html: string,
   settings: Partial<Settings> = {},
   customEntries: Record<string, string> = {},
-  bundle: LocaleBundle = TEST_BUNDLE,
+  bundle: LocaleBundle = TEST_BUNDLE
 ): Controller {
   document.head.innerHTML = '<title>Issues · vuejs/core</title>'
   document.body.innerHTML = html
@@ -54,7 +54,7 @@ function create(
     isPathExcluded,
     onReset,
     onActiveChange,
-    host: window,
+    host: window
   })
   return controller
 }
@@ -157,7 +157,7 @@ describe('createController', () => {
       active: true,
       excluded: false,
       pages: ['common', 'repository', 'issues'],
-      translatedCount: 2,
+      translatedCount: 2
     })
   })
 
@@ -167,7 +167,7 @@ describe('createController', () => {
       active: false,
       excluded: true,
       pages: ['common', 'repository', 'issues'],
-      translatedCount: 0,
+      translatedCount: 0
     })
   })
 
@@ -244,9 +244,9 @@ describe('updateLocale', () => {
 
 describe('onReset（Turbo 缓存克隆体）', () => {
   it.each<[string, (c: Controller) => void]>([
-    ['词条', (c) => c.updateCustomEntries({ Issues: '问题' })],
-    ['时间本地化开关', (c) => c.updateSettings({ ...SETTINGS, enabled: false, translateTime: false })],
-    ['语言包', (c) => c.updateLocale([['common', { static: { Issues: '議題' } }]], 'zh-TW')],
+    ['词条', c => c.updateCustomEntries({ Issues: '问题' })],
+    ['时间本地化开关', c => c.updateSettings({ ...SETTINGS, enabled: false, translateTime: false })],
+    ['语言包', c => c.updateLocale([['common', { static: { Issues: '議題' } }]], 'zh-TW')]
   ])('停止翻译期间换了%s：恢复翻译、启动后补发一次', (_name, act) => {
     const c = create('<p>Issues</p>')
     c.updateSettings({ ...SETTINGS, enabled: false })
@@ -275,11 +275,11 @@ describe('onReset（Turbo 缓存克隆体）', () => {
   })
 
   it.each<[string, (c: Controller) => void, ResetReason]>([
-    ['停用', (c) => c.updateSettings({ ...SETTINGS, enabled: false }), 'change'],
-    ['排除路径设置命中当前页', (c) => c.updateSettings({ ...SETTINGS, excludedPaths: ['/vuejs/core'] }), 'change'],
-    ['词条有变化', (c) => c.updateCustomEntries({ Issues: '问题' }), 'change'],
-    ['时间本地化开关变化', (c) => c.updateSettings({ ...SETTINGS, translateTime: false }), 'change'],
-    ['dispose', (c) => c.dispose(), 'dispose'],
+    ['停用', c => c.updateSettings({ ...SETTINGS, enabled: false }), 'change'],
+    ['排除路径设置命中当前页', c => c.updateSettings({ ...SETTINGS, excludedPaths: ['/vuejs/core'] }), 'change'],
+    ['词条有变化', c => c.updateCustomEntries({ Issues: '问题' }), 'change'],
+    ['时间本地化开关变化', c => c.updateSettings({ ...SETTINGS, translateTime: false }), 'change'],
+    ['dispose', c => c.dispose(), 'dispose']
   ])('翻译中%s：通知一次，带上原因', (_name, act, reason) => {
     const c = create('<p>Issues</p>')
     act(c)
@@ -317,15 +317,15 @@ describe('onReset（Turbo 缓存克隆体）', () => {
   })
 
   it.each<[string, (c: Controller) => void]>([
-    ['词条相同', (c) => c.updateCustomEntries({})],
-    ['只改标题开关', (c) => c.updateSettings({ ...SETTINGS, translateTitle: false })],
+    ['词条相同', c => c.updateCustomEntries({})],
+    ['只改标题开关', c => c.updateSettings({ ...SETTINGS, translateTitle: false })],
     [
       '页面类型变化',
-      (c) => {
+      c => {
         history.pushState(null, '', '/vuejs/core/pulls')
         c.checkLocation()
-      },
-    ],
+      }
+    ]
   ])('%s：不通知', (_name, act) => {
     const c = create('<p>Issues</p>')
     act(c)
@@ -447,9 +447,9 @@ describe('本地时区变化', () => {
     c.updateLocale(
       [
         ['common', { static: { Issues: '議題' } }],
-        ['common', zhCnTime],
+        ['common', zhCnTime]
       ],
-      'zh-CN',
+      'zh-CN'
     )
 
     process.env.TZ = 'Asia/Tokyo'
@@ -478,26 +478,26 @@ describe('本地时区变化', () => {
   it.each<[string, (c: Controller) => void]>([
     [
       '进出排除路径',
-      (c) => {
+      c => {
         history.pushState(null, '', '/settings/profile')
         c.checkLocation()
         history.pushState(null, '', HOME)
         c.checkLocation()
-      },
+      }
     ],
     [
       '停用再启用',
-      (c) => {
+      c => {
         c.updateSettings({ ...SETTINGS, excludedPaths: ['/settings'], enabled: false })
         c.updateSettings({ ...SETTINGS, excludedPaths: ['/settings'] })
-      },
-    ],
+      }
+    ]
   ])('改了时区、还没派发事件就%s：恢复翻译时按新时区翻译，与时间元素一致；启动后补发重置', async (_name, restart) => {
     const c = create(
       `<p title="${FULL_TIME}">${FULL_TIME}</p><relative-time datetime="2026-10-26T02:03:00Z"></relative-time>`,
       { excludedPaths: ['/settings'] },
       {},
-      ZONE_BUNDLE,
+      ZONE_BUNDLE
     )
     await settleTime()
 

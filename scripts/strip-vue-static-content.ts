@@ -44,7 +44,7 @@ export function stripVueStaticContentPlugin(): Plugin {
       filter: { id: RUNTIME_DOM_RE },
       handler(code, id) {
         return stripStaticContent(code, id.split('?', 1)[0])
-      },
-    },
+      }
+    }
   }
 }

@@ -6,14 +6,14 @@ const LIST_ACTION: Readonly<Record<string, string>> = {
   dismissed: '消除于',
   'auto-dismissed': '自动消除于',
   closed: '关闭于',
-  reopened: '重新打开于',
+  reopened: '重新打开于'
 }
 
 const REACHABILITY: Readonly<Record<string, string>> = {
   Reachable: '可达',
   'Potentially reachable': '可能可达',
   Unreachable: '不可达',
-  Unavailable: '不可用',
+  Unavailable: '不可用'
 }
 
 /**
@@ -62,8 +62,7 @@ export default {
 
     // 未启用：To receive …, you must first enable Dependabot alerts in <this repository’s settings>.
     'Dependabot alerts are disabled.': 'Dependabot 警报已禁用。',
-    'To receive Dependabot alerts, you must first enable Dependabot alerts in':
-      '要接收 Dependabot 警报，须先启用 Dependabot 警报，前往',
+    'To receive Dependabot alerts, you must first enable Dependabot alerts in': '要接收 Dependabot 警报，须先启用 Dependabot 警报，前往',
     'this repository’s settings': '此存储库的设置',
     "this repository's settings": '此存储库的设置',
 
@@ -135,8 +134,7 @@ export default {
     'Prioritize this alert with signals like': '可借助以下信号确定此警报的优先级',
     'whether the code is deployed to production': '代码是否已部署到生产环境',
     'Your code reaches the vulnerable function.': '你的代码会调用存在漏洞的函数。',
-    "Analysis couldn't confirm whether your code reaches the vulnerable function.":
-      '分析无法确认你的代码是否会调用存在漏洞的函数。',
+    "Analysis couldn't confirm whether your code reaches the vulnerable function.": '分析无法确认你的代码是否会调用存在漏洞的函数。',
     "We couldn't determine reachability because of an error on our side. We're continually improving reachability analysis, so you should see fewer of these errors over time.":
       '因我们这边出错而无法确定可达性。可达性分析在持续改进，此类错误会逐渐减少。',
     "We'll try again tomorrow as long as reachability analysis is enabled for this repository.":
@@ -152,8 +150,7 @@ export default {
     "Reachability analysis didn't complete, so call paths aren't available.": '可达性分析未完成，调用路径不可用。',
     'About reachability': '关于可达性',
     // … from the public npm registry and from <private registries configured for Dependabot>.
-    'Reachability analysis supports dependencies from the public npm registry and from':
-      '可达性分析支持的依赖项来自公共 npm 注册表以及',
+    'Reachability analysis supports dependencies from the public npm registry and from': '可达性分析支持的依赖项来自公共 npm 注册表以及',
     'private registries configured for Dependabot': '为 Dependabot 配置的专用注册表',
     // The <reachability analysis run> for this repository reached its time limit …
     'reachability analysis run': '可达性分析运行',
@@ -170,8 +167,7 @@ export default {
 
     // 导出 CSV 报告
     'Export CSV': '导出 CSV',
-    'Generating your report. Stay on this page to automatically download the report.':
-      '正在生成报告。停留在此页面将自动下载报告。',
+    'Generating your report. Stay on this page to automatically download the report.': '正在生成报告。停留在此页面将自动下载报告。',
     "Your report is being generated. You will receive an email when it's ready. Stay on this page to automatically download the report.":
       '正在生成报告。完成后将通过电子邮件通知你。停留在此页面将自动下载报告。',
     'Your report is being generated. You will receive an email when it’s ready. Stay on this page to automatically download the report.':
@@ -184,7 +180,7 @@ export default {
     'Your report is ready and the download has started. An email with the report has also been sent to you.':
       '报告已就绪且已开始下载。报告也已通过电子邮件发送给你。',
     'Something went wrong while exporting your data. Please try again later. If the problem persists, please contact support.':
-      '导出数据时出错。请稍后重试。如果问题仍然存在，请联系支持。',
+      '导出数据时出错。请稍后重试。如果问题仍然存在，请联系支持。'
   },
   scoped: {
     // 其他区域也出现的同形文字，本区域内单独生效
@@ -201,14 +197,11 @@ export default {
     Opened: '打开于',
     // dependabot opened this <时间>
     'opened this': '打开于',
-    'View logs': '查看日志',
+    'View logs': '查看日志'
   },
   regexp: [
     // 列表条目：#38 opened 3 days ago • Detected in …
-    [
-      /^#(\d+) (opened|fixed|dismissed|auto-dismissed|closed|reopened)$/,
-      (_, number, action) => `#${number} ${LIST_ACTION[action]}`,
-    ],
+    [/^#(\d+) (opened|fixed|dismissed|auto-dismissed|closed|reopened)$/, (_, number, action) => `#${number} ${LIST_ACTION[action]}`],
     // 详情页修复建议
     [/^Upgrade (\S+) to fix (\d+) Dependabot alerts? in (\S+)$/, '升级 $1 以修复 $3 中的 $2 个 Dependabot 警报'],
     [/^Upgrade (\S+) to version (\S+) or later\. For example:$/, '将 $1 升级到 $2 或更高版本。例如：'],
@@ -218,12 +211,12 @@ export default {
     // 侧栏可达性标记的 aria-label（原文无引号）
     [
       /^Filter alerts by (Reachable|Potentially reachable|Unreachable|Unavailable) reachability$/,
-      (_, title) => `筛选可达性为${REACHABILITY[title]}的警报`,
-    ],
+      (_, title) => `筛选可达性为${REACHABILITY[title]}的警报`
+    ]
   ],
   // 被元素拆开的整句；整句未命中时由 static 的片段兜底
   inline: [
     // 可达性分析：Prioritize this alert with signals like <a>severity</a>, <a>EPSS score</a>, or <a>…</a>.
-    ['Prioritize this alert with signals like {}, {}, or {}.', '可借助{}、{}或{}等信号确定此警报的优先级。'],
-  ],
+    ['Prioritize this alert with signals like {}, {}, or {}.', '可借助{}、{}或{}等信号确定此警报的优先级。']
+  ]
 } satisfies PageDictionary

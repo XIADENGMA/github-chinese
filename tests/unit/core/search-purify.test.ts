@@ -9,7 +9,7 @@ let purifier: SearchPurifier | undefined
 
 /** 等 MutationObserver 回调 */
 async function flush(): Promise<void> {
-  await new Promise((done) => setTimeout(done, 0))
+  await new Promise(done => setTimeout(done, 0))
 }
 
 function start(lines: readonly string[]): SearchPurifier {
@@ -20,7 +20,7 @@ function start(lines: readonly string[]): SearchPurifier {
 
 /** 存储库结果（同搜索结果页：标题行的链接为存储库；描述、主题为用户内容） */
 function repoResult(repo: string, description = '', topics: readonly string[] = []): string {
-  const tokens = topics.map((topic) => `<div><a class="topicLabel__x" href="/topics/${topic}">${topic}</a></div>`)
+  const tokens = topics.map(topic => `<div><a class="topicLabel__x" href="/topics/${topic}">${topic}</a></div>`)
   return (
     `<div class="Result__x"><div class="resultRow__x"><div class="resultContent__x">` +
     `<h3 class="header__x"><div class="headerRow__x"><div class="search-title title__x">` +
@@ -34,9 +34,7 @@ function repoResult(repo: string, description = '', topics: readonly string[] = 
 
 /** 议题结果：标题行先是所属存储库的链接，再是议题；标签为高亮文字，作者在页脚 */
 function issueResult(repo: string, title: string, labels: readonly string[] = [], author = 'hubot'): string {
-  const tokens = labels.map(
-    (label) => `<div><span class="prc-Label"><span class="search-match">${label}</span></span></div>`,
-  )
+  const tokens = labels.map(label => `<div><span class="prc-Label"><span class="search-match">${label}</span></span></div>`)
   return (
     `<div class="Result__x"><h3 class="header__x">` +
     `<div class="RepositoryContext__x"><a href="/${repo}"><span>${repo}</span></a></div>` +
@@ -66,7 +64,7 @@ function items$(): HTMLElement[] {
 
 /** 各条结果是否隐藏 */
 function hiddenStates(): boolean[] {
-  return items$().map((item) => item.style.getPropertyValue('display') === 'none')
+  return items$().map(item => item.style.getPropertyValue('display') === 'none')
 }
 
 beforeEach(() => {
@@ -91,7 +89,7 @@ describe('createSearchPurifier', () => {
       issueResult('octocat/linguist', 'Bug'),
       issueResult('vuejs/docs', 'Typo', ['sample-label']),
       userResult('octocat', 'The Octocat'),
-      userResult('vuejs', 'Vue'),
+      userResult('vuejs', 'Vue')
     )
     start(['@octocat', 'vuejs/core', 'Sample text', 'sample-topic', 'sample-label'])
     expect(hiddenStates()).toEqual([true, true, true, false, true, true, true, true, false])
@@ -112,7 +110,7 @@ describe('createSearchPurifier', () => {
   it('不按页脚、描述里的链接与文字判断所有者', () => {
     showResults(
       repoResult('vuejs/vue', 'See <a href="https://github.com/octocat">github.com/octocat</a>'),
-      issueResult('vuejs/docs', 'Typo', [], 'octocat'),
+      issueResult('vuejs/docs', 'Typo', [], 'octocat')
     )
     start(['@octocat'])
     expect(hiddenStates()).toEqual([false, false])
@@ -121,8 +119,7 @@ describe('createSearchPurifier', () => {
   it('之后插入的结果（换页、加载更多）也隐藏', async () => {
     showResults()
     start(['@octocat'])
-    document.querySelector('[data-testid="results-list"]')!.innerHTML =
-      repoResult('vuejs/core') + repoResult('octocat/hello-world')
+    document.querySelector('[data-testid="results-list"]')!.innerHTML = repoResult('vuejs/core') + repoResult('octocat/hello-world')
     await flush()
     expect(hiddenStates()).toEqual([false, true])
   })

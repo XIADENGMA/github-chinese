@@ -59,10 +59,8 @@ export default {
     'Customize your pins': '自定义置顶项',
     'Customize pins': '自定义置顶项',
     'Edit pinned items': '编辑置顶项',
-    'Select up to six public repositories or gists you’d like to show to anyone.':
-      '最多选择六个要向所有人展示的公共存储库或代码片段。',
-    "Select up to six public repositories or gists you'd like to show to anyone.":
-      '最多选择六个要向所有人展示的公共存储库或代码片段。',
+    'Select up to six public repositories or gists you’d like to show to anyone.': '最多选择六个要向所有人展示的公共存储库或代码片段。',
+    "Select up to six public repositories or gists you'd like to show to anyone.": '最多选择六个要向所有人展示的公共存储库或代码片段。',
     'Select up to six public repositories you’d like to show to anyone.': '最多选择六个要向所有人展示的公共存储库。',
     "Select up to six public repositories you'd like to show to anyone.": '最多选择六个要向所有人展示的公共存储库。',
     'Select up to six public repositories you’d like to show.': '最多选择六个要展示的公共存储库。',
@@ -99,8 +97,7 @@ export default {
     'blocking users': '阻止用户',
     'You must be logged in to block users.': '登录后才能阻止用户。',
     'Close all issues, pull requests, and discussions opened by this user': '关闭此用户创建的所有议题、拉取请求和讨论',
-    'Content in all repositories owned by your account will be closed.':
-      '你的帐户拥有的所有存储库中的相关内容都将被关闭。',
+    'Content in all repositories owned by your account will be closed.': '你的帐户拥有的所有存储库中的相关内容都将被关闭。',
     'Add an optional note': '添加可选备注',
     'Maximum 250 characters. Please don’t include any personal information such as legal names or email addresses. Markdown is supported. This note will only be visible to you.':
       '最多 250 个字符。请勿包含法定姓名或电子邮件地址等个人信息。支持 Markdown。此备注仅你可见。',
@@ -113,7 +110,7 @@ export default {
 
     // 编辑个人资料表单
     'You can @mention other users and organizations to link to them.': '你可以 @提及 其他用户和组织以链接到其主页。',
-    'other users and organizations to link to them.': '其他用户和组织以链接到其主页。',
+    'other users and organizations to link to them.': '其他用户和组织以链接到其主页。'
   },
   scoped: {
     Followers: '关注者',
@@ -138,7 +135,7 @@ export default {
     'badge.': '徽章。',
     'Filter repositories': '筛选存储库',
     // 置顶对话框加载失败：Something went wrong. <Retry.>
-    'Retry.': '重试。',
+    'Retry.': '重试。'
   },
   regexp: [
     // 正在关注计数（数字与文字拼接后）；N followers 由 common-ui 的通用计数规则翻译
@@ -152,7 +149,7 @@ export default {
     // 本地时间：- 1h ahead / - 7h behind / - 5h30m ahead（时与分之间不带空格；带空格的写法同样接受）
     [
       /^- (\d+(?:\.\d+)?h(?: ?\d+m)?|\d+m) (ahead|behind)$/,
-      (_, offset, direction) => `- ${direction === 'ahead' ? '快' : '慢'} ${formatOffset(offset)}`,
+      (_, offset, direction) => `- ${direction === 'ahead' ? '快' : '慢'} ${formatOffset(offset)}`
     ],
     // 组织头像溢出：+ 12 more
     [/^\+ (\d+) more$/, '另有 $1 个'],
@@ -160,7 +157,7 @@ export default {
     // 编辑个人资料：社交帐户输入框
     [/^Link to social profile (\d)$/, '社交帐户链接 $1'],
     // 置顶项排序按钮：Move hello-world up
-    [/^Move (.+?) (up|down)$/, (_, name, direction) => `${direction === 'up' ? '上移' : '下移'} ${name}`],
+    [/^Move (.+?) (up|down)$/, (_, name, direction) => `${direction === 'up' ? '上移' : '下移'} ${name}`]
   ],
   ignore: [
     // 状态消息（姓名、简介、公司、所在地、置顶存储库由全局忽略规则处理）
@@ -168,8 +165,8 @@ export default {
     // 页头面包屑首项的用户名（today 这类用户名会被当成时间词翻译）
     'li:first-child > [class*="contextCrumb__"]',
     // 个人资料自述文件标题中的「用户名/用户名」
-    '.profile-readme .text-mono',
+    '.profile-readme .text-mono'
   ],
   // 正在关注计数被 <span> 拆开：<a><span>31</span> following</a>（链接内没有图标）
-  inline: [['{} following', '正在关注 {} 人']],
+  inline: [['{} following', '正在关注 {} 人']]
 } satisfies PageDictionary

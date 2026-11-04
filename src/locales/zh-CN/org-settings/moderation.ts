@@ -9,7 +9,7 @@ const DURATION_UNIT: Readonly<Record<string, string>> = {
   day: '天',
   week: '周',
   month: '个月',
-  year: '年',
+  year: '年'
 }
 
 const DURATION_QUALIFIER: Readonly<Record<string, string>> = { about: '约', almost: '将近', over: '超过' }
@@ -40,8 +40,7 @@ export default {
     'All blocked users': '所有已阻止的用户',
     'Block user from organization': '在组织中阻止用户',
     'Block user from organization and send message': '在组织中阻止用户并发送消息',
-    'Close all open issues, pull requests, and discussions opened by this user':
-      '关闭此用户创建的所有议题、拉取请求和讨论',
+    'Close all open issues, pull requests, and discussions opened by this user': '关闭此用户创建的所有议题、拉取请求和讨论',
     'Hide this user’s comments': '隐藏此用户的评论',
     "Hide this user's comments": '隐藏此用户的评论',
     'Send a notification to this user': '向此用户发送通知',
@@ -108,7 +107,7 @@ export default {
     'No attribution invitations have been sent': '尚未发送归属邀请',
     Reattribute: '重新归属',
     'Reattribute contributions': '重新归属贡献',
-    Mannequin: '占位帐户',
+    Mannequin: '占位帐户'
   },
   scoped: {
     // 阻止用户表格与对话框（与个人设置共用的短词）
@@ -164,7 +163,7 @@ export default {
     // 代码审查限制：「Code review limits are currently」+ 状态 +「for all repositories. …」
     enabled: '已启用',
     disabled: '已禁用',
-    Unset: '取消设置',
+    Unset: '取消设置'
   },
   regexp: [
     // 版主
@@ -192,11 +191,10 @@ export default {
     [/^Enabled with less than a minute remaining(\.?)$/, (_, dot: string) => `已启用剩余不到 1 分钟${dot ? '。' : ''}`],
     [
       /^Enabled with (?:(about|almost|over) )?(\d+|an?|one) (second|minute|hour|day|week|month|year)s? remaining(\.?)$/,
-      (_, qualifier: string, amount: string, unit: string, dot: string) =>
-        enabledRemaining(qualifier, amount, unit, dot),
+      (_, qualifier: string, amount: string, unit: string, dot: string) => enabledRemaining(qualifier, amount, unit, dot)
     ],
 
     // 导入/导出
-    [/^(\d+) mannequins?$/, '$1 个占位帐户'],
-  ],
+    [/^(\d+) mannequins?$/, '$1 个占位帐户']
+  ]
 } satisfies PageDictionary

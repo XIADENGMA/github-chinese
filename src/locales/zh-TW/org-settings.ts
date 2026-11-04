@@ -49,5 +49,5 @@ export default mergeDictionaries(
   rulesets,
   rulesetRules,
   rulesetInsights,
-  rulesetImport,
+  rulesetImport
 ) satisfies PageDictionary

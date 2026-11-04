@@ -3,7 +3,7 @@ import type { PageDictionary } from '../../../core/types'
 /** 自动合并动作 */
 const AUTO_MERGE_ACTION: Readonly<Record<string, string>> = {
   'automatically merge': '自动合并',
-  'be added to the merge queue': '加入合并队列',
+  'be added to the merge queue': '加入合并队列'
 }
 
 /**
@@ -22,17 +22,12 @@ export default {
       '将为以下拉取请求启用自动合并。这将替换堆栈中现有的自动合并设置。',
     'Learn more about automatically merging a pull request.': '了解自动合并拉取请求。',
     'Learn more about auto-merge.': '了解自动合并。',
-    'This pull request will be automatically merged when all requirements are met.':
-      '此拉取请求将在满足所有要求时自动合并。',
-    'This pull request will be added to the merge queue when all requirements are met.':
-      '此拉取请求将在满足所有要求时加入合并队列。',
-    'This pull request will be added to the merge queue when all requirements are met':
-      '此拉取请求将在满足所有要求时加入合并队列',
-    'This pull request will automatically merge when it meets the merge requirements.':
-      '此拉取请求将在满足合并要求时自动合并。',
+    'This pull request will be automatically merged when all requirements are met.': '此拉取请求将在满足所有要求时自动合并。',
+    'This pull request will be added to the merge queue when all requirements are met.': '此拉取请求将在满足所有要求时加入合并队列。',
+    'This pull request will be added to the merge queue when all requirements are met': '此拉取请求将在满足所有要求时加入合并队列',
+    'This pull request will automatically merge when it meets the merge requirements.': '此拉取请求将在满足合并要求时自动合并。',
     'Auto-merge is not allowed on this repository.': '此存储库不允许自动合并。',
-    'Auto-merge cannot be enabled because this pull request is already in a mergeable state.':
-      '此拉取请求因已可合并而无法启用自动合并。',
+    'Auto-merge cannot be enabled because this pull request is already in a mergeable state.': '此拉取请求因已可合并而无法启用自动合并。',
 
     // 合并队列
     'Merge when ready': '准备就绪时合并',
@@ -82,8 +77,7 @@ export default {
     'The pull request was successfully converted to draft.': '已将拉取请求转换为草稿。',
     'Not planning to merge?': '不打算合并？',
     'Close this pull request?': '要关闭此拉取请求吗？',
-    'This pull request will be closed. You can reopen it later if needed.':
-      '此拉取请求将被关闭。如有需要可以稍后重新打开。',
+    'This pull request will be closed. You can reopen it later if needed.': '此拉取请求将被关闭。如有需要可以稍后重新打开。',
     'Failed to close the pull request': '关闭拉取请求失败',
     'The pull request was successfully closed.': '已关闭拉取请求。',
 
@@ -151,8 +145,7 @@ export default {
     'Rebasing was stopped due to merge conflicts': '变基因合并冲突而停止',
     'Rebasing was stopped due to an error': '变基因出错而停止',
     'Rebasing was stopped due to a network error': '变基因网络错误而停止',
-    'Try to rebase this stack again. If the problem persists, refresh the page.':
-      '请重新变基此堆栈。如果问题仍然存在，请刷新页面。',
+    'Try to rebase this stack again. If the problem persists, refresh the page.': '请重新变基此堆栈。如果问题仍然存在，请刷新页面。',
     // 原文界面名 Done 无引号，译文不加
     'Command-line conflict-resolution instructions are available below. Select Done to proceed.':
       '下方提供了命令行解决冲突的说明。选择完成以继续。',
@@ -165,8 +158,7 @@ export default {
       '从第一个未合并的分支开始，每个分支都会变基到其下方分支的最新提交之上。',
     'Once a branch is rebased, it is force-pushed.': '分支变基后会被强制推送。',
     'The process stops at the first merge conflict or failed rebase.': '过程会在遇到第一个合并冲突或变基失败时停止。',
-    'Commits keep their original author, but will be signed and verified by GitHub.':
-      '提交保留原作者，但会由 GitHub 签名和验证。',
+    'Commits keep their original author, but will be signed and verified by GitHub.': '提交保留原作者，但会由 GitHub 签名和验证。',
     'Learn more about commit signature verification.': '了解提交签名验证。',
     'Current stack entry merge conflicts': '当前堆栈条目的合并冲突',
     'Downstack merge conflicts': '下层堆栈的合并冲突',
@@ -175,12 +167,10 @@ export default {
     'This stack is out-of-date with its base branch': '此堆栈落后于其基础分支',
     'Required stack rebase': '必需的堆栈变基',
     'Some branches in this stack have diverged and must be rebased': '此堆栈中的部分分支已分叉且必须变基',
-    'Rebase this stack to restore a linear commit history across its branches.':
-      '变基此堆栈以恢复各分支间线性的提交历史记录。',
+    'Rebase this stack to restore a linear commit history across its branches.': '变基此堆栈以恢复各分支间线性的提交历史记录。',
 
     // 在场证明
-    'Authentication is already in progress. Complete it before starting another attempt.':
-      '身份验证正在进行中。请先完成再重新尝试。',
+    'Authentication is already in progress. Complete it before starting another attempt.': '身份验证正在进行中。请先完成再重新尝试。',
     'Authenticating... Proof of presence, opens in a new tab': '身份验证中...在场证明，在新标签页中打开',
     'Authenticate proof of presence, opens in a new tab': '验证在场证明，在新标签页中打开',
     'The proof of presence requirement could not be evaluated. Try again later.': '无法评估在场证明要求。请稍后重试。',
@@ -191,7 +181,7 @@ export default {
     'Proof of presence required': '需要在场证明',
     'Proof of presence verified': '在场证明已验证',
     'Proof of presence unavailable': '在场证明不可用',
-    'Unable to load proof of presence. Try again later.': '无法加载在场证明。请稍后重试。',
+    'Unable to load proof of presence. Try again later.': '无法加载在场证明。请稍后重试。'
   },
   scoped: {
     // 合并队列片段：This repository uses the <merge queue> for all merges into the <main> branch.
@@ -252,67 +242,48 @@ export default {
     'Authenticating…': '身份验证中…',
     'via MFA': '通过多因素身份验证',
     'via Re-Auth': '通过重新进行身份验证',
-    'Proof of presence': '在场证明',
+    'Proof of presence': '在场证明'
   },
   regexp: [
     // 合并队列
     [/^for all merges into the (.+) branch\.$/, '来合并所有更改到 $1 分支。'],
-    [
-      /^There (?:is|are) (\d+) pull requests? ahead of this one in the$/,
-      '此拉取请求在以下队列中前面还有 $1 个拉取请求',
-    ],
+    [/^There (?:is|are) (\d+) pull requests? ahead of this one in the$/, '此拉取请求在以下队列中前面还有 $1 个拉取请求'],
     [
       /^This pull request will be automatically grouped with other pull requests and merged into (.+)\.$/,
-      '此拉取请求将自动与其他拉取请求分组并合并到 $1。',
+      '此拉取请求将自动与其他拉取请求分组并合并到 $1。'
     ],
     [/^This pull request will be merged into (.+) by itself\.$/, '此拉取请求将单独合并到 $1。'],
     // 自动合并
     [
       /^This pull request and (\d+) others? in the stack will (automatically merge|be added to the merge queue) when they all meet the merge requirements\.$/,
-      (_, count, action) =>
-        `此拉取请求与堆栈中的其他 ${count} 个拉取请求将在全部满足合并要求后${AUTO_MERGE_ACTION[action] ?? action}。`,
+      (_, count, action) => `此拉取请求与堆栈中的其他 ${count} 个拉取请求将在全部满足合并要求后${AUTO_MERGE_ACTION[action] ?? action}。`
     ],
-    [
-      /^Are you sure you want to disable auto-merge for (\d+) pull requests?\?$/,
-      '确定要为 $1 个拉取请求禁用自动合并吗？',
-    ],
+    [/^Are you sure you want to disable auto-merge for (\d+) pull requests?\?$/, '确定要为 $1 个拉取请求禁用自动合并吗？'],
     // 合并后：代码空间清理（产品名按 product-names.md：codespace → 代码空间）
     [/^Delete (?:(\d+) )?codespaces?$/, (_, count) => (count ? `删除 ${count} 个代码空间` : '删除代码空间')],
-    [
-      /^Deleting (?:(\d+) )?codespaces?\.$/,
-      (_, count) => (count ? `正在删除 ${count} 个代码空间。` : '正在删除代码空间。'),
-    ],
-    [
-      /^Couldn['’]t delete (?:(\d+) )?codespaces?$/,
-      (_, count) => (count ? `无法删除 ${count} 个代码空间` : '无法删除代码空间'),
-    ],
+    [/^Deleting (?:(\d+) )?codespaces?\.$/, (_, count) => (count ? `正在删除 ${count} 个代码空间。` : '正在删除代码空间。')],
+    [/^Couldn['’]t delete (?:(\d+) )?codespaces?$/, (_, count) => (count ? `无法删除 ${count} 个代码空间` : '无法删除代码空间')],
     [
       /^You['’]re all set — the (\d+) codespaces? for head branch can be safely deleted\. You can also manage your codespaces in$/,
-      '一切就绪——头部分支的 $1 个代码空间可以安全删除。你也可以在以下位置管理代码空间',
+      '一切就绪——头部分支的 $1 个代码空间可以安全删除。你也可以在以下位置管理代码空间'
     ],
-    [
-      /^Are you sure you want to delete (\d+) codespaces? for the head branch\?$/,
-      '确定要删除头部分支的 $1 个代码空间吗？',
-    ],
+    [/^Are you sure you want to delete (\d+) codespaces? for the head branch\?$/, '确定要删除头部分支的 $1 个代码空间吗？'],
     // 堆栈合并
     [/^(\d+) pull requests are being merged\.$/, '正在合并 $1 个拉取请求。'],
-    [
-      /^Merging this pull request will also merge (\d+) pull requests? below it\.$/,
-      '合并此拉取请求还将合并其下方的 $1 个拉取请求。',
-    ],
+    [/^Merging this pull request will also merge (\d+) pull requests? below it\.$/, '合并此拉取请求还将合并其下方的 $1 个拉取请求。'],
     [/^(\d+) of (\d+) pull requests loading$/, '正在加载 $1/$2 个拉取请求'],
     [/^(\d+) of (\d+) branches rebased$/, '已变基 $1/$2 个分支'],
     [
       /^Resolve the merge conflicts in pull request #(\d+), then try to rebase this stack again\.$/,
-      '请先解决拉取请求 #$1 中的合并冲突，然后重新变基此堆栈。',
+      '请先解决拉取请求 #$1 中的合并冲突，然后重新变基此堆栈。'
     ],
     [
       /^Check pull request #(\d+) for any issues, then try to rebase this stack again\.$/,
-      '请检查拉取请求 #$1 是否有问题，然后重新变基此堆栈。',
+      '请检查拉取请求 #$1 是否有问题，然后重新变基此堆栈。'
     ],
     [/^Rebase this stack onto the latest version of (.+)\.$/, '将此堆栈变基到 $1 的最新版本。'],
     // 在场证明
-    [/^This requirement was satisfied by ([\w-]+)$/, '此要求已由 $1 满足'],
+    [/^This requirement was satisfied by ([\w-]+)$/, '此要求已由 $1 满足']
   ],
   inline: [
     // 禁用自动合并的说明（React 合并框）：This pull request will <span>merge automatically</span> when all requirements
@@ -323,14 +294,14 @@ export default {
     // fork of <strong>owner/repo</strong> in the <a>settings</a>.（宿主为合并框副标题 <p>）；原文一个逗号，译文一个
     [
       "You're all set — the {} branch can be safely deleted. If you wish, you can also delete this fork of {} in the {}.",
-      '一切就绪——{} 分支可以安全删除。如有需要也可以删除 {} 的此复刻，入口在{}。',
+      '一切就绪——{} 分支可以安全删除。如有需要也可以删除 {} 的此复刻，入口在{}。'
     ],
     [
       'You’re all set — the {} branch can be safely deleted. If you wish, you can also delete this fork of {} in the {}.',
-      '一切就绪——{} 分支可以安全删除。如有需要也可以删除 {} 的此复刻，入口在{}。',
+      '一切就绪——{} 分支可以安全删除。如有需要也可以删除 {} 的此复刻，入口在{}。'
     ],
     // 同一存储库时只有前半句；按片段翻译时“——”后的空白文本节点会留下空格，整句收录
     ["You're all set — the {} branch can be safely deleted.", '一切就绪——{} 分支可以安全删除。'],
-    ['You’re all set — the {} branch can be safely deleted.', '一切就绪——{} 分支可以安全删除。'],
-  ],
+    ['You’re all set — the {} branch can be safely deleted.', '一切就绪——{} 分支可以安全删除。']
+  ]
 } satisfies PageDictionary

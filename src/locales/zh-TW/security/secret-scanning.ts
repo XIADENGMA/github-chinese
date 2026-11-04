@@ -6,7 +6,7 @@ const CLOSE_REASON: Readonly<Record<string, string>> = {
   'false positive': '誤報',
   'used in tests': '用於測試',
   "won't fix": '不予修正',
-  'won’t fix': '不予修正',
+  'won’t fix': '不予修正'
 }
 
 /**
@@ -90,7 +90,7 @@ export default {
     // 详情：时间轴（<用户> opened this alert <时间>）；警示的 open 作「建立」
     'opened this alert': '建立了此警示',
     'closed this as': '關閉了此警示並標示為',
-    'closed this as completed in': '在下列提交中關閉了此警示並標示為完成',
+    'closed this as completed in': '在下列提交中關閉了此警示並標示為完成'
   },
   scoped: {
     // 其他区域也出现的同形文字，本区域内单独生效
@@ -121,20 +121,20 @@ export default {
     'hidden item': '個隱藏項目',
     'hidden items': '個隱藏項目',
     'Load all...': '全部載入...',
-    'Load all…': '全部載入…',
+    'Load all…': '全部載入…'
   },
   regexp: [
     // 关闭原因标签：Closed as revoked（原文无标点，译文不加冒号；dependabot.ts 的筛选按钮 Closed as 另作「關閉原因」）
     [
       /^Closed as (revoked|false positive|used in tests|won['’]t fix)$/i,
-      (_, reason) => `已關閉並標示為${CLOSE_REASON[reason.toLowerCase()]}`,
+      (_, reason) => `已關閉並標示為${CLOSE_REASON[reason.toLowerCase()]}`
     ],
     // 筛选栏 aria-label：Advanced filter dialog: 1 valid filter
-    [/^Advanced filter dialog: ([\d,]+) valid filters?$/, '進階篩選器對話方塊：$1 個有效篩選器'],
+    [/^Advanced filter dialog: ([\d,]+) valid filters?$/, '進階篩選器對話方塊：$1 個有效篩選器']
   ],
   // 被元素拆开的整句；整句未命中时由 static 的片段兜底
   inline: [
     // 修复步骤：Revoke this <机密类型> through <提供者> to prevent unauthorized access.；「透過 …」移到动词前
-    ['Revoke this {} through {} to prevent unauthorized access.', '將此 {} 透過 {} 撤銷，以防止未經授權的存取。'],
-  ],
+    ['Revoke this {} through {} to prevent unauthorized access.', '將此 {} 透過 {} 撤銷，以防止未經授權的存取。']
+  ]
 } satisfies PageDictionary

@@ -9,7 +9,7 @@ const METADATA: Readonly<Record<string, string>> = {
   Labels: '標籤',
   Assignees: '負責人',
   Fields: '欄位',
-  Type: '類型',
+  Type: '類型'
 }
 
 const REPO_SOURCE = '[\\w.-]+\\/[\\w.-]+'
@@ -41,8 +41,7 @@ export default {
     'Please review our security policy for more details': '詳情請參閱我們的安全性政策',
     'Edit templates': '編輯範本',
     'View templates': '查看範本',
-    'Issues are disabled for the selected repository. Please select a different repository.':
-      '選取的儲存庫已停用議題。請選擇其他儲存庫。',
+    'Issues are disabled for the selected repository. Please select a different repository.': '選取的儲存庫已停用議題。請選擇其他儲存庫。',
     'Unable to load top repositories': '無法載入常用儲存庫',
     // 存储库选择按钮（按钮文字 Select repository 由通用词典处理，各状态的无障碍名称同用「儲存庫」）
     'No repository selected': '未選擇儲存庫',
@@ -53,8 +52,7 @@ export default {
 
     // 首次贡献与贡献指南更新提示（新建议题页与比较页，放 static）：Be sure to review the <contributing guidelines>.
     'It looks like this is your first time opening an issue in this project!': '看來這是你第一次在此專案中建立議題！',
-    'It looks like this is your first time opening a pull request in this project!':
-      '看來這是你第一次在此專案中建立拉取請求！',
+    'It looks like this is your first time opening a pull request in this project!': '看來這是你第一次在此專案中建立拉取請求！',
     'Be sure to review the': '請務必詳閱',
     // Documentation has changed since you last contributed. Take a look before submitting an issue: <Contributing guidelines>
     'Documentation has changed since you last contributed': '自你上次貢獻以來說明文件已變更',
@@ -105,8 +103,7 @@ export default {
     'Go to Copilot': '前往 Copilot',
     'Generate issue content with Copilot': '使用 Copilot 產生議題內容',
     'Additional context (optional)': '額外上下文（選填）',
-    'Add any additional context to help Copilot generate a better issue...':
-      '新增任何額外上下文，幫助 Copilot 產生更好的議題...',
+    'Add any additional context to help Copilot generate a better issue...': '新增任何額外上下文，幫助 Copilot 產生更好的議題...',
     'Generate content': '產生內容',
     'Failed to generate content with Copilot. Please try again.': '無法使用 Copilot 產生內容。請再試一次。',
     'Please provide a title, existing description, or additional context to generate content.':
@@ -117,8 +114,7 @@ export default {
     'I’ve updated the issue title and description above.': '我已更新上方的議題標題和描述。',
     'Writing…': '撰寫中…',
     'Try again?': '再試一次？',
-    'You have made edits to the generated content. Discarding will lose your changes.':
-      '你已編輯產生的內容。捨棄將會遺失你的變更。',
+    'You have made edits to the generated content. Discarding will lose your changes.': '你已編輯產生的內容。捨棄將會遺失你的變更。',
     'You have made edits to the generated content. Trying again will replace your changes with new generated content.':
       '你已編輯產生的內容。再試一次會以新產生的內容取代你的變更。',
 
@@ -140,7 +136,7 @@ export default {
     // GitHub 默认模板的说明（同 labels.ts 默认标签说明；默认模板名不译）
     'Create a report to help us improve': '建立回報以協助我們改進',
     'Suggest an idea for this project': '為此專案提出想法',
-    "Describe this issue template's purpose here.": '在此描述此議題範本的用途。',
+    "Describe this issue template's purpose here.": '在此描述此議題範本的用途。'
   },
   scoped: {
     // 标题输入框占位符与 aria-label（Copilot 页面另有同名词条）
@@ -151,7 +147,7 @@ export default {
     'You’re using an': '你正在使用',
     'issue form': '議題表單',
     // 模板编辑器 Add template: 后的下拉按钮
-    select: '選擇',
+    select: '選擇'
   },
   regexp: [
     // 对话框标题：Create new sub-issue、Create new issue - "标题"
@@ -160,16 +156,13 @@ export default {
     // Create new issue in owner/repo[: 模板名]
     [
       new RegExp(`^Create new (issue|sub-issue) in (${REPO_SOURCE})(?:: (.+))?$`),
-      (_, type, repo, template) => `在 ${repo} 中建立新${relation(type)}${template ? `：${template}` : ''}`,
+      (_, type, repo, template) => `在 ${repo} 中建立新${relation(type)}${template ? `：${template}` : ''}`
     ],
-    [
-      new RegExp(`^Clone current (issue|sub-issue) in (${REPO_SOURCE})$`),
-      (_, type, repo) => `在 ${repo} 中複製目前的${relation(type)}`,
-    ],
+    [new RegExp(`^Clone current (issue|sub-issue) in (${REPO_SOURCE})$`), (_, type, repo) => `在 ${repo} 中複製目前的${relation(type)}`],
     // 存储库选择按钮：Selected repository: owner/repo (required)
     [
       /^Selected repository: ([\w.-]+(?:\/[\w.-]+)?)( \(required\))?$/,
-      (_, repo, required) => `已選擇的儲存庫：${repo}${required ? '（必填）' : ''}`,
+      (_, repo, required) => `已選擇的儲存庫：${repo}${required ? '（必填）' : ''}`
     ],
     // 继续创建后的链接与播报
     [/^Issue #(\d+) created$/, '議題 #$1 已建立'],
@@ -182,14 +175,14 @@ export default {
       (_, list: string) =>
         `正在跨儲存庫複製此議題。以下中繼資料可能不會一併複製：${list
           .split(', ')
-          .map((name) => METADATA[name] ?? name)
-          .join('、')}。`,
+          .map(name => METADATA[name] ?? name)
+          .join('、')}。`
     ],
     // 议题表单上传
     [/^Uploading (\d+) files?\.\.\.$/, '正在上傳 $1 個檔案...'],
     [/^View (\d+) more$/, '查看其他 $1 個'],
     // 创建后添加关系
-    [/^Failed to add (\d+) of (\d+) issue relationship\(s\)$/, '$2 個議題關係中有 $1 個無法新增'],
+    [/^Failed to add (\d+) of (\d+) issue relationship\(s\)$/, '$2 個議題關係中有 $1 個無法新增']
   ],
   ignore: [
     // 议题表单：字段标签、复选框分组与选项、下拉菜单选项（模板作者编写）
@@ -198,6 +191,6 @@ export default {
     '[class*="checkboxOptionLabel__"]',
     '[class*="dropdownMenuOverlay__"] [class*="prc-ActionList-ItemLabel-"]',
     // 可能重复的议题标题
-    '[class*="issueTitleText__"]',
-  ],
+    '[class*="issueTitleText__"]'
+  ]
 } satisfies PageDictionary

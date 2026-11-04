@@ -6,14 +6,14 @@ const ADVISORY_STATE: Readonly<Record<string, string>> = {
   Draft: '草稿',
   Triage: '待分類',
   Published: '已發布',
-  Closed: '已關閉',
+  Closed: '已關閉'
 }
 
 const LIST_STATE: Readonly<Record<string, string>> = {
   published: '已發布的安全性公告',
   draft: '安全性公告草稿',
   closed: '已關閉的安全性公告',
-  triage: '待分類的安全性公告',
+  triage: '待分類的安全性公告'
 }
 
 /** 严重性：Critical 作「重大」 */
@@ -22,14 +22,14 @@ const SEVERITY_FILTER: Readonly<Record<string, string>> = {
   Low: '低',
   Moderate: '中',
   High: '高',
-  Critical: '重大',
+  Critical: '重大'
 }
 
 const SORT: Readonly<Record<string, string>> = {
   Newest: '最新',
   Oldest: '最舊',
   'Recently updated': '最近更新',
-  'Least recently updated': '最久未更新',
+  'Least recently updated': '最久未更新'
 }
 
 /** 「octocat, monalisa, and hubot」→「octocat、monalisa 和 hubot」 */
@@ -50,17 +50,14 @@ export default {
     // 存储库安全公告列表
     'View known security vulnerabilities and report new vulnerabilities privately to maintainers.':
       '查看已知的安全性漏洞並私下向維護者回報新漏洞。',
-    "View information about security vulnerabilities from this repository's maintainers.":
-      '查看此儲存庫維護者發布的安全性漏洞資訊。',
-    'View information about security vulnerabilities from this repository’s maintainers.':
-      '查看此儲存庫維護者發布的安全性漏洞資訊。',
+    "View information about security vulnerabilities from this repository's maintainers.": '查看此儲存庫維護者發布的安全性漏洞資訊。',
+    'View information about security vulnerabilities from this repository’s maintainers.': '查看此儲存庫維護者發布的安全性漏洞資訊。',
     "Privately discuss, fix, and publish information about security vulnerabilities in your repository's code.":
       '私下討論、修正並發布儲存庫程式碼中安全性漏洞的資訊。',
     'Privately discuss, fix, and publish information about security vulnerabilities in your repository’s code.':
       '私下討論、修正並發布儲存庫程式碼中安全性漏洞的資訊。',
     'Filter advisories: severity:critical, ecosystem:npm': '篩選公告：severity:critical, ecosystem:npm',
-    'Filter advisories: severity:critical, ecosystem:npm, sort:newest':
-      '篩選公告：severity:critical, ecosystem:npm, sort:newest',
+    'Filter advisories: severity:critical, ecosystem:npm, sort:newest': '篩選公告：severity:critical, ecosystem:npm, sort:newest',
     'Available filters': '可用的篩選器',
     'Clear current search query, filters, and sorts': '清除目前的搜尋查詢、篩選器和排序',
     'Narrow your search': '縮小搜尋範圍',
@@ -135,8 +132,7 @@ export default {
     'Language support': '語言支援',
     'About GitHub Advisory Database': '關於 GitHub 公告資料庫',
     'Search by CVE/GHSA ID, package, severity, ecosystem, credit…': '依 CVE/GHSA ID、套件、嚴重性、生態系、致謝搜尋…',
-    'Search by CVE/GHSA ID, package, severity, ecosystem, credit...':
-      '依 CVE/GHSA ID、套件、嚴重性、生態系、致謝搜尋...',
+    'Search by CVE/GHSA ID, package, severity, ecosystem, credit...': '依 CVE/GHSA ID、套件、嚴重性、生態系、致謝搜尋...',
     'Filter by CWE': '依 CWE 篩選',
     // 公告条目：<CVE> was published for <软件包> (<生态系统>) <时间>；整句见 inline，这里是整句未命中时的片段
     'was published for': '已發布 影響',
@@ -157,12 +153,11 @@ export default {
     'Checking history': '正在檢查歷史記錄',
     'See something to contribute?': '有內容要補充？',
     'Suggest improvements for this vulnerability': '為此漏洞提出改進建議',
-    'Suggest improvements for this advisory on the GitHub Advisory Database.':
-      '在 GitHub 公告資料庫中為此公告提出改進建議。',
+    'Suggest improvements for this advisory on the GitHub Advisory Database.': '在 GitHub 公告資料庫中為此公告提出改進建議。',
     'See advisory in GitHub Advisory Database': '在 GitHub 公告資料庫中查看公告',
     'See all of your affected repositories': '查看你所有受影響的儲存庫',
     'Advisory links': '公告連結',
-    'Improve this advisory': '改進此公告',
+    'Improve this advisory': '改進此公告'
   },
   scoped: {
     // 其他区域也出现的同形文字，本区域内单独生效
@@ -182,39 +177,33 @@ export default {
     Other: '其他',
     'An unexpected error occurred. Please try again.': '發生未預期的錯誤。請再試一次。',
     // 生态系统筛选项、公告表单的生态系统选项（与 npm、pip 等并列）；产品名按用户规定译出
-    'GitHub Actions': 'GitHub 動作',
+    'GitHub Actions': 'GitHub 動作'
   },
   regexp: [
     // 公告列表状态切换：3 Published
     [/^([\d,]+) (Draft|Triage|Published|Closed)$/, (_, count, state) => `${count} 則${ADVISORY_STATE[state]}`],
     [
       /^There aren['’]t any (published|draft|closed|triage) security advisories(\.?)$/,
-      (_, state, period) => `沒有${LIST_STATE[state]}${period ? '。' : ''}`,
+      (_, state, period) => `沒有${LIST_STATE[state]}${period ? '。' : ''}`
     ],
     // 原文是两句，没有逗号，译文不加
-    [
-      /^Exact package name not found on (.+)\. You can still submit this report\.$/,
-      '在 $1 上找不到完全相符的套件名稱。仍可送出此回報。',
-    ],
+    [/^Exact package name not found on (.+)\. You can still submit this report\.$/, '在 $1 上找不到完全相符的套件名稱。仍可送出此回報。'],
     // GitHub 公告資料庫列表
     [/^([\d,]+) advisor(?:y|ies)$/, '$1 則公告'],
-    [
-      /^Filter by severity - (All severities|Low|Moderate|High|Critical)$/,
-      (_, level) => `依嚴重性篩選 - ${SEVERITY_FILTER[level]}`,
-    ],
+    [/^Filter by severity - (All severities|Low|Moderate|High|Critical)$/, (_, level) => `依嚴重性篩選 - ${SEVERITY_FILTER[level]}`],
     [/^Sort by - (Newest|Oldest|Recently updated|Least recently updated)$/, (_, sort) => `排序依據 - ${SORT[sort]}`],
     [/^Credited to ([\w-]+(?:, [\w-]+)*,? and [\w-]+|[\w-]+)$/, (_, names) => `致謝 ${joinNames(names)}`],
     // 撤回说明：前缀与日期用 joinCjk 拼接，日期后接中文不加空格
     [
       new RegExp(`^This advisory was withdrawn on (${DATE_SOURCE})(\\.?)$`),
-      (_, date, period) => `${joinCjk('此公告已於', translateTime(date))}撤回${period ? '。' : ''}`,
-    ],
+      (_, date, period) => `${joinCjk('此公告已於', translateTime(date))}撤回${period ? '。' : ''}`
+    ]
   ],
   ignore: [
     // GitHub Advisory Database 详情页标题（公告摘要）
     'h2.lh-condensed.Subhead-heading',
     // GitHub Advisory Database 列表：<CVE> was published for <软件包> (<生态系统>) 中的软件包名
-    'div.mt-1.text-small.color-fg-muted span.text-bold ~ span',
+    'div.mt-1.text-small.color-fg-muted span.text-bold ~ span'
   ],
   // 被元素拆开的公告条目整句；槽位顺序不变，未命中时按片段翻译（published、by、was published for、published to）
   inline: [
@@ -230,6 +219,6 @@ export default {
     // GitHub 公告資料庫详情时间线：<a>头像</a> <a>用户</a> published to <a>存储库</a> <relative-time>
     ['{} {} published to {} {}', '{} {} 發布到 {} 於 {}'],
     // GitHub 公告資料庫详情时间线：Published to the GitHub Advisory Database <relative-time>
-    ['Published to the GitHub Advisory Database {}', '於 {}發布到 GitHub 公告資料庫'],
-  ],
+    ['Published to the GitHub Advisory Database {}', '於 {}發布到 GitHub 公告資料庫']
+  ]
 } satisfies PageDictionary

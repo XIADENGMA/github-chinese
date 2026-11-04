@@ -71,5 +71,5 @@ export const zhCN: LocaleBundle = [
   ['sponsors', sponsors],
   ['education', education],
   ['mcp', mcp],
-  ['status', status],
+  ['status', status]
 ]

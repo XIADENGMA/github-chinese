@@ -30,7 +30,7 @@ export const FIELD_NAMES: Readonly<Record<string, string>> = {
   Size: '大小',
   'Start date': '開始日期',
   'Target date': '目標日期',
-  'End date': '結束日期',
+  'End date': '結束日期'
 }
 
 const FIELD_NAMES_LOWER = new Map(Object.entries(FIELD_NAMES).map(([name, zh]) => [name.toLowerCase(), zh]))
@@ -43,7 +43,7 @@ export function translateFieldName(name: string): string {
 /** 字段名正则片段（不含捕获组），长名在前 */
 export const FIELD_NAME_SOURCE = Object.keys(FIELD_NAMES)
   .sort((a, b) => b.length - a.length)
-  .map((name) => name.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&'))
+  .map(name => name.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&'))
   .join('|')
 
 /** 拼接用户字段名后，在中文与英文 / 数字之间补空格 */
@@ -59,7 +59,7 @@ const VALUE_NOUNS: Readonly<Record<string, string>> = {
   'iteration value': '迭代值',
   'iteration values': '迭代值',
   value: '值',
-  values: '值',
+  values: '值'
 }
 
 function valueNoun(noun: string): string {
@@ -103,10 +103,8 @@ export default {
     'Reorder custom fields': '調整自訂欄位順序',
     'Reorder fields list': '欄位順序清單',
     'Reorder custom fields list': '自訂欄位順序清單',
-    'Change the order in which fields appear on project items and in field lists.':
-      '變更欄位在專案項目和欄位清單中的顯示順序。',
-    'Change the order in which custom fields appear on project items and in field lists.':
-      '變更自訂欄位在專案項目和欄位清單中的顯示順序。',
+    'Change the order in which fields appear on project items and in field lists.': '變更欄位在專案項目和欄位清單中的顯示順序。',
+    'Change the order in which custom fields appear on project items and in field lists.': '變更自訂欄位在專案項目和欄位清單中的顯示順序。',
     'appear on project items and in field lists.': '在專案項目和欄位清單中的顯示順序。',
     'No fields are available to reorder.': '沒有可調整順序的欄位。',
     'No sortable columns available. Only custom fields can be reordered.': '沒有可排序的欄。只能調整自訂欄位的順序。',
@@ -120,8 +118,7 @@ export default {
     'Delete field': '刪除欄位',
     'This field no longer exists': '此欄位已不存在',
     'Select another field to view settings.': '選擇其他欄位以查看設定。',
-    'New items added to the project will automatically have this value set for this field.':
-      '新加入專案的項目會自動將此欄位設為此值。',
+    'New items added to the project will automatically have this value set for this field.': '新加入專案的項目會自動將此欄位設為此值。',
 
     // 删除 / 移除字段
     'Delete field?': '刪除欄位？',
@@ -178,8 +175,7 @@ export default {
     'See more fields': '查看更多欄位',
     'This field conflicts with an issue field. Rename this field.': '此欄位與議題欄位衝突。請重新命名此欄位。',
     'No Issue Fields available': '沒有可用的議題欄位',
-    "All issue fields have restricted visibility and can't be added to this project.":
-      '所有議題欄位都因可見度受限而無法加入此專案。',
+    "All issue fields have restricted visibility and can't be added to this project.": '所有議題欄位都因可見度受限而無法加入此專案。',
     'All available Issue Fields have been added to this project.': '所有可用的議題欄位都已加入此專案。',
     "Issue fields can be created in the project owner's settings.": '可在專案擁有者的設定中建立議題欄位。',
     'Manage Issue Fields': '管理議題欄位',
@@ -201,7 +197,7 @@ export default {
       '在專案中選取類型欄位，並為專案項目套用 Epic、Feature 和 Task',
     'New timestamp fields available': '可使用新的時間戳記欄位',
     'You can now add Created, Closed, and Updated timestamp fields to your project to track when issues and pull requests were created, closed, or last updated.':
-      '現在可以為專案新增建立時間、關閉時間和更新時間欄位以追蹤議題和拉取請求的建立、關閉或上次更新時間。',
+      '現在可以為專案新增建立時間、關閉時間和更新時間欄位以追蹤議題和拉取請求的建立、關閉或上次更新時間。'
   },
   scoped: {
     // 通用文本（仅项目页生效）
@@ -284,20 +280,17 @@ export default {
     Planned: '已規劃',
     Completed: '已完成',
     Active: '使用中',
-    'Remove item': '移除',
+    'Remove item': '移除'
   },
   regexp: [
     // 字段设置页（字段名原文没有引号，译文也不加；中英文之间由 pangu / joinCjk 补空格；原文没有的逗号不加）
     [/^(.+) field settings$/, (_, name: string) => pangu(`${translateFieldName(name)}欄位設定`)],
     [
       /^(.+) fields are created by GitHub and cannot be renamed\.$/,
-      (_, name: string) => pangu(`${translateFieldName(name)}欄位由 GitHub 建立且無法重新命名。`),
+      (_, name: string) => pangu(`${translateFieldName(name)}欄位由 GitHub 建立且無法重新命名。`)
     ],
     // 原文是 field actions；去掉引号后「開啟狀態的動作」有歧义，补「欄位」：開啟狀態欄位的動作
-    [
-      /^Open field actions for (.+)$/,
-      (_, name: string) => joinCjk(joinCjk('開啟', translateFieldName(name)), '欄位的動作'),
-    ],
+    [/^Open field actions for (.+)$/, (_, name: string) => joinCjk(joinCjk('開啟', translateFieldName(name)), '欄位的動作')],
     [/^Move field (.+)$/, (_, name: string) => joinCjk('移動欄位', translateFieldName(name))],
     [new RegExp(`^(${FIELD_NAME_SOURCE}) options$`), (_, name: string) => `${translateFieldName(name)}選項`],
     [/^Add ([a-z][\w -]*)…$/, (_, name: string) => pangu(`新增${translateFieldName(name)}…`)],
@@ -305,15 +298,15 @@ export default {
     // 删除 / 移除字段（原文的 “” 转成「」；带数据的整句由下方 inline 规则译出，不构成行内句时按首段翻译）
     [
       /^This will delete the field “(.+)”(\.)?$/,
-      (_, name: string, dot?: string) => `這將刪除欄位「${translateFieldName(name)}」${dot ? '。' : ''}`,
+      (_, name: string, dot?: string) => `這將刪除欄位「${translateFieldName(name)}」${dot ? '。' : ''}`
     ],
     [
       /^This will delete the field “(.+)” and remove its data from$/,
-      (_, name: string) => `這將刪除欄位「${translateFieldName(name)}」並從以下位置移除其資料`,
+      (_, name: string) => `這將刪除欄位「${translateFieldName(name)}」並從以下位置移除其資料`
     ],
     [
       /^This will remove the field “(.+)” from this project, but it will remain on existing issues\.$/,
-      (_, name: string) => `這將從此專案中移除欄位「${translateFieldName(name)}」，但會保留在現有議題上。`,
+      (_, name: string) => `這將從此專案中移除欄位「${translateFieldName(name)}」，但會保留在現有議題上。`
     ],
     [/^This will remove the field “(.+)”$/, (_, name: string) => `這將移除欄位「${translateFieldName(name)}」`],
     [/^(\d+) items?$/, '$1 個項目'],
@@ -341,79 +334,67 @@ export default {
     [
       new RegExp(`^Delete (?:(${NOUN_SOURCE})|(\\d+) (${NOUN_SOURCE}))(\\?)?$`),
       (_, single: string, count: string, plural: string, mark: string) =>
-        `刪除${count ? ` ${count} 個` : ''}${valueNoun(single || plural)}${mark ? '？' : ''}`,
+        `刪除${count ? ` ${count} 個` : ''}${valueNoun(single || plural)}${mark ? '？' : ''}`
     ],
     [
       /^This will permanently delete (?:this|these) (option|options|iteration|iterations|value|values|iteration value|iteration values) from the "(.+)" field and will impact everyone using this project\.$/,
       (_, noun: string, field: string) =>
-        `這將從「${translateFieldName(field)}」欄位中永久刪除所選${valueNoun(noun)}並影響所有使用此專案的人。`,
+        `這將從「${translateFieldName(field)}」欄位中永久刪除所選${valueNoun(noun)}並影響所有使用此專案的人。`
     ],
     [
       new RegExp(`^The ${NOUN_SOURCE} will be permanently deleted from (\\d+) items? in this project\\.$`),
-      '將從此專案的 $1 個項目中永久刪除。',
+      '將從此專案的 $1 個項目中永久刪除。'
     ],
-    [
-      new RegExp(`^The ${NOUN_SOURCE} will be permanently deleted from any items in this project\\.$`),
-      '將從此專案的所有項目中永久刪除。',
-    ],
+    [new RegExp(`^The ${NOUN_SOURCE} will be permanently deleted from any items in this project\\.$`), '將從此專案的所有項目中永久刪除。'],
     [
       /^(?:This iteration value|These iteration values) will be removed from (\d+) items? in this project\.$/,
-      '將從此專案的 $1 個項目中移除。',
+      '將從此專案的 $1 個項目中移除。'
     ],
-    [
-      /^(?:This iteration value|These iteration values) will be removed from any items in this project\.$/,
-      '將從此專案的所有項目中移除。',
-    ],
+    [/^(?:This iteration value|These iteration values) will be removed from any items in this project\.$/, '將從此專案的所有項目中移除。'],
     [
       new RegExp(
-        `^(?:This|These) (${NOUN_SOURCE}) (?:is|are) used in (\\d+) workflows?\\. Deleting (?:it|them) will disable the workflows? and invalidate any actions referencing (?:it|them)\\.$`,
+        `^(?:This|These) (${NOUN_SOURCE}) (?:is|are) used in (\\d+) workflows?\\. Deleting (?:it|them) will disable the workflows? and invalidate any actions referencing (?:it|them)\\.$`
       ),
       (_, noun: string, count: string) =>
-        `${count} 個工作流程正在使用所選${valueNoun(noun)}。刪除後會停用相關工作流程並使引用它的動作失效。`,
+        `${count} 個工作流程正在使用所選${valueNoun(noun)}。刪除後會停用相關工作流程並使引用它的動作失效。`
     ],
 
     // 议题字段（字段名原文没有引号，译文也不加；两句之间随原文用句号）
     [
       /^Use issue fields defined by (.+) to keep information consistent across projects\.$/,
-      '使用 $1 定義的議題欄位以保持各專案的資訊一致。',
+      '使用 $1 定義的議題欄位以保持各專案的資訊一致。'
     ],
-    [
-      /^Add (.+) field to project$/,
-      (_, name: string) => joinCjk(joinCjk('將', translateFieldName(name)), '欄位加入專案'),
-    ],
+    [/^Add (.+) field to project$/, (_, name: string) => joinCjk(joinCjk('將', translateFieldName(name)), '欄位加入專案')],
     [/^(.+) field added to project$/, (_, name: string) => joinCjk(translateFieldName(name), '欄位已加入專案')],
     [
       /^Could not add (.+) field to project\. Please try again\.$/,
-      (_, name: string) => `${joinCjk(joinCjk('無法將', translateFieldName(name)), '欄位加入專案')}。請再試一次。`,
+      (_, name: string) => `${joinCjk(joinCjk('無法將', translateFieldName(name)), '欄位加入專案')}。請再試一次。`
     ],
     [
       /^In order to add the "(.+)" issue field, you need to rename your project field\.$/,
-      '若要新增「$1」議題欄位，必須先重新命名專案欄位。',
+      '若要新增「$1」議題欄位，必須先重新命名專案欄位。'
     ],
     [/^Rename project field "(.+)"$/, '重新命名專案欄位「$1」'],
     [
       /^You already have (\d+) fields in your project\. Remove some in order to add more fields\.$/,
-      '專案已有 $1 個欄位。移除部分欄位後才能新增更多欄位。',
+      '專案已有 $1 個欄位。移除部分欄位後才能新增更多欄位。'
     ],
-    [
-      /^You can only add (\d+) at a time\. Deselect some fields to continue\.$/,
-      '一次最多只能新增 $1 個。取消選取部分欄位後才能繼續。',
-    ],
+    [/^You can only add (\d+) at a time\. Deselect some fields to continue\.$/, '一次最多只能新增 $1 個。取消選取部分欄位後才能繼續。'],
     [
       /^You already have (\d+) fields in your project\. Adding these would exceed the (\d+)-field limit\.$/,
-      '專案已有 $1 個欄位。新增這些欄位會超過 $2 個欄位的上限。',
+      '專案已有 $1 個欄位。新增這些欄位會超過 $2 個欄位的上限。'
     ],
     [/^Issue fields can only be applied to issues within the (.+) organization$/, '議題欄位只能套用於 $1 組織內的議題'],
 
     // 议题类型设置（原文右引号误用为左引号 “）
     [
       /^Rename your “(.+)[“”] custom field and start using issue types defined by your organization\.$/,
-      '重新命名自訂欄位「$1」並開始使用組織定義的議題類型。',
+      '重新命名自訂欄位「$1」並開始使用組織定義的議題類型。'
     ],
     [
       /^To start using issue types in your project, please rename your “(.+)[“”] custom field and update any filters that reference it\.$/,
-      '若要在專案中使用議題類型，請重新命名自訂欄位「$1」並更新引用它的篩選器。',
-    ],
+      '若要在專案中使用議題類型，請重新命名自訂欄位「$1」並更新引用它的篩選器。'
+    ]
   ],
   inline: [
     // 删除字段对话框（delete-field-dialog.tsx）：<p>This will delete the field “字段” and remove its data from <strong>3 items</strong> and <strong>2 workflows</strong>.</p>
@@ -421,13 +402,13 @@ export default {
     // 译文只在槽位前留空格，原文没有的逗号不加。不构成行内句时按上方 regexp 的首段翻译
     [
       /^This will delete the field “(.+)” and remove its data from \{\}\.$/,
-      (_, name: string) => `這將刪除欄位「${translateFieldName(name)}」並從 {}中移除其資料。`,
+      (_, name: string) => `這將刪除欄位「${translateFieldName(name)}」並從 {}中移除其資料。`
     ],
     [
       /^This will delete the field “(.+)” and remove its data from \{\} and \{\}\.$/,
-      (_, name: string) => `這將刪除欄位「${translateFieldName(name)}」並從 {}和 {}中移除其資料。`,
+      (_, name: string) => `這將刪除欄位「${translateFieldName(name)}」並從 {}和 {}中移除其資料。`
     ],
     // 字段设置页议题字段的说明（column-settings-view.tsx）：<span>Issue fields can only be edited in the <a>project owner's settings</a>.</span>
-    ['Issue fields can only be edited in the {}.', '議題欄位只能在{}中編輯。'],
-  ],
+    ['Issue fields can only be edited in the {}.', '議題欄位只能在{}中編輯。']
+  ]
 } satisfies PageDictionary

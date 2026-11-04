@@ -42,8 +42,7 @@ export default {
     'The Student Developer Pack': '学生开发人员包',
     'Discover the Student Developer Pack': '探索学生开发人员包',
     'Access professional developer tools and partner offers at no cost.': '免费使用专业开发人员工具和合作伙伴优惠。',
-    'Build skills with step-by-step Learning Paths for every experience level.':
-      '通过面向各经验水平的分步学习路径提升技能。',
+    'Build skills with step-by-step Learning Paths for every experience level.': '通过面向各经验水平的分步学习路径提升技能。',
     'Explore curated Experiences in Web Development, Data Science & Machine Learning, and more.':
       '探索 Web 开发、数据科学与机器学习等领域的精选体验。',
 
@@ -57,20 +56,20 @@ export default {
       '如果你是 13 岁及以上、就读于授予学位或文凭课程的学生，GitHub 学生开发人员包就是为你准备的。你只需要一个学校电子邮件地址和/或带日期的官方在读证明。有关申请流程和我们接受的文件的更多信息，请阅读我们的申请文档。',
     'If you’re a student aged 13+ and enrolled in a degree or diploma-granting course of study, the GitHub Student Developer Pack is for you. All you need is a school-issued email address and/or official, dated proof of enrollment. For more information about the application process and what documents we accept, please':
       '如果你是 13 岁及以上、就读于授予学位或文凭课程的学生，GitHub 学生开发人员包就是为你准备的。你只需要一个学校电子邮件地址和/或带日期的官方在读证明。有关申请流程和我们接受的文件的更多信息，请',
-    'read our docs on applying': '阅读我们的申请文档',
+    'read our docs on applying': '阅读我们的申请文档'
   },
   scoped: {
     'Get verified': '获得验证',
     // auth/signup 等页面另有本页译法，短标签放 scoped
-    'Unlimited repositories': '无限存储库',
+    'Unlimited repositories': '无限存储库'
   },
   regexp: [
     // 3K Actions minutes and 180 Codespaces hours per month.
     [
       /^(\d+)K Actions minutes and (\d+) Codespaces hours per month\.$/,
-      (_, minutes, hours) => joinCjk(`每月 ${thousands(minutes!)}`, `分钟操作和 ${hours} 小时代码空间。`),
+      (_, minutes, hours) => joinCjk(`每月 ${thousands(minutes!)}`, `分钟操作和 ${hours} 小时代码空间。`)
     ],
     // 2 GB Packages storage and 20 GB Codespaces storage.
-    [/^(\d+) GB Packages storage and (\d+) GB Codespaces storage\.$/, '$1 GB 软件包存储和 $2 GB 代码空间存储。'],
-  ],
+    [/^(\d+) GB Packages storage and (\d+) GB Codespaces storage\.$/, '$1 GB 软件包存储和 $2 GB 代码空间存储。']
+  ]
 } satisfies PageDictionary

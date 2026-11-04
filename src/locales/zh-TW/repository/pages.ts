@@ -2,7 +2,7 @@ import type { PageDictionary, RegExpRule } from '../../../core/types'
 
 const regexp: readonly RegExpRule[] = [
   // 贡献入口页的标签页标题：Contribute to <owner/repo>
-  [/^Contribute to ([\w.-]+\/[\w.-]+)$/, '參與貢獻 $1'],
+  [/^Contribute to ([\w.-]+\/[\w.-]+)$/, '參與貢獻 $1']
 ]
 
 /**
@@ -53,7 +53,7 @@ export default {
       '維護者為議題和拉取請求加上適合新貢獻者的標籤後，它們就會顯示在這裡。',
     'All issues in this repository': '此儲存庫的所有議題',
     'Additional resources': '其他資源',
-    'Discover other projects on GitHub': '探索 GitHub 上的其他專案',
+    'Discover other projects on GitHub': '探索 GitHub 上的其他專案'
   },
-  regexp,
+  regexp
 } satisfies PageDictionary

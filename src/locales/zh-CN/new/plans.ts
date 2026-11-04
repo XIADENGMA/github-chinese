@@ -65,8 +65,7 @@ export default {
     // 机密保护（provider 译“提供程序”；Provider patterns 由 repo-settings 的 static 译作“提供程序模式”，此处不重复）
     'GitHub Secret Protection': 'GitHub 机密保护',
     'Push protection': '推送保护',
-    'Prevent secret exposures by proactively blocking secrets before they reach your code.':
-      '在机密进入代码前主动拦截，防止机密泄露。',
+    'Prevent secret exposures by proactively blocking secrets before they reach your code.': '在机密进入代码前主动拦截，防止机密泄露。',
     'Secret scanning': '机密扫描',
     'Detect and manage exposed secrets across git history, pull requests, issues, and wikis.':
       '在 Git 历史记录、拉取请求、议题和 Wiki 中检测并管理已泄露的机密。',
@@ -76,11 +75,9 @@ export default {
     'Providers get real-time alerts when their tokens appear in public code, enabling them to notify, quarantine, or revoke secrets.':
       '提供程序的令牌出现在公共代码中时，提供程序会实时收到警报，以便通知、隔离或撤销机密。',
     'Validity checks': '有效性检查',
-    'Prioritize active secrets with validity checks for provider patterns.':
-      '通过提供程序模式的有效性检查，优先处理仍有效的机密。',
+    'Prioritize active secrets with validity checks for provider patterns.': '通过提供程序模式的有效性检查，优先处理仍有效的机密。',
     'AI detection for alerts': '警报 AI 检测',
-    'Use AI to detect unstructured secrets, like passwords, in existing code.':
-      '使用 AI 检测现有代码中的非结构化机密（如密码）。',
+    'Use AI to detect unstructured secrets, like passwords, in existing code.': '使用 AI 检测现有代码中的非结构化机密（如密码）。',
     'AI detection for push protection': '推送保护 AI 检测',
     'Use AI to detect unstructured secrets, like passwords, and block pushes that contain them.':
       '使用 AI 检测非结构化机密（如密码），并阻止包含这些机密的推送。',
@@ -108,8 +105,7 @@ export default {
     'Uncover vulnerabilities in your code with our industry-leading semantic code analysis.':
       '借助业界领先的语义代码分析发现代码中的漏洞。',
     'Security campaigns': '安全活动',
-    'Reduce security debt and burn down your security backlog with security campaigns.':
-      '通过安全活动减少安全债务，清理安全积压。',
+    'Reduce security debt and burn down your security backlog with security campaigns.': '通过安全活动减少安全债务，清理安全积压。',
     'Get a clear view of your project’s dependencies with a summary of manifest, lock files, and submitted dependencies via the API.':
       '通过清单、锁定文件和经 API 提交的依赖项摘要，清楚了解项目的依赖项。',
     "Get a clear view of your project's dependencies with a summary of manifest, lock files, and submitted dependencies via the API.":
@@ -121,12 +117,10 @@ export default {
     'Define alert-centric policies to control how Dependabot handles alerts and pull requests.':
       '定义以警报为中心的策略，控制 Dependabot 处理警报和拉取请求的方式。',
     'Dependabot security updates with grouped updates': '支持分组更新的 Dependabot 安全更新',
-    'Automated pull requests that batch dependency updates for known vulnerabilities.':
-      '自动创建拉取请求，批量更新存在已知漏洞的依赖项。',
+    'Automated pull requests that batch dependency updates for known vulnerabilities.': '自动创建拉取请求，批量更新存在已知漏洞的依赖项。',
     'Dependabot version updates': 'Dependabot 版本更新',
     'Automated pull requests that keep your dependencies up to date.': '自动创建拉取请求，使依赖项保持最新。',
-    'Get a clear view of risk distribution with security metrics and dashboards.':
-      '通过安全指标和仪表板清楚了解风险分布。',
+    'Get a clear view of risk distribution with security metrics and dashboards.': '通过安全指标和仪表板清楚了解风险分布。',
 
     // 平台安全与合规
     SBOMs: 'SBOM',
@@ -158,16 +152,15 @@ export default {
     'Invoice billing': '发票付款',
     'Pay bills via invoice, rather than using your credit card.': '通过发票支付账单，而不是使用信用卡。',
     'Self-hosted deployment': '自托管部署',
-    'Self-hosted GitHub for on-prem appliances or self-managed cloud tenants.':
-      '在本地设备或自管理云租户上自托管 GitHub。',
+    'Self-hosted GitHub for on-prem appliances or self-managed cloud tenants.': '在本地设备或自管理云租户上自托管 GitHub。',
     'Enterprise Managed Users': '企业托管用户',
     'GitHub Connect': 'GitHub 连接',
     'Multi-tenant enterprise SaaS solution on Microsoft Azure, allowing you to choose a regional cloud deployment for data residency, so your in-scope data is stored at rest in a designated location. This is available in the EU and Australia with additional regions coming soon.':
-      'Microsoft Azure 上的多租户企业 SaaS 解决方案，可选择区域云部署实现数据驻留，让范围内的静态数据存储在指定位置。目前已在欧盟和澳大利亚推出，更多区域即将推出。',
+      'Microsoft Azure 上的多租户企业 SaaS 解决方案，可选择区域云部署实现数据驻留，让范围内的静态数据存储在指定位置。目前已在欧盟和澳大利亚推出，更多区域即将推出。'
   },
   regexp: [
     // 使用量与支出上限
     [/^([\d,]+) minutes\/month$/, '每月 $1 分钟'],
-    [/^(\$[\d,]+(?:\.\d+)?) spend limit$/, '$1 支出上限'],
-  ],
+    [/^(\$[\d,]+(?:\.\d+)?) spend limit$/, '$1 支出上限']
+  ]
 } satisfies PageDictionary

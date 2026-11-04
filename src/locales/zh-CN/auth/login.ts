@@ -61,8 +61,7 @@ export default {
     'Enter the code displayed on your device': '输入设备上显示的代码',
     'GitHub staff will never ask you to enter your code on this page.': 'GitHub 员工绝不会要求你在此页面输入代码。',
     'This authorization was requested from': '此授权请求来自',
-    'Make sure you trust this device as it will get access to your account.':
-      '请确认你信任此设备，它将获得你帐户的访问权限。',
+    'Make sure you trust this device as it will get access to your account.': '请确认你信任此设备，它将获得你帐户的访问权限。',
     "Congratulations, you're all set!": '恭喜，一切就绪！',
     'Congratulations, you’re all set!': '恭喜，一切就绪！',
     'Your device is now connected.': '设备已连接。',
@@ -77,17 +76,17 @@ export default {
 
     // 切换帐户 /switch_account
     'Signed out': '已退出登录',
-    'Add a different account': '添加其他帐户',
+    'Add a different account': '添加其他帐户'
   },
   scoped: {
     Continue: '继续',
     Loading: '加载中',
     Or: '或',
     'to continue to': '以继续使用',
-    'Requested from': '请求来源',
+    'Requested from': '请求来源'
   },
   regexp: [
     // 注册 / 登录表单：使用其他 Google / Apple 帐户
-    [/^Use a different (Google|Apple) account$/, '使用其他 $1 帐户'],
-  ],
+    [/^Use a different (Google|Apple) account$/, '使用其他 $1 帐户']
+  ]
 } satisfies PageDictionary

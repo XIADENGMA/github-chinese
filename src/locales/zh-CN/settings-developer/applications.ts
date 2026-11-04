@@ -35,8 +35,7 @@ export default {
     'Your installation was suspended by you on': '此安装已由你暂停于',
     // 「Read more about connecting with third-party applications at <a>GitHub Help</a>.」
     'Read more about connecting with third-party applications at': '有关连接第三方应用的详情请参阅',
-    'Read more about connecting with third-party applications at GitHub Help.':
-      '有关连接第三方应用的详情请参阅 GitHub 帮助。',
+    'Read more about connecting with third-party applications at GitHub Help.': '有关连接第三方应用的详情请参阅 GitHub 帮助。',
     'App Suspended': '应用已暂停',
     'Label: App Suspended': '标签：应用已暂停',
 
@@ -58,10 +57,8 @@ export default {
     'access to your account.': '访问你的帐户。',
     'to access your account.': '访问你的帐户。',
     'Are you sure you want to revoke authorization?': '确定要撤销授权吗？',
-    'will no longer be able to access your GitHub account. You cannot undo this action.':
-      '将无法再访问你的 GitHub 帐户。此操作无法撤销。',
-    'will no longer be able to access the GitHub API. You cannot undo this action.':
-      '将无法再访问 GitHub API。此操作无法撤销。',
+    'will no longer be able to access your GitHub account. You cannot undo this action.': '将无法再访问你的 GitHub 帐户。此操作无法撤销。',
+    'will no longer be able to access the GitHub API. You cannot undo this action.': '将无法再访问 GitHub API。此操作无法撤销。',
     'I understand, revoke access': '我已了解，撤销访问权限',
     'Revoking…': '撤销中…',
     'Revoking...': '撤销中...',
@@ -72,8 +69,7 @@ export default {
     'OAuth applications. This action cannot be undone.': 'OAuth 应用的访问权限。此操作无法撤销。',
     'This will revoke access for all third-party OAuth applications. This action cannot be undone.':
       '这将撤销所有第三方 OAuth 应用的访问权限。此操作无法撤销。',
-    'Any SSH keys created on your behalf by applications will also be deleted.':
-      '应用代表你创建的 SSH 密钥也将被删除。',
+    'Any SSH keys created on your behalf by applications will also be deleted.': '应用代表你创建的 SSH 密钥也将被删除。',
     'Type your username to confirm.': '输入你的用户名以确认。',
     'I understand, revoke access for everything': '我已了解，撤销所有访问权限',
 
@@ -91,7 +87,7 @@ export default {
     'Denying access will remove this application’s ability to request access to private data in the':
       '拒绝访问后此应用将无法再请求访问以下组织的私密数据',
     "Denying access will remove this application's ability to request access to private data in the":
-      '拒绝访问后此应用将无法再请求访问以下组织的私密数据',
+      '拒绝访问后此应用将无法再请求访问以下组织的私密数据'
   },
   scoped: {
     // 标签页（Installed GitHub Apps 等与存储库设置相同的说明由 repo-settings 收录；Configure、Revoke 等按钮由 common-ui 收录）
@@ -107,8 +103,7 @@ export default {
     'App settings': '应用设置',
     'This applies to all current and future repositories owned by the resource owner. Also includes public repositories (read-only).':
       '适用于资源所有者拥有的所有现有和将来的存储库。同时包括公共存储库（只读）。',
-    'Select at least one repository. Also includes public repositories (read-only).':
-      '至少选择一个存储库。同时包括公共存储库（只读）。',
+    'Select at least one repository. Also includes public repositories (read-only).': '至少选择一个存储库。同时包括公共存储库（只读）。',
     'Only select repositories': '仅选定的存储库',
     'Suspend your installation': '暂停安装',
     'This will block the app access to your resources.': '这将阻止该应用访问你的资源。',
@@ -155,7 +150,7 @@ export default {
     'Currently:': '当前：',
     'Grant access': '授予访问权限',
     'Deny access': '拒绝访问',
-    'organization.': '组织。',
+    'organization.': '组织。'
   },
   regexp: [
     // 已授权的应用：数量、使用情况、所有者
@@ -165,23 +160,20 @@ export default {
     [new RegExp(`^(${USAGE_SOURCE}) · Owned by$`), (_, usage: string) => `${translateUsage(usage)} · 所有者`],
     [
       new RegExp(`^(${USAGE_SOURCE}) · Owned by ([\\w.-]+)$`),
-      (_, usage: string, owner: string) => `${translateUsage(usage)} · 所有者 ${owner}`,
+      (_, usage: string, owner: string) => `${translateUsage(usage)} · 所有者 ${owner}`
     ],
     [/^Owned by ([\w.-]+)$/, '所有者 $1'],
     [
       /^(.+) will no longer be able to access your GitHub account\. You cannot undo this action\.$/,
-      '$1 将无法再访问你的 GitHub 帐户。此操作无法撤销。',
+      '$1 将无法再访问你的 GitHub 帐户。此操作无法撤销。'
     ],
     [
       /^(.+) will no longer be able to access the GitHub API\. You cannot undo this action\.$/,
-      '$1 将无法再访问 GitHub API。此操作无法撤销。',
+      '$1 将无法再访问 GitHub API。此操作无法撤销。'
     ],
     [/^(.+) has been revoked from your account\.$/, '已从你的帐户撤销 $1。'],
     // 已授权的 OAuth 应用：每个应用的操作菜单与确认对话框（应用名原样保留）
-    [
-      /^Reporting (.+) will contact Support about abuse on the application\.$/,
-      '举报 $1 将联系支持团队处理该应用的滥用问题。',
-    ],
+    [/^Reporting (.+) will contact Support about abuse on the application\.$/, '举报 $1 将联系支持团队处理该应用的滥用问题。'],
     [new RegExp(`^Report ${APP_NAME_SOURCE}$`), '举报 $1'],
     [new RegExp(`^Revoke ${APP_NAME_SOURCE}$`), '撤销 $1'],
 
@@ -189,17 +181,16 @@ export default {
     [new RegExp(`^Installed (${TIME_SOURCE})$`), (_, time: string) => joinCjk(translateTime(time), '安装')],
     [
       new RegExp(`^Your installation was suspended by you on (${DATE_SOURCE})(\\.?)$`),
-      (_, date: string, dot: string) =>
-        `${joinCjk(joinCjk('你已于', translateTime(date)), '暂停此安装')}${dot ? '。' : ''}`,
+      (_, date: string, dot: string) => `${joinCjk(joinCjk('你已于', translateTime(date)), '暂停此安装')}${dot ? '。' : ''}`
     ],
     [/^Uninstall ["“](.+)["”]$/, '卸载“$1”'],
     [
       /^This action cannot be undone\. Are you sure you want to uninstall this GitHub App from (\d+) repositor(?:y|ies)\?$/,
-      '此操作无法撤销。确定要从 $1 个存储库中卸载此 GitHub 应用吗？',
+      '此操作无法撤销。确定要从 $1 个存储库中卸载此 GitHub 应用吗？'
     ],
     [
       /^This action cannot be undone\. Are you sure you want to uninstall this GitHub App from all repositories\?$/,
-      '此操作无法撤销。确定要从所有存储库中卸载此 GitHub 应用吗？',
+      '此操作无法撤销。确定要从所有存储库中卸载此 GitHub 应用吗？'
     ],
     [/^You['’]re all set! (.+) has been uninstalled\.$/, '已卸载 $1。'],
     [/^You['’]re all set! A job has been queued to uninstall the ['‘](.+)['’] app\.$/, '已排队卸载 $1 应用。'],
@@ -210,12 +201,12 @@ export default {
     [/^(.+) is requesting updated permissions$/, '$1 正在请求更新权限'],
     [
       /^The (.+) app will retain its current permissions if you choose not to accept the new permissions\.$/,
-      '$1 应用将在你不接受新权限时保留其当前权限。',
+      '$1 应用将在你不接受新权限时保留其当前权限。'
     ],
 
     // 应用授权详情：组织访问
     [/^(.+) is authorized to access this organization['’]s resources$/, '$1 已获授权访问此组织的资源'],
-    [/^(.+) is denied access (?:to )?this organization['’]s resources$/, '$1 已被拒绝访问此组织的资源'],
+    [/^(.+) is denied access (?:to )?this organization['’]s resources$/, '$1 已被拒绝访问此组织的资源']
     // 「Created <time>」由 common-ui 的时间词条翻译
-  ],
+  ]
 } satisfies PageDictionary

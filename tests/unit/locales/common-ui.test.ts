@@ -30,58 +30,58 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Star this repository (0)', '为此存储库加星标 (0)'],
-      ['Star this repository (1.2k)', '为此存储库加星标 (1.2k)'],
+      ['Star this repository (1.2k)', '为此存储库加星标 (1.2k)']
     ],
-    misses: ['Star this repository (many)'],
+    misses: ['Star this repository (many)']
   },
   { hits: [['Unstar this repository (12)', '取消此存储库的星标 (12)']], misses: ['Unstar this repo (12)'] },
   {
     hits: [['Starred, click to unstar this repository (54.9k)', '已加星标，单击可取消此存储库的星标 (54.9k)']],
-    misses: ['Starred, click to unstar (5)'],
+    misses: ['Starred, click to unstar (5)']
   },
   {
     hits: [
       ['0 users starred this repository', '0 个用户为此存储库加了星标'],
-      ['1 user starred this repository', '1 个用户为此存储库加了星标'],
+      ['1 user starred this repository', '1 个用户为此存储库加了星标']
     ],
-    misses: ['Many users starred this repository'],
+    misses: ['Many users starred this repository']
   },
   // 分页
   {
     hits: [
       ['Page 2', '第 2 页'],
       ['Page 7...', '第 7 页...'],
-      ['Page 40…', '第 40 页…'],
+      ['Page 40…', '第 40 页…']
     ],
-    misses: ['Page two', 'Pages 2'],
+    misses: ['Page two', 'Pages 2']
   },
   // DataTable 分页：读屏播报、合并后的可见范围（‒ 为 U+2012）
   {
     hits: [
       ['Showing 1 through 10 of 24', '显示 24 个中的第 1 至 10 个'],
-      ['Showing 1,001 through 1,025 of 2,345', '显示 2,345 个中的第 1,001 至 1,025 个'],
+      ['Showing 1,001 through 1,025 of 2,345', '显示 2,345 个中的第 1,001 至 1,025 个']
     ],
-    misses: ['Showing 1 through 10', 'Showing 1 to 10 of 24'],
+    misses: ['Showing 1 through 10', 'Showing 1 to 10 of 24']
   },
   {
     hits: [
       ['1 through ‒10 of 24', '24 个中的第 1‒10 个'],
-      ['21 through ‒24 of 24', '24 个中的第 21‒24 个'],
+      ['21 through ‒24 of 24', '24 个中的第 21‒24 个']
     ],
-    misses: ['1 through 10 of 24', '1‒10 of 24'],
+    misses: ['1 through 10 of 24', '1‒10 of 24']
   },
   // 选择面板的读屏播报
   {
     hits: [
       ['5 items available, 2 selected.', '5 个可用条目，已选择 2 个。'],
-      ['1 item available, 0 selected.', '1 个可用条目，已选择 0 个。'],
+      ['1 item available, 0 selected.', '1 个可用条目，已选择 0 个。']
     ],
-    misses: ['5 items available'],
+    misses: ['5 items available']
   },
   { hits: [['Focused item: bug', '当前条目：bug']], misses: ['Focused item'] },
   {
     hits: [['Labels, filter text box and list of items', 'Labels，筛选文本框和条目列表']],
-    misses: ['filter text box and list of items'],
+    misses: ['filter text box and list of items']
   },
   { hits: [['Currently selected: main', '当前选择：main']], misses: ['Currently selected'] },
   { hits: [['Selected: bug, docs', '已选择：bug, docs']], misses: ['Selected bug'] },
@@ -89,39 +89,36 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Static value is lost. More information available below.', 'Static value is lost。更多信息见下方。'],
-      [
-        'Selected. Fix the bug. New activity. More information available below.',
-        '已选择。Fix the bug。有新动态。更多信息见下方。',
-      ],
+      ['Selected. Fix the bug. New activity. More information available below.', '已选择。Fix the bug。有新动态。更多信息见下方。'],
       ['Selected. Fix the bug. More information available below.', '已选择。Fix the bug。更多信息见下方。'],
-      ['Fix the bug. New activity. More information available below.', 'Fix the bug。有新动态。更多信息见下方。'],
+      ['Fix the bug. New activity. More information available below.', 'Fix the bug。有新动态。更多信息见下方。']
     ],
-    misses: ['Static value is lost. More information available below'],
+    misses: ['Static value is lost. More information available below']
   },
   { hits: [['Select: Fix the bug', '选择：Fix the bug']], misses: ['Select:'] },
   {
     hits: [
       ['Selected. Fix the bug.', '已选择。Fix the bug。'],
       ['Unselected. Fix the bug.', '未选择。Fix the bug。'],
-      ['Selected. Fix the bug. New activity.', '已选择。Fix the bug。有新动态。'],
+      ['Selected. Fix the bug. New activity.', '已选择。Fix the bug。有新动态。']
     ],
-    misses: ['Selected.', 'Unselected. Fix the bug'],
+    misses: ['Selected.', 'Unselected. Fix the bug']
   },
   { hits: [['Fix the bug. New activity.', 'Fix the bug。有新动态。']], misses: ['New activity.'] },
   {
     hits: [
       ['Select all list items: Repositories', '全选列表项：Repositories'],
       ['Select all issues and pull requests: Inbox', '全选议题和拉取请求：Inbox'],
-      ['Select all list items:', '全选列表项'],
+      ['Select all list items:', '全选列表项']
     ],
-    misses: ['Select all files: src'],
+    misses: ['Select all files: src']
   },
   {
     hits: [
       ['3 list items selected', '已选择 3 个列表项'],
-      ['1 issue or pull request selected', '已选择 1 个议题或拉取请求'],
+      ['1 issue or pull request selected', '已选择 1 个议题或拉取请求']
     ],
-    misses: ['3 files selected'],
+    misses: ['3 files selected']
   },
   { hits: [['3 list items of 25 selected', '25 个列表项中已选择 3 个']], misses: ['3 list items of many selected'] },
   // 窗格、面包屑、标签组、字数统计
@@ -131,104 +128,91 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Show +3 more', '再显示 3 个'],
-      ['Show 12 more', '再显示 12 个'],
+      ['Show 12 more', '再显示 12 个']
     ],
-    misses: ['Show many more'],
+    misses: ['Show many more']
   },
   {
     hits: [
       ['20 characters remaining', '还可输入 20 个字符'],
-      ['1 character remaining', '还可输入 1 个字符'],
+      ['1 character remaining', '还可输入 1 个字符']
     ],
-    misses: ['No characters remaining'],
+    misses: ['No characters remaining']
   },
   { hits: [['5 characters over', '超出 5 个字符']], misses: ['characters over'] },
   {
     hits: [
       ['You can enter up to 250 characters', '最多可输入 250 个字符'],
-      ['You can enter up to 1 character', '最多可输入 1 个字符'],
+      ['You can enter up to 1 character', '最多可输入 1 个字符']
     ],
-    misses: ['You can enter up to many characters'],
+    misses: ['You can enter up to many characters']
   },
   { hits: [['3 selected', '已选择 3 个']], misses: ['All selected'] },
   { hits: [['3 of 10 selected', '10 个中已选择 3 个']], misses: ['3 of many selected'] },
   // 反馈对话框
   {
     hits: [['Please keep your feedback within 1,000 characters or less.', '反馈内容不能超过 1,000 个字符。']],
-    misses: ['Please keep your feedback short.'],
+    misses: ['Please keep your feedback short.']
   },
   { hits: [['Request ID: 9F3C:1A2B:3C4D', '请求 ID：9F3C:1A2B:3C4D']], misses: ['Request ID'] },
 
   // 登录提示
   {
     hits: [['You must be logged in to sponsor octocat', '登录后才能赞助 octocat']],
-    misses: ['You must be logged in to sponsor'],
+    misses: ['You must be logged in to sponsor']
   },
 
   // 状态与标签 title
   {
     hits: [
       ['Status: Open', '状态：打开'],
-      ['Status: Not planned', '状态：未计划'],
+      ['Status: Not planned', '状态：未计划']
     ],
-    misses: ['Status: Unknown'],
+    misses: ['Status: Unknown']
   },
   {
     hits: [
       ['Label: Verified', '标签：已验证'],
-      ['Label: Public archive', '标签：公共存档'],
+      ['Label: Public archive', '标签：公共存档']
     ],
-    misses: ['Label: bug'],
+    misses: ['Label: bug']
   },
   // 作者关系说明
   {
     hits: [
       ['This user is a member of the octo-org organization.', '此用户是 octo-org 组织的成员。'],
-      ['You are a member of the octo-org organization', '你是 octo-org 组织的成员'],
+      ['You are a member of the octo-org organization', '你是 octo-org 组织的成员']
     ],
-    misses: ['This user is a member of an organization.'],
+    misses: ['This user is a member of an organization.']
   },
   {
     hits: [
       ['This user is the owner of the hello-world repository.', '此用户是 hello-world 存储库的所有者。'],
-      ['You are the owner of this repository.', '你是此存储库的所有者。'],
+      ['You are the owner of this repository.', '你是此存储库的所有者。']
     ],
-    misses: ['This user is the owner of the repository.'],
+    misses: ['This user is the owner of the repository.']
+  },
+  {
+    hits: [['This user has been invited to collaborate on the hello-world repository.', '此用户已受邀协作 hello-world 存储库。']],
+    misses: ['This user has been invited to collaborate.']
   },
   {
     hits: [
-      [
-        'This user has been invited to collaborate on the hello-world repository.',
-        '此用户已受邀协作 hello-world 存储库。',
-      ],
+      ['This user has previously committed to the hello-world repository.', '此用户曾向 hello-world 存储库提交过代码。'],
+      ['You have previously committed to this repository', '你曾向此存储库提交过代码']
     ],
-    misses: ['This user has been invited to collaborate.'],
+    misses: ['This user has previously committed to the hello-world project.']
   },
   {
-    hits: [
-      [
-        'This user has previously committed to the hello-world repository.',
-        '此用户曾向 hello-world 存储库提交过代码。',
-      ],
-      ['You have previously committed to this repository', '你曾向此存储库提交过代码'],
-    ],
-    misses: ['This user has previously committed to the hello-world project.'],
-  },
-  {
-    hits: [
-      [
-        'This user is a first-time contributor to the hello-world repository.',
-        '此用户是 hello-world 存储库的首次贡献者。',
-      ],
-    ],
-    misses: ['This user is a first-time contributor.'],
+    hits: [['This user is a first-time contributor to the hello-world repository.', '此用户是 hello-world 存储库的首次贡献者。']],
+    misses: ['This user is a first-time contributor.']
   },
   {
     hits: [
       ['This user is a maintainer on this repository.', '此用户是此存储库的维护者。'],
-      ['This user is a collaborator on this repository.', '此用户是此存储库的协作者。'],
+      ['This user is a collaborator on this repository.', '此用户是此存储库的协作者。']
     ],
-    misses: ['This user is an admin on this repository.'],
+    misses: ['This user is an admin on this repository.']
   },
   {
     hits: [
@@ -236,9 +220,9 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['This user is the author of this discussion.', '此用户是此讨论的作者。'],
       ['You are the author of this pull request.', '你是此拉取请求的作者。'],
       ['This user is the author', '此用户是作者'],
-      ['You are the author.', '你是作者。'],
+      ['You are the author.', '你是作者。']
     ],
-    misses: ['This user is the author of this commit.'],
+    misses: ['This user is the author of this commit.']
   },
 
   // 相对时间与日期
@@ -249,27 +233,27 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['last week', '上周'],
       ['yesterday', '昨天'],
       ['Oct 26, 2026', '2026 年 10 月 26 日'],
-      ['on Jul 1', '7 月 1 日'],
+      ['on Jul 1', '7 月 1 日']
     ],
-    misses: ['days ago', '3 eons ago'],
+    misses: ['days ago', '3 eons ago']
   },
   {
     hits: [
       ['2d ago', '前天'],
       ['19m ago', '19 分钟前'],
       ['12h ago', '12 小时前'],
-      ['3mo ago', '3 个月前'],
+      ['3mo ago', '3 个月前']
     ],
-    misses: ['2x ago', 'd ago'],
+    misses: ['2x ago', 'd ago']
   },
   {
     hits: [
       ['Updated 3 days ago', '3 天前更新'],
       ['updated on Jan 5', '1 月 5 日更新'],
       ['Updated Oct 26, 2026', '2026 年 10 月 26 日更新'],
-      ['Updated yesterday', '昨天更新'],
+      ['Updated yesterday', '昨天更新']
     ],
-    misses: ['Updated recently'],
+    misses: ['Updated recently']
   },
   { hits: [['Last updated 2 hours ago', '2 小时前最后更新']], misses: ['Last updated by octocat'] },
   { hits: [['Created 5 minutes ago', '5 分钟前创建']], misses: ['Created by octocat'] },
@@ -291,41 +275,41 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Jan 15, 2026, 12:05 AM HAST', '2026 年 1 月 15 日 00:05 (GMT-10)'],
       ['Jul 15, 2026, 1:05 AM HADT', '2026 年 7 月 15 日 01:05 (GMT-9)'],
       ['on Oct 26, 2026, 10:03 AM', '2026 年 10 月 26 日 10:03'],
-      ['October 26, 2026 02:03', '2026 年 10 月 26 日 2:03'],
+      ['October 26, 2026 02:03', '2026 年 10 月 26 日 2:03']
     ],
-    misses: ['Oct 26, 2026, 25:61 AM', 'Octopus 26, 2026, 10:03 AM GMT+8', 'Oct 26, 2026, 10:03 AM XST'],
+    misses: ['Oct 26, 2026, 25:61 AM', 'Octopus 26, 2026, 10:03 AM GMT+8', 'Oct 26, 2026, 10:03 AM XST']
   },
   {
     hits: [
       ['7:05 AM on October 19', '10 月 19 日 7:05'],
       ['3:00 AM on July 1, 2025', '2025 年 7 月 1 日 3:00'],
       ['11:30 PM yesterday', '昨天 23:30'],
-      ['12:00 PM today', '今天 12:00'],
+      ['12:00 PM today', '今天 12:00']
     ],
-    misses: ['7:05 on October 19'],
+    misses: ['7:05 on October 19']
   },
   {
     hits: [
       ['07:51AM on October 16', '10 月 16 日 7:51'],
-      ['05:49PM on December 22, 2024', '2024 年 12 月 22 日 17:49'],
+      ['05:49PM on December 22, 2024', '2024 年 12 月 22 日 17:49']
     ],
-    misses: ['07:51 on October 16'],
+    misses: ['07:51 on October 16']
   },
   {
     hits: [
       ['Today at 9:03 AM', '今天 9:03'],
-      ['Yesterday at 11:45 PM', '昨天 23:45'],
+      ['Yesterday at 11:45 PM', '昨天 23:45']
     ],
-    misses: ['Tomorrow at 9:03 AM'],
+    misses: ['Tomorrow at 9:03 AM']
   },
   {
     hits: [
       ['Last 7 days', '最近 7 天'],
       ['Past 24 hours', '过去 24 小时'],
       ['Last 3 months', '最近 3 个月'],
-      ['Past 1 year', '过去 1 年'],
+      ['Past 1 year', '过去 1 年']
     ],
-    misses: ['Last few days'],
+    misses: ['Last few days']
   },
   {
     hits: [
@@ -333,48 +317,48 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['30 days', '30 天'],
       ['1 week', '1 周'],
       ['1 month', '1 个月'],
-      ['5 minutes', '5 分钟'],
+      ['5 minutes', '5 分钟']
     ],
-    misses: ['several days', '30 days left'],
+    misses: ['several days', '30 days left']
   },
   // 编辑历史
   {
     hits: [
       ['Edited 2 times', '已编辑 2 次'],
-      ['Edited 1 time', '已编辑 1 次'],
+      ['Edited 1 time', '已编辑 1 次']
     ],
-    misses: ['Edited many times'],
+    misses: ['Edited many times']
   },
   {
     hits: [
       ['edited by monalisa', '由 monalisa 编辑'],
-      ['edited by dependabot[bot]', '由 dependabot[bot] 编辑'],
+      ['edited by dependabot[bot]', '由 dependabot[bot] 编辑']
     ],
-    misses: ['edited by the team'],
+    misses: ['edited by the team']
   },
 
   // 通用计数
   {
     hits: [
       ['1.1k stars', '1.1k 个星标'],
-      ['1 star', '1 个星标'],
+      ['1 star', '1 个星标']
     ],
-    misses: ['many stars', 'stars'],
+    misses: ['many stars', 'stars']
   },
   { hits: [['351 forks', '351 个复刻']], misses: ['forks'] },
   {
     hits: [
       ['7 comments', '7 条评论'],
-      ['1 comment', '1 条评论'],
+      ['1 comment', '1 条评论']
     ],
-    misses: ['No comments'],
+    misses: ['No comments']
   },
   {
     hits: [
       ['24 replies', '24 条回复'],
-      ['1 reply', '1 条回复'],
+      ['1 reply', '1 条回复']
     ],
-    misses: ['Show replies'],
+    misses: ['Show replies']
   },
   { hits: [['3 items', '3 个项']], misses: ['3 starry items'] },
   { hits: [['3 files', '3 个文件']], misses: ['files'] },
@@ -386,17 +370,17 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['103 downloads', '103 次下载'],
-      ['1 download', '1 次下载'],
+      ['1 download', '1 次下载']
     ],
-    misses: ['downloads'],
+    misses: ['downloads']
   },
   { hits: [['1 package', '1 个软件包']], misses: ['packages'] },
   {
     hits: [
       ['124 repositories', '124 个存储库'],
-      ['1 repository', '1 个存储库'],
+      ['1 repository', '1 个存储库']
     ],
-    misses: ['Popular repositories'],
+    misses: ['Popular repositories']
   },
   { hits: [['4 projects', '4 个项目']], misses: ['projects'] },
   { hits: [['2 milestones', '2 个里程碑']], misses: ['milestones'] },
@@ -414,9 +398,9 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['4 lines changed', '4 行更改'],
-      ['1 line changed', '1 行更改'],
+      ['1 line changed', '1 行更改']
     ],
-    misses: ['lines changed recently'],
+    misses: ['lines changed recently']
   },
   { hits: [['160 remaining', '剩余 160']], misses: ['remaining'] },
   { hits: [[', and 3 more', '，以及其他 3 个']], misses: [', and more'] },
@@ -426,184 +410,177 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Markdown input: edit mode selected.', 'Markdown 输入：已选择编辑模式。'],
-      ['Markdown input: preview mode selected.', 'Markdown 输入：已选择预览模式。'],
+      ['Markdown input: preview mode selected.', 'Markdown 输入：已选择预览模式。']
     ],
-    misses: ['Markdown input: split mode selected.'],
+    misses: ['Markdown input: split mode selected.']
   },
   { hits: [['Heading 2', '2 级标题']], misses: ['Heading 7'] },
   {
     hits: [
       ['Add bold text, <Ctrl+b>', '添加粗体文本，<Ctrl+b>'],
       ['Add a bulleted list, <Cmd+Shift+8>', '添加项目符号列表，<Cmd+Shift+8>'],
-      ['Add a suggestion, <Ctrl+g>', '添加建议，<Ctrl+g>'],
+      ['Add a suggestion, <Ctrl+g>', '添加建议，<Ctrl+g>']
     ],
-    misses: ['Add bold text, Ctrl+b'],
+    misses: ['Add bold text, Ctrl+b']
   },
   {
     hits: [
       ['1 column', '1 列'],
-      ['5 rows', '5 行'],
+      ['5 rows', '5 行']
     ],
-    misses: ['0 rows', 'columns'],
+    misses: ['0 rows', 'columns']
   },
   { hits: [['Uploading your files... (1/3)', '正在上传文件... (1/3)']], misses: ['Uploading your files... (1)'] },
   {
     hits: [
       ['Uploading "image.png"...', '正在上传“image.png”...'],
-      ['Uploading "image.png"…', '正在上传“image.png”…'],
+      ['Uploading "image.png"…', '正在上传“image.png”…']
     ],
-    misses: ['Uploading image.png'],
+    misses: ['Uploading image.png']
   },
   { hits: [['Failed to upload "image.png"', '“image.png”上传失败']], misses: ['Failed to upload'] },
   {
     hits: [
       ['File type .exe not supported. See the', '不支持文件类型 .exe。请参阅'],
-      ['File types .exe, .dll not supported. See the', '不支持文件类型 .exe, .dll。请参阅'],
+      ['File types .exe, .dll not supported. See the', '不支持文件类型 .exe, .dll。请参阅']
     ],
-    misses: ['File type not supported.'],
+    misses: ['File type not supported.']
   },
   {
     hits: [['Try again with GIF, JPEG, PNG or ZIP.', '请改用 GIF、JPEG、PNG 或 ZIP 格式的文件重试。']],
-    misses: ['Try again with a smaller file.'],
+    misses: ['Try again with a smaller file.']
   },
   {
     hits: [
       ['with a GIF, JPEG, or PNG.', '并改用 GIF、JPEG 或 PNG 格式的文件。'],
-      [
-        'with a GIF, JPEG, JPG, MOV, MP4, PNG, SVG, WEBM or WEBP.',
-        '并改用 GIF、JPEG、JPG、MOV、MP4、PNG、SVG、WEBM 或 WEBP 格式的文件。',
-      ],
+      ['with a GIF, JPEG, JPG, MOV, MP4, PNG, SVG, WEBM or WEBP.', '并改用 GIF、JPEG、JPG、MOV、MP4、PNG、SVG、WEBM 或 WEBP 格式的文件。'],
       ['with a PNG.', '并改用 PNG 格式的文件。'],
-      ['with an MP4.', '并改用 MP4 格式的文件。'],
+      ['with an MP4.', '并改用 MP4 格式的文件。']
     ],
-    misses: ['with a smaller file.', 'with a GIF, JPEG, or PNG', 'with GIF or PNG.'],
+    misses: ['with a smaller file.', 'with a GIF, JPEG, or PNG', 'with GIF or PNG.']
   },
   {
     hits: [['Please upload a picture smaller than 10,000x10,000.', '请上传小于 10,000x10,000 的图片。']],
-    misses: ['Please upload a smaller picture.'],
+    misses: ['Please upload a smaller picture.']
   },
   {
     hits: [
       ['There was an error creating your PullRequest.', '创建拉取请求时出错。'],
       ['There was an error creating your Discussion.', '创建讨论时出错。'],
       // Gist 与中文之间加空格
-      ['There was an error creating your Gist.', '创建代码片段时出错。'],
+      ['There was an error creating your Gist.', '创建代码片段时出错。']
     ],
-    misses: ['There was an error creating your account.'],
+    misses: ['There was an error creating your account.']
   },
   {
     hits: [
       [`1 ${ATTACHMENT_NOTICE}`, '你文本中的 1 个附件来自访问受限的存储库，可能并非对此存储库的所有查看者可见。'],
       [
         `3 ${ATTACHMENT_NOTICE.replace('attachment', 'attachments')}`,
-        '你文本中的 3 个附件来自访问受限的存储库，可能并非对此存储库的所有查看者可见。',
-      ],
+        '你文本中的 3 个附件来自访问受限的存储库，可能并非对此存储库的所有查看者可见。'
+      ]
     ],
-    misses: ['Attachments in your text may not be visible.'],
+    misses: ['Attachments in your text may not be visible.']
   },
   {
     hits: [
       ['smile emoji', 'smile 表情符号'],
-      ['+1 emoji', '+1 表情符号'],
+      ['+1 emoji', '+1 表情符号']
     ],
-    misses: ['Custom emoji', 'smile emoji pack'],
+    misses: ['Custom emoji', 'smile emoji pack']
   },
 
   // 评论操作与对话框
   {
     hits: [
       ["Actions for octocat's comment, 7:05 AM on October 19", 'octocat 的评论操作，10 月 19 日 7:05'],
-      ['Actions for octocat’s reply, 12:05 PM today', 'octocat 的回复操作，今天 12:05'],
+      ['Actions for octocat’s reply, 12:05 PM today', 'octocat 的回复操作，今天 12:05']
     ],
-    misses: ["Actions for octocat's comment"],
+    misses: ["Actions for octocat's comment"]
   },
   {
     hits: [
       ['today commented', 'today 评论于'],
       ['octocat replied', 'octocat 回复了'],
-      ['dependabot[bot] commented', 'dependabot[bot] 评论于'],
+      ['dependabot[bot] commented', 'dependabot[bot] 评论于']
     ],
-    misses: ['octocat and hubot commented'],
+    misses: ['octocat and hubot commented']
   },
   {
     hits: [
       ["@octocat's profile", '@octocat 的个人资料'],
-      ['@renovate[bot]’s profile', '@renovate[bot] 的个人资料'],
+      ['@renovate[bot]’s profile', '@renovate[bot] 的个人资料']
     ],
-    misses: ["Update John's profile"],
+    misses: ["Update John's profile"]
   },
   {
     hits: [
       ["octo-org's sponsor since January 2024", '自 2024 年 1 月起赞助 octo-org'],
       ["octo-org's sponsor since 一月 2024", '自 2024 年 1 月起赞助 octo-org'],
       ['octo-org’s sponsor since 十二月 2023', '自 2023 年 12 月起赞助 octo-org'],
-      ["octo-org's sponsor since 3月 2025", '自 2025 年 3 月起赞助 octo-org'],
+      ["octo-org's sponsor since 3月 2025", '自 2025 年 3 月起赞助 octo-org']
     ],
-    misses: [
-      "octo-org's sponsor since 2024",
-      "octo-org's sponsor since 十三月 2024",
-      "octo-org's sponsor since 13月 2024",
-    ],
+    misses: ["octo-org's sponsor since 2024", "octo-org's sponsor since 十三月 2024", "octo-org's sponsor since 13月 2024"]
   },
   {
     hits: [
       ['Hide comment as Off-topic', '以偏离主题为由隐藏评论'],
-      ['Hide comment as Outdated', '以过时为由隐藏评论'],
+      ['Hide comment as Outdated', '以过时为由隐藏评论']
     ],
-    misses: ['Hide comment as Rude'],
+    misses: ['Hide comment as Rude']
   },
   {
     hits: [
       ['Hidden as off-topic', '因偏离主题而隐藏'],
       ['Hidden as low-quality', '因低质量而隐藏'],
-      ['Hidden as outdated', '因过时而隐藏'],
+      ['Hidden as outdated', '因过时而隐藏']
     ],
-    misses: ['Hidden as rude'],
+    misses: ['Hidden as rude']
   },
   {
     hits: [
       ['Report comment', '举报评论'],
-      ['Report pull request', '举报拉取请求'],
+      ['Report pull request', '举报拉取请求']
     ],
-    misses: ['Report bug'],
+    misses: ['Report bug']
   },
   {
     hits: [['Unable to submit report: Network error', '无法提交举报：Network error']],
-    misses: ['Unable to submit report now'],
+    misses: ['Unable to submit report now']
   },
   // 举报对话框
   {
     hits: [
       ['Where would you like to report this comment to?', '你想向何处举报此评论？'],
-      ['Where would you like to report this content to?', '你想向何处举报此内容？'],
+      ['Where would you like to report this content to?', '你想向何处举报此内容？']
     ],
-    misses: ['Where would you like to report this to?'],
+    misses: ['Where would you like to report this to?']
   },
   {
     hits: [
       ['This comment violates', '此评论违反了'],
-      ['This pull request violates', '此拉取请求违反了'],
+      ['This pull request violates', '此拉取请求违反了']
     ],
-    misses: ['This rule violates'],
+    misses: ['This rule violates']
   },
   {
     hits: [
       ["@octocat's", '@octocat 的'],
-      ['@octo-org’s', '@octo-org 的'],
+      ['@octo-org’s', '@octo-org 的']
     ],
-    misses: ["octocat's"],
+    misses: ["octocat's"]
   },
   {
     hits: [['Choose a reason for reporting this issue', '选择举报此议题的原因']],
-    misses: ['Choose a reason for reporting this'],
+    misses: ['Choose a reason for reporting this']
   },
   // 经典页面的编辑历史对话框
   {
     hits: [
       ["monalisa's edit", 'monalisa 的编辑'],
-      ['github-actions[bot]’s edit', 'github-actions[bot] 的编辑'],
+      ['github-actions[bot]’s edit', 'github-actions[bot] 的编辑']
     ],
-    misses: ["monalisa's edits"],
+    misses: ["monalisa's edits"]
   },
   { hits: [['octocat deleted this content', 'octocat 删除了此内容']], misses: ['The admin team deleted this content'] },
   { hits: [['View profile for @octocat', '查看 @octocat 的个人资料']], misses: ['View profile for octocat'] },
@@ -611,55 +588,50 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   { hits: [['Unblock @octocat', '取消阻止 @octocat']], misses: ['Unblock everyone now'] },
   {
     hits: [['Block octocat from octo-org', '在 octo-org 中阻止 octocat']],
-    misses: ['Block octocat from the organization'],
+    misses: ['Block octocat from the organization']
   },
   { hits: [['Unblock octocat from octo-org', '在 octo-org 中取消阻止 octocat']], misses: ['Unblock octocat'] },
   {
     hits: [
       ['For 1 day', '1 天'],
-      ['For 30 days', '30 天'],
+      ['For 30 days', '30 天']
     ],
-    misses: ['For a day'],
+    misses: ['For a day']
   },
   {
     hits: [
       ['Block a user: For 7 days', '阻止用户：7 天'],
-      ['Block a user: Until I unblock them', '阻止用户：直到我取消阻止'],
+      ['Block a user: Until I unblock them', '阻止用户：直到我取消阻止']
     ],
-    misses: ['Block a user: Forever'],
+    misses: ['Block a user: Forever']
   },
   {
     hits: [['Are you sure you want to unblock @octocat?', '确定要取消阻止 @octocat 吗？']],
-    misses: ['Are you sure you want to unblock octocat?'],
+    misses: ['Are you sure you want to unblock octocat?']
   },
   {
-    hits: [
-      [
-        'A maintainer of the @octo-org organization has blocked you because of',
-        '@octo-org 组织的一个维护者阻止你的原因是',
-      ],
-    ],
-    misses: ['A maintainer has blocked you because of'],
+    hits: [['A maintainer of the @octo-org organization has blocked you because of', '@octo-org 组织的一个维护者阻止你的原因是']],
+    misses: ['A maintainer has blocked you because of']
   },
   // 无法评论
   {
     hits: [
       ['You do not have permissions to comment on this issue.', '你没有评论此议题的权限。'],
-      ['You do not have permissions to comment on this pull request.', '你没有评论此拉取请求的权限。'],
+      ['You do not have permissions to comment on this pull request.', '你没有评论此拉取请求的权限。']
     ],
-    misses: ['You do not have permissions to comment on this gist.'],
+    misses: ['You do not have permissions to comment on this gist.']
   },
   {
     hits: [['There was an error posting your comment: Body is too long', '发布评论时出错：Body is too long']],
-    misses: ['There was an error posting your comment'],
+    misses: ['There was an error posting your comment']
   },
   // 反应（经典页面）
   {
     hits: [
       ['react with heart', '添加爱心反应'],
-      ['react with thumbs up', '添加点赞反应'],
+      ['react with thumbs up', '添加点赞反应']
     ],
-    misses: ['react with smile'],
+    misses: ['react with smile']
   },
   {
     hits: [
@@ -668,51 +640,46 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['octocat, monalisa, and hubot reacted with laugh emoji', 'octocat、monalisa 和 hubot 做出了大笑反应'],
       [
         'octocat, monalisa, heart-octo, and 180 more reacted with hooray emoji',
-        'octocat、monalisa、heart-octo 以及其他 180 人做出了欢呼反应',
+        'octocat、monalisa、heart-octo 以及其他 180 人做出了欢呼反应'
       ],
       ['You reacted with heart emoji', '你做出了爱心反应'],
-      ['You and octocat reacted with rocket emoji', '你和 octocat 做出了火箭反应'],
+      ['You and octocat reacted with rocket emoji', '你和 octocat 做出了火箭反应']
     ],
-    misses: ['octocat reacted with smile emoji'],
+    misses: ['octocat reacted with smile emoji']
   },
   {
-    hits: [
-      [
-        'thumbs up (21): github-actions[bot], 07:51AM on October 16',
-        '点赞 (21)：github-actions[bot]，10 月 16 日 7:51',
-      ],
-    ],
-    misses: ['thumbs up (21): github-actions[bot]'],
+    hits: [['thumbs up (21): github-actions[bot], 07:51AM on October 16', '点赞 (21)：github-actions[bot]，10 月 16 日 7:51']],
+    misses: ['thumbs up (21): github-actions[bot]']
   },
   {
     hits: [
       ['27 people reacted', '27 人做出了反应'],
-      ['1 person reacted', '1 人做出了反应'],
+      ['1 person reacted', '1 人做出了反应']
     ],
-    misses: ['Some people reacted'],
+    misses: ['Some people reacted']
   },
   {
     hits: [
       ['You and 2 others reacted', '你和其他 2 人做出了反应'],
       ['You and 1 other reacted', '你和其他 1 人做出了反应'],
-      ['You and 1,024 others reacted', '你和其他 1,024 人做出了反应'],
+      ['You and 1,024 others reacted', '你和其他 1,024 人做出了反应']
     ],
-    misses: ['You and others reacted'],
+    misses: ['You and others reacted']
   },
   // 反应（React）
   {
     hits: [
       ['👍 4 reactions', '👍 4 个反应'],
-      ['👀 1 reaction', '👀 1 个反应'],
+      ['👀 1 reaction', '👀 1 个反应']
     ],
-    misses: ['🐛 4 reactions'],
+    misses: ['🐛 4 reactions']
   },
   {
     hits: [
       ['React with 👀', '添加 👀 反应'],
-      ['Unreact with 🚀', '取消 🚀 反应'],
+      ['Unreact with 🚀', '取消 🚀 反应']
     ],
-    misses: ['React with 🐛'],
+    misses: ['React with 🐛']
   },
   { hits: [['People who reacted with ❤️', '做出 ❤️ 反应的人']], misses: ['People who reacted'] },
   {
@@ -720,73 +687,68 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Reacted by octocat, 小红, monalisa and Zoë Octo', 'octocat、小红、monalisa 和 Zoë Octo 做出了反应'],
       ['Reacted by octocat', 'octocat 做出了反应'],
       ['Reacted by a, b, c and 22 more', 'a、b、c 以及其他 22 人做出了反应'],
-      ['Reacted by You and octocat', '你和 octocat 做出了反应'],
+      ['Reacted by You and octocat', '你和 octocat 做出了反应']
     ],
-    misses: ['Reacted'],
+    misses: ['Reacted']
   },
   {
     hits: [
       ['+3 more people', '还有 3 人'],
-      ['+1 more person', '还有 1 人'],
+      ['+1 more person', '还有 1 人']
     ],
-    misses: ['+ more people'],
+    misses: ['+ more people']
   },
   // 反应按钮与反应栏的上下文
   {
     hits: [
       ["React to octocat's comment, 7:05 AM today", '为 octocat 的评论添加反应，今天 7:05'],
-      ['React to review, 3:00 AM on July 1, 2025', '为审查添加反应，2025 年 7 月 1 日 3:00'],
+      ['React to review, 3:00 AM on July 1, 2025', '为审查添加反应，2025 年 7 月 1 日 3:00']
     ],
-    misses: ["React to octocat's comment"],
+    misses: ["React to octocat's comment"]
   },
   {
-    hits: [
-      [
-        "Reactions are currently unavailable for octocat's review, 11:30 PM yesterday",
-        'octocat 审查的反应当前不可用，昨天 23:30',
-      ],
-    ],
-    misses: ['Reactions are currently unavailable for this comment'],
+    hits: [["Reactions are currently unavailable for octocat's review, 11:30 PM yesterday", 'octocat 审查的反应当前不可用，昨天 23:30']],
+    misses: ['Reactions are currently unavailable for this comment']
   },
   {
     hits: [
       ['Reactions for octocat’s comment, 7:05 AM on October 19', 'octocat 评论的反应，10 月 19 日 7:05'],
-      ['Reactions for comment, 7:05 AM today', '评论的反应，今天 7:05'],
+      ['Reactions for comment, 7:05 AM today', '评论的反应，今天 7:05']
     ],
-    misses: ['Reactions for everyone'],
+    misses: ['Reactions for everyone']
   },
 
   // 悬停卡片
   {
     hits: [
       ['Committed to this repository in the past week', '过去一周内曾向此存储库提交代码'],
-      ['Committed to this repository in the past month', '过去一个月内曾向此存储库提交代码'],
+      ['Committed to this repository in the past month', '过去一个月内曾向此存储库提交代码']
     ],
-    misses: ['Committed to this repository in the past decade'],
+    misses: ['Committed to this repository in the past decade']
   },
   {
     hits: [
       ['Opened this issue (their first in @octo-org)', '打开了此议题（在 @octo-org 中的第一个议题）'],
       ['Opened this pull request (their first in @octo-org)', '创建了此拉取请求（在 @octo-org 中的第一个拉取请求）'],
-      ['Opened this discussion (their first in @octo-org)', '发起了此讨论（在 @octo-org 中的第一个讨论）'],
+      ['Opened this discussion (their first in @octo-org)', '发起了此讨论（在 @octo-org 中的第一个讨论）']
     ],
-    misses: ['Opened this issue (their first)'],
+    misses: ['Opened this issue (their first)']
   },
   {
     hits: [['Started 1 discussion in octo-org/hello-world', '在 octo-org/hello-world 中发起了 1 个讨论']],
-    misses: ['Started 1 discussion in octo-org'],
+    misses: ['Started 1 discussion in octo-org']
   },
   {
     hits: [['Answered 37 discussions in octo-org/hello-world', '在 octo-org/hello-world 中回答了 37 个讨论']],
-    misses: ['Answered 37 discussions'],
+    misses: ['Answered 37 discussions']
   },
   { hits: [['Sponsor @octocat', '赞助 @octocat']], misses: ['Sponsor octocat'] },
   {
     hits: [
       ['View all commits by monalisa', '查看 monalisa 的所有提交'],
-      ['View all commits by renovate[bot]', '查看 renovate[bot] 的所有提交'],
+      ['View all commits by renovate[bot]', '查看 renovate[bot] 的所有提交']
     ],
-    misses: ['View all commits'],
+    misses: ['View all commits']
   },
 
   // 表单校验错误
@@ -799,29 +761,29 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['Login has already been taken', '用户名已被使用'],
       ['Description is too long (maximum is 350 characters).', '描述过长（最多 350 个字符）。'],
       ['Password is too short (minimum is 1 character)', '密码太短（最少 1 个字符）'],
-      ['Key is the wrong length (should be 40 characters)', '密钥长度不正确（应为 40 个字符）'],
+      ['Key is the wrong length (should be 40 characters)', '密钥长度不正确（应为 40 个字符）']
     ],
     misses: [
       'Nickname is invalid',
       'Name is very invalid',
       'Name is invalid..',
       'Name is too long (maximum is many characters)',
-      'name is invalid',
-    ],
+      'name is invalid'
+    ]
   },
 
   // 标签：Dependabot 生态标签的说明（标签选择器、拉取请求侧栏令牌的 title；产品名按术语表译出，其余生态名保持原文）
   {
     hits: [
       ['Pull requests that update javascript code', '更新 javascript 代码的拉取请求'],
-      ['Pull requests that update GitHub Actions code', '更新 GitHub 操作代码的拉取请求'],
+      ['Pull requests that update GitHub Actions code', '更新 GitHub 操作代码的拉取请求']
     ],
-    misses: ['Pull requests that update docs'],
-  },
+    misses: ['Pull requests that update docs']
+  }
 ]
 
-const HITS = REGEXP_CASES.flatMap((item) => item.hits)
-const MISSES = REGEXP_CASES.flatMap((item) => item.misses)
+const HITS = REGEXP_CASES.flatMap(item => item.hits)
+const MISSES = REGEXP_CASES.flatMap(item => item.misses)
 
 describe('common-ui 正则词条', () => {
   it.each(HITS)('%s → %s', (input, expected) => {
@@ -829,7 +791,7 @@ describe('common-ui 正则词条', () => {
     expect(translate(input)).toBe(expected)
   })
 
-  it.each(MISSES)('不命中：%s', (input) => {
+  it.each(MISSES)('不命中：%s', input => {
     expect(translate(input)).toBeUndefined()
   })
 
@@ -861,7 +823,7 @@ describe('common-ui 正则词条', () => {
     expect(join(['Block a user: ', 'For 3 days'])).toBe('阻止用户：3 天')
     expect(join(['Are you sure you want to unblock @', 'octocat', '?'])).toBe('确定要取消阻止 @octocat 吗？')
     expect(join(['A maintainer of the @', 'octo-org', ' organization has blocked you because of', ' '])).toBe(
-      '@octo-org 组织的一个维护者阻止你的原因是',
+      '@octo-org 组织的一个维护者阻止你的原因是'
     )
     expect(join(['today', ' commented'])).toBe('today 评论于')
     expect(join(['Select all ', 'list items', ': ', 'Repositories'])).toBe('全选列表项：Repositories')
@@ -869,10 +831,10 @@ describe('common-ui 正则词条', () => {
 
   it('几条校验错误拼成一段时逐句翻译', () => {
     expect(translate('Domain is not a valid public domain.. Domain is not properly formatted.')).toBe(
-      '域不是有效的公共域名。域格式不正确。',
+      '域不是有效的公共域名。域格式不正确。'
     )
     expect(translate("Name can't be blank. Description is too long (maximum is 350 characters).")).toBe(
-      '名称不能为空。描述过长（最多 350 个字符）。',
+      '名称不能为空。描述过长（最多 350 个字符）。'
     )
     expect(translate("Name can't be blank. Name is invalid")).toBe('名称不能为空。名称无效')
     expect(translate("Name can't be blank. Nickname is invalid.")).toBeUndefined()
@@ -1115,11 +1077,11 @@ describe('common-ui 静态词条', () => {
     ['Spammy', '疑似垃圾帐户'],
     [
       'This user is marked as spammy. Their comments will only show in staff mode.',
-      '此用户已被标记为疑似垃圾帐户。其评论仅在员工模式下显示。',
+      '此用户已被标记为疑似垃圾帐户。其评论仅在员工模式下显示。'
     ],
     [
       'Code of Conduct and should be submitted to the maintainers of this repository for review.',
-      '行为准则，应提交给此存储库的维护者审查。',
+      '行为准则，应提交给此存储库的维护者审查。'
     ],
     ['blocking a user', '阻止用户'],
     ['Blocking', '阻止'],
@@ -1130,15 +1092,15 @@ describe('common-ui 静态词条', () => {
     ['Unable to block user. Please try again.', '无法阻止用户。请重试。'],
     [
       'prevents them from interacting with your repositories, such as opening or commenting on pull requests or issues, starring, forking, or watching. Learn more about',
-      '后，其将无法与你的存储库互动，例如创建或评论拉取请求和议题、加星标、复刻或关注。了解',
+      '后，其将无法与你的存储库互动，例如创建或评论拉取请求和议题、加星标、复刻或关注。了解'
     ],
     [
       'Blocking a user prevents them from interacting with repositories of this organization, such as opening or commenting on pull requests or issues. Learn more about',
-      '阻止用户后，其将无法与此组织的存储库互动，例如创建或评论拉取请求和议题。了解',
+      '阻止用户后，其将无法与此组织的存储库互动，例如创建或评论拉取请求和议题。了解'
     ],
     [
       'Content in repositories owned by this organization where you have write access will be closed.',
-      '此组织拥有且你有写入访问权限的存储库中的相关内容将被关闭。',
+      '此组织拥有且你有写入访问权限的存储库中的相关内容将被关闭。'
     ],
     ['Failed to block user', '阻止用户失败'],
     ['Failed to block user from organization', '在组织中阻止用户失败'],
@@ -1152,7 +1114,7 @@ describe('common-ui 静态词条', () => {
     ['deleted this content', '删除了此内容'],
     [
       'The most recent revision cannot be deleted. Need to delete sensitive information? Go to the specific edit where the information was added.',
-      '无法删除最新修订。需要删除敏感信息？请转到添加该信息的那次编辑。',
+      '无法删除最新修订。需要删除敏感信息？请转到添加该信息的那次编辑。'
     ],
     ['This edit’s content will no longer be visible.', '此编辑的内容将不再可见。'],
     ['This edit’s content will no longer be visible', '此编辑的内容将不再可见'],
@@ -1161,10 +1123,7 @@ describe('common-ui 静态词条', () => {
     ["Couldn't display edit history diff", '无法显示编辑历史记录差异'],
     // 评论出错（两句之间原文是句号）
     ['There was a problem saving your comment. Please try again.', '保存评论时出现问题。请重试。'],
-    [
-      'There was a problem saving your comment. Please reload the page and try again.',
-      '保存评论时出现问题。请重新加载页面后重试。',
-    ],
+    ['There was a problem saving your comment. Please reload the page and try again.', '保存评论时出现问题。请重新加载页面后重试。'],
     ['Could not add reaction. Please try again.', '无法添加反应。请重试。'],
     ['Could not subscribe. Please try again.', '无法订阅。请重试。'],
     ['Could not unsubscribe. Please try again.', '无法取消订阅。请重试。'],
@@ -1220,7 +1179,7 @@ describe('common-ui 静态词条', () => {
     ['You are assigned to this pull request', '你是此拉取请求的受理人'],
     ['You are assigned to and opened this pull request', '你创建了此拉取请求且是其受理人'],
     ['Git-commit', '提交'],
-    ['Check-circle', '已回答'],
+    ['Check-circle', '已回答']
   ])('%s → %s', (input, expected) => {
     expect(translate(input)).toBe(expected)
   })
@@ -1271,7 +1230,7 @@ describe('common-ui 静态词条', () => {
       'of',
       // DataTable 页码按钮里读屏用的词，与可见页码分属不同节点
       'Page',
-      'page',
+      'page'
     ]) {
       expect(commonUi.static?.[word]).toBeUndefined()
     }
@@ -1283,8 +1242,8 @@ describe('common-ui 静态词条', () => {
         '.markdown-body-short',
         '.js-hovercard-content .dashboard-break-word',
         '.js-hovercard-content address',
-        '.js-hovercard-content .user-status-message-wrapper',
-      ]),
+        '.js-hovercard-content .user-status-message-wrapper'
+      ])
     )
   })
 })
@@ -1347,12 +1306,12 @@ describe('common-ui 被元素拆开的句子（DOM）', () => {
 
   /** 元素的直接子文本节点 */
   function ownTexts(element: Element): string[] {
-    return [...element.childNodes].filter((node) => node.nodeType === Node.TEXT_NODE).map((node) => (node as Text).data)
+    return [...element.childNodes].filter(node => node.nodeType === Node.TEXT_NODE).map(node => (node as Text).data)
   }
 
   /** 等待变动回调处理完 */
   function settle(): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, 0))
+    return new Promise(resolve => setTimeout(resolve, 0))
   }
 
   afterEach(() => {
@@ -1366,10 +1325,7 @@ describe('common-ui 被元素拆开的句子（DOM）', () => {
     const dialogBody = body.querySelector('[data-component="Dialog.Body"]')!
     expect(dialogBody.textContent).toBe('确定要取消阻止 octocat 访问 octo-org 吗？')
     expect(ownTexts(dialogBody)).toEqual(['确定要取消阻止 ', ' 访问 ', ' 吗？'])
-    expect([...dialogBody.querySelectorAll('strong')].map((strong) => strong.textContent)).toEqual([
-      'octocat',
-      'octo-org',
-    ])
+    expect([...dialogBody.querySelectorAll('strong')].map(strong => strong.textContent)).toEqual(['octocat', 'octo-org'])
     expect(body.querySelector('[data-component="Dialog.Title"]')?.textContent).toBe('在 octo-org 中取消阻止 octocat')
     expect(body.querySelector('[data-component="Dialog.Footer"] button')?.textContent).toBe('取消')
   })
@@ -1378,10 +1334,10 @@ describe('common-ui 被元素拆开的句子（DOM）', () => {
     // children: ["Are you sure you want to unblock @", login, "?"]
     const body = start(
       '<div class="prc-Dialog-Body-bB903" data-component="Dialog.Body">Are you sure you want to unblock @octocat?</div>',
-      (root) => {
+      root => {
         const first = root.querySelector('[data-component="Dialog.Body"]')!.firstChild as Text
         first.splitText('Are you sure you want to unblock @'.length).splitText('octocat'.length)
-      },
+      }
     )
     const dialogBody = body.querySelector('[data-component="Dialog.Body"]')!
     expect(dialogBody.childNodes).toHaveLength(3)
@@ -1391,7 +1347,7 @@ describe('common-ui 被元素拆开的句子（DOM）', () => {
   it('个人阻止对话框：正文按行内句整句翻译，用户名不动，链接文字照常翻译', () => {
     const prose = start(BLOCK_DIALOG_BODY, splitBlockDialog).querySelector('p')!
     expect(prose.textContent).toBe(
-      '阻止 @octocat 后，其将无法与你的存储库互动，例如创建或评论拉取请求和议题、加星标、复刻或关注。了解阻止用户。',
+      '阻止 @octocat 后，其将无法与你的存储库互动，例如创建或评论拉取请求和议题、加星标、复刻或关注。了解阻止用户。'
     )
     expect(prose.querySelector('strong')?.textContent).toBe('@octocat')
     expect(prose.querySelector('a')?.textContent).toBe('阻止用户')
@@ -1404,9 +1360,7 @@ describe('common-ui 被元素拆开的句子（DOM）', () => {
     const range = nav.querySelector('[data-component="Table.Pagination.Range"]')!
     expect(range.textContent).toBe('24 个中的第 1‒10 个')
     expect(range.firstChild?.textContent).toBe('24 个中的第 1‒10 个')
-    expect(nav.querySelector('[data-component="Table.Pagination.PreviousPageButton"] > span')?.textContent).toBe(
-      '上一页',
-    )
+    expect(nav.querySelector('[data-component="Table.Pagination.PreviousPageButton"] > span')?.textContent).toBe('上一页')
     expect(nav.querySelector('[data-component="Table.Pagination.NextPageButton"] > span')?.textContent).toBe('下一页')
     expect(nav.querySelector('[data-component="Table.Pagination.Page"]')?.lastChild?.textContent).toBe('1')
   })
@@ -1416,10 +1370,10 @@ describe('common-ui 被元素拆开的句子（DOM）', () => {
     const status = nav.querySelector('span > div')!
     const range = nav.querySelector('[data-component="Table.Pagination.Range"]')!
     // React 只改写变化的数字文本节点：播报中的 1 / 10，可见范围中的 1 / 10
-    const statusNumbers = [...status.childNodes].filter((node) => node.nodeType === Node.TEXT_NODE) as Text[]
+    const statusNumbers = [...status.childNodes].filter(node => node.nodeType === Node.TEXT_NODE) as Text[]
     statusNumbers[1]!.data = '11'
     statusNumbers[3]!.data = '20'
-    const rangeNumbers = [...range.childNodes].filter((node) => node.nodeType === Node.TEXT_NODE) as Text[]
+    const rangeNumbers = [...range.childNodes].filter(node => node.nodeType === Node.TEXT_NODE) as Text[]
     rangeNumbers[0]!.data = '11'
     rangeNumbers[1]!.data = '20'
     await settle()
@@ -1440,7 +1394,7 @@ describe('common-ui 被元素拆开的句子（DOM）', () => {
     translator = createTranslator({
       matcher: full,
       host: window,
-      resolvePages: () => ['common', 'repository', 'pulls'],
+      resolvePages: () => ['common', 'repository', 'pulls']
     })
     translator.start()
     return document.body
@@ -1450,11 +1404,7 @@ describe('common-ui 被元素拆开的句子（DOM）', () => {
 
   it.each([
     ['无图标', '', '此对话已因垃圾信息而锁定并限制为仅协作者可评论。'],
-    [
-      '前有图标',
-      '<svg aria-hidden="true" class="octicon octicon-lock"></svg> ',
-      ' 此对话已因垃圾信息而锁定并限制为仅协作者可评论。',
-    ],
+    ['前有图标', '<svg aria-hidden="true" class="octicon octicon-lock"></svg> ', ' 此对话已因垃圾信息而锁定并限制为仅协作者可评论。']
   ])('锁定横幅（%s）：被 strong 拆开的整句按行内句翻译，原因词由 pulls 词典翻译', (_, icon, expected) => {
     const banner = startPulls(`<div class="flash">${icon}${LOCK_BANNER}</div>`, cnMatcher).querySelector('.flash')!
     expect(banner.textContent).toBe(expected)
@@ -1471,18 +1421,11 @@ describe('common-ui 被元素拆开的句子（DOM）', () => {
 
   it('锁定横幅（繁体）：整句按行内句翻译', () => {
     const html = `<div class="flash">${LOCK_BANNER.replace('spam', 'off-topic')}</div>`
-    expect(startPulls(html, twMatcher).querySelector('.flash')?.textContent).toBe(
-      '此對話已因離題而鎖定並限制為僅協作者可留言。',
-    )
+    expect(startPulls(html, twMatcher).querySelector('.flash')?.textContent).toBe('此對話已因離題而鎖定並限制為僅協作者可留言。')
   })
 
   /** 用正式语言包按议题页或拉取请求页翻译 */
-  function startRepoPage(
-    page: 'issues' | 'pulls',
-    html: string,
-    full: Matcher,
-    prepare?: (body: HTMLElement) => void,
-  ): HTMLElement {
+  function startRepoPage(page: 'issues' | 'pulls', html: string, full: Matcher, prepare?: (body: HTMLElement) => void): HTMLElement {
     document.body.innerHTML = html
     prepare?.(document.body)
     translator = createTranslator({ matcher: full, host: window, resolvePages: () => ['common', 'repository', page] })
@@ -1492,14 +1435,14 @@ describe('common-ui 被元素拆开的句子（DOM）', () => {
 
   it.each(['issues', 'pulls'] as const)(
     '个人阻止对话框（繁体，%s）：正文整句译「封鎖」，议题依赖关系的 Blocking 仍按 scoped 译「阻擋」',
-    (page) => {
+    page => {
       const body = startRepoPage(page, `${BLOCK_DIALOG_BODY}<h3>Blocking</h3>`, twMatcher, splitBlockDialog)
       expect(body.querySelector('p')?.textContent).toBe(
-        '封鎖 @octocat 後，對方將無法與你的儲存庫互動，例如建立拉取請求或議題、在其中留言、加星號、分叉或關注。瞭解封鎖使用者。',
+        '封鎖 @octocat 後，對方將無法與你的儲存庫互動，例如建立拉取請求或議題、在其中留言、加星號、分叉或關注。瞭解封鎖使用者。'
       )
       expect(body.querySelector('p strong')?.textContent).toBe('@octocat')
       expect(body.querySelector('h3')?.textContent).toBe('阻擋')
-    },
+    }
   )
 })
 
@@ -1544,7 +1487,7 @@ describe('common-ui 繁体词条', () => {
     ['Opened this pull request (their first ever)', '建立了此拉取請求（其第一個拉取請求）'],
     ['You commented on and opened this issue', '你建立了此議題並留言'],
     ['You were mentioned on and commented on this pull request', '你在此拉取請求中被提及並留言'],
-    ['You are assigned to this pull request', '你是此拉取請求的負責人'],
+    ['You are assigned to this pull request', '你是此拉取請求的負責人']
   ])('%s → %s', (input, expected) => {
     expect(twMatcher.translate(input, ['common'])).toBe(expected)
   })

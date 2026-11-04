@@ -18,7 +18,7 @@ const STAT_KINDS: Readonly<Record<string, string>> = {
   issue: '议题',
   issues: '议题',
   'pull request': '拉取请求',
-  'pull requests': '拉取请求',
+  'pull requests': '拉取请求'
 }
 
 /** 排序字段 */
@@ -26,7 +26,7 @@ const SORT_FIELDS: Readonly<Record<string, string>> = {
   Relevance: '相关性',
   'Last pushed': '最近推送',
   Name: '名称',
-  Stars: '星标',
+  Stars: '星标'
 }
 
 /** 排序方向（repos-filter.ts 的排序取值共用） */
@@ -65,15 +65,13 @@ export default {
     "When viewing an organization's repositories, you can use the": '查看组织的存储库时，可以使用',
     'When viewing an organization’s repositories, you can use the': '查看组织的存储库时，可以使用',
     'filter to filter by custom property.': '筛选器按自定义属性筛选。',
-    'Using a comma within certain filters will aggregate the results. For example:':
-      '在某些筛选器中使用逗号会合并结果。例如：',
-    'will show all repositories that have either Go or Ruby as their primary language.':
-      '会显示主要语言为 Go 或 Ruby 的所有存储库。',
+    'Using a comma within certain filters will aggregate the results. For example:': '在某些筛选器中使用逗号会合并结果。例如：',
+    'will show all repositories that have either Go or Ruby as their primary language.': '会显示主要语言为 Go 或 Ruby 的所有存储库。',
     // 只在 /repos 出现（组织页没有已保存的视图）
     "Don't forget that you can create saved views to keep track of your most important repositories!":
       '别忘了可以创建已保存的视图来跟踪你最重要的存储库！',
     'Don’t forget that you can create saved views to keep track of your most important repositories!':
-      '别忘了可以创建已保存的视图来跟踪你最重要的存储库！',
+      '别忘了可以创建已保存的视图来跟踪你最重要的存储库！'
   },
   scoped: {
     'Comfortable display density': '宽松显示密度',
@@ -93,17 +91,17 @@ export default {
     // 页码超出范围的空状态及其读屏连写（与 issues/list.ts、pulls/list.ts 一致）
     'No more repositories.': '没有更多存储库。',
     'Visit a lower page.': '请访问前面的页面。',
-    'No more repositories. Visit a lower page.': '没有更多存储库。请访问前面的页面。',
+    'No more repositories. Visit a lower page.': '没有更多存储库。请访问前面的页面。'
   },
   regexp: [
     [
       /^Sort by (Relevance|Last pushed|Name|Stars) (ascending|descending)$/,
-      (_, field, order) => `按${SORT_FIELDS[field] ?? field}${sortDirection(order)}排序`,
+      (_, field, order) => `按${SORT_FIELDS[field] ?? field}${sortDirection(order)}排序`
     ],
     [/^Show (\d+) more topics?$/, '再显示 $1 个主题'],
     [
       new RegExp(`^${COUNT} (forks?|stars?|issues?|pull requests?) in ${REPO}$`),
-      (_, count, kind, repo) => `${repo} 中的 ${count} 个${STAT_KINDS[kind] ?? kind}`,
+      (_, count, kind, repo) => `${repo} 中的 ${count} 个${STAT_KINDS[kind] ?? kind}`
     ],
     [new RegExp(`^${REPO}[’']s past year of commit activity$`), '$1 过去一年的提交活动'],
     // 窄屏的紧凑更新时间（4m、13h、2d、6mo）是 <relative-time format="micro"> 在 shadow DOM 里渲染的文字，
@@ -113,23 +111,22 @@ export default {
     // 列表加载后的读屏播报
     [
       new RegExp(
-        `^${COUNT} repositor(?:y|ies) found\\. List is sorted by (Relevance|Last pushed|Name|Stars) in (ascending|descending) order\\.$`,
+        `^${COUNT} repositor(?:y|ies) found\\. List is sorted by (Relevance|Last pushed|Name|Stars) in (ascending|descending) order\\.$`
       ),
-      (_, count, field, order) =>
-        `找到 ${count} 个存储库。列表按${SORT_FIELDS[field] ?? field}${sortDirection(order)}排列。`,
+      (_, count, field, order) => `找到 ${count} 个存储库。列表按${SORT_FIELDS[field] ?? field}${sortDirection(order)}排列。`
     ],
     // 删除视图的确认框（同 issues/views.ts；视图名是用户内容）
     [/^Are you sure you want to delete view '(.+)'\?$/, '确定要删除视图“$1”吗？'],
     // 图标与颜色选择器
-    ...VIEW_ICON_RULES,
+    ...VIEW_ICON_RULES
   ],
   inline: [
     // 从未推送过的存储库显示 Created <relative-time>（Updated 由通用词典按片段译作“更新于”）
-    ['Created {}', '创建于 {}'],
+    ['Created {}', '创建于 {}']
   ],
   ignore: [
     // 描述与语言
     '.repos-list-description',
-    '[class*="PrimaryLanguageName__"]',
-  ],
+    '[class*="PrimaryLanguageName__"]'
+  ]
 } satisfies PageDictionary

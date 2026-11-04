@@ -6,7 +6,7 @@ import {
   keyName,
   propertyValueName,
   SORT_VALUE,
-  valueName,
+  valueName
 } from '../organization/repos-filter'
 
 /** 收件箱分区名（全局 /pulls） */
@@ -17,12 +17,12 @@ const INBOX_SECTION: Readonly<Record<string, string>> = {
   'Waiting for review or checks': '等待審查或檢查',
   'Needs action': '需要採取動作',
   'Ready to merge': '可以合併',
-  Merging: '合併中',
+  Merging: '合併中'
 }
 
 /** 分区名中的撇号可能是直撇号或弯撇号 */
 const INBOX_SECTION_SOURCE = Object.keys(INBOX_SECTION)
-  .map((name) => name.replace("'", "['’]"))
+  .map(name => name.replace("'", "['’]"))
   .join('|')
 
 function inboxSection(name: string): string {
@@ -35,7 +35,7 @@ const AGE: Readonly<Record<string, string>> = {
   'Last week': '過去一週',
   'Last month': '過去一個月',
   'Last 3 months': '過去 3 個月',
-  'Last year': '過去一年',
+  'Last year': '過去一年'
 }
 
 const AGE_SOURCE = Object.keys(AGE).join('|')
@@ -43,7 +43,7 @@ const AGE_SOURCE = Object.keys(AGE).join('|')
 /** 正则备选：转义元字符，长的在前 */
 function alternatives(texts: readonly string[]): string {
   return texts
-    .map((text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+    .map(text => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
     .sort((a, b) => b.length - a.length)
     .join('|')
 }
@@ -70,8 +70,8 @@ const KEPT_VALUES: ReadonlySet<string> = new Set(['README', 'Size'])
  * Name、Public 等由通用词典或 list.ts 同译；KEPT_VALUES 不收
  */
 const REPO_FILTER_VALUE: Readonly<Record<string, string>> = {
-  ...Object.fromEntries(['Recently pushed', 'Relevance', 'Funding file', 'At least 1'].map((v) => [v, valueName(v)])),
-  ...SORT_VALUE,
+  ...Object.fromEntries(['Recently pushed', 'Relevance', 'Funding file', 'At least 1'].map(v => [v, valueName(v)])),
+  ...SORT_VALUE
 }
 
 /**
@@ -101,13 +101,12 @@ export default {
     'Your pull requests with failing checks, merge conflicts, outdated branches, or requested changes':
       '你建立的檢查失敗、有合併衝突、分支過時或收到變更要求的拉取請求',
     'Your pull requests that are ready to merge': '你建立的可以合併的拉取請求',
-    'Your pull requests that are currently merging or are in the merge queue':
-      '你建立的正在合併或在合併佇列中的拉取請求',
+    'Your pull requests that are currently merging or are in the merge queue': '你建立的正在合併或在合併佇列中的拉取請求',
 
     // 视图选项
     'Default view options': '預設檢視選項',
     'Tailor your Inbox to fit your workflow, or pick a different view to open by default at github.com/pulls':
-      '依你的工作流程自訂收件匣，或選擇在 github.com/pulls 預設開啟的其他檢視',
+      '依你的工作流程自訂收件匣，或選擇在 github.com/pulls 預設開啟的其他檢視'
   },
   scoped: {
     'Needs your review': '需要你審查',
@@ -170,7 +169,7 @@ export default {
     'Exclude owner': '排除擁有者',
     'Exclude user': '排除使用者',
     // 不带 key 的建议项与输入 - 时的建议分组标题（同 organization、issues 词典）
-    Exclude: '排除',
+    Exclude: '排除'
   },
   regexp: [
     // 分区名：原文有引号的才加「」；无引号时补「區段」，免得「展開需要你審查」读成一句话
@@ -178,7 +177,7 @@ export default {
     [new RegExp(`^More options for (${INBOX_SECTION_SOURCE})$`), (_, name) => `${inboxSection(name)}區段的更多選項`],
     [
       new RegExp(`^(Expand|Collapse) (${INBOX_SECTION_SOURCE})$`),
-      (_, action, name) => `${action === 'Expand' ? '展開' : '摺疊'}${inboxSection(name)}區段`,
+      (_, action, name) => `${action === 'Expand' ? '展開' : '摺疊'}${inboxSection(name)}區段`
     ],
     // Default to this view when visiting <code>/pulls</code>（与议题仪表板同译）
     [/^Default to this view when visiting (\S+)$/, '造訪 $1 時預設開啟此檢視'],
@@ -194,18 +193,17 @@ export default {
     [
       new RegExp(`^(${REPO_FILTER_KEY_SOURCE}|Property: [^,]+), Filter(?:, (${REPO_FILTER_DESCRIPTION_SOURCE}))?$`),
       (_, name: string, description: string) =>
-        `${keyName(name)}，篩選器${description ? `，${FILTER_DESCRIPTION[description] ?? description}` : ''}`,
+        `${keyName(name)}，篩選器${description ? `，${FILTER_DESCRIPTION[description] ?? description}` : ''}`
     ],
     // 非必填自定义属性的 Has / No 建议项及其 aria-label（同 organization 词典；选择存储库筛选框不出这两项，
     // 先于下一条命中，免得译成「Has Property: team，屬性：team」）
     [
       /^(Has|No) [Pp]roperty: ([^,]+?)(?:, (Property: \2))?$/,
-      (_, kind: string, name: string, suffix: string) =>
-        `${kind === 'Has' ? '有' : '無'}屬性：${name}${suffix ? `，屬性：${name}` : ''}`,
+      (_, kind: string, name: string, suffix: string) => `${kind === 'Has' ? '有' : '無'}屬性：${name}${suffix ? `，屬性：${name}` : ''}`
     ],
     // 自定义属性子键取值的 aria-label：<值>, Property: <属性名>；自定义属性子键（同 organization 词典）
     [/^(.+), Property: ([^,]+)$/, (_, value: string, name: string) => `${propertyValueName(value)}，屬性：${name}`],
-    [/^Property: ([^,]+)$/, '屬性：$1'],
+    [/^Property: ([^,]+)$/, '屬性：$1']
   ],
   attributeRules: [
     // 选择存储库筛选框中取值的 aria-label：<值>, <键>（同 organization 词典），只改该对话框的建议项。
@@ -214,14 +212,14 @@ export default {
       PICKER_OPTION,
       'aria-label',
       /^(?!(?:Has|No) )([^,]+), (License|Language|Organization)$/,
-      (_, value: string, key: string) => `${value}，${keyName(key)}`,
+      (_, value: string, key: string) => `${value}，${keyName(key)}`
     ],
     // 其余取值限于表中的；KEPT_VALUES 保留原文
     [
       PICKER_OPTION,
       'aria-label',
       new RegExp(`^(${REPO_FILTER_VALUE_SOURCE}|Property: [^,]+), (${REPO_FILTER_KEY_SOURCE})$`),
-      (_, value: string, key: string) => `${KEPT_VALUES.has(value) ? value : valueName(value)}，${keyName(key)}`,
-    ],
-  ],
+      (_, value: string, key: string) => `${KEPT_VALUES.has(value) ? value : valueName(value)}，${keyName(key)}`
+    ]
+  ]
 } satisfies PageDictionary

@@ -188,7 +188,7 @@ describe('定时刷新沿用位置判断', () => {
     for (const element of times) element.tick()
     const lookups = closest.mock.calls.filter(([selector]) => selector.includes('.markdown-body')).length
     closest.mockRestore()
-    expect(times.map((element) => element.renderedText)).toEqual([ZH_TEXT, ZH_TEXT, ZH_TEXT])
+    expect(times.map(element => element.renderedText)).toEqual([ZH_TEXT, ZH_TEXT, ZH_TEXT])
     expect(lookups).toBe(0)
   })
 
@@ -208,9 +208,7 @@ describe('定时刷新沿用位置判断', () => {
   })
 
   it('所在区块移入忽略区域：同样不补空格', async () => {
-    start(
-      '<main><section><a href="#c"><relative-time></relative-time></a></section></main><div class="markdown-body"></div>',
-    )
+    start('<main><section><a href="#c"><relative-time></relative-time></a></section></main><div class="markdown-body"></div>')
     await settleTime()
     time().tick()
     $('.markdown-body').append($('section'))
@@ -258,7 +256,7 @@ describe('定时刷新沿用位置判断', () => {
 
   it('依赖子节点的忽略规则随插入节点命中祖先：不补空格', async () => {
     start(`<main><section>${PAGE_ZH_TIME}</section></main>`, {
-      matcher: testMatcher(undefined, ignoring('section:has(> .sample-flag)')),
+      matcher: testMatcher(undefined, ignoring('section:has(> .sample-flag)'))
     })
     await settleTime()
     time().tick()
@@ -325,17 +323,17 @@ describe('TIME_SOURCE 拼成的词典规则', () => {
       {
         regexp: [
           [new RegExp(`^Updated (${TIME_SOURCE})$`), (_, time: string) => joinCjk(translateTime(time), '更新')],
-          [new RegExp(`^(${TIME_SOURCE})$`), (_, time: string) => translateTime(time)],
-        ],
-      },
-    ],
+          [new RegExp(`^(${TIME_SOURCE})$`), (_, time: string) => translateTime(time)]
+        ]
+      }
+    ]
   ]
 
   it.each([
     ['Updated on Jan 5, 2024', '2024 年 1 月 5 日更新'],
     ['Updated on January 2024', '2024 年 1 月更新'],
     ['Updated on 5 January 2024', '2024 年 1 月 5 日更新'],
-    ['on January 2024', '2024 年 1 月'],
+    ['on January 2024', '2024 年 1 月']
   ])('规则接受的带 on 日期整句译出：%s → %s', (source, expected) => {
     start(`<span id="time">${source}</span>`, { matcher: testMatcher(undefined, TIME_BUNDLE) })
     expect($('#time').textContent).toBe(expected)

@@ -28,8 +28,7 @@ export default {
     Added: '已新增',
     'Not added yet': '尚未新增',
     // 检查清单各项的帮助链接
-    'Add a description to your repository so people understand the goals of your project.':
-      '為儲存庫新增描述，讓其他人瞭解專案的目標。',
+    'Add a description to your repository so people understand the goals of your project.': '為儲存庫新增描述，讓其他人瞭解專案的目標。',
     'Writing a README': '撰寫讀我檔案',
     'What is a code of conduct?': '什麼是行為準則？',
     'Writing contributing guidelines': '撰寫貢獻指南',
@@ -52,8 +51,7 @@ export default {
     'We tried our best, but the graph wouldn’t load. Try reloading the page.': '圖表無法載入。請嘗試重新載入頁面。',
     "We tried our best, but the graph wouldn't load. Try reloading the page.": '圖表無法載入。請嘗試重新載入頁面。',
     'Discussions page views': '討論頁面瀏覽次數',
-    'Total page views to Discussions segmented by logged in vs anonymous users.':
-      '依已登入和匿名使用者區分的討論頁面總瀏覽次數。',
+    'Total page views to Discussions segmented by logged in vs anonymous users.': '依已登入和匿名使用者區分的討論頁面總瀏覽次數。',
     'Not enough data yet.': '尚無足夠資料。',
     'It usually takes about a week to populate this chart.': '通常約需一週才能產生此圖表。',
     'Read more about insights': '瞭解洞察',
@@ -63,7 +61,7 @@ export default {
       '所選期間內曾新增表情回應、投贊成票、標示答案、留言或發文的不重複使用者人數。',
     'Discussions new contributors': '討論新貢獻者',
     'Count of unique new users to Discussions who have reacted, upvoted, marked an answer, commented, or posted in the selected period.':
-      '所選期間內首次在討論中新增表情回應、投贊成票、標示答案、留言或發文的不重複使用者人數。',
+      '所選期間內首次在討論中新增表情回應、投贊成票、標示答案、留言或發文的不重複使用者人數。'
   },
   scoped: {
     'Code of conduct': '行為準則',
@@ -77,6 +75,6 @@ export default {
     Quantity: '數量',
     Timeline: '時間軸',
     'logged in': '已登入',
-    anonymous: '匿名',
-  },
+    anonymous: '匿名'
+  }
 } satisfies PageDictionary

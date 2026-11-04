@@ -34,8 +34,7 @@ export default {
 
     // 严重性
     'Pending selection': '待選擇',
-    'We were not able to calculate your score. Please try changing the vector string again.':
-      '無法計算分數。請再次嘗試修改向量字串。',
+    'We were not able to calculate your score. Please try changing the vector string again.': '無法計算分數。請再次嘗試修改向量字串。',
     'Assess severity using CVSS v3': '使用 CVSS v3 評估嚴重性',
     'Assess severity using CVSS v4': '使用 CVSS v4 評估嚴重性',
     'CVSS score required': '需要 CVSS 分數',
@@ -50,14 +49,13 @@ export default {
     'Until it is published, this draft security advisory will only be visible to the maintainers of':
       '發布前，此安全性公告草稿僅對以下儲存庫的維護者可見',
     '. Other users and teams may be added once the advisory is created.': '。公告建立後可新增其他使用者和團隊。',
-    'Once published, security advisories on public repositories are visible to everyone.':
-      '公開儲存庫的安全性公告發布後，所有人都能看到。',
+    'Once published, security advisories on public repositories are visible to everyone.': '公開儲存庫的安全性公告發布後，所有人都能看到。',
     // Once reviewed by GitHub, … broadcast on the <GitHub Advisory Database>. They may also …
     'Once reviewed by GitHub, security advisories may be broadcast on the': '經 GitHub 審查後，安全性公告可能會發布到',
     '. They may also trigger Dependabot alerts to users that depend on this repository.':
       '。還可能對相依於此儲存庫的使用者觸發 Dependabot 警示。',
     'Glossary and documentation': '詞彙表和說明文件',
-    'Dependabot language support': 'Dependabot 語言支援',
+    'Dependabot language support': 'Dependabot 語言支援'
   },
   scoped: {
     // 描述模板的小标题
@@ -66,10 +64,10 @@ export default {
     // 致谢类型（另见 advisories.ts；Tool 见 code-scanning.ts）
     Sponsor: '贊助者',
     // 描述编辑器的已保存回复为空：You can create one in your <a>settings</a>.（前段由 common-ui 翻译）
-    settings: '設定',
+    settings: '設定'
   },
   regexp: [
     // 输入框占位符：e.g. CVE-2026-######、e.g. < 1.2.3、e.g. example.js
-    [/^e\.g\. (\S.*)$/, '例如 $1'],
-  ],
+    [/^e\.g\. (\S.*)$/, '例如 $1']
+  ]
 } satisfies PageDictionary

@@ -5,14 +5,14 @@ import { joinCjk } from '../helpers'
 export const METRIC: Readonly<Record<string, string>> = {
   Commits: '提交',
   Additions: '新增',
-  Deletions: '删除',
+  Deletions: '删除'
 }
 
 /** 见解页 ChartCard 的固定标题 */
 const CHART_TITLE: Readonly<Record<string, string>> = {
   'Top committers': '主要提交者',
   'Code frequency': '代码频率',
-  Commits: '提交',
+  Commits: '提交'
 }
 
 const OVER_TIME_RE = /^(Commits|Additions|Deletions) over time$/
@@ -38,7 +38,7 @@ const CHART_TYPE: Readonly<Record<string, string>> = {
   'Scatter chart': '散点图',
   'Bubble chart': '气泡图',
   Boxplot: '箱线图',
-  Chart: '图表',
+  Chart: '图表'
 }
 
 /** Highcharts 无障碍描述：计数单位 */
@@ -59,7 +59,7 @@ const CHART_UNIT: Readonly<Record<string, string>> = {
   bubble: '个气泡',
   bubbles: '个气泡',
   box: '个箱体',
-  boxes: '个箱体',
+  boxes: '个箱体'
 }
 
 /** Highcharts 无障碍描述：坐标轴名 */
@@ -70,14 +70,14 @@ const AXIS_NAME: Readonly<Record<string, string>> = {
   Frequency: '频率',
   categories: '类别',
   'navigator-x-axis': '导航 X 轴',
-  'navigator-y-axis': '导航 Y 轴',
+  'navigator-y-axis': '导航 Y 轴'
 }
 
 const RANGE_UNIT: Readonly<Record<string, string>> = {
   days: '天',
   hours: '小时',
   minutes: '分钟',
-  seconds: '秒',
+  seconds: '秒'
 }
 
 function axisName(name: string): string {
@@ -122,8 +122,7 @@ export default {
     'Show labels for each data point in line chart.': '在折线图中显示每个数据点的标签。',
     'Show labels for each data point in chart.': '在图表中显示每个数据点的标签。',
     'Differentiate by line style': '按线型区分',
-    'Use unique line styles (dashed, dotted, etc.) to differentiate lines in charts.':
-      '使用不同线型（虚线、点线等）区分图表中的线条。',
+    'Use unique line styles (dashed, dotted, etc.) to differentiate lines in charts.': '使用不同线型（虚线、点线等）区分图表中的线条。',
 
     // 屏幕阅读器
     'Interactive chart': '交互式图表',
@@ -132,7 +131,7 @@ export default {
     'View as data table, Chart': '以数据表查看，图表',
     'Toggle series visibility, Chart': '切换数据系列显示，图表',
     'Start of selected range': '所选范围起点',
-    'End of selected range': '所选范围终点',
+    'End of selected range': '所选范围终点'
   },
   scoped: {
     Category: '类别',
@@ -149,7 +148,7 @@ export default {
     'Data cannot contain null values': '数据不能包含空值',
     'Graph could not be drawn due to a network problem.': '因网络问题无法绘制图表。',
     Unlabeled: '无标签',
-    'Y value': 'Y 值',
+    'Y value': 'Y 值'
   },
   regexp: [
     // 图表容器标签：Commits over time. Interactive chart.
@@ -161,25 +160,24 @@ export default {
     // 图表类型：Bar chart with 14 bars.（原文只有句号，译文不加逗号，改语序）
     [
       /^(Combination chart|Line chart|Bar chart|Pie chart|Scatter chart|Bubble chart|Boxplot|Chart) with ([\d,]+) (data series|data points?|lines?|bars?|slices?|pies?|points?|bubbles?|box(?:es)?)\.$/,
-      (_, type, count, unit) => `包含 ${count} ${CHART_UNIT[unit]}的${CHART_TYPE[type]}。`,
+      (_, type, count, unit) => `包含 ${count} ${CHART_UNIT[unit]}的${CHART_TYPE[type]}。`
     ],
     // 坐标轴：The chart has 1 X axis displaying Time. Data ranges from A to B.（原文无逗号、冒号，译文不加；Data range: 的冒号随原文）
     [
       new RegExp(
-        `^The chart has 1 (X|Y) axis displaying ([^.]+)\\.(?: Data ranges from ${AXIS_VALUE} to ${AXIS_VALUE}\\.| Data range: ([\\d,.]+) (categories|days|hours|minutes|seconds)\\.)?$`,
+        `^The chart has 1 (X|Y) axis displaying ([^.]+)\\.(?: Data ranges from ${AXIS_VALUE} to ${AXIS_VALUE}\\.| Data range: ([\\d,.]+) (categories|days|hours|minutes|seconds)\\.)?$`
       ),
       (_, axis, name, from, to, amount, unit) => {
         let range = ''
         if (from) range = `数据范围从 ${from} 到 ${to}。`
-        else if (amount)
-          range = `数据范围：${unit === 'categories' ? `${amount} 个类别` : `${amount} ${RANGE_UNIT[unit]}`}。`
+        else if (amount) range = `数据范围：${unit === 'categories' ? `${amount} 个类别` : `${amount} ${RANGE_UNIT[unit]}`}。`
         return `图表有 1 条${axisDisplaying(name, axis)}。${range}`
-      },
+      }
     ],
     // 多条坐标轴：The chart has 2 X axes displaying Time, and navigator-x-axis.（原文的逗号只在名称列表里，译作顿号；不另加逗号）
     [
       /^The chart has (\d+) (X|Y) axes displaying ([^.]+)\.$/,
-      (_, count, axis, names) => `图表的 ${count} 条 ${axis} 轴分别${displaying(names.split(/, and |, | and /))}。`,
-    ],
-  ],
+      (_, count, axis, names) => `图表的 ${count} 条 ${axis} 轴分别${displaying(names.split(/, and |, | and /))}。`
+    ]
+  ]
 } satisfies PageDictionary

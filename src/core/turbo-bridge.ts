@@ -404,7 +404,7 @@ export function installTurboBridge(win: BridgeWindow): () => void {
     // 新桥接安装时读取：卸载后不再随事件变化
     get visiting() {
       return visiting
-    },
+    }
   }
   registry[BRIDGE_KEY] = installed
   return uninstall

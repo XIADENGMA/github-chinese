@@ -172,6 +172,6 @@ export default {
     'Snippet format': '程式碼片段格式',
     'URL snippet': 'URL 程式碼片段',
     'HTML snippet': 'HTML 程式碼片段',
-    'MARKDOWN snippet': 'Markdown 程式碼片段',
-  },
+    'MARKDOWN snippet': 'Markdown 程式碼片段'
+  }
 } satisfies PageDictionary

@@ -84,8 +84,7 @@ export default {
     'Members of this organization can see and': '此組織的成員可以查看並',
     '@mention': '@提及',
     'this team.': '此團隊。',
-    'A visible team can be seen and @mentioned by every member of this organization.':
-      '此組織的每位成員都能查看並 @提及可見團隊。',
+    'A visible team can be seen and @mentioned by every member of this organization.': '此組織的每位成員都能查看並 @提及可見團隊。',
     'A secret team can only be seen by its members and may not be nested.': '祕密團隊只有其成員看得到，且不支援巢狀。',
     'Team notifications': '團隊通知',
     'Everyone will be notified when the team is @mentioned.': '團隊被 @提及時，所有人都會收到通知。',
@@ -149,6 +148,6 @@ export default {
     'Select a parent team': '選擇父團隊',
     'Confirm new parent team': '確認新的父團隊',
     'Clear selected value': '清除選取的值',
-    'Add a team': '新增團隊',
-  },
+    'Add a team': '新增團隊'
+  }
 } satisfies PageDictionary

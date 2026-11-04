@@ -52,7 +52,7 @@ export function useTextList(options: TextListOptions): UseTextList {
       return undefined
     }
     const key = keyOf(item)
-    if (options.items.value.some((other) => other !== except && keyOf(other) === key)) {
+    if (options.items.value.some(other => other !== except && keyOf(other) === key)) {
       toast.show('danger', 'exists')
       return undefined
     }
@@ -82,13 +82,13 @@ export function useTextList(options: TextListOptions): UseTextList {
     }
     // 保存期间新旧两个值共用一个键：保存前（列表仍是原值）、保存后（换成新值）渲染的都是原来那一行
     rowIds.set(item, rowKey(original))
-    const saved = await save(options.items.value.map((other) => (other === original ? item : other)))
+    const saved = await save(options.items.value.map(other => (other === original ? item : other)))
     rowIds.delete(saved ? original : item)
     return saved ? item : undefined
   }
 
   function remove(item: string): Promise<boolean> {
-    return save(options.items.value.filter((other) => other !== item))
+    return save(options.items.value.filter(other => other !== item))
   }
 
   return { rows, rowKey, add, edit, remove }

@@ -35,11 +35,9 @@ export default {
     'Copilot cloud agent access disabled': 'Copilot 云代理访问已禁用',
     'Agents (opens a new page)': '代理（打开新页面）',
     // 存储库代理页（/<owner>/<repo>/agents）：未开通与空状态
-    'Copilot Coding Agent handles routine tasks so you can focus on core work':
-      'Copilot 编码代理处理日常任务让你专注于核心工作',
+    'Copilot Coding Agent handles routine tasks so you can focus on core work': 'Copilot 编码代理处理日常任务让你专注于核心工作',
     'View Copilot Coding Agent capabilities': '查看 Copilot 编码代理的功能',
-    'Available on paid plans. Try it with Copilot Pro — free for 30 days.':
-      '付费计划可用。试用 Copilot 专业版——30 天免费。',
+    'Available on paid plans. Try it with Copilot Pro — free for 30 days.': '付费计划可用。试用 Copilot 专业版——30 天免费。',
     'Let Copilot work on tasks for you in the background.': '让 Copilot 在后台为你处理任务。',
     'Your code review sessions are available from the pull request timeline. Enable Copilot cloud agent to assign tasks, track progress, and review changes — all from this page.':
       '你的代码审查会话可在拉取请求时间线中查看。启用 Copilot 云代理后即可在此页面分配任务、跟踪进度并审查更改。',
@@ -79,7 +77,7 @@ export default {
     'Filter by agent': '按代理筛选',
 
     // 代理推广提示（免费用户弹出提示的标题 Start a task with Copilot cloud agent 见 common/global-nav.ts）
-    'Let Copilot tackle your TODOs': '让 Copilot 处理你的待办事项',
+    'Let Copilot tackle your TODOs': '让 Copilot 处理你的待办事项'
   },
   scoped: {
     // 外壳
@@ -158,14 +156,14 @@ export default {
     'See what’s new': '查看新功能',
     "See what's new": '查看新功能',
     // Copilot 专业版结账页（/github-copilot/pro）的步骤名：核对订单，不是代码审查
-    Review: '确认',
+    Review: '确认'
   },
   regexp: [
     // 侧栏用户菜单：方案标签后接升级链接（Copilot Free · <Upgrade>）；用户按钮的无障碍名称（octocat, Copilot Free）
     [/^(Copilot (?:Free|Pro\+?|Business|Enterprise|Student)) ·$/, (_, plan: string) => `${copilotPlan(plan)} ·`],
     [
       /^([\w-]+), (Copilot (?:Free|Pro\+?|Business|Enterprise|Student))$/,
-      (_, login: string, plan: string) => `${login}，${copilotPlan(plan)}`,
-    ],
-  ],
+      (_, login: string, plan: string) => `${login}，${copilotPlan(plan)}`
+    ]
+  ]
 } satisfies PageDictionary

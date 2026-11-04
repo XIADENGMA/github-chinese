@@ -1,9 +1,5 @@
 /** 扩展生效的站点（含 GitHub 状态页），与 wxt.config.ts 的 host_permissions 保持一致 */
-export const GITHUB_ORIGINS: readonly string[] = [
-  'https://github.com/*',
-  'https://gist.github.com/*',
-  'https://www.githubstatus.com/*',
-]
+export const GITHUB_ORIGINS: readonly string[] = ['https://github.com/*', 'https://gist.github.com/*', 'https://www.githubstatus.com/*']
 
 const GITHUB_HOSTS: ReadonlySet<string> = new Set(['github.com', 'gist.github.com', 'www.githubstatus.com'])
 

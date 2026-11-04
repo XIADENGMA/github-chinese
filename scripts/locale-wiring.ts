@@ -21,24 +21,17 @@ const DICTIONARY_FIELDS = new Set([
   'labelDescriptions',
   'labelRegexp',
   'listNames',
-  'issueTypes',
+  'issueTypes'
 ])
 /** 原文 → 译文的表 */
 type TableField = 'static' | 'scoped' | 'labels' | 'labelDescriptions' | 'listNames' | 'issueTypes'
-const TABLE_FIELDS: readonly TableField[] = [
-  'static',
-  'scoped',
-  'labels',
-  'labelDescriptions',
-  'listNames',
-  'issueTypes',
-]
+const TABLE_FIELDS: readonly TableField[] = ['static', 'scoped', 'labels', 'labelDescriptions', 'listNames', 'issueTypes']
 
 /** 顶层主文件与子目录中的文件（绝对路径，按名称排序）；顶层的 index.ts、helpers.ts 不是词典 */
 export function listDictionaryFiles(dir = LOCALE_DIR, top = true): string[] {
   return readdirSync(dir)
     .sort()
-    .flatMap((name) => {
+    .flatMap(name => {
       const full = resolve(dir, name)
       if (statSync(full).isDirectory()) return listDictionaryFiles(full, false)
       if (!name.endsWith('.ts')) return []
@@ -70,7 +63,7 @@ export function parentOf(file: string, root = LOCALE_DIR): string | undefined {
 export function isDictionaryLike(value: unknown): value is PageDictionary {
   if (typeof value !== 'object' || value === null || Array.isArray(value)) return false
   const keys = Object.keys(value)
-  return keys.length > 0 && keys.every((key) => DICTIONARY_FIELDS.has(key))
+  return keys.length > 0 && keys.every(key => DICTIONARY_FIELDS.has(key))
 }
 
 /**
@@ -79,7 +72,7 @@ export function isDictionaryLike(value: unknown): value is PageDictionary {
  */
 export function classifyModule(
   module: Readonly<Record<string, unknown>>,
-  place: 'top' | 'sub' | 'outside',
+  place: 'top' | 'sub' | 'outside'
 ): 'dictionary' | 'helper' | 'missing-default' {
   if ('default' in module) return 'dictionary'
   if (place === 'sub' && !Object.values(module).some(isDictionaryLike)) return 'helper'
@@ -98,7 +91,7 @@ export function arrayOf<T>(value: readonly T[] | undefined): readonly T[] {
 /** 没有任何词条 */
 export function isEmptyDictionary(dict: PageDictionary): boolean {
   return (
-    TABLE_FIELDS.every((field) => Object.keys(recordOf(dict[field])).length === 0) &&
+    TABLE_FIELDS.every(field => Object.keys(recordOf(dict[field])).length === 0) &&
     arrayOf(dict.regexp).length === 0 &&
     arrayOf(dict.ignore).length === 0 &&
     arrayOf(dict.attributeRules).length === 0 &&
@@ -128,7 +121,7 @@ function indexOf(dict: PageDictionary): Index {
       attributeRules: new Set(arrayOf(dict.attributeRules)),
       inline: new Set(arrayOf(dict.inline)),
       mergeText: new Set(arrayOf(dict.mergeText)),
-      labelRules: new Set(arrayOf(dict.labelRegexp)),
+      labelRules: new Set(arrayOf(dict.labelRegexp))
     }
     indexes.set(dict, index)
   }
@@ -139,22 +132,22 @@ function indexOf(dict: PageDictionary): Index {
 export function isMerged(child: PageDictionary, parent: PageDictionary): boolean {
   const { rules, selectors, attributeRules, inline, mergeText, labelRules } = indexOf(parent)
   return (
-    TABLE_FIELDS.every((field) => {
+    TABLE_FIELDS.every(field => {
       const target = recordOf(parent[field])
-      return Object.keys(recordOf(child[field])).every((key) => Object.hasOwn(target, key))
+      return Object.keys(recordOf(child[field])).every(key => Object.hasOwn(target, key))
     }) &&
-    arrayOf(child.regexp).every((rule) => rules.has(rule)) &&
-    arrayOf(child.ignore).every((selector) => selectors.has(selector)) &&
-    arrayOf(child.attributeRules).every((rule) => attributeRules.has(rule)) &&
-    arrayOf(child.inline).every((rule) => inline.has(rule)) &&
-    arrayOf(child.mergeText).every((selector) => mergeText.has(selector)) &&
-    arrayOf(child.labelRegexp).every((rule) => labelRules.has(rule))
+    arrayOf(child.regexp).every(rule => rules.has(rule)) &&
+    arrayOf(child.ignore).every(selector => selectors.has(selector)) &&
+    arrayOf(child.attributeRules).every(rule => attributeRules.has(rule)) &&
+    arrayOf(child.inline).every(rule => inline.has(rule)) &&
+    arrayOf(child.mergeText).every(selector => mergeText.has(selector)) &&
+    arrayOf(child.labelRegexp).every(rule => labelRules.has(rule))
   )
 }
 
 /** 合并后译文与子文件不同的原文：被排在前面的词典覆盖了 */
 export function overriddenKeys(child: PageDictionary, parent: PageDictionary): string[] {
-  return TABLE_FIELDS.flatMap((field) => {
+  return TABLE_FIELDS.flatMap(field => {
     const target = recordOf(parent[field])
     return Object.entries(recordOf(child[field]))
       .filter(([key, value]) => Object.hasOwn(target, key) && target[key] !== value)
@@ -166,10 +159,7 @@ export function overriddenKeys(child: PageDictionary, parent: PageDictionary): s
 export function mergedFiles(dicts: ReadonlyMap<string, PageDictionary>, root = LOCALE_DIR): Map<string, string[]> {
   const subs = [...dicts].filter(([file, dict]) => placeOf(file, root) === 'sub' && !isEmptyDictionary(dict))
   return new Map(
-    [...dicts].map(([file, dict]) => [
-      file,
-      subs.filter(([sub, child]) => sub !== file && isMerged(child, dict)).map(([sub]) => sub),
-    ]),
+    [...dicts].map(([file, dict]) => [file, subs.filter(([sub, child]) => sub !== file && isMerged(child, dict)).map(([sub]) => sub)])
   )
 }
 
@@ -179,47 +169,45 @@ export function mergedFiles(dicts: ReadonlyMap<string, PageDictionary>, root = L
  */
 export function ownEntries(dict: PageDictionary, children: readonly PageDictionary[]): PageDictionary {
   if (children.length === 0) return dict
-  const childRules = new Set(children.flatMap((child) => arrayOf(child.regexp)))
-  const childSelectors = new Set(children.flatMap((child) => arrayOf(child.ignore)))
-  const childAttributeRules = new Set(children.flatMap((child) => arrayOf(child.attributeRules)))
-  const childInline = new Set(children.flatMap((child) => arrayOf(child.inline)))
-  const childMergeText = new Set(children.flatMap((child) => arrayOf(child.mergeText)))
-  const childLabelRules = new Set(children.flatMap((child) => arrayOf(child.labelRegexp)))
+  const childRules = new Set(children.flatMap(child => arrayOf(child.regexp)))
+  const childSelectors = new Set(children.flatMap(child => arrayOf(child.ignore)))
+  const childAttributeRules = new Set(children.flatMap(child => arrayOf(child.attributeRules)))
+  const childInline = new Set(children.flatMap(child => arrayOf(child.inline)))
+  const childMergeText = new Set(children.flatMap(child => arrayOf(child.mergeText)))
+  const childLabelRules = new Set(children.flatMap(child => arrayOf(child.labelRegexp)))
   const own = (field: TableField): Record<string, string> =>
     Object.fromEntries(
-      Object.entries(recordOf(dict[field])).filter(
-        ([key, value]) => !children.some((child) => recordOf(child[field])[key] === value),
-      ),
+      Object.entries(recordOf(dict[field])).filter(([key, value]) => !children.some(child => recordOf(child[field])[key] === value))
     )
   return {
     static: own('static'),
     scoped: own('scoped'),
-    regexp: arrayOf(dict.regexp).filter((rule) => !childRules.has(rule)),
-    ignore: arrayOf(dict.ignore).filter((selector) => !childSelectors.has(selector)),
-    attributeRules: arrayOf(dict.attributeRules).filter((rule) => !childAttributeRules.has(rule)),
-    inline: arrayOf(dict.inline).filter((rule) => !childInline.has(rule)),
-    mergeText: arrayOf(dict.mergeText).filter((selector) => !childMergeText.has(selector)),
+    regexp: arrayOf(dict.regexp).filter(rule => !childRules.has(rule)),
+    ignore: arrayOf(dict.ignore).filter(selector => !childSelectors.has(selector)),
+    attributeRules: arrayOf(dict.attributeRules).filter(rule => !childAttributeRules.has(rule)),
+    inline: arrayOf(dict.inline).filter(rule => !childInline.has(rule)),
+    mergeText: arrayOf(dict.mergeText).filter(selector => !childMergeText.has(selector)),
     labels: own('labels'),
     labelDescriptions: own('labelDescriptions'),
-    labelRegexp: arrayOf(dict.labelRegexp).filter((rule) => !childLabelRules.has(rule)),
+    labelRegexp: arrayOf(dict.labelRegexp).filter(rule => !childLabelRules.has(rule)),
     listNames: own('listNames'),
-    issueTypes: own('issueTypes'),
+    issueTypes: own('issueTypes')
   }
 }
 
 /** 每个文件自己的词条 */
 export function ownEntriesByFile(
   dicts: ReadonlyMap<string, PageDictionary>,
-  merged: ReadonlyMap<string, readonly string[]>,
+  merged: ReadonlyMap<string, readonly string[]>
 ): Map<string, PageDictionary> {
   return new Map(
     [...dicts].map(([file, dict]) => [
       file,
       ownEntries(
         dict,
-        (merged.get(file) ?? []).flatMap((sub) => dicts.get(sub) ?? []),
-      ),
-    ]),
+        (merged.get(file) ?? []).flatMap(sub => dicts.get(sub) ?? [])
+      )
+    ])
   )
 }
 
@@ -233,7 +221,7 @@ export function pageKeysByFile(
   dicts: ReadonlyMap<string, PageDictionary>,
   bundle: LocaleBundle,
   merged: ReadonlyMap<string, readonly string[]>,
-  root = LOCALE_DIR,
+  root = LOCALE_DIR
 ): Map<string, PageKey[]> {
   const keys = new Map<string, Set<PageKey>>()
   for (const [file, dict] of dicts) {
@@ -245,7 +233,7 @@ export function pageKeysByFile(
       keys.set(target, set)
     }
   }
-  return new Map([...dicts.keys()].map((file) => [file, [...(keys.get(file) ?? [])]]))
+  return new Map([...dicts.keys()].map(file => [file, [...(keys.get(file) ?? [])]]))
 }
 
 /** 语言包实际生效的全局 static：按注册顺序，先出现者优先（与匹配器一致） */

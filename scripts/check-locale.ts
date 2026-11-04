@@ -41,7 +41,7 @@ import {
   patternRegExp,
   patternSlots,
   SLOT,
-  slotCount,
+  slotCount
 } from '../src/core/inline-key'
 import { hasTopLevelAlternative } from '../src/core/regexp-index'
 import type { LocaleBundle, PageDictionary, PageKey, RegExpRule } from '../src/core/types'
@@ -58,7 +58,7 @@ import {
   parentOf,
   placeOf,
   recordOf,
-  registeredKeys,
+  registeredKeys
 } from './locale-wiring'
 import { ACCEPTED_WORDS, MAINLAND_TERMS } from './data/mainland-terms'
 import { simplifiedChars } from './data/simplified-only'
@@ -81,7 +81,7 @@ function fail(message: string): never {
 
 /** 文件所在的语言目录；不在 src/locales/<语言> 下时为 undefined */
 function localeOfFile(file: string): string | undefined {
-  return Object.keys(LOCALES).find((locale) => placeOf(file, resolve('src/locales', locale)) !== 'outside')
+  return Object.keys(LOCALES).find(locale => placeOf(file, resolve('src/locales', locale)) !== 'outside')
 }
 
 function parseCommand(args: readonly string[]): Command {
@@ -98,7 +98,7 @@ function parseCommand(args: readonly string[]): Command {
     } else if (arg.startsWith('--')) fail(`未知参数 ${arg}`)
     else files.push(resolve(arg))
   }
-  const fileLocales = [...new Set(files.flatMap((file) => localeOfFile(file) ?? []))]
+  const fileLocales = [...new Set(files.flatMap(file => localeOfFile(file) ?? []))]
   if (fileLocales.length > 1) fail('简体、繁体词典文件要分开检查')
   const [fileLocale] = fileLocales
   if (locale !== undefined && fileLocale !== undefined && fileLocale !== locale)
@@ -124,7 +124,7 @@ const ALLOWED_KEYS = new Set([
   'labelDescriptions',
   'labelRegexp',
   'listNames',
-  'issueTypes',
+  'issueTypes'
 ])
 /**
  * 回溯计时的通用输入：[重复片段, 结尾]，由计时线程补足到输入长度。结尾都带槽位字符：句型键必含槽位字符，
@@ -135,7 +135,7 @@ const REDOS_INPUTS: readonly (readonly [unit: string, end: string])[] = [
   ['a ', SLOT],
   ['1', SLOT],
   ['Aa1 ', `!${SLOT}`],
-  ['a,', SLOT],
+  ['a,', SLOT]
 ]
 /** regexp 规则、属性规则的计时输入长度；行内句正则只匹配句型键，按句型键长度上限 */
 const REDOS_INPUT_LENGTH = 4000
@@ -238,7 +238,7 @@ interface RuleTarget {
 }
 
 /** regexp 规则、属性规则：原样执行 */
-const REGEXP_TARGET: RuleTarget = { compile: (pattern) => pattern, length: REDOS_INPUT_LENGTH }
+const REGEXP_TARGET: RuleTarget = { compile: pattern => pattern, length: REDOS_INPUT_LENGTH }
 /** 行内句正则：槽位换成槽位字符后匹配句型键，键长不超过上限 */
 const INLINE_TARGET: RuleTarget = { compile: patternRegExp, length: MAX_SENTENCE_KEY }
 
@@ -269,10 +269,8 @@ function checkEntries(label: string, entries: unknown, report: Report): void {
     else if (value === key) report.warnings.push(`${where}：译文与原文相同`)
     if (normalizeText(key) !== key) report.errors.push(`${where}：键未规范化（首尾空白 / 连续空白 / NBSP）`)
     if (!hasLatin(key)) report.errors.push(`${where}：键不含英文字母，不会被匹配`)
-    if (typeof value === 'string' && CJK_LATIN_RE.test(value))
-      report.warnings.push(`${where}：中英文之间缺空格 → ${value}`)
-    if (typeof value === 'string' && CJK_HALF_PUNCT_RE.test(value))
-      report.warnings.push(`${where}：中文后接半角标点 → ${value}`)
+    if (typeof value === 'string' && CJK_LATIN_RE.test(value)) report.warnings.push(`${where}：中英文之间缺空格 → ${value}`)
+    if (typeof value === 'string' && CJK_HALF_PUNCT_RE.test(value)) report.warnings.push(`${where}：中文后接半角标点 → ${value}`)
     if (typeof value === 'string') checkPunctuation(where, key, value, report)
   }
 }
@@ -293,8 +291,7 @@ const CJK_TEXT_RE = /[一-鿿]/
 /** 抛出的错误信息：开发者看的，按项目约定用简体 */
 function isErrorMessage(node: ts.Node): boolean {
   return (
-    ts.isThrowStatement(node) ||
-    (ts.isNewExpression(node) && ts.isIdentifier(node.expression) && node.expression.text.endsWith('Error'))
+    ts.isThrowStatement(node) || (ts.isNewExpression(node) && ts.isIdentifier(node.expression) && node.expression.text.endsWith('Error'))
   )
 }
 
@@ -334,13 +331,7 @@ function checkPunctuation(where: string, key: string, value: string, report: Rep
   }
 }
 
-function checkRule(
-  where: string,
-  rule: unknown,
-  report: Report,
-  redos: RedosTask[],
-  target: RuleTarget = REGEXP_TARGET,
-): void {
+function checkRule(where: string, rule: unknown, report: Report, redos: RedosTask[], target: RuleTarget = REGEXP_TARGET): void {
   if (!Array.isArray(rule) || rule.length !== 2 || !(rule[0] instanceof RegExp)) {
     report.errors.push(`${where}：应为 [RegExp, string | function]`)
     return
@@ -361,11 +352,9 @@ function checkRule(
     for (const [, , digits, name] of replacement.matchAll(REPLACEMENT_REF_RE)) {
       if (Number(digits) > groups) report.errors.push(`${tag}：$${digits} 超出捕获组数量 ${groups}`)
       // 同 String.prototype.replace：正则没有命名组时 $<名称> 原样输出，有命名组而名字不对时换成空串
-      if (name !== undefined && !names?.has(name))
-        report.errors.push(`${tag}：$<${name}> ${names ? '不是命名组' : '会原样输出'}`)
+      if (name !== undefined && !names?.has(name)) report.errors.push(`${tag}：$<${name}> ${names ? '不是命名组' : '会原样输出'}`)
     }
-    if (CJK_LATIN_RE.test(replacement.replace(/\$\d+/g, '')))
-      report.warnings.push(`${tag}：中英文之间缺空格 → ${replacement}`)
+    if (CJK_LATIN_RE.test(replacement.replace(/\$\d+/g, ''))) report.warnings.push(`${tag}：中英文之间缺空格 → ${replacement}`)
     if (!PATTERN_END_PUNCT_RE.test(pattern.source) && TARGET_END_RE.test(replacement))
       report.warnings.push(`${tag}：原文结尾无标点，替换文本结尾不应有标点 → ${replacement}`)
   } else if (typeof replacement !== 'function') {
@@ -399,8 +388,7 @@ function checkAttributeRule(where: string, rule: unknown, report: Report, redos:
 function captureGroups(source: string): string[] {
   const groups: string[] = []
   for (let at = 0; at < source.length; at = source[at] === '(' ? at + 1 : tokenEnd(source, at)) {
-    if (source[at] === '(' && CAPTURE_RE.test(source.slice(at, at + 4)))
-      groups.push(source.slice(at + 1, groupEnd(source, at) - 1))
+    if (source[at] === '(' && CAPTURE_RE.test(source.slice(at, at + 4))) groups.push(source.slice(at + 1, groupEnd(source, at) - 1))
   }
   return groups
 }
@@ -412,7 +400,7 @@ function carriedSlots(pattern: RegExp, translation: string): number {
   let count = 0
   for (const [, sign, digits, name] of translation.matchAll(REPLACEMENT_REF_RE)) {
     if (sign === '&') count += slotsIn(pattern.source)
-    else if (name !== undefined) count += slotsIn(groups.find((group) => group.startsWith(`?<${name}>`)))
+    else if (name !== undefined) count += slotsIn(groups.find(group => group.startsWith(`?<${name}>`)))
     else if (digits !== undefined) {
       // 两位数超出捕获组数时，按一位数加一个字面数字处理
       const index = Number(digits) > groups.length ? Number(digits[0]) : Number(digits)
@@ -424,8 +412,7 @@ function carriedSlots(pattern: RegExp, translation: string): number {
 
 /** 字符串句型的键长、宿主至少要有的子节点数超过引擎上限时，句型不会被匹配 */
 function checkReach(tag: string, key: string, report: Report): void {
-  if (key.length > MAX_SENTENCE_KEY)
-    report.errors.push(`${tag}：句型键长 ${key.length}，超过上限 ${MAX_SENTENCE_KEY}，不会被匹配`)
+  if (key.length > MAX_SENTENCE_KEY) report.errors.push(`${tag}：句型键长 ${key.length}，超过上限 ${MAX_SENTENCE_KEY}，不会被匹配`)
   const children = minChildren(key)
   if (children > MAX_SENTENCE_CHILDREN)
     report.errors.push(`${tag}：至少 ${children} 个子节点，超过上限 ${MAX_SENTENCE_CHILDREN}，不会被匹配`)
@@ -446,20 +433,16 @@ function checkInlineRule(where: string, rule: unknown, report: Report, redos: Re
     report.errors.push(`${where}：句型必须是字符串或 RegExp`)
     return
   }
-  const tag =
-    pattern instanceof RegExp ? `${where} /${pattern.source}/${pattern.flags}` : `${where} ${JSON.stringify(pattern)}`
+  const tag = pattern instanceof RegExp ? `${where} /${pattern.source}/${pattern.flags}` : `${where} ${JSON.stringify(pattern)}`
   const slots = patternSlots(pattern)
-  if (slots === 0)
-    report.errors.push(`${tag}：句型没有槽位，应写进 ${pattern instanceof RegExp ? 'regexp' : 'static / scoped'}`)
+  if (slots === 0) report.errors.push(`${tag}：句型没有槽位，应写进 ${pattern instanceof RegExp ? 'regexp' : 'static / scoped'}`)
   if (pattern instanceof RegExp) {
     checkRule(where, rule, report, redos, INLINE_TARGET)
     if (typeof translation !== 'string') return
     const carried = carriedSlots(pattern, translation)
     const count = slotCount(translation) + carried
     if (count !== slots)
-      report.errors.push(
-        `${tag}：译文有 ${count} 个槽位${carried > 0 ? `（引用带入 ${carried} 个）` : ''}，句型有 ${slots} 个`,
-      )
+      report.errors.push(`${tag}：译文有 ${count} 个槽位${carried > 0 ? `（引用带入 ${carried} 个）` : ''}，句型有 ${slots} 个`)
     return
   }
   // 槽位换成占位字符再查标点与空格：直接删掉会让两侧的标点、空白挨在一起或落到句末
@@ -473,8 +456,7 @@ function checkInlineRule(where: string, rule: unknown, report: Report, redos: Re
     return
   }
   if (translation !== translation.trim()) report.errors.push(`${tag}：译文首尾有空白`)
-  if (slotCount(translation) !== slots)
-    report.errors.push(`${tag}：译文有 ${slotCount(translation)} 个槽位，句型有 ${slots} 个`)
+  if (slotCount(translation) !== slots) report.errors.push(`${tag}：译文有 ${slotCount(translation)} 个槽位，句型有 ${slots} 个`)
   const text = translation.replace(SLOT_MARK_RE, SLOT)
   if (CJK_LATIN_RE.test(text)) report.warnings.push(`${tag}：中英文之间缺空格 → ${translation}`)
   if (CJK_HALF_PUNCT_RE.test(text)) report.warnings.push(`${tag}：中文后接半角标点 → ${translation}`)
@@ -605,7 +587,7 @@ function sampleChar(atom: string, flags: string): string | undefined {
   try {
     const single = new RegExp(`^(?:${atom})$`, flags.replace(/[gy]/g, ''))
     const written = Array.from(atom.matchAll(WRITTEN_CHAR_RE), ([token]) => literalChar(token))
-    sample = [literalChar(atom), ...SAMPLE_CHARS, ...written].find((char) => char !== undefined && single.test(char))
+    sample = [literalChar(atom), ...SAMPLE_CHARS, ...written].find(char => char !== undefined && single.test(char))
   } catch {
     sample = undefined
   }
@@ -663,7 +645,7 @@ function redosInputs(pattern: RegExp): RedosInput[] {
   walkGroup(plan, 0, pattern.source.length, '')
   const cuts = [...plan.cuts].slice(0, REDOS_MAX_CUTS)
   const pumps = [...plan.pumps.values()].slice(0, REDOS_MAX_CUTS)
-  return [...cuts.flatMap((cut) => REDOS_INPUTS.map(([unit, end]): RedosInput => [cut, unit, end])), ...pumps]
+  return [...cuts.flatMap(cut => REDOS_INPUTS.map(([unit, end]): RedosInput => [cut, unit, end])), ...pumps]
 }
 
 /** 逐条正则在线程里计时；超时的结束线程、换新线程继续 */
@@ -679,7 +661,7 @@ class RedosProbe {
     const { source, flags } = pattern
     const inputs = redosInputs(pattern)
     const worker = this.worker
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       let worst = 0
       let left = inputs.length
       const finish = (elapsed: number): void => {
@@ -726,8 +708,7 @@ async function checkRedos(tasks: readonly RedosTask[]): Promise<void> {
   try {
     for (const task of tasks) {
       const elapsed = await probe.measure(task.pattern, task.length)
-      if (elapsed === Infinity)
-        task.report.errors.push(`${task.tag}：疑似灾难回溯（超过 ${REDOS_TIMEOUT_MS}ms 未结束）`)
+      if (elapsed === Infinity) task.report.errors.push(`${task.tag}：疑似灾难回溯（超过 ${REDOS_TIMEOUT_MS}ms 未结束）`)
       else if (elapsed > REDOS_LIMIT_MS) task.report.errors.push(`${task.tag}：疑似灾难回溯（${elapsed.toFixed(0)}ms）`)
     }
   } finally {
@@ -736,12 +717,8 @@ async function checkRedos(tasks: readonly RedosTask[]): Promise<void> {
 }
 
 /** 主文件注册、子文件接线，并给每个文件标上生效的页面类型 */
-function checkWiring(
-  units: readonly Unit[],
-  bundle: LocaleBundle,
-  merged: ReadonlyMap<string, readonly string[]>,
-): void {
-  const dicts = new Map(units.flatMap((unit) => (unit.dict ? [[unit.file, unit.dict] as const] : [])))
+function checkWiring(units: readonly Unit[], bundle: LocaleBundle, merged: ReadonlyMap<string, readonly string[]>): void {
+  const dicts = new Map(units.flatMap(unit => (unit.dict ? [[unit.file, unit.dict] as const] : [])))
   const keys = pageKeysByFile(dicts, bundle, merged, ROOT)
   for (const unit of units) {
     if (!unit.dict) continue
@@ -759,7 +736,7 @@ function checkWiring(
     unit.report.errors.push(
       existsSync(parent)
         ? `没有被任何已注册的词典合并（应在 ${displayPath(parent)} 用 mergeDictionaries 合并）`
-        : `缺少上级文件 ${displayPath(parent)}`,
+        : `缺少上级文件 ${displayPath(parent)}`
     )
   }
 }
@@ -777,10 +754,7 @@ function claim(owners: Map<string, Owner>, label: string, key: string, unit: Uni
     return
   }
   if (previous.value === value) unit.report.warnings.push(`${label} ${JSON.stringify(key)} 与 ${previous.name} 重复`)
-  else
-    unit.report.errors.push(
-      `${label} ${JSON.stringify(key)} 冲突：${previous.name}「${previous.value}」≠ 本文件「${value}」`,
-    )
+  else unit.report.errors.push(`${label} ${JSON.stringify(key)} 冲突：${previous.name}「${previous.value}」≠ 本文件「${value}」`)
 }
 
 /**
@@ -795,37 +769,31 @@ function checkConflicts(units: readonly Unit[]): void {
   const issueTypeOwners = new Map<string, Owner>()
   const scopedOwners = new Map<PageKey, Map<string, Owner>>()
   for (const unit of units) {
-    for (const [key, value] of Object.entries(recordOf(unit.own?.static)))
-      claim(staticOwners, 'static', key, unit, value)
-    for (const [key, value] of Object.entries(recordOf(unit.own?.labels)))
-      claim(labelOwners, 'labels', key, unit, value)
+    for (const [key, value] of Object.entries(recordOf(unit.own?.static))) claim(staticOwners, 'static', key, unit, value)
+    for (const [key, value] of Object.entries(recordOf(unit.own?.labels))) claim(labelOwners, 'labels', key, unit, value)
     for (const [key, value] of Object.entries(recordOf(unit.own?.labelDescriptions)))
       claim(descriptionOwners, 'labelDescriptions', key, unit, value)
-    for (const [key, value] of Object.entries(recordOf(unit.own?.listNames)))
-      claim(listNameOwners, 'listNames', key, unit, value)
-    for (const [key, value] of Object.entries(recordOf(unit.own?.issueTypes)))
-      claim(issueTypeOwners, 'issueTypes', key, unit, value)
+    for (const [key, value] of Object.entries(recordOf(unit.own?.listNames))) claim(listNameOwners, 'listNames', key, unit, value)
+    for (const [key, value] of Object.entries(recordOf(unit.own?.issueTypes))) claim(issueTypeOwners, 'issueTypes', key, unit, value)
     for (const page of new Set(unit.keys)) {
       const owners = scopedOwners.get(page) ?? new Map<string, Owner>()
       scopedOwners.set(page, owners)
-      for (const [key, value] of Object.entries(recordOf(unit.own?.scoped)))
-        claim(owners, `scoped（${page}）`, key, unit, value)
+      for (const [key, value] of Object.entries(recordOf(unit.own?.scoped))) claim(owners, `scoped（${page}）`, key, unit, value)
     }
   }
 }
 
 /** 同组不同文件分别给出同一原文的 scoped 与 static（同一文件内的由 checkDictionary 报告） */
 function checkGroupOverlap(units: readonly Unit[], merged: ReadonlyMap<string, readonly string[]>): void {
-  const byFile = new Map(units.map((unit) => [unit.file, unit]))
+  const byFile = new Map(units.map(unit => [unit.file, unit]))
   for (const unit of units) {
     if (!unit.dict || placeOf(unit.file, ROOT) !== 'top') continue
     const statics = recordOf(unit.dict.static)
-    const members = [unit, ...(merged.get(unit.file) ?? []).flatMap((file) => byFile.get(file) ?? [])]
+    const members = [unit, ...(merged.get(unit.file) ?? []).flatMap(file => byFile.get(file) ?? [])]
     for (const key of Object.keys(recordOf(unit.dict.scoped))) {
       if (!Object.hasOwn(statics, key)) continue
       const inOneFile = members.some(
-        (member) =>
-          Object.hasOwn(recordOf(member.own?.static), key) && Object.hasOwn(recordOf(member.own?.scoped), key),
+        member => Object.hasOwn(recordOf(member.own?.static), key) && Object.hasOwn(recordOf(member.own?.scoped), key)
       )
       if (!inOneFile) unit.report.warnings.push(`scoped 与 static 重复（来自不同文件）：${JSON.stringify(key)}`)
     }
@@ -835,7 +803,7 @@ function checkGroupOverlap(units: readonly Unit[], merged: ReadonlyMap<string, r
 /** 可删的 scoped：实际生效的全局 static 已有相同译文，且所有生效的 scoped 对这条原文只有这一种译文 */
 function checkRedundant(units: readonly Unit[], bundle: LocaleBundle): void {
   const active = effectiveStatic(bundle)
-  const effective = units.filter((unit) => unit.keys.length > 0)
+  const effective = units.filter(unit => unit.keys.length > 0)
   const scopedValues = new Map<string, Set<string>>()
   for (const unit of effective) {
     for (const [key, value] of Object.entries(recordOf(unit.own?.scoped)))
@@ -844,10 +812,8 @@ function checkRedundant(units: readonly Unit[], bundle: LocaleBundle): void {
   for (const unit of effective) {
     for (const [key, value] of Object.entries(recordOf(unit.own?.scoped))) {
       if (active.get(key) !== value || scopedValues.get(key)?.size !== 1) continue
-      const owner = effective.find((other) => recordOf(other.own?.static)[key] === value)
-      unit.report.warnings.push(
-        `可删：scoped ${JSON.stringify(key)} 与${owner ? ` ${owner.name} 的` : '全局'} static 译文相同`,
-      )
+      const owner = effective.find(other => recordOf(other.own?.static)[key] === value)
+      unit.report.warnings.push(`可删：scoped ${JSON.stringify(key)} 与${owner ? ` ${owner.name} 的` : '全局'} static 译文相同`)
     }
   }
 }
@@ -875,7 +841,7 @@ async function loadBundle(): Promise<{ bundle?: LocaleBundle; error?: string }> 
     if (!Array.isArray(bundle)) return { error: `index.ts 没有导出数组 ${BUNDLE_EXPORT}` }
     // 只认 [页面类型, 词典] 形状的条目
     return {
-      bundle: bundle.filter((entry): entry is LocaleBundle[number] => Array.isArray(entry) && entry.length === 2),
+      bundle: bundle.filter((entry): entry is LocaleBundle[number] => Array.isArray(entry) && entry.length === 2)
     }
   } catch (error) {
     return { error: `index.ts 加载失败：${errorMessage(error)}` }
@@ -915,7 +881,7 @@ function print(units: readonly Unit[]): number {
     const listNames = listNamesCount > 0 ? `  listNames ${listNamesCount}` : ''
     const issueTypes = issueTypesCount > 0 ? `  issueTypes ${issueTypesCount}` : ''
     process.stdout.write(
-      `${status} ${unit.name}  static ${staticCount}  scoped ${scopedCount}  regexp ${regexpCount}${inline}${labels}${descriptions}${labelRegexp}${listNames}${issueTypes}  错误 ${report.errors.length}  警告 ${report.warnings.length}\n`,
+      `${status} ${unit.name}  static ${staticCount}  scoped ${scopedCount}  regexp ${regexpCount}${inline}${labels}${descriptions}${labelRegexp}${listNames}${issueTypes}  错误 ${report.errors.length}  警告 ${report.warnings.length}\n`
     )
     for (const error of report.errors) process.stdout.write(`    错误 ${error}\n`)
     for (const warning of report.warnings) process.stdout.write(`    警告 ${warning}\n`)
@@ -937,10 +903,10 @@ function hasProblems(report: Report): boolean {
 function extraSources(): string[] {
   const shared = existsSync(SHARED_DIR)
     ? readdirSync(SHARED_DIR)
-        .filter((name) => name.endsWith('.ts'))
-        .map((name) => resolve(SHARED_DIR, name))
+        .filter(name => name.endsWith('.ts'))
+        .map(name => resolve(SHARED_DIR, name))
     : []
-  return [resolve(ROOT, 'helpers.ts'), INDEX_FILE, ...shared].filter((file) => existsSync(file))
+  return [resolve(ROOT, 'helpers.ts'), INDEX_FILE, ...shared].filter(file => existsSync(file))
 }
 
 async function main(): Promise<void> {
@@ -950,7 +916,7 @@ async function main(): Promise<void> {
   for (const unit of loaded) await load(unit)
   if (TRADITIONAL) for (const unit of loaded) scanLiterals(unit.file, unit.report)
   // 共用工具不是词典：指定时照常列出，全量检查时只列有问题的
-  const units = loaded.filter((unit) => !unit.helper || !whole || hasProblems(unit.report))
+  const units = loaded.filter(unit => !unit.helper || !whole || hasProblems(unit.report))
   if (TRADITIONAL && whole) {
     for (const file of extraSources()) {
       const unit = unitOf(file)
@@ -968,7 +934,7 @@ async function main(): Promise<void> {
     }
   } else {
     // 全量检查时每个文件只查自己的词条，跨文件检查也按各自的词条
-    const dicts = new Map(units.flatMap((unit) => (unit.dict ? [[unit.file, unit.dict] as const] : [])))
+    const dicts = new Map(units.flatMap(unit => (unit.dict ? [[unit.file, unit.dict] as const] : [])))
     const merged = mergedFiles(dicts, ROOT)
     const own = ownEntriesByFile(dicts, merged)
     for (const unit of units) {
@@ -985,7 +951,7 @@ async function main(): Promise<void> {
         file: INDEX_FILE,
         name: displayPath(INDEX_FILE),
         report: { errors: [`${error}；已跳过注册、接线与 scoped 冲突检查`], warnings: [] },
-        keys: [],
+        keys: []
       })
   }
   await checkRedos(redos)

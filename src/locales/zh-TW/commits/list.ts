@@ -5,13 +5,13 @@ import { DATE_SOURCE, joinCjk, translateTime } from '../helpers'
 const VERIFICATION_STATES: Readonly<Record<string, string>> = {
   verified: '已驗證',
   unverified: '未驗證',
-  'partially verified': '部分驗證',
+  'partially verified': '部分驗證'
 }
 
 /** 提交消息中关闭关键字的提示：This commit closes issue #12. */
 const CLOSE_TARGETS: Readonly<Record<string, string>> = {
   issue: '議題',
-  'pull request': '拉取請求',
+  'pull request': '拉取請求'
 }
 
 /** 引用：#12 或 owner/repo#12 */
@@ -24,7 +24,7 @@ const regexp: readonly RegExpRule[] = [
   [/^Copy full SHA for ([0-9a-f]{7,40})$/, '複製 $1 的完整 SHA'],
   [
     /^(Show|Hide) description for ([0-9a-f]{7,40})$/,
-    (_, action: string, sha: string) => `${action === 'Show' ? '顯示' : '隱藏'} ${sha} 的描述`,
+    (_, action: string, sha: string) => `${action === 'Show' ? '顯示' : '隱藏'} ${sha} 的描述`
   ],
   [/^View (\d+) commit comments?$/, '查看 $1 則提交留言'],
   // 多个作者：按钮文字、无障碍名称、对话框标题（作者是人，量词作「位」）
@@ -36,7 +36,7 @@ const regexp: readonly RegExpRule[] = [
   // 提交消息中的关闭关键字提示：This commit closes issue #12.
   [
     new RegExp(`^This commit (?:closes|fixes|resolves) (issue|pull request) (${ISSUE_REF_SOURCE})\\.$`),
-    (_, target: string, ref: string) => `此提交會關閉${CLOSE_TARGETS[target] ?? target} ${ref}。`,
+    (_, target: string, ref: string) => `此提交會關閉${CLOSE_TARGETS[target] ?? target} ${ref}。`
   ],
   // 文件历史记录：标签页标题段、重命名提示
   [/^History for (.+) - ([\w.-]+\/[\w.-]+)$/, '$1 的歷史記錄 - $2'],
@@ -45,7 +45,7 @@ const regexp: readonly RegExpRule[] = [
   // 签名弹层的无障碍名称：verified: 0ff253b
   [
     /^(verified|unverified|partially verified): ([0-9a-f]{7})$/,
-    (_, state: string, sha: string) => `${VERIFICATION_STATES[state] ?? state}：${sha}`,
+    (_, state: string, sha: string) => `${VERIFICATION_STATES[state] ?? state}：${sha}`
   ],
   [/^Verification error: ([0-9a-f]{7})$/, '驗證錯誤：$1'],
   // 签名弹层：<上傳你的 GPG 公開簽署金鑰> 以驗證你的簽章。
@@ -57,7 +57,7 @@ const regexp: readonly RegExpRule[] = [
   // 筛选结果播报（结果量词作「項」）
   [/^(\d[\d,]*) results?$/, '$1 項結果'],
   // 提交行的无障碍名称：<提交消息>. More information available below.
-  [/^(\S.*)\. More information available below\.$/, '$1。下方有更多資訊。'],
+  [/^(\S.*)\. More information available below\.$/, '$1。下方有更多資訊。']
 ]
 
 /**
@@ -131,8 +131,7 @@ export default {
     'Analyzing...': '分析中...',
     'Failed to generate commit recap': '無法產生提交回顧',
     // 两句原文用句号分开，译文不并成逗号句
-    'AI-generated content may be inaccurate. Please verify important information.':
-      'AI 產生的內容可能不準確。請確認重要資訊。',
+    'AI-generated content may be inaccurate. Please verify important information.': 'AI 產生的內容可能不準確。請確認重要資訊。',
     // 提交反馈后：謝謝。我們正在開發此功能並期待你的 <詳細意見回饋>！（原文无逗号，译文不加）
     'Thank you. This feature is under development and': '謝謝。我們正在開發此功能並期待你的',
     'detailed feedback': '詳細意見回饋',
@@ -186,8 +185,7 @@ export default {
     "The key that signed this doesn't have usage flags that allow signing.": '簽署此內容的金鑰沒有允許簽署的用途旗標。',
     'The key that signed this doesn’t have usage flags that allow signing.': '簽署此內容的金鑰沒有允許簽署的用途旗標。',
     'The key that signed this is expired.': '簽署此內容的金鑰已過期。',
-    'We had a problem checking for revoked certificates. Please try again later.':
-      '檢查已撤銷的憑證時發生問題。請稍後再試。',
+    'We had a problem checking for revoked certificates. Please try again later.': '檢查已撤銷的憑證時發生問題。請稍後再試。',
     'One or more certificates in the chain has been revoked.': '憑證鏈中有一或多個憑證已撤銷。',
     'The signing certificate or its chain could not be verified.': '無法驗證簽署憑證或其憑證鏈。',
     'We were unable to verify this signature.': '無法驗證此簽章。',
@@ -202,7 +200,7 @@ export default {
     'An unavailable user': '無法顯示的使用者',
     // <用户> 驗證此提交的方式為 <在場證明>
     'authenticated this commit with': '驗證此提交的方式為',
-    'Completed on': '完成於',
+    'Completed on': '完成於'
   },
   scoped: {
     // 作者行动词：<用户> 推送於 <时间>（撰寫於、提交於由 common-ui 收录）
@@ -220,11 +218,11 @@ export default {
     // 签名对话框的屏幕阅读器标题（验证状态原值）
     verified: '已驗證',
     unverified: '未驗證',
-    partially_verified: '部分驗證',
+    partially_verified: '部分驗證'
   },
   regexp,
   ignore: [
     // 提交历史的“History for”面包屑：存储库名与路径段是用户内容（documentation 等目录名会撞上全局词条）
-    '[data-component="Breadcrumbs"] [data-component="Breadcrumbs.Item"]',
-  ],
+    '[data-component="Breadcrumbs"] [data-component="Breadcrumbs.Item"]'
+  ]
 } satisfies PageDictionary

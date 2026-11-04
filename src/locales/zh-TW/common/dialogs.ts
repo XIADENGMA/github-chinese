@@ -68,8 +68,7 @@ export default {
     'Close the feature preview dialog': '關閉功能預覽對話方塊',
     'Feature preview dialog': '功能預覽對話方塊',
     'Loading feature preview item': '正在載入功能預覽項目',
-    'Sorry, something went wrong and we were not able to fetch the feature previews':
-      '抱歉，發生錯誤，無法擷取功能預覽',
+    'Sorry, something went wrong and we were not able to fetch the feature previews': '抱歉，發生錯誤，無法擷取功能預覽',
     'Feature enabled': '功能已啟用',
     'Feature disabled': '功能已停用',
     'Help us improve this and make your experience even better.': '協助我們改善此功能，讓你的體驗更好。',
@@ -291,8 +290,7 @@ export default {
     'Submit comment and close or open pull request': '送出留言並關閉或重新開啟拉取請求',
     'Request reviewers': '請求審查者',
     'Link an issue or pull request from the same repository': '連結同一儲存庫中的議題或拉取請求',
-    'Toggle visibility of all collapsed review comments instead of just the current one':
-      '切換所有已摺疊審查留言的顯示',
+    'Toggle visibility of all collapsed review comments instead of just the current one': '切換所有已摺疊審查留言的顯示',
     'Open commits list': '開啟提交清單',
     'Open files list': '開啟檔案清單',
     'Next commit': '下一個提交',
@@ -342,27 +340,21 @@ export default {
     'Select item': '選取項目',
     'Create issue': '建立議題',
     'Submit form': '送出表單',
-    'Submit input': '送出輸入內容',
+    'Submit input': '送出輸入內容'
   },
   regexp: [
     // 快捷键提示：头部按钮与工具提示（g then d、(g then d)、(control shift l)）
     [new RegExp(`^\\((${HINT_SOURCE})\\)$`), (_, hint) => hintParens(hint)],
     [new RegExp(`^(${HINT_SOURCE})$`), (_, hint) => hintLabel(hint)],
     // 用户状态过期时间选项（服务端下发，首字母大写）：In 30 minutes / In 4 hours；自定义时长可到天、周
-    [
-      /^In (\d+) (minute|hour|day|week)s?$/,
-      (_, amount, unit) => relativeTime(Number(amount), unit as Intl.RelativeTimeFormatUnit),
-    ],
+    [/^In (\d+) (minute|hour|day|week)s?$/, (_, amount, unit) => relativeTime(Number(amount), unit as Intl.RelativeTimeFormatUnit)],
     [/^Select an emoji: (:[\w+-]+:)$/, '選擇表情符號：$1'],
     // 功能预览开关的无障碍名称
-    [
-      /^(Enable|Disable) the (.+) feature preview$/,
-      (_, action, name) => `${action === 'Enable' ? '啟用' : '停用'} ${name} 功能預覽`,
-    ],
+    [/^(Enable|Disable) the (.+) feature preview$/, (_, action, name) => `${action === 'Enable' ? '啟用' : '停用'} ${name} 功能預覽`],
     // sudo 确认对话框：电子邮件验证（设置、存储库设置等任意页面）。电子邮件用 [^\s@]+，避免大量 @ 时的二次方回溯
     [
       /^Enter the verification code sent to ([^\s@]+@[^\s@]+)\. If it doesn['’]t appear within a few minutes, check your spam folder\.$/,
-      '輸入傳送至 $1 的驗證碼。如果幾分鐘內沒有收到，請檢查垃圾郵件資料夾。',
-    ],
-  ],
+      '輸入傳送至 $1 的驗證碼。如果幾分鐘內沒有收到，請檢查垃圾郵件資料夾。'
+    ]
+  ]
 } satisfies PageDictionary

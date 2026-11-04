@@ -14,7 +14,7 @@ const MONTH_NUMBERS: Readonly<Record<string, number>> = {
   September: 9,
   October: 10,
   November: 11,
-  December: 12,
+  December: 12
 }
 
 const MONTH_FULL_SOURCE = Object.keys(MONTH_NUMBERS).join('|')
@@ -27,7 +27,7 @@ const CALENDAR_LABELS: Readonly<Record<string, string>> = Object.fromEntries([
   ...Object.entries(MONTH_NUMBERS).map(([name, month]) => [name, formatDate(undefined, month, undefined)]),
   ...MONTH_SHORT.map((name, index) => [name, formatDate(undefined, index + 1, undefined)]),
   ...WEEKDAYS.map((name, index) => [name, `星期${WEEKDAY_NAMES[index]}`]),
-  ...WEEKDAYS.map((name, index) => [name.slice(0, 3), `周${WEEKDAY_NAMES[index]}`]),
+  ...WEEKDAYS.map((name, index) => [name.slice(0, 3), `周${WEEKDAY_NAMES[index]}`])
 ])
 
 const NUM = '(\\d[\\d,]*)'
@@ -72,23 +72,16 @@ export default {
     'Private contributions': '私密贡献',
     'Turning on private contributions will show anonymized private activity on your profile.':
       '开启私密贡献将在你的个人资料中显示匿名化的私密活动。',
-    'Turning off private contributions will show only public activity on your profile.':
-      '关闭私密贡献将在你的个人资料中只显示公开活动。',
+    'Turning off private contributions will show only public activity on your profile.': '关闭私密贡献将在你的个人资料中只显示公开活动。',
     'Turning on the activity overview will show an overview of your activity across organizations and repositories.':
       '开启活动概述将显示你在各组织和存储库中的活动概述。',
-    'Turning off the activity overview will hide the section on your profile.':
-      '关闭活动概述将在你的个人资料中隐藏此部分。',
-    'Visitors will now see your public and anonymized private contributions.':
-      '访客现在会看到你的公开贡献和匿名化的私密贡献。',
+    'Turning off the activity overview will hide the section on your profile.': '关闭活动概述将在你的个人资料中隐藏此部分。',
+    'Visitors will now see your public and anonymized private contributions.': '访客现在会看到你的公开贡献和匿名化的私密贡献。',
     'Visitors will now see only your public contributions.': '访客现在只会看到你的公开贡献。',
-    "Others will now see 'Activity overview' when they view your profile.":
-      '其他人查看你的个人资料时将看到“活动概述”。',
-    'Others will now see ‘Activity overview’ when they view your profile.':
-      '其他人查看你的个人资料时将看到“活动概述”。',
-    "The 'Activity overview' section will no longer appear on your profile.":
-      '“活动概述”部分将不再显示在你的个人资料中。',
-    'The ‘Activity overview’ section will no longer appear on your profile.':
-      '“活动概述”部分将不再显示在你的个人资料中。',
+    "Others will now see 'Activity overview' when they view your profile.": '其他人查看你的个人资料时将看到“活动概述”。',
+    'Others will now see ‘Activity overview’ when they view your profile.': '其他人查看你的个人资料时将看到“活动概述”。',
+    "The 'Activity overview' section will no longer appear on your profile.": '“活动概述”部分将不再显示在你的个人资料中。',
+    'The ‘Activity overview’ section will no longer appear on your profile.': '“活动概述”部分将不再显示在你的个人资料中。',
 
     // 活动概述
     'Activity overview': '活动概述',
@@ -116,7 +109,7 @@ export default {
     'First issue': '第一个议题',
     'Joined GitHub': '加入 GitHub',
     'This repository is public': '此存储库为公共存储库',
-    'This repository is private': '此存储库为专用存储库',
+    'This repository is private': '此存储库为专用存储库'
   },
   scoped: {
     ...CALENDAR_LABELS,
@@ -129,7 +122,7 @@ export default {
     merged: '个已合并的',
     open: '个打开的',
     closed: '个已关闭的',
-    'Joined the': '加入了',
+    'Joined the': '加入了'
   },
   regexp: [
     // 贡献图标题与提示；按组织筛选后带「in <组织>」
@@ -139,11 +132,11 @@ export default {
     [new RegExp(`^${NUM} contributions? in (\\d{4}) in ${ORG}$`), '$2 年在 $3 中共 $1 次贡献'],
     [
       new RegExp(`^${NUM} contributions? on (${MONTH_FULL_SOURCE}) (\\d{1,2})(?:st|nd|rd|th)\\.$`),
-      (_, count, month, day) => joinCjk(monthDay(month, day), `有 ${count} 次贡献。`),
+      (_, count, month, day) => joinCjk(monthDay(month, day), `有 ${count} 次贡献。`)
     ],
     [
       new RegExp(`^No contributions on (${MONTH_FULL_SOURCE}) (\\d{1,2})(?:st|nd|rd|th)\\.$`),
-      (_, month, day) => joinCjk(monthDay(month, day), '没有贡献。'),
+      (_, month, day) => joinCjk(monthDay(month, day), '没有贡献。')
     ],
     [/^Contribution activity in (\d{4}), (\d+) of (\d+)$/, '$1 年贡献活动，$3 项中的第 $2 项'],
 
@@ -152,22 +145,19 @@ export default {
 
     // 时间线分组标题
     [new RegExp(`^Created ${NUM} commits? in ${NUM} ${REPOS}$`), '在 $2 个存储库中创建了 $1 个提交'],
-    [
-      new RegExp(`^Created ${NUM} (other )?${REPOS}$`),
-      (_, count, other) => `创建了 ${count} 个${other ? '其他' : ''}存储库`,
-    ],
+    [new RegExp(`^Created ${NUM} (other )?${REPOS}$`), (_, count, other) => `创建了 ${count} 个${other ? '其他' : ''}存储库`],
     [
       new RegExp(`^Opened ${NUM} (other )?pull requests? in ${NUM} ${REPOS}$`),
-      (_, count, other, repos) => `在 ${repos} 个存储库中创建了 ${count} 个${other ? '其他' : ''}拉取请求`,
+      (_, count, other, repos) => `在 ${repos} 个存储库中创建了 ${count} 个${other ? '其他' : ''}拉取请求`
     ],
     [
       new RegExp(`^Opened ${NUM} (other )?issues? in ${NUM} ${REPOS}$`),
-      (_, count, other, repos) => `在 ${repos} 个存储库中打开了 ${count} 个${other ? '其他' : ''}议题`,
+      (_, count, other, repos) => `在 ${repos} 个存储库中打开了 ${count} 个${other ? '其他' : ''}议题`
     ],
     [new RegExp(`^Reviewed ${NUM} pull requests? in ${NUM} ${REPOS}$`), '在 $2 个存储库中审查了 $1 个拉取请求'],
     [
       new RegExp(`^Started ${NUM} (other )?discussions? in ${NUM} ${REPOS}$`),
-      (_, count, other, repos) => `在 ${repos} 个存储库中发起了 ${count} 个${other ? '其他' : ''}讨论`,
+      (_, count, other, repos) => `在 ${repos} 个存储库中发起了 ${count} 个${other ? '其他' : ''}讨论`
     ],
     [new RegExp(`^Answered ${NUM} discussions? in ${NUM} ${REPOS}$`), '在 $2 个存储库中回答了 $1 个讨论'],
     [new RegExp(`^${NUM} ${REPOS} not shown$`), '另有 $1 个存储库未显示'],
@@ -177,7 +167,7 @@ export default {
     [new RegExp(`^that received ${NUM} comments?$`), '收到 $1 条评论'],
     [
       new RegExp(`^Created (a pull request|an issue) in ([\\w.-]+/[\\w.-]+) that received ${NUM} comments?$`),
-      (_, kind, repo, count) => `在 ${repo} 中创建的${kind === 'an issue' ? '议题' : '拉取请求'}收到 ${count} 条评论`,
+      (_, kind, repo, count) => `在 ${repo} 中创建的${kind === 'an issue' ? '议题' : '拉取请求'}收到 ${count} 条评论`
     ],
     [/^Joined the ([\w.-]+) organization$/, '加入了 $1 组织'],
     [/^(\d+) of (\d+) tasks?$/, '$2 个任务中已完成 $1 个'],
@@ -185,7 +175,7 @@ export default {
     [/^Progress: (\d+(?:\.\d+)?%)$/, '进度：$1'],
     [
       new RegExp(`^(\\d{1,3})% of commits in (${MONTH_FULL_SOURCE}) were made to ([\\w.-]+/[\\w.-]+)$`),
-      (_, percent, month, repo) => joinCjk(monthName(month), `的提交中有 ${percent}% 提交到 ${repo}`),
+      (_, percent, month, repo) => joinCjk(monthName(month), `的提交中有 ${percent}% 提交到 ${repo}`)
     ],
     // 专用存储库中的贡献
     [/^Only people who can see (\S+) can see this contribution$/, '只有能查看 $1 的人才能看到此贡献'],
@@ -198,24 +188,15 @@ export default {
     [/^@([\w-]+)[’']s activity is private$/, '@$1 的活动为私密'],
 
     // 日期：贡献日期、私密贡献日期范围（单个日期由 common-ui 翻译）
-    [
-      new RegExp(`^This contribution was made on (${DATE_SOURCE})$`),
-      (_, date) => joinCjk('此贡献发生于', translateTime(date)),
-    ],
-    [
-      new RegExp(`^(${DATE_SOURCE}) – (${DATE_SOURCE})$`),
-      (_, from, to) => `${translateTime(from)} – ${translateTime(to)}`,
-    ],
+    [new RegExp(`^This contribution was made on (${DATE_SOURCE})$`), (_, date) => joinCjk('此贡献发生于', translateTime(date))],
+    [new RegExp(`^(${DATE_SOURCE}) – (${DATE_SOURCE})$`), (_, from, to) => `${translateTime(from)} – ${translateTime(to)}`],
     // 加载更多活动时的页面标题：user (Name) / September 2026
-    [
-      new RegExp(`^(.+?) / (${MONTH_FULL_SOURCE}) (\\d{4})$`),
-      (_, who, month, year) => `${who} / ${monthName(month, year)}`,
-    ],
+    [new RegExp(`^(.+?) / (${MONTH_FULL_SOURCE}) (\\d{4})$`), (_, who, month, year) => `${who} / ${monthName(month, year)}`]
   ],
   ignore: [
     // 时间线中的拉取请求 / 议题正文摘录
-    '.contribution-activity-listing .Box p',
+    '.contribution-activity-listing .Box p'
   ],
   // 时间线月份标题：<span data-sr-feedback>October <span>2026</span></span>，合并后由 common-ui 的日期规则翻译
-  mergeText: ['h3 > span[data-sr-feedback]'],
+  mergeText: ['h3 > span[data-sr-feedback]']
 } satisfies PageDictionary

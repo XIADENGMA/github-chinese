@@ -44,12 +44,12 @@ export const CATEGORIES: Readonly<Record<string, string>> = {
   'Time tracking': '時間追蹤',
   Utilities: '公用程式',
   'Game CI': '遊戲 CI',
-  'GitHub Sponsors': 'GitHub 贊助',
+  'GitHub Sponsors': 'GitHub 贊助'
 }
 
 /** 类别名的正则片段（已转义） */
 const CATEGORY_NAMES = Object.keys(CATEGORIES)
-  .map((name) => name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+  .map(name => name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
   .join('|')
 
 /** 「<类别> apps / actions」标题：程式碼品質應用程式、IDE 應用程式、GitHub 贊助動作 */
@@ -59,9 +59,7 @@ function categoryHeading(name: string, kind: string): string {
 
 /** 首页与筛选用到的单词；Security、Support、Code review 与 common 的全局译文相同，不进 scoped */
 const CATEGORY_SCOPED = Object.fromEntries(
-  Object.entries(CATEGORIES).filter(
-    ([name, label]) => name !== label && !['Security', 'Support', 'Code review'].includes(name),
-  ),
+  Object.entries(CATEGORIES).filter(([name, label]) => name !== label && !['Security', 'Support', 'Code review'].includes(name))
 )
 
 export default {
@@ -69,8 +67,7 @@ export default {
     // 头部
     'Enhance your workflow with extensions': '使用擴充功能強化你的工作流程',
     // 原文没有标点，译文不加
-    'Tools from the community and partners to simplify tasks and automate processes':
-      '來自社群和合作夥伴的工具可簡化工作並自動化流程',
+    'Tools from the community and partners to simplify tasks and automate processes': '來自社群和合作夥伴的工具可簡化工作並自動化流程',
     'Tools to improve your workflow': '改善工作流程的工具',
 
     // 导航
@@ -109,8 +106,7 @@ export default {
 
     // 搜索结果
     'Copilot Extensions': 'Copilot 擴充功能',
-    'Extend Copilot capabilities using third party tools, services, and data':
-      '使用第三方工具、服務和資料擴充 Copilot 的功能',
+    'Extend Copilot capabilities using third party tools, services, and data': '使用第三方工具、服務和資料擴充 Copilot 的功能',
     'Automate your workflow from idea to production': '將從構想到上線的工作流程自動化',
     'Build on your workflow with apps that integrate with GitHub': '使用與 GitHub 整合的應用程式擴充你的工作流程',
     'Try searching by different keywords.': '嘗試使用其他關鍵字搜尋。',
@@ -136,17 +132,13 @@ export default {
       '推送到 GitHub 時自動建置並測試程式碼，避免錯誤部署到正式環境。',
     'Secure and manage your third-party dependencies.': '保護並管理第三方相依項目。',
     'Streamline your code deployment so you can focus on your product.': '簡化程式碼部署以便專注於產品。',
-    'Enables custom protection rules to gate deployments with third-party services':
-      '啟用自訂保護規則以透過第三方服務管控部署',
+    'Enables custom protection rules to gate deployments with third-party services': '啟用自訂保護規則以透過第三方服務管控部署',
     'Developer tools that are run natively on your local machine.': '在本機上原生執行的開發人員工具。',
     'Tools for building a CI pipeline for game development': '為遊戲開發建置 CI 管線的工具',
-    'Find the right interface to build, debug, and deploy your source code.':
-      '找到合適的介面來建置、偵錯並部署原始碼。',
+    'Find the right interface to build, debug, and deploy your source code.': '找到合適的介面來建置、偵錯並部署原始碼。',
     'Get the skills you need to level up.': '取得更上一層樓所需的技能。',
-    "Extend your software's reach. Localize and translate continuously from GitHub.":
-      '擴大軟體的觸及範圍。在 GitHub 上持續在地化並翻譯。',
-    'Extend your software’s reach. Localize and translate continuously from GitHub.':
-      '擴大軟體的觸及範圍。在 GitHub 上持續在地化並翻譯。',
+    "Extend your software's reach. Localize and translate continuously from GitHub.": '擴大軟體的觸及範圍。在 GitHub 上持續在地化並翻譯。',
+    'Extend your software’s reach. Localize and translate continuously from GitHub.': '擴大軟體的觸及範圍。在 GitHub 上持續在地化並翻譯。',
     'Improve your workflow for the small screen.': '改善小螢幕上的工作流程。',
     'Continuous integration for Mobile applications': '行動應用程式的持續整合',
     'Monitor the impact of your code changes. Measure performance, track errors, and analyze your application.':
@@ -156,11 +148,9 @@ export default {
     'Organize, manage, and track your project with tools that build on top of issues and pull requests.':
       '使用以議題和拉取請求為基礎的工具來組織、管理並追蹤專案。',
     'Get your site ready for production so you can get the word out.': '讓網站做好上線準備以便廣為宣傳。',
-    'The latest tools that help you and your team build software better, together.':
-      '協助你和團隊攜手更好地打造軟體的最新工具。',
+    'The latest tools that help you and your team build software better, together.': '協助你和團隊攜手更好地打造軟體的最新工具。',
     'Get insights into how your teams are developing software using GitHub.': '深入瞭解團隊如何使用 GitHub 開發軟體。',
-    'Find, fix, and prevent security vulnerabilities before they can be exploited.':
-      '在安全性漏洞遭到利用前發現、修正並防範。',
+    'Find, fix, and prevent security vulnerabilities before they can be exploited.': '在安全性漏洞遭到利用前發現、修正並防範。',
     'Get your team and customers the help they need.': '為團隊和客戶提供所需的協助。',
     'Optimize your work to minimize impact on the environment.': '最佳化工作以減少對環境的影響。',
     'Eliminate bugs and ship with more confidence by adding these tools to your workflow.':
@@ -183,8 +173,7 @@ export default {
     'How to create and list tools on the GitHub Marketplace, including guidelines for listing content, artwork, and screenshots.':
       '如何在 GitHub 市集建立並上架工具，包括上架內容、圖片和螢幕截圖的指南。',
     'Adding webhooks for a GitHub Marketplace listing': '為 GitHub 市集上架資訊新增 Web 鉤子',
-    'Add webhooks for your app to notify you when specified events are triggered.':
-      '為應用程式新增 Web 鉤子以在指定事件觸發時通知你。',
+    'Add webhooks for your app to notify you when specified events are triggered.': '為應用程式新增 Web 鉤子以在指定事件觸發時通知你。'
   },
   scoped: {
     ...CATEGORY_SCOPED,
@@ -212,24 +201,21 @@ export default {
     'Best match': '最相符',
     // 类别说明「Tools to manage your <GitHub Sponsors> community」
     'Tools to manage your': '管理',
-    community: '社群的工具',
+    community: '社群的工具'
   },
   regexp: [
     [/^Search results for “(.+)”$/, '「$1」的搜尋結果'],
     // 原文末尾的句号照录；搜索结果量词作「項」，与 common-ui/counts.ts 一致
     [/^(\d[\d,]*) results?(\.?)$/, (_, count: string, period: string) => `${count} 項結果${period ? '。' : ''}`],
-    [
-      new RegExp(`^(${CATEGORY_NAMES}) (apps|actions)$`),
-      (_, name: string, kind: string) => categoryHeading(name, kind),
-    ],
+    [new RegExp(`^(${CATEGORY_NAMES}) (apps|actions)$`), (_, name: string, kind: string) => categoryHeading(name, kind)],
     // 分页：原文末尾的省略号照录
-    [/^Page (\d+)(\.\.\.|…)?$/, '第 $1 頁$2'],
+    [/^Page (\d+)(\.\.\.|…)?$/, '第 $1 頁$2']
   ],
   ignore: [
     // 列表条目：名称、描述
     '[data-testid="marketplace-item"] h3',
     '[data-testid="marketplace-item"] p',
     // 搜索框内的查询文本叠加层（用户输入）
-    '#marketplace-search-filter div[aria-hidden="true"]',
-  ],
+    '#marketplace-search-filter div[aria-hidden="true"]'
+  ]
 } satisfies PageDictionary

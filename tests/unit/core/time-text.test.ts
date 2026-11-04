@@ -6,7 +6,7 @@ import {
   stripLocalZone,
   TIME_UPDATED_EVENT,
   type TimeText,
-  zoneProbe,
+  zoneProbe
 } from '../../../src/core/time-text'
 import { FakeRelativeTime, defineFakeRelativeTime, settleTime } from './time-element'
 
@@ -85,7 +85,7 @@ const TITLE_OPTIONS: Intl.DateTimeFormatOptions = {
   year: 'numeric',
   hour: 'numeric',
   minute: '2-digit',
-  timeZoneName: 'short',
+  timeZoneName: 'short'
 }
 /** 显示文字的格式（超过 30 天显示日期）：2026年10月26日 */
 const DATE_OPTIONS: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' }
@@ -205,7 +205,7 @@ describe('spaceDigits', () => {
     ['上午10:03', '上午 10:03'],
     ['3小时5分钟', '3 小时 5 分钟'],
     ['昨天', '昨天'],
-    ['3 days ago', '3 days ago'],
+    ['3 days ago', '3 days ago']
   ])('%s → %s', (input, expected) => {
     expect(spaceDigits(input)).toBe(expected)
   })
@@ -225,7 +225,7 @@ describe('stripLocalZone', () => {
     ['2026年10月7日 上午12:06 [PDT]', '2026年10月7日 上午12:06 [PDT]'],
     ['2026年10月7日 UTC 07:06', '2026年10月7日 UTC 07:06'],
     ['2026年10月7日 XYZ 15:06', '2026年10月7日 XYZ 15:06'],
-    ['3天前', '3天前'],
+    ['3天前', '3天前']
   ])('%s → %s', (text, expected) => {
     expect(stripLocalZone(text, time)).toBe(expected)
   })
@@ -235,7 +235,7 @@ describe('stripLocalZone', () => {
     ['Europe/London', '2026年10月7日 GMT+1 08:06', '2026年10月7日 08:06'],
     ['America/Los_Angeles', '2026年10月7日 上午12:06 [PDT]', '2026年10月7日 上午12:06'],
     ['America/Adak', '2026年10月6日 下午10:06 [HADT]', '2026年10月6日 下午10:06'],
-    ['Asia/Kolkata', '2026年10月7日 GMT+5:30 12:36', '2026年10月7日 12:36'],
+    ['Asia/Kolkata', '2026年10月7日 GMT+5:30 12:36', '2026年10月7日 12:36']
   ])('本地时区为 %s：%s → %s', (zone, text, expected) => {
     changeZone(zone)
     expect(stripLocalZone(text, time)).toBe(expected)
@@ -366,7 +366,7 @@ describe('createTimeText', () => {
 
   it('restore 移除改写过的 title，元素按当前 lang 重新生成', async () => {
     const time = mount()
-    const timeText = create((element) => element.getAttribute('lang') === 'zh-CN')
+    const timeText = create(element => element.getAttribute('lang') === 'zh-CN')
     timeText.attach()
     time.setAttribute('lang', 'zh-CN')
     await settleTime()
@@ -645,7 +645,7 @@ describe('改了系统时区', () => {
 
   it.each([
     ['zh-CN', ZH_CN_TIME, '2026 年 10 月 26 日 GMT+8 10:03', '2026 年 10 月 26 日 11:03'],
-    ['zh-TW', ZH_TW_TIME, '2026 年 10 月 26 日 上午 10:03 [GMT+8]', '2026 年 10 月 26 日 上午 11:03'],
+    ['zh-TW', ZH_TW_TIME, '2026 年 10 月 26 日 上午 10:03 [GMT+8]', '2026 年 10 月 26 日 上午 11:03']
   ])('改时区后插入的 %s 元素：沿用缓存的格式时保留时区，新建的格式按新时区去掉', async (_lang, html, cached, fresh) => {
     create().attach()
     mountIntl(html)

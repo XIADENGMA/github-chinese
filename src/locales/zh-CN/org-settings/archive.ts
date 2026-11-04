@@ -12,7 +12,7 @@ const FILTER_TARGET: Readonly<Record<string, string>> = {
   organization: '组织',
   repository: '存储库',
   team: '团队',
-  user: '用户',
+  user: '用户'
 }
 
 /**
@@ -62,7 +62,7 @@ export default {
     "Enabling will allow you to view IP addresses of current members for organization audit log events. As this feature makes your users' IP addresses automatically available, you should review this change with your legal team to determine whether any user notification is required. When enabled at the enterprise level it will be automatically enabled for all organizations owned by the enterprise, the reverse is not true.":
       '启用后，你可以在组织审核日志事件中查看当前成员的 IP 地址。此功能会自动公开用户的 IP 地址，你应与法务团队评估此更改，确定是否需要通知用户。在企业级别启用后，企业拥有的所有组织都会自动启用；反之则不然。',
     'Enabling will allow you to view IP addresses of current members for organization audit log events. As this feature makes your users’ IP addresses automatically available, you should review this change with your legal team to determine whether any user notification is required. When enabled at the enterprise level it will be automatically enabled for all organizations owned by the enterprise, the reverse is not true.':
-      '启用后，你可以在组织审核日志事件中查看当前成员的 IP 地址。此功能会自动公开用户的 IP 地址，你应与法务团队评估此更改，确定是否需要通知用户。在企业级别启用后，企业拥有的所有组织都会自动启用；反之则不然。',
+      '启用后，你可以在组织审核日志事件中查看当前成员的 IP 地址。此功能会自动公开用户的 IP 地址，你应与法务团队评估此更改，确定是否需要通知用户。在企业级别启用后，企业拥有的所有组织都会自动启用；反之则不然。'
   },
   scoped: {
     // 预定提醒
@@ -110,7 +110,7 @@ export default {
     Deleted: '删除于',
     'Done!': '完成！',
     'These repositories were deleted by members of this organization. Repositories can be restored for 90 days after deletion.':
-      '这些存储库已被此组织的成员删除。存储库删除后 90 天内可以恢复。',
+      '这些存储库已被此组织的成员删除。存储库删除后 90 天内可以恢复。'
   },
   regexp: [
     [/^Ignore with (\d+) or more approvals?$/, '有 $1 个或更多批准时忽略'],
@@ -118,13 +118,10 @@ export default {
     // 审核日志搜索建议的无障碍标签：「action: filter by action」
     [
       /^([a-z_]+): filter by (action|actor|country|created date|operation|organization|repository|team|user)$/,
-      (_, qualifier: string, target: string) => `${qualifier}: 按${FILTER_TARGET[target] ?? target}筛选`,
+      (_, qualifier: string, target: string) => `${qualifier}: 按${FILTER_TARGET[target] ?? target}筛选`
     ],
-    [
-      new RegExp(`^This is where you can review activity from ${ORG}[’']s sponsorships\\.$`),
-      '你可以在这里查看 $1 的赞助活动。',
-    ],
+    [new RegExp(`^This is where you can review activity from ${ORG}[’']s sponsorships\\.$`), '你可以在这里查看 $1 的赞助活动。'],
     [new RegExp(`^No recoverable repositories were found for ${ORG}\\.$`), '未找到 $1 可恢复的存储库。'],
-    [/^Are you sure you want to restore ([\w.-]+(?:\/[\w.-]+)?)\?$/, '确定要恢复 $1 吗？'],
-  ],
+    [/^Are you sure you want to restore ([\w.-]+(?:\/[\w.-]+)?)\?$/, '确定要恢复 $1 吗？']
+  ]
 } satisfies PageDictionary

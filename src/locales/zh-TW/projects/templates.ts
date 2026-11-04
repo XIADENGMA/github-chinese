@@ -15,7 +15,7 @@ export const OPTION_NAMES: Readonly<Record<string, string>> = {
   Backlog: '待辦清單',
   Ready: '就緒',
   'In review': '審查中',
-  'No Status': '無狀態',
+  'No Status': '無狀態'
 }
 
 export function translateOptionName(name: string): string {
@@ -24,7 +24,7 @@ export function translateOptionName(name: string): string {
 
 const AUTO_ADD_SUB_ISSUES: Readonly<Record<string, string>> = {
   ' and its sub-issues': '及其子議題',
-  ' and their sub-issues': '及其子議題',
+  ' and their sub-issues': '及其子議題'
 }
 
 export default {
@@ -63,8 +63,7 @@ export default {
     'Plan your current and upcoming iterations as you work through your prioritized backlog of items':
       '在處理依優先順序排列的待辦項目時規劃目前和接下來的迭代',
     'Product launch': '產品發表',
-    'Manage work items across teams and functions when planning for a product launch 🚀':
-      '在規劃產品發表時跨團隊和職能管理工作項目 🚀',
+    'Manage work items across teams and functions when planning for a product launch 🚀': '在規劃產品發表時跨團隊和職能管理工作項目 🚀',
     "Manage your team's long term plans as you plan out your roadmap": '在規劃藍圖時管理團隊的長期計畫',
     'Team retrospective': '團隊回顧',
     'Reflect as a team what went well, what can be improved next time, and action items':
@@ -75,8 +74,7 @@ export default {
     'Import items from search query': '從搜尋查詢匯入項目',
     'All new and existing items from the selected repository will be added to this project.':
       '選取的儲存庫中所有新的和現有的項目都會加入此專案。',
-    'All existing items matching the search query will be added to this project.':
-      '與搜尋查詢相符的所有現有項目都會加入此專案。',
+    'All existing items matching the search query will be added to this project.': '與搜尋查詢相符的所有現有項目都會加入此專案。',
     'Import items based on search query': '根據搜尋查詢匯入項目',
     'Items to import': '要匯入的項目',
     'We were unable to bulk import items at this time. Please try again.': '目前無法批次匯入項目。請再試一次。',
@@ -85,7 +83,7 @@ export default {
       '企業環境基於安全性考量要求明確指定儲存庫範圍 (repo:owner/name)。不允許只使用組織和使用者限定詞。',
     'Select entities to add': '選取要加入的內容',
     'Import query': '匯入查詢',
-    '0 items will be added': '不會加入任何項目',
+    '0 items will be added': '不會加入任何項目'
   },
   scoped: {
     // 通用文本（仅项目页生效）
@@ -167,8 +165,7 @@ export default {
     'Interaction count': '互動數',
     'Reactions count': '表情回應數',
     'Search for draft items': '搜尋草稿項目',
-    'Restrict your search to the title, body, comments, or any combination of these':
-      '將搜尋範圍限定在標題、內文、留言或其任意組合',
+    'Restrict your search to the title, body, comments, or any combination of these': '將搜尋範圍限定在標題、內文、留言或其任意組合',
     'Items linked to an issue or pull request': '連結到議題或拉取請求的項目',
     'Specify a review state': '指定審查狀態',
     'Commit status: pending | success | failure': '提交狀態：pending | success | failure',
@@ -203,25 +200,23 @@ export default {
     'Most commented': '最多留言',
     'Items with pending status': '狀態為 pending 的項目',
     'Items with success status': '狀態為 success 的項目',
-    'Items with failure status': '狀態為 failure 的項目',
+    'Items with failure status': '狀態為 failure 的項目'
   },
   regexp: [
     // 结果的量词按术语表用「項」
     [/^(\d+) results$/, '$1 項結果'],
     [
       /^The most recent 500 items( and (?:its|their) sub-issues)? will be added to the project$/,
-      (_, subIssues?: string) =>
-        `最近的 500 個項目${subIssues ? (AUTO_ADD_SUB_ISSUES[subIssues] ?? '') : ''}將加入專案`,
+      (_, subIssues?: string) => `最近的 500 個項目${subIssues ? (AUTO_ADD_SUB_ISSUES[subIssues] ?? '') : ''}將加入專案`
     ],
     [
       /^(\d+) items?( and (?:its|their) sub-issues)? will be added$/,
-      (_, count: string, subIssues?: string) =>
-        `將加入 ${count} 個項目${subIssues ? (AUTO_ADD_SUB_ISSUES[subIssues] ?? '') : ''}`,
-    ],
+      (_, count: string, subIssues?: string) => `將加入 ${count} 個項目${subIssues ? (AUTO_ADD_SUB_ISSUES[subIssues] ?? '') : ''}`
+    ]
   ],
   inline: [
     // 批量添加 / 从搜索查询导入的模式切换（bulk-add-configuration.tsx）：
     // <p>Add from a <button>search query</button> instead</p>，按钮文字 search query / repository 照常翻译
-    ['Add from a {} instead', '改為從{}加入'],
-  ],
+    ['Add from a {} instead', '改為從{}加入']
+  ]
 } satisfies PageDictionary

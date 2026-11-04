@@ -39,7 +39,7 @@ export default {
     'Billing overview': '计费概述',
     'Billing Usage': '计费使用情况',
     'Billing usage': '计费使用情况',
-    'Payment Information': '付款信息',
+    'Payment Information': '付款信息'
   },
   scoped: {
     // 页头帐户名后的读屏文字：「Mona (octocat) settings」
@@ -84,6 +84,6 @@ export default {
     Applications: '应用',
     'Scheduled reminders': '预定提醒',
     'Developer settings': '开发人员设置',
-    'Developer Settings': '开发人员设置',
-  },
+    'Developer Settings': '开发人员设置'
+  }
 } satisfies PageDictionary

@@ -17,7 +17,7 @@ export interface ImageFetchDeps {
 
 export const IMAGE_FETCH_DEPS: ImageFetchDeps = {
   // 不把全局 fetch 直接挂到对象上：以对象为 this 调用会报 Illegal invocation
-  fetch: (url, init) => fetch(url, init),
+  fetch: (url, init) => fetch(url, init)
 }
 
 function toBase64(bytes: Uint8Array): string {
@@ -38,7 +38,7 @@ async function fetchDataUrl(url: string, deps: ImageFetchDeps): Promise<string |
     const response = await deps.fetch(url, {
       credentials: 'omit',
       referrerPolicy: 'no-referrer',
-      signal: controller.signal,
+      signal: controller.signal
     })
     const type = (response.headers.get('content-type') ?? '').split(';')[0]!.trim().toLowerCase()
     if (!response.ok || !IMAGE_TYPE_RE.test(type)) return undefined
@@ -57,11 +57,7 @@ async function fetchDataUrl(url: string, deps: ImageFetchDeps): Promise<string |
  * 只用支持该地址的加速源：故障转移关闭时只试第一个（首选，或首选不支持时第一个支持的），开启时依次尝试；
  * 首选为自动选择时按已知的探测结果排序后依次尝试。未开启、不是可加速的图片、都取不到时为 undefined
  */
-export async function fetchImage(
-  href: string,
-  settings: Settings,
-  deps: ImageFetchDeps = IMAGE_FETCH_DEPS,
-): Promise<string | undefined> {
+export async function fetchImage(href: string, settings: Settings, deps: ImageFetchDeps = IMAGE_FETCH_DEPS): Promise<string | undefined> {
   const link = parseImageUrl(href)
   if (!link || !settings.enabled || !settings.accelerateImages) return undefined
   const candidates = candidateSources(settings, link)

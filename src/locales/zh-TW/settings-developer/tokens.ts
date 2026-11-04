@@ -9,7 +9,7 @@ const WEEKDAYS: Readonly<Record<string, string>> = {
   Wed: '週三',
   Thu: '週四',
   Fri: '週五',
-  Sat: '週六',
+  Sat: '週六'
 }
 
 const MONTH_NUMBERS: Readonly<Record<string, number>> = {
@@ -24,7 +24,7 @@ const MONTH_NUMBERS: Readonly<Record<string, number>> = {
   sep: 9,
   oct: 10,
   nov: 11,
-  dec: 12,
+  dec: 12
 }
 
 /** 令牌页的日期格式：“Tue, Nov 25 2025”（不含捕获组） */
@@ -276,7 +276,7 @@ export default {
     'Read public user gpg keys': '讀取使用者公開 GPG 金鑰',
     'Full control of public user ssh signing keys': '完全控制使用者公開 SSH 簽署金鑰',
     'Write public user ssh signing keys': '寫入使用者公開 SSH 簽署金鑰',
-    'Read public user ssh signing keys': '讀取使用者公開 SSH 簽署金鑰',
+    'Read public user ssh signing keys': '讀取使用者公開 SSH 簽署金鑰'
   },
   scoped: {
     // 与组织令牌策略共用（Personal access tokens 见 permissions.ts，Note 见 moderation.ts，Custom 由 settings-account 收录）
@@ -307,42 +307,37 @@ export default {
     'Authorization check': '授權檢查',
     'Authorization failed': '授權失敗',
     'Retry check': '重新檢查',
-    'See the documentation': '查看說明文件',
+    'See the documentation': '查看說明文件'
   },
   regexp: [
     // 过期时间
     [
       new RegExp(`^(Expires|Expired) on (${ANY_DATE_SOURCE})(\\.?)$`),
       (_, state: string, date: string, dot: string) =>
-        state === 'Expires'
-          ? `${datePhrase('將於', date, '到期')}${period(dot)}`
-          : `${datePhrase('已於', date, '過期')}${period(dot)}`,
+        state === 'Expires' ? `${datePhrase('將於', date, '到期')}${period(dot)}` : `${datePhrase('已於', date, '過期')}${period(dot)}`
     ],
     [
       new RegExp(`^This token expires on (${ANY_DATE_SOURCE})(\\.?)$`),
-      (_, date: string, dot: string) => `${datePhrase('此權杖將於', date, '到期')}${period(dot)}`,
+      (_, date: string, dot: string) => `${datePhrase('此權杖將於', date, '到期')}${period(dot)}`
     ],
     [
       new RegExp(`^This token expired on (${ANY_DATE_SOURCE})(\\.?)$`),
-      (_, date: string, dot: string) => `${datePhrase('此權杖已於', date, '過期')}${period(dot)}`,
+      (_, date: string, dot: string) => `${datePhrase('此權杖已於', date, '過期')}${period(dot)}`
     ],
     [
       new RegExp(`^The token will expire on (${ANY_DATE_SOURCE})(\\.?)$`),
-      (_, date: string, dot: string) => `${datePhrase('權杖將於', date, '到期')}${period(dot)}`,
+      (_, date: string, dot: string) => `${datePhrase('權杖將於', date, '到期')}${period(dot)}`
     ],
     [
       new RegExp(`^Expires (${RELATIVE_SOURCE})(\\.?)$`),
-      (_, time: string, dot: string) => `${joinCjk(translateTime(time), '到期')}${period(dot)}`,
+      (_, time: string, dot: string) => `${joinCjk(translateTime(time), '到期')}${period(dot)}`
     ],
     [
       new RegExp(`^(\\d+) days? \\((${ANY_DATE_SOURCE})\\)$`),
-      (_, days: string, date: string) => `${days} 天（${translateTokenDate(date)}）`,
+      (_, days: string, date: string) => `${days} 天（${translateTokenDate(date)}）`
     ],
     // 日期单独在 <strong> 等元素中
-    [
-      new RegExp(`^(${WEEKDAY_DATE_SOURCE})(\\.?)$`),
-      (_, date: string, dot: string) => `${translateTokenDate(date)}${period(dot)}`,
-    ],
+    [new RegExp(`^(${WEEKDAY_DATE_SOURCE})(\\.?)$`), (_, date: string, dot: string) => `${translateTokenDate(date)}${period(dot)}`],
     [/^Limit set by ([\w.-]+) organization$/, '由 $1 組織設定的限制'],
     // 组织或企业的令牌有效期策略（名称为空时原文为「The requires …」；豁免句原文无逗号，译文不加）
     [
@@ -351,7 +346,7 @@ export default {
         const subject = owner ? joinCjk(policyOwner(owner), '要求') : '要求'
         const note = exempt ? '你身為企業管理員不受此要求限制。' : ''
         return `${subject}精細個人存取權杖的最長有效期為 ${days} 天。${note}`
-      },
+      }
     ],
 
     // 使用情况
@@ -364,14 +359,14 @@ export default {
     // 生成前的权限汇总；句末冒号随原文
     [
       /^(\d+) permissions? for all repositories(:?)$/,
-      (_, count: string, colon: string) => `所有儲存庫的 ${count} 項權限${colon ? '：' : ''}`,
+      (_, count: string, colon: string) => `所有儲存庫的 ${count} 項權限${colon ? '：' : ''}`
     ],
     [
       /^(\d+) permissions? for (\d+) repositor(?:y|ies)(:?)$/,
-      (_, count: string, repos: string, colon: string) => `${repos} 個儲存庫的 ${count} 項權限${colon ? '：' : ''}`,
+      (_, count: string, repos: string, colon: string) => `${repos} 個儲存庫的 ${count} 項權限${colon ? '：' : ''}`
     ],
     [/^(\d+) account permissions?$/, '$1 項帳號權限'],
     [/^(\d+) organization permissions?$/, '$1 項組織權限'],
-    [/^(\d+) repository permissions?$/, '$1 項儲存庫權限'],
-  ],
+    [/^(\d+) repository permissions?$/, '$1 項儲存庫權限']
+  ]
 } satisfies PageDictionary

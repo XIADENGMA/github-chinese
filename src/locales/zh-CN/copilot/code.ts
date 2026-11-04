@@ -4,7 +4,7 @@ import type { PageDictionary } from '../../../core/types'
 const WORK_EVENT: Readonly<Record<string, string>> = {
   started: '开始工作',
   finished: '完成了工作',
-  stopped: '停止了工作',
+  stopped: '停止了工作'
 }
 
 /**
@@ -25,14 +25,11 @@ export default {
     'Copilot summary complete': 'Copilot 摘要已完成',
     'Copilot summary error': 'Copilot 摘要出错',
     'Copilot encountered a temporary error.': 'Copilot 遇到临时错误。',
-    'Copilot could not regenerate the summary. The previous summary was restored.':
-      'Copilot 无法重新生成摘要。已恢复之前的摘要。',
-    "Copilot couldn't regenerate this summary. The previous summary is shown.":
-      'Copilot 无法重新生成此摘要。显示的是之前的摘要。',
+    'Copilot could not regenerate the summary. The previous summary was restored.': 'Copilot 无法重新生成摘要。已恢复之前的摘要。',
+    "Copilot couldn't regenerate this summary. The previous summary is shown.": 'Copilot 无法重新生成此摘要。显示的是之前的摘要。',
     'Summary not complete': '摘要未完成',
     'Save and discard': '保存并放弃',
-    'Copilot is not done generating a summary. Are you sure you want to discard?':
-      'Copilot 尚未生成完摘要。确定要放弃吗？',
+    'Copilot is not done generating a summary. Are you sure you want to discard?': 'Copilot 尚未生成完摘要。确定要放弃吗？',
     'How did Copilot perform?': 'Copilot 表现如何？',
     'Thank you!': '谢谢！',
     'Good summary': '摘要不错',
@@ -90,8 +87,7 @@ export default {
     "Copilot will push a commit directly to this pull request's branch.": 'Copilot 将直接向此拉取请求的分支推送提交。',
     'Fix and open pull request': '修复并创建拉取请求',
     'Copilot will create a new pull request with the changes.': 'Copilot 将使用这些更改创建新的拉取请求。',
-    'An unexpected error occurred while trying to Fix with Copilot. Please try again.':
-      '使用 Copilot 修复时发生意外错误。请重试。',
+    'An unexpected error occurred while trying to Fix with Copilot. Please try again.': '使用 Copilot 修复时发生意外错误。请重试。',
     'To update your billing entity,': '要更新计费实体，',
     'go to settings': '请转到设置',
     'For more information, see the': '详情请参阅',
@@ -165,29 +161,28 @@ export default {
     'Sign in to continue': '登录以继续',
     'Sign in or create a GitHub account to continue using Copilot.': '登录或创建 GitHub 帐户以继续使用 Copilot。',
     'Create a free account': '创建免费帐户',
-    'Something went wrong!': '出错了！',
+    'Something went wrong!': '出错了！'
   },
   scoped: {
     Wrap: '自动换行',
-    Unwrap: '取消自动换行',
+    Unwrap: '取消自动换行'
   },
   regexp: [
     [/^Copilot failed to create a pull request\. (.+)$/, 'Copilot 创建拉取请求失败。$1'],
     [
       /^Model options loaded\. Model selection changed to (.+) because the previous model is unavailable\.$/,
-      '模型选项已加载。之前的模型不可用，已改为 $1。',
+      '模型选项已加载。之前的模型不可用，已改为 $1。'
     ],
     // Copilot 代码审查概述
     [
       /^Copilot reviewed (\d+) out of (\d+) changed files? in this pull request and generated (no|\d+) comments?\.$/,
       (_, reviewed: string, total: string, comments: string) =>
-        `Copilot 审查了此拉取请求 ${total} 个已更改文件中的 ${reviewed} 个，${comments === 'no' ? '未生成评论' : `生成了 ${comments} 条评论`}。`,
+        `Copilot 审查了此拉取请求 ${total} 个已更改文件中的 ${reviewed} 个，${comments === 'no' ? '未生成评论' : `生成了 ${comments} 条评论`}。`
     ],
     // 编码代理的时间线事件（原文无标点，出错原因并入句中）
     [
       /^Copilot (started|finished|stopped) work on behalf of ([\w-]+)( due to an error)?$/,
-      (_, verb: string, user: string, error = '') =>
-        `Copilot 代表 ${user} ${error ? '因出错' : ''}${WORK_EVENT[verb] ?? verb}`,
-    ],
-  ],
+      (_, verb: string, user: string, error = '') => `Copilot 代表 ${user} ${error ? '因出错' : ''}${WORK_EVENT[verb] ?? verb}`
+    ]
+  ]
 } satisfies PageDictionary

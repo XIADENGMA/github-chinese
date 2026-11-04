@@ -370,6 +370,6 @@ export default {
     'Prince Edward Island': '爱德华王子岛省',
     Quebec: '魁北克省',
     Saskatchewan: '萨斯喀彻温省',
-    Yukon: '育空地区',
-  },
+    Yukon: '育空地区'
+  }
 } satisfies PageDictionary

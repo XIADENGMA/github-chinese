@@ -5,7 +5,7 @@ import { DATE_SOURCE, joinCjk, RELATIVE_SOURCE, translateTime } from '../helpers
 const BUDGET_LABEL: Readonly<Record<string, string>> = {
   'Copilot budget': 'Copilot 預算',
   'AI credits': 'AI 點數',
-  'Copilot AI credits': 'Copilot AI 點數',
+  'Copilot AI credits': 'Copilot AI 點數'
 }
 
 /** Copilot 预算横幅：用尽描述中的预算名称（「全部 …」） */
@@ -15,7 +15,7 @@ const BUDGET_EXHAUSTED: Readonly<Record<string, string>> = {
   'all your Copilot AI credits': '全部 Copilot AI 點數',
   'its full Copilot budget': '全部 Copilot 預算',
   'all its AI credits': '全部 AI 點數',
-  'all its Copilot AI credits': '全部 Copilot AI 點數',
+  'all its Copilot AI credits': '全部 Copilot AI 點數'
 }
 
 /** Copilot 预算横幅：审批人 */
@@ -23,7 +23,7 @@ const BUDGET_APPROVER: Readonly<Record<string, string>> = {
   'org admins': '組織管理員',
   'enterprise account owners': '企業帳號擁有者',
   'an admin': '管理員',
-  'an enterprise account owner': '企業帳號擁有者',
+  'an enterprise account owner': '企業帳號擁有者'
 }
 
 const BUDGET_LABEL_SOURCE = '(Copilot budget|AI credits|Copilot AI credits)'
@@ -35,7 +35,7 @@ const PERSONAL_EXHAUSTED_SOURCE = '(your full Copilot budget|all your AI credits
 /** Copilot 预算申请审批：申请的额度类型（附在无障碍名称末尾的括号内） */
 const BUDGET_TARGET: Readonly<Record<string, string>> = {
   'Universal AI credits': '通用 AI 點數',
-  'Copilot AI credits': 'Copilot AI 點數',
+  'Copilot AI credits': 'Copilot AI 點數'
 }
 const BUDGET_TARGET_SOURCE = '(?: \\((Universal AI credits|Copilot AI credits)\\))?'
 
@@ -75,8 +75,7 @@ export default {
     'Your announcement is still available. Try again.': '公告仍會顯示。請再試一次。',
     'Retry dismissal': '重試關閉',
     // 关闭失败时的屏幕阅读器播报（announce 写入 aria-live 区域）
-    "Couldn't dismiss this announcement. Your announcement is still available. Try again.":
-      '無法關閉此公告。公告仍會顯示。請再試一次。',
+    "Couldn't dismiss this announcement. Your announcement is still available. Try again.": '無法關閉此公告。公告仍會顯示。請再試一次。',
 
     // 单一登录横幅：组织名在 <strong> 中，前后文字分别匹配
     'Single sign-on information': '單一登入資訊',
@@ -107,8 +106,7 @@ export default {
     'Your recovery codes have not been saved in the past year. Make sure you still have them stored somewhere safe by viewing and downloading them again.':
       '你在過去一年內未曾儲存復原碼。請重新查看並下載復原碼，確保仍將其存放在安全的地方。',
     'View recovery codes': '查看復原碼',
-    "Please verify your email address to access all of GitHub's features.":
-      '請驗證你的電子郵件地址以使用 GitHub 的所有功能。',
+    "Please verify your email address to access all of GitHub's features.": '請驗證你的電子郵件地址以使用 GitHub 的所有功能。',
     'Configure email settings': '調整電子郵件設定',
     'Your email was verified.': '你的電子郵件已驗證。',
     // 节假日换机提醒：前段 + 链接 redownloading your recovery codes + 结尾片段（“ - ”作破折号）
@@ -152,14 +150,12 @@ export default {
     // Copilot 预算设置横幅：组织名在 <strong> 中，前后文字分别匹配
     'Copilot budget setup': 'Copilot 預算設定',
     'GitHub Copilot billing for': 'GitHub Copilot 在',
-    'is now usage-based. Set a per-user budget to manage costs.':
-      '現已改為依用量計費。設定每位使用者的預算以控管成本。',
+    'is now usage-based. Set a per-user budget to manage costs.': '現已改為依用量計費。設定每位使用者的預算以控管成本。',
     'Set your budget': '設定預算',
     // Copilot 预算申请审批卡片
     'Member requests for additional Copilot budget': '額外 Copilot 預算的成員請求',
     'No pending budget requests': '沒有待處理的預算請求',
-    'When members request additional Copilot budget, their requests will appear here.':
-      '成員提出的額外 Copilot 預算請求會顯示在這裡。',
+    'When members request additional Copilot budget, their requests will appear here.': '成員提出的額外 Copilot 預算請求會顯示在這裡。',
     'Select all requests': '選取所有請求',
     'Approve and increase': '核准並提高預算',
     'Select at least one request to approve.': '至少選取一個要核准的請求。',
@@ -265,11 +261,9 @@ export default {
     'Increase this rate limit by': '若要提高此速率限制可以',
     'signing in': '登入',
     'Bad gateway': '閘道錯誤',
-    'GitHub is taking too long to respond. Please try again in a few minutes.':
-      'GitHub 回應時間過長。請幾分鐘後再試一次。',
+    'GitHub is taking too long to respond. Please try again in a few minutes.': 'GitHub 回應時間過長。請幾分鐘後再試一次。',
     'Service unavailable': '服務無法使用',
-    'GitHub is temporarily unavailable. Please try again in a few minutes.':
-      'GitHub 暫時無法使用。請幾分鐘後再試一次。',
+    'GitHub is temporarily unavailable. Please try again in a few minutes.': 'GitHub 暫時無法使用。請幾分鐘後再試一次。',
     'Maintenance in progress': '維護中',
     'GitHub is currently undergoing scheduled maintenance. Please check GitHub Status for updates.':
       'GitHub 目前正在執行排定的維護。請查看 GitHub 狀態頁面以取得最新資訊。',
@@ -291,7 +285,7 @@ export default {
     'Terms of service': '服務條款',
     // <relative-time> 的 prefix 属性（如 Actions 运行列表的「Today at 9:04」）
     'Today at': '今天',
-    'Yesterday at': '昨天',
+    'Yesterday at': '昨天'
   },
   regexp: [
     // React 应用错误页标签页标题：Error 503
@@ -303,59 +297,55 @@ export default {
     // 强制 2FA 横幅的后半句（前半句 GitHub users are <strong>now required</strong> 见 static）
     [
       new RegExp(
-        `^to enable two-factor authentication as an additional security measure\\. Your activity on GitHub includes you in this requirement\\. You will need to enable two-factor authentication on your account before (${DATE_SOURCE}), or be restricted from account actions\\.$`,
+        `^to enable two-factor authentication as an additional security measure\\. Your activity on GitHub includes you in this requirement\\. You will need to enable two-factor authentication on your account before (${DATE_SOURCE}), or be restricted from account actions\\.$`
       ),
       (_, date: string) =>
         joinCjk(
-          joinCjk(
-            '啟用雙重驗證作為額外的安全措施。根據你在 GitHub 上的活動，你也在此要求範圍內。你必須在',
-            translateTime(date),
-          ),
-          '之前為帳號啟用雙重驗證，否則帳號操作將受到限制。',
-        ),
+          joinCjk('啟用雙重驗證作為額外的安全措施。根據你在 GitHub 上的活動，你也在此要求範圍內。你必須在', translateTime(date)),
+          '之前為帳號啟用雙重驗證，否則帳號操作將受到限制。'
+        )
     ],
     // Copilot 预算横幅（组织、企业预算用尽）：Your organization <strong>名称</strong> has used …。
     // <strong> 前的 Your organization / Your enterprise 由 static 翻译，其后的文字整段匹配。个人预算用尽的句子见 inline
     [
       /^has used (its full Copilot budget|all its AI credits|all its Copilot AI credits)\. Access resumes on (.+?)\. Contact your admins to increase it\.$/,
-      (_, budget, date) =>
-        `已用完${BUDGET_EXHAUSTED[budget] ?? budget}。${resumesOn(date)}。請聯絡你的管理員提高額度。`,
+      (_, budget, date) => `已用完${BUDGET_EXHAUSTED[budget] ?? budget}。${resumesOn(date)}。請聯絡你的管理員提高額度。`
     ],
     // 申请发送成功后的屏幕阅读器播报
     [
       new RegExp(`^Request sent\\. Your ${APPROVERS_SOURCE} will be notified\\.$`),
-      (_, approvers) => `請求已送出。你的${BUDGET_APPROVER[approvers] ?? approvers}將會收到通知。`,
+      (_, approvers) => `請求已送出。你的${BUDGET_APPROVER[approvers] ?? approvers}將會收到通知。`
     ],
     [
       new RegExp(`^Your ${APPROVERS_SOURCE} will be notified that you need additional ${BUDGET_LABEL_SOURCE}\\.$`),
       (_, approvers, label) =>
-        `你的${BUDGET_APPROVER[approvers] ?? approvers}將會收到通知，得知你需要額外的 ${BUDGET_LABEL[label] ?? label}。`,
+        `你的${BUDGET_APPROVER[approvers] ?? approvers}將會收到通知，得知你需要額外的 ${BUDGET_LABEL[label] ?? label}。`
     ],
     [
       new RegExp(`^Your request for additional ${BUDGET_LABEL_SOURCE} was declined by ${APPROVER_SOURCE}( on|\\.)$`),
       (_, label, approver, tail) =>
-        `你對額外 ${BUDGET_LABEL[label] ?? label}的請求已遭${BUDGET_APPROVER[approver] ?? approver}拒絕${tail === '.' ? '。' : '於'}`,
+        `你對額外 ${BUDGET_LABEL[label] ?? label}的請求已遭${BUDGET_APPROVER[approver] ?? approver}拒絕${tail === '.' ? '。' : '於'}`
     ],
     // Copilot 预算申请审批卡片：申请时间（React 拆分的时长与文字拼接后）、每行控件的无障碍名称
     [new RegExp(`^Requested (${RELATIVE_SOURCE})$`), (_, time) => joinCjk(translateTime(time), '提出請求')],
     [
       new RegExp(`^(Approve|Deny) request from ([\\w-]+)${BUDGET_TARGET_SOURCE}$`),
-      (_, verb, login, label) => `${verb === 'Approve' ? '核准' : '拒絕'} ${login} 的請求${budgetTarget(label)}`,
+      (_, verb, login, label) => `${verb === 'Approve' ? '核准' : '拒絕'} ${login} 的請求${budgetTarget(label)}`
     ],
     [
       new RegExp(`^New budget in dollars for ([\\w-]+)${BUDGET_TARGET_SOURCE}$`),
-      (_, login, label) => `${login} 的新預算美元金額${budgetTarget(label)}`,
-    ],
+      (_, login, label) => `${login} 的新預算美元金額${budgetTarget(label)}`
+    ]
   ],
   inline: [
     // Copilot 预算横幅（个人预算用尽）：<span>You've used … from <strong>来源</strong>. Access resumes on <日期>.
     // Your org admins can increase it sooner.</span>。来源（组织或企业名）移到句中，整句收录
     [
       new RegExp(
-        `^You've used ${PERSONAL_EXHAUSTED_SOURCE} from \\{\\}\\. Access resumes on (.+?)\\. Your ${APPROVERS_SOURCE} can increase it sooner\\.$`,
+        `^You've used ${PERSONAL_EXHAUSTED_SOURCE} from \\{\\}\\. Access resumes on (.+?)\\. Your ${APPROVERS_SOURCE} can increase it sooner\\.$`
       ),
       (_, budget, date, approvers) =>
-        `你已用完來自 {} 的${BUDGET_EXHAUSTED[budget] ?? budget}。${resumesOn(date)}。你的${BUDGET_APPROVER[approvers] ?? approvers}可以提前提高額度。`,
-    ],
-  ],
+        `你已用完來自 {} 的${BUDGET_EXHAUSTED[budget] ?? budget}。${resumesOn(date)}。你的${BUDGET_APPROVER[approvers] ?? approvers}可以提前提高額度。`
+    ]
+  ]
 } satisfies PageDictionary

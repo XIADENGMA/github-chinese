@@ -51,13 +51,10 @@ describe('时间元素', () => {
 
   it('其余前缀查词典：已收录的翻译，未收录的保持原样并计入未翻译；停止后还原', () => {
     const custom = { 'Today at': '今天' }
-    start(
-      '<relative-time id="a" prefix="Today at "></relative-time><relative-time id="b" prefix="Due by"></relative-time>',
-      {
-        matcher: testMatcher({ custom }),
-        collectUntranslated: true,
-      },
-    )
+    start('<relative-time id="a" prefix="Today at "></relative-time><relative-time id="b" prefix="Due by"></relative-time>', {
+      matcher: testMatcher({ custom }),
+      collectUntranslated: true
+    })
     expect($('#a').getAttribute('prefix')).toBe('今天 ')
     expect($('#b').getAttribute('prefix')).toBe('Due by')
     expect(translator!.drainUntranslated()).toEqual([['Due by', 'issues', 2, 1, 1]])
@@ -272,7 +269,7 @@ describe('页面级忽略：仓库页头部面包屑', () => {
   const bundle: LocaleBundle = [
     ...TEST_BUNDLE,
     ['common', { static: { Home: '首页', Docs: '文档', 'Switch repository': '切换仓库' } }],
-    ['repository', { ignore: PAGE_IGNORES.repository }],
+    ['repository', { ignore: PAGE_IGNORES.repository }]
   ]
   const header = (owner: string, repo?: string): string => `
     <header aria-label="Global navigation menu" class="GlobalNav styles-module__appHeader__YzYWk">
@@ -285,17 +282,13 @@ describe('页面级忽略：仓库页头部面包屑', () => {
   it('仓库页的所有者名、仓库名不翻译，切换仓库提示照常；非仓库页的界面面包屑照常翻译', () => {
     start(header('Home', 'Docs'), {
       matcher: testMatcher({}, bundle),
-      resolvePages: () => ['common', 'repository', 'code'],
+      resolvePages: () => ['common', 'repository', 'code']
     })
-    expect([$('#owner').textContent, $('#repo').textContent, $('#tip').textContent]).toEqual([
-      'Home',
-      'Docs',
-      '切换仓库',
-    ])
+    expect([$('#owner').textContent, $('#repo').textContent, $('#tip').textContent]).toEqual(['Home', 'Docs', '切换仓库'])
     translator!.stop()
     start(header('Notifications'), {
       matcher: testMatcher({}, bundle),
-      resolvePages: () => ['common', 'notifications'],
+      resolvePages: () => ['common', 'notifications']
     })
     expect($('#owner').textContent).toBe('通知')
   })
@@ -316,10 +309,7 @@ describe('镜像文字属性 data-content / data-text', () => {
     <div id="json" data-content='{"a":"Code"}'>Code</div>
     <div class="markdown-body"><span id="ig" data-component="text" data-content="Issues">Issues</span></div>`
   const attr = (selector: string, name: string): string | null => $(selector).getAttribute(name)
-  const pair = (selector: string, name = 'data-content'): [string | null, string | null] => [
-    $(selector).textContent,
-    attr(selector, name),
-  ]
+  const pair = (selector: string, name = 'data-content'): [string | null, string | null] => [$(selector).textContent, attr(selector, name)]
 
   it('白名单内的属性随文字翻译；表情、JSON、值与文字不同、忽略区域都不动；不计入未翻译', () => {
     const t = start(NAV, { matcher: testMatcher({ custom }), collectUntranslated: true })
@@ -362,7 +352,7 @@ describe('镜像文字属性 data-content / data-text', () => {
     start(NAV, { matcher: testMatcher({ custom }) })
     $('nav ul').insertAdjacentHTML(
       'beforeend',
-      '<li><a class="prc-components-UnderlineItem-7fP-n"><span id="new" data-component="text" data-content="Insights">Insights</span></a></li>',
+      '<li><a class="prc-components-UnderlineItem-7fP-n"><span id="new" data-component="text" data-content="Insights">Insights</span></a></li>'
     )
     await settle()
     expect(pair('#new')).toEqual(['洞察', '洞察'])
@@ -385,22 +375,22 @@ describe('未翻译收集', () => {
     const t = start(
       `<p>Hello world</p><p>Hello world</p><p>https://github.com</p><p>v1.2.3</p><p>@octocat</p><p>vuejs/core</p>
       <p>a1b2c3d4e5</p><p>Oct 26, 2026</p><p>Issues</p><button title="Mystery tooltip"></button>`,
-      { collectUntranslated: true },
+      { collectUntranslated: true }
     )
     expect(t.drainUntranslated()).toEqual([
       ['Hello world', 'issues', 1, 2, 1],
-      ['Mystery tooltip', 'issues', 2, 1, 1],
+      ['Mystery tooltip', 'issues', 2, 1, 1]
     ])
     expect(t.drainUntranslated()).toEqual([])
   })
 
   it('整组未命中时记录拼接文本；部分命中时记录未命中的节点', () => {
     const t = start('<span>Merged <!-- -->into main</span><a>Issues<!-- -->Unknown tail</a>', {
-      collectUntranslated: true,
+      collectUntranslated: true
     })
     expect(t.drainUntranslated()).toEqual([
       ['Merged into main', 'issues', 1, 1, 1],
-      ['Unknown tail', 'issues', 1, 1, 1],
+      ['Unknown tail', 'issues', 1, 1, 1]
     ])
   })
 
@@ -455,7 +445,7 @@ describe('未翻译收集', () => {
     t.setFeatures({ collectUntranslated: true })
     expect(t.drainUntranslated()).toEqual([
       ['Hello world', 'issues', 1, 1, 1],
-      ['Mystery', 'issues', 2, 1, 1],
+      ['Mystery', 'issues', 2, 1, 1]
     ])
     $('p').firstChild!.textContent = 'Hello again'
     await settle()

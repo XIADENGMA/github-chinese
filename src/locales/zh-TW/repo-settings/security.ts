@@ -49,8 +49,7 @@ export default {
     'Disabling the dependency graph will also disable Dependabot alerts.': '停用相依性圖表也會停用 Dependabot 警示。',
     // 与 insights/dependency-graph.ts 的「相依性提交 API」一致
     'Automatic dependency submission': '自動相依性提交',
-    'Automatically detect and report build-time dependencies for select ecosystems.':
-      '自動偵測並回報部分生態系的建置階段相依項目。',
+    'Automatically detect and report build-time dependencies for select ecosystems.': '自動偵測並回報部分生態系的建置階段相依項目。',
     'Use standard GitHub runners': '使用標準 GitHub 執行器',
     'Enabled for labeled runners': '已為帶有標籤的執行器啟用',
     "Use runners labeled with 'dependency-submission'": '使用帶有「dependency-submission」標籤的執行器',
@@ -115,14 +114,12 @@ export default {
     'Learn more about configuring a dependabot.yml file': '瞭解如何設定 dependabot.yml 檔案',
     'Learn more about configuring a dependabot.yml file.': '瞭解如何設定 dependabot.yml 檔案。',
     'Learn more about Dependabot.': '瞭解 Dependabot。',
-    'Run Dependabot security and version updates on Actions runners.':
-      '在動作執行器上執行 Dependabot 安全性更新和版本更新。',
+    'Run Dependabot security and version updates on Actions runners.': '在動作執行器上執行 Dependabot 安全性更新和版本更新。',
     'Run Dependabot security and version updates on self-hosted Actions runners.':
       '在自架動作執行器上執行 Dependabot 安全性更新和版本更新。',
 
     // 代码扫描
-    'Code scanning with GitHub Actions is not available for this repository.':
-      '此儲存庫無法使用透過 GitHub 動作執行的程式碼掃描。',
+    'Code scanning with GitHub Actions is not available for this repository.': '此儲存庫無法使用透過 GitHub 動作執行的程式碼掃描。',
     // 后接「enable it」与「submit code scanning results externally using the API」链接
     'GitHub Actions is disabled on this repository because it is a fork. To use code scanning please':
       '此儲存庫是分叉，因此已停用 GitHub 動作。若要使用程式碼掃描，請',
@@ -134,18 +131,14 @@ export default {
     'Actors must submit requests to dismiss an alert. This can impact pull requests requiring code scanning dismissal to merge.':
       '執行者必須送出請求才能解除警示。這可能會影響需要解除程式碼掃描警示才能合併的拉取請求。',
     'CodeQL analysis': 'CodeQL 分析',
-    'Identify vulnerabilities and errors with CodeQL for eligible repositories.':
-      '使用 CodeQL 為符合資格的儲存庫識別漏洞和錯誤。',
+    'Identify vulnerabilities and errors with CodeQL for eligible repositories.': '使用 CodeQL 為符合資格的儲存庫識別漏洞和錯誤。',
     'Last scan': '上次掃描',
-    'CodeQL will automatically find the best configuration for your repository.':
-      'CodeQL 會自動為你的儲存庫找出最佳設定。',
+    'CodeQL will automatically find the best configuration for your repository.': 'CodeQL 會自動為你的儲存庫找出最佳設定。',
     'Languages detected in this repository are not compatible with this setup type at this time. Use the advanced setup instead.':
       '此儲存庫中偵測到的語言目前與此設定類型不相容。請改用進階設定。',
-    'Customize your CodeQL configuration via a YAML file checked into the repository.':
-      '透過簽入儲存庫的 YAML 檔案自訂 CodeQL 設定。',
+    'Customize your CodeQL configuration via a YAML file checked into the repository.': '透過簽入儲存庫的 YAML 檔案自訂 CodeQL 設定。',
     'Not supported': '不支援',
-    'Languages on this repository are not compatible with this feature. Learn more about':
-      '此儲存庫中的語言與此功能不相容。瞭解',
+    'Languages on this repository are not compatible with this feature. Learn more about': '此儲存庫中的語言與此功能不相容。瞭解',
     'supported languages and frameworks': '支援的語言和架構',
     'CodeQL default configuration': 'CodeQL 預設設定',
     'These languages were detected on the default branch of this repository.': '在此儲存庫的預設分支上偵測到這些語言。',
@@ -154,8 +147,7 @@ export default {
     'CodeQL will automatically perform the first scan when it detects': 'CodeQL 在預設分支上偵測到',
     'a supported language': '支援的語言',
     'CodeQL high-precision queries.': 'CodeQL 高精確度查詢。',
-    'Queries from the default suite, plus lower severity and precision queries.':
-      '預設套件中的查詢，以及嚴重性和精確度較低的查詢。',
+    'Queries from the default suite, plus lower severity and precision queries.': '預設套件中的查詢，以及嚴重性和精確度較低的查詢。',
     'This is the runner default setup will use to run': '這是預設設定執行時將使用的執行器',
     'Loading runner info...': '正在載入執行器資訊...',
     'Loading runner info…': '正在載入執行器資訊…',
@@ -200,16 +192,14 @@ export default {
     'Identify code security findings using AI.': '使用 AI 識別程式碼安全性發現項目。',
     'Learn more about AI scan': '瞭解 AI 掃描',
     'AI Scan for pull requests': '拉取請求 AI 掃描',
-    'Generate security findings for non-CodeQL languages using AI.':
-      '使用 AI 為 CodeQL 不支援的語言產生安全性發現項目。',
+    'Generate security findings for non-CodeQL languages using AI.': '使用 AI 為 CodeQL 不支援的語言產生安全性發現項目。',
     'AI Scan for pull requests enablement': '拉取請求 AI 掃描啟用狀態',
     'Copilot Autofix for third-party tools': '第三方工具的 Copilot 自動修正',
     'Suggest fixes for third-party alerts using AI. Ensure that these tools are properly configured or that an analysis is uploaded for this feature to work. Learn more about the':
       '使用 AI 為第三方警示建議修正。請確認這些工具已正確設定或已上傳分析，此功能才能運作。瞭解',
     'limitations of autofix code suggestions for third party tools': '第三方工具自動修正程式碼建議的限制',
     'Check runs failure threshold': '檢查執行失敗門檻',
-    'Select the alert severity level for code scanning check runs to fail.':
-      '選擇會導致程式碼掃描檢查執行失敗的警示嚴重性層級。',
+    'Select the alert severity level for code scanning check runs to fail.': '選擇會導致程式碼掃描檢查執行失敗的警示嚴重性層級。',
     'Create a branch ruleset': '建立分支規則集',
     // 「Create a branch ruleset」链接 +「to prevent a branch from merging when these checks fail.」
     'to prevent a branch from merging when these checks fail.': '以在這些檢查失敗時阻止分支合併。',
@@ -235,8 +225,7 @@ export default {
     'This will enable Secret Protection for your repository.': '這會為你的儲存庫啟用機密保護。',
     'Enable secret scanning alerts': '啟用機密掃描警示',
     'No additional licenses will be consumed.': '不會額外耗用授權。',
-    'Receive alerts on GitHub for detected secrets, keys, or other tokens.':
-      '在 GitHub 上接收偵測到的機密、金鑰或其他權杖的警示。',
+    'Receive alerts on GitHub for detected secrets, keys, or other tokens.': '在 GitHub 上接收偵測到的機密、金鑰或其他權杖的警示。',
     'Custom patterns': '自訂模式',
 
     // 警示存取权
@@ -253,7 +242,7 @@ export default {
     'Organization administrators, repository administrators, and teams with the security manager role':
       '組織管理員、儲存庫管理員和具有安全性管理員角色的團隊',
     'These members always see code scanning, Dependabot, and secret scanning alerts.':
-      '這些成員一律可以看到程式碼掃描、Dependabot 和機密掃描警示。',
+      '這些成員一律可以看到程式碼掃描、Dependabot 和機密掃描警示。'
   },
   scoped: {
     // 代码扫描设置里单独出现的功能名（见 nav.ts 文件头）
@@ -303,8 +292,7 @@ export default {
     'Search for people or teams': '搜尋人員或團隊',
 
     // 推送保护的可绕过执行者（推送保护、规则集共用的绕过列表组件；译法同 org-settings/security.ts；原文无逗号，译文不加）
-    'Push Protection will run and the selected actor(s) will be prompted to bypass':
-      '推送保護會執行並向選取的執行者顯示繞過提示',
+    'Push Protection will run and the selected actor(s) will be prompted to bypass': '推送保護會執行並向選取的執行者顯示繞過提示',
     'Push Protection will not run and no bypass prompt will be shown': '推送保護不會執行也不會顯示繞過提示',
     'No actors have been selected': '尚未選取執行者',
     'At least one actor is required.': '至少需要一個執行者。',
@@ -320,7 +308,7 @@ export default {
     // Dependabot 规则页（与组织设置共用；New rule、/ New rule、Rules 由 branches.ts、nav.ts 收录）
     ...DEPENDABOT_RULES_SCOPED,
     // 「Dismiss alerts」的期限选项（组织设置由 moderation.ts 收录，不放进共用常量）
-    Indefinitely: '無限期',
+    Indefinitely: '無限期'
   },
   regexp: [
     // 代码扫描：上次扫描 / 下次扫描时间
@@ -333,6 +321,6 @@ export default {
     // 绕过列表每行菜单按钮的读屏名称：「<名称> Bypass actor actions」（与组织设置共用）
     BYPASS_ACTOR_ACTIONS_RULE,
     // Dependabot 规则（与组织设置共用）；「Managed by <组织>」由 rulesets.ts 收录
-    ...DEPENDABOT_RULES_REGEXP,
-  ],
+    ...DEPENDABOT_RULES_REGEXP
+  ]
 } satisfies PageDictionary

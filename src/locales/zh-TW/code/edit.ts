@@ -7,7 +7,7 @@ const EDITOR_KIND: Readonly<Record<string, string>> = {
   dependabot: 'Dependabot',
   devcontainer: 'devcontainer',
   'issue template': '議題範本',
-  'discussion template': '討論範本',
+  'discussion template': '討論範本'
 }
 
 const EDITOR_KIND_SOURCE = '(workflow|dependabot|devcontainer|issue template|discussion template)'
@@ -52,8 +52,7 @@ export default {
     'key moving focus. Alternatively, use': '鍵是否移動焦點。也可以按',
     'to move to the next interactive element on the page.': '移到頁面上的下一個互動元素。',
     // 工作流编辑器底部的自动补全提示（含 kbd；macOS 多一个 Option + Space）
-    'Use Control + Space to trigger autocomplete in most situations.':
-      '使用 Control + Space 可在大多數情況下觸發自動完成。',
+    'Use Control + Space to trigger autocomplete in most situations.': '使用 Control + Space 可在大多數情況下觸發自動完成。',
     'Use Control + Space or Option + Space to trigger autocomplete in most situations.':
       '使用 Control + Space 或 Option + Space 可在大多數情況下觸發自動完成。',
     'Use Tab to navigate to the next placeholder.': '使用 Tab 可跳到下一個預留位置。',
@@ -72,8 +71,7 @@ export default {
     'There is no content to preview.': '沒有可預覽的內容。',
     'There has been an error generating the preview.': '產生預覽時發生錯誤。',
     'But you can preview the whole file.': '但你可以預覽整個檔案。',
-    'There has been an error generating the preview. But you can preview the whole file.':
-      '產生預覽時發生錯誤。但你可以預覽整個檔案。',
+    'There has been an error generating the preview. But you can preview the whole file.': '產生預覽時發生錯誤。但你可以預覽整個檔案。',
     'Error getting preview': '取得預覽時發生錯誤',
     'Unable to load this preview, sorry.': '無法載入此預覽。',
 
@@ -102,8 +100,7 @@ export default {
       '儲存庫擁有者已限制可提議變更的人員。如需協助，請查看',
     'Pull requests cannot be created in this repository': '無法在此儲存庫中建立拉取請求',
     'The repository owner has disabled pull requests.': '儲存庫擁有者已停用拉取請求。',
-    'The repository owner has disabled pull requests. If you need help, view the':
-      '儲存庫擁有者已停用拉取請求。如需協助，請查看',
+    'The repository owner has disabled pull requests. If you need help, view the': '儲存庫擁有者已停用拉取請求。如需協助，請查看',
     'If you need help, view the': '如需協助，請查看',
     'support resources': '支援資源',
     'This repository is currently being migrated.': '此儲存庫正在移轉。',
@@ -118,8 +115,7 @@ export default {
     'You’ll have to bring it up to date before you can propose changes.': '必須先更新分叉才能提議變更。',
     'Binary file content is not editable.': '二進位檔案內容無法編輯。',
     'But you can still rename or move it.': '但仍可重新命名或移動。',
-    'Forking this .github repository affects default community health files':
-      '分叉此 .github 儲存庫會影響預設的社群健康檔案',
+    'Forking this .github repository affects default community health files': '分叉此 .github 儲存庫會影響預設的社群健康檔案',
     'This is a `.github` repository.': '這是 `.github` 儲存庫。',
     "Forking it to propose changes will use this repository's": '分叉以提議變更時將使用此儲存庫的',
     'community health files': '社群健康檔案',
@@ -138,8 +134,7 @@ export default {
     ', so you can send a pull request.': '，之後可建立拉取請求。',
     'shows the community how to support this project. Please see our': '向社群說明贊助此專案的方式。請參閱',
     'repository funding links documentation': '儲存庫贊助連結說明文件',
-    "for more information on formatting and what is and isn't allowed in this file.":
-      '以瞭解此檔案的格式和允許、禁止的內容。',
+    "for more information on formatting and what is and isn't allowed in this file.": '以瞭解此檔案的格式和允許、禁止的內容。',
     'Please note that funding links are currently': '請注意此儲存庫的贊助連結目前',
     'on this repository. Visit': '。請前往',
     'repository settings': '儲存庫設定',
@@ -149,10 +144,8 @@ export default {
     '. Need help? Check out the': '。需要協助嗎？請查看',
     'documentation.': '說明文件。',
     'Looks like this file is an issue template. Need help?': '此檔案似乎是議題範本。需要協助嗎？',
-    'Looks like this file is a custom slash command. Need help? Check out the':
-      '此檔案似乎是自訂斜線命令。需要協助嗎？請查看',
-    'file helps users to easily cite your software from the repository overview.':
-      '檔案可協助使用者從儲存庫總覽輕鬆引用你的軟體。',
+    'Looks like this file is a custom slash command. Need help? Check out the': '此檔案似乎是自訂斜線命令。需要協助嗎？請查看',
+    'file helps users to easily cite your software from the repository overview.': '檔案可協助使用者從儲存庫總覽輕鬆引用你的軟體。',
     'Insert example': '插入範例',
     'Parent directory contains leading or trailing whitespace.': '父目錄名稱的開頭或結尾含有空白字元。',
     'We’ve detected the file has mixed line endings. When you commit changes we will normalize them to':
@@ -189,8 +182,7 @@ export default {
     'Loading featured actions': '正在載入精選動作',
     'Browse all actions on the GitHub Marketplace': '在 GitHub 市集中瀏覽所有動作',
     // 后接 <devcontainer.json> 与「 file.」（檔案。）
-    'Copy and paste the following snippet into the features attribute of your':
-      '將下列程式碼片段複製並貼到以下檔案的 features 屬性中',
+    'Copy and paste the following snippet into the features attribute of your': '將下列程式碼片段複製並貼到以下檔案的 features 屬性中',
     'Version:': '版本：',
     'Copy snippet to clipboard': '將程式碼片段複製到剪貼簿',
     'Couldn’t load snippet.': '無法載入程式碼片段。',
@@ -206,8 +198,7 @@ export default {
     'Development containers': '開發容器',
     'are configuration files used by Codespaces and tools implementing the dev container specification.':
       '是程式碼空間和實作開發容器規格的工具所使用的設定檔。',
-    'These files allow you to create a consistent, sharable development environment.':
-      '這些檔案可讓你建立一致、可共用的開發環境。',
+    'These files allow you to create a consistent, sharable development environment.': '這些檔案可讓你建立一致、可共用的開發環境。',
     "Dev Container Features are self-contained units of installation code and development container configuration. Features are designed to install atop a wide-range of base container images. Be sure to check a Feature's documentation to see which base images are supported.":
       '開發容器功能是由安裝程式碼和開發容器設定組成的獨立單元。功能可安裝在各種基底容器映像檔上。請查看各功能的說明文件以確認支援哪些基底映像檔。',
     'To reference a Feature, add the desired Feature(s) to a': '若要引用功能，請將所需的功能新增到',
@@ -225,11 +216,9 @@ export default {
     'Add an optional extended description': '新增選填的詳細描述',
     'There was an error committing your changes:': '提交變更時發生錯誤：',
     // 提交出错（服务端下发）：<用户> has committed since you started editing. <See what changed>
-    'A file with the same name already exists. Please choose a different name and try again.':
-      '已有同名檔案。請選擇其他名稱後再試一次。',
+    'A file with the same name already exists. Please choose a different name and try again.': '已有同名檔案。請選擇其他名稱後再試一次。',
     'See what changed': '查看變更內容',
-    'Something went wrong. Please fork the project, then try from your fork.':
-      '發生錯誤。請分叉此專案，然後在分叉中再試一次。',
+    'Something went wrong. Please fork the project, then try from your fork.': '發生錯誤。請分叉此專案，然後在分叉中再試一次。',
     'Copilot is thinking...': 'Copilot 正在思考...',
     'Regenerate commit message': '重新產生提交訊息',
     'Copilot commit message generated:': 'Copilot 已產生提交訊息：',
@@ -270,8 +259,7 @@ export default {
       '分支在組織管理員將此組織帳號升級到 GitHub 團隊版之前不會在此私人儲存庫中強制執行。',
     'targeting your': '對你的',
     'The rulesets targeting your': '規則集對你的',
-    "You've successfully submitted a request to your organization's admins for this feature.":
-      '已成功向組織管理員送出此功能的申請。',
+    "You've successfully submitted a request to your organization's admins for this feature.": '已成功向組織管理員送出此功能的申請。',
 
     // 推送保护（检测到机密）：Secret scanning found a custom pattern named <b>…</b>, defined by your admins, on <a>line 3</a>.
     // （逗号随原文，不改写成括号）
@@ -311,8 +299,7 @@ export default {
     'Know which resources this secret can access': '得知此機密可存取哪些資源',
     "Act on behalf of the secret's owner": '代表機密擁有者行事',
     'Push this secret to this repository without being blocked': '將此機密推送到此儲存庫而不受阻擋',
-    'Push protection is enabled for your account. To disable, visit your':
-      '你的帳號已啟用推送保護。若要停用，請前往你的',
+    'Push protection is enabled for your account. To disable, visit your': '你的帳號已啟用推送保護。若要停用，請前往你的',
     'code security settings': '程式碼安全性設定',
     'Bypass reason': '繞過原因',
     "It's used in tests": '用於測試',
@@ -352,7 +339,7 @@ export default {
     'Processing your files…': '正在處理檔案…',
     'Uploads are disabled.': '上傳已停用。',
     'File uploads require push access to this repository.': '上傳檔案需要此儲存庫的推送權限。',
-    'Learn more about pull requests.': '瞭解拉取請求。',
+    'Learn more about pull requests.': '瞭解拉取請求。'
   },
 
   scoped: {
@@ -440,18 +427,18 @@ export default {
     'This file is': '此檔案',
     empty: '為空白',
     'branch.': '分支。',
-    'Add files via upload': '透過上傳新增檔案',
+    'Add files via upload': '透過上傳新增檔案'
   },
 
   regexp: [
     // 编辑器屏幕阅读器标题
     [
       new RegExp(`^Creating a new (?:${EDITOR_KIND_SOURCE} )?file in (\\S+)$`),
-      (_, kind: string, repo: string) => joinCjk(`在 ${repo} 中建立新`, editorFile(kind)),
+      (_, kind: string, repo: string) => joinCjk(`在 ${repo} 中建立新`, editorFile(kind))
     ],
     [
       new RegExp(`^Editing (?:${EDITOR_KIND_SOURCE} file )?(\\S.*) in (\\S+)$`),
-      (_, kind: string, name: string, repo: string) => `${joinCjk(`編輯 ${repo} 中的`, editorFile(kind))} ${name}`,
+      (_, kind: string, name: string, repo: string) => `${joinCjk(`編輯 ${repo} 中的`, editorFile(kind))} ${name}`
     ],
     [/^Editing (\S.*) file contents$/, '編輯 $1 檔案內容'],
 
@@ -483,13 +470,13 @@ export default {
     // 删除页
     [
       /^Deleting (directory )?(\S.*)\. Commit changes to save\.$/,
-      (_, dir: string, path: string) => `正在刪除${dir ? '目錄' : ''} ${path}。提交變更以儲存。`,
+      (_, dir: string, path: string) => `正在刪除${dir ? '目錄' : ''} ${path}。提交變更以儲存。`
     ],
     [/^Failed to load diff: (\d+)$/, '無法載入差異：$1'],
 
     // 上传页：文件列表中的删除按钮（Remove <文件名>）、屏幕阅读器标题
     [/^Remove (\S+)$/, '移除 $1'],
-    [/^Uploading files to (\S+)$/, '上傳檔案到 $1'],
+    [/^Uploading files to (\S+)$/, '上傳檔案到 $1']
   ],
 
   inline: [
@@ -503,12 +490,12 @@ export default {
     // 不能创建拉取请求时没有「, so you can send a pull request」；分叉名提到「新分支」之前
     [
       'You’re making changes in a project you don’t have write access to. Submitting a change will write it to a new branch in your fork {}, so you can send a pull request.',
-      '你正在變更你沒有寫入權限的專案。送出的變更將寫入你的分叉 {} 中的新分支，之後可建立拉取請求。',
+      '你正在變更你沒有寫入權限的專案。送出的變更將寫入你的分叉 {} 中的新分支，之後可建立拉取請求。'
     ],
     [
       'You’re making changes in a project you don’t have write access to. Submitting a change will write it to a new branch in your fork {}.',
-      '你正在變更你沒有寫入權限的專案。送出的變更將寫入你的分叉 {} 中的新分支。',
-    ],
+      '你正在變更你沒有寫入權限的專案。送出的變更將寫入你的分叉 {} 中的新分支。'
+    ]
   ],
 
   ignore: [
@@ -530,6 +517,6 @@ export default {
     '[class*="envItem__"] > a',
     // 上传页：待提交文件名、上传进度中的文件名
     '.js-manifest-file-entry .js-filename',
-    '.js-upload-meter-filename',
-  ],
+    '.js-upload-meter-filename'
+  ]
 } satisfies PageDictionary

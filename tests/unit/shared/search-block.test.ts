@@ -8,7 +8,7 @@ import {
   normalizeRule,
   ownerOfPath,
   parseRule,
-  ruleKeyOf,
+  ruleKeyOf
 } from '../../../src/shared/search-block'
 
 describe('ownerOfPath', () => {
@@ -19,16 +19,16 @@ describe('ownerOfPath', () => {
     ['/vuejs/core/issues/1', { owner: 'vuejs', name: 'core' }],
     ['/octocat/.github', { owner: 'octocat', name: '.github' }],
     ['/orgs/octo-org/repositories', { owner: 'octo-org' }],
-    ['/users/octocat/packages/container/package/sample', { owner: 'octocat' }],
+    ['/users/octocat/packages/container/package/sample', { owner: 'octocat' }]
   ])('%s：%j', (path, expected) => {
     expect(ownerOfPath(path)).toEqual(expected)
   })
 
   it.each(['/', '', '/search', '/topics/vue', '/Topics/vue', '/marketplace/actions/x', '/orgs', '/orgs/-x', '/-x'])(
     '%s：不是用户、存储库下的路径',
-    (path) => {
+    path => {
       expect(ownerOfPath(path)).toBeUndefined()
-    },
+    }
   )
 
   it('解码路径；无法解码的段原样判断', () => {
@@ -49,7 +49,7 @@ describe('parseRule', () => {
     ['http://www.github.com/octocat?tab=repositories', { kind: 'owner', owner: 'octocat' }],
     ['github.com/octocat/hello-world.git', { kind: 'repo', owner: 'octocat', name: 'hello-world' }],
     ['https://github.com/vuejs/core/issues/1#top', { kind: 'repo', owner: 'vuejs', name: 'core' }],
-    ['https://github.com/orgs/octo-org/packages', { kind: 'owner', owner: 'octo-org' }],
+    ['https://github.com/orgs/octo-org/packages', { kind: 'owner', owner: 'octo-org' }]
   ] as const)('%j：所有者、存储库', (line, expected) => {
     expect(parseRule(line)).toEqual(expected)
   })
@@ -64,7 +64,7 @@ describe('parseRule', () => {
     ['-octocat', '-octocat'],
     ['octocat/', 'octocat/'],
     ['octocat/hello/world', 'octocat/hello/world'],
-    ['https://gist.github.com/octocat', 'https://gist.github.com/octocat'],
+    ['https://gist.github.com/octocat', 'https://gist.github.com/octocat']
   ])('%j：关键词', (line, keyword) => {
     expect(parseRule(line)).toEqual({ kind: 'keyword', keyword })
   })
@@ -79,8 +79,8 @@ describe('parseRule', () => {
     '@-octocat',
     '@octocat/hello-world',
     'https://github.com/',
-    'https://github.com/settings/profile',
-  ])('%j：无效', (line) => {
+    'https://github.com/settings/profile'
+  ])('%j：无效', line => {
     expect(parseRule(line)).toBeUndefined()
   })
 
@@ -129,7 +129,7 @@ describe('compileSearchBlockRules / isBlockedResult', () => {
     expect(list).toEqual({
       owners: new Set(['octocat', 'hubot']),
       repos: new Set(['vuejs/core']),
-      keywords: ['sample text'],
+      keywords: ['sample text']
     })
   })
 

@@ -16,7 +16,7 @@ const STATES: Readonly<Record<string, string>> = {
   Completed: '已完成',
   'Not planned': '不予處理',
   Duplicate: '重複',
-  Archived: '已封存',
+  Archived: '已封存'
 }
 
 /** Primer Label 的 title：Label: Verified */
@@ -34,7 +34,7 @@ const LABELS: Readonly<Record<string, string>> = {
   'Public mirror': '公開鏡像',
   Preview: '預覽',
   'Public preview': '公開預覽',
-  Staff: '員工',
+  Staff: '員工'
 }
 
 /** 作者关系说明的主语：This user is → 此使用者；You are → 你 */
@@ -55,13 +55,13 @@ function period(dot: string): string {
 const ROLES: Readonly<Record<string, string>> = {
   maintainer: '維護者',
   collaborator: '協作者',
-  contributor: '貢獻者',
+  contributor: '貢獻者'
 }
 
 const ITEM_KINDS: Readonly<Record<string, string>> = {
   issue: '議題',
   'pull request': '拉取請求',
-  discussion: '討論',
+  discussion: '討論'
 }
 
 export default {
@@ -147,49 +147,48 @@ export default {
     'This is a mannequin user.': '這是佔位帳號。',
     'This is your first pull request on GitHub.': '這是你在 GitHub 上的第一個拉取請求。',
     "This user's first pull request on GitHub.": '這是此使用者在 GitHub 上的第一個拉取請求。',
-    'This user’s first pull request on GitHub.': '這是此使用者在 GitHub 上的第一個拉取請求。',
+    'This user’s first pull request on GitHub.': '這是此使用者在 GitHub 上的第一個拉取請求。'
   },
   regexp: [
     // 状态与标签 title
     [
       /^Status: (Open|Closed|Merged|Draft|Queued|Completed|Not planned|Duplicate|Archived)$/,
-      (_, state: string) => `狀態：${STATES[state]!}`,
+      (_, state: string) => `狀態：${STATES[state]!}`
     ],
     [
       /^Label: (Verified|Unverified|GitHub Sponsor|Public|Private|Internal|Public archive|Private archive|Public template|Private template|Public mirror|Preview|Public preview|Staff)$/,
-      (_, label: string) => `標籤：${LABELS[label]!}`,
+      (_, label: string) => `標籤：${LABELS[label]!}`
     ],
 
     // 作者关系说明（评论头部徽章的 tooltip；原文有的带句号，有的不带）
     [
       /^(This user is|You are) a member of the ([\w.-]+) organization(\.?)$/,
-      (_, who: string, org: string, dot: string) => `${subject(who)}是 ${org} 組織的成員${period(dot)}`,
+      (_, who: string, org: string, dot: string) => `${subject(who)}是 ${org} 組織的成員${period(dot)}`
     ],
     [
       /^(This user is|You are) the owner of (?:the ([\w.-]+)|this) repository(\.?)$/,
-      (_, who: string, repo: string, dot: string) => `${subject(who)}是${repository(repo)}的擁有者${period(dot)}`,
+      (_, who: string, repo: string, dot: string) => `${subject(who)}是${repository(repo)}的擁有者${period(dot)}`
     ],
     [
       /^(This user has|You have) been invited to collaborate on (?:the ([\w.-]+)|this) repository(\.?)$/,
-      (_, who: string, repo: string, dot: string) =>
-        `${subject(who)}已受邀成為${repository(repo)}的協作者${period(dot)}`,
+      (_, who: string, repo: string, dot: string) => `${subject(who)}已受邀成為${repository(repo)}的協作者${period(dot)}`
     ],
     [
       /^(This user has|You have) previously committed to (?:the ([\w.-]+)|this) repository(\.?)$/,
-      (_, who: string, repo: string, dot: string) => `${subject(who)}曾提交至${repository(repo)}${period(dot)}`,
+      (_, who: string, repo: string, dot: string) => `${subject(who)}曾提交至${repository(repo)}${period(dot)}`
     ],
     [
       /^(This user is|You are) a first-time contributor to (?:the ([\w.-]+)|this) repository(\.?)$/,
-      (_, who: string, repo: string, dot: string) => `${subject(who)}是${repository(repo)}的首次貢獻者${period(dot)}`,
+      (_, who: string, repo: string, dot: string) => `${subject(who)}是${repository(repo)}的首次貢獻者${period(dot)}`
     ],
     [
       /^(This user is|You are) a (maintainer|collaborator|contributor) on this repository(\.?)$/,
-      (_, who: string, role: string, dot: string) => `${subject(who)}是此儲存庫的${ROLES[role]!}${period(dot)}`,
+      (_, who: string, role: string, dot: string) => `${subject(who)}是此儲存庫的${ROLES[role]!}${period(dot)}`
     ],
     [
       /^(This user is|You are) the author(?: of this (issue|pull request|discussion))?(\.?)$/,
       (_, who: string, kind: string | undefined, dot: string) =>
-        `${subject(who)}是${kind ? `此${ITEM_KINDS[kind]!}的` : ''}作者${period(dot)}`,
-    ],
-  ],
+        `${subject(who)}是${kind ? `此${ITEM_KINDS[kind]!}的` : ''}作者${period(dot)}`
+    ]
+  ]
 } satisfies PageDictionary

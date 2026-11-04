@@ -21,7 +21,7 @@ const UNITS: Readonly<Record<string, string>> = {
   'pull request': '拉取請求',
   'pull requests': '拉取請求',
   'issue or pull request': '議題或拉取請求',
-  'issues and pull requests': '議題和拉取請求',
+  'issues and pull requests': '議題和拉取請求'
 }
 const UNIT_SOURCE = '(list items?|issue or pull request|issues and pull requests|issues?|pull requests?)'
 
@@ -372,7 +372,7 @@ export default {
     'Previous page': '上一頁',
     'Next page': '下一頁',
     'Previous Page': '上一頁',
-    'Next Page': '下一頁',
+    'Next Page': '下一頁'
   },
   regexp: [
     // 复制按钮：Copy "a1b2c3d" to clipboard
@@ -380,10 +380,7 @@ export default {
     // 星标按钮：Star this repository (0)、0 users starred this repository
     [new RegExp(`^Star this repository \\(${STAT}\\)$`), '為此儲存庫加星號 ($1)'],
     [new RegExp(`^Unstar this repository \\(${STAT}\\)$`), '移除此儲存庫的星號 ($1)'],
-    [
-      new RegExp(`^Starred, click to unstar this repository \\(${STAT}\\)$`),
-      '已加星號，按一下可移除此儲存庫的星號 ($1)',
-    ],
+    [new RegExp(`^Starred, click to unstar this repository \\(${STAT}\\)$`), '已加星號，按一下可移除此儲存庫的星號 ($1)'],
     [new RegExp(`^${STAT} users? starred this repository$`), '$1 位使用者為此儲存庫加了星號'],
     // 分页按钮：Page 7...（省略号表示其后有省略的页码，随原文）
     [/^Page (\d+)(\.\.\.|…)?$/, (_, page: string, dots: string | undefined) => `第 ${page} 頁${dots ?? ''}`],
@@ -396,7 +393,7 @@ export default {
     // 选择面板的读屏播报
     [
       new RegExp(`^${COUNT} items? available, ${COUNT} selected\\.$`),
-      (_, total: string, selected: string) => `${total} 個可用項目，已選取 ${selected} 個。`,
+      (_, total: string, selected: string) => `${total} 個可用項目，已選取 ${selected} 個。`
     ],
     [/^Focused item: (.+)$/, '焦點項目：$1'],
     [/^(.+), filter text box and list of items$/, '$1，篩選文字方塊和項目清單'],
@@ -408,28 +405,25 @@ export default {
     [
       /^(Selected\. )?(.+?)(\. New activity)?\. More information available below\.$/,
       (_, selected: string | undefined, title: string, activity: string | undefined) =>
-        `${selected ? '已選取。' : ''}${title}${activity ? '。有新動態' : ''}。下方有更多資訊。`,
+        `${selected ? '已選取。' : ''}${title}${activity ? '。有新動態' : ''}。下方有更多資訊。`
     ],
     // 列表条目勾选框与读屏播报：Select: <标题>、Selected. <标题>.、Unselected. <标题>.
     [/^Select: (.+)$/, '選取：$1'],
     [
       /^(Selected|Unselected)\. (.+?)(\. New activity)?\.$/,
       (_, state: string, title: string, activity: string | undefined) =>
-        `${state === 'Selected' ? '已選取' : '未選取'}。${title}${activity ? '。有新動態' : ''}。`,
+        `${state === 'Selected' ? '已選取' : '未選取'}。${title}${activity ? '。有新動態' : ''}。`
     ],
     [/^(.+?)\. New activity\.$/, '$1。有新動態。'],
     // 全选勾选框：Select all list items: <列表标题>；已选计数：3 list items selected、3 list items of 25 selected
     [
       new RegExp(`^Select all ${UNIT_SOURCE}:(?: (.+))?$`),
-      (_, unit: string, title: string | undefined) => `全選${UNITS[unit]!}${title ? `：${title}` : ''}`,
+      (_, unit: string, title: string | undefined) => `全選${UNITS[unit]!}${title ? `：${title}` : ''}`
     ],
-    [
-      new RegExp(`^${COUNT} ${UNIT_SOURCE} selected$`),
-      (_, count: string, unit: string) => `已選取 ${count} 個${UNITS[unit]!}`,
-    ],
+    [new RegExp(`^${COUNT} ${UNIT_SOURCE} selected$`), (_, count: string, unit: string) => `已選取 ${count} 個${UNITS[unit]!}`],
     [
       new RegExp(`^${COUNT} ${UNIT_SOURCE} of ${COUNT} selected$`),
-      (_, count: string, unit: string, total: string) => `${total} 個${UNITS[unit]!}中已選取 ${count} 個`,
+      (_, count: string, unit: string, total: string) => `${total} 個${UNITS[unit]!}中已選取 ${count} 個`
     ],
     // 窗格、面包屑、标签组、字数统计
     [/^Pane width (\d+) pixels$/, '窗格寬度 $1 像素'],
@@ -445,9 +439,9 @@ export default {
     [new RegExp(`^${COUNT} of ${COUNT} selected$`), '$2 個中已選取 $1 個'],
     // 反馈对话框
     [/^Please keep your feedback within (\d[\d,]*) characters or less\.$/, '意見回饋不得超過 $1 個字元。'],
-    [/^Request ID: ([\w:./-]+)$/, '請求 ID：$1'],
+    [/^Request ID: ([\w:./-]+)$/, '請求 ID：$1']
   ],
   // DataTable 分页的可见范围：数字、读屏用的 through、‒ 与 of 分在多个节点，合并后整段翻译。
   // 页码按钮里读屏用的「Page」「page」与可见页码分属不同节点，合并会让页码移入隐藏文字，不收录
-  mergeText: ['p[data-component="Table.Pagination.Range"]'],
+  mergeText: ['p[data-component="Table.Pagination.Range"]']
 } satisfies PageDictionary

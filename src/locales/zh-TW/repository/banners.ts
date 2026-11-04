@@ -12,7 +12,7 @@ const FRAMEWORKS: Readonly<Record<string, string>> = {
   'Nuxt.js app': 'Nuxt.js 應用程式',
   'Eleventy site': 'Eleventy 網站',
   project: '專案',
-  site: '網站',
+  site: '網站'
 }
 
 /** 交互限制剩余时间的单位 */
@@ -22,7 +22,7 @@ const LIMIT_UNITS: Readonly<Record<string, string>> = {
   day: '天',
   week: '週',
   month: '個月',
-  year: '年',
+  year: '年'
 }
 
 /** 交互限制剩余时间的修饰词 */
@@ -30,14 +30,14 @@ const LIMIT_QUALIFIERS: Readonly<Record<string, string>> = {
   about: '約',
   almost: '將近',
   over: '超過',
-  'less than': '不到',
+  'less than': '不到'
 }
 
 /** 同步复刻后的提示：Successfully <操作> upstream <base>（原文无逗号，译文不加） */
 const SYNC_RESULTS: Readonly<Record<string, (base: string) => string>> = {
-  'fetched and fast-forwarded from': (base) => `已成功從上游 ${base} 擷取並快轉`,
-  'fetched and merged from': (base) => `已成功從上游 ${base} 擷取並合併`,
-  'discarded changes and synchronized branch to match': (base) => `已成功捨棄變更並將分支同步為與上游 ${base} 一致`,
+  'fetched and fast-forwarded from': base => `已成功從上游 ${base} 擷取並快轉`,
+  'fetched and merged from': base => `已成功從上游 ${base} 擷取並合併`,
+  'discarded changes and synchronized branch to match': base => `已成功捨棄變更並將分支同步為與上游 ${base} 一致`
 }
 
 /** 部署横幅：將你的 <框架> 部署到 GitHub 頁面；未收录的框架名原样保留，与两侧中文之间补空格 */
@@ -69,57 +69,49 @@ const regexp: readonly RegExpRule[] = [
   [new RegExp(`^${COUNT} commits? behind$`), '落後 $1 個提交'],
   // 同步复刻弹层（原文无逗号，译文不加）
   [
-    new RegExp(
-      `^Update branch to keep this branch up-to-date by syncing ${COUNT} commits? from the upstream repository\\.$`,
-    ),
-    '更新分支以同步上游儲存庫的 $1 個提交並讓此分支保持最新。',
+    new RegExp(`^Update branch to keep this branch up-to-date by syncing ${COUNT} commits? from the upstream repository\\.$`),
+    '更新分支以同步上游儲存庫的 $1 個提交並讓此分支保持最新。'
   ],
   [
     new RegExp(
-      `^Discard ${COUNT} commits? to make this branch match the upstream repository\\. ${COUNT} commits? will be removed from this branch\\.$`,
+      `^Discard ${COUNT} commits? to make this branch match the upstream repository\\. ${COUNT} commits? will be removed from this branch\\.$`
     ),
-    '捨棄 $1 個提交以讓此分支與上游儲存庫一致。將從此分支移除 $2 個提交。',
+    '捨棄 $1 個提交以讓此分支與上游儲存庫一致。將從此分支移除 $2 個提交。'
   ],
   [new RegExp(`^Discard ${COUNT} commits?$`), '捨棄 $1 個提交'],
   // 分支保护建议横幅
   [/^Your (\S+) branch isn['’]t protected$/, '你的 $1 分支未受保護'],
   // 部署横幅：Deploy your Vite app to GitHub Pages；侧栏部署分节：… in a matter of minutes
   [/^Deploy your (.+?) to GitHub Pages$/, (_, name: string) => deployTo('將你的', name)],
-  [
-    /^Deploy your (.+?) to GitHub Pages in a matter of minutes$/,
-    (_, name: string) => deployTo('在幾分鐘內將你的', name),
-  ],
+  [/^Deploy your (.+?) to GitHub Pages in a matter of minutes$/, (_, name: string) => deployTo('在幾分鐘內將你的', name)],
   // 最近推送的分支：<分支> had recent pushes 5 minutes ago（时间与句子在同一文本节点）
   [/^had recent pushes (\S.*)$/, (_, time: string) => joinCjk(pushTime(time), '有新推送')],
   // 交互限制横幅：剩余时间（23 hours、about 1 month）
   [
     /^(?:(about|almost|over|less than) )?(\d+|an?|one) (minute|hour|day|week|month|year)s? remaining$/,
-    (_, qualifier: string, amount: string, unit: string) => remaining(qualifier, amount, unit),
+    (_, qualifier: string, amount: string, unit: string) => remaining(qualifier, amount, unit)
   ],
   // 交互限制横幅：從未 <提交於> 此儲存庫 main 分支的使用者…（分支名与句尾在同一文本组；
   // 链接 committed 由 common-ui 的全局词条译作「提交於」，句尾不再加「到」）
   [
     /^to the (\S+) branch of this repository will be unable to interact with the repository\.$/,
-    '此儲存庫 $1 分支的使用者將無法與此儲存庫互動。',
+    '此儲存庫 $1 分支的使用者將無法與此儲存庫互動。'
   ],
   // 阻止的用户贡献过的提醒
   [
     new RegExp(`^${COUNT} users you['’]ve blocked have previously contributed to this repository\\.$`),
-    '你封鎖的 $1 位使用者曾為此儲存庫做出貢獻。',
+    '你封鎖的 $1 位使用者曾為此儲存庫做出貢獻。'
   ],
   // 缺少必填自定义属性
-  [
-    new RegExp(`^This repository is missing ${COUNT} required custom property values$`),
-    '此儲存庫缺少 $1 個必填的自訂屬性值',
-  ],
+  [new RegExp(`^This repository is missing ${COUNT} required custom property values$`), '此儲存庫缺少 $1 個必填的自訂屬性值'],
   // 不可变操作迁移对话框：<5 out of 10 tags> from <owner/repo> …；1 tag → 1 version
   [new RegExp(`^${COUNT} out of ${COUNT} tags?$`), '$2 個標記中的 $1 個'],
   [new RegExp(`^${COUNT} versions?$`), '$1 個版本'],
   // 同步复刻后的提示
   [
     /^Successfully (fetched and fast-forwarded from|fetched and merged from|discarded changes and synchronized branch to match) upstream (\S+?)(\.)?$/,
-    (_, action: string, base: string, dot: string) => `${SYNC_RESULTS[action]?.(base) ?? base}${dot ? '。' : ''}`,
-  ],
+    (_, action: string, base: string, dot: string) => `${SYNC_RESULTS[action]?.(base) ?? base}${dot ? '。' : ''}`
+  ]
 ]
 
 /**
@@ -153,8 +145,7 @@ export default {
     // 默认分支改名：<旧名> 現已重新命名為 <新名>
     'The default branch has been renamed!': '預設分支已重新命名！',
     'is now named': '現已重新命名為',
-    'If you have a local clone, you can update it by running the following commands.':
-      '如果你有本機複本，可以執行下列命令來更新。',
+    'If you have a local clone, you can update it by running the following commands.': '如果你有本機複本，可以執行下列命令來更新。',
     'Learn about dealing with special characters on the command line.': '瞭解如何在命令列中處理特殊字元。',
     'Copy update commands to clipboard': '將更新命令複製到剪貼簿',
     'OK, got it': '好，我知道了',
@@ -227,7 +218,7 @@ export default {
     'Consider inviting another GitHub user to be your successor.': '考慮邀請另一位 GitHub 使用者成為你的繼任者。',
     'Inviting a successor helps ensure the continuity of your work in case you are unable to access your account.':
       '邀請繼任者有助於在你無法存取帳號時確保工作延續。',
-    'Invite a successor': '邀請繼任者',
+    'Invite a successor': '邀請繼任者'
   },
   scoped: {
     // 复刻 / 分支信息条
@@ -252,10 +243,8 @@ export default {
     'Update branch': '更新分支',
     'Discarding changes...': '正在捨棄變更...',
     'This branch has conflicts that must be resolved': '此分支有必須解決的衝突',
-    'You can resolve merge conflicts using the command line and a text editor.':
-      '你可以使用命令列和文字編輯器解決合併衝突。',
-    'Sorry, getting ahead/behind information for this branch is taking too long.':
-      '抱歉，取得此分支的領先/落後資訊花費的時間過長。',
+    'You can resolve merge conflicts using the command line and a text editor.': '你可以使用命令列和文字編輯器解決合併衝突。',
+    'Sorry, getting ahead/behind information for this branch is taking too long.': '抱歉，取得此分支的領先/落後資訊花費的時間過長。',
     'Cannot retrieve ahead/behind information for this branch.': '無法取得此分支的領先/落後資訊。',
     'Cannot retrieve comparison with upstream repository.': '無法取得與上游儲存庫的比較結果。',
 
@@ -270,17 +259,17 @@ export default {
     collaborators: '協作者',
     'or view': '或查看',
     // 缺少必填自定义属性
-    'Remind me later': '稍後提醒我',
+    'Remind me later': '稍後提醒我'
   },
   regexp,
   // 父存储库默认分支改名弹层（ParentBranchRenamePopover，React 把 {' '} 渲染成单独的文本节点）：
   // 整句命中后链接前的空白不再保留，链接文字照常翻译
   inline: [
     ["You can rename this fork's default branch to match in {}", '如需重新命名此分叉的預設分支以保持一致可前往{}'],
-    ['You can rename this fork’s default branch to match in {}', '如需重新命名此分叉的預設分支以保持一致可前往{}'],
+    ['You can rename this fork’s default branch to match in {}', '如需重新命名此分叉的預設分支以保持一致可前往{}']
   ],
   ignore: [
     // 最近推送的分支横幅：分支名链接（Flash > Box > a.text-bold）
-    '[class*="Flash__"] > [class*="Box__"] > a.text-bold[href*="/tree/"]',
-  ],
+    '[class*="Flash__"] > [class*="Box__"] > a.text-bold[href*="/tree/"]'
+  ]
 } satisfies PageDictionary

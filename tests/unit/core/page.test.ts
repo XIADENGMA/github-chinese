@@ -139,10 +139,7 @@ describe('detectPages', () => {
     ['https://github.com/vuejs/core/pull/16031/agent-sessions', ['common', 'repository', 'pulls', 'copilot']],
     ['https://github.com/vuejs/core/pull/16031/agent-sessions/0a1b2c3d', ['common', 'repository', 'pulls', 'copilot']],
     ['https://github.com/vuejs/core/pull/16031/checks', ['common', 'repository', 'actions', 'pulls']],
-    [
-      'https://github.com/vuejs/core/pull/16031/checks?check_run_id=121444227923',
-      ['common', 'repository', 'actions', 'pulls'],
-    ],
+    ['https://github.com/vuejs/core/pull/16031/checks?check_run_id=121444227923', ['common', 'repository', 'actions', 'pulls']],
     ['https://github.com/vuejs/core/issues/16031/checks', ['common', 'repository', 'issues']],
     // 堆栈列表与堆栈详情属拉取请求仪表板
     ['https://github.com/vuejs/core/stacks', ['common', 'repository', 'pulls']],
@@ -152,7 +149,7 @@ describe('detectPages', () => {
     // 定价页与新建组织的选择计划页同一张表；子页不算
     ['https://github.com/pricing/', ['common', 'new']],
     ['https://github.com/pricing?ref_cta=x', ['common', 'new']],
-    ['https://github.com/pricing/calculator', ['common']],
+    ['https://github.com/pricing/calculator', ['common']]
   ])('%s', (url, expected) => {
     expect(pages(url)).toEqual(expected)
   })
@@ -162,11 +159,7 @@ describe('detectPages', () => {
   })
 
   it('非法转义的路径段按原样小写', () => {
-    expect(detectPages({ hostname: 'github.com', pathname: '/%E0%A4%A/x/ISSUES' })).toEqual([
-      'common',
-      'repository',
-      'issues',
-    ])
+    expect(detectPages({ hostname: 'github.com', pathname: '/%E0%A4%A/x/ISSUES' })).toEqual(['common', 'repository', 'issues'])
   })
 })
 
@@ -187,7 +180,7 @@ describe('accountLogin', () => {
     ['/organizations/VueJS/settings/rules', 'vuejs'],
     ['/organizations', undefined],
     ['/', undefined],
-    ['', undefined],
+    ['', undefined]
   ])('%s → %s', (pathname, expected) => {
     expect(accountLogin(pathname)).toBe(expected)
   })
@@ -203,7 +196,7 @@ describe('repositoryName', () => {
     ['/users/octocat/projects', undefined],
     ['/settings/profile', undefined],
     ['/topics/vue', undefined],
-    ['/', undefined],
+    ['/', undefined]
   ])('%s → %s', (pathname, expected) => {
     expect(repositoryName(pathname)).toBe(expected)
   })

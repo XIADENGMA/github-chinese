@@ -24,8 +24,7 @@ export default {
     // 句末的「.」是单独的文本节点
     'Make it easier for students and educators to collaborate on projects and assignments.':
       '让学生和教育工作者更轻松地协作完成项目和作业。',
-    'Make it easier for students and educators to collaborate on projects and assignments':
-      '让学生和教育工作者更轻松地协作完成项目和作业',
+    'Make it easier for students and educators to collaborate on projects and assignments': '让学生和教育工作者更轻松地协作完成项目和作业',
 
     // 全校方案折叠面板
     'Unlock a passion for learning with GitHub for your whole school': '用 GitHub 为全校点燃学习热情',
@@ -52,13 +51,10 @@ export default {
       '我们面向学校的免费教育自助解决方案不包含企业支持、高级安全、企业托管用户或 Copilot 商业版等高级功能。如果你的机构需要这些附加功能，请联系我们的销售团队，讨论面向学校的可用折扣。',
 
     // GitHub 课堂（数字见 regexp）
-    'Bring the global power of open source and the developer community to your campus.':
-      '将开源和开发人员社区的全球力量带到你的校园。',
+    'Bring the global power of open source and the developer community to your campus.': '将开源和开发人员社区的全球力量带到你的校园。',
     'Discover GitHub Classroom': '探索 GitHub 课堂',
-    'Give students hands-on experience with the tools used by professional developers.':
-      '让学生亲身体验专业开发人员使用的工具。',
-    'Empower your students and faculty with real-world software development skills':
-      '用真实的软件开发技能赋能你的学生和教职员工',
+    'Give students hands-on experience with the tools used by professional developers.': '让学生亲身体验专业开发人员使用的工具。',
+    'Empower your students and faculty with real-world software development skills': '用真实的软件开发技能赋能你的学生和教职员工',
 
     // CTA
     'Discover the impact of GitHub Education': '了解 GitHub 教育的影响力',
@@ -94,8 +90,7 @@ export default {
     'Provide the platform access across all interested departments.': '为所有有意参与的部门提供平台访问权限。',
     'Designate an administrator as the main contact for GitHub to handle any technical queries.':
       '指定一名管理员作为 GitHub 的主要联系人，处理任何技术问题。',
-    "Display your school's logo on our website as a sign of our partnership.":
-      '在我们的网站上展示你学校的徽标，作为我们合作关系的标志。',
+    "Display your school's logo on our website as a sign of our partnership.": '在我们的网站上展示你学校的徽标，作为我们合作关系的标志。',
     'Maintain open lines of communication for all qualified users within your institution.':
       '为你机构内所有符合条件的用户保持畅通的沟通渠道。',
     'Agree to receive regular updates from GitHub Education to stay informed about new tools and opportunities.':
@@ -121,8 +116,7 @@ export default {
     "Interested? Let us know, and we'll guide you through joining our education initiative!":
       '有兴趣？告诉我们，我们将指导你加入我们的教育计划！',
     ", and we'll guide you through joining our education initiative!": '，我们将指导你加入我们的教育计划！',
-    'Do schools receive free access to Copilot and the Student Developer Pack?':
-      '学校是否可以免费获得 Copilot 和学生开发人员包？',
+    'Do schools receive free access to Copilot and the Student Developer Pack?': '学校是否可以免费获得 Copilot 和学生开发人员包？',
     // … Students and educators must <!-- -->apply directly to receive these benefits<!-- -->.
     'While GitHub offers free access to Copilot and numerous partner tools for all verified students and educators, these are not accessed through our educational institutional benefits. Students and educators must apply directly to receive these benefits.':
       '虽然 GitHub 为所有已验证的学生和教育工作者免费提供 Copilot 和众多合作伙伴工具，但这些并不通过我们的教育机构福利获取。学生和教育工作者必须直接申请才能获得这些福利。',
@@ -136,7 +130,7 @@ export default {
     'GitHub Education supports accredited institutions that grant degrees. For non-profit organizations, GitHub offers separate discounts. Visit our':
       'GitHub 教育支持授予学位的经认证机构。对于非营利组织，GitHub 提供单独的折扣。请访问我们的',
     'GitHub Social Impact': 'GitHub 社会影响力',
-    'site for more information.': '网站了解更多信息。',
+    'site for more information.': '网站了解更多信息。'
   },
   scoped: {
     'Enroll your campus': '注册你的校园',
@@ -151,20 +145,20 @@ export default {
     'Let us know': '告诉我们',
     // 本页只出现在「… please </b><b>contact our sales team</b><b> to discuss …」里，「请」从首段挪到此段；
     // new 页另有 scoped「联系我们的销售团队」
-    'contact our sales team': '请联系我们的销售团队',
+    'contact our sales team': '请联系我们的销售团队'
   },
   regexp: [
     // 2k+ universities, community colleges, secondary schools, and bootcamps use GitHub in the classroom.
     [
       /^(\d+)k\+ universities, community colleges, secondary schools, and bootcamps use GitHub in the classroom\.$/,
-      (_, count) => joinCjk(`超过 ${thousands(count!)}`, '所大学、社区学院、中学和训练营在课堂上使用 GitHub。'),
-    ],
+      (_, count) => joinCjk(`超过 ${thousands(count!)}`, '所大学、社区学院、中学和训练营在课堂上使用 GitHub。')
+    ]
   ],
   inline: [
     // Our offering is intended as a <b>whole-school solution</b> to ensure every department benefits. …
     [
       'Our offering is intended as a {} to ensure every department benefits. It promotes an integrated learning and development environment throughout your entire institution. However, the adoption must be at the institutional level and cannot be implemented by individual departments.',
-      '我们的方案旨在成为{}，确保每个部门都能受益。它在你的整个机构内推动一体化的学习和开发环境。但采用必须在机构层面进行，不能由单个部门实施。',
-    ],
-  ],
+      '我们的方案旨在成为{}，确保每个部门都能受益。它在你的整个机构内推动一体化的学习和开发环境。但采用必须在机构层面进行，不能由单个部门实施。'
+    ]
+  ]
 } satisfies PageDictionary

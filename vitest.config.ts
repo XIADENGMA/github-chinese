@@ -16,12 +16,7 @@ export default defineConfig({
     // 样式默认不处理；这几处的布局约束（列表限高、表头固定、弹出页宽度、语言下拉同一行）有用例按计算样式断言。
     // 设置页的公共样式表由入口引入，用例里另行引入
     css: {
-      include: [
-        /options[\\/]options\.css/,
-        /options[\\/]CustomEntriesSection\.vue/,
-        /popup[\\/]App\.vue/,
-        /popup[\\/]LanguageSection\.vue/,
-      ],
+      include: [/options[\\/]options\.css/, /options[\\/]CustomEntriesSection\.vue/, /popup[\\/]App\.vue/, /popup[\\/]LanguageSection\.vue/]
     },
     coverage: {
       provider: 'v8',
@@ -32,8 +27,8 @@ export default defineConfig({
         lines: 80,
         functions: 80,
         branches: 75,
-        statements: 80,
-      },
-    },
-  },
+        statements: 80
+      }
+    }
+  }
 })

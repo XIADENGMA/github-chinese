@@ -22,7 +22,7 @@ async function render(): Promise<VueWrapper> {
 }
 
 function tab(wrapper: VueWrapper): DOMWrapper<Element> {
-  const found = wrapper.findAll('[role="tab"]').find((item) => item.text() === '净化设置')
+  const found = wrapper.findAll('[role="tab"]').find(item => item.text() === '净化设置')
   if (!found) throw new Error('未找到标签：净化设置')
   return found
 }
@@ -44,7 +44,7 @@ function addInput(wrapper: VueWrapper): DOMWrapper<HTMLInputElement> {
 function rules(wrapper: VueWrapper): string[] {
   return section(wrapper)
     .findAll<HTMLInputElement>('tbody input')
-    .map((input) => input.element.value)
+    .map(input => input.element.value)
 }
 
 async function addRule(wrapper: VueWrapper, value: string): Promise<void> {
@@ -58,7 +58,7 @@ function toastTexts(wrapper: VueWrapper): string[] {
   return wrapper
     .get('[aria-live="polite"]')
     .findAll('.ui-toast')
-    .map((toast) => toast.text())
+    .map(toast => toast.text())
 }
 
 describe.skipIf(!App)('设置页：净化设置', () => {
@@ -118,12 +118,12 @@ describe.skipIf(!App)('设置页：净化设置', () => {
     expect(
       section(wrapper)
         .findAll('th')
-        .map((item) => item.text()),
+        .map(item => item.text())
     ).toEqual(['屏蔽规则', '操作'])
     expect(
       section(wrapper)
         .findAll('tbody input')
-        .map((input) => input.attributes('aria-label')),
+        .map(input => input.attributes('aria-label'))
     ).toEqual(['屏蔽规则', '屏蔽规则'])
   })
 
@@ -145,7 +145,7 @@ describe.skipIf(!App)('设置页：净化设置', () => {
     ['格式错误', '@-x', '格式错误'],
     ['已存在：不区分大小写', '@OctoCat', '已存在'],
     ['已存在：地址与简写相同', 'https://github.com/octocat', '已存在'],
-    ['已存在：关键词引号可有可无', '"Sample TEXT"', '已存在'],
+    ['已存在：关键词引号可有可无', '"Sample TEXT"', '已存在']
   ])('添加失败（%s）：提示，不保存，添加框保留', async (_name, value, message) => {
     await searchBlockRulesItem.setValue(['@octocat', 'Sample text'])
     const wrapper = await render()

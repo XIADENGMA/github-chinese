@@ -3,7 +3,7 @@ import type { PageDictionary } from '../../../core/types'
 /** AI 扫描类型（提示文案里的 {scanName}） */
 const SCAN_NAME: Readonly<Record<string, string>> = {
   'standard scan': '標準掃描',
-  'deep scan': '深度掃描',
+  'deep scan': '深度掃描'
 }
 
 /**
@@ -134,8 +134,7 @@ export default {
     'Cancel scan': '取消掃描',
     // Advanced AI security scan on <分支>. Powered by MDASH. Scans may take over an hour …
     'Advanced AI security scan on': '在以下分支上執行進階 AI 安全性掃描',
-    '. Scans can consume a large number of AI credits. Powered by MDASH.':
-      '。掃描可能耗用大量 AI 點數。由 MDASH 提供支援。',
+    '. Scans can consume a large number of AI credits. Powered by MDASH.': '。掃描可能耗用大量 AI 點數。由 MDASH 提供支援。',
     '. Scans may take over an hour and consume a large number of AI credits. Powered by MDASH.':
       '。掃描可能耗時超過一小時並耗用大量 AI 點數。由 MDASH 提供支援。',
     '. Powered by MDASH. Scans may take over an hour and consume a large number of AI credits.':
@@ -286,9 +285,8 @@ export default {
     'Link a branch or pull request': '連結分支或拉取請求',
     'Group selected': '已選取群組',
     'Pull request and branch search results': '拉取請求和分支搜尋結果',
-    'Unable to complete the search for pull requests and branches. Try a moment later.':
-      '無法完成拉取請求和分支的搜尋。請稍後再試。',
-    'Invalid item type': '無效的項目類型',
+    'Unable to complete the search for pull requests and branches. Try a moment later.': '無法完成拉取請求和分支的搜尋。請稍後再試。',
+    'Invalid item type': '無效的項目類型'
   },
   scoped: {
     // 其他区域也出现的同形文字，本区域内单独生效
@@ -329,7 +327,7 @@ export default {
     'try again': '再試一次',
     Issue: '議題',
     // 「在 GitHub 桌面版中開啟」对话框里的链接文字；产品名按用户规定译出
-    'GitHub Desktop': 'GitHub 桌面版',
+    'GitHub Desktop': 'GitHub 桌面版'
   },
   regexp: [
     // 受影响分支的修正位置：Fixed <时间> via pull request #12
@@ -340,28 +338,24 @@ export default {
     [
       /^\+ (at least )?([\d,]+|more) branches \(not shown\)$/,
       (_, atLeast: string | undefined, count: string) =>
-        count === 'more' ? '+ 更多分支（未顯示）' : `+ ${atLeast ? '至少 ' : ''}${count} 個分支（未顯示）`,
+        count === 'more' ? '+ 更多分支（未顯示）' : `+ ${atLeast ? '至少 ' : ''}${count} 個分支（未顯示）`
     ],
     // 开发区的拉取请求条目
     [/^#(\d+) was closed$/, '#$1 已關閉'],
     [/^#(\d+) was merged into$/, '#$1 已合併到'],
     // 自动修正
-    [
-      /^Commit autofix(?:es)? to (new )?branch$/,
-      (_, isNew: string | undefined) => `將自動修正提交到${isNew ? '新' : ''}分支`,
-    ],
+    [/^Commit autofix(?:es)? to (new )?branch$/, (_, isNew: string | undefined) => `將自動修正提交到${isNew ? '新' : ''}分支`],
     [/^Copilot failed to create a pull request\. (.+)\.$/, 'Copilot 無法建立拉取請求。$1。'],
     // 代理式自动修正横幅：Failed to create pull request: <错误信息>.
     [/^Failed to create pull request: (.+)\.$/, '無法建立拉取請求：$1。'],
     // AI 扫描不可用的说明（{scanName} = standard scan / deep scan）
     [
       /^There are no AI credits available to start an? (standard scan|deep scan)\. This may be because the budget has been exceeded or because metered billing has not been set up by the repository owner\.$/,
-      (_, scan: string) =>
-        `沒有可用的 AI 點數來啟動${SCAN_NAME[scan]}。可能是已超出預算或儲存庫擁有者尚未設定依用量計費。`,
+      (_, scan: string) => `沒有可用的 AI 點數來啟動${SCAN_NAME[scan]}。可能是已超出預算或儲存庫擁有者尚未設定依用量計費。`
     ],
     [
       /^Before you can start an? (standard scan|deep scan), you need to pick a "Usage billed to" option in your$/,
-      (_, scan: string) => `啟動${SCAN_NAME[scan]}前，必須在以下設定中選擇「使用量計費帳號」`,
+      (_, scan: string) => `啟動${SCAN_NAME[scan]}前，必須在以下設定中選擇「使用量計費帳號」`
     ],
     // AI 深度扫描进度
     [/^([\d,]+) of ([\d,]+) functions scanned$/, '已掃描 $1/$2 個函式'],
@@ -371,7 +365,7 @@ export default {
     [/^([\d,]+)\/([\d,]+) files? scanned$/, '已掃描 $1/$2 個檔案'],
     // 代码路径：3 steps in src/index.js、Step 2
     [/^([\d,]+) steps? in (\S+)$/, '$2 中的 $1 個步驟'],
-    [/^Step (\d+)$/, '步驟 $1'],
+    [/^Step (\d+)$/, '步驟 $1']
   ],
   // 被元素拆开的整句（结构见 code-scanning-shared、code-scanning-development-section 组件源码）
   inline: [
@@ -385,9 +379,6 @@ export default {
     [/^Fixed \{\} via commit ([0-9a-f]{7,40})$/, '於 {}透過提交 $1 修正'],
     ['Fixed {}', '修正於 {}'],
     // 在 GitHub 桌面版中开启分支：… make sure <a>GitHub Desktop</a> is installed …, then <a>try again</a>.
-    [
-      'If nothing happens, make sure {} is installed and set up properly, then {}.',
-      '如果沒有反應，請確認 {}已正確安裝並設定，然後{}。',
-    ],
-  ],
+    ['If nothing happens, make sure {} is installed and set up properly, then {}.', '如果沒有反應，請確認 {}已正確安裝並設定，然後{}。']
+  ]
 } satisfies PageDictionary

@@ -117,5 +117,5 @@ export default {
   about: '關於',
   githubRepository: 'GitHub',
 
-  badgeOff: '關',
+  badgeOff: '關'
 } satisfies Messages

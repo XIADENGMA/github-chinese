@@ -162,7 +162,7 @@ const TIME_ZONES: Readonly<Record<string, string>> = {
   "Nuku'alofa": '努瓜婁發',
   'Nuku’alofa': '努瓜婁發',
   Samoa: '薩摩亞',
-  'Tokelau Is.': '托克勞群島',
+  'Tokelau Is.': '托克勞群島'
 }
 
 /** 转义正则元字符：时区名含括号、点号 */
@@ -177,7 +177,7 @@ export default {
   regexp: [
     [
       new RegExp(`^\\(GMT([+-]\\d{2}:\\d{2})\\) (${ZONE_SOURCE})$`),
-      (_, offset: string, zone: string) => `(GMT${offset}) ${TIME_ZONES[zone] ?? zone}`,
-    ],
-  ],
+      (_, offset: string, zone: string) => `(GMT${offset}) ${TIME_ZONES[zone] ?? zone}`
+    ]
+  ]
 } satisfies PageDictionary

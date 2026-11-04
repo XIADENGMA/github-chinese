@@ -41,8 +41,7 @@ export default {
       '上游儲存庫已啟用此設定。停用此設定可能導致提交無法合併到上游。',
     'Allow comments on individual commits': '允許對個別提交留言',
     // 原文无标点，译文不加：啟用此設定將允許任何能查看此儲存庫的人新增 <提交留言>。現有的提交留言…
-    'Enabling this setting will allow anyone who can view this repository to add':
-      '啟用此設定將允許任何能查看此儲存庫的人新增',
+    'Enabling this setting will allow anyone who can view this repository to add': '啟用此設定將允許任何能查看此儲存庫的人新增',
     '. Existing commit comments are not affected by this setting and will remain viewable, editable, and deletable.':
       '。現有的提交留言不受此設定影響，仍可查看、編輯和刪除。',
 
@@ -55,22 +54,19 @@ export default {
     // 发行版
     'Enable release immutability': '啟用不可變發行版本',
     'Immutable releases': '不可變發行版本',
-    'Disallow assets and tags from being modified once a release is published.':
-      '發行版本發布後，不允許修改其資產和標記。',
+    'Disallow assets and tags from being modified once a release is published.': '發行版本發布後，不允許修改其資產和標記。',
 
     // 社交预览
     'Social preview': '社群預覽',
     'Upload an image to customize your repository’s social media preview.': '上傳圖片以自訂儲存庫在社群媒體上的預覽。',
     "Upload an image to customize your repository's social media preview.": '上傳圖片以自訂儲存庫在社群媒體上的預覽。',
-    'Images should be at least 640×320px (1280×640px for best display).':
-      '圖片尺寸至少應為 640×320 像素（1280×640 像素顯示效果最佳）。',
+    'Images should be at least 640×320px (1280×640px for best display).': '圖片尺寸至少應為 640×320 像素（1280×640 像素顯示效果最佳）。',
     'Download template': '下載範本',
     'Upload an image…': '上傳圖片…',
     'Upload an image...': '上傳圖片...',
     'Remove image': '移除圖片',
     // 「…while」+ <strong>owner/repo</strong> +「is private.」
-    'You can upload a social image, but it will not be visible publicly while':
-      '你可以上傳社群圖片，但圖片不會公開顯示，因為',
+    'You can upload a social image, but it will not be visible publicly while': '你可以上傳社群圖片，但圖片不會公開顯示，因為',
 
     // 功能：Wiki
     'Wikis host documentation for your repository.': 'Wiki 用來存放儲存庫的說明文件。',
@@ -102,8 +98,7 @@ export default {
     'If disabled, existing forks will be unaffected.': '停用後，現有分叉不受影響。',
 
     // 功能：赞助
-    'Sponsorships help your community know how to financially support this repository.':
-      '贊助功能讓社群瞭解如何為此儲存庫提供資金支持。',
+    'Sponsorships help your community know how to financially support this repository.': '贊助功能讓社群瞭解如何為此儲存庫提供資金支持。',
     'Display a "Sponsor" button': '顯示「贊助」按鈕',
     'Display a “Sponsor” button': '顯示「贊助」按鈕',
     'Add links to GitHub Sponsors or third-party methods your repository accepts for financial contributions to your project.':
@@ -154,16 +149,14 @@ export default {
     'You must select squashing or rebasing option. This is because linear history is required on at least one protected branch.':
       '必須選取壓縮或重定基底選項。這是因為至少有一個受保護的分支要求線性歷史記錄。',
     'Allow merge commits': '允許合併提交',
-    'Add all commits from the head branch to the base branch with a merge commit.':
-      '透過合併提交，將來源分支的所有提交加入基底分支。',
+    'Add all commits from the head branch to the base branch with a merge commit.': '透過合併提交，將來源分支的所有提交加入基底分支。',
     'Default commit message': '預設提交訊息',
     'Presented when merging a pull request with merge.': '以合併方式合併拉取請求時顯示。',
     'Default message': '預設訊息',
     'Pull request title and commit details': '拉取請求標題和提交詳細資料',
     'Pull request title and description': '拉取請求標題和描述',
     'Allow squash merging': '允許壓縮合併',
-    'Combine all commits from the head branch into a single commit in the base branch.':
-      '將來源分支的所有提交合併為基底分支中的單一提交。',
+    'Combine all commits from the head branch into a single commit in the base branch.': '將來源分支的所有提交合併為基底分支中的單一提交。',
     'Presented when merging a pull request with squash.': '以壓縮方式合併拉取請求時顯示。',
     'Default to pull request title and commit details': '預設使用拉取請求標題和提交詳細資料',
     'Default to PR title for squash merge commits': '壓縮合併提交預設使用 PR 標題',
@@ -183,8 +176,7 @@ export default {
     'Allow auto-merge': '允許自動合併',
     'Waits for merge requirements to be met and then merges automatically.': '等待符合合併要求後自動合併。',
     'Learn more about auto-merge': '瞭解自動合併',
-    'After pull requests are merged, you can have head branches deleted automatically.':
-      '拉取請求合併後，可以自動刪除來源分支。',
+    'After pull requests are merged, you can have head branches deleted automatically.': '拉取請求合併後，可以自動刪除來源分支。',
     'Automatically delete head branches': '自動刪除來源分支',
     'Deleted branches will still be able to be restored.': '已刪除的分支仍可還原。',
 
@@ -206,8 +198,7 @@ export default {
     'Must be a whole number between 2 and 1000': '必須是 2 到 1000 之間的整數',
 
     // 议题自动关闭
-    'After merging a pull request, linked issues can be closed automatically.':
-      '合併拉取請求後，可以自動關閉已連結的議題。',
+    'After merging a pull request, linked issues can be closed automatically.': '合併拉取請求後，可以自動關閉已連結的議題。',
     'Auto-close issues with merged linked pull requests': '已連結的拉取請求合併後自動關閉議題',
     'Whenever linked pull requests have merged, auto-close the issue.': '每當已連結的拉取請求合併時，自動關閉議題。',
 
@@ -234,7 +225,7 @@ export default {
     'Changing your default branch': '變更預設分支',
     'can have unintended consequences that can affect new pull requests and clones.':
       '可能會產生非預期的後果，影響新的拉取請求和儲存庫複製。',
-    'I understand, update the default branch.': '我瞭解，更新預設分支。',
+    'I understand, update the default branch.': '我瞭解，更新預設分支。'
   },
   scoped: {
     'Repository name': '儲存庫名稱',
@@ -264,7 +255,7 @@ export default {
     Archives: '封存檔',
     Pushes: '推送',
     'Up to': '最多',
-    feedback: '意見回饋',
+    feedback: '意見回饋'
   },
   regexp: [
     // 存储库名称可用性
@@ -272,7 +263,7 @@ export default {
     [
       new RegExp(`^The repository ${NAME} already exists on this account(\\.?)$`),
       // 与 new.ts 的同一句同译
-      (_, name: string, dot: string) => `此帳號已有名為 ${name} 的儲存庫${dot ? '。' : ''}`,
+      (_, name: string, dot: string) => `此帳號已有名為 ${name} 的儲存庫${dot ? '。' : ''}`
     ],
     // 默认分支：重命名对话框（片段被 <code> 隔开时由 static 分别匹配）
     [new RegExp(`^Rename ${BRANCH} to:$`), '將 $1 重新命名為：'],
@@ -280,28 +271,21 @@ export default {
     [/^Will update (\d+) pull requests? targeting this branch\.$/, '將更新 $1 個以此分支為目標的拉取請求。'],
     [
       new RegExp(`^Will update (\\d+) branch protection rules? that explicitly targets? (\\S+?)(\\.?)$`),
-      (_, count: string, branch: string, dot: string) =>
-        `將更新 ${count} 個明確針對 ${branch} 的分支保護規則${dot ? '。' : ''}`,
+      (_, count: string, branch: string, dot: string) => `將更新 ${count} 個明確針對 ${branch} 的分支保護規則${dot ? '。' : ''}`
     ],
     [/^Will close (\d+) open pull requests? for this branch\.$/, '將關閉 $1 個來自此分支的開放中拉取請求。'],
     // 默认分支：切换对话框
     [
       new RegExp(`^Choose another branch to use as the default branch of ${NAME}(?:/${NAME})? instead of ${BRANCH}$`),
       (_, owner: string, repo: string, branch: string) =>
-        `選擇另一個分支取代 ${branch} 作為 ${repo ? `${owner}/${repo}` : owner} 的預設分支`,
+        `選擇另一個分支取代 ${branch} 作為 ${repo ? `${owner}/${repo}` : owner} 的預設分支`
     ],
     [new RegExp(`^Default branch (?:changed|updated) to ${BRANCH}$`), '預設分支已變更為 $1'],
     // 社交预览（私人存储库、删除确认）
     [
-      new RegExp(
-        `^You can upload a social image, but it will not be visible publicly while ${NAME}(?:/${NAME})? is private\\.$`,
-      ),
-      (_, owner: string, repo: string) =>
-        `你可以上傳社群圖片，但 ${repo ? `${owner}/${repo}` : owner} 是私人儲存庫，圖片不會公開顯示。`,
+      new RegExp(`^You can upload a social image, but it will not be visible publicly while ${NAME}(?:/${NAME})? is private\\.$`),
+      (_, owner: string, repo: string) => `你可以上傳社群圖片，但 ${repo ? `${owner}/${repo}` : owner} 是私人儲存庫，圖片不會公開顯示。`
     ],
-    [
-      new RegExp(`^Are you sure you want to remove ${NAME}/${NAME}[’']s promotional image\\?$`),
-      '確定要移除 $1/$2 的宣傳圖片嗎？',
-    ],
-  ],
+    [new RegExp(`^Are you sure you want to remove ${NAME}/${NAME}[’']s promotional image\\?$`), '確定要移除 $1/$2 的宣傳圖片嗎？']
+  ]
 } satisfies PageDictionary

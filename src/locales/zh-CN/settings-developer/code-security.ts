@@ -34,10 +34,8 @@ export default {
     'Pushes that contain secrets will not be blocked.': '包含机密的推送将不会被阻止。',
 
     // 全部启用 / 全部禁用：确认对话框
-    "You're about to enable dependency graph on all your private repositories.":
-      '你即将为你的所有专用存储库启用依赖项关系图。',
-    'You’re about to enable dependency graph on all your private repositories.':
-      '你即将为你的所有专用存储库启用依赖项关系图。',
+    "You're about to enable dependency graph on all your private repositories.": '你即将为你的所有专用存储库启用依赖项关系图。',
+    'You’re about to enable dependency graph on all your private repositories.': '你即将为你的所有专用存储库启用依赖项关系图。',
     "You're about to disable dependency graph on all your private repositories. This will also disable Dependabot alerts and Dependabot security updates on those repositories.":
       '你即将为你的所有专用存储库禁用依赖项关系图。这也会禁用这些存储库的 Dependabot 警报和 Dependabot 安全更新。',
     'You’re about to disable dependency graph on all your private repositories. This will also disable Dependabot alerts and Dependabot security updates on those repositories.':
@@ -54,10 +52,8 @@ export default {
       '你即将为你的所有存储库启用 Dependabot 安全更新。此功能需要依赖项关系图和 Dependabot 警报，因此也会为所有存储库开启它们。',
     'You’re about to enable Dependabot security updates on all your repositories. Dependabot security updates require the dependency graph and Dependabot alerts, so we’ll also turn that on for all repositories.':
       '你即将为你的所有存储库启用 Dependabot 安全更新。此功能需要依赖项关系图和 Dependabot 警报，因此也会为所有存储库开启它们。',
-    "You're about to disable Dependabot security updates on all your repositories.":
-      '你即将为你的所有存储库禁用 Dependabot 安全更新。',
-    'You’re about to disable Dependabot security updates on all your repositories.':
-      '你即将为你的所有存储库禁用 Dependabot 安全更新。',
+    "You're about to disable Dependabot security updates on all your repositories.": '你即将为你的所有存储库禁用 Dependabot 安全更新。',
+    'You’re about to disable Dependabot security updates on all your repositories.': '你即将为你的所有存储库禁用 Dependabot 安全更新。',
     "You're about to enable grouped security updates on all your repositories. Grouped security updates require the dependency graph, Dependabot alerts and Dependabot security updates, so we'll also turn that on for all repositories.":
       '你即将为你的所有存储库启用分组安全更新。此功能需要依赖项关系图、Dependabot 警报和 Dependabot 安全更新，因此也会为所有存储库开启它们。',
     'You’re about to enable grouped security updates on all your repositories. Grouped security updates require the dependency graph, Dependabot alerts and Dependabot security updates, so we’ll also turn that on for all repositories.':
@@ -66,27 +62,21 @@ export default {
       '你即将为你的所有存储库启用分组安全更新。此功能需要依赖项关系图、Dependabot 警报和 Dependabot 安全更新，因此也会为所有存储库开启它们。',
     'You’re about to enable grouped security updates on all your repositories. Grouped security updates require the dependency graph, Dependabot alerts, Dependabot security updates and Dependabot security updates, so we’ll also turn that on for all repositories.':
       '你即将为你的所有存储库启用分组安全更新。此功能需要依赖项关系图、Dependabot 警报和 Dependabot 安全更新，因此也会为所有存储库开启它们。',
-    "You're about to disable grouped security updates on all your repositories.":
-      '你即将为你的所有存储库禁用分组安全更新。',
-    'You’re about to disable grouped security updates on all your repositories.':
-      '你即将为你的所有存储库禁用分组安全更新。',
+    "You're about to disable grouped security updates on all your repositories.": '你即将为你的所有存储库禁用分组安全更新。',
+    'You’re about to disable grouped security updates on all your repositories.': '你即将为你的所有存储库禁用分组安全更新。',
     // 原文 so 前无逗号：改用“所需的 / 所依赖的”定语，不加逗号
     "You're about to enable dependabot on actions on all your repositories. Dependabot on actions requires Actions so we'll also turn that on for all repositories.":
       '你即将为你的所有存储库启用操作运行器上的 Dependabot。此功能所需的 GitHub 操作也会为所有存储库开启。',
     'You’re about to enable dependabot on actions on all your repositories. Dependabot on actions requires Actions so we’ll also turn that on for all repositories.':
       '你即将为你的所有存储库启用操作运行器上的 Dependabot。此功能所需的 GitHub 操作也会为所有存储库开启。',
-    "You're about to disable dependabot on actions on all your repositories.":
-      '你即将为你的所有存储库禁用操作运行器上的 Dependabot。',
-    'You’re about to disable dependabot on actions on all your repositories.':
-      '你即将为你的所有存储库禁用操作运行器上的 Dependabot。',
+    "You're about to disable dependabot on actions on all your repositories.": '你即将为你的所有存储库禁用操作运行器上的 Dependabot。',
+    'You’re about to disable dependabot on actions on all your repositories.': '你即将为你的所有存储库禁用操作运行器上的 Dependabot。',
     "You're about to enable dependabot self-hosted on all your repositories. Dependabot self-hosted depends on Dependabot on Actions so we'll also turn that on for all repositories.":
       '你即将为你的所有存储库启用自托管运行器上的 Dependabot。此功能所依赖的操作运行器上的 Dependabot 也会为所有存储库开启。',
     'You’re about to enable dependabot self-hosted on all your repositories. Dependabot self-hosted depends on Dependabot on Actions so we’ll also turn that on for all repositories.':
       '你即将为你的所有存储库启用自托管运行器上的 Dependabot。此功能所依赖的操作运行器上的 Dependabot 也会为所有存储库开启。',
-    "You're about to disable dependabot self-hosted on all your repositories.":
-      '你即将为你的所有存储库禁用自托管运行器上的 Dependabot。',
-    'You’re about to disable dependabot self-hosted on all your repositories.':
-      '你即将为你的所有存储库禁用自托管运行器上的 Dependabot。',
+    "You're about to disable dependabot self-hosted on all your repositories.": '你即将为你的所有存储库禁用自托管运行器上的 Dependabot。',
+    'You’re about to disable dependabot self-hosted on all your repositories.': '你即将为你的所有存储库禁用自托管运行器上的 Dependabot。',
     'Enable dependency graph': '启用依赖项关系图',
     'Disable dependency graph': '禁用依赖项关系图',
     'Disable Dependabot alerts': '禁用 Dependabot 警报',
@@ -97,14 +87,13 @@ export default {
     'Enable dependabot on actions': '启用操作运行器上的 Dependabot',
     'Disable dependabot on actions': '禁用操作运行器上的 Dependabot',
     'Enable dependabot self-hosted': '启用自托管运行器上的 Dependabot',
-    'Disable dependabot self-hosted': '禁用自托管运行器上的 Dependabot',
+    'Disable dependabot self-hosted': '禁用自托管运行器上的 Dependabot'
   },
   scoped: {
     'Security & analysis': '安全与分析',
     'Disable all': '全部禁用',
     'Enable all': '全部启用',
-    'Security and analysis features help keep your repositories secure and updated.':
-      '安全与分析功能可帮助你的存储库保持安全和最新。',
+    'Security and analysis features help keep your repositories secure and updated.': '安全与分析功能可帮助你的存储库保持安全和最新。',
     // 「Block commits that contain <a>supported secrets</a> across all public repositories on GitHub.」
     // 范围状语并入句首片段，句尾片段只剩句号；supported secrets 与存储库安全设置同译
     'Block commits that contain': '在 GitHub 上的所有公共存储库中阻止提交中出现',
@@ -151,8 +140,7 @@ export default {
     'This will turn on secret scanning for all public repositories.': '这将为所有公共存储库开启机密扫描。',
     'Enable for eligible repositories': '为符合条件的存储库启用',
     'Disable secret scanning?': '禁用机密扫描？',
-    'This will disable secret scanning on all repositories where it is enabled.':
-      '这将在所有已启用机密扫描的存储库中禁用它。',
+    'This will disable secret scanning on all repositories where it is enabled.': '这将在所有已启用机密扫描的存储库中禁用它。',
     'Disable secret scanning': '禁用机密扫描',
     'Push protection': '推送保护',
     'Automatically enable for repositories added to secret scanning': '为新加入机密扫描的存储库自动启用',
@@ -160,18 +148,16 @@ export default {
     'This will turn on push protection for all repositories that have secret scanning enabled.':
       '这将为所有已启用机密扫描的存储库开启推送保护。',
     'Disable push protection?': '禁用推送保护？',
-    'This will disable push protection on all repositories where it is enabled.':
-      '这将在所有已启用推送保护的存储库中禁用它。',
+    'This will disable push protection on all repositories where it is enabled.': '这将在所有已启用推送保护的存储库中禁用它。',
     'You can still enable push protection at the repository level.': '你仍可在存储库级别启用推送保护。',
     'Enable push protection': '启用推送保护',
-    'Disable push protection': '禁用推送保护',
+    'Disable push protection': '禁用推送保护'
   },
   regexp: [
     [
       /^You['’]re about to (enable|disable) private vulnerability reporting on all public repositories in (\S+)\.$/,
-      (_, action: string, owner: string) =>
-        `你即将为 ${owner} 的所有公共存储库${TOGGLE[action] ?? action}专用漏洞报告。`,
+      (_, action: string, owner: string) => `你即将为 ${owner} 的所有公共存储库${TOGGLE[action] ?? action}专用漏洞报告。`
     ],
-    [/^Security settings updated for (\S+?)['’]s repositories\.$/, '已更新 $1 存储库的安全设置。'],
-  ],
+    [/^Security settings updated for (\S+?)['’]s repositories\.$/, '已更新 $1 存储库的安全设置。']
+  ]
 } satisfies PageDictionary

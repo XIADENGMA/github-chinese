@@ -31,7 +31,7 @@ const ICON_STATES: Readonly<Record<string, string>> = {
   'in progress': '正在进行',
   waiting: '等待中',
   abandoned: '已放弃',
-  destroyed: '已销毁',
+  destroyed: '已销毁'
 }
 
 export default {
@@ -58,7 +58,7 @@ export default {
     'View workflow run': '查看工作流运行',
     '/ History': '/ 历史记录',
     'More list item action bar': '更多操作',
-    'Text will be ignored since log searching is not yet available:': '因暂不支持日志搜索而忽略以下文本：',
+    'Text will be ignored since log searching is not yet available:': '因暂不支持日志搜索而忽略以下文本：'
   },
 
   scoped: {
@@ -101,35 +101,26 @@ export default {
     between: '介于',
     Has: '有',
     Exclude: '排除',
-    Created: '创建时间',
+    Created: '创建时间'
   },
 
   regexp: [
     [/^([\d,]+) deployments?$/, '$1 个部署'],
     [/^via (.+) #(\d+)$/, '通过 $1 #$2'],
     [/^View deployment to (.+)$/, '查看 $1 的部署'],
-    [
-      /^(Pin|Unpin) (.+) environment$/,
-      (_, action: string, name: string) => `${action === 'Pin' ? '置顶' : '取消置顶'} ${name} 环境`,
-    ],
-    [
-      new RegExp(`^Deployment (${alternation(ICON_STATES)})$`),
-      (_, state: string) => `部署${pick(ICON_STATES, state) ?? state}`,
-    ],
+    [/^(Pin|Unpin) (.+) environment$/, (_, action: string, name: string) => `${action === 'Pin' ? '置顶' : '取消置顶'} ${name} 环境`],
+    [new RegExp(`^Deployment (${alternation(ICON_STATES)})$`), (_, state: string) => `部署${pick(ICON_STATES, state) ?? state}`],
     // 列表条目：Status: Deployed (completed).
     [
       new RegExp(`^Status: (${STATE_SOURCE}) \\((${PHASE_SOURCE})\\)\\.$`),
-      (_, state: string, phase: string) => `${deploymentStatus(state, phase)}。`,
+      (_, state: string, phase: string) => `${deploymentStatus(state, phase)}。`
     ],
     // 列表条目的无障碍名称：标题: Status: Deployed (completed). More information available below.
     [
-      new RegExp(
-        `^(?:(.+): )?Status: (${STATE_SOURCE}) \\((${PHASE_SOURCE})\\)\\. More information available below\\.$`,
-      ),
-      (_, title: string, state: string, phase: string) =>
-        `${title ? `${title}：` : ''}${deploymentStatus(state, phase)}。更多信息见下方。`,
+      new RegExp(`^(?:(.+): )?Status: (${STATE_SOURCE}) \\((${PHASE_SOURCE})\\)\\. More information available below\\.$`),
+      (_, title: string, state: string, phase: string) => `${title ? `${title}：` : ''}${deploymentStatus(state, phase)}。更多信息见下方。`
     ],
     // 名词 Filter 作“筛选器”；issues 指筛选语法错误，用“处错误”，避免与议题（issue）混淆；与 issues/filter.ts 同句同译
-    [/^Filter contains (\d+) issues?:$/, '筛选器有 $1 处错误：'],
-  ],
+    [/^Filter contains (\d+) issues?:$/, '筛选器有 $1 处错误：']
+  ]
 } satisfies PageDictionary

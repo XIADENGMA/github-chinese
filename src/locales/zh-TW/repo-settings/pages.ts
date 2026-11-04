@@ -69,12 +69,9 @@ export default {
     'Please wait for the DNS check to complete.': '請等待 DNS 檢查完成。',
     'DNS records should point to the': 'DNS 記錄應指向',
     'internationalized domain name': '國際化網域名稱',
-    'Domain does not resolve to the GitHub Pages server. For more information, see':
-      '網域未解析至 GitHub 頁面伺服器。如需詳細資訊，請參閱',
-    "Domain's DNS record could not be retrieved. For more information, see":
-      '無法擷取網域的 DNS 記錄。如需詳細資訊，請參閱',
-    'Domain’s DNS record could not be retrieved. For more information, see':
-      '無法擷取網域的 DNS 記錄。如需詳細資訊，請參閱',
+    'Domain does not resolve to the GitHub Pages server. For more information, see': '網域未解析至 GitHub 頁面伺服器。如需詳細資訊，請參閱',
+    "Domain's DNS record could not be retrieved. For more information, see": '無法擷取網域的 DNS 記錄。如需詳細資訊，請參閱',
+    'Domain’s DNS record could not be retrieved. For more information, see': '無法擷取網域的 DNS 記錄。如需詳細資訊，請參閱',
     'No changes to custom domain.': '自訂網域沒有變更。',
     'Custom domain removed. Please remember to remove any GitHub Pages DNS records for this domain if you do not plan to continue using it with GitHub Pages.':
       '已移除自訂網域。如果不打算繼續將此網域用於 GitHub 頁面，請記得移除此網域的所有 GitHub 頁面 DNS 記錄。',
@@ -86,13 +83,11 @@ export default {
       '— 你的網站無法使用此選項，因為網域未正確設定為支援 HTTPS (',
     '— Unavailable for your site because a certificate has not yet been issued for your domain (':
       '— 你的網站無法使用此選項，因為尚未為網域核發憑證 (',
-    '— Required for your site because you are using the default domain (':
-      '— 你的網站必須啟用此選項，因為正在使用預設網域 (',
+    '— Required for your site because you are using the default domain (': '— 你的網站必須啟用此選項，因為正在使用預設網域 (',
     'Troubleshooting custom domains': '自訂網域疑難排解',
     'HTTPS provides a layer of encryption that prevents others from snooping on or tampering with traffic to your site.':
       'HTTPS 提供一層加密，防止他人窺探或竄改網站的流量。',
-    'When HTTPS is enforced, your site will only be served over HTTPS.':
-      '強制使用 HTTPS 時，網站只會透過 HTTPS 提供服務。',
+    'When HTTPS is enforced, your site will only be served over HTTPS.': '強制使用 HTTPS 時，網站只會透過 HTTPS 提供服務。',
     'Learn more about securing your GitHub Pages site with HTTPS': '瞭解如何使用 HTTPS 保護 GitHub 頁面網站',
 
     // 可见性
@@ -103,7 +98,7 @@ export default {
       '使用 GitHub 企業版帳號，你可以透過私人發布來限制 GitHub 頁面網站的存取。私人發布的網站可用來與企業成員分享內部文件或知識庫。',
     'Try GitHub Enterprise': '試用 GitHub 企業版',
     'Try GitHub Enterprise risk-free for 30 days': '免費試用 GitHub 企業版 30 天',
-    'Learn more about the visibility of your GitHub Pages site.': '瞭解 GitHub 頁面網站的可見度。',
+    'Learn more about the visibility of your GitHub Pages site.': '瞭解 GitHub 頁面網站的可見度。'
   },
   scoped: {
     'create your own': '建立自己的工作流程',
@@ -122,7 +117,7 @@ export default {
     // 来源下拉框与简介链接里单独出现的产品名（见 nav.ts 文件头）
     'GitHub Pages': 'GitHub 頁面',
     'GitHub Actions': 'GitHub 動作',
-    'GitHub Enterprise': 'GitHub 企業版',
+    'GitHub Enterprise': 'GitHub 企業版'
   },
   regexp: [
     // 站点状态
@@ -132,22 +127,16 @@ export default {
     // 构建来源（片段被 <code> 隔开时由 static 分别匹配）
     [
       /^Your GitHub Pages site is currently being built from the (\S+) folder in the (\S+) branch\.$/,
-      '你的 GitHub 頁面網站目前建置自 $2 分支中的 $1 資料夾。',
+      '你的 GitHub 頁面網站目前建置自 $2 分支中的 $1 資料夾。'
     ],
-    [
-      /^Your GitHub Pages site is currently being built from the (\S+) branch\.$/,
-      '你的 GitHub 頁面網站目前建置自 $1 分支。',
-    ],
-    [
-      /^Your site was last deployed to the (\S+) environment by the (.{1,100}) workflow\.$/,
-      '你的網站上次透過 $2 工作流程部署到 $1 環境。',
-    ],
+    [/^Your GitHub Pages site is currently being built from the (\S+) branch\.$/, '你的 GitHub 頁面網站目前建置自 $1 分支。'],
+    [/^Your site was last deployed to the (\S+) environment by the (.{1,100}) workflow\.$/, '你的網站上次透過 $2 工作流程部署到 $1 環境。'],
     // 自定义域
     [
       /^Custom domains allow you to serve your site from a domain other than (\S+?)(\.?)$/,
-      (_, domain: string, dot: string) => `自訂網域可讓網站使用 ${domain} 以外的網域提供服務${dot ? '。' : ''}`,
+      (_, domain: string, dot: string) => `自訂網域可讓網站使用 ${domain} 以外的網域提供服務${dot ? '。' : ''}`
     ],
     // 取消发布（更多选项菜单的读屏名称）
-    [/^Unpublish ([\w.-]+\/[\w.-]+)$/, '取消發布 $1'],
-  ],
+    [/^Unpublish ([\w.-]+\/[\w.-]+)$/, '取消發布 $1']
+  ]
 } satisfies PageDictionary

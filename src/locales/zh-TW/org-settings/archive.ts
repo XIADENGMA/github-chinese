@@ -15,7 +15,7 @@ const FILTER_TARGET: Readonly<Record<string, string>> = {
   organization: '組織',
   repository: '儲存庫',
   team: '團隊',
-  user: '使用者',
+  user: '使用者'
 }
 
 /**
@@ -68,7 +68,7 @@ export default {
     "Enabling will allow you to view IP addresses of current members for organization audit log events. As this feature makes your users' IP addresses automatically available, you should review this change with your legal team to determine whether any user notification is required. When enabled at the enterprise level it will be automatically enabled for all organizations owned by the enterprise, the reverse is not true.":
       '啟用後，你可以在組織稽核記錄事件中查看目前成員的 IP 位址。此功能會自動提供使用者的 IP 位址，你應與法務團隊評估此變更，確認是否需要通知使用者。在企業層級啟用時，企業擁有的所有組織都會自動啟用；反之則不然。',
     'Enabling will allow you to view IP addresses of current members for organization audit log events. As this feature makes your users’ IP addresses automatically available, you should review this change with your legal team to determine whether any user notification is required. When enabled at the enterprise level it will be automatically enabled for all organizations owned by the enterprise, the reverse is not true.':
-      '啟用後，你可以在組織稽核記錄事件中查看目前成員的 IP 位址。此功能會自動提供使用者的 IP 位址，你應與法務團隊評估此變更，確認是否需要通知使用者。在企業層級啟用時，企業擁有的所有組織都會自動啟用；反之則不然。',
+      '啟用後，你可以在組織稽核記錄事件中查看目前成員的 IP 位址。此功能會自動提供使用者的 IP 位址，你應與法務團隊評估此變更，確認是否需要通知使用者。在企業層級啟用時，企業擁有的所有組織都會自動啟用；反之則不然。'
   },
   scoped: {
     // 预定提醒
@@ -118,7 +118,7 @@ export default {
     Deleted: '刪除於',
     'Done!': '完成！',
     'These repositories were deleted by members of this organization. Repositories can be restored for 90 days after deletion.':
-      '這些儲存庫已由此組織的成員刪除。儲存庫刪除後 90 天內可以還原。',
+      '這些儲存庫已由此組織的成員刪除。儲存庫刪除後 90 天內可以還原。'
   },
   regexp: [
     [/^Ignore with (\d+) or more approvals?$/, '有 $1 個或更多核准時忽略'],
@@ -126,13 +126,10 @@ export default {
     // 审核日志搜索建议的无障碍标签：「action: filter by action」（限定符与半角冒号原样保留）
     [
       /^([a-z_]+): filter by (action|actor|country|created date|operation|organization|repository|team|user)$/,
-      (_, qualifier: string, target: string) => `${qualifier}: 依${FILTER_TARGET[target] ?? target}篩選`,
+      (_, qualifier: string, target: string) => `${qualifier}: 依${FILTER_TARGET[target] ?? target}篩選`
     ],
-    [
-      new RegExp(`^This is where you can review activity from ${ORG}[’']s sponsorships\\.$`),
-      '你可以在這裡查看 $1 的贊助活動。',
-    ],
+    [new RegExp(`^This is where you can review activity from ${ORG}[’']s sponsorships\\.$`), '你可以在這裡查看 $1 的贊助活動。'],
     [new RegExp(`^No recoverable repositories were found for ${ORG}\\.$`), '找不到 $1 可還原的儲存庫。'],
-    [/^Are you sure you want to restore ([\w.-]+(?:\/[\w.-]+)?)\?$/, '確定要還原 $1 嗎？'],
-  ],
+    [/^Are you sure you want to restore ([\w.-]+(?:\/[\w.-]+)?)\?$/, '確定要還原 $1 嗎？']
+  ]
 } satisfies PageDictionary

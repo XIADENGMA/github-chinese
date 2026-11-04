@@ -65,12 +65,12 @@ async function setup(count: number, element: HTMLElement, keyed = false): Promis
 
 /** 渲染项简写：行写序号，占位写“gap 高度” */
 function shape(items: readonly VirtualItem<string>[]): (number | string)[] {
-  return items.map((item) => (item.kind === 'row' ? item.index : `gap ${item.height}`))
+  return items.map(item => (item.kind === 'row' ? item.index : `gap ${item.height}`))
 }
 
 /** 渲染项的键：行写序号，占位写键名 */
 function keys(items: readonly VirtualItem<string>[]): (number | string)[] {
-  return items.map((item) => (item.kind === 'row' ? item.index : String(item.key.description)))
+  return items.map(item => (item.kind === 'row' ? item.index : String(item.key.description)))
 }
 
 function range(start: number, end: number): number[] {
@@ -181,7 +181,7 @@ describe('useVirtualList', () => {
           observed.push(target)
         }
         disconnect = disconnect
-      },
+      }
     )
     const element = container(400)
     const sample = row(0, ROW)
@@ -209,7 +209,7 @@ describe('useVirtualList', () => {
         }
         observe(): void {}
         disconnect(): void {}
-      },
+      }
     )
     const { element, list } = await setup(100, container(400))
     await scrollTo(element, 50 * ROW)
@@ -232,15 +232,7 @@ describe('useVirtualList', () => {
     const { element, list } = await setup(100, container(400, range(0, 13)))
     input(element, 5).focus()
     await scrollTo(element, 50 * ROW)
-    expect(shape(list.result.items.value)).toEqual([
-      `gap ${4 * ROW}`,
-      4,
-      5,
-      6,
-      `gap ${41 * ROW}`,
-      ...range(48, 63),
-      `gap ${37 * ROW}`,
-    ])
+    expect(shape(list.result.items.value)).toEqual([`gap ${4 * ROW}`, 4, 5, 6, `gap ${41 * ROW}`, ...range(48, 63), `gap ${37 * ROW}`])
     const total = list.result.items.value.reduce((sum, item) => sum + (item.kind === 'row' ? ROW : item.height), 0)
     expect(total).toBe(100 * ROW)
 
@@ -284,14 +276,13 @@ describe('useVirtualList', () => {
     input(element, 100).focus()
     await scrollTo(element, 0)
     const before = keys(list.result.items.value)
-    expect(before.filter((key) => typeof key === 'string')).toEqual(['before-pin', 'after'])
+    expect(before.filter(key => typeof key === 'string')).toEqual(['before-pin', 'after'])
 
     await scrollTo(element, 150 * ROW)
     const after = keys(list.result.items.value)
-    expect(after.filter((key) => typeof key === 'string')).toEqual(['before', 'after-pin', 'after'])
+    expect(after.filter(key => typeof key === 'string')).toEqual(['before', 'after-pin', 'after'])
     // Vue 按键比对新旧列表：两次都有的项顺序一致，就不会移动焦点行的节点（移动会让输入框失去焦点）
-    const shared = (from: (number | string)[], to: (number | string)[]): (number | string)[] =>
-      from.filter((key) => to.includes(key))
+    const shared = (from: (number | string)[], to: (number | string)[]): (number | string)[] => from.filter(key => to.includes(key))
     expect(shared(before, after)).toEqual(shared(after, before))
   })
 
@@ -356,7 +347,7 @@ describe('useVirtualList', () => {
     expect(shape(list.result.items.value).slice(0, 5)).toEqual([`gap ${1 * ROW}`, 1, 2, 3, `gap ${44 * ROW}`])
     expect(list.result.items.value[2]).toEqual({ kind: 'row', index: 2, data: 'item-1' })
 
-    source.value = source.value.filter((item) => item !== 'item-1')
+    source.value = source.value.filter(item => item !== 'item-1')
     await nextTick()
     expect(shape(list.result.items.value)[0]).toBe(`gap ${48 * ROW}`)
   })
@@ -389,9 +380,7 @@ describe('useVirtualList', () => {
     expect(element.scrollTop).toBe(0)
     expect(shape(list.result.items.value)[0]).toBe(0)
 
-    const detached = withScope(() =>
-      useVirtualList({ source: ['item-0'], viewport: shallowRef(null), estimatedHeight: ROW }),
-    )
+    const detached = withScope(() => useVirtualList({ source: ['item-0'], viewport: shallowRef(null), estimatedHeight: ROW }))
     expect(() => detached.result.scrollToTop()).not.toThrow()
     detached.stop()
   })

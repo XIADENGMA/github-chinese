@@ -15,8 +15,7 @@ export default {
       '交付出色作品，真正的精彩才刚开始。继续查看教程、最佳实践和文档，充分用好 GitHub。',
     'Remove from dashboard': '从仪表板删除',
     'Create your first code project': '创建你的第一个代码项目',
-    'It’s your own space to experiment, learn, and share code with the world.':
-      '这是你自己的空间，可以尝试、学习，并与世界分享代码。',
+    'It’s your own space to experiment, learn, and share code with the world.': '这是你自己的空间，可以尝试、学习，并与世界分享代码。',
     'Introduction to GitHub tutorial': 'GitHub 入门教程',
     'Create a personal README.md': '创建个人 README.md',
     'Blank project': '空白项目',
@@ -74,8 +73,7 @@ export default {
     'Learn with a tutorial project': '通过教程项目学习',
     'Introduction to GitHub': 'GitHub 入门',
     'Get started using GitHub in less than an hour.': '一小时内上手 GitHub。',
-    'Create a site or blog from your GitHub repositories with GitHub Pages.':
-      '使用 GitHub 页面从 GitHub 存储库创建网站或博客。',
+    'Create a site or blog from your GitHub repositories with GitHub Pages.': '使用 GitHub 页面从 GitHub 存储库创建网站或博客。',
     'Code with Copilot': '使用 Copilot 编程',
     'Develop with AI-powered code suggestions using GitHub Copilot, Codespaces, and VS Code.':
       '借助 GitHub Copilot、代码空间和 VS Code 的 AI 代码建议进行开发。',
@@ -92,8 +90,7 @@ export default {
     'Anyone on the internet can see this repository': '互联网上的任何人都能看到此存储库',
     'You choose who can see and commit to this repository': '由你决定谁能查看和提交到此存储库',
     // 卡片显示原因：标点随原文，不加冒号
-    "You're seeing this because you haven't created a repository in a while.":
-      '你看到此内容是因为你有一段时间没有创建存储库了。',
+    "You're seeing this because you haven't created a repository in a while.": '你看到此内容是因为你有一段时间没有创建存储库了。',
     "You're seeing this because you haven't used repositories, issues, and pull requests recently.":
       '你看到此内容是因为你最近没有使用存储库、议题和拉取请求。',
     'Repositories that need your help': '需要你帮助的存储库',
@@ -101,12 +98,10 @@ export default {
 
     // 旧版首页：使用行业工具（拉取请求的动词 open → 创建）
     'Use tools of the trade': '使用行业工具',
-    "You're seeing this because you haven't opened a pull request in a while.":
-      '你看到此内容是因为你有一段时间没有创建拉取请求了。',
+    "You're seeing this because you haven't opened a pull request in a while.": '你看到此内容是因为你有一段时间没有创建拉取请求了。',
     'Simplify your development workflow with a GUI': '用图形界面简化开发工作流程',
     'Install GitHub Desktop': '安装 GitHub 桌面版',
-    'to visualize, commit, and push changes without ever touching the command line.':
-      '，无需命令行即可可视化、提交和推送更改。',
+    'to visualize, commit, and push changes without ever touching the command line.': '，无需命令行即可可视化、提交和推送更改。',
     'Get AI-based coding suggestions': '获取 AI 编程建议',
     'Try GitHub Copilot free for 30 days,': '免费试用 GitHub Copilot 30 天，',
     'which suggests entire functions in real time, right from your editor.': '它能在编辑器中实时建议完整函数。',
@@ -114,8 +109,7 @@ export default {
     'the github.dev web-based editor': '基于网页的 github.dev 编辑器',
     'from your repository or pull request to create and commit changes.': '，在存储库或拉取请求中创建并提交更改。',
     'Install a powerful code editor': '安装强大的代码编辑器',
-    'is a multi-platform code editor optimized for building and debugging software.':
-      '是一款为构建和调试软件而优化的跨平台代码编辑器。',
+    'is a multi-platform code editor optimized for building and debugging software.': '是一款为构建和调试软件而优化的跨平台代码编辑器。',
     'Set up your local dev environment': '设置本地开发环境',
     'set up Git': '设置 Git',
     ', simplify your dev workflow with': '，简化开发工作流程可使用',
@@ -123,8 +117,7 @@ export default {
 
     // 旧版首页：开始使用 GitHub
     'Get started on GitHub': '开始使用 GitHub',
-    "You're seeing this because you haven't used GitHub's core features, yet.":
-      '你看到此内容是因为你还没有使用过 GitHub 的核心功能。',
+    "You're seeing this because you haven't used GitHub's core features, yet.": '你看到此内容是因为你还没有使用过 GitHub 的核心功能。',
     'Introduce yourself with a profile README': '用个人资料自述文件介绍自己',
     'Share information about yourself by creating a profile README, which appears at the top of your profile page.':
       '创建个人资料自述文件分享你的信息，它会显示在个人资料页顶部。',
@@ -135,16 +128,13 @@ export default {
       'GitHub 的“Hello World”教程讲解基础知识，你将创建自己的存储库，并学习用于创建和审查代码的拉取请求工作流程。',
     'Try the GitHub flow': '体验 GitHub 流程',
     'About version control and Git': '关于版本控制和 Git',
-    'Learn about the version control system, Git, and how it works with GitHub.':
-      '了解版本控制系统 Git，以及它如何与 GitHub 配合使用。',
+    'Learn about the version control system, Git, and how it works with GitHub.': '了解版本控制系统 Git，以及它如何与 GitHub 配合使用。',
     'The GitHub Flow': 'GitHub 流程',
-    "Adopt GitHub's lightweight, branch-based workflow to collaborate on projects.":
-      '采用 GitHub 基于分支的轻量工作流程协作开发项目。',
+    "Adopt GitHub's lightweight, branch-based workflow to collaborate on projects.": '采用 GitHub 基于分支的轻量工作流程协作开发项目。',
 
     // 旧版新手提示
     'Learn Git and GitHub without any code!': '无需编写代码即可学习 Git 和 GitHub！',
-    'Using the Hello World guide, you’ll create a repository, start a branch,':
-      '跟随 Hello World 指南，你将创建存储库、新建分支、',
+    'Using the Hello World guide, you’ll create a repository, start a branch,': '跟随 Hello World 指南，你将创建存储库、新建分支、',
     'write comments, and open a pull request.': '撰写评论并创建拉取请求。',
     "Let's get started!": '开始吧！',
     'Hide this notice forever': '不再显示此提示',
@@ -163,7 +153,7 @@ export default {
     'Learn. Collaborate. Grow.': '学习。协作。成长。',
     'GitHub Education gives you the tools and community support to take on tech challenges and turn them into opportunities. Your future in tech starts here!':
       'GitHub 教育为你提供工具和社区支持，迎接技术挑战并化为机遇。你的技术未来从这里开始！',
-    'Go to GitHub Education': '转到 GitHub 教育',
+    'Go to GitHub Education': '转到 GitHub 教育'
   },
   scoped: {
     'Getting started': '入门',
@@ -172,13 +162,13 @@ export default {
     complete: '已完成',
     // 旧版首页：开始编写代码的表单标签；Use + <the github.dev web-based editor> + from your repository …
     'Repository name': '存储库名称',
-    Use: '使用',
+    Use: '使用'
   },
   regexp: [
     // 入门清单进度：2/3 completed（新手清单）/ 2/3 complete（共享清单组件）
     [/^(\d+)\/(\d+) completed?$/, '已完成 $1/$2'],
     // 资源卡片：Read · Est. 5m / Watch · 9 videos
     [/^Read · Est\. (\d+)m$/, '阅读 · 约 $1 分钟'],
-    [/^Watch · (\d+) videos?$/, '观看 · $1 个视频'],
-  ],
+    [/^Watch · (\d+) videos?$/, '观看 · $1 个视频']
+  ]
 } satisfies PageDictionary

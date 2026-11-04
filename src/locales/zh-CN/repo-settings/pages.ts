@@ -62,8 +62,7 @@ export default {
     'Please wait for the DNS check to complete.': '请等待 DNS 检查完成。',
     'DNS records should point to the': 'DNS 记录应指向',
     'internationalized domain name': '国际化域名',
-    'Domain does not resolve to the GitHub Pages server. For more information, see':
-      '域未解析到 GitHub 页面服务器。详情请参阅',
+    'Domain does not resolve to the GitHub Pages server. For more information, see': '域未解析到 GitHub 页面服务器。详情请参阅',
     "Domain's DNS record could not be retrieved. For more information, see": '无法获取域的 DNS 记录。详情请参阅',
     'Domain’s DNS record could not be retrieved. For more information, see': '无法获取域的 DNS 记录。详情请参阅',
     'No changes to custom domain.': '自定义域未更改。',
@@ -81,8 +80,7 @@ export default {
     'Troubleshooting custom domains': '自定义域故障排除',
     'HTTPS provides a layer of encryption that prevents others from snooping on or tampering with traffic to your site.':
       'HTTPS 提供一层加密，防止他人窥探或篡改站点流量。',
-    'When HTTPS is enforced, your site will only be served over HTTPS.':
-      '强制实施 HTTPS 后，站点将仅通过 HTTPS 提供服务。',
+    'When HTTPS is enforced, your site will only be served over HTTPS.': '强制实施 HTTPS 后，站点将仅通过 HTTPS 提供服务。',
     'Learn more about securing your GitHub Pages site with HTTPS': '了解如何使用 HTTPS 保护 GitHub 页面站点',
 
     // 可见性
@@ -93,7 +91,7 @@ export default {
       '使用 GitHub 企业版帐户，可以私密发布 GitHub 页面站点以限制访问。私密发布的站点可用于与企业成员共享内部文档或知识库。',
     'Try GitHub Enterprise': '试用 GitHub 企业版',
     'Try GitHub Enterprise risk-free for 30 days': '免费试用 GitHub 企业版 30 天',
-    'Learn more about the visibility of your GitHub Pages site.': '了解 GitHub 页面站点的可见性。',
+    'Learn more about the visibility of your GitHub Pages site.': '了解 GitHub 页面站点的可见性。'
   },
   scoped: {
     'create your own': '创建自己的工作流',
@@ -111,7 +109,7 @@ export default {
     // 来源下拉框与简介链接里单独出现的产品名（见 nav.ts 文件头）
     'GitHub Pages': 'GitHub 页面',
     'GitHub Actions': 'GitHub 操作',
-    'GitHub Enterprise': 'GitHub 企业版',
+    'GitHub Enterprise': 'GitHub 企业版'
   },
   regexp: [
     // 站点状态
@@ -121,22 +119,19 @@ export default {
     // 构建来源（片段被 <code> 隔开时由 static 分别匹配）
     [
       /^Your GitHub Pages site is currently being built from the (\S+) folder in the (\S+) branch\.$/,
-      '你的 GitHub 页面站点当前构建自 $2 分支中的 $1 文件夹。',
+      '你的 GitHub 页面站点当前构建自 $2 分支中的 $1 文件夹。'
     ],
-    [
-      /^Your GitHub Pages site is currently being built from the (\S+) branch\.$/,
-      '你的 GitHub 页面站点当前构建自 $1 分支。',
-    ],
+    [/^Your GitHub Pages site is currently being built from the (\S+) branch\.$/, '你的 GitHub 页面站点当前构建自 $1 分支。'],
     [
       /^Your site was last deployed to the (\S+) environment by the (.{1,100}) workflow\.$/,
-      '你的站点最近一次通过 $2 工作流部署到 $1 环境。',
+      '你的站点最近一次通过 $2 工作流部署到 $1 环境。'
     ],
     // 自定义域
     [
       /^Custom domains allow you to serve your site from a domain other than (\S+?)(\.?)$/,
-      (_, domain: string, dot: string) => `自定义域可让站点使用 ${domain} 之外的域提供服务${dot ? '。' : ''}`,
+      (_, domain: string, dot: string) => `自定义域可让站点使用 ${domain} 之外的域提供服务${dot ? '。' : ''}`
     ],
     // 取消发布（更多选项菜单的读屏名称）
-    [/^Unpublish ([\w.-]+\/[\w.-]+)$/, '取消发布 $1'],
-  ],
+    [/^Unpublish ([\w.-]+\/[\w.-]+)$/, '取消发布 $1']
+  ]
 } satisfies PageDictionary

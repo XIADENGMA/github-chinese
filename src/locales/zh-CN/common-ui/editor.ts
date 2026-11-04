@@ -15,14 +15,14 @@ const SUBJECTS: Readonly<Record<string, string>> = {
   Release: '发行版',
   Comment: '评论',
   Commit: '提交',
-  Gist: '代码片段',
+  Gist: '代码片段'
 }
 
 /** Markdown 编辑器视图模式 */
 const MODES: Readonly<Record<string, string>> = {
   edit: '编辑',
   preview: '预览',
-  hybrid: '混合',
+  hybrid: '混合'
 }
 
 /** 经典 Markdown 工具栏按钮（aria-label 带快捷键：Add bold text, <Ctrl+b>） */
@@ -36,7 +36,7 @@ const TOOLBAR: Readonly<Record<string, string>> = {
   'Add a bulleted list': '添加项目符号列表',
   'Add a numbered list': '添加编号列表',
   'Add a task list': '添加任务列表',
-  'Add a suggestion': '添加建议',
+  'Add a suggestion': '添加建议'
 }
 const TOOLBAR_SOURCE = `(${Object.keys(TOOLBAR).join('|')})`
 
@@ -176,23 +176,14 @@ export default {
     // 自动补全建议
     'Autocomplete suggestions': '自动补全建议',
     'Loading autocomplete suggestions…': '正在加载自动补全建议…',
-    'Filter emoji': '筛选表情符号',
+    'Filter emoji': '筛选表情符号'
   },
   regexp: [
-    [
-      /^Markdown input: (edit|preview|hybrid) mode selected\.$/,
-      (_, mode: string) => `Markdown 输入：已选择${MODES[mode]!}模式。`,
-    ],
+    [/^Markdown input: (edit|preview|hybrid) mode selected\.$/, (_, mode: string) => `Markdown 输入：已选择${MODES[mode]!}模式。`],
     [/^Heading ([1-6])$/, '$1 级标题'],
-    [
-      new RegExp(`^${TOOLBAR_SOURCE}, <([^<>]+)>$`),
-      (_, label: string, keys: string) => `${TOOLBAR[label]!}，<${keys}>`,
-    ],
+    [new RegExp(`^${TOOLBAR_SOURCE}, <([^<>]+)>$`), (_, label: string, keys: string) => `${TOOLBAR[label]!}，<${keys}>`],
     // 斜杠命令 /table 的行列数
-    [
-      /^([1-9]\d?) (columns?|rows?)$/,
-      (_, count: string, unit: string) => `${count} ${unit.startsWith('c') ? '列' : '行'}`,
-    ],
+    [/^([1-9]\d?) (columns?|rows?)$/, (_, count: string, unit: string) => `${count} ${unit.startsWith('c') ? '列' : '行'}`],
 
     // 上传进度与错误
     [/^Uploading your files\.\.\. \((\d+)\/(\d+)\)$/, '正在上传文件... ($1/$2)'],
@@ -201,25 +192,25 @@ export default {
     [/^File types? (.+) not supported\. See the$/, '不支持文件类型 $1。请参阅'],
     [
       /^Try again with ([A-Z0-9, ]+) or ([A-Z0-9]+)\.$/,
-      (_, types: string, last: string) => `请改用 ${types.split(', ').join('、')} 或 ${last} 格式的文件重试。`,
+      (_, types: string, last: string) => `请改用 ${types.split(', ').join('、')} 或 ${last} 格式的文件重试。`
     ],
     // 附件类型错误：We don’t support that file type. <a>Try again</a> with a GIF, JPEG, or PNG.
     [
       /^with an? ((?:[A-Z0-9]+, )*[A-Z0-9]+,? or [A-Z0-9]+|[A-Z0-9]+)\.$/,
-      (_, list: string) => `并改用 ${list.replace(/,? or /, ' 或 ').replace(/, /g, '、')} 格式的文件。`,
+      (_, list: string) => `并改用 ${list.replace(/,? or /, ' 或 ').replace(/, /g, '、')} 格式的文件。`
     ],
     [/^Please upload a picture smaller than ([\d,]+x[\d,]+)\.$/, '请上传小于 $1 的图片。'],
     [
       /^There was an error creating your (Issue|PullRequest|Discussion|Release|Comment|Commit|Gist)\.$/,
       // 类型译文与中文之间按需补空格：创建代码片段时出错。
-      (_, subject: string) => joinCjk(joinCjk('创建', SUBJECTS[subject] ?? subject), '时出错。'),
+      (_, subject: string) => joinCjk(joinCjk('创建', SUBJECTS[subject] ?? subject), '时出错。')
     ],
     [
       /^(\d[\d,]*) attachments? in your text may not be visible to all the viewers of the repository due to being from a repository with restricted access\.$/,
-      '你文本中的 $1 个附件来自访问受限的存储库，可能并非对此存储库的所有查看者可见。',
+      '你文本中的 $1 个附件来自访问受限的存储库，可能并非对此存储库的所有查看者可见。'
     ],
 
     // 表情符号建议：smile emoji
-    [/^([a-z0-9_+-]+) emoji$/, '$1 表情符号'],
-  ],
+    [/^([a-z0-9_+-]+) emoji$/, '$1 表情符号']
+  ]
 } satisfies PageDictionary

@@ -12,7 +12,7 @@ const TIMEFRAMES: Readonly<Record<string, string>> = {
   'This year': '今年',
   'Last year': '去年',
   Custom: '自訂',
-  'Custom range': '自訂範圍',
+  'Custom range': '自訂範圍'
 }
 
 /** 使用量分组依据 */
@@ -31,13 +31,13 @@ const GROUPS: Readonly<Record<string, string>> = {
   User: '使用者',
   Users: '使用者',
   'Cost center': '成本中心',
-  'Cost centers': '成本中心',
+  'Cost centers': '成本中心'
 }
 
 /** 分组名的译名，大小写不敏感（图表标题有 “grouped by skus”）；未知分组返回 undefined */
 function groupName(group: string): string | undefined {
   const lower = group.toLowerCase()
-  const key = Object.keys(GROUPS).find((name) => name.toLowerCase() === lower)
+  const key = Object.keys(GROUPS).find(name => name.toLowerCase() === lower)
   return key === undefined ? undefined : GROUPS[key]
 }
 
@@ -63,13 +63,12 @@ const USAGE_PRODUCTS: Readonly<Record<string, string>> = {
   'Spark usage': 'Spark 使用量',
   'Advanced Security usage': '進階安全性使用量',
   'Premium request usage': '進階請求使用量',
-  'Premium requests usage': '進階請求使用量',
+  'Premium requests usage': '進階請求使用量'
 }
 
 const USAGE_PRODUCT_SOURCE = Object.keys(USAGE_PRODUCTS).join('|')
 /** 分组名（大小写混用：“grouped by SKU”“grouped by skus”） */
-const GROUP_SOURCE =
-  '(?:[Pp]roducts?|SKUs?|skus?|[Rr]epositor(?:y|ies)|[Mm]odels?|[Oo]rganizations?|[Uu]sers?|[Cc]ost centers?)'
+const GROUP_SOURCE = '(?:[Pp]roducts?|SKUs?|skus?|[Rr]epositor(?:y|ies)|[Mm]odels?|[Oo]rganizations?|[Uu]sers?|[Cc]ost centers?)'
 const USAGE_TITLE_RE = new RegExp(`^(${USAGE_PRODUCT_SOURCE}) grouped by (${GROUP_SOURCE})$`)
 
 /** 使用量图表标题：「Metered usage」→「計量使用量」；「Actions usage grouped by SKU」→「依 SKU 分組的動作使用量」 */
@@ -91,14 +90,14 @@ const CHART_TYPES: Readonly<Record<string, string>> = {
   Area: '區域圖',
   Bar: '橫條圖',
   Column: '直條圖',
-  Pie: '圓形圖',
+  Pie: '圓形圖'
 }
 const AXIS_NAMES: Readonly<Record<string, string>> = {
   Time: '時間',
   Date: '日期',
   Billing: '計費金額',
   Usage: '使用量',
-  Amount: '金額',
+  Amount: '金額'
 }
 
 /** 预算的范围类型与预算名（“View actions for All AI Credit SKUs budget for Account mona”）：按 SKU 汇总的预算名与产品名 */
@@ -107,7 +106,7 @@ const BUDGET_SCOPES: Readonly<Record<string, string>> = {
   Organization: '組織',
   Enterprise: '企業',
   Repository: '儲存庫',
-  'Cost center': '成本中心',
+  'Cost center': '成本中心'
 }
 const BUDGET_NAMES: Readonly<Record<string, string>> = {
   'All AI Credit SKUs': '所有 AI 點數 SKU',
@@ -117,7 +116,7 @@ const BUDGET_NAMES: Readonly<Record<string, string>> = {
   Packages: '套件',
   Models: '模型',
   'Advanced Security': '進階安全性',
-  'Shared Storage': '共用儲存空間',
+  'Shared Storage': '共用儲存空間'
 }
 
 /** 依次拼接各段，中英文相接处加空格 */
@@ -143,14 +142,14 @@ const INCLUDED_ITEMS: Readonly<Record<string, string>> = {
   'Git LFS storage': 'Git LFS 儲存空間',
   'Packages data transfer': '套件資料傳輸',
   'Packages storage': '套件儲存空間',
-  'Codespaces storage': '程式碼空間的儲存空間',
+  'Codespaces storage': '程式碼空間的儲存空間'
 }
 const PERIODS: Readonly<Record<string, string>> = {
   today: '今天',
   'this month': '本月',
   'last month': '上個月',
   'this year': '今年',
-  'last year': '去年',
+  'last year': '去年'
 }
 
 const MONEY = '(\\$[\\d,]+(?:\\.\\d+)?)'
@@ -293,10 +292,8 @@ export default {
     'Copilot Premium Request': 'Copilot 進階請求',
 
     // 程式碼空間使用量提醒（Codespaces / codespace → 程式碼空間）
-    "You've used 90% of included services for GitHub Codespaces storage.":
-      '你已使用 GitHub 程式碼空間的儲存空間所含服務的 90%。',
-    "You've used 100% of included services for GitHub Codespaces storage.":
-      '你已使用 GitHub 程式碼空間的儲存空間所含服務的 100%。',
+    "You've used 90% of included services for GitHub Codespaces storage.": '你已使用 GitHub 程式碼空間的儲存空間所含服務的 90%。',
+    "You've used 100% of included services for GitHub Codespaces storage.": '你已使用 GitHub 程式碼空間的儲存空間所含服務的 100%。',
     'Update spending limit': '更新支出上限',
     // 免费额度用完说明：被 “export your unpushed work to a branch.”“usage report” 等链接拆开（逗号数随原文）
     "When your allotment is exhausted, you won't be able to use Codespaces until you set up a spending limit or your free Codespaces allotment is reset next month. If you want to access your in progress work from a codespace, you can":
@@ -384,16 +381,14 @@ export default {
     'Enable to use the this feature.': '啟用以使用此功能。',
     'Budgets let you set monthly usage limits for specific GitHub products or SKUs. If no budget is set, usage for that product is unlimited.':
       '預算可讓你為特定 GitHub 產品或 SKU 設定每月使用量上限。未設定預算時，該產品的使用量不受限制。',
-    'SKU level budgets are only available for products that have > 1 SKU.':
-      '只有 SKU 超過 1 個的產品才能設定 SKU 層級預算。',
+    'SKU level budgets are only available for products that have > 1 SKU.': '只有 SKU 超過 1 個的產品才能設定 SKU 層級預算。',
     'Budgets and Alerts': '預算和警示',
     'New monthly budget': '新增每月預算',
     'Edit monthly budget': '編輯每月預算',
     'Create a budget to track spending for a selected product and scope.': '建立預算以追蹤所選產品和範圍的支出。',
     'Create a budget to track spending for a selected product and scope': '建立預算以追蹤所選產品和範圍的支出',
     'Payment method is missing': '缺少付款方式',
-    'Please set up a valid payment method before creating or adjusting your budget.':
-      '建立或調整預算前，請先設定有效的付款方式。',
+    'Please set up a valid payment method before creating or adjusting your budget.': '建立或調整預算前，請先設定有效的付款方式。',
     'Budget type': '預算類型',
     'Budget Type': '預算類型',
     'Set budget for either a product or individual SKU within a product.': '為產品或產品中的個別 SKU 設定預算。',
@@ -412,16 +407,13 @@ export default {
     'Budget scope': '預算範圍',
     'Select the scope of spending for this budget.': '選擇此預算的支出範圍。',
     'Scoped budgets track spending for a single repository': '範圍預算會追蹤單一儲存庫的支出',
-    'Scoped budgets track spending for all repositories owned by your account':
-      '範圍預算會追蹤你帳號擁有的所有儲存庫的支出',
+    'Scoped budgets track spending for all repositories owned by your account': '範圍預算會追蹤你帳號擁有的所有儲存庫的支出',
     'Scoped budgets track all spending for your account': '範圍預算會追蹤你帳號的所有支出',
     'Search repository': '搜尋儲存庫',
     Budget: '預算',
     'Set a budget amount to track your spending on a monthly basis.': '設定預算金額以按月追蹤支出。',
-    "Usage before budget creation isn't counted in the current billing cycle.":
-      '建立預算前的使用量不會計入目前的帳單週期。',
-    'Usage before budget creation isn’t counted in the current billing cycle.':
-      '建立預算前的使用量不會計入目前的帳單週期。',
+    "Usage before budget creation isn't counted in the current billing cycle.": '建立預算前的使用量不會計入目前的帳單週期。',
+    'Usage before budget creation isn’t counted in the current billing cycle.': '建立預算前的使用量不會計入目前的帳單週期。',
     'Budget amount': '預算金額',
     'Stop usage when budget limit is reached': '達到預算上限時停止使用',
     'Limit usage when budget limit is reached': '達到預算上限時限制使用',
@@ -429,8 +421,7 @@ export default {
     'Spending won’t exceed your set budget': '支出不會超過你設定的預算',
     'Get emails and GitHub notifications when your spending has reached 75%, 90%, and 100% of the budget threshold.':
       '支出達到預算門檻的 75%、90% 和 100% 時，接收電子郵件和 GitHub 通知。',
-    'Receive emails when usage reaches 75%, 90%, and 100% of the budget amount.':
-      '使用量達到預算金額的 75%、90% 和 100% 時接收電子郵件。',
+    'Receive emails when usage reaches 75%, 90%, and 100% of the budget amount.': '使用量達到預算金額的 75%、90% 和 100% 時接收電子郵件。',
     'Receive budget threshold alerts': '接收預算門檻警示',
     'Alert Recipients': '警示收件者',
     'Alert recipients': '警示收件者',
@@ -441,7 +432,7 @@ export default {
     'Create budget': '建立預算',
     'Update budget': '更新預算',
     'Delete budget': '刪除預算',
-    'Please add a payment method to use budgets.': '請新增付款方式以使用預算。',
+    'Please add a payment method to use budgets.': '請新增付款方式以使用預算。'
   },
   scoped: {
     // 时间范围、报告类型、表格栏等单词（Current month 的全站 static 由 actions 词典提供，此处固定本页译法）
@@ -485,7 +476,7 @@ export default {
     'Select the': '選擇',
     'to include in this': '以納入此',
     '. You can only add/remove the': '。你只能新增/移除你有權存取的',
-    'that you have access to.': '。',
+    'that you have access to.': '。'
   },
   regexp: [
     // 总览卡片说明：Gross metered usage for Oct 1 - Oct 31, 2025.（句号随原文）
@@ -495,29 +486,27 @@ export default {
       (_, kind: string, start: string, end: string, dot: string) =>
         `${joinCjk(
           `${translateTime(start)} - ${translateTime(end)}`,
-          kind === 'Gross metered usage' ? '的計量使用量總額' : '期間包含的使用量折扣',
-        )}${dot ? '。' : ''}`,
+          kind === 'Gross metered usage' ? '的計量使用量總額' : '期間包含的使用量折扣'
+        )}${dot ? '。' : ''}`
     ],
     [
-      new RegExp(
-        `^Current usage for (${DATE_SOURCE}) - (${DATE_SOURCE})\\. Monthly quota resets in (\\d+) day\\(s\\)\\.$`,
-      ),
+      new RegExp(`^Current usage for (${DATE_SOURCE}) - (${DATE_SOURCE})\\. Monthly quota resets in (\\d+) day\\(s\\)\\.$`),
       (_, start: string, end: string, days: string) =>
-        `${joinCjk(`${translateTime(start)} - ${translateTime(end)}`, '的目前使用量')}。每月配額將在 ${days} 天後重設。`,
+        `${joinCjk(`${translateTime(start)} - ${translateTime(end)}`, '的目前使用量')}。每月配額將在 ${days} 天後重設。`
     ],
     [
       new RegExp(`^Resets in (\\d+) days? on (${DATE_SOURCE})$`),
-      (_, days: string, date: string) => joinAll(`${days} 天後於`, translateTime(date), '重設'),
+      (_, days: string, date: string) => joinAll(`${days} 天後於`, translateTime(date), '重設')
     ],
     [
       /^Included usage limits reset in (\d+) days?(\.?)$/,
-      (_, days: string, dot: string) => `包含的使用量上限將在 ${days} 天後重設${dot ? '。' : ''}`,
+      (_, days: string, dot: string) => `包含的使用量上限將在 ${days} 天後重設${dot ? '。' : ''}`
     ],
     [/^(\d+) days?$/, '$1 天'],
     // 金额与使用量：「~$3.00 off*」中的约数符号与脚注星号随原文
     [
       new RegExp(`^(~?)${MONEY} off(\\*?)$`),
-      (_, tilde: string, amount: string, star: string) => `折抵${tilde ? '約' : ''} ${amount}${star}`,
+      (_, tilde: string, amount: string, star: string) => `折抵${tilde ? '約' : ''} ${amount}${star}`
     ],
     [new RegExp(`^${MONEY} off per month for (\\d+) years?$`), '$2 年內每月折抵 $1'],
     [new RegExp(`^${NUMBER} min used / ${NUMBER} min included$`), '已使用 $1 分鐘 / 包含 $2 分鐘'],
@@ -526,34 +515,28 @@ export default {
     [new RegExp(`^${NUMBER} included Actions minutes$`), '包含 $1 動作分鐘數'],
     [
       new RegExp(`^${NUMBER} GB included (${Object.keys(INCLUDED_ITEMS).join('|')})$`),
-      (_, amount: string, item: string) => `包含 ${amount} GB ${INCLUDED_ITEMS[item] ?? item}`,
+      (_, amount: string, item: string) => `包含 ${amount} GB ${INCLUDED_ITEMS[item] ?? item}`
     ],
     [new RegExp(`^${NUMBER} included Codespaces core hours$`), '包含 $1 程式碼空間核心時數'],
     [/^Discount for usage in public repositories \((\d+%) off\)$/, '公開儲存庫使用量折扣（減免 $1）'],
-    [
-      /^Based on (\d[\d,]*) additional premium requests? beyond your included usage\.$/,
-      '依據超出所含使用量的 $1 個額外進階請求。',
-    ],
+    [/^Based on (\d[\d,]*) additional premium requests? beyond your included usage\.$/, '依據超出所含使用量的 $1 個額外進階請求。'],
     // AI 點數计数不加量词：額外 1,500 AI 點數
-    [
-      /^Based on (\d[\d,]*) additional AI credits? beyond your included usage\.$/,
-      '依據超出所含使用量的額外 $1 AI 點數。',
-    ],
+    [/^Based on (\d[\d,]*) additional AI credits? beyond your included usage\.$/, '依據超出所含使用量的額外 $1 AI 點數。'],
     [
       /^Cost calculated based on additional (\d[\d,]*) premium requests? for Copilot and Spark\.$/,
-      '費用依 Copilot 和 Spark 的 $1 個額外進階請求計算。',
+      '費用依 Copilot 和 Spark 的 $1 個額外進階請求計算。'
     ],
     [
       /^Cost calculated based on additional (\d[\d,]*) premium requests?(\.?)$/,
-      (_, count: string, dot: string) => `費用依 ${count} 個額外進階請求計算${dot ? '。' : ''}`,
+      (_, count: string, dot: string) => `費用依 ${count} 個額外進階請求計算${dot ? '。' : ''}`
     ],
     [
       /^Cost calculated based on additional (\d[\d,]*) token units?(\.?)$/,
-      (_, count: string, dot: string) => `費用依 ${count} 個額外權杖單位計算${dot ? '。' : ''}`,
+      (_, count: string, dot: string) => `費用依 ${count} 個額外權杖單位計算${dot ? '。' : ''}`
     ],
     [
       /^Cost calculated based on (\d[\d,]*) Spark premium requests? that exceed the premium request usage included with your Copilot licenses\.$/,
-      '費用依超出 Copilot 授權所含進階請求使用量的 $1 個 Spark 進階請求計算。',
+      '費用依超出 Copilot 授權所含進階請求使用量的 $1 個 Spark 進階請求計算。'
     ],
     [/^\/ (\d[\d,]*) AI credits$/, '/ $1 AI 點數'],
     // 使用量按 SKU 分组时核数可变的 SKU 名：Actions macOS 3-core、Codespaces compute 2-core
@@ -567,61 +550,55 @@ export default {
     // 计量使用量：时间范围、分组、图表标题（年份括号内只有数字，用半形，前面加空格）
     [
       /^(?:Timeframe|Time [Ff]rame): (Today|Current month|Last month|Custom|Custom range|This year|Last year)(?: \((\d{4})\))?$/,
-      (_, period: string, year: string) => `時間範圍：${TIMEFRAMES[period] ?? period}${year ? ` (${year})` : ''}`,
+      (_, period: string, year: string) => `時間範圍：${TIMEFRAMES[period] ?? period}${year ? ` (${year})` : ''}`
     ],
-    [
-      /^(This year|Last year) \((\d{4})\)$/,
-      (_, period: string, year: string) => `${TIMEFRAMES[period] ?? period} (${year})`,
-    ],
+    [/^(This year|Last year) \((\d{4})\)$/, (_, period: string, year: string) => `${TIMEFRAMES[period] ?? period} (${year})`],
     // 分组按钮：Group: None、Group by: Product（Group by → 分組依據）
     [
       /^Group( by)?: (None|Products?|SKUs?|Repositor(?:y|ies)|Models?|Organizations?|Users?|Cost centers?)$/,
-      (_, by: string, group: string) => `${by ? '分組依據' : '分組'}：${groupName(group) ?? group}`,
+      (_, by: string, group: string) => `${by ? '分組依據' : '分組'}：${groupName(group) ?? group}`
     ],
     // 图表标题：Actions usage grouped by SKU、Advanced Security usage grouped by skus
     [USAGE_TITLE_RE, (_, product: string, group: string) => usageTitle(`${product} grouped by ${group}`)],
     [
       /^Top (two|three|four|five) repositories (today|this month|last month|this year|last year)$/,
-      (_, count: string, period: string) => `${PERIODS[period] ?? period}前${ORDINALS[count] ?? count}名的儲存庫`,
+      (_, count: string, period: string) => `${PERIODS[period] ?? period}前${ORDINALS[count] ?? count}名的儲存庫`
     ],
-    [
-      new RegExp(`^(${DATE_SOURCE}) \\(All times in UTC\\)$`),
-      (_, date: string) => `${translateTime(date)}（所有時間皆為 UTC）`,
-    ],
+    [new RegExp(`^(${DATE_SOURCE}) \\(All times in UTC\\)$`), (_, date: string) => `${translateTime(date)}（所有時間皆為 UTC）`],
     [
       new RegExp(`^Usage for (${DATE_SOURCE})(?: - (${DATE_SOURCE}))?(\\.?)$`),
       (_, start: string, end: string | undefined, dot: string) =>
-        `${joinCjk(periodName(end ? `${start} - ${end}` : start), '的使用量')}${dot ? '。' : ''}`,
+        `${joinCjk(periodName(end ? `${start} - ${end}` : start), '的使用量')}${dot ? '。' : ''}`
     ],
     // 使用量明细标题后接授权说明时
     [
       new RegExp(
-        `^Usage for (${DATE_SOURCE}) - (${DATE_SOURCE})\\. For license-based products, the price/unit is a prorated portion of the monthly price\\.$`,
+        `^Usage for (${DATE_SOURCE}) - (${DATE_SOURCE})\\. For license-based products, the price/unit is a prorated portion of the monthly price\\.$`
       ),
       (_, start: string, end: string) =>
-        `${joinCjk(periodName(`${start} - ${end}`), '的使用量')}。對於依授權計費的產品，單價為按比例分攤的月費。`,
+        `${joinCjk(periodName(`${start} - ${end}`), '的使用量')}。對於依授權計費的產品，單價為按比例分攤的月費。`
     ],
     // 卡片中单独显示的日期范围：Oct 1 - Oct 31, 2025
     [DATE_RANGE_RE, (_, start: string, end: string) => `${translateTime(start)} - ${translateTime(end)}`],
     [
       new RegExp(`^Metered usage before the billing transition, until (${DATE_SOURCE})$`),
-      (_, date: string) => joinCjk('計費轉換前的計量使用量，截至', translateTime(date)),
+      (_, date: string) => joinCjk('計費轉換前的計量使用量，截至', translateTime(date))
     ],
     // 使用量图表的无障碍描述（Highcharts）；原文没有逗号、冒号，译文不加：「X 圖表顯示 Y 的資料。找到 N 個資料點。」
     [
       /^(.+?) chart showing data for (.+?)\. (\d+) data points? found\.$/,
       (_, title: string, period: string, count: string) =>
-        `${joinAll(usageTitle(title), '圖表顯示', periodName(period), '的資料')}。找到 ${count} 個資料點。`,
+        `${joinAll(usageTitle(title), '圖表顯示', periodName(period), '的資料')}。找到 ${count} 個資料點。`
     ],
     [/^(.+?)\. Interactive chart\.$/, (_, title: string) => `${usageTitle(title)}。互動式圖表。`],
     [
       new RegExp(`^(${Object.keys(CHART_TYPES).join('|')}) chart with (\\d+) data points?\\.$`),
-      (_, type: string, count: string) => `包含 ${count} 個資料點的${CHART_TYPES[type] ?? type}。`,
+      (_, type: string, count: string) => `包含 ${count} 個資料點的${CHART_TYPES[type] ?? type}。`
     ],
     [
       /^The chart has (\d+) ([XY]) ax[ie]s displaying (.+?)\. Data ranges from (.+?) to (.+)\.$/,
       (_, count: string, axis: string, name: string, from: string, to: string) =>
-        `${joinAll(`圖表有 ${count} 條顯示`, lookup(AXIS_NAMES, name) ?? name, '的')} ${axis} 軸。資料範圍為 ${from} 至 ${to}。`,
+        `${joinAll(`圖表有 ${count} 條顯示`, lookup(AXIS_NAMES, name) ?? name, '的')} ${axis} 軸。資料範圍為 ${from} 至 ${to}。`
     ],
     // 预算
     [/^(\d+) budgets?$/, '$1 個預算'],
@@ -640,28 +617,21 @@ export default {
     [
       new RegExp(`^View actions for (.+?) budget for (${Object.keys(BUDGET_SCOPES).join('|')}) (.+)$`),
       (_, budget: string, scope: string, name: string) =>
-        joinAll(
-          '查看',
-          BUDGET_SCOPES[scope] ?? scope,
-          name,
-          '的',
-          lookup(BUDGET_NAMES, budget) ?? budget,
-          '預算的選項',
-        ),
+        joinAll('查看', BUDGET_SCOPES[scope] ?? scope, name, '的', lookup(BUDGET_NAMES, budget) ?? budget, '預算的選項')
     ],
     // 使用量报告（句号随原文；与 org-settings/billing.ts 同译）
     [
       /^We['’]re preparing your usage report\. It may take ~30 minutes to see usage in your report\. We['’]ll send an email to (\S+@\S+) when it['’]s ready\.$/,
-      '正在準備使用量報告。使用量可能約 30 分鐘後才會出現在報告中。報告準備好後我們會傳送電子郵件至 $1。',
+      '正在準備使用量報告。使用量可能約 30 分鐘後才會出現在報告中。報告準備好後我們會傳送電子郵件至 $1。'
     ],
     [
       /^We['’]re preparing your usage report\. We['’]ll send an email to (\S+@\S+) when it['’]s ready\.$/,
-      '正在準備使用量報告。報告準備好後我們會傳送電子郵件至 $1。',
+      '正在準備使用量報告。報告準備好後我們會傳送電子郵件至 $1。'
     ],
     [
       /^Your usage report request is already in progress\. Check (\S+@\S+) for the report when it['’]s ready\.$/,
-      '你的使用量報告請求已在處理中。報告準備好後請至 $1 查收。',
+      '你的使用量報告請求已在處理中。報告準備好後請至 $1 查收。'
     ],
-    [/^The usage report will be emailed when it['’]s ready to (\S+@\S+)\.$/, '報告準備好後會以電子郵件傳送至 $1。'],
-  ],
+    [/^The usage report will be emailed when it['’]s ready to (\S+@\S+)\.$/, '報告準備好後會以電子郵件傳送至 $1。']
+  ]
 } satisfies PageDictionary

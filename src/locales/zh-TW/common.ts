@@ -15,13 +15,4 @@ import { mergeDictionaries } from './helpers'
  * 以及 GitHub 自有页面正文（高级支持、企业试用、联系销售、结账、安全产品介绍）与国家/地区、州/省列表。
  * 本文件的 regexp、inline 全站生效。
  */
-export default mergeDictionaries(
-  marketing,
-  globalNav,
-  search,
-  dialogs,
-  site,
-  pages,
-  securityPages,
-  regions,
-) satisfies PageDictionary
+export default mergeDictionaries(marketing, globalNav, search, dialogs, site, pages, securityPages, regions) satisfies PageDictionary

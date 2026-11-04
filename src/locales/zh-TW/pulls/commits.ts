@@ -5,7 +5,7 @@ import { DATE_SOURCE, joinCjk, translateTime } from '../helpers'
 const VERIFICATION_STATES: Readonly<Record<string, string>> = {
   verified: '已驗證',
   unverified: '未驗證',
-  'partially verified': '部分驗證',
+  'partially verified': '部分驗證'
 }
 
 /**
@@ -21,7 +21,7 @@ export default {
     'Loading commits': '正在載入提交',
     'Unable to load commits': '無法載入提交',
     "This pull request is big! We're only showing the most recent 250 commits": '此拉取請求很大！僅顯示最近 250 個提交',
-    'Only the most recent 250 commits are being shown.': '僅顯示最近 250 個提交。',
+    'Only the most recent 250 commits are being shown.': '僅顯示最近 250 個提交。'
   },
   regexp: [
     // 日期分组标题：Commits on Oct 26, 2026
@@ -29,7 +29,7 @@ export default {
     [/^Copy full SHA for ([0-9a-f]{7,40})$/, '複製 $1 的完整 SHA'],
     [
       /^(Show|Hide) description for ([0-9a-f]{7,40})$/,
-      (_, action: string, sha: string) => `${action === 'Show' ? '顯示' : '隱藏'} ${sha} 的描述`,
+      (_, action: string, sha: string) => `${action === 'Show' ? '顯示' : '隱藏'} ${sha} 的描述`
     ],
     [/^View (\d+) commit comments?$/, '查看 $1 則提交留言'],
     // 多个作者：按钮文字
@@ -37,8 +37,8 @@ export default {
     // 签名徽章：verified: 0ff253b
     [
       /^(verified|unverified|partially verified): ([0-9a-f]{7,40})$/,
-      (_, state: string, sha: string) => `${VERIFICATION_STATES[state] ?? state}：${sha}`,
+      (_, state: string, sha: string) => `${VERIFICATION_STATES[state] ?? state}：${sha}`
     ],
-    [/^Verification error: ([0-9a-f]{7,40})$/, '驗證錯誤：$1'],
-  ],
+    [/^Verification error: ([0-9a-f]{7,40})$/, '驗證錯誤：$1']
+  ]
 } satisfies PageDictionary

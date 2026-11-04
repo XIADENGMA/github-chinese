@@ -115,7 +115,7 @@ const zhCN = {
   about: '关于',
   githubRepository: 'GitHub',
 
-  badgeOff: '关',
+  badgeOff: '关'
 }
 
 export type MessageKey = keyof typeof zhCN

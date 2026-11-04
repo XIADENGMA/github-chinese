@@ -32,13 +32,10 @@ export default {
     'Manual workflow': '手动工作流',
     'Simple workflow that is manually triggered.': '手动触发的简单工作流。',
     'Getting started and core concepts': '入门和核心概念',
-    'New to Actions? Start here. Learn the core concepts and how to get started.':
-      '初次使用操作？从这里开始。了解核心概念和入门方法。',
+    'New to Actions? Start here. Learn the core concepts and how to get started.': '初次使用操作？从这里开始。了解核心概念和入门方法。',
     'Configuring and managing workflows': '配置和管理工作流',
-    'Create custom workflows to control your project’s life cycle processes.':
-      '创建自定义工作流来控制项目的生命周期流程。',
-    "Create custom workflows to control your project's life cycle processes.":
-      '创建自定义工作流来控制项目的生命周期流程。',
+    'Create custom workflows to control your project’s life cycle processes.': '创建自定义工作流来控制项目的生命周期流程。',
+    "Create custom workflows to control your project's life cycle processes.": '创建自定义工作流来控制项目的生命周期流程。',
     'Language and framework guides': '语言和框架指南',
     'Guides for projects written in many programming languages.': '适用于多种编程语言项目的指南。',
     'Didn’t find what you’re looking for?': '没有找到所需内容？',
@@ -56,8 +53,7 @@ export default {
     'Build a docker container, publish it to Google Container Registry, and deploy to GKE.':
       '构建 Docker 容器，发布到 Google Container Registry，并部署到 GKE。',
     'Set up Terraform CLI in your GitHub Actions workflow.': '在 GitHub 操作工作流中设置 Terraform CLI。',
-    'Deploy a container to Alibaba Cloud Container Service for Kubernetes (ACK).':
-      '将容器部署到阿里云容器服务 Kubernetes 版 (ACK)。',
+    'Deploy a container to Alibaba Cloud Container Service for Kubernetes (ACK).': '将容器部署到阿里云容器服务 Kubernetes 版 (ACK)。',
     'Build a docker container, publish it to IBM Cloud Container Registry, and deploy to IBM Cloud Kubernetes Service.':
       '构建 Docker 容器，发布到 IBM Cloud Container Registry，并部署到 IBM Cloud Kubernetes Service。',
     'This workflow will build a docker container, publish and deploy it to Tencent Kubernetes Engine (TKE).':
@@ -67,8 +63,7 @@ export default {
       'GitHub 为 C、C++、C#、Go、Java、JavaScript、TypeScript、Python、Ruby、Kotlin 和 Swift 开发人员提供的安全分析。',
     'Test a Laravel project.': '测试 Laravel 项目。',
     'Test a Symfony project.': '测试 Symfony 项目。',
-    'Build a Java Package using Gradle and publish to GitHub Packages.':
-      '使用 Gradle 构建 Java 软件包并发布到 GitHub 软件包。',
+    'Build a Java Package using Gradle and publish to GitHub Packages.': '使用 Gradle 构建 Java 软件包并发布到 GitHub 软件包。',
     'Create and test an R package on multiple R versions.': '在多个 R 版本上创建并测试 R 软件包。',
     'Greets users who are first time contributors to the repo': '向首次为存储库做贡献的用户致意',
     'Labels pull requests based on the files changed': '根据已更改的文件为拉取请求添加标签',
@@ -82,8 +77,7 @@ export default {
     'Deploy an Astro site.': '部署 Astro 站点。',
     'Publishes a Node.js package to GitHub Packages.': '将 Node.js 软件包发布到 GitHub 软件包。',
     'Build and test a Crystal project.': '构建并测试 Crystal 项目。',
-    'Run linters for several languages on your code base for changed files':
-      '对代码库中已更改的文件运行多种语言的 Linter',
+    'Run linters for several languages on your code base for changed files': '对代码库中已更改的文件运行多种语言的 Linter',
     'Checks for stale issues and pull requests': '检查陈旧的议题和拉取请求',
     'Build and test a Node.js project with npm.': '使用 npm 构建并测试 Node.js 项目。',
     'Create and test a Python application.': '创建并测试 Python 应用。',
@@ -123,7 +117,7 @@ export default {
     'Built-in secret store': '内置机密存储',
     'Automate your software development practices with workflow files embracing the Git flow by codifying it in your repository.':
       '用工作流文件将 Git 流程写入存储库以自动化软件开发实践。',
-    'Multi-container testing': '多容器测试',
+    'Multi-container testing': '多容器测试'
   },
 
   scoped: {
@@ -141,12 +135,12 @@ export default {
     'continuous integration workflows': '持续集成工作流',
     'automation workflows': '自动化工作流',
     'code scanning workflows': '代码扫描工作流',
-    'Pages workflows': '页面工作流',
+    'Pages workflows': '页面工作流'
   },
 
   regexp: [
     [/^Found ([\d,]+) workflows?$/, '找到 $1 个工作流'],
     // 模板作者：By GitHub Actions、By Microsoft Azure
-    [/^By (.+)$/, (_, author: string) => `来自 ${pick(AUTHORS, author) ?? author}`],
-  ],
+    [/^By (.+)$/, (_, author: string) => `来自 ${pick(AUTHORS, author) ?? author}`]
+  ]
 } satisfies PageDictionary

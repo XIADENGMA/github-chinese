@@ -13,7 +13,7 @@ const SECTION: Readonly<Record<string, string>> = {
   Private: '专用',
   Shared: '共享',
   private: '专用',
-  shared: '共享',
+  shared: '共享'
 }
 
 /** 视图图标颜色 */
@@ -24,7 +24,7 @@ const ICON_COLOR: Readonly<Record<string, string>> = {
   Orange: '橙色',
   Red: '红色',
   Pink: '粉色',
-  Purple: '紫色',
+  Purple: '紫色'
 }
 
 /** 视图图标名（getDisplayName 后的形式） */
@@ -72,7 +72,7 @@ const ICON: Readonly<Record<string, string>> = {
   Gear: '齿轮',
   Copilot: 'Copilot',
   Globe: '地球',
-  Comment: '评论',
+  Comment: '评论'
 }
 
 const ICON_SOURCE = Object.keys(ICON)
@@ -82,7 +82,7 @@ const ICON_SOURCE = Object.keys(ICON)
 /** 图标与颜色选择器按钮的 Tooltip 与 aria-label；已保存视图组件与 /repos 存储库视图共用 */
 export const VIEW_ICON_RULES: readonly RegExpRule[] = [
   [/^(Gray|Blue|Green|Orange|Red|Pink|Purple) color$/, (_, color) => `${ICON_COLOR[color] ?? color}`],
-  [new RegExp(`^(${ICON_SOURCE}) icon$`), (_, name) => joinCjk(ICON[name] ?? name, '图标')],
+  [new RegExp(`^(${ICON_SOURCE}) icon$`), (_, name) => joinCjk(ICON[name] ?? name, '图标')]
 ]
 
 function scope(name: string): string {
@@ -189,10 +189,8 @@ export default {
     // 看板布局（与项目视图共用，由本词典收录）
     'Column overview': '列概述',
     'Loading board': '正在加载看板',
-    'There are more columns than can be shown. Narrow your search to see the rest.':
-      '列数超出显示上限。缩小搜索范围以查看其余列。',
-    'There are more rows than can be shown. Narrow your search to see the rest.':
-      '行数超出显示上限。缩小搜索范围以查看其余行。',
+    'There are more columns than can be shown. Narrow your search to see the rest.': '列数超出显示上限。缩小搜索范围以查看其余列。',
+    'There are more rows than can be shown. Narrow your search to see the rest.': '行数超出显示上限。缩小搜索范围以查看其余行。',
     'No cards': '没有卡片',
     'Loading cards': '正在加载卡片',
     'Loading columns': '正在加载列',
@@ -201,38 +199,35 @@ export default {
     'More rows': '更多行',
     'Move to': '移动到',
     'Move left': '左移',
-    'Move right': '右移',
+    'Move right': '右移'
   },
   scoped: {
     Icon: '图标',
     Shared: '共享',
     Pinned: '已置顶',
     'Move up': '上移',
-    'Move down': '下移',
+    'Move down': '下移'
   },
   regexp: [
     // 视图行：Created by octocat •
     [/^Created by ([\w-]+(?:\[bot\])?)( •)?$/, (_, login, dot) => `由 ${login} 创建${dot ? ' •' : ''}`],
     // 分区折叠、展开全部
-    [
-      /^(Expand|Collapse) (Private|Shared)$/,
-      (_, action, name) => `${action === 'Expand' ? '展开' : '折叠'}${section(name)}视图`,
-    ],
+    [/^(Expand|Collapse) (Private|Shared)$/, (_, action, name) => `${action === 'Expand' ? '展开' : '折叠'}${section(name)}视图`],
     [/^Showing all (\d+) (private|shared) views$/, (_, count, name) => `显示全部 ${count} 个${section(name)}视图`],
     [/^Show more (private|shared) views$/, (_, name) => `显示更多${section(name)}视图`],
     // 可见范围说明
     [
       /^Everyone who can view this (repository|organization|profile) can see this shared view\.$/,
-      (_, name) => `所有能查看此${scope(name)}的人都能看到此共享视图。`,
+      (_, name) => `所有能查看此${scope(name)}的人都能看到此共享视图。`
     ],
     [
       /^Anyone with (repository|organization|profile) access can see this view\.$/,
-      (_, name) => `拥有${scope(name)}访问权限的任何人都能看到此视图。`,
+      (_, name) => `拥有${scope(name)}访问权限的任何人都能看到此视图。`
     ],
     [/^Everyone who can view this (repository|organization|profile)$/, (_, name) => `所有能查看此${scope(name)}的人`],
     [
       /^Save a search as a view\. Views are visible to everyone with (repository|organization|profile) access\.$/,
-      (_, name) => `将搜索保存为视图。拥有${scope(name)}访问权限的所有人都能看到视图。`,
+      (_, name) => `将搜索保存为视图。拥有${scope(name)}访问权限的所有人都能看到视图。`
     ],
     [/^for everyone in this (repository|organization)\.$/, (_, name) => `供此${scope(name)}中的所有人使用。`],
     // 删除、复制、置顶（视图名是用户内容：原文有引号的才用“”，没有的不加；与中文之间按 joinName 留空格）
@@ -240,18 +235,12 @@ export default {
     [/^Are you sure you want to delete view (.+)\?$/, (_, name) => `${viewName('确定要删除视图', name, '吗')}？`],
     [
       /^View (.+) deleted\. No (private|shared) views remaining\.$/,
-      (_, name, kind) => `${viewName('视图', name, '已删除')}。已没有${section(kind)}视图。`,
+      (_, name, kind) => `${viewName('视图', name, '已删除')}。已没有${section(kind)}视图。`
     ],
-    [
-      /^View (.+) deleted\. No saved views remaining\.$/,
-      (_, name) => `${viewName('视图', name, '已删除')}。已没有已保存的视图。`,
-    ],
+    [/^View (.+) deleted\. No saved views remaining\.$/, (_, name) => `${viewName('视图', name, '已删除')}。已没有已保存的视图。`],
     [/^View (.+) deleted$/, (_, name) => viewName('视图', name, '已删除')],
     [/^Create a copy of “(.+)” as a new saved view\.$/, '将“$1”复制为新的已保存视图。'],
-    [
-      /^Maximum of (\d+) pins reached\. Unpin an item to pin another\.$/,
-      '已达到 $1 个置顶项的上限。请先取消置顶一项。',
-    ],
+    [/^Maximum of (\d+) pins reached\. Unpin an item to pin another\.$/, '已达到 $1 个置顶项的上限。请先取消置顶一项。'],
     [/^View (.+) pinned$/, (_, name) => viewName('视图', name, '已置顶')],
     [/^View (.+) unpinned$/, (_, name) => viewName('视图', name, '已取消置顶')],
     [/^Could not pin (.+)$/, (_, name) => joinName('无法置顶', name)],
@@ -270,6 +259,6 @@ export default {
     [/^More cards in (.+)$/, (_, name) => joinName(name, '中的更多卡片')],
     // 看板泳道与单元格的无障碍名称（数量在最后）：Alice row, 3 cards；Done, Alice, 1 card（分组值不加引号）
     [/^(.+) row, ([\d,]+) cards?$/, (_, name, count) => `${joinName(name, '行')}，${count} 张卡片`],
-    [/^(.+), ([\d,]+) cards?$/, '$1，$2 张卡片'],
-  ],
+    [/^(.+), ([\d,]+) cards?$/, '$1，$2 张卡片']
+  ]
 } satisfies PageDictionary

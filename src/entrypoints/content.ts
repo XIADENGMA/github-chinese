@@ -25,7 +25,7 @@ import {
   isFetchedImage,
   isResolvedDownload,
   type BackgroundMessage,
-  type ContentMessage,
+  type ContentMessage
 } from '../shared/messages'
 import {
   DEFAULT_SETTINGS,
@@ -34,7 +34,7 @@ import {
   getSettings,
   isPathExcluded,
   watchSettings,
-  type Settings,
+  type Settings
 } from '../shared/settings'
 import { sendToBackground } from '../shared/tab-messages'
 
@@ -57,8 +57,8 @@ function expectsResponse(message: ContentMessage): boolean {
 
 /** 当前语言的语言包：词典脚本按需加载，动态导入失败（Firefox、Safari 不动态导入）时请后台注入 */
 const locales = createLocaleLoader({
-  resolveUrl: (path) => browser.runtime.getURL(path as Parameters<typeof browser.runtime.getURL>[0]),
-  requestInjection: async (locale) => {
+  resolveUrl: path => browser.runtime.getURL(path as Parameters<typeof browser.runtime.getURL>[0]),
+  requestInjection: async locale => {
     const message: BackgroundMessage = { type: 'gcn:inject-locale', locale }
     return isAcknowledged(await browser.runtime.sendMessage(message))
   },
@@ -68,7 +68,7 @@ const locales = createLocaleLoader({
   // 条件直接写构建期常量（同 isFirefoxBuild）：函数调用不内联，经它判断时 Firefox 构建里仍留着 import()
   ...(String(import.meta.env.FIREFOX) === 'true' || String(import.meta.env.SAFARI) === 'true'
     ? { waitForRegistration: () => waitForRegistration(document) }
-    : { importScript: (url: string) => import(/* @vite-ignore */ url) }),
+    : { importScript: (url: string) => import(/* @vite-ignore */ url) })
 })
 
 /** 总开关关闭时启动用的空语言包：开启后加载完成才换上真实语言包 */
@@ -101,14 +101,14 @@ const VIEWER_MESSAGES: Readonly<Record<ViewerLabel, MessageKey>> = {
   download: 'download',
   close: 'close',
   loading: 'stateLoading',
-  loadFailed: 'loadFailed',
+  loadFailed: 'loadFailed'
 }
 
 /** 复制加速链接按钮的状态 → 界面文案 */
 const COPY_MESSAGES: Readonly<Record<CopyState, MessageKey>> = {
   idle: 'copyLink',
   copied: 'copied',
-  failed: 'copyFailed',
+  failed: 'copyFailed'
 }
 
 /** 在新标签页打开（不让新页面拿到本页的 window.opener） */
@@ -153,7 +153,7 @@ function createMessageGate(): MessageGate {
     open(handler) {
       handle = handler
       for (const { message, sendResponse } of queued.splice(0)) handler(message, sendResponse)
-    },
+    }
   }
 }
 
@@ -181,7 +181,7 @@ export default defineContentScript({
       getCustomEntries().catch(() => ({})),
       getSearchBlockRules().catch(() => []),
       // 与后台注册词典脚本同一来源（见 shared/language-env）
-      pageLanguageEnvironment(),
+      pageLanguageEnvironment()
     ])
     let languages = initialLanguages
     let current: Settings = settings
@@ -189,7 +189,7 @@ export default defineContentScript({
     // 搜索净化不等语言包：结果插入页面时就隐藏（见 core/search-purify）
     const purifier = createSearchPurifier(document, {
       active: () => current.enabled && current.purifySearch,
-      rules: () => blockList,
+      rules: () => blockList
     })
     const locale: PageLocale = resolvePageLocale(settings.language, languages)
     // 总开关关闭时不加载语言包，开启时再加载（见 syncLocale）
@@ -215,13 +215,13 @@ export default defineContentScript({
       settings: effective(settings),
       customEntries,
       isPathExcluded,
-      onActiveChange: (active) => mark.update(active),
+      onActiveChange: active => mark.update(active),
       // 交给主世界的 turbo-bridge 处理 Turbo 缓存克隆体；有已失效实例的标记时强制重新访问。
       // 失效时只做普通重置：新实例此时可能已写入标记
-      onReset: (reason) => {
+      onReset: reason => {
         const stale = reason !== 'dispose' && mark.clearOthers()
         window.dispatchEvent(new Event(stale ? TURBO_REVISIT_EVENT : TURBO_RESET_EVENT))
-      },
+      }
     })
     /** 最近一次加载请求的序号：加载期间又有变化（关闭、语言再变）时，旧请求的结果丢弃 */
     let localeRequest = 0
@@ -260,7 +260,7 @@ export default defineContentScript({
 
     /** 等在途的 syncLocale 落定，最多 STATUS_WAIT_MS */
     const waitForLocale = (task: Promise<void>): Promise<void> =>
-      new Promise((resolve) => {
+      new Promise(resolve => {
         const timer = ctx.setTimeout(resolve, STATUS_WAIT_MS)
         const settle = (pending: Promise<void>): void => {
           const next = (): void => {
@@ -281,9 +281,9 @@ export default defineContentScript({
     const cloneUrls = createCloneUrlRewriter(document, {
       settings: () => current,
       resolve: resolveDownload,
-      copy: (text) => {
+      copy: text => {
         navigator.clipboard.writeText(text).catch(() => undefined)
-      },
+      }
     })
     // 图片加速：图片加载失败时经加速源取回（见 core/image-accelerate）
     const images = createImageAccelerator({ settings: () => current, fetchImage })
@@ -294,20 +294,20 @@ export default defineContentScript({
     const copyLinks = createCopyLinkButtons(document, {
       settings: () => current,
       resolve: resolveDownload,
-      copy: (text) => navigator.clipboard.writeText(text),
-      label: (state) => message(COPY_MESSAGES[state]),
+      copy: text => navigator.clipboard.writeText(text),
+      label: state => message(COPY_MESSAGES[state])
     })
     // 自动加载：「加载更多」与分页列表的下一页（见 core/auto-load）
     const autoLoader = createAutoLoader(document, {
       active: () => current.enabled && current.autoLoad,
       fetchPage,
-      pageLabel: (page) => message('pageNumber', { page }),
+      pageLabel: page => message('pageNumber', { page })
     })
     // 图片预览：单击正文里的图片在页面内预览（见 core/image-preview）
     const preview = createImagePreview(document, {
       active: () => current.enabled && current.imagePreview,
-      label: (key) => message(VIEWER_MESSAGES[key]),
-      open: (url) => openInNewTab(url),
+      label: key => message(VIEWER_MESSAGES[key]),
+      open: url => openInNewTab(url)
     })
 
     const applySettings = (next: Settings): void => {
@@ -351,17 +351,12 @@ export default defineContentScript({
         resolve: resolveDownload,
         open: (url, newTab) => {
           window.open(url, newTab ? '_blank' : '_self', newTab ? 'noopener' : '')
-        },
+        }
       }),
-      { capture: true },
+      { capture: true }
     )
     // 新标签页打开：图片预览、下载加速都不处理的链接点击（见 core/new-tab）
-    ctx.addEventListener(
-      window,
-      'click',
-      createNewTabClickHandler({ settings: () => current, open: openInNewTab }),
-      { capture: true },
-    )
+    ctx.addEventListener(window, 'click', createNewTabClickHandler({ settings: () => current, open: openInNewTab }), { capture: true })
     // 图片的 error 不冒泡：在捕获阶段监听
     ctx.addEventListener(window, 'error', images.onError, { capture: true })
 
@@ -417,7 +412,7 @@ export default defineContentScript({
     }
 
     // 往返缓存恢复：缓存期间收不到自定义词条、屏蔽规则的通知，Firefox 还会丢弃设置变更事件，恢复后补读
-    ctx.addEventListener(window, 'pageshow', (event) => {
+    ctx.addEventListener(window, 'pageshow', event => {
       if (!event.persisted) return
       void refreshCustomEntries()
       void refreshSearchRules()
@@ -459,5 +454,5 @@ export default defineContentScript({
 
     // 启动完成：处理读存储期间排队的消息
     gate.open(handleMessage)
-  },
+  }
 })

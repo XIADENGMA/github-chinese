@@ -7,7 +7,7 @@ const ADD_EMAIL_ERRORS: ReadonlyMap<string, string> = new Map([
   ['email is already in use', '电子邮件已被使用'],
   ['Email is already in use', '电子邮件已被使用'],
   ['email is invalid', '电子邮件无效'],
-  ['Email is invalid', '电子邮件无效'],
+  ['Email is invalid', '电子邮件无效']
 ])
 
 /**
@@ -31,10 +31,8 @@ export default {
       '此电子邮件地址是对议题、拉取请求的回复及类似活动等 GitHub 通知的默认地址。',
     'This email will be used for account-related notifications and can also be used for password resets.':
       '此电子邮件将用于帐户相关通知并可用于重置密码。',
-    "This email will not be used as the 'from' address for web-based Git operations.":
-      '此电子邮件不会用作网页端 Git 操作的“发件人”地址。',
-    'This email will not be used as the ‘from’ address for web-based Git operations.':
-      '此电子邮件不会用作网页端 Git 操作的“发件人”地址。',
+    "This email will not be used as the 'from' address for web-based Git operations.": '此电子邮件不会用作网页端 Git 操作的“发件人”地址。',
+    'This email will not be used as the ‘from’ address for web-based Git operations.': '此电子邮件不会用作网页端 Git 操作的“发件人”地址。',
     'Unverified email addresses cannot receive notifications or be used to reset your password.':
       '未验证的电子邮件地址无法接收通知或用于重置密码。',
     'Manage email preferences': '管理电子邮件首选项',
@@ -98,8 +96,7 @@ export default {
     'when performing web-based Git operations (e.g. edits and merges) and sending email on your behalf. If you want command line Git operations to use your private email you must':
       '执行网页端 Git 操作（如编辑和合并）和代你发送电子邮件。如果希望命令行 Git 操作使用你的私密电子邮件则必须',
     'set your email in Git': '在 Git 中设置电子邮件',
-    'Previously authored commits associated with a public email will remain public.':
-      '之前使用公开电子邮件创作的提交将保持公开。',
+    'Previously authored commits associated with a public email will remain public.': '之前使用公开电子邮件创作的提交将保持公开。',
     'Your primary email address is now public. To select which email to display on your profile, visit':
       '你的主要电子邮件地址现已公开。要选择在个人资料中显示哪个电子邮件，请前往',
     'profile settings.': '个人资料设置。',
@@ -141,32 +138,32 @@ export default {
     'To stop receiving emails for the topics below, uncheck any topics you don’t want to receive, then click Save subscription preferences':
       '要停止接收以下主题的电子邮件，请取消勾选不想接收的主题，然后单击保存订阅首选项',
     'General info and offers from GitHub': '来自 GitHub 的一般信息和优惠',
-    'Unsubscribe from all topics': '取消订阅所有主题',
+    'Unsubscribe from all topics': '取消订阅所有主题'
   },
   scoped: {
     // 电子邮件标签
     Primary: '主要',
-    Backup: '备用',
+    Backup: '备用'
   },
   regexp: [
     [
       // 句号随原文；“e.g. edits and merges” 作“编辑和合并等”，不加括号
       new RegExp(
-        `^Emails you can use to sign in to your account\\. Your emails will not be used as the ['‘]from['’] address for web-based Git operations, e\\.g\\. edits and merges\\. All web-based Git operations will be linked to ${EMAIL}(\\.?)$`,
+        `^Emails you can use to sign in to your account\\. Your emails will not be used as the ['‘]from['’] address for web-based Git operations, e\\.g\\. edits and merges\\. All web-based Git operations will be linked to ${EMAIL}(\\.?)$`
       ),
       (_, email: string, dot: string) =>
-        `可用于登录帐户的电子邮件。这些电子邮件不会用作编辑和合并等网页端 Git 操作的“发件人”地址。所有网页端 Git 操作都将关联到 ${email}${dot ? '。' : ''}`,
+        `可用于登录帐户的电子邮件。这些电子邮件不会用作编辑和合并等网页端 Git 操作的“发件人”地址。所有网页端 Git 操作都将关联到 ${email}${dot ? '。' : ''}`
     ],
     [
       new RegExp(`^We sent a verification email to ${EMAIL}\\. Please follow the instructions in it\\.$`),
-      '已向 $1 发送验证电子邮件。请按照其中的说明操作。',
+      '已向 $1 发送验证电子邮件。请按照其中的说明操作。'
     ],
     [new RegExp(`^Your primary email was changed to ${EMAIL}\\.$`), '你的主要电子邮件地址已更改为 $1。'],
     [
       new RegExp(
-        `^Because you have email privacy enabled, ${EMAIL} will be used for account-related notifications as well as password resets\\. ${EMAIL} will be used for web-based Git operations, e\\.g\\.,? edits and merges\\.$`,
+        `^Because you have email privacy enabled, ${EMAIL} will be used for account-related notifications as well as password resets\\. ${EMAIL} will be used for web-based Git operations, e\\.g\\.,? edits and merges\\.$`
       ),
-      '由于你已启用电子邮件隐私，$1 将用于帐户相关通知和重置密码。$2 将用于编辑和合并等网页端 Git 操作。',
+      '由于你已启用电子邮件隐私，$1 将用于帐户相关通知和重置密码。$2 将用于编辑和合并等网页端 Git 操作。'
     ],
     [new RegExp(`^Removed email ${EMAIL} from your account\\.$`), '已从你的帐户中移除电子邮件 $1。'],
     [new RegExp(`^Subscription preferences for ${EMAIL}$`), '$1 的订阅首选项'],
@@ -176,14 +173,14 @@ export default {
     // 断开 Google / Apple 连接的确认对话框
     [
       new RegExp(
-        `^This will disconnect ${EMAIL} from your social identity provider\\. You will no longer be able to use it as a password alternative\\.$`,
+        `^This will disconnect ${EMAIL} from your social identity provider\\. You will no longer be able to use it as a password alternative\\.$`
       ),
-      '这将断开 $1 与社交标识提供者的连接。你将无法再用它代替密码登录。',
+      '这将断开 $1 与社交标识提供者的连接。你将无法再用它代替密码登录。'
     ],
     // 添加电子邮件失败的提示：原因未收录时保留原文
     [
       new RegExp(`^Error adding ${EMAIL}: (.+)$`),
-      (_, email: string, reason: string) => `添加 ${email} 时出错：${ADD_EMAIL_ERRORS.get(reason) ?? reason}`,
-    ],
-  ],
+      (_, email: string, reason: string) => `添加 ${email} 时出错：${ADD_EMAIL_ERRORS.get(reason) ?? reason}`
+    ]
+  ]
 } satisfies PageDictionary

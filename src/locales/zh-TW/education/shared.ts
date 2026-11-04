@@ -44,8 +44,7 @@ export default {
     // 教师页：<a>Sign up for free</a> and take …（整句见 inline）；学校页：同一句是只隔注释的文本组
     'Sign up for free and take the first step toward becoming a leader in technology and innovation.':
       '免費註冊，踏出成為科技和創新領域領導者的第一步。',
-    'and take the first step toward becoming a leader in technology and innovation.':
-      '，踏出成為科技和創新領域領導者的第一步。',
+    'and take the first step toward becoming a leader in technology and innovation.': '，踏出成為科技和創新領域領導者的第一步。'
   },
   scoped: {
     // 页内导航、标签页标题；Partners、Education、More 由 common 提供
@@ -72,19 +71,16 @@ export default {
     'Copilot for Business': 'Copilot 商務版',
     'GitHub Skills': 'GitHub 技能',
     'GitHub Sponsors': 'GitHub 贊助',
-    'GitHub Desktop': 'GitHub 桌面版',
+    'GitHub Desktop': 'GitHub 桌面版'
   },
   inline: [
     // 教师页常见问题：<a>Sign up for free</a> and take the first step …
-    [
-      '{} and take the first step toward becoming a leader in technology and innovation.',
-      '{}，踏出成為科技和創新領域領導者的第一步。',
-    ],
+    ['{} and take the first step toward becoming a leader in technology and innovation.', '{}，踏出成為科技和創新領域領導者的第一步。']
   ],
   ignore: [
     // 推荐语（第三方引言、人名与职务、公司名）
     'figure[class*="Testimonial-module__Testimonial___"]',
     // 「看看各校如何使用 GitHub」卡片标题是学校名（链接到博客文章）
-    'a[class*="Card-module__Card__link___"][href^="https://github.blog/"]',
-  ],
+    'a[class*="Card-module__Card__link___"][href^="https://github.blog/"]'
+  ]
 } satisfies PageDictionary

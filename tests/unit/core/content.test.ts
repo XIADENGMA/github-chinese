@@ -9,7 +9,7 @@ import {
   TURBO_RESET_EVENT,
   TURBO_REVISIT_EVENT,
   TURBO_TRANSLATING_EVENT,
-  type BridgeWindow,
+  type BridgeWindow
 } from '../../../src/core/turbo-bridge'
 import { $, settle, TEST_BUNDLE } from './helpers'
 
@@ -35,7 +35,7 @@ const state = vi.hoisted(() => ({
     imagePreview: false,
     newTab: false,
     newTabScopes: ['external', 'search'] as readonly string[],
-    newTabPaths: [] as readonly string[],
+    newTabPaths: [] as readonly string[]
   },
   failSettings: false,
   /** 设置后读取设置要等它落定（模拟读存储较慢） */
@@ -45,7 +45,7 @@ const state = vi.hoisted(() => ({
   /** 搜索净化的屏蔽规则 */
   searchRules: [] as readonly string[],
   unwatchSettings: vi.fn(),
-  listeners: [] as Listener[],
+  listeners: [] as Listener[]
 }))
 
 /** 模拟扩展消息接口：记录监听器，send() 依次调用；sendMessage 为发往后台的消息 */
@@ -56,14 +56,14 @@ const runtime = vi.hoisted(() => ({
   onMessage: {
     addListener: vi.fn((listener: Listener) => state.listeners.push(listener)),
     removeListener: vi.fn((listener: Listener) => {
-      state.listeners = state.listeners.filter((item) => item !== listener)
-    }),
-  },
+      state.listeners = state.listeners.filter(item => item !== listener)
+    })
+  }
 }))
 
 /** 浏览器的语言偏好列表：默认读不到（undefined），按 navigator.languages */
 const i18n = vi.hoisted(() => ({
-  getAcceptLanguages: vi.fn(async (): Promise<string[] | undefined> => undefined),
+  getAcceptLanguages: vi.fn(async (): Promise<string[] | undefined> => undefined)
 }))
 
 vi.mock('wxt/browser', () => ({ browser: { runtime, i18n } }))
@@ -71,15 +71,15 @@ vi.mock('wxt/browser', () => ({ browser: { runtime, i18n } }))
 /** 语言包加载：按语言返回测试词典；deps 为内容脚本创建加载器时传入的依赖 */
 const locales = vi.hoisted(() => ({
   load: vi.fn(async (_locale: string): Promise<unknown> => undefined),
-  deps: undefined as LocaleLoaderDeps | undefined,
+  deps: undefined as LocaleLoaderDeps | undefined
 }))
 
-vi.mock('../../../src/shared/locale-loader', async (importOriginal) => ({
+vi.mock('../../../src/shared/locale-loader', async importOriginal => ({
   ...(await importOriginal<typeof import('../../../src/shared/locale-loader')>()),
   createLocaleLoader: (deps: LocaleLoaderDeps) => {
     locales.deps = deps
     return { load: locales.load }
-  },
+  }
 }))
 
 vi.mock('../../../src/shared/settings', () => ({
@@ -95,8 +95,8 @@ vi.mock('../../../src/shared/settings', () => ({
     state.settingsListener = listener
     return state.unwatchSettings
   }),
-  isPathExcluded: (pathname: string, patterns: readonly string[]) => patterns.some((p) => pathname.startsWith(p)),
-  matchesPathPattern: (pathname: string, patterns: readonly string[]) => patterns.some((p) => pathname.startsWith(p)),
+  isPathExcluded: (pathname: string, patterns: readonly string[]) => patterns.some(p => pathname.startsWith(p)),
+  matchesPathPattern: (pathname: string, patterns: readonly string[]) => patterns.some(p => pathname.startsWith(p))
 }))
 
 interface FakeContext {
@@ -107,12 +107,7 @@ interface FakeContext {
   readonly intervals: (() => void)[]
   readonly timeouts: (() => void)[]
   onInvalidated(callback: () => void): () => void
-  addEventListener(
-    target: EventTarget,
-    type: string,
-    handler: () => void,
-    options?: boolean | AddEventListenerOptions,
-  ): void
+  addEventListener(target: EventTarget, type: string, handler: () => void, options?: boolean | AddEventListenerOptions): void
   setInterval(handler: () => void, timeout: number): number
   setTimeout(handler: () => void, timeout: number): number
   /** 执行一轮定时任务 */
@@ -163,7 +158,7 @@ function createContext(): FakeContext {
     invalidate() {
       context.invalid = true
       for (const callback of context.invalidated) callback()
-    },
+    }
   }
   return context
 }
@@ -174,17 +169,17 @@ async function load(): Promise<ContentScriptDefinition> {
 
 function send(message: unknown): unknown {
   let response: unknown
-  for (const listener of state.listeners) listener(message, {}, (value) => (response = value))
+  for (const listener of state.listeners) listener(message, {}, value => (response = value))
   return response
 }
 
 /** 异步应答：handled 为监听器是否保持消息通道 */
 function sendAsync(message: unknown): { handled: boolean; response: Promise<unknown> } {
   let resolve: (value: unknown) => void = () => undefined
-  const response = new Promise((done) => {
+  const response = new Promise(done => {
     resolve = done
   })
-  const handled = state.listeners.map((listener) => listener(message, {}, resolve)).some((result) => result === true)
+  const handled = state.listeners.map(listener => listener(message, {}, resolve)).some(result => result === true)
   return { handled, response }
 }
 
@@ -195,7 +190,7 @@ const TW_BUNDLE: LocaleBundle = [['common', { static: { Issues: '議題' } }]]
 
 /** 等待异步回调执行 */
 async function flushTasks(): Promise<void> {
-  await new Promise((resolve) => setTimeout(resolve, 0))
+  await new Promise(resolve => setTimeout(resolve, 0))
 }
 
 /** 测试结束时撤销的监听 */
@@ -221,13 +216,13 @@ function captureResets(): string[] {
 
 /** <html> 上的实例标记 */
 function marks(): string[] {
-  return document.documentElement.getAttributeNames().filter((name) => name.startsWith(INSTANCE_MARK_PREFIX))
+  return document.documentElement.getAttributeNames().filter(name => name.startsWith(INSTANCE_MARK_PREFIX))
 }
 
 /** 让读取设置挂起，返回放行函数 */
 function holdSettings(): () => void {
   let release: () => void = () => undefined
-  state.settingsGate = new Promise((resolve) => {
+  state.settingsGate = new Promise(resolve => {
     release = resolve
   })
   return release
@@ -269,10 +264,10 @@ beforeEach(() => {
     imagePreview: false,
     newTab: false,
     newTabScopes: ['external', 'search'],
-    newTabPaths: [],
+    newTabPaths: []
   }
   locales.load.mockReset()
-  locales.load.mockImplementation(async (locale) => (locale === 'zh-TW' ? TW_BUNDLE : TEST_BUNDLE))
+  locales.load.mockImplementation(async locale => (locale === 'zh-TW' ? TW_BUNDLE : TEST_BUNDLE))
   locales.deps = undefined
   i18n.getAcceptLanguages.mockReset()
   document.head.innerHTML = '<title>Issues · vuejs/core</title>'
@@ -295,11 +290,7 @@ afterEach(() => {
 describe('content script', () => {
   it('声明匹配地址与运行时机', async () => {
     const definition = await load()
-    expect(definition.matches).toEqual([
-      'https://github.com/*',
-      'https://gist.github.com/*',
-      'https://www.githubstatus.com/*',
-    ])
+    expect(definition.matches).toEqual(['https://github.com/*', 'https://gist.github.com/*', 'https://www.githubstatus.com/*'])
     expect(definition.runAt).toBe('document_start')
     expect(definition.noScriptStartedPostMessage).toBe(true)
   })
@@ -330,18 +321,17 @@ describe('content script', () => {
     expect(runtime.sendMessage).not.toHaveBeenCalled()
   })
 
-  it.each([
-    { type: 'gcn:get-untranslated' },
-    { type: 'gcn:flush-untranslated' },
-    { type: 'gcn:untranslated-cleared', epoch: 1 },
-  ])('旧版本的未翻译消息 %j：不处理、不应答', async (message) => {
-    const definition = await load()
-    context = createContext()
-    await definition.main(context as never)
-    expect(sendAsync(message).handled).toBe(false)
-    expect(send(message)).toBeUndefined()
-    expect($('p').textContent).toBe('议题')
-  })
+  it.each([{ type: 'gcn:get-untranslated' }, { type: 'gcn:flush-untranslated' }, { type: 'gcn:untranslated-cleared', epoch: 1 }])(
+    '旧版本的未翻译消息 %j：不处理、不应答',
+    async message => {
+      const definition = await load()
+      context = createContext()
+      await definition.main(context as never)
+      expect(sendAsync(message).handled).toBe(false)
+      expect(send(message)).toBeUndefined()
+      expect($('p').textContent).toBe('议题')
+    }
+  )
 
   it('响应设置变化；自定义词条变化由后台通知后重新读取', async () => {
     const definition = await load()
@@ -363,7 +353,7 @@ describe('content script', () => {
     const reads = (): number[] => [
       vi.mocked(settings.getSettings).mock.calls.length,
       vi.mocked(settings.getCustomEntries).mock.calls.length,
-      vi.mocked(settings.getSearchBlockRules).mock.calls.length,
+      vi.mocked(settings.getSearchBlockRules).mock.calls.length
     ]
     const before = reads()
     const pageshow = (persisted: boolean): void => {
@@ -555,9 +545,9 @@ describe('页面翻译语言', () => {
     let resolve: (bundle: LocaleBundle) => void = () => undefined
     locales.load.mockImplementationOnce(
       () =>
-        new Promise((done) => {
+        new Promise(done => {
           resolve = done
-        }),
+        })
     )
     state.settingsListener!({ ...state.settings, language: 'zh-TW' })
     state.settingsListener!({ ...state.settings, language: 'zh-CN' })
@@ -582,7 +572,7 @@ describe('页面翻译语言', () => {
     state.settings = { ...state.settings, language: 'zh-CN' }
     let release: () => void = () => undefined
     locales.load.mockImplementationOnce(async () => {
-      await new Promise<void>((resolve) => {
+      await new Promise<void>(resolve => {
         release = resolve
       })
       return TEST_BUNDLE
@@ -603,7 +593,7 @@ describe('页面翻译语言', () => {
     stubLanguages(['zh-CN'])
     let release: () => void = () => undefined
     locales.load.mockImplementationOnce(async () => {
-      await new Promise<void>((resolve) => {
+      await new Promise<void>(resolve => {
         release = resolve
       })
       return TEST_BUNDLE
@@ -671,9 +661,9 @@ describe('页面翻译语言', () => {
     let resolveFirst: (languages: string[]) => void = () => undefined
     i18n.getAcceptLanguages.mockImplementationOnce(
       () =>
-        new Promise((done) => {
+        new Promise(done => {
           resolveFirst = done
-        }),
+        })
     )
     window.dispatchEvent(new Event('languagechange'))
     window.dispatchEvent(new Event('languagechange'))
@@ -721,11 +711,11 @@ describe('总开关关闭时启动', () => {
     let resolve: (bundle: LocaleBundle) => void = () => undefined
     locales.load.mockImplementationOnce(
       () =>
-        new Promise((done) => {
+        new Promise(done => {
           resolve = done
-        }),
+        })
     )
-    return (bundle) => resolve(bundle)
+    return bundle => resolve(bundle)
   }
 
   /** 主世界桥接的询问：被取消即为在翻译 */
@@ -813,7 +803,7 @@ describe('总开关关闭时启动', () => {
       () =>
         new Promise((_, reject) => {
           fail = reject
-        }),
+        })
     )
     state.settingsListener!({ ...state.settings, enabled: true })
     const probe = sendAsync({ type: 'gcn:get-status' })
@@ -1064,7 +1054,7 @@ describe('重置事件与实例标记', () => {
       const attributes = cached.get(location.href)
       if (!attributes) return
       for (const attr of [...root.attributes]) {
-        if (!attributes.some((item) => item.name === attr.name)) root.removeAttribute(attr.name)
+        if (!attributes.some(item => item.name === attr.name)) root.removeAttribute(attr.name)
       }
       for (const attr of attributes) {
         if (root.getAttribute(attr.name) !== attr.value) root.setAttribute(attr.name, attr.value)
@@ -1077,7 +1067,7 @@ describe('重置事件与实例标记', () => {
       popTo(path) {
         history.replaceState(null, '', path)
         window.dispatchEvent(new PopStateEvent('popstate'))
-      },
+      }
     }
   }
 
@@ -1117,7 +1107,7 @@ describe('重置事件与实例标记', () => {
     state.settingsListener!({ ...state.settings, enabled: false })
     state.settingsListener!({ ...state.settings })
     state.settingsListener!({ ...state.settings, enabled: false })
-    expect(seen.map((event) => event.type)).toEqual([TURBO_REVISIT_EVENT, TURBO_RESET_EVENT])
+    expect(seen.map(event => event.type)).toEqual([TURBO_REVISIT_EVENT, TURBO_RESET_EVENT])
     for (const event of seen) {
       expect(event.constructor).toBe(Event)
       expect('detail' in event).toBe(false)
@@ -1184,14 +1174,14 @@ describe('重置事件与实例标记', () => {
 
   it.each<[string, () => Promise<void>]>([
     ['改自定义词条', () => changeEntries({ Issues: '问题' })],
-    ['改时间本地化开关', async () => state.settingsListener!({ ...state.settings, translateTime: false })],
+    ['改时间本地化开关', async () => state.settingsListener!({ ...state.settings, translateTime: false })]
   ])('有已失效实例的标记：%s时同样强制重新访问，保留本实例的标记', async (_name, act) => {
     document.documentElement.setAttribute(`${INSTANCE_MARK_PREFIX}stale`, '')
     const definition = await load()
     context = createContext()
     const events = captureResets()
     await definition.main(context as never)
-    const own = marks().filter((name) => name !== `${INSTANCE_MARK_PREFIX}stale`)
+    const own = marks().filter(name => name !== `${INSTANCE_MARK_PREFIX}stale`)
     await act()
     expect(events).toEqual(['revisit'])
     expect(marks()).toEqual(own)
@@ -1446,7 +1436,7 @@ describe('下载加速', () => {
 
   it.each([
     ['应答不合法', async () => ({ ok: false })],
-    ['后台出错', async () => Promise.reject(new Error('no receiver'))],
+    ['后台出错', async () => Promise.reject(new Error('no receiver'))]
   ])('故障转移，%s：打开原链接', async (_name, respond) => {
     state.settings = { ...state.settings, accelerate: true, failover: true }
     runtime.sendMessage.mockImplementation(respond)
@@ -1677,18 +1667,19 @@ describe('增强功能', () => {
     function releases(versions: readonly string[], next?: string): string {
       const link = next ? `<a class="next_page" href="${next}">Next</a>` : '<span class="next_page disabled">Next</span>'
       const sections = versions.map(
-        (version) => `<section id="release-${version}"><h2><a href="/vuejs/core/releases/tag/${version}">${version}</a></h2><p>Sample text</p></section>`,
+        version =>
+          `<section id="release-${version}"><h2><a href="/vuejs/core/releases/tag/${version}">${version}</a></h2><p>Sample text</p></section>`
       )
       return `<div>${sections.join('')}</div><div class="paginate-container"><div class="pagination">${link}</div></div>`
     }
 
     function versions(): string[] {
-      return [...document.querySelectorAll('section h2')].map((node) => node.textContent ?? '')
+      return [...document.querySelectorAll('section h2')].map(node => node.textContent ?? '')
     }
 
     function nearPagination(): void {
       const container = document.querySelector('.paginate-container')
-      for (const item of observed.filter((entry) => entry.element === container)) {
+      for (const item of observed.filter(entry => entry.element === container)) {
         item.callback([{ isIntersecting: true } as IntersectionObserverEntry], {} as IntersectionObserver)
       }
     }
@@ -1703,7 +1694,7 @@ describe('增强功能', () => {
             observed.push({ element, callback: this.callback })
           }
           disconnect(): void {}
-        },
+        }
       )
       history.replaceState(null, '', '/vuejs/core/releases')
       document.body.innerHTML = releases(['v3.5', 'v3.4', 'v3.3'], '/vuejs/core/releases?page=2')
@@ -1719,7 +1710,7 @@ describe('增强功能', () => {
       await flushTasks()
       expect(fetchMock).toHaveBeenCalledExactlyOnceWith(PAGE_2, {
         credentials: 'same-origin',
-        headers: { Accept: 'text/html' },
+        headers: { Accept: 'text/html' }
       })
       expect(versions()).toEqual(['v3.5', 'v3.4', 'v3.3', 'v3.2'])
       // 页码分隔：扩展界面语言
@@ -1755,7 +1746,7 @@ describe('搜索净化', () => {
   /** 各条搜索结果是否隐藏 */
   function hidden(): boolean[] {
     return [...document.querySelectorAll<HTMLElement>('[data-testid="results-list"] > div')].map(
-      (item) => item.style.getPropertyValue('display') === 'none',
+      item => item.style.getPropertyValue('display') === 'none'
     )
   }
 
@@ -1775,9 +1766,9 @@ describe('搜索净化', () => {
     let release: (bundle: LocaleBundle) => void = () => undefined
     locales.load.mockImplementation(
       () =>
-        new Promise((resolve) => {
+        new Promise(resolve => {
           release = resolve
-        }),
+        })
     )
     const definition = await load()
     context = createContext()

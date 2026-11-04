@@ -12,7 +12,7 @@ function render(options: { disabled?: boolean; onClick?: () => void } = {}): Vue
   return mount(required(UiButton), {
     props: { disabled: options.disabled },
     attrs: { onClick: options.onClick },
-    slots: { default: '保存' },
+    slots: { default: '保存' }
   })
 }
 
@@ -31,7 +31,7 @@ function mouseClick(wrapper: VueWrapper): void {
 
 /** 各波纹的位置与边长（px） */
 function waves(wrapper: VueWrapper): Array<{ left: number; top: number; size: number }> {
-  return wrapper.findAll('.ui-ripple-wave').map((wave) => {
+  return wrapper.findAll('.ui-ripple-wave').map(wave => {
     const style = (wave.element as HTMLElement).style
     expect(style.width).toBe(style.height)
     return { left: parseFloat(style.left), top: parseFloat(style.top), size: parseFloat(style.width) }
@@ -57,12 +57,10 @@ describe.skipIf(!UiButton)('UiButton', () => {
 
     it('type、样式、尺寸、图标按钮', () => {
       const wrapper = mount(required(UiButton), {
-        props: { type: 'submit', variant: 'primary', size: 'sm', icon: true },
+        props: { type: 'submit', variant: 'primary', size: 'sm', icon: true }
       })
       expect(wrapper.attributes('type')).toBe('submit')
-      expect(wrapper.classes()).toEqual(
-        expect.arrayContaining(['ui-button', 'ui-button-primary', 'ui-button-sm', 'ui-button-icon']),
-      )
+      expect(wrapper.classes()).toEqual(expect.arrayContaining(['ui-button', 'ui-button-primary', 'ui-button-sm', 'ui-button-icon']))
       expect(render().classes()).toEqual(expect.arrayContaining(['ui-button-default', 'ui-button-md']))
       expect(render().classes()).not.toContain('ui-button-icon')
     })
@@ -70,7 +68,7 @@ describe.skipIf(!UiButton)('UiButton', () => {
     it('aria-label、title、data-test、class 落在原生 button 上', () => {
       const wrapper = mount(required(UiButton), {
         attrs: { 'aria-label': '删除 Code', title: '删除', 'data-test': 'remove', class: 'extra' },
-        slots: { default: '删除' },
+        slots: { default: '删除' }
       })
       expect(wrapper.attributes()).toMatchObject({ 'aria-label': '删除 Code', title: '删除', 'data-test': 'remove' })
       expect(wrapper.classes()).toContain('extra')
@@ -98,7 +96,7 @@ describe.skipIf(!UiButton)('UiButton', () => {
     function renderLink(): VueWrapper {
       return mount(required(UiButton), {
         props: { href: 'https://github.com/vuejs/core', variant: 'invisible', icon: true },
-        attrs: { target: '_blank', rel: 'noreferrer', 'aria-label': 'Sample text' },
+        attrs: { target: '_blank', rel: 'noreferrer', 'aria-label': 'Sample text' }
       })
     }
 
@@ -109,7 +107,7 @@ describe.skipIf(!UiButton)('UiButton', () => {
         href: 'https://github.com/vuejs/core',
         target: '_blank',
         rel: 'noreferrer',
-        'aria-label': 'Sample text',
+        'aria-label': 'Sample text'
       })
       expect(wrapper.attributes('type')).toBeUndefined()
       expect(wrapper.attributes('disabled')).toBeUndefined()
@@ -165,7 +163,7 @@ describe.skipIf(!UiButton)('UiButton', () => {
     it('系统要求减少动态效果时不生成', async () => {
       const matchMedia = vi
         .spyOn(window, 'matchMedia')
-        .mockImplementation((query) => ({ matches: query === '(prefers-reduced-motion: reduce)' }) as MediaQueryList)
+        .mockImplementation(query => ({ matches: query === '(prefers-reduced-motion: reduce)' }) as MediaQueryList)
       const wrapper = render()
       pointerdown(wrapper, { clientX: 30, clientY: 30 })
       keyboardClick(wrapper)
@@ -187,7 +185,7 @@ describe.skipIf(!UiButton)('UiButton', () => {
       for (const clientX of [10, 20, 30, 40, 50]) pointerdown(wrapper, { clientX, clientY: 20 })
       await wrapper.vm.$nextTick()
       // 按下位置依次右移 10px：留下的是后 3 个
-      const lefts = waves(wrapper).map((wave) => Math.round(wave.left + wave.size / 2 + RECT.left))
+      const lefts = waves(wrapper).map(wave => Math.round(wave.left + wave.size / 2 + RECT.left))
       expect(lefts).toEqual([30, 40, 50])
     })
 

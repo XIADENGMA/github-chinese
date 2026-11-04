@@ -14,9 +14,7 @@ export interface UseUpdateCheck {
 export function useUpdateCheck(): UseUpdateCheck {
   const current = getExtensionVersion()
   const latest = shallowRef<string>()
-  const newVersion = computed(() =>
-    latest.value !== undefined && isNewerVersion(latest.value, current) ? latest.value : undefined,
-  )
+  const newVersion = computed(() => (latest.value !== undefined && isNewerVersion(latest.value, current) ? latest.value : undefined))
   // 条件直接写构建期常量（同 isFirefoxBuild）：函数调用不内联，Firefox 构建里会留着检查代码
   if (String(import.meta.env.FIREFOX) === 'true') return { newVersion }
 
@@ -24,7 +22,7 @@ export function useUpdateCheck(): UseUpdateCheck {
   onScopeDispose(() => {
     active = false
   })
-  void checkLatestVersion((version) => {
+  void checkLatestVersion(version => {
     if (active) latest.value = version
   })
   return { newVersion }

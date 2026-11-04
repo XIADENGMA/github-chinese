@@ -53,7 +53,7 @@ const ZONE_ABBREVIATIONS: Readonly<Record<string, number>> = {
   HDT: -540,
   // 夏威夷-阿留申时间：en-US 给 America/Adak 用，zh-TW 给 Pacific/Honolulu、America/Adak 用
   HAST: -600,
-  HADT: -540,
+  HADT: -540
 }
 const GMT_OFFSET_RE = /^GMT([+-])(\d{1,2})(?::(\d{2}))?$/
 
@@ -83,15 +83,12 @@ const ZONE_WORD_RE = new RegExp(`(^|\\s)(?:\\[(${ZONE_WORD})\\]|(${ZONE_WORD}))(
  * 只认整个词（本地为 GMT+1 时不动 GMT+10、GMT+1:30）；其他时区、不认识的缩写保留，不含时返回原文
  */
 export function stripLocalZone(text: string, time: number): string {
-  return text.replace(
-    ZONE_WORD_RE,
-    (match, before: string, bracketed: string | undefined, bare: string | undefined, after: string) => {
-      const offset = zoneOffset(bracketed ?? bare ?? '')
-      if (offset === undefined || !isLocalOffset(offset, time)) return match
-      // 在中间时留下前面的空白，在首尾时一并去掉
-      return before && after ? before : ''
-    },
-  )
+  return text.replace(ZONE_WORD_RE, (match, before: string, bracketed: string | undefined, bare: string | undefined, after: string) => {
+    const offset = zoneOffset(bracketed ?? bare ?? '')
+    if (offset === undefined || !isLocalOffset(offset, time)) return match
+    // 在中间时留下前面的空白，在首尾时一并去掉
+    return before && after ? before : ''
+  })
 }
 
 /** 浏览器本地时区的探针：IANA 时区名与今年 1 月、7 月的偏移 */
@@ -158,7 +155,7 @@ export function createZoneWatcher(doc: Document, onChange: () => void): ZoneWatc
 
     check() {
       if (running) compare(zoneProbe())
-    },
+    }
   }
 }
 
@@ -229,7 +226,7 @@ export function createTimeText(doc: Document, owns: (element: Element) => boolea
   /** 移除过别处 title 的元素：再遇到改写过而没有记录的 title 就直接认领，免得反复移除、渲染 */
   const cleared = new WeakSet<Element>()
   /** 观察改写过 title 的元素的 datetime：日期变了就移除过时的改写 */
-  const observer = new MutationObserver((records) => {
+  const observer = new MutationObserver(records => {
     for (const record of records) resetStale(record.target as Element)
   })
   /** 本次 attach 后已观察 datetime 的元素 */
@@ -354,6 +351,6 @@ export function createTimeText(doc: Document, owns: (element: Element) => boolea
         cleared.add(element)
         element.removeAttribute('title')
       }
-    },
+    }
   }
 }

@@ -35,11 +35,9 @@ export default {
     'Copilot cloud agent access disabled': 'Copilot 雲端代理存取權已停用',
     'Agents (opens a new page)': '代理（開啟新頁面）',
     // 存储库代理页（/<owner>/<repo>/agents）：未开通与空状态
-    'Copilot Coding Agent handles routine tasks so you can focus on core work':
-      'Copilot 程式開發代理處理例行任務讓你專注於核心工作',
+    'Copilot Coding Agent handles routine tasks so you can focus on core work': 'Copilot 程式開發代理處理例行任務讓你專注於核心工作',
     'View Copilot Coding Agent capabilities': '查看 Copilot 程式開發代理的功能',
-    'Available on paid plans. Try it with Copilot Pro — free for 30 days.':
-      '適用於付費方案。試用 Copilot 專業版——30 天免費。',
+    'Available on paid plans. Try it with Copilot Pro — free for 30 days.': '適用於付費方案。試用 Copilot 專業版——30 天免費。',
     'Let Copilot work on tasks for you in the background.': '讓 Copilot 在背景為你處理任務。',
     'Your code review sessions are available from the pull request timeline. Enable Copilot cloud agent to assign tasks, track progress, and review changes — all from this page.':
       '你的程式碼審查工作階段可從拉取請求時間軸查看。啟用 Copilot 雲端代理來指派任務、追蹤進度並審查變更——全部在此頁面完成。',
@@ -79,7 +77,7 @@ export default {
     'Filter by agent': '依代理篩選',
 
     // 代理推广提示（免费用户弹出提示的标题 Start a task with Copilot cloud agent 见 common/global-nav.ts）
-    'Let Copilot tackle your TODOs': '讓 Copilot 處理你的待辦事項',
+    'Let Copilot tackle your TODOs': '讓 Copilot 處理你的待辦事項'
   },
   scoped: {
     // 外壳
@@ -158,14 +156,14 @@ export default {
     'See what’s new': '查看新功能',
     "See what's new": '查看新功能',
     // Copilot 专业版结账页（/github-copilot/pro）的步骤名：核对订单，不是代码审查
-    Review: '確認',
+    Review: '確認'
   },
   regexp: [
     // 侧栏用户菜单：方案标签后接升级链接（Copilot Free · <Upgrade>）；用户按钮的无障碍名称（octocat, Copilot Free）
     [/^(Copilot (?:Free|Pro\+?|Business|Enterprise|Student)) ·$/, (_, plan: string) => `${copilotPlan(plan)} ·`],
     [
       /^([\w-]+), (Copilot (?:Free|Pro\+?|Business|Enterprise|Student))$/,
-      (_, login: string, plan: string) => `${login}，${copilotPlan(plan)}`,
-    ],
-  ],
+      (_, login: string, plan: string) => `${login}，${copilotPlan(plan)}`
+    ]
+  ]
 } satisfies PageDictionary

@@ -26,16 +26,13 @@ export default {
     Transitive: '传递',
     Direct: '直接',
     'Learn more about SBOMS.': '了解 SBOM。',
-    'Supported ecosystems will have transitivity labels on their packages.':
-      '受支持的生态系统会在软件包上显示传递性标签。',
+    'Supported ecosystems will have transitivity labels on their packages.': '受支持的生态系统会在软件包上显示传递性标签。',
     'View transitive paths': '查看传递路径',
-    'You can view transitive paths for packages within supported ecosystems.':
-      '可以查看受支持生态系统中软件包的传递路径。',
+    'You can view transitive paths for packages within supported ecosystems.': '可以查看受支持生态系统中软件包的传递路径。',
     'Show dependency options': '显示依赖项选项',
     'No dependencies found.': '未找到依赖项。',
     // To view your dependency graph, … define dependencies in <one of the supported manifest file types>, like …
-    'To view your dependency graph, your repository must define dependencies in':
-      '要查看依赖项关系图，存储库须在以下文件中定义依赖项',
+    'To view your dependency graph, your repository must define dependencies in': '要查看依赖项关系图，存储库须在以下文件中定义依赖项',
     'Detect additional dependencies with GitHub Actions': '使用 GitHub 操作检测更多依赖项',
     // … GitHub Actions adds your dependencies using the <dependency submission API> so you can receive …
     'Not all dependencies are automatically detected for ecosystems like Gradle. GitHub Actions adds your dependencies using the':
@@ -52,8 +49,7 @@ export default {
     'Known security vulnerability in': '已知安全漏洞位于',
     'Known vulnerability found': '发现已知漏洞',
     'update suggested:': '建议更新：',
-    'Always verify the validity and compatibility of suggestions with your codebase.':
-      '请始终验证建议的有效性及其与代码库的兼容性。',
+    'Always verify the validity and compatibility of suggestions with your codebase.': '请始终验证建议的有效性及其与代码库的兼容性。',
     'What’s not been updated': '尚未更新的内容',
     "What's not been updated": '尚未更新的内容',
 
@@ -97,8 +93,7 @@ export default {
     "We haven't found any dependents for this repository yet.": '尚未发现此存储库的被依赖项。',
     'We’ll keep looking!': '我们会继续查找！',
     "We'll keep looking!": '我们会继续查找！',
-    'GitHub does not currently determine the dependents of private repositories':
-      'GitHub 目前不会确定专用存储库的被依赖项',
+    'GitHub does not currently determine the dependents of private repositories': 'GitHub 目前不会确定专用存储库的被依赖项',
 
     // Dependabot 更新（/network/updates）
     'Enable Dependabot': '启用 Dependabot',
@@ -108,8 +103,7 @@ export default {
     'Dependabot isn’t enabled on forks by default': '复刻默认不启用 Dependabot',
     "Dependabot version updates aren't configured yet": '尚未配置 Dependabot 版本更新',
     'Dependabot version updates aren’t configured yet': '尚未配置 Dependabot 版本更新',
-    'Dependabot creates pull requests to keep your dependencies up-to-date.':
-      'Dependabot 会创建拉取请求以使依赖项保持最新。',
+    'Dependabot creates pull requests to keep your dependencies up-to-date.': 'Dependabot 会创建拉取请求以使依赖项保持最新。',
     'Create config file': '创建配置文件',
     'Recent update jobs': '最近的更新作业',
     // <Dependabot version updates> automatically keep your application up-to-date …
@@ -118,7 +112,7 @@ export default {
     'can also help keep dependencies updated.': '也可以帮助保持依赖项为最新。',
     'Monitored dependency files': '受监控的依赖文件',
     'Check for updates': '检查更新',
-    'Recent jobs': '最近的作业',
+    'Recent jobs': '最近的作业'
   },
   scoped: {
     'one of the supported manifest file types': '支持的清单文件类型之一',
@@ -132,29 +126,26 @@ export default {
     'view logs': '查看日志',
     'Secret scanning': '机密扫描',
     // 生态系统筛选项（与 npm 并列）；产品名按用户规定译出，同 security 公告的生态系统选项
-    'GitHub Actions': 'GitHub 操作',
+    'GitHub Actions': 'GitHub 操作'
   },
   regexp: [
     // 依赖条目元信息：· Detected automatically on Oct 18, 2026 · MIT
     [
       new RegExp(`^· Detected automatically on (${DATE_SOURCE})(?: · (.+))?$`),
-      (_, date, license) => `${joinCjk('· 自动检测于', translateTime(date))}${license ? ` · ${license}` : ''}`,
+      (_, date, license) => `${joinCjk('· 自动检测于', translateTime(date))}${license ? ` · ${license}` : ''}`
     ],
     // 依赖路径对话框
     [/^Paths for (.+)$/, '$1 的路径'],
     [/^Showing ([\d,]+) paths?\. Export SBOM to view all paths\.$/, '显示 $1 条路径。导出 SBOM 以查看所有路径。'],
     // 计数
     [/^([\d,]+) Total$/, '共 $1 个'],
-    [
-      /^([\d,]+) (Repositor(?:y|ies)|Packages?)$/,
-      (_, count, kind) => `${count} 个${kind.startsWith('Repositor') ? '存储库' : '软件包'}`,
-    ],
+    [/^([\d,]+) (Repositor(?:y|ies)|Packages?)$/, (_, count, kind) => `${count} 个${kind.startsWith('Repositor') ? '存储库' : '软件包'}`],
     // 页面标题片段：Network Dependents · owner/repo · @scope/name repositories
     // 软件包名须像软件包名（@scope/name、小写开头，或含 . : /），避免误命中「12 repositories」「Public repositories」
     [
       /^(@[\w.-]+\/[\w.-]+|[a-z][\w.:/-]*|[A-Z0-9][\w-]*[.:/][\w.:/-]*) (repositories|packages)$/,
-      (_, name, kind) => `依赖 ${name} 的${kind === 'repositories' ? '存储库' : '软件包'}`,
-    ],
+      (_, name, kind) => `依赖 ${name} 的${kind === 'repositories' ? '存储库' : '软件包'}`
+    ]
   ],
   ignore: [
     // 软件包名、清单文件路径
@@ -162,6 +153,6 @@ export default {
     'a[data-hovercard-type="dependency_graph_package"]',
     'a[data-test-selector="dg-repo-pkg-manifest"]',
     '#dependents .select-menu-item-text',
-    '#dependents p[role="status"] > strong',
-  ],
+    '#dependents p[role="status"] > strong'
+  ]
 } satisfies PageDictionary

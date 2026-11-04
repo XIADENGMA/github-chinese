@@ -9,7 +9,7 @@ const WEEKDAYS: Readonly<Record<string, string>> = {
   Thursday: '星期四',
   Friday: '星期五',
   Saturday: '星期六',
-  Sunday: '星期日',
+  Sunday: '星期日'
 }
 
 /** 日期单元格无障碍名称的附注：Monday, October 26 (Today) (Maximum allowed date) */
@@ -19,7 +19,7 @@ const DAY_NOTES: Readonly<Record<string, string>> = {
   'End of selected range': '選取範圍終點',
   'Inside selected range': '在選取範圍內',
   'Minimum allowed date': '允許的最早日期',
-  'Maximum allowed date': '允許的最晚日期',
+  'Maximum allowed date': '允許的最晚日期'
 }
 
 const WEEKDAY_SOURCE = Object.keys(WEEKDAYS).join('|')
@@ -31,24 +31,18 @@ function translateDayNotes(notes: string): string {
 
 const regexp: readonly RegExpRule[] = [
   // 筛选按钮：所选日期范围（Oct 1 - Oct 26 / Dec 1, 2025 - Jan 5, 2026；只选了起点时为 Oct 1 -）
-  [
-    new RegExp(`^(${DATE_SOURCE}) - (${DATE_SOURCE})$`),
-    (_, from: string, to: string) => `${translateTime(from)} - ${translateTime(to)}`,
-  ],
+  [new RegExp(`^(${DATE_SOURCE}) - (${DATE_SOURCE})$`), (_, from: string, to: string) => `${translateTime(from)} - ${translateTime(to)}`],
   [new RegExp(`^(${DATE_SOURCE}) -$`), (_, from: string) => `${translateTime(from)} -`],
   // 日历：周行（「周」作「週」）、日期单元格
   [/^Week (\d)$/, '第 $1 週'],
   [
     new RegExp(`^(${WEEKDAY_SOURCE}), (${MONTH_SOURCE} \\d{1,2})((?: \\((?:${DAY_NOTE_SOURCE})\\))*)$`),
     (_, weekday: string, date: string, notes: string) =>
-      `${joinCjk(translateDate(date) ?? date, WEEKDAYS[weekday] ?? '')}${translateDayNotes(notes)}`,
+      `${joinCjk(translateDate(date) ?? date, WEEKDAYS[weekday] ?? '')}${translateDayNotes(notes)}`
   ],
   // 输入校验
   [new RegExp(`^Must be on or after (${DATE_SOURCE})$`), (_, date: string) => joinCjk('不得早於', translateTime(date))],
-  [
-    new RegExp(`^Must be on or before (${DATE_SOURCE})$`),
-    (_, date: string) => joinCjk('不得晚於', translateTime(date)),
-  ],
+  [new RegExp(`^Must be on or before (${DATE_SOURCE})$`), (_, date: string) => joinCjk('不得晚於', translateTime(date))]
 ]
 
 /**
@@ -105,7 +99,7 @@ export default {
     Wednesday: '星期三',
     Thursday: '星期四',
     Friday: '星期五',
-    Saturday: '星期六',
+    Saturday: '星期六'
   },
-  regexp,
+  regexp
 } satisfies PageDictionary

@@ -59,8 +59,7 @@ export default {
     'Remove this project as a template? It will no longer be available as a template when creating new projects.':
       '将此项目从模板中删除？创建新项目时将不再能使用它作为模板。',
     'Copy as template': '复制为模板',
-    'Copy this project into a template that can be used when creating new projects.':
-      '将此项目复制为可在创建新项目时使用的模板。',
+    'Copy this project into a template that can be used when creating new projects.': '将此项目复制为可在创建新项目时使用的模板。',
     'Make a copy of this project.': '创建此项目的副本。',
     'Re-open project': '重新打开项目',
     'Re-opening a project will add it to the list of open projects.': '重新打开项目会将其添加到打开的项目列表中。',
@@ -73,15 +72,13 @@ export default {
     'Once you delete a project, there is no going back. Please be certain.': '项目删除后无法恢复。请谨慎操作。',
     'Delete this project': '删除此项目',
     'Resync search index for this project': '重新同步此项目的搜索索引',
-    'This will asynchronously correct inconsistencies between the search index and the database':
-      '将异步修正搜索索引与数据库之间的不一致',
+    'This will asynchronously correct inconsistencies between the search index and the database': '将异步修正搜索索引与数据库之间的不一致',
     'Resync search index': '重新同步搜索索引',
 
     // 删除项目对话框：整句由下方 inline 规则译出，不构成行内句时按以下片段翻译
     'Delete project warning': '删除项目警告',
     'I understand the consequences, delete this project': '我了解后果，删除此项目',
-    'project, saved views, custom fields and associated values, and Insights data.':
-      '项目及其保存的视图、自定义字段及相关值和见解数据。',
+    'project, saved views, custom fields and associated values, and Insights data.': '项目及其保存的视图、自定义字段及相关值和见解数据。',
     'This will not delete issues or pull requests themselves.': '议题和拉取请求本身不会被删除。',
 
     // 访问权限
@@ -103,8 +100,7 @@ export default {
       '项目为公共项目时组织成员才能查看。要授予组织成员更多权限，可将其加入团队或添加为协作者。',
 
     // 默认存储库
-    'By default, new issues created from this project are added to this repository.':
-      '从此项目新建的议题默认添加到此存储库。',
+    'By default, new issues created from this project are added to this repository.': '从此项目新建的议题默认添加到此存储库。',
 
     // 经典项目迁移
     'Setting up the project…': '正在设置项目…',
@@ -115,10 +111,8 @@ export default {
     'Your classic project': '你的经典项目',
     'Users visiting the classic project will be linked to this one.': '访问经典项目的用户会被引导到此项目。',
     '• Users visiting the classic project will be linked to this one.': '• 访问经典项目的用户会被引导到此项目。',
-    'This project has been migrated as part of the sunset for Projects (classic).':
-      '此项目已随项目（经典）停用而迁移。',
-    'This project is being migrated as part of the sunset for Projects (classic).':
-      '此项目正随项目（经典）停用进行迁移。',
+    'This project has been migrated as part of the sunset for Projects (classic).': '此项目已随项目（经典）停用而迁移。',
+    'This project is being migrated as part of the sunset for Projects (classic).': '此项目正随项目（经典）停用进行迁移。'
   },
   scoped: {
     // 通用文本（仅项目页生效）
@@ -126,8 +120,7 @@ export default {
     'Short description': '简短描述',
     'An error occurred while saving.': '保存时出错。',
     'Edit README': '编辑自述文件',
-    'You have unsaved changes. Are you sure you want leave this page and discard them?':
-      '有未保存的更改。确定要离开此页面并放弃更改吗？',
+    'You have unsaved changes. Are you sure you want leave this page and discard them?': '有未保存的更改。确定要离开此页面并放弃更改吗？',
     'Unexpected bad things will happen if you don’t read this!': '不读完以下内容可能会造成意想不到的后果！',
     'Are you absolutely sure?': '你确定吗？',
     'be undone. This will permanently delete the': '撤销。这将永久删除',
@@ -150,8 +143,7 @@ export default {
     'Remove collaborator': '删除协作者',
     'Select all collaborators.': '全选协作者。',
     'Remove yourself as admin?': '将自己从管理员中删除？',
-    'Are you sure you want to remove yourself as Admin? You will lose access to Settings':
-      '确定要将自己从管理员中删除吗？你将无法访问设置',
+    'Are you sure you want to remove yourself as Admin? You will lose access to Settings': '确定要将自己从管理员中删除吗？你将无法访问设置',
     'Failed to remove collaborators': '协作者删除失败',
     'Loading collaborators...': '正在加载协作者...',
     'Add a collaborator to see them here.': '添加的协作者会显示在这里。',
@@ -209,41 +201,35 @@ export default {
     'Filter repositories': '筛选存储库',
     'No repositories available': '没有可用的存储库',
     // 经典项目迁移
-    'Try again': '重试',
+    'Try again': '重试'
   },
   regexp: [
     [/^Workflows \((\d+) enabled\)$/, '工作流（已启用 $1 个）'],
     [/^(\d+) draft issues?$/, '$1 个草稿议题'],
     [/^(\d+) users? successfully added$/, '已成功添加 $1 个用户'],
     [/^Remove collaborator (.+)$/, (_, name: string) => `删除协作者 ${collaboratorName(name)}`],
-    [
-      new RegExp(`^Unselect ${NOT_COLLABORATOR}(${COLLABORATOR_SOURCE})$`),
-      (_, name: string) => `取消选择 ${collaboratorName(name)}`,
-    ],
-    [
-      new RegExp(`^Select ${NOT_COLLABORATOR}(${COLLABORATOR_SOURCE})$`),
-      (_, name: string) => `选择 ${collaboratorName(name)}`,
-    ],
+    [new RegExp(`^Unselect ${NOT_COLLABORATOR}(${COLLABORATOR_SOURCE})$`), (_, name: string) => `取消选择 ${collaboratorName(name)}`],
+    [new RegExp(`^Select ${NOT_COLLABORATOR}(${COLLABORATOR_SOURCE})$`), (_, name: string) => `选择 ${collaboratorName(name)}`],
     [/^(\d+) selected$/, '已选择 $1 个'],
     [/^(\d+) members?, (\d+) teams?$/, '$1 个成员，$2 个团队'],
     [/^(\d+) members?$/, '$1 个成员'],
     [/^(\d+) teams?$/, '$1 个团队'],
     [/^@(.+) • (\d+) members?$/, '@$1 • $2 个成员'],
     [/^(\d+) collaborators? found\.$/, '找到 $1 个协作者。'],
-    [/^Migrating (.+)$/, '正在迁移 $1'],
+    [/^Migrating (.+)$/, '正在迁移 $1']
   ],
   // 删除项目对话框里的项目名：须照原文输入才能确认，不翻译。默认标题 @user's untitled project 在顶栏、详细信息侧栏、
   // 项目列表同样保持原文（views.ts、list.ts 的 ignore），items.ts 的正则只在标签页标题等未忽略处生效
   ignore: [
     'label[for="confirm-delete-input"] > span',
-    '[role="alertdialog"]:has(#confirm-delete-input) p:first-of-type > span:nth-of-type(2)',
+    '[role="alertdialog"]:has(#confirm-delete-input) p:first-of-type > span:nth-of-type(2)'
   ],
   inline: [
     // 删除项目对话框（delete-project-dialog.tsx）：加粗的 cannot、项目名、草稿议题数都是 <span>
     // <p>This action <span>cannot</span> be undone. This will permanently delete the <span>项目名</span> project, saved views, …</p>
     [
       'This action {} be undone. This will permanently delete the {} project, saved views, custom fields and associated values, and Insights data.',
-      '此操作{}撤销。这将永久删除 {} 项目及其保存的视图、自定义字段及相关值和见解数据。',
+      '此操作{}撤销。这将永久删除 {} 项目及其保存的视图、自定义字段及相关值和见解数据。'
     ],
     // <p>This will also delete <span>3 draft issues</span> that were created in this project.</p>
     [/^This will also delete \{\} that (?:were|was) created in this project\.$/, '这还将删除在此项目中创建的 {}。'],
@@ -254,13 +240,13 @@ export default {
     // <p>Make this project a template that can be used by members of the <b>组织</b> organization when creating new projects.</p>
     [
       'Make this project a template that can be used by members of the {} organization when creating new projects.',
-      '将此项目设为模板供 {} 组织成员创建新项目时使用。',
+      '将此项目设为模板供 {} 组织成员创建新项目时使用。'
     ],
     // 经典项目迁移完成的说明（project-migration-overlay-description.tsx）：
     // <span>• <a>Your classic project</a> has been closed and is read-only.<br>• Users visiting the classic project will be linked to this one.</span>
     [
       '• {} has been closed and is read-only. {} • Users visiting the classic project will be linked to this one.',
-      '• {}已关闭且为只读。{}• 访问经典项目的用户会被引导到此项目。',
+      '• {}已关闭且为只读。{}• 访问经典项目的用户会被引导到此项目。'
     ],
     // <span><a>Your classic project</a> is still open, but future changes won't be synchronized.</span>
     ["{} is still open, but future changes won't be synchronized.", '{}仍处于打开状态，但之后的更改不会同步。'],
@@ -268,7 +254,7 @@ export default {
     // 按片段翻译时链接前的空格会留在两个中文词之间；链接文字 owners 照常翻译
     [
       'Only those with direct access and {} can see this project. Owners are also admins of this project.',
-      '只有拥有直接访问权限的人和{}可以查看此项目。所有者也是此项目的管理员。',
-    ],
-  ],
+      '只有拥有直接访问权限的人和{}可以查看此项目。所有者也是此项目的管理员。'
+    ]
+  ]
 } satisfies PageDictionary

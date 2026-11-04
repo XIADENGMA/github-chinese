@@ -12,14 +12,12 @@ const NOT_REF_WORDS: readonly string[] = [
   'parent per pick previous primary protected publish published push pushed release remote remove rename renamed',
   'required restore same search select selected semantic signed some source specific stale switch target that the',
   'their this to topic tracking unknown unprotected unverified update upstream valid verified version view which',
-  'with working your',
+  'with working your'
 ]
   .join(' ')
   .split(' ')
 
-const NOT_REF_SOURCE = NOT_REF_WORDS.map(
-  (word) => `[${word.charAt(0).toUpperCase()}${word.charAt(0)}]${word.slice(1)}`,
-).join('|')
+const NOT_REF_SOURCE = NOT_REF_WORDS.map(word => `[${word.charAt(0).toUpperCase()}${word.charAt(0)}]${word.slice(1)}`).join('|')
 
 /**
  * 许可证名之前不是许可证名的常见词（「View license」「Add license」等交给其它词条；
@@ -35,14 +33,14 @@ function codespacesPayer(payer: string): string {
 
 /** Code 下拉可启动的桌面应用：客户端名 GitHub Desktop 译出（GitHub 桌面版），第三方应用名原样保留 */
 const DESKTOP_APPS: Readonly<Record<string, string>> = {
-  'GitHub Desktop': 'GitHub 桌面版',
+  'GitHub Desktop': 'GitHub 桌面版'
 }
 
 const REF_TYPES: Readonly<Record<string, string>> = {
   branch: '分支',
   branches: '分支',
   tag: '标签',
-  tags: '标签',
+  tags: '标签'
 }
 
 /** 检查状态徽章的状态值（术语表：Pending → 挂起） */
@@ -50,7 +48,7 @@ const CHECK_STATES: Readonly<Record<string, string>> = {
   failure: '失败',
   success: '成功',
   pending: '挂起',
-  error: '出错',
+  error: '出错'
 }
 
 /** 文件列表行的类型：<名称>, (Directory) */
@@ -59,35 +57,26 @@ const ENTRY_TYPES: Readonly<Record<string, string>> = {
   File: '文件',
   Submodule: '子模块',
   'Symlink to directory': '指向目录的符号链接',
-  'Symlink to file': '指向文件的符号链接',
+  'Symlink to file': '指向文件的符号链接'
 }
 
 const regexp: readonly RegExpRule[] = [
   // 分支选择器按钮的无障碍名称：main branch / v1.0.0 tag（排除常见词开头的短语与 1 tag 这类计数）
   [
     new RegExp(`^(?!(?:${NOT_REF_SOURCE}) |\\d[\\d,]* )(\\S+) (branch|tag)$`),
-    (_, name: string, type: string) => `${name} ${REF_TYPES[type] ?? type}`,
+    (_, name: string, type: string) => `${name} ${REF_TYPES[type] ?? type}`
   ],
   // 分支选择器筛选结果播报
-  [
-    /^(\d[\d,]*) (branch|branches|tag|tags) found$/,
-    (_, count: string, type: string) => `找到 ${count} 个${REF_TYPES[type] ?? type}`,
-  ],
+  [/^(\d[\d,]*) (branch|branches|tag|tags) found$/, (_, count: string, type: string) => `找到 ${count} 个${REF_TYPES[type] ?? type}`],
   // 最新提交行：提交总数；复刻信息条：提交数片段
   [/^(\d[\d,]*) [Cc]ommits?$/, '$1 个提交'],
   [/^Commit ([0-9a-f]{7,40})$/, '提交 $1'],
-  [
-    /^commits by (\S+)(?: and (\S+))?$/,
-    (_, first: string, second: string) => `${second ? `${first} 和 ${second}` : first} 的提交`,
-  ],
+  [/^commits by (\S+)(?: and (\S+))?$/, (_, first: string, second: string) => `${second ? `${first} 和 ${second}` : first} 的提交`],
   // 多个作者（与 commits 词典一致；存储库首页的作用域不含 commits）
   [/^Show (\d+) authors$/, '显示 $1 个作者'],
   [/^(\d+) authors$/, '$1 个作者'],
   [/^([\w.-]+)['’]s org home page$/, '$1 的组织主页'],
-  [
-    /^Status checks: (failure|success|pending|error)$/,
-    (_, state: string) => `状态检查：${CHECK_STATES[state] ?? state}`,
-  ],
+  [/^Status checks: (failure|success|pending|error)$/, (_, state: string) => `状态检查：${CHECK_STATES[state] ?? state}`],
   // 检查状态徽章的汇总（术语表：N checks → N 个检查）
   [/^(\d+) ?\/ ?(\d+) checks OK$/, '$1/$2 个检查正常'],
   // 转到文件：搜索结果数
@@ -96,12 +85,12 @@ const regexp: readonly RegExpRule[] = [
   // 文件列表行的无障碍名称
   [
     /^(.+), \((Directory|File|Submodule|Symlink to directory|Symlink to file)\)$/,
-    (_, name: string, type: string) => `${name}（${ENTRY_TYPES[type] ?? type}）`,
+    (_, name: string, type: string) => `${name}（${ENTRY_TYPES[type] ?? type}）`
   ],
   // 目录条目过多被截断（文件列表表格内；带「Latest commit info may be omitted.」的版本由 code 词典处理）
   [
     /^Sorry, we had to truncate this directory to (\d[\d,]*) files\. (\d[\d,]*) (?:entry was|entries were) omitted from the list\.$/,
-    '此目录已截断为 $1 个文件，另有 $2 个条目未列出。',
+    '此目录已截断为 $1 个文件，另有 $2 个条目未列出。'
   ],
   [/^(\d[\d,]*) (?:entry was|entries were) omitted from the list\.$/, '另有 $1 个条目未列出。'],
   // 许可证：README 标签页与 About 侧栏（MIT license、Apache-2.0 license）；许可证名以大写字母或数字开头
@@ -109,18 +98,14 @@ const regexp: readonly RegExpRule[] = [
   // 多个许可证：MIT and 2 other licenses found（无名称时为 Unknown）；恰好两个时 MIT, Apache-2.0 licenses found
   [
     /^(.+) and (\d+) other licenses? found$/,
-    (_, name: string, count: string) =>
-      `找到${name === 'Unknown' ? '未知许可证' : ` ${name} `}及另外 ${count} 个许可证`,
+    (_, name: string, count: string) => `找到${name === 'Unknown' ? '未知许可证' : ` ${name} `}及另外 ${count} 个许可证`
   ],
   [/^([^,]+), ([^,]+) licenses found$/, '找到 $1、$2 许可证'],
   // Code 下拉：启动桌面应用
   [/^Launching (GitHub Desktop|Visual Studio|Xcode)$/, (_, app: string) => `正在启动 ${DESKTOP_APPS[app] ?? app}`],
   [/^download (GitHub Desktop|Visual Studio|Xcode)$/, (_, app: string) => `下载 ${DESKTOP_APPS[app] ?? app}`],
   // Code 下拉的 Codespaces 标签页：企业托管用户（句首为链接；整句由 inline 处理，此为未拼成整句时的片段）
-  [
-    /^must have their Codespaces usage paid for by (.+)\.$/,
-    (_, payer: string) => `的代码空间使用量必须由${codespacesPayer(payer)}支付。`,
-  ],
+  [/^must have their Codespaces usage paid for by (.+)\.$/, (_, payer: string) => `的代码空间使用量必须由${codespacesPayer(payer)}支付。`]
 ]
 
 /**
@@ -213,7 +198,7 @@ export default {
     'IP allow lists': 'IP 允许列表',
     'which are unsupported by Codespaces at this time.': '但代码空间目前不支持。',
     // 发生意外错误。请 <联系支持> 了解详情。
-    'An unexpected error occurred. Please': '发生意外错误。请',
+    'An unexpected error occurred. Please': '发生意外错误。请'
   },
   scoped: {
     // 分支选择器
@@ -326,7 +311,7 @@ export default {
     'Edit file': '编辑文件',
     Outline: '大纲',
     'Close outline': '关闭大纲',
-    'Filter headings': '筛选标题',
+    'Filter headings': '筛选标题'
   },
   regexp,
   // 被链接拆开的整句（React 把 {' '} 渲染成单独的文本节点）：整句命中后不再逐段翻译，链接文字照常翻译
@@ -334,11 +319,11 @@ export default {
     // Code 下拉：没有 SSH 公钥（LocalTab）
     [
       "You don't have any public SSH keys in your GitHub account. You can {}, or try cloning this repository via HTTPS.",
-      '你的 GitHub 帐户中没有 SSH 公钥。你可以{}，或尝试通过 HTTPS 克隆此存储库。',
+      '你的 GitHub 帐户中没有 SSH 公钥。你可以{}，或尝试通过 HTTPS 克隆此存储库。'
     ],
     [
       'You don’t have any public SSH keys in your GitHub account. You can {}, or try cloning this repository via HTTPS.',
-      '你的 GitHub 帐户中没有 SSH 公钥。你可以{}，或尝试通过 HTTPS 克隆此存储库。',
+      '你的 GitHub 帐户中没有 SSH 公钥。你可以{}，或尝试通过 HTTPS 克隆此存储库。'
     ],
     // Code 下拉：启动桌面应用后的提示（LocalTab 的 LaunchingPlatformContents）：
     // 链接文字是「下载 GitHub 桌面版」或「下载 Xcode」，结尾可能是中文或英文，放在句末紧接句号，两种都不需要空格
@@ -347,13 +332,13 @@ export default {
     ['Please {} to use Codespaces.', '请{}后使用代码空间。'],
     [
       'Your organization or enterprise enforces {} which are unsupported by Codespaces at this time.',
-      '你的组织或企业强制实施了代码空间目前不支持的 {}。',
+      '你的组织或企业强制实施了代码空间目前不支持的 {}。'
     ],
     ['An unexpected error occurred. Please {} for more information.', '发生意外错误。请{}了解详情。'],
     [
       /^\{\} must have their Codespaces usage paid for by (.+)\.$/,
-      (_, payer: string) => `{}的代码空间使用量必须由${codespacesPayer(payer)}支付。`,
-    ],
+      (_, payer: string) => `{}的代码空间使用量必须由${codespacesPayer(payer)}支付。`
+    ]
   ],
   ignore: [
     // 分支选择器按钮上的当前分支名、列表中的分支 / 标签名、新建分支的名称与来源
@@ -361,6 +346,6 @@ export default {
     '[class*="HighlightedText__"]',
     '[class*="RefActionText__"]',
     // 转到文件的搜索结果路径
-    '[class*="HighlightMatch__"]',
-  ],
+    '[class*="HighlightMatch__"]'
+  ]
 } satisfies PageDictionary

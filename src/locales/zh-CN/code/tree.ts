@@ -6,7 +6,7 @@ const COPILOT_REFERENCE: Readonly<Record<string, string>> = {
   folder: '文件夹',
   directory: '目录',
   symbol: '符号',
-  selection: '所选内容',
+  selection: '所选内容'
 }
 
 /** 「1 entry was」「12 entries were」→ 条目数 */
@@ -18,7 +18,7 @@ const ENTRY_TYPES: Readonly<Record<string, string>> = {
   File: '文件',
   Submodule: '子模块',
   'Symlink to directory': '指向目录的符号链接',
-  'Symlink to file': '指向文件的符号链接',
+  'Symlink to file': '指向文件的符号链接'
 }
 
 /**
@@ -73,7 +73,7 @@ export default {
     // 查找文件页（/find，Rails）
     'File Finder': '文件查找器',
     'The name of the file to navigate to.': '要跳转到的文件名。',
-    'No matching files found.': '未找到匹配的文件。',
+    'No matching files found.': '未找到匹配的文件。'
   },
 
   scoped: {
@@ -85,7 +85,7 @@ export default {
     '(forward slash)': '（正斜杠）',
 
     // 存储库概述侧栏：推荐工作流的作者（By <作者>，作者名是相邻文本节点）
-    By: '来自',
+    By: '来自'
   },
 
   regexp: [
@@ -102,10 +102,8 @@ export default {
 
     // 目录页截断提示（同一 Flash 内的文本节点拼接后整段匹配；不带末句的版本由 repository 词典处理）
     [
-      new RegExp(
-        `^Sorry, we had to truncate this directory to ([\\d,]+) files\\. ${OMITTED_SOURCE} Latest commit info may be omitted\\.$`,
-      ),
-      '此目录已截断为 $1 个文件，另有 $2 个条目未列出。最新提交信息可能不完整。',
+      new RegExp(`^Sorry, we had to truncate this directory to ([\\d,]+) files\\. ${OMITTED_SOURCE} Latest commit info may be omitted\\.$`),
+      '此目录已截断为 $1 个文件，另有 $2 个条目未列出。最新提交信息可能不完整。'
     ],
 
     // 贡献者（追溯视图头部）：按钮 aria-label 末尾带一个多余的引号
@@ -116,11 +114,11 @@ export default {
     // 询问 Copilot（Ask Copilot about this repository 由 repository 词典的 static 处理）
     [
       /^Ask Copilot about this (file|folder|directory|symbol|selection)$/,
-      (_, kind: string) => `向 Copilot 询问此${COPILOT_REFERENCE[kind] ?? kind}`,
+      (_, kind: string) => `向 Copilot 询问此${COPILOT_REFERENCE[kind] ?? kind}`
     ],
 
     // 存储库概述侧栏：引用对话框的复制按钮
-    [/^Copy (APA|BibTeX)$/, '复制 $1'],
+    [/^Copy (APA|BibTeX)$/, '复制 $1']
   ],
 
   ignore: [
@@ -132,7 +130,7 @@ export default {
     // 贡献者对话框、被阻止贡献者横幅：用户名
     '[class*="contributorLink__"]',
     // 查找文件页：存储库名
-    'virtual-filter-input .bold',
+    'virtual-filter-input .bold'
   ],
 
   attributeRules: [
@@ -141,7 +139,7 @@ export default {
       FILENAME_LINK,
       'aria-label',
       /^(.+), \((Directory|File|Submodule|Symlink to directory|Symlink to file)\)$/,
-      (_, name: string, type: string) => `${name}（${ENTRY_TYPES[type] ?? type}）`,
-    ],
-  ],
+      (_, name: string, type: string) => `${name}（${ENTRY_TYPES[type] ?? type}）`
+    ]
+  ]
 } satisfies PageDictionary

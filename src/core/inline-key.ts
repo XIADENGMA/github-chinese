@@ -57,7 +57,7 @@ export function keyMatches(pattern: string, key: string): boolean {
 /** 句型键对应的宿主至少有几个子节点：每个槽位一个元素，非空的每段文字至少一个文本节点 */
 export function minChildren(key: string): number {
   const segments = key.split(KEY_SLOT_RE)
-  return segments.length - 1 + segments.filter((segment) => segment !== '').length
+  return segments.length - 1 + segments.filter(segment => segment !== '').length
 }
 
 /** 正则句型：{} 匹配任一槽位，{#} 只匹配数字槽位 */

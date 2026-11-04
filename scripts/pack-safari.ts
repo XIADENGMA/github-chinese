@@ -11,16 +11,7 @@ import { tmpdir } from 'node:os'
 import { dirname, join, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
-import {
-  APP_NAME,
-  appVersion,
-  buildArgs,
-  converterArgs,
-  findHostPage,
-  MIN_MACOS,
-  packageName,
-  pickScheme,
-} from './safari'
+import { APP_NAME, appVersion, buildArgs, converterArgs, findHostPage, MIN_MACOS, packageName, pickScheme } from './safari'
 
 const USAGE = '用法：bun run pack:safari [--input <扩展目录>] [--out <输出目录>]'
 /** 宿主应用页面（替换 Xcode 模板的英文页面） */
@@ -46,7 +37,7 @@ function warn(message: string): void {
 function run(command: string, args: readonly string[], capture = false): string {
   const result = spawnSync(command, args, {
     encoding: 'utf8',
-    stdio: ['ignore', capture ? 'pipe' : 'inherit', 'inherit'],
+    stdio: ['ignore', capture ? 'pipe' : 'inherit', 'inherit']
   })
   if (result.error) throw new Error(`${command} 无法运行：${result.error.message}`, { cause: result.error })
   if (result.status !== 0) throw new Error(`${command} 失败：退出码 ${result.status ?? result.signal}`)
@@ -69,15 +60,13 @@ async function readManifest(dir: string): Promise<Manifest> {
 async function listEntries(dir: string, kind: 'file' | 'directory'): Promise<string[]> {
   const entries = await readdir(dir, { recursive: true, withFileTypes: true })
   return entries
-    .filter((entry) => (kind === 'file' ? entry.isFile() : entry.isDirectory()))
-    .map((entry) => relative(dir, join(entry.parentPath, entry.name)).split(sep).join('/'))
+    .filter(entry => (kind === 'file' ? entry.isFile() : entry.isDirectory()))
+    .map(entry => relative(dir, join(entry.parentPath, entry.name)).split(sep).join('/'))
 }
 
 /** 转换生成的 .xcodeproj */
 async function findProject(dir: string): Promise<string> {
-  const projects = (await listEntries(dir, 'directory')).filter(
-    (path) => path.split('/').at(-1) === `${APP_NAME}.xcodeproj`,
-  )
+  const projects = (await listEntries(dir, 'directory')).filter(path => path.split('/').at(-1) === `${APP_NAME}.xcodeproj`)
   if (projects.length !== 1) throw new Error(`未找到 Xcode 工程：${dir}`)
   return join(dir, projects[0]!)
 }
@@ -106,14 +95,13 @@ async function verifyApp(app: string, manifest: Manifest, version: string): Prom
   const minimum = plistValue(plist, 'LSMinimumSystemVersion')
   if (minimum !== MIN_MACOS) throw new Error(`应用要求的最低 macOS 为 ${minimum}，应为 ${MIN_MACOS}`)
   const plugins = join(app, 'Contents/PlugIns')
-  const appexes = (await readdir(plugins)).filter((name) => name.endsWith('.appex'))
+  const appexes = (await readdir(plugins)).filter(name => name.endsWith('.appex'))
   if (appexes.length !== 1) throw new Error(`应用中的扩展数量不为 1：${appexes.join('、') || '无'}`)
   const bundled = await readManifest(join(plugins, appexes[0]!, 'Contents/Resources'))
-  if (bundled.version !== manifest.version)
-    throw new Error(`应用内扩展版本 ${bundled.version} 与 ${manifest.version} 不符`)
+  if (bundled.version !== manifest.version) throw new Error(`应用内扩展版本 ${bundled.version} 与 ${manifest.version} 不符`)
   const executable = join(app, 'Contents/MacOS', plistValue(plist, 'CFBundleExecutable'))
   const archs = run('lipo', ['-archs', executable], true).trim().split(/\s+/)
-  const missing = REQUIRED_ARCHS.filter((arch) => !archs.includes(arch))
+  const missing = REQUIRED_ARCHS.filter(arch => !archs.includes(arch))
   if (missing.length > 0) throw new Error(`应用缺少架构：${missing.join('、')}`)
   run('codesign', ['--verify', '--deep', '--strict', '--verbose=2', app])
 }
@@ -121,7 +109,7 @@ async function verifyApp(app: string, manifest: Manifest, version: string): Prom
 async function main(): Promise<void> {
   const { values, positionals } = parseArgs({
     options: { input: { type: 'string' }, out: { type: 'string' } },
-    allowPositionals: true,
+    allowPositionals: true
   })
   if (positionals.length > 0) throw new Error(USAGE)
   if (process.platform !== 'darwin') throw new Error('仅支持 macOS（需要 Xcode）')

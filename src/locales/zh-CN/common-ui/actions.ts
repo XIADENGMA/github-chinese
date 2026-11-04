@@ -20,7 +20,7 @@ const UNITS: Readonly<Record<string, string>> = {
   'pull request': '拉取请求',
   'pull requests': '拉取请求',
   'issue or pull request': '议题或拉取请求',
-  'issues and pull requests': '议题和拉取请求',
+  'issues and pull requests': '议题和拉取请求'
 }
 const UNIT_SOURCE = '(list items?|issue or pull request|issues and pull requests|issues?|pull requests?)'
 
@@ -368,7 +368,7 @@ export default {
     'Previous page': '上一页',
     'Next page': '下一页',
     'Previous Page': '上一页',
-    'Next Page': '下一页',
+    'Next Page': '下一页'
   },
   regexp: [
     // 复制按钮：Copy "a1b2c3d" to clipboard
@@ -388,7 +388,7 @@ export default {
     // 选择面板的读屏播报
     [
       new RegExp(`^${COUNT} items? available, ${COUNT} selected\\.$`),
-      (_, total: string, selected: string) => `${total} 个可用条目，已选择 ${selected} 个。`,
+      (_, total: string, selected: string) => `${total} 个可用条目，已选择 ${selected} 个。`
     ],
     [/^Focused item: (.+)$/, '当前条目：$1'],
     [/^(.+), filter text box and list of items$/, '$1，筛选文本框和条目列表'],
@@ -400,28 +400,25 @@ export default {
     [
       /^(Selected\. )?(.+?)(\. New activity)?\. More information available below\.$/,
       (_, selected: string | undefined, title: string, activity: string | undefined) =>
-        `${selected ? '已选择。' : ''}${title}${activity ? '。有新动态' : ''}。更多信息见下方。`,
+        `${selected ? '已选择。' : ''}${title}${activity ? '。有新动态' : ''}。更多信息见下方。`
     ],
     // 列表条目勾选框与读屏播报：Select: <标题>、Selected. <标题>.、Unselected. <标题>.
     [/^Select: (.+)$/, '选择：$1'],
     [
       /^(Selected|Unselected)\. (.+?)(\. New activity)?\.$/,
       (_, state: string, title: string, activity: string | undefined) =>
-        `${state === 'Selected' ? '已选择' : '未选择'}。${title}${activity ? '。有新动态' : ''}。`,
+        `${state === 'Selected' ? '已选择' : '未选择'}。${title}${activity ? '。有新动态' : ''}。`
     ],
     [/^(.+?)\. New activity\.$/, '$1。有新动态。'],
     // 全选勾选框：Select all list items: <列表标题>；已选计数：3 list items selected、3 list items of 25 selected
     [
       new RegExp(`^Select all ${UNIT_SOURCE}:(?: (.+))?$`),
-      (_, unit: string, title: string | undefined) => `全选${UNITS[unit]!}${title ? `：${title}` : ''}`,
+      (_, unit: string, title: string | undefined) => `全选${UNITS[unit]!}${title ? `：${title}` : ''}`
     ],
-    [
-      new RegExp(`^${COUNT} ${UNIT_SOURCE} selected$`),
-      (_, count: string, unit: string) => `已选择 ${count} 个${UNITS[unit]!}`,
-    ],
+    [new RegExp(`^${COUNT} ${UNIT_SOURCE} selected$`), (_, count: string, unit: string) => `已选择 ${count} 个${UNITS[unit]!}`],
     [
       new RegExp(`^${COUNT} ${UNIT_SOURCE} of ${COUNT} selected$`),
-      (_, count: string, unit: string, total: string) => `${total} 个${UNITS[unit]!}中已选择 ${count} 个`,
+      (_, count: string, unit: string, total: string) => `${total} 个${UNITS[unit]!}中已选择 ${count} 个`
     ],
     // 窗格、面包屑、标签组、字数统计
     [/^Pane width (\d+) pixels$/, '窗格宽度 $1 像素'],
@@ -437,9 +434,9 @@ export default {
     [new RegExp(`^${COUNT} of ${COUNT} selected$`), '$2 个中已选择 $1 个'],
     // 反馈对话框
     [/^Please keep your feedback within (\d[\d,]*) characters or less\.$/, '反馈内容不能超过 $1 个字符。'],
-    [/^Request ID: ([\w:./-]+)$/, '请求 ID：$1'],
+    [/^Request ID: ([\w:./-]+)$/, '请求 ID：$1']
   ],
   // DataTable 分页的可见范围：数字、读屏用的 through、‒ 与 of 分在多个节点，合并后整段翻译。
   // 页码按钮里读屏用的「Page」「page」与可见页码分属不同节点，合并会让页码移入隐藏文字，不收录
-  mergeText: ['p[data-component="Table.Pagination.Range"]'],
+  mergeText: ['p[data-component="Table.Pagination.Range"]']
 } satisfies PageDictionary

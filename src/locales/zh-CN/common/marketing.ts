@@ -264,7 +264,7 @@ export default {
     'GitHub on Twitch': 'Twitch 上的 GitHub',
     'GitHub’s organization on GitHub': 'GitHub 在 GitHub 上的组织',
     'English - Select language': 'English - 选择语言',
-    'Select language': '选择语言',
+    'Select language': '选择语言'
   },
   regexp: [
     // 版权行：品牌与年份保持原样，仅标记为已处理
@@ -276,7 +276,7 @@ export default {
     [
       new RegExp(`^Day (\\d+): Opening Keynote begins (${MONTH_SOURCE} \\d{1,2}) at (\\d{1,2}) (AM|PM) Pacific Time$`),
       (_, day: string, date: string, hour: string, half: string) =>
-        `第 ${day} 天：开幕主题演讲将于太平洋时间 ${translateDate(date) ?? date}${half === 'AM' ? '上午' : '下午'} ${hour} 点开始`,
-    ],
-  ],
+        `第 ${day} 天：开幕主题演讲将于太平洋时间 ${translateDate(date) ?? date}${half === 'AM' ? '上午' : '下午'} ${hour} 点开始`
+    ]
+  ]
 } satisfies PageDictionary

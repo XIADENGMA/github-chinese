@@ -5,7 +5,7 @@ const CLOSE_REASON: Readonly<Record<string, string>> = {
   'false positive': '误报',
   'used in tests': '用于测试',
   "won't fix": '不予修复',
-  'won’t fix': '不予修复',
+  'won’t fix': '不予修复'
 }
 
 /** 机密扫描：警报列表（筛选、空状态、反馈横幅）、详情（修复步骤、时间线）、有效性、关闭原因、推送保护 */
@@ -84,7 +84,7 @@ export default {
     // 详情：时间线（<用户> opened this alert <时间>）
     'opened this alert': '打开了此警报',
     'closed this as': '将此警报关闭为',
-    'closed this as completed in': '在以下提交中完成并关闭了此警报',
+    'closed this as completed in': '在以下提交中完成并关闭了此警报'
   },
   scoped: {
     // 其他区域也出现的同形文字，本区域内单独生效
@@ -115,20 +115,17 @@ export default {
     'hidden item': '个隐藏项',
     'hidden items': '个隐藏项',
     'Load all...': '加载全部...',
-    'Load all…': '加载全部…',
+    'Load all…': '加载全部…'
   },
   regexp: [
     // 关闭原因标签：Closed as revoked（原文无标点，译文不加冒号）
-    [
-      /^Closed as (revoked|false positive|used in tests|won['’]t fix)$/i,
-      (_, reason) => `以${CLOSE_REASON[reason.toLowerCase()]}为由关闭`,
-    ],
+    [/^Closed as (revoked|false positive|used in tests|won['’]t fix)$/i, (_, reason) => `以${CLOSE_REASON[reason.toLowerCase()]}为由关闭`],
     // 筛选栏 aria-label：Advanced filter dialog: 1 valid filter
-    [/^Advanced filter dialog: ([\d,]+) valid filters?$/, '高级筛选器对话框：$1 个有效筛选器'],
+    [/^Advanced filter dialog: ([\d,]+) valid filters?$/, '高级筛选器对话框：$1 个有效筛选器']
   ],
   // 被元素拆开的整句；整句未命中时由 static 的片段兜底
   inline: [
     // 修复步骤：Revoke this <机密类型> through <提供程序> to prevent unauthorized access.；“通过 …”移到动词前
-    ['Revoke this {} through {} to prevent unauthorized access.', '将此 {} 通过 {} 撤销，以防止未经授权的访问。'],
-  ],
+    ['Revoke this {} through {} to prevent unauthorized access.', '将此 {} 通过 {} 撤销，以防止未经授权的访问。']
+  ]
 } satisfies PageDictionary

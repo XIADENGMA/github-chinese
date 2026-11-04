@@ -11,7 +11,7 @@ const matcher = createMatcher([['gist', gist]])
 const fullMatcher = createMatcher([
   ['common', common],
   ['common', commonUi],
-  ['gist', gist],
+  ['gist', gist]
 ])
 const GIST_SCOPE: readonly PageKey[] = ['common', 'gist']
 const REPO_SCOPE: readonly PageKey[] = ['common', 'repository']
@@ -36,149 +36,140 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   // 列表项：Created <relative-time> — forked from <a>…</a>
   {
     hits: [['— forked from', '— 复刻自']],
-    misses: ['forked from', '— forked from octocat/hello', '- forked from'],
+    misses: ['forked from', '— forked from octocat/hello', '- forked from']
   },
   // 嵌入、克隆与 GitHub Desktop（客户端名译“GitHub 桌面版”）
   {
     hits: [
       [
         'Save octocat/6cad326836d38bd3a7ae to your computer and use it in GitHub Desktop.',
-        '将 octocat/6cad326836d38bd3a7ae 保存到你的计算机并在 GitHub 桌面版中使用。',
-      ],
+        '将 octocat/6cad326836d38bd3a7ae 保存到你的计算机并在 GitHub 桌面版中使用。'
+      ]
     ],
-    misses: ['Save to your computer and use it in GitHub Desktop.'],
+    misses: ['Save to your computer and use it in GitHub Desktop.']
   },
   {
     hits: [
       [
         'Clone this repository at &lt;script src=&quot;https://gist.github.com/octocat/6cad326836d38bd3a7ae.js&quot;&gt;&lt;/script&gt;',
-        '通过 &lt;script src=&quot;https://gist.github.com/octocat/6cad326836d38bd3a7ae.js&quot;&gt;&lt;/script&gt; 克隆此存储库',
+        '通过 &lt;script src=&quot;https://gist.github.com/octocat/6cad326836d38bd3a7ae.js&quot;&gt;&lt;/script&gt; 克隆此存储库'
       ],
       [
         'Clone this repository at https://gist.github.com/6cad326836d38bd3a7ae.git',
-        '通过 https://gist.github.com/6cad326836d38bd3a7ae.git 克隆此存储库',
-      ],
+        '通过 https://gist.github.com/6cad326836d38bd3a7ae.git 克隆此存储库'
+      ]
     ],
-    misses: ['Clone this repository'],
+    misses: ['Clone this repository']
   },
   // 文件区无障碍名称：时刻转为 24 小时制
   {
     hits: [
       ['LICENSE content, created by octocat on 02:10AM today.', 'LICENSE 的内容，由 octocat 于今天 02:10 创建。'],
-      [
-        'CLAUDE.md content, created by monalisa on 04:55PM yesterday.',
-        'CLAUDE.md 的内容，由 monalisa 于昨天 16:55 创建。',
-      ],
+      ['CLAUDE.md content, created by monalisa on 04:55PM yesterday.', 'CLAUDE.md 的内容，由 monalisa 于昨天 16:55 创建。'],
       [
         'Dockerfile content, created by hubot on 02:30PM on June 25, 2019.',
-        'Dockerfile 的内容，由 hubot 于 2019 年 6 月 25 日 14:30 创建。',
+        'Dockerfile 的内容，由 hubot 于 2019 年 6 月 25 日 14:30 创建。'
       ],
       [
         'data.json content, created by octocat on 12:46AM on August 12, 2022.',
-        'data.json 的内容，由 octocat 于 2022 年 8 月 12 日 00:46 创建。',
+        'data.json 的内容，由 octocat 于 2022 年 8 月 12 日 00:46 创建。'
       ],
-      [
-        'notes.md content, created by monalisa on 12:56PM on January 13.',
-        'notes.md 的内容，由 monalisa 于 1 月 13 日 12:56 创建。',
-      ],
+      ['notes.md content, created by monalisa on 12:56PM on January 13.', 'notes.md 的内容，由 monalisa 于 1 月 13 日 12:56 创建。'],
       // 日在月前、无日的写法：on 前缀由 translateTime 去掉
       [
         'README.md content, created by octocat on 09:05AM on 25 June 2019.',
-        'README.md 的内容，由 octocat 于 2019 年 6 月 25 日 09:05 创建。',
+        'README.md 的内容，由 octocat 于 2019 年 6 月 25 日 09:05 创建。'
       ],
-      [
-        'hello.rb content, created by octocat on 11:30PM on June 2019.',
-        'hello.rb 的内容，由 octocat 于 2019 年 6 月 23:30 创建。',
-      ],
+      ['hello.rb content, created by octocat on 11:30PM on June 2019.', 'hello.rb 的内容，由 octocat 于 2019 年 6 月 23:30 创建。']
     ],
-    misses: ['LICENSE content, created by octocat.', 'LICENSE content, created by octocat on 02:10AM last week.'],
+    misses: ['LICENSE content, created by octocat.', 'LICENSE content, created by octocat on 02:10AM last week.']
   },
   // 修订：差异统计（与 commits、wiki 一致：新增 / 删除 N 行）
   {
     hits: [
       ['36 changes: 0 additions & 36 deletions', '36 处更改：新增 0 行和删除 36 行'],
-      ['1 change: 1 addition & 0 deletions', '1 处更改：新增 1 行和删除 0 行'],
+      ['1 change: 1 addition & 0 deletions', '1 处更改：新增 1 行和删除 0 行']
     ],
-    misses: ['36 changes'],
+    misses: ['36 changes']
   },
   {
     hits: [
       ['1 changed file', '1 个已更改的文件'],
-      ['3 changed files', '3 个已更改的文件'],
+      ['3 changed files', '3 个已更改的文件']
     ],
-    misses: ['changed files'],
+    misses: ['changed files']
   },
   {
     hits: [
       ['1 addition', '新增 1 行'],
-      ['12 additions', '新增 12 行'],
+      ['12 additions', '新增 12 行']
     ],
-    misses: ['No additions'],
+    misses: ['No additions']
   },
   {
     hits: [
       ['1 deletion', '删除 1 行'],
-      ['4 deletions', '删除 4 行'],
+      ['4 deletions', '删除 4 行']
     ],
-    misses: ['No deletions'],
+    misses: ['No deletions']
   },
   {
     hits: [
       [
         '1,024 additions, 12 deletions not shown because the diff is too large. Please use a local Git client to view these changes.',
-        '新增 1,024 行、删除 12 行未显示，因为差异过大。请使用本地 Git 客户端查看这些更改。',
-      ],
+        '新增 1,024 行、删除 12 行未显示，因为差异过大。请使用本地 Git 客户端查看这些更改。'
+      ]
     ],
-    misses: ['Some additions not shown because the diff is too large.'],
+    misses: ['Some additions not shown because the diff is too large.']
   },
   // 搜索
   {
     hits: [
       ['1 gist result', '1 个代码片段结果'],
-      ['2,345 gist results', '2,345 个代码片段结果'],
+      ['2,345 gist results', '2,345 个代码片段结果']
     ],
-    misses: ['gist results'],
+    misses: ['gist results']
   },
   {
     hits: [
       ["We couldn’t find any gists matching 'vue'", '未找到与“vue”匹配的代码片段'],
-      ["We couldn't find any gists matching 'foo bar'", '未找到与“foo bar”匹配的代码片段'],
+      ["We couldn't find any gists matching 'foo bar'", '未找到与“foo bar”匹配的代码片段']
     ],
-    misses: ['We couldn’t find any gists matching vue'],
+    misses: ['We couldn’t find any gists matching vue']
   },
   // 空列表
   {
     hits: [
       ['octocat doesn’t have any public gists yet.', 'octocat 还没有任何公共代码片段。'],
       ["octocat doesn't have any gists yet.", 'octocat 还没有任何代码片段。'],
-      ['mona-lisa doesn’t have any forked gists yet.', 'mona-lisa 还没有任何复刻的代码片段。'],
+      ['mona-lisa doesn’t have any forked gists yet.', 'mona-lisa 还没有任何复刻的代码片段。']
     ],
-    misses: ['octocat doesn’t have any private gists yet.'],
+    misses: ['octocat doesn’t have any private gists yet.']
   },
   {
     hits: [
       ['You don’t have any gists yet.', '你还没有任何代码片段。'],
       ["You don't have any starred gists yet.", '你还没有任何已加星标的代码片段。'],
-      ['You don’t have any secret gists yet.', '你还没有任何机密代码片段。'],
+      ['You don’t have any secret gists yet.', '你还没有任何机密代码片段。']
     ],
-    misses: ['You don’t have any private gists yet.'],
+    misses: ['You don’t have any private gists yet.']
   },
   // 标签页标题
   {
     hits: [
       ['octocat’s gists', 'octocat 的代码片段'],
-      ["mona-lisa's gists", 'mona-lisa 的代码片段'],
+      ["mona-lisa's gists", 'mona-lisa 的代码片段']
     ],
-    misses: ['octocat’s repositories'],
+    misses: ['octocat’s repositories']
   },
   // 标星者列表与个人资料侧栏
   {
     hits: [
       ['Joined on Apr 4, 2016', '2016 年 4 月 4 日加入'],
       ['Joined on June 22, 2024', '2024 年 6 月 22 日加入'],
-      ['Joined on 4 April 2016', '2016 年 4 月 4 日加入'],
+      ['Joined on 4 April 2016', '2016 年 4 月 4 日加入']
     ],
-    misses: ['Joined on 2016', 'Joined GitHub on Apr 4, 2016'],
+    misses: ['Joined on 2016', 'Joined GitHub on Apr 4, 2016']
   },
   { hits: [['Works for GitHub', '就职于 GitHub']], misses: ['Works at GitHub'] },
   { hits: [['Is from San Francisco', '来自 San Francisco']], misses: ['Is located in San Francisco'] },
@@ -192,14 +183,14 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       // 名片脚本按 `${h}h${m}m` 格式化，时与分之间不带空格；带空格的写法同样接受
       ['- 2h30m behind', '- 慢 2 小时 30 分钟'],
       ['- 5h 30m ahead', '- 快 5 小时 30 分钟'],
-      ['- 30m behind', '- 慢 30 分钟'],
+      ['- 30m behind', '- 慢 30 分钟']
     ],
-    misses: ['- 15 hours behind', '- 2h30 behind'],
-  },
+    misses: ['- 15 hours behind', '- 2h30 behind']
+  }
 ]
 
-const HITS = REGEXP_CASES.flatMap((item) => item.hits)
-const MISSES = REGEXP_CASES.flatMap((item) => item.misses)
+const HITS = REGEXP_CASES.flatMap(item => item.hits)
+const MISSES = REGEXP_CASES.flatMap(item => item.misses)
 
 describe('gist 正则词条', () => {
   it.each(HITS)('%s → %s', (input, expected) => {
@@ -207,7 +198,7 @@ describe('gist 正则词条', () => {
     expect(translate(input)).toBe(expected)
   })
 
-  it.each(MISSES)('不命中：%s', (input) => {
+  it.each(MISSES)('不命中：%s', input => {
     expect(translate(input)).toBeUndefined()
   })
 
@@ -225,12 +216,8 @@ describe('gist 正则词条', () => {
 
   it('相邻文本节点拼接后命中', () => {
     const join = (parts: readonly string[]): string => normalizeText(parts.join(''))
-    expect(translate(join(['36', ' changes: ', '0', ' additions & ', '36', ' deletions']))).toBe(
-      '36 处更改：新增 0 行和删除 36 行',
-    )
-    expect(translate(join(['octocat', ' doesn’t have any ', 'starred ', 'gists yet.']))).toBe(
-      'octocat 还没有任何已加星标的代码片段。',
-    )
+    expect(translate(join(['36', ' changes: ', '0', ' additions & ', '36', ' deletions']))).toBe('36 处更改：新增 0 行和删除 36 行')
+    expect(translate(join(['octocat', ' doesn’t have any ', 'starred ', 'gists yet.']))).toBe('octocat 还没有任何已加星标的代码片段。')
   })
 
   it('文件区无障碍名称：三种日期写法都不残留 on', () => {
@@ -253,12 +240,9 @@ describe('gist 正则词条', () => {
   })
 
   it.each([
-    [
-      'with a GIF, JPEG, JPG, MOV, MP4, PNG, SVG, WEBM or WEBP.',
-      '并改用 GIF、JPEG、JPG、MOV、MP4、PNG、SVG、WEBM 或 WEBP 格式的文件。',
-    ],
+    ['with a GIF, JPEG, JPG, MOV, MP4, PNG, SVG, WEBM or WEBP.', '并改用 GIF、JPEG、JPG、MOV、MP4、PNG、SVG、WEBM 或 WEBP 格式的文件。'],
     ['with a GIF, JPEG, or PNG.', '并改用 GIF、JPEG 或 PNG 格式的文件。'],
-    ['with a PNG.', '并改用 PNG 格式的文件。'],
+    ['with a PNG.', '并改用 PNG 格式的文件。']
   ])('评论框附件类型错误片段由 common-ui 翻译：%s', (input, expected) => {
     expect(translate(input)).toBeUndefined()
     expect(translateFull(input)).toBe(expected)
@@ -288,7 +272,7 @@ describe('gist 静态词条', () => {
     ['Your public gists will show up here on your profile.', '你的公共代码片段会显示在这里。'],
     ['Create public gist', '创建公共代码片段'],
     ['Make secret', '设为机密'],
-    ['Make public', '设为公共'],
+    ['Make public', '设为公共']
   ])('%s → %s', (input, expected) => {
     expect(translate(input)).toBe(expected)
   })
@@ -316,7 +300,7 @@ describe('gist 页面专用词条', () => {
     ['Load earlier comments...', '加载更早的评论...'],
     [
       'Sign up for free to join this conversation on GitHub. Already have an account? Sign in to comment',
-      '免费注册以加入 GitHub 上的此对话。已有帐户？登录后评论',
+      '免费注册以加入 GitHub 上的此对话。已有帐户？登录后评论'
     ],
     ['This user is the author of this .', '此用户是此代码片段的作者。'],
     ['revised', '修订'],
@@ -328,7 +312,7 @@ describe('gist 页面专用词条', () => {
     ['Site wide shortcuts', '全站快捷方式'],
     ['Enter file contents here', '在此输入文件内容'],
     ['No changes to display.', '无可显示的更改。'],
-    ['Commit email:', '提交电子邮件：'],
+    ['Commit email:', '提交电子邮件：']
   ])('%s → %s', (input, expected) => {
     expect(translate(input)).toBe(expected)
   })
@@ -338,11 +322,7 @@ describe('gist 页面专用词条', () => {
     expect(matcher.translateRaw(' key moving focus.', GIST_SCOPE)).toBe(' 键是否移动焦点。')
     expect(translate('Use', REPO_SCOPE)).toBeUndefined()
     // to toggle the 与第二句（Alternatively, use … to move to the next interactive element…）由 code 词典的 static 收录
-    for (const key of [
-      'to toggle the',
-      'key moving focus. Alternatively, use',
-      'to move to the next interactive element on the page.',
-    ]) {
+    for (const key of ['to toggle the', 'key moving focus. Alternatively, use', 'to move to the next interactive element on the page.']) {
       expect(gist.scoped?.[key]).toBeUndefined()
       expect(gist.static?.[key]).toBeUndefined()
     }
@@ -376,7 +356,7 @@ describe('gist 页面专用词条', () => {
       'Sign up for free',
       'to join this conversation on GitHub',
       '. Already have an account?',
-      'Sign in to comment',
+      'Sign in to comment'
     ]) {
       expect(gist.scoped?.[key]).toBeUndefined()
       expect(gist.static?.[key]).toBeUndefined()
@@ -404,7 +384,7 @@ describe('gist 忽略选择器', () => {
     expect(matcher.ignoreSelectors(REPO_SCOPE)).toEqual([])
   })
 
-  it.each(gist.ignore ?? [])('选择器合法：%s', (selector) => {
+  it.each(gist.ignore ?? [])('选择器合法：%s', selector => {
     expect(() => document.querySelector(selector)).not.toThrow()
   })
 
@@ -420,15 +400,8 @@ describe('gist 忽略选择器', () => {
       <div class="user-status-message-wrapper"><div>Always Coding :)</div></div>
     `
     const selector = matcher.ignoreSelectors(GIST_SCOPE).join(', ')
-    const texts = [...document.querySelectorAll(selector)].map((node) => node.textContent?.trim())
-    expect(texts).toEqual([
-      'Docker compose notes',
-      'docker-compose.yml',
-      'My shell helpers',
-      'bash',
-      'octocat',
-      'Always Coding :)',
-    ])
+    const texts = [...document.querySelectorAll(selector)].map(node => node.textContent?.trim())
+    expect(texts).toEqual(['Docker compose notes', 'docker-compose.yml', 'My shell helpers', 'bash', 'octocat', 'Always Coding :)'])
     document.body.innerHTML = ''
   })
 

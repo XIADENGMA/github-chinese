@@ -27,19 +27,16 @@ describe('构建标识（wxt.config.ts）', () => {
     'src/core/matcher.test.ts',
     'scripts/harvest.spec.mjs',
     'web-ext.config.ts',
-    'src/web-ext.config.ts',
-  ])('与 WXT 源码包相同的排除项：%s', async (path) => {
+    'src/web-ext.config.ts'
+  ])('与 WXT 源码包相同的排除项：%s', async path => {
     const { excludedFromSources } = await loadConfig()
     expect(excludedFromSources(path)).toBe(true)
   })
 
-  it.each(['src/entrypoints/content.ts', 'public/_locales/en/messages.json', 'src/core/latest.ts', 'LICENSE'])(
-    '收入：%s',
-    async (path) => {
-      const { excludedFromSources } = await loadConfig()
-      expect(excludedFromSources(path)).toBe(false)
-    },
-  )
+  it.each(['src/entrypoints/content.ts', 'public/_locales/en/messages.json', 'src/core/latest.ts', 'LICENSE'])('收入：%s', async path => {
+    const { excludedFromSources } = await loadConfig()
+    expect(excludedFromSources(path)).toBe(false)
+  })
 
   it('按路径排序，逐个写入「路径 + \\0 + 原始字节 + \\0」，sha256 取前 12 位', async () => {
     const { computeBuildId } = await loadConfig()
@@ -86,11 +83,11 @@ describe('构建标识（wxt.config.ts）', () => {
 
   it.each([
     ['wxt build', ENV],
-    ['wxt dev', { ...ENV, mode: 'development', command: 'serve' } as ConfigEnv],
+    ['wxt dev', { ...ENV, mode: 'development', command: 'serve' } as ConfigEnv]
   ])('%s：构建时压缩词典的词条表（scripts/pack-tables.ts），插件不限定命令', async (_, env) => {
     const { default: config } = await loadConfig()
     const plugins = (await config.vite!(env)).plugins ?? []
-    const plugin = plugins.find((item) => item && 'name' in item && item.name === 'github-chinese:pack-tables')
+    const plugin = plugins.find(item => item && 'name' in item && item.name === 'github-chinese:pack-tables')
     expect(plugin).toBeDefined()
     // 不设 apply：开发版与正式版的词条表是同一种形态
     expect(plugin && 'apply' in plugin ? plugin.apply : undefined).toBeUndefined()
@@ -98,7 +95,7 @@ describe('构建标识（wxt.config.ts）', () => {
 })
 
 describe('清单权限', () => {
-  it.each(['chrome', 'edge', 'firefox'])('%s：申请 storage、scripting；不声明快捷键命令', async (browser) => {
+  it.each(['chrome', 'edge', 'firefox'])('%s：申请 storage、scripting；不声明快捷键命令', async browser => {
     const { default: config } = await loadConfig()
     const manifest = (await (config.manifest as UserManifestFn)({ ...ENV, browser })) as UserManifest
     expect(manifest.permissions).toEqual(['storage', 'scripting'])

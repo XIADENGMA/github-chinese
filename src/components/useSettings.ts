@@ -1,21 +1,5 @@
-import {
-  computed,
-  effectScope,
-  onScopeDispose,
-  ref,
-  shallowRef,
-  type ComputedRef,
-  type EffectScope,
-  type Ref,
-} from 'vue'
-import {
-  DEFAULT_SETTINGS,
-  getSettings,
-  updateSettings,
-  watchSettings,
-  type Settings,
-  type SettingsPatch,
-} from '../shared/settings'
+import { computed, effectScope, onScopeDispose, ref, shallowRef, type ComputedRef, type EffectScope, type Ref } from 'vue'
+import { DEFAULT_SETTINGS, getSettings, updateSettings, watchSettings, type Settings, type SettingsPatch } from '../shared/settings'
 
 export interface UseSettings {
   /** 当前设置；存储变化时自动更新 */
@@ -39,7 +23,7 @@ function createSettings(): UseSettings {
   // 写入串行执行，避免并发读改写丢失修改
   let queue: Promise<unknown> = Promise.resolve()
 
-  const stopWatch = watchSettings((next) => {
+  const stopWatch = watchSettings(next => {
     changed = true
     settings.value = next
     loaded.value = true
@@ -47,26 +31,26 @@ function createSettings(): UseSettings {
   onScopeDispose(stopWatch)
 
   getSettings().then(
-    (value) => {
+    value => {
       if (!changed) settings.value = value
       loaded.value = true
     },
     () => {
       loadFailed.value = true
-    },
+    }
   )
 
   function update(patch: SettingsPatch): Promise<boolean> {
     const task = queue.then(() => updateSettings(patch))
     queue = task.catch(() => undefined)
     return task.then(
-      (next) => {
+      next => {
         changed = true
         settings.value = next
         loaded.value = true
         return true
       },
-      () => false,
+      () => false
     )
   }
 

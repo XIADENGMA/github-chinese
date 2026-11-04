@@ -43,5 +43,5 @@ export default mergeDictionaries(
   pages,
   security,
   secrets,
-  copilot,
+  copilot
 ) satisfies PageDictionary

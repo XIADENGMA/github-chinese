@@ -6,7 +6,7 @@ const FILE_VERB: Readonly<Record<string, string>> = {
   Edited: '编辑了',
   Created: '创建了',
   Read: '读取了',
-  Listed: '列出了',
+  Listed: '列出了'
 }
 
 /** 工具调用汇总：计数动词 + 单位 */
@@ -15,7 +15,7 @@ const COUNT_VERB: Readonly<Record<string, readonly [string, string]>> = {
   'Searched the web': ['在网页上搜索了', '次'],
   Fetched: ['获取了', '个网页'],
   Ran: ['运行了', '个技能'],
-  Asked: ['提出了', '个问题'],
+  Asked: ['提出了', '个问题']
 }
 
 /** 工具显示名（工具调用标题“工具名: 参数”） */
@@ -39,7 +39,7 @@ const TOOL_NAME: Readonly<Record<string, string>> = {
   'Proposed work': '提议的工作',
   Subagent: '子代理',
   'Read agent': '读取代理',
-  'Message agent': '向代理发送消息',
+  'Message agent': '向代理发送消息'
 }
 
 /** 不是文件名的常见词（避免把 “Read more” 之类当成工具调用汇总） */
@@ -51,7 +51,7 @@ const SUMMARY_HEAD = [
   '(?:Searched the web|Searched|Fetched|Ran|Asked) \\d+ (?:quer(?:y|ies)|pages?|skills?|questions?)',
   'Updated plan',
   'Used \\d+ tools?',
-  'Ran .+?',
+  'Ran .+?'
 ].join('|')
 
 /** 按次数汇总的工具调用 */
@@ -62,7 +62,7 @@ const TIMES_VERB: Readonly<Record<string, string>> = {
   Thought: '思考',
   'Read agents': '读取代理',
   'Message agents': '向代理发送消息',
-  'List agents': '列出代理',
+  'List agents': '列出代理'
 }
 
 /** 按数量汇总的工具调用：原文模板 → 译文模板（# 为数量） */
@@ -77,11 +77,11 @@ const COUNT_ACTION: Readonly<Record<string, string>> = {
   'Review # changes': '审查 # 次更改',
   'Activate # skills': '激活 # 个技能',
   'Reply to # comments': '回复 # 条评论',
-  'Run # subagent tasks': '运行 # 个子代理任务',
+  'Run # subagent tasks': '运行 # 个子代理任务'
 }
 
 const COUNT_ACTION_SOURCE = Object.keys(COUNT_ACTION)
-  .map((key) => key.replace('#', '\\d+'))
+  .map(key => key.replace('#', '\\d+'))
   .join('|')
 
 const TOOL_NAME_SOURCE = Object.keys(TOOL_NAME)
@@ -98,8 +98,7 @@ function summaryHead(head: string): string {
   if (two) return `${FILE_VERB[two[1]!]} ${two[2]} 和 ${two[3]}`
   const one = /^(Edited|Created|Read|Listed) (\S+)$/.exec(head)
   if (one) return `${FILE_VERB[one[1]!]} ${one[2]}`
-  const counted =
-    /^(Searched the web|Searched|Fetched|Ran|Asked) (\d+) (?:quer(?:y|ies)|pages?|skills?|questions?)$/.exec(head)
+  const counted = /^(Searched the web|Searched|Fetched|Ran|Asked) (\d+) (?:quer(?:y|ies)|pages?|skills?|questions?)$/.exec(head)
   if (counted) {
     const [verb, unit] = COUNT_VERB[counted[1]!] ?? [counted[1]!, '']
     return `${verb} ${counted[2]} ${unit}`
@@ -115,9 +114,7 @@ function summaryHead(head: string): string {
 function removedParts(removed: string): string {
   return removed
     .split(' and ')
-    .map((part) =>
-      part.replace(/^([\d.,]+[kKmM]?) tokens?$/, '$1 个令牌').replace(/^([\d.,]+[kKmM]?) messages?$/, '$1 条消息'),
-    )
+    .map(part => part.replace(/^([\d.,]+[kKmM]?) tokens?$/, '$1 个令牌').replace(/^([\d.,]+[kKmM]?) messages?$/, '$1 条消息'))
     .join('和 ')
 }
 
@@ -337,10 +334,8 @@ export default {
     'Loading diff…': '正在加载差异…',
     'Could not load the diff for this file.': '无法加载此文件的差异。',
     'Binary file or no patch available.': '二进制文件或无可用补丁。',
-    'File contents are unavailable. Reconnect to the environment to load the diff.':
-      '文件内容不可用。重新连接到环境以加载差异。',
-    'Connection lost. Diffs will keep loading automatically once reconnected.':
-      '连接已断开。重新连接后将自动继续加载差异。',
+    'File contents are unavailable. Reconnect to the environment to load the diff.': '文件内容不可用。重新连接到环境以加载差异。',
+    'Connection lost. Diffs will keep loading automatically once reconnected.': '连接已断开。重新连接后将自动继续加载差异。',
     'Connection restored.': '连接已恢复。',
     'Changed file information is unavailable': '无法获取已更改文件的信息',
     'Changed file information needs refreshing': '已更改文件的信息需要刷新',
@@ -372,17 +367,13 @@ export default {
     'This file is too large to preview.': '此文件过大，无法预览。',
     'The repository revision is unavailable.': '存储库修订版本不可用。',
     'This image does not have a supported preview URL.': '此图片没有受支持的预览 URL。',
-    'Preview is unavailable for this file format. Download the original file instead.':
-      '此文件格式无法预览。请改为下载原始文件。',
-    'Unable to load this file. It may no longer exist or you may not have access.':
-      '无法加载此文件。文件可能已不存在，或你无权访问。',
+    'Preview is unavailable for this file format. Download the original file instead.': '此文件格式无法预览。请改为下载原始文件。',
+    'Unable to load this file. It may no longer exist or you may not have access.': '无法加载此文件。文件可能已不存在，或你无权访问。',
     'File contents are unavailable.': '文件内容不可用。',
     'Unable to load this uploaded file.': '无法加载此上传的文件。',
-    'This file is too large to preview. Download the original file instead.':
-      '此文件过大，无法预览。请改为下载原始文件。',
+    'This file is too large to preview. Download the original file instead.': '此文件过大，无法预览。请改为下载原始文件。',
     'Unable to load this file. Please try again.': '无法加载此文件。请重试。',
-    'Repository exploration is unavailable until the conversation owner is known.':
-      '确定对话所有者之前，无法浏览存储库。',
+    'Repository exploration is unavailable until the conversation owner is known.': '确定对话所有者之前，无法浏览存储库。',
     'Select repository to explore': '选择要浏览的存储库',
     'Close repo explorer': '关闭存储库浏览器',
 
@@ -472,7 +463,7 @@ export default {
     'Switch this conversation to a different repository': '将此对话切换到其他存储库',
     'Show or update the Microsoft Teams task plan': '显示或更新 Microsoft Teams 任务计划',
     'Switch the model for this conversation': '切换此对话的模型',
-    'Choose a model for this conversation': '为此对话选择模型',
+    'Choose a model for this conversation': '为此对话选择模型'
   },
   scoped: {
     Plan: '计划',
@@ -492,7 +483,7 @@ export default {
     Ran: '已运行',
     Asked: '已询问',
     Left: '左侧',
-    Right: '右侧',
+    Right: '右侧'
   },
   regexp: [
     // 工具调用汇总
@@ -502,56 +493,46 @@ export default {
       new RegExp(`^(${SUMMARY_HEAD})(?: and (\\d+) other tool calls?)?(?:, (\\d+) failed)?$`),
       // 原文 and 处无标点：以“及另外”连接；逗号随原文
       (_, head: string, others: string, failed: string) =>
-        `${others ? joinCjk(summaryHead(head), `及另外 ${others} 个工具调用`) : summaryHead(head)}${failed ? `，${failed} 个失败` : ''}`,
+        `${others ? joinCjk(summaryHead(head), `及另外 ${others} 个工具调用`) : summaryHead(head)}${failed ? `，${failed} 个失败` : ''}`
     ],
     [
       /^(Search|Search code|Web search|Thought|Read agents|Message agents|List agents) (\d+) times$/,
-      (_, verb: string, count: string) => `${TIMES_VERB[verb] ?? verb} ${count} 次`,
+      (_, verb: string, count: string) => `${TIMES_VERB[verb] ?? verb} ${count} 次`
     ],
     [
       new RegExp(`^(?:${COUNT_ACTION_SOURCE})$`),
       (match: string) => {
         const count = /\d+/.exec(match)?.[0] ?? ''
         return (COUNT_ACTION[match.replace(count, '#')] ?? '').replace('#', count)
-      },
+      }
     ],
     [/^Insert at (\d+) locations$/, '在 $1 处插入'],
     [/^(\d+) progress updates$/, '$1 次进度更新'],
     [/^(\d+) operations$/, '$1 项操作'],
 
     // 工具调用标题
-    [
-      new RegExp(`^(${TOOL_NAME_SOURCE}): (.+)$`),
-      (_, tool: string, detail: string) => `${TOOL_NAME[tool] ?? tool}：${detail}`,
-    ],
+    [new RegExp(`^(${TOOL_NAME_SOURCE}): (.+)$`), (_, tool: string, detail: string) => `${TOOL_NAME[tool] ?? tool}：${detail}`],
     [/^Activate (.+) skill$/, '激活技能 $1'],
     [/^Run "(.+)" custom setup step$/, '运行“$1”自定义设置步骤'],
     [/^Read pull request \((.+)\)$/, '读取拉取请求 ($1)'],
     [
       /^Read pull request(?: \((.+?)\))? on ([\w.-]+\/[\w.-]+)#(\d+)$/,
-      (_, method: string, repo: string, number: string) =>
-        `读取拉取请求${method ? ` (${method})` : ''} ${repo}#${number}`,
+      (_, method: string, repo: string, number: string) => `读取拉取请求${method ? ` (${method})` : ''} ${repo}#${number}`
     ],
     [/^Call to (.+)$/, '调用 $1'],
     [
       /^(Send input to|Read logs from|Stop) (Bash|PowerShell) session (\S+)$/,
       (_, action: string, shell: string, id: string) =>
-        `${action === 'Stop' ? '停止' : action === 'Read logs from' ? '读取' : '向'} ${shell} 会话 ${id}${action === 'Send input to' ? ' 发送输入' : action === 'Read logs from' ? ' 的日志' : ''}`,
+        `${action === 'Stop' ? '停止' : action === 'Read logs from' ? '读取' : '向'} ${shell} 会话 ${id}${action === 'Send input to' ? ' 发送输入' : action === 'Read logs from' ? ' 的日志' : ''}`
     ],
     [/^Start or send input to long-running Bash session (\S+)$/, '启动长时间运行的 Bash 会话 $1 或向其发送输入'],
     [/^View logs from long-running Bash session (\S+)$/, '查看长时间运行的 Bash 会话 $1 的日志'],
     [/^Stop long-running Bash session (\S+)$/, '停止长时间运行的 Bash 会话 $1'],
     [/^Couldn['’]t compact the conversation: (.+)$/, '无法压缩对话：$1'],
-    [
-      /^Conversation compacted, removing (.+)\.$/,
-      (_, removed: string) => `对话已压缩，删除了 ${removedParts(removed)}。`,
-    ],
+    [/^Conversation compacted, removing (.+)\.$/, (_, removed: string) => `对话已压缩，删除了 ${removedParts(removed)}。`],
     [/^The model could not run: (.+)$/, '模型无法运行：$1'],
     [/^(.+) could not run: (.+)$/, '$1 无法运行：$2'],
-    [
-      /^(.+) subagent (timeline|activity)$/,
-      (_, name: string, kind: string) => `${name} 子代理${kind === 'timeline' ? '时间线' : '活动'}`,
-    ],
+    [/^(.+) subagent (timeline|activity)$/, (_, name: string, kind: string) => `${name} 子代理${kind === 'timeline' ? '时间线' : '活动'}`],
     [/^Expand diff to show all (\d+) lines$/, '展开差异以显示全部 $1 行'],
     [/^Collapse (\d+) lines$/, '折叠 $1 行'],
     [/^Show all (\d+) lines$/, '显示全部 $1 行'],
@@ -560,7 +541,7 @@ export default {
     [
       /^([\w-]+(?:\[bot\])?) (reviewed|commented|requested changes)$/,
       (_, login: string, action: string) =>
-        `${login} ${action === 'reviewed' ? '审查了' : action === 'commented' ? '发表了评论' : '请求了更改'}`,
+        `${login} ${action === 'reviewed' ? '审查了' : action === 'commented' ? '发表了评论' : '请求了更改'}`
     ],
     [/^(\d+) review comments?$/, '$1 条审查评论'],
 
@@ -569,7 +550,7 @@ export default {
     [/^Allow (.+) for this session$/, '本会话中允许 $1'],
     [
       /^Permission request (\d+) of (\d+)(?:: (.+))?$/,
-      (_, current: string, total: string, title: string) => `权限请求 ${current}/${total}${title ? `：${title}` : ''}`,
+      (_, current: string, total: string, title: string) => `权限请求 ${current}/${total}${title ? `：${title}` : ''}`
     ],
     [/^Question table (\d+) of (\d+)$/, '问题表格 $1/$2'],
 
@@ -586,11 +567,8 @@ export default {
     [/^Preview of (.+)$/, '$1 的预览'],
     [/^(\d+) new artifacts? available\.$/, '有 $1 个新工件可用。'],
     [/^Unable to submit messages?$/, '无法提交消息'],
-    [
-      /^Copilot finished the session before it could pick up (?:this|these) messages?$/,
-      'Copilot 在处理该消息前已结束会话',
-    ],
+    [/^Copilot finished the session before it could pick up (?:this|these) messages?$/, 'Copilot 在处理该消息前已结束会话']
   ],
   // grep 计数模式的结果头（3 <span>files</span> with matches）：数字与 file、files 分属不同节点，整段合并后匹配
-  mergeText: ['.tmp-p-3 > span.fgColor-muted.d-block.text-small'],
+  mergeText: ['.tmp-p-3 > span.fgColor-muted.d-block.text-small']
 } satisfies PageDictionary

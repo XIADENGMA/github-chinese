@@ -18,14 +18,14 @@ const LABELS: Readonly<Record<string, string>> = {
   enhancement: '改进',
   'good first issue': '适合新手的议题',
   'help wanted': '需要帮助',
-  question: '疑问',
+  question: '疑问'
 }
 
 const LABEL_DESCRIPTIONS: Readonly<Record<string, string>> = {
   'Something isn’t working': '有功能不正常',
   'Improvements or additions to documentation': '文档改进或补充',
   'Further information is requested': '需要更多信息',
-  'Extra attention is needed': '需要额外关注',
+  'Extra attention is needed': '需要额外关注'
 }
 
 const BUNDLE: LocaleBundle = [
@@ -34,20 +34,18 @@ const BUNDLE: LocaleBundle = [
     {
       static: { Issues: '议题', 'Sample text': '示例文字' },
       // 说明提示（忽略区域根）的无障碍名称由属性规则改写（语言包见 common-ui/labels.ts）
-      attributeRules: [
-        ['[class*="labelDescriptionTooltip__"]', 'aria-label', /^Further information is requested$/, '需要更多信息'],
-      ],
+      attributeRules: [['[class*="labelDescriptionTooltip__"]', 'aria-label', /^Further information is requested$/, '需要更多信息']],
       labels: LABELS,
       labelDescriptions: LABEL_DESCRIPTIONS,
-      labelRegexp: [[/^Pull requests that update ([\w.#+ -]{1,40}) code$/, '更新 $1 代码的拉取请求']],
-    },
+      labelRegexp: [[/^Pull requests that update ([\w.#+ -]{1,40}) code$/, '更新 $1 代码的拉取请求']]
+    }
   ],
-  ['issues', { ignore: ['ul[role="group"]:not(:has([data-loading]))'] }],
+  ['issues', { ignore: ['ul[role="group"]:not(:has([data-loading]))'] }]
 ]
 
 /** 繁体：切换语言用 */
 const TW_BUNDLE: LocaleBundle = [
-  ['common', { static: { Issues: '議題' }, labels: { bug: '錯誤', documentation: '說明文件', question: '疑問' } }],
+  ['common', { static: { Issues: '議題' }, labels: { bug: '錯誤', documentation: '說明文件', question: '疑問' } }]
 ]
 
 const ISSUES: readonly PageKey[] = ['common', 'repository', 'issues']
@@ -131,7 +129,7 @@ function start(html: string, options: Partial<TranslatorOptions> = {}): Translat
     host: window,
     collectUntranslated: true,
     resolvePages: () => ISSUES,
-    ...options,
+    ...options
   })
   translator.start()
   return translator
@@ -169,7 +167,7 @@ describe('议题类型名称区域', () => {
         // 议题页置顶标题栏
         '<div class="smallMetadataRow__gR9GFk"><div class="smallToken__0gOjpn" id="sticky">Task</div></div>' +
         LIST('Bug', 'label-bug'),
-      { matcher: createMatcher([...BUNDLE, ['issues', { issueTypes: { Bug: '缺陷', Task: '任务' } }]]) },
+      { matcher: createMatcher([...BUNDLE, ['issues', { issueTypes: { Bug: '缺陷', Task: '任务' } }]]) }
     )
     expect(text('#type-bug')).toBe('缺陷')
     expect(text('#sticky')).toBe('任务')
@@ -184,9 +182,7 @@ describe('议题类型名称区域', () => {
 
 describe('初次遍历', () => {
   it('议题列表、侧栏、经典标签、时间线、标签页、贡献页、标签选择器里的默认标签名与说明都译出；stop 后还原', () => {
-    const t = start(
-      `${LIST('bug', 'list')}${SIDEBAR}${CLASSIC}<p id="timeline">${TIMELINE}</p>${LABELS_PAGE}${CONTRIB}${PICKER}`,
-    )
+    const t = start(`${LIST('bug', 'list')}${SIDEBAR}${CLASSIC}<p id="timeline">${TIMELINE}</p>${LABELS_PAGE}${CONTRIB}${PICKER}`)
     expect(text('#list')).toBe('缺陷')
     expect(text('#side-name')).toBe('疑问')
     expect(text('#side-desc')).toBe('需要更多信息')
@@ -222,7 +218,7 @@ describe('初次遍历', () => {
       `${LIST('scope: vapor', 'custom')}${LIST('🐞 bug', 'emoji')}${LIST('Bug', 'case')}` +
         '<a class="IssueLabel" id="segments" href="/octocat/hello-world/labels/1"><g-emoji alias="bug">🐞</g-emoji> bug</a>' +
         '<span class="IssueLabel" id="two"><span>bug</span><span>question</span></span>' +
-        `${LABELS_PAGE}<tool-tip for="label-9" id="custom-tip">related to vapor mode</tool-tip>`,
+        `${LABELS_PAGE}<tool-tip for="label-9" id="custom-tip">related to vapor mode</tool-tip>`
     )
     expect(text('#custom')).toBe('scope: vapor')
     expect(text('#emoji')).toBe('🐞 bug')
@@ -234,12 +230,12 @@ describe('初次遍历', () => {
     expect(text('#custom-desc')).toBe('related to vapor mode')
     expect(text('#custom-tip')).toBe('related to vapor mode')
     // 只记了标签页列表行的无障碍名称（不在标签区域里，测试词典没有规则）
-    expect(misses(t).every((source) => source.endsWith('1 open issues1 open issues.'))).toBe(true)
+    expect(misses(t).every(source => source.endsWith('1 open issues1 open issues.'))).toBe(true)
   })
 
   it('区域外同样的文字不受影响：照常查词典，没有词条时保持原文并记未翻译', () => {
     const t = start(
-      `<p id="outside">bug</p><a class="Link--primary" href="/octocat/hello-world/tree/main/documentation" id="dir">documentation</a>${PICKER}`,
+      `<p id="outside">bug</p><a class="Link--primary" href="/octocat/hello-world/tree/main/documentation" id="dir">documentation</a>${PICKER}`
     )
     expect(text('#outside')).toBe('bug')
     expect(text('#dir')).toBe('documentation')
@@ -260,7 +256,7 @@ describe('初次遍历', () => {
         '<span class="IssueLabel" id="inner-no"><span translate="no">bug</span></span>' +
         '<span class="IssueLabel" id="nested-no"><span class="IssueLabel notranslate">bug</span></span>' +
         '<span class="IssueLabel" id="code"><code>bug</code></span>' +
-        `<div contenteditable="true">${TOKEN('bug', 'editable')}</div>`,
+        `<div contenteditable="true">${TOKEN('bug', 'editable')}</div>`
     )
     for (const id of ['markdown', 'mention', 'no', 'notranslate', 'gcn', 'outer-no', 'inner-no', 'nested-no', 'code']) {
       expect(text(`#${id}`), id).toBe('bug')
@@ -273,7 +269,7 @@ describe('初次遍历', () => {
     translator = createTranslator({
       matcher: createMatcher([['common', { static: { Issues: '议题' } }]]),
       host: window,
-      resolvePages: () => ISSUES,
+      resolvePages: () => ISSUES
     })
     translator.start()
     expect(text('#list')).toBe('bug')
@@ -331,7 +327,7 @@ describe('名称与说明分开匹配', () => {
         '<span class="d-inline-block IssueLabel" id="contrib-swap">' +
         '<a id="label-c9" class="IssueLabel hx_IssueLabel" href="/octocat/hello-world/labels/9">Further information is requested</a>' +
         '<tool-tip id="tooltip-c9" for="label-c9" class="sr-only" role="tooltip">help wanted</tool-tip></span>' +
-        CONTRIB,
+        CONTRIB
     )
     expect(text('#name-desc')).toBe('Extra attention is needed')
     expect(text('#name-rule')).toBe('Pull requests that update Ruby code')
@@ -344,7 +340,7 @@ describe('名称与说明分开匹配', () => {
     // 默认标签照常
     expect(text('#label-c1')).toBe('\n    需要帮助\n')
     expect(text('#tooltip-c1')).toBe('需要额外关注')
-    expect(misses(t).every((source) => source.endsWith('1 open issues1 open issues.'))).toBe(true)
+    expect(misses(t).every(source => source.endsWith('1 open issues1 open issues.'))).toBe(true)
   })
 
   it('改写后按所在区域重新判断：说明区域里的文字改成默认说明时译出，改成默认标签名时写回页面的文字', async () => {
@@ -401,7 +397,7 @@ describe('React 重渲染', () => {
     $('#rows').insertAdjacentHTML('beforeend', `<li>${LIST('help wanted', 'new-row')}</li>`)
     $('#contrib').insertAdjacentHTML(
       'beforeend',
-      '<a id="label-c2" class="IssueLabel hx_IssueLabel" href="/octocat/hello-world/labels/2">question</a>',
+      '<a id="label-c2" class="IssueLabel hx_IssueLabel" href="/octocat/hello-world/labels/2">question</a>'
     )
     await settle()
     expect(text('#new-row')).toBe('需要帮助')
@@ -456,7 +452,7 @@ describe('只有图标的元素（已存档令牌的存档图标）', () => {
       `${ARCHIVED('question', 'archived')}${ARCHIVED('scope: vapor', 'archived-custom')}` +
         '<span class="IssueLabel" id="classic"><svg class="octicon" viewBox="0 0 16 16"><title>Archived</title></svg> bug</span>' +
         '<span class="IssueLabel" id="image"><img class="emoji" alt=":octocat:" src="/octocat.png"> bug</span>' +
-        '<span class="IssueLabel" id="swatch"><span class="color-dot"></span>bug</span>',
+        '<span class="IssueLabel" id="swatch"><span class="color-dot"></span>bug</span>'
     )
     expect(text('#archived')).toBe('疑问')
     // 图标的无障碍名称在忽略区域里，不处理
@@ -473,10 +469,7 @@ describe('只有图标的元素（已存档令牌的存档图标）', () => {
 
   it('译后插入、移除图标：照常翻译', async () => {
     start(`${LIST('bug', 'list')}`)
-    $('#list').insertAdjacentHTML(
-      'beforebegin',
-      '<span class="archivedIcon__6ud3yr"><svg aria-label="Archived"></svg></span>',
-    )
+    $('#list').insertAdjacentHTML('beforebegin', '<span class="archivedIcon__6ud3yr"><svg aria-label="Archived"></svg></span>')
     await settle()
     expect(text('#list')).toBe('缺陷')
   })
@@ -504,9 +497,7 @@ describe('元素因类名变化进入或离开标签区域（类名变化不观�
   })
 
   it('离开：随文字改写按普通文字处理（不查标签表）；只改类名时下次遍历还原', async () => {
-    const t = start(
-      `${SHELL('a', 'prc-Token-TokenTextContainer-cOUaD')}${SHELL('b', 'prc-Token-TokenTextContainer-cOUaD')}`,
-    )
+    const t = start(`${SHELL('a', 'prc-Token-TokenTextContainer-cOUaD')}${SHELL('b', 'prc-Token-TokenTextContainer-cOUaD')}`)
     expect(text('#a')).toBe('缺陷')
     expect(text('#b')).toBe('缺陷')
     $('#a').className = 'plain'
@@ -542,7 +533,7 @@ describe('先译后忽略', () => {
   it('译后加上退出标记（区域根、祖先、区域里的包装、嵌套的标签区域）：还原原文，之后改写的文字也不翻译', async () => {
     start(
       `<div id="wrap">${LIST('bug', 'ancestor')}</div>${LIST('bug', 'root')}${LIST('bug', 'inner')}` +
-        `<span class="IssueLabel" id="classic">bug</span>${LABELS_PAGE}`,
+        `<span class="IssueLabel" id="classic">bug</span>${LABELS_PAGE}`
     )
     expect(text('#doc-name')).toBe('文档')
     $('#wrap').setAttribute('translate', 'no')
@@ -594,15 +585,15 @@ describe('停用、换词典、切换语言、排除页面', () => {
       newTabPaths: [],
       accelerateSource: 'ghfast',
       customSources: [],
-      removedSources: [],
+      removedSources: []
     }
     document.body.innerHTML = `${LIST('bug', 'list')}${SIDEBAR}<main></main>`
     const c = createController({
       bundle: BUNDLE,
       settings,
       customEntries: {},
-      isPathExcluded: (pathname, patterns) => patterns.some((pattern) => pathname.startsWith(pattern)),
-      host: window,
+      isPathExcluded: (pathname, patterns) => patterns.some(pattern => pathname.startsWith(pattern)),
+      host: window
     })
     controller = c
     expect(text('#list')).toBe('缺陷')
@@ -642,7 +633,7 @@ describe('文档解析中', () => {
   it('解析器在译文后只追加符号、标点：整段不是默认标签，写回原文；停用后不变', async () => {
     const t = start(
       '<a class="IssueLabel" id="symbol" href="/octocat/hello-world/labels/1">bug</a>' +
-        '<a class="IssueLabel" id="mark" href="/octocat/hello-world/labels/2">question</a>',
+        '<a class="IssueLabel" id="mark" href="/octocat/hello-world/labels/2">question</a>'
     )
     parsing()
     expect(text('#symbol')).toBe('缺陷')

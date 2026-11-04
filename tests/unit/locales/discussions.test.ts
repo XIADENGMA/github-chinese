@@ -35,49 +35,49 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['octo-org hello-world.js Discussions', 'octo-org/hello-world.js 的讨论'],
-      ['octo-org octo-org Discussions', 'octo-org/octo-org 的讨论'],
+      ['octo-org octo-org Discussions', 'octo-org/octo-org 的讨论']
     ],
-    misses: ['Explore GitHub Discussions', 'Set up Discussions'],
+    misses: ['Explore GitHub Discussions', 'Set up Discussions']
   },
   {
     hits: [
       ['octo-org hello-world.js Help Discussions', 'octo-org/hello-world.js 的帮助讨论'],
-      ['octo-org hello-world.js Build Error Report Discussions', 'octo-org/hello-world.js 的 Build Error Report 讨论'],
+      ['octo-org hello-world.js Build Error Report Discussions', 'octo-org/hello-world.js 的 Build Error Report 讨论']
     ],
-    misses: ['Learn about using GitHub Discussions', 'Turn on GitHub Discussions'],
+    misses: ['Learn about using GitHub Discussions', 'Turn on GitHub Discussions']
   },
   // list：类别页的页面标题段（只翻译默认类别名）
   {
     hits: [
       ['octo-org/hello-world.js Polls', 'octo-org/hello-world.js 投票'],
-      ['acme/app Q&A', 'acme/app 问答'],
+      ['acme/app Q&A', 'acme/app 问答']
     ],
-    misses: ['octo-org/hello-world.js RFC', 'hello-world.js Polls'],
+    misses: ['octo-org/hello-world.js RFC', 'hello-world.js Polls']
   },
   // list：类别页的置顶讨论标题（类别名原文不带引号，译文也不加）
   {
     hits: [
       ['Pinned to Announcements', '置顶于公告'],
-      ['Pinned to RFC', '置顶于 RFC'],
+      ['Pinned to RFC', '置顶于 RFC']
     ],
-    misses: ['Pinned to'],
+    misses: ['Pinned to']
   },
   // list：筛选
   {
     hits: [
       ['Filter: Open', '筛选器：打开'],
       ['Filter: Unanswered', '筛选器：未回答'],
-      ['Filter: Open, Answered', '筛选器：打开、已回答'],
+      ['Filter: Open, Answered', '筛选器：打开、已回答']
     ],
-    misses: ['Filter: Draft', 'Filter: Open, Draft'],
+    misses: ['Filter: Draft', 'Filter: Open, Draft']
   },
   // list：列表项无障碍名称
   {
     hits: [
       ['Ideas (category)', '想法（类别）'],
-      ['RFC (category)', 'RFC（类别）'],
+      ['RFC (category)', 'RFC（类别）']
     ],
-    misses: ['(category)'],
+    misses: ['(category)']
   },
   { hits: [['octocat (author)', 'octocat（作者）']], misses: ['Jane Doe (author)'] },
   { hits: [['mona (participant)', 'mona（参与者）']], misses: ['the participant'] },
@@ -85,16 +85,13 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   // list：登录后列表项的屏幕阅读器文字
   {
     hits: [
-      [
-        'General · #527 was created by octocat on January 08, 2025 23:53',
-        '常规 · #527 由 octocat 于 2025 年 1 月 8 日 23:53 创建',
-      ],
+      ['General · #527 was created by octocat on January 08, 2025 23:53', '常规 · #527 由 octocat 于 2025 年 1 月 8 日 23:53 创建'],
       [
         'Other Feature Feedback, Questions, & Ideas · #7 was created by mona on May 14, 2026 14:50',
-        'Other Feature Feedback, Questions, & Ideas · #7 由 mona 于 2026 年 5 月 14 日 14:50 创建',
-      ],
+        'Other Feature Feedback, Questions, & Ideas · #7 由 mona 于 2026 年 5 月 14 日 14:50 创建'
+      ]
     ],
-    misses: ['General · #527 was created by octocat', 'General #527 was created by octocat on January 08, 2025 23:53'],
+    misses: ['General · #527 was created by octocat', 'General #527 was created by octocat on January 08, 2025 23:53']
   },
   // list：评论数链接
   {
@@ -103,32 +100,32 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['0 comments: mona, 01:59AM today', '0 条评论：mona，今天 1:59'],
       ['3 comments: octo-user, 11:51PM yesterday', '3 条评论：octo-user，昨天 23:51'],
       ['2013 comments: mona, 12:37PM on February 22, 2020', '2013 条评论：mona，2020 年 2 月 22 日 12:37'],
-      ['1 comment: octocat, 12:05AM today', '1 条评论：octocat，今天 0:05'],
+      ['1 comment: octocat, 12:05AM today', '1 条评论：octocat，今天 0:05']
     ],
-    misses: ['12 comments: octocat', '12 comments'],
+    misses: ['12 comments: octocat', '12 comments']
   },
   // list：计数（N comments、N replies、N participants 由 common-ui 翻译）
   {
     hits: [
       ['3 new comments', '3 条新评论'],
-      ['1 new comment', '1 条新评论'],
+      ['1 new comment', '1 条新评论']
     ],
-    misses: ['new comments'],
+    misses: ['new comments']
   },
   {
     hits: [
       ['5 upvotes', '5 票赞成'],
-      ['1 upvote', '1 票赞成'],
+      ['1 upvote', '1 票赞成']
     ],
-    misses: ['upvotes'],
+    misses: ['upvotes']
   },
   { hits: [['2 answers', '2 个回答']], misses: ['answers'] },
   {
     hits: [
       ['3 suggested answers', '3 个建议答案'],
-      ['1 new suggested answer', '1 个新的建议答案'],
+      ['1 new suggested answer', '1 个新的建议答案']
     ],
-    misses: ['suggested answers'],
+    misses: ['suggested answers']
   },
   // viewer：详情
   { hits: [['Answered by monalisa', '回答者 monalisa']], misses: ['Answered by two people'] },
@@ -136,44 +133,41 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       ['Status: Closed as resolved', '状态：已关闭为已解决'],
       ['Status: Closed as outdated', '状态：已关闭为过时'],
-      ['Status: Closed as duplicate', '状态：已关闭为重复'],
+      ['Status: Closed as duplicate', '状态：已关闭为重复']
     ],
-    misses: ['Status: Closed as completed', 'Status: Closed'],
+    misses: ['Status: Closed as completed', 'Status: Closed']
   },
   {
     hits: [
       // 原文没有括号：日期放进句中；原文有句点才加句号
-      [
-        'This discussion was converted from issue #123 on January 5, 2024',
-        '此讨论于 2024 年 1 月 5 日由议题 #123 转换而来',
-      ],
+      ['This discussion was converted from issue #123 on January 5, 2024', '此讨论于 2024 年 1 月 5 日由议题 #123 转换而来'],
       ['This discussion was converted from issue #7 on Jan 5, 2024.', '此讨论于 2024 年 1 月 5 日由议题 #7 转换而来。'],
-      ['This discussion was converted from issue #42.', '此讨论由议题 #42 转换而来。'],
+      ['This discussion was converted from issue #42.', '此讨论由议题 #42 转换而来。']
     ],
-    misses: ['This discussion was converted from issue #abc'],
+    misses: ['This discussion was converted from issue #abc']
   },
   { hits: [['This user is sponsoring octo-org.', '此用户正在赞助 octo-org。']], misses: ['This user is sponsoring'] },
   {
     hits: [
       [
         "Congratulations, you've created the first discussion in octo-org/hello-world!",
-        '恭喜，你已在 octo-org/hello-world 中创建了第一个讨论！',
+        '恭喜，你已在 octo-org/hello-world 中创建了第一个讨论！'
       ],
-      ['Congratulations, you’ve created the first discussion in acme!', '恭喜，你已在 acme 中创建了第一个讨论！'],
+      ['Congratulations, you’ve created the first discussion in acme!', '恭喜，你已在 acme 中创建了第一个讨论！']
     ],
-    misses: ['Congratulations!'],
+    misses: ['Congratulations!']
   },
   // viewer：登录后评论的按钮名称
   {
     hits: [
       ['Upvote: (86): octocat, 09:00AM on May 12, 2022', '赞成 (86)：octocat，2022 年 5 月 12 日 9:00'],
-      ['Upvote: (1,024): mona, 11:30PM yesterday', '赞成 (1,024)：mona，昨天 23:30'],
+      ['Upvote: (1,024): mona, 11:30PM yesterday', '赞成 (1,024)：mona，昨天 23:30']
     ],
-    misses: ['Upvote: (86)'],
+    misses: ['Upvote: (86)']
   },
   {
     hits: [['Write a reply: octocat, 01:16PM today', '编写回复：octocat，今天 13:16']],
-    misses: ['Write a reply: octocat'],
+    misses: ['Write a reply: octocat']
   },
   // viewer：投票
   {
@@ -181,52 +175,50 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       ['2 votes', '2 票'],
       ['1 vote', '1 票'],
       ['2k votes', '2k 票'],
-      ['1.5k votes', '1.5k 票'],
+      ['1.5k votes', '1.5k 票']
     ],
-    misses: ['votes', 'many votes'],
+    misses: ['votes', 'many votes']
   },
   // viewer：回复
   {
     hits: [
       ['Show 77 previous replies', '显示前 77 条回复'],
-      ['Show 1 previous reply', '显示前 1 条回复'],
+      ['Show 1 previous reply', '显示前 1 条回复']
     ],
-    misses: ['Show previous replies'],
+    misses: ['Show previous replies']
   },
   { hits: [['Show 3 more replies', '再显示 3 条回复']], misses: ['Show more replies'] },
   // viewer：置顶（类别名原文不带引号，译文也不加）
   {
     hits: [['Discussion "Roadmap" has been unpinned.', '已取消置顶讨论“Roadmap”。']],
-    misses: ['Discussion "" has been unpinned.'],
+    misses: ['Discussion "" has been unpinned.']
   },
   {
     hits: [
       ['Discussion pinned to Announcements', '已将讨论置顶到公告'],
-      ['Discussion pinned to RFC', '已将讨论置顶到 RFC'],
+      ['Discussion pinned to RFC', '已将讨论置顶到 RFC']
     ],
-    misses: ['Discussion pinned'],
+    misses: ['Discussion pinned']
   },
   { hits: [['Discussion unpinned from Q&A', '已从问答取消置顶讨论']], misses: ['Discussion unpinned'] },
   { hits: [['Pin discussion to General', '将讨论置顶到常规']], misses: ['Pin discussion to'] },
   {
     hits: [
       ['Pin to Ideas', '置顶到想法'],
-      ['Pin to RFC', '置顶到 RFC'],
+      ['Pin to RFC', '置顶到 RFC']
     ],
-    misses: ['Pin to'],
+    misses: ['Pin to']
   },
   {
     hits: [
       ['This will pin this discussion to the top of the Polls category.', '这会在投票类别中置顶此讨论。'],
-      ['This will pin this discussion to the top of the RFC category.', '这会在 RFC 类别中置顶此讨论。'],
+      ['This will pin this discussion to the top of the RFC category.', '这会在 RFC 类别中置顶此讨论。']
     ],
-    misses: ['This will pin this discussion.'],
+    misses: ['This will pin this discussion.']
   },
   {
-    hits: [
-      ['Are you sure you want to unpin this discussion from Show and tell?', '确定要从展示与分享取消置顶此讨论吗？'],
-    ],
-    misses: ['Are you sure you want to unpin this discussion from?'],
+    hits: [['Are you sure you want to unpin this discussion from Show and tell?', '确定要从展示与分享取消置顶此讨论吗？']],
+    misses: ['Are you sure you want to unpin this discussion from?']
   },
   // viewer：页面标题段
   { hits: [['Discussion #100709', '讨论 #100709']], misses: ['Discussion #abc'] },
@@ -234,9 +226,9 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Get started with Q&A category', '开始使用问答类别'],
-      ['Get started with RFC category', '开始使用 RFC 类别'],
+      ['Get started with RFC category', '开始使用 RFC 类别']
     ],
-    misses: ['Get started with category'],
+    misses: ['Get started with category']
   },
   // compose：投票选项输入框
   { hits: [['Option 3', '选项 3']], misses: ['Option three'] },
@@ -244,16 +236,16 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['6 categories', '6 个类别'],
-      ['1 category', '1 个类别'],
+      ['1 category', '1 个类别']
     ],
-    misses: ['categories'],
+    misses: ['categories']
   },
   {
     hits: [
       ['Edit Announcements category', '编辑公告类别'],
-      ['Edit RFC category', '编辑 RFC 类别'],
+      ['Edit RFC category', '编辑 RFC 类别']
     ],
-    misses: ['Edit categories'],
+    misses: ['Edit categories']
   },
   { hits: [['Delete Polls category', '删除投票类别']], misses: ['Delete categories'] },
   { hits: [['Edit section Ask for help', '编辑分组 Ask for help']], misses: ['Edit sections'] },
@@ -263,21 +255,21 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       // 原文带引号的才用“”
       ['Category "Ideas" has been created.', '“想法”类别已创建。'],
-      ['Category RFC has been deleted.', 'RFC 类别已删除。'],
+      ['Category RFC has been deleted.', 'RFC 类别已删除。']
     ],
-    misses: ['Category has been created.'],
+    misses: ['Category has been created.']
   },
   {
     hits: [
       ['Section "Community" has been updated.', '“Community”分组已更新。'],
-      ['Section Community has been deleted.', 'Community 分组已删除。'],
+      ['Section Community has been deleted.', 'Community 分组已删除。']
     ],
-    misses: ['Section has been updated.'],
-  },
+    misses: ['Section has been updated.']
+  }
 ]
 
-const HITS = REGEXP_CASES.flatMap((item) => item.hits)
-const MISSES = REGEXP_CASES.flatMap((item) => item.misses)
+const HITS = REGEXP_CASES.flatMap(item => item.hits)
+const MISSES = REGEXP_CASES.flatMap(item => item.misses)
 const RULES = dict.regexp ?? []
 
 function firstRule(input: string): number {
@@ -291,14 +283,14 @@ describe('discussions 正则词条', () => {
     expect(translate(input)).toBe(expected)
   })
 
-  it.each(MISSES)('不命中：%s', (input) => {
+  it.each(MISSES)('不命中：%s', input => {
     expect(translate(input)).toBeUndefined()
   })
 
   it('用例与正则一一对应，正例首个命中对应的正则', () => {
     expect(REGEXP_CASES).toHaveLength(RULES.length)
     const mismatched = REGEXP_CASES.flatMap((item, index) =>
-      item.hits.filter(([input]) => firstRule(input) !== index).map(([input]) => `#${index} ${input}`),
+      item.hits.filter(([input]) => firstRule(input) !== index).map(([input]) => `#${index} ${input}`)
     )
     expect(mismatched).toEqual([])
   })
@@ -339,9 +331,7 @@ describe('discussions 正则词条', () => {
     // You can open a <a>new discussion</a> to ask questions about this repository or get help.（原文无逗号，译文不加）
     expect(translate('You can open a')).toBe('你可以发起一个')
     expect(translate('new discussion')).toBe('新讨论')
-    expect(translate('to ask questions about this repository or get help.')).toBe(
-      '来询问有关此存储库的问题或寻求帮助。',
-    )
+    expect(translate('to ask questions about this repository or get help.')).toBe('来询问有关此存储库的问题或寻求帮助。')
     // If this doesn’t look right you can <a>choose a different category.</a>（原文无逗号，译文不加）
     expect(translate('If this doesn’t look right you can')).toBe('类别不合适时可以')
     expect(translate('choose a different category.')).toBe('选择其他类别。')
@@ -377,7 +367,7 @@ describe('discussions 静态词条', () => {
     ['New discussion', '新建讨论'],
     [
       'Integrate with your existing workflows and GitHub Actions via the GraphQL API and webhooks.',
-      '通过 GraphQL API 和 Web 钩子与现有工作流及 GitHub 操作集成。',
+      '通过 GraphQL API 和 Web 钩子与现有工作流及 GitHub 操作集成。'
     ],
     ['Search all discussions', '搜索所有讨论'],
     ['View all discussions', '查看所有讨论'],
@@ -405,12 +395,12 @@ describe('discussions 静态词条', () => {
     // 原文分句、原文无逗号处，译文不合并、不添加
     [
       'You can pin up to 4 discussions. They will appear publicly at the top of the discussions page.',
-      '最多可置顶 4 个讨论。它们将公开显示在讨论页顶部。',
+      '最多可置顶 4 个讨论。它们将公开显示在讨论页顶部。'
     ],
     ['Cannot be changed to polls. Please create a new category for polls.', '无法更改为投票格式。请为投票新建类别。'],
     [
       "Be sure to mark someone's comment as an answer if it helps you resolve your question — they deserve the credit!",
-      '记得将帮你解决了问题的评论标记为答案——这是对回答者应有的认可！',
+      '记得将帮你解决了问题的评论标记为答案——这是对回答者应有的认可！'
     ],
     ['Pin this discussion to this category', '将此讨论置顶到此类别'],
     ['Unpin discussion from this category', '从此类别取消置顶讨论'],
@@ -435,12 +425,12 @@ describe('discussions 静态词条', () => {
     // 新成员首帖说明（原文没有 quickly，译文不加“快速”）
     [
       "Since you're new here, we're helping you to get started by generating your first post to the community. Don't worry, you can edit this discussion after you post!",
-      '你是新成员，我们为你生成了面向社区的第一篇帖子来帮助你上手。别担心，发布后仍可编辑此讨论！',
+      '你是新成员，我们为你生成了面向社区的第一篇帖子来帮助你上手。别担心，发布后仍可编辑此讨论！'
     ],
     [
       'Since you’re new here, we’re helping you to get started by generating your first post to the community. Don’t worry, you can edit this discussion after you post!',
-      '你是新成员，我们为你生成了面向社区的第一篇帖子来帮助你上手。别担心，发布后仍可编辑此讨论！',
-    ],
+      '你是新成员，我们为你生成了面向社区的第一篇帖子来帮助你上手。别担心，发布后仍可编辑此讨论！'
+    ]
   ])('%s → %s', (input, expected) => {
     expect(dict.static?.[input]).toBe(expected)
     expect(translate(input)).toBe(expected)
@@ -490,17 +480,14 @@ describe('discussions 页面词条', () => {
     ["You're receiving notifications because you're subscribed to this thread.", '你因已订阅此线程而收到通知。'],
     ['You’re receiving notifications because you’re watching this repository.', '你因正在关注此存储库而收到通知。'],
     ['You’re receiving notifications because you authored the thread.', '你因是此线程的作者而收到通知。'],
-    [
-      'You’re receiving notifications because you modified the open/close state.',
-      '你因更改了打开/关闭状态而收到通知。',
-    ],
+    ['You’re receiving notifications because you modified the open/close state.', '你因更改了打开/关闭状态而收到通知。'],
     // 持续关系用“正在+动词”
     ['You’re ignoring this repository.', '你正在忽略此存储库。'],
     ["You're ignoring this repository.", '你正在忽略此存储库。'],
     ['This conversation has been locked and limited to collaborators.', '此对话已锁定并限制为仅协作者可评论。'],
     ['Announcements', '公告'],
     ['Q&A', '问答'],
-    ['Show and tell', '展示与分享'],
+    ['Show and tell', '展示与分享']
   ])('%s → %s', (input, expected) => {
     expect(dict.scoped?.[input]).toBe(expected)
     expect(translate(input)).toBe(expected)
@@ -516,7 +503,7 @@ describe('discussions 页面词条', () => {
       'Sign in to view',
       'Show comment',
       'Submitting',
-      'Submitting…',
+      'Submitting…'
     ]) {
       expect(dict.scoped?.[text]).toBeUndefined()
       expect(dict.static?.[text]).toBeUndefined()
@@ -537,7 +524,7 @@ describe('discussions 页面词条', () => {
     expect(dict.static?.['Suggested filters']).toBeUndefined()
     const withNotifications = createMatcher([
       ['notifications', notifications],
-      ['discussions', discussions],
+      ['discussions', discussions]
     ])
     expect(withNotifications.translate('Suggested filters', [...SCOPE])).toBe('建议的筛选器')
   })
@@ -545,7 +532,7 @@ describe('discussions 页面词条', () => {
   it('全站 static 的 Close as duplicate 与问题页的 scoped 同译', () => {
     const withIssues = createMatcher([
       ['issues', issues],
-      ['discussions', discussions],
+      ['discussions', discussions]
     ])
     expect(withIssues.translate('Close as duplicate', ['common', 'repository', 'issues'])).toBe('以重复关闭')
     expect(withIssues.translate('Close as duplicate', [...SCOPE])).toBe('以重复关闭')
@@ -555,7 +542,7 @@ describe('discussions 页面词条', () => {
   it('You’re ignoring this repository. 与拉取请求页的全站 static 同译', () => {
     const withPulls = createMatcher([
       ['pulls', pulls],
-      ['discussions', discussions],
+      ['discussions', discussions]
     ])
     const straight = "You're ignoring this repository."
     expect(withPulls.translate(straight, ['common', 'repository', 'pulls'])).toBe('你正在忽略此存储库。')
@@ -573,14 +560,12 @@ describe('discussions 页面词条', () => {
 })
 
 describe('discussions 忽略选择器', () => {
-  it.each(dict.ignore ?? [])('%s 是合法选择器', (selector) => {
+  it.each(dict.ignore ?? [])('%s 是合法选择器', selector => {
     expect(() => document.createElement('div').querySelector(selector)).not.toThrow()
   })
 
   it('搜索框的高亮层与尺寸层由全局忽略选择器排除', () => {
-    expect(IGNORE_SELECTORS).toEqual(
-      expect.arrayContaining(['.QueryBuilder-StyledInputContent', '.QueryBuilder-Sizer']),
-    )
+    expect(IGNORE_SELECTORS).toEqual(expect.arrayContaining(['.QueryBuilder-StyledInputContent', '.QueryBuilder-Sizer']))
   })
 
   it('投票问题与选项被忽略，界面文字不被忽略', () => {
@@ -597,7 +582,7 @@ describe('discussions 忽略选择器', () => {
       </div>`
     const selector = (dict.ignore ?? []).join(', ')
     const ignored = (text: string): boolean => {
-      const element = [...document.querySelectorAll('*')].reverse().find((node) => node.textContent?.trim() === text)
+      const element = [...document.querySelectorAll('*')].reverse().find(node => node.textContent?.trim() === text)
       return Boolean(element?.closest(selector))
     }
     expect(ignored('Which option is better?')).toBe(true)
@@ -691,8 +676,8 @@ describe('discussions 繁体词条（完整语言包）', () => {
     ['settings', '設定'],
     [
       'Since you’re new here, we’re helping you to get started by generating your first post to the community. Don’t worry, you can edit this discussion after you post!',
-      '你是新成員，我們為你產生了第一篇社群貼文來協助你上手。別擔心，發布後仍可編輯此討論！',
-    ],
+      '你是新成員，我們為你產生了第一篇社群貼文來協助你上手。別擔心，發布後仍可編輯此討論！'
+    ]
   ])('%s → %s', (input, expected) => {
     expect(twMatcher.translate(input, SCOPE)).toBe(expected)
   })

@@ -2,7 +2,7 @@ import type { PageDictionary } from '../../../core/types'
 
 const ORG_INVITE_VERB: Readonly<Record<string, string>> = {
   Invite: '邀請成員加入',
-  Add: '新增成員至',
+  Add: '新增成員至'
 }
 
 /** 登录后全局导航栏：头部按钮、全局导航侧栏、用户菜单、新建菜单、Copilot 与代理菜单、存储库标签导航 */
@@ -70,8 +70,7 @@ export default {
     'Pro+': '專業增強版',
     'Meet the new Copilot': '認識全新的 Copilot',
     'Close announcement': '關閉公告',
-    'Start a session or revisit recent sessions from the navigation bar.':
-      '從導覽列開始工作階段或重新開啟最近的工作階段。',
+    'Start a session or revisit recent sessions from the navigation bar.': '從導覽列開始工作階段或重新開啟最近的工作階段。',
     "Start a session or revisit recent sessions from the navigation bar. Choose Learn more for a quick tour of what's new.":
       '從導覽列開始工作階段或重新開啟最近的工作階段。選擇瞭解詳情可快速瀏覽新功能。',
     'Opening Copilot': '正在開啟 Copilot',
@@ -195,8 +194,7 @@ export default {
     'An error has occurred while switching accounts. Please try again.': '切換帳號時發生錯誤。請再試一次。',
     'An error occurred while switching accounts. Please try again.': '切換帳號時發生錯誤。請再試一次。',
     'Unable to switch to the selected account.': '無法切換到選取的帳號。',
-    'Please try again. If the issue persists, try adding the account again.':
-      '請再試一次。如果問題持續發生，請嘗試再次新增此帳號。',
+    'Please try again. If the issue persists, try adding the account again.': '請再試一次。如果問題持續發生，請嘗試再次新增此帳號。',
 
     // 企业栏
     'Data residency:': '資料落地：',
@@ -219,7 +217,7 @@ export default {
     Codespaces: '程式碼空間',
     Models: '模型',
     'Security and quality': '安全性和品質',
-    Insights: '洞察',
+    Insights: '洞察'
   },
   regexp: [
     // 已登录头部搜索按钮的无障碍名称与按钮文字（快捷键不是 / 时）
@@ -236,6 +234,6 @@ export default {
     [/^Users managed by (.+)$/, '由 $1 管理的使用者'],
     // 代理菜单：会话数播报、正在创建的任务
     [/^(\d+) recent sessions?$/, '$1 個最近的工作階段'],
-    [/^Creating task in ([\w.-]+\/[\w.-]+)$/, '正在 $1 中建立任務'],
-  ],
+    [/^Creating task in ([\w.-]+\/[\w.-]+)$/, '正在 $1 中建立任務']
+  ]
 } satisfies PageDictionary

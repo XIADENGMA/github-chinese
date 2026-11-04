@@ -57,8 +57,7 @@ export default {
 
     // 新建表单
     'Create new codespace': '建立新的程式碼空間',
-    'Get started with development in the cloud from an existing repository or a template.':
-      '從現有儲存庫或範本開始在雲端開發。',
+    'Get started with development in the cloud from an existing repository or a template.': '從現有儲存庫或範本開始在雲端開發。',
     'Find out more about codespaces.': '進一步瞭解程式碼空間。',
     'Start coding': '開始寫程式',
     'Unable to load repositories, please reload the page.': '無法載入儲存庫，請重新載入頁面。',
@@ -110,12 +109,11 @@ export default {
     // 申请额外权限（/codespaces/allow_permissions）：此程式碼空間正在請求 <額外權限>
     'This codespace is requesting': '此程式碼空間正在請求',
     'additional permissions': '額外權限',
-    'Your codespace is requesting the following permissions for these repositories:':
-      '你的程式碼空間正在為這些儲存庫請求下列權限：',
+    'Your codespace is requesting the following permissions for these repositories:': '你的程式碼空間正在為這些儲存庫請求下列權限：',
     'The following permissions were also requested but are not available. You can continue but the codespace may not function as intended.':
       '另外也請求了下列權限，但這些權限無法使用。你可以繼續，但程式碼空間可能無法正常運作。',
     'Continue without authorizing': '不授權並繼續',
-    'Authorize and continue': '授權並繼續',
+    'Authorize and continue': '授權並繼續'
   },
   scoped: {
     // 模板名（快速启动模板卡片的标题被全局忽略规则屏蔽时不生效）
@@ -168,7 +166,7 @@ export default {
     installed: '安裝',
     // 申请额外权限
     'Contents:': '內容：',
-    write: '寫入',
+    write: '寫入'
   },
   regexp: [
     [/^Owned by ([\w.-]+)$/, '擁有者為 $1'],
@@ -181,14 +179,11 @@ export default {
     [/^By ([\w-]+)$/, '由 $1 發布'],
 
     // 列表状态与提示
-    [
-      /^This codespace is (\d+) commits? ahead of remote and has uncommitted changes$/,
-      '此程式碼空間領先遠端 $1 個提交且有未提交的變更',
-    ],
+    [/^This codespace is (\d+) commits? ahead of remote and has uncommitted changes$/, '此程式碼空間領先遠端 $1 個提交且有未提交的變更'],
     [/^This codespace is (\d+) commits? ahead of remote$/, '此程式碼空間領先遠端 $1 個提交'],
     [
       /^You['’]re at (\d+)% of your included usage for this billing period\. For more information, view your$/,
-      '你已達到本帳單週期包含使用量的 $1%。如需詳細資訊，請查看你的',
+      '你已達到本帳單週期包含使用量的 $1%。如需詳細資訊，請查看你的'
     ],
     [/^(\d+) permissions? requested$/, '請求了 $1 項權限'],
 
@@ -197,13 +192,13 @@ export default {
     [/^Codespace "(.+)" deleted\.$/, '程式碼空間「$1」已刪除。'],
     [
       new RegExp(
-        `^Your codespace "(.+)" has been updated to use machine type: "${SPEC}"\\. Changes will take effect the next time your codespace restarts\\.$`,
+        `^Your codespace "(.+)" has been updated to use machine type: "${SPEC}"\\. Changes will take effect the next time your codespace restarts\\.$`
       ),
-      '你的程式碼空間「$1」已改用機器類型「$2 核心、$3 GB 記憶體、$4 GB 儲存空間」。變更將在程式碼空間下次重新啟動時生效。',
+      '你的程式碼空間「$1」已改用機器類型「$2 核心、$3 GB 記憶體、$4 GB 儲存空間」。變更將在程式碼空間下次重新啟動時生效。'
     ],
     [/^Your codespace "(.+)" has been updated\.$/, '你的程式碼空間「$1」已更新。'],
     [/^Your codespace "(.+)" will no longer be auto-deleted\.$/, '你的程式碼空間「$1」將不再自動刪除。'],
     [/^(.+) has unpushed changes, are you sure you want to delete\?$/, '$1 有未推送的變更，確定要刪除嗎？'],
-    [/^Are you sure you want to delete (.+)\?$/, '確定要刪除 $1 嗎？'],
-  ],
+    [/^Are you sure you want to delete (.+)\?$/, '確定要刪除 $1 嗎？']
+  ]
 } satisfies PageDictionary

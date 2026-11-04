@@ -7,7 +7,7 @@ import {
   safeMatches,
   selectorKeys,
   splitSelectorList,
-  tagMatches,
+  tagMatches
 } from '../../../src/core/selectors'
 
 function element(html: string): Element {
@@ -18,11 +18,7 @@ function element(html: string): Element {
 
 describe('splitSelectorList', () => {
   it('按顶层逗号拆分，忽略括号与引号内的逗号', () => {
-    expect(splitSelectorList('.a, :is(h1, h2) > b,[title="x, y"] , ')).toEqual([
-      '.a',
-      ':is(h1, h2) > b',
-      '[title="x, y"]',
-    ])
+    expect(splitSelectorList('.a, :is(h1, h2) > b,[title="x, y"] , ')).toEqual(['.a', ':is(h1, h2) > b', '[title="x, y"]'])
     expect(splitSelectorList('a\\,b, c')).toEqual(['a\\,b', 'c'])
   })
 })
@@ -33,30 +29,18 @@ describe('selectorKeys', () => {
     ['#user-profile-frame .d-table-cell .color-fg-muted.text-small', [{ kind: 'class', name: 'color-fg-muted' }]],
     ['article.Box-row > h2', [{ kind: 'tag', name: 'h2' }]],
     ['div#main', [{ kind: 'id', name: 'main' }]],
-    [
-      'a[data-hovercard-type="user"]',
-      [{ kind: 'attribute', condition: { name: 'data-hovercard-type', operator: '=', value: 'user' } }],
-    ],
+    ['a[data-hovercard-type="user"]', [{ kind: 'attribute', condition: { name: 'data-hovercard-type', operator: '=', value: 'user' } }]],
     ['[contenteditable=""]', [{ kind: 'attribute', condition: { name: 'contenteditable', operator: '=', value: '' } }]],
     ['[data-gcn-ignore]', [{ kind: 'attribute', condition: { name: 'data-gcn-ignore', operator: '', value: '' } }]],
-    [
-      '[class*="prc-Token-"] [class*=\'Text-\' i]',
-      [{ kind: 'attribute', condition: { name: 'class', operator: '*=', value: 'text-' } }],
-    ],
-    [
-      'p[class*="description__"]',
-      [{ kind: 'attribute', condition: { name: 'class', operator: '*=', value: 'description__' } }],
-    ],
-    [
-      '[itemprop~=codeRepository][itemprop="x"]',
-      [{ kind: 'attribute', condition: { name: 'itemprop', operator: '=', value: 'x' } }],
-    ],
+    ['[class*="prc-Token-"] [class*=\'Text-\' i]', [{ kind: 'attribute', condition: { name: 'class', operator: '*=', value: 'text-' } }]],
+    ['p[class*="description__"]', [{ kind: 'attribute', condition: { name: 'class', operator: '*=', value: 'description__' } }]],
+    ['[itemprop~=codeRepository][itemprop="x"]', [{ kind: 'attribute', condition: { name: 'itemprop', operator: '=', value: 'x' } }]],
     [
       'a:not([href$="l=Other"]) > [itemprop="keywords"]',
-      [{ kind: 'attribute', condition: { name: 'itemprop', operator: '=', value: 'keywords' } }],
+      [{ kind: 'attribute', condition: { name: 'itemprop', operator: '=', value: 'keywords' } }]
     ],
     ['.pinned-item-list-item-content tool-tip', [{ kind: 'tag', name: 'tool-tip' }]],
-    ['h1::before', [{ kind: 'tag', name: 'h1' }]],
+    ['h1::before', [{ kind: 'tag', name: 'h1' }]]
   ])('%s', (selector, keys) => {
     expect(selectorKeys(selector)).toEqual(keys)
   })
@@ -65,20 +49,17 @@ describe('selectorKeys', () => {
     expect(selectorKeys('[data-listview-item-title-container] :is(h1, h2, .title)')).toEqual([
       { kind: 'tag', name: 'h1' },
       { kind: 'tag', name: 'h2' },
-      { kind: 'class', name: 'title' },
+      { kind: 'class', name: 'title' }
     ])
     expect(selectorKeys(':where(.a b, c)')).toEqual([
       { kind: 'tag', name: 'b' },
-      { kind: 'tag', name: 'c' },
+      { kind: 'tag', name: 'c' }
     ])
   })
 
-  it.each(['*', ':root', ':is(*, .a)', ':not(.a)', '.a\\:b', '[xlink|href]', ':is(.a):is(.b)', ':has(.a)'])(
-    '%s 提取不到特征',
-    (selector) => {
-      expect(selectorKeys(selector)).toBeUndefined()
-    },
-  )
+  it.each(['*', ':root', ':is(*, .a)', ':not(.a)', '.a\\:b', '[xlink|href]', ':is(.a):is(.b)', ':has(.a)'])('%s 提取不到特征', selector => {
+    expect(selectorKeys(selector)).toBeUndefined()
+  })
 })
 
 describe('conditionHolds', () => {
@@ -94,7 +75,7 @@ describe('conditionHolds', () => {
     ['*=', 'token-', 'x prc-Token-y', true],
     ['*=', 'zzz', 'abc', false],
     ['=', 'user', 'USER', true],
-    ['', '', 'anything', true],
+    ['', '', 'anything', true]
   ])('%s %s 对 %s → %s', (operator, value, actual, expected) => {
     expect(conditionHolds({ name: 'x', operator, value }, actual)).toBe(expected)
   })
@@ -129,9 +110,9 @@ describe('元素匹配', () => {
       '[class*="prc-TopicTag-"]',
       'article > h2',
       '#readme',
-      '[data-listview-item-title-container] :is(h3)',
+      '[data-listview-item-title-container] :is(h3)'
     ],
-    probe,
+    probe
   )
 
   it.each([
@@ -143,7 +124,7 @@ describe('元素匹配', () => {
     ['<span class="prc-TopicTag-TopicTag-abc"></span>', true],
     ['<span class="prc-Other"></span>', false],
     ['<article><h2></h2></article>', false],
-    ['<section id="readme"></section>', true],
+    ['<section id="readme"></section>', true]
   ])('%s → %s', (html, expected) => {
     expect(elementMatches(index, element(html))).toBe(expected)
   })
@@ -172,7 +153,7 @@ describe('元素匹配', () => {
     const broken = {
       matches: () => {
         throw new Error('bad')
-      },
+      }
     } as unknown as Element
     expect(safeMatches(broken, '.a')).toBe(false)
   })

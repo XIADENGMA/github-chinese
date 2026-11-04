@@ -7,7 +7,7 @@ const ADD_EMAIL_ERRORS: ReadonlyMap<string, string> = new Map([
   ['email is already in use', '電子郵件已被使用'],
   ['Email is already in use', '電子郵件已被使用'],
   ['email is invalid', '電子郵件無效'],
-  ['Email is invalid', '電子郵件無效'],
+  ['Email is invalid', '電子郵件無效']
 ])
 
 /**
@@ -102,8 +102,7 @@ export default {
     'when performing web-based Git operations (e.g. edits and merges) and sending email on your behalf. If you want command line Git operations to use your private email you must':
       '來執行網頁上的 Git 操作（例如編輯和合併）和代你傳送電子郵件。如果要讓命令列 Git 操作使用不公開的電子郵件，你必須',
     'set your email in Git': '在 Git 中設定電子郵件',
-    'Previously authored commits associated with a public email will remain public.':
-      '先前使用公開電子郵件撰寫的提交將保持公開。',
+    'Previously authored commits associated with a public email will remain public.': '先前使用公開電子郵件撰寫的提交將保持公開。',
     'Your primary email address is now public. To select which email to display on your profile, visit':
       '你的主要電子郵件地址現已公開。若要選擇在個人檔案中顯示哪個電子郵件，請前往',
     'profile settings.': '個人檔案設定。',
@@ -146,32 +145,32 @@ export default {
     'To stop receiving emails for the topics below, uncheck any topics you don’t want to receive, then click Save subscription preferences':
       '若要停止接收以下主題的電子郵件，請取消勾選不想接收的主題，然後按一下儲存訂閱偏好設定',
     'General info and offers from GitHub': '來自 GitHub 的一般資訊和優惠',
-    'Unsubscribe from all topics': '取消訂閱所有主題',
+    'Unsubscribe from all topics': '取消訂閱所有主題'
   },
   scoped: {
     // 电子邮件标签
     Primary: '主要',
-    Backup: '備用',
+    Backup: '備用'
   },
   regexp: [
     [
       // 句号随原文；「e.g. edits and merges」作「編輯和合併等」，不加括号
       new RegExp(
-        `^Emails you can use to sign in to your account\\. Your emails will not be used as the ['‘]from['’] address for web-based Git operations, e\\.g\\. edits and merges\\. All web-based Git operations will be linked to ${EMAIL}(\\.?)$`,
+        `^Emails you can use to sign in to your account\\. Your emails will not be used as the ['‘]from['’] address for web-based Git operations, e\\.g\\. edits and merges\\. All web-based Git operations will be linked to ${EMAIL}(\\.?)$`
       ),
       (_, email: string, dot: string) =>
-        `可用來登入帳號的電子郵件。你的電子郵件不會作為網頁上編輯和合併等 Git 操作的「寄件者」地址。所有網頁上的 Git 操作都會連結到 ${email}${dot ? '。' : ''}`,
+        `可用來登入帳號的電子郵件。你的電子郵件不會作為網頁上編輯和合併等 Git 操作的「寄件者」地址。所有網頁上的 Git 操作都會連結到 ${email}${dot ? '。' : ''}`
     ],
     [
       new RegExp(`^We sent a verification email to ${EMAIL}\\. Please follow the instructions in it\\.$`),
-      '我們已傳送驗證電子郵件至 $1。請依照其中的說明操作。',
+      '我們已傳送驗證電子郵件至 $1。請依照其中的說明操作。'
     ],
     [new RegExp(`^Your primary email was changed to ${EMAIL}\\.$`), '你的主要電子郵件已變更為 $1。'],
     [
       new RegExp(
-        `^Because you have email privacy enabled, ${EMAIL} will be used for account-related notifications as well as password resets\\. ${EMAIL} will be used for web-based Git operations, e\\.g\\.,? edits and merges\\.$`,
+        `^Because you have email privacy enabled, ${EMAIL} will be used for account-related notifications as well as password resets\\. ${EMAIL} will be used for web-based Git operations, e\\.g\\.,? edits and merges\\.$`
       ),
-      '由於你已啟用電子郵件隱私，$1 將用於帳號相關通知和重設密碼。$2 將用於網頁上編輯和合併等 Git 操作。',
+      '由於你已啟用電子郵件隱私，$1 將用於帳號相關通知和重設密碼。$2 將用於網頁上編輯和合併等 Git 操作。'
     ],
     [new RegExp(`^Removed email ${EMAIL} from your account\\.$`), '已從你的帳號中移除電子郵件 $1。'],
     [new RegExp(`^Subscription preferences for ${EMAIL}$`), '$1 的訂閱偏好設定'],
@@ -181,14 +180,14 @@ export default {
     // 断开 Google / Apple 连接的确认对话框（social identity provider → 社群身分識別提供者）
     [
       new RegExp(
-        `^This will disconnect ${EMAIL} from your social identity provider\\. You will no longer be able to use it as a password alternative\\.$`,
+        `^This will disconnect ${EMAIL} from your social identity provider\\. You will no longer be able to use it as a password alternative\\.$`
       ),
-      '這將中斷 $1 與社群身分識別提供者的連接。你將無法再用它代替密碼。',
+      '這將中斷 $1 與社群身分識別提供者的連接。你將無法再用它代替密碼。'
     ],
     // 添加电子邮件失败的提示：原因未收录时保留原文
     [
       new RegExp(`^Error adding ${EMAIL}: (.+)$`),
-      (_, email: string, reason: string) => `新增 ${email} 時發生錯誤：${ADD_EMAIL_ERRORS.get(reason) ?? reason}`,
-    ],
-  ],
+      (_, email: string, reason: string) => `新增 ${email} 時發生錯誤：${ADD_EMAIL_ERRORS.get(reason) ?? reason}`
+    ]
+  ]
 } satisfies PageDictionary

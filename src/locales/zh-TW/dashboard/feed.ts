@@ -2,8 +2,7 @@ import type { PageDictionary } from '../../../core/types'
 
 /** 推荐原因：You're seeing this because you <reason> <target>；目标未拼进同一节点时只译前半句（标点随原文，不加冒号） */
 function reasonText(reason: string, target: string): string {
-  if (reason === 'collaborated with')
-    return target ? `你看到此內容是因為你曾與 ${target} 協作` : '你看到此內容是因為你曾協作過'
+  if (reason === 'collaborated with') return target ? `你看到此內容是因為你曾與 ${target} 協作` : '你看到此內容是因為你曾協作過'
   if (reason === 'starred') return target ? `你看到此內容是因為你為 ${target} 加了星號` : '你看到此內容是因為你加了星號'
   return target ? `你看到此內容是因為你追蹤了 ${target}` : '你看到此內容是因為你追蹤了'
 }
@@ -12,7 +11,7 @@ function reasonText(reason: string, target: string): string {
 const FEWER: Readonly<Record<string, string>> = {
   starred: '已加星號的',
   forked: '分叉的',
-  trending: '熱門',
+  trending: '熱門'
 }
 
 /**
@@ -109,7 +108,7 @@ export default {
     'Failed to apply filters. Resetting your feed.': '無法套用篩選器。正在重設你的動態。',
     'feed item heading menu': '動態項目標題選單',
     'card content': '卡片內容',
-    'Repo Details': '儲存庫詳細資料',
+    'Repo Details': '儲存庫詳細資料'
   },
   scoped: {
     // 标签页
@@ -137,14 +136,11 @@ export default {
     // 旧版动态里单独的 opened：议题、拉取请求的动词 open 都作“建立”（GLOSSARY.zh-TW pull request、Open 行）
     // （采集数据中没有该卡片，未核实是否也会接拉取请求链接）
     opened: '建立了',
-    'your repository': '你的儲存庫',
+    'your repository': '你的儲存庫'
   },
   regexp: [
     // 条目选项菜单：You're seeing this because you starred octo-org/hello-world
-    [
-      /^You[’']re seeing this because you (starred|follow|collaborated with)(?: (.+))?$/,
-      (_, reason, target) => reasonText(reason, target),
-    ],
+    [/^You[’']re seeing this because you (starred|follow|collaborated with)(?: (.+))?$/, (_, reason, target) => reasonText(reason, target)],
     // 聚合卡片：and 3 more / 5 more commits » / added 2 repositories to
     [/^and ([\d,]+) more$/, '和其他 $1 個'],
     [/^([\d,]+) more commits? »$/, '還有 $1 個提交 »'],
@@ -156,25 +152,16 @@ export default {
     // 旧版动态卡片的“不感兴趣”菜单：I'm not interested in starred repositories from octocat
     [
       /^I[’']m not interested in (starred|forked) repositories from ([\w.-]+)$/,
-      (_, kind, user) => `對 ${user} ${kind === 'starred' ? '加星號' : '分叉'}的儲存庫不感興趣`,
+      (_, kind, user) => `對 ${user} ${kind === 'starred' ? '加星號' : '分叉'}的儲存庫不感興趣`
     ],
     [/^I[’']m not interested in ([\w.-]+\/[\w.-]+)$/, '對 $1 不感興趣'],
-    [
-      /^I want to see fewer (starred|forked|trending) repositories$/,
-      (_, kind) => `減少顯示${FEWER[kind] ?? kind}儲存庫`,
-    ],
-    [
-      /^Dismissed a repository from ([\w.-]+\/[\w.-]+)\. Thank you for the feedback!$/,
-      '已從動態中移除 $1。感謝你的意見回饋！',
-    ],
+    [/^I want to see fewer (starred|forked|trending) repositories$/, (_, kind) => `減少顯示${FEWER[kind] ?? kind}儲存庫`],
+    [/^Dismissed a repository from ([\w.-]+\/[\w.-]+)\. Thank you for the feedback!$/, '已從動態中移除 $1。感謝你的意見回饋！'],
     // 卡片区域与星号计数的无障碍名称：repository body 0 / Repo Details 1 / 523 stargazers
     [/^repository body (\d+)$/, '儲存庫內容 $1'],
     [/^Repo Details (\d+)$/, '儲存庫詳細資料 $1'],
     [/^([\d,]+) stargazers?$/, '$1 位加星號的使用者'],
     // 追踪按钮：Follow octocat / Unfollow octocat
-    [
-      /^(Follow|Unfollow) ([A-Za-z\d][\w-]*)$/,
-      (_, action, user) => `${action === 'Follow' ? '追蹤' : '取消追蹤'} ${user}`,
-    ],
-  ],
+    [/^(Follow|Unfollow) ([A-Za-z\d][\w-]*)$/, (_, action, user) => `${action === 'Follow' ? '追蹤' : '取消追蹤'} ${user}`]
+  ]
 } satisfies PageDictionary

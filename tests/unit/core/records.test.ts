@@ -9,7 +9,7 @@ function setReadyState(state: DocumentReadyState): void {
 /** 同一父元素下依次排列的文本节点 */
 function textsIn(...values: string[]): Text[] {
   const parent = document.createElement('p')
-  const nodes = values.map((value) => document.createTextNode(value))
+  const nodes = values.map(value => document.createTextNode(value))
   parent.append(...nodes)
   return nodes
 }
@@ -43,7 +43,7 @@ describe('textSource：文档解析中，解析器追加到已写入节点', () 
     ['数字', '123'],
     ['非 ASCII 字母', 'é'],
     ['组合附加符号', '\u0301'],
-    ['下划线', '_'],
+    ['下划线', '_']
   ])('已译节点追加%s：按原文加追加部分重译，记录清除', (_, extra) => {
     const [node] = textsIn('Opened by octocat') as [Text]
     records.writeText(node, 'Opened by octocat', '由 octocat 打开')
@@ -148,7 +148,7 @@ describe('textSource：文档解析中，解析器追加到已写入节点', () 
 })
 
 describe('textSource：解析结束后', () => {
-  it.each(['interactive', 'complete'] as const)('%s：追加也按外部改写处理，当前值成为新原文', (state) => {
+  it.each(['interactive', 'complete'] as const)('%s：追加也按外部改写处理，当前值成为新原文', state => {
     setReadyState(state)
     const [node] = textsIn('Edit') as [Text]
     records.writeText(node, 'Edit', '编辑')

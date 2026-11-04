@@ -17,7 +17,7 @@ const localeScript = (patch: Partial<RegisteredScript> = {}): RegisteredScript =
   js: ['locale-zh-cn.js'],
   runAt: 'document_start',
   persistAcrossSessions: true,
-  ...patch,
+  ...patch
 })
 
 beforeEach(() => {
@@ -35,9 +35,7 @@ describe('syncLocaleScript', () => {
   it('开启时注册当前语言的词典脚本：document_start，站点与内容脚本相同，跨会话保留', async () => {
     await syncLocaleScript(settings({ language: 'zh-TW' }))
     expect(registered).toEqual([localeScript({ js: ['locale-zh-tw.js'] })])
-    expect(fakeBrowser.scripting.registerContentScripts).toHaveBeenCalledWith([
-      expect.objectContaining({ persistAcrossSessions: true }),
-    ])
+    expect(fakeBrowser.scripting.registerContentScripts).toHaveBeenCalledWith([expect.objectContaining({ persistAcrossSessions: true })])
   })
 
   it('语言自动时按浏览器环境选（测试环境无中文、时区非台港澳 → 简体）', async () => {
@@ -73,9 +71,7 @@ describe('syncLocaleScript', () => {
   it('改语言后仍跨会话保留：更新时显式写持久（Chromium 的更新不带该标志即改为仅本次会话）', async () => {
     await syncLocaleScript(settings({ language: 'zh-CN' }))
     await syncLocaleScript(settings({ language: 'zh-TW' }))
-    expect(fakeBrowser.scripting.updateContentScripts).toHaveBeenCalledWith([
-      expect.objectContaining({ persistAcrossSessions: true }),
-    ])
+    expect(fakeBrowser.scripting.updateContentScripts).toHaveBeenCalledWith([expect.objectContaining({ persistAcrossSessions: true })])
     expect(registered).toEqual([localeScript({ js: ['locale-zh-tw.js'] })])
   })
 
@@ -106,7 +102,7 @@ describe('syncLocaleScript', () => {
     const [github, gist, status] = GITHUB_ORIGINS
     registered.push(localeScript())
     vi.mocked(fakeBrowser.scripting.getRegisteredContentScripts).mockResolvedValueOnce([
-      { ...localeScript(), matches: [status!, github!, gist!, github!] },
+      { ...localeScript(), matches: [status!, github!, gist!, github!] }
     ] as never)
     await syncLocaleScript(settings({ language: 'zh-CN' }))
     expect(fakeBrowser.scripting.updateContentScripts).not.toHaveBeenCalled()
@@ -117,7 +113,7 @@ describe('syncLocaleScript', () => {
       id: LOCALE_SCRIPT_ID,
       matches: [...GITHUB_ORIGINS],
       js: ['/locale-zh-cn.js'],
-      runAt: 'document_start',
+      runAt: 'document_start'
     })
     await syncLocaleScript(settings({ language: 'zh-CN' }))
     expect(fakeBrowser.scripting.updateContentScripts).not.toHaveBeenCalled()
@@ -153,7 +149,7 @@ describe('syncLocaleScript', () => {
   it('Firefox（申请 scripting，查询按注册时的顺序返回站点列表）：照常注册，相同设置不更新', async () => {
     vi.stubEnv('FIREFOX', 'true')
     vi.mocked(fakeBrowser.scripting.getRegisteredContentScripts).mockImplementation((async () =>
-      registered.map((script) => ({ ...script }))) as never)
+      registered.map(script => ({ ...script }))) as never)
     await syncLocaleScript(settings({ language: 'zh-TW' }))
     await syncLocaleScript(settings({ language: 'zh-TW' }))
     expect(registered).toEqual([localeScript({ js: ['locale-zh-tw.js'] })])

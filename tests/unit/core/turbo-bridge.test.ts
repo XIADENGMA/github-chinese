@@ -6,7 +6,7 @@ import {
   TURBO_RESET_EVENT,
   TURBO_REVISIT_EVENT,
   TURBO_TRANSLATING_EVENT,
-  type BridgeWindow,
+  type BridgeWindow
 } from '../../../src/core/turbo-bridge'
 import { $, settle, TEST_BUNDLE } from './helpers'
 
@@ -75,11 +75,11 @@ function createTurbo(): FakeTurbo {
   return {
     cache: {
       clear: vi.fn(() => snapshots.clear()),
-      exemptPageFromCache: vi.fn(setNoCache),
+      exemptPageFromCache: vi.fn(setNoCache)
     },
     visit: vi.fn((url: string, options?: { action?: string }) => {
       if (visitStarts) startVisit(url, options?.action)
-    }),
+    })
   }
 }
 
@@ -226,7 +226,7 @@ function frameResponse(): void {
   document.body.append(frame)
   frame.dispatchEvent(new CustomEvent('turbo:before-fetch-response', { bubbles: true, detail: {} }))
   frame.remove()
-  const transients = [...document.head.querySelectorAll(TRANSIENT)].map((element) => element.cloneNode(true) as Element)
+  const transients = [...document.head.querySelectorAll(TRANSIENT)].map(element => element.cloneNode(true) as Element)
   cachedTransients.set(location.href, transients)
 }
 
@@ -473,7 +473,7 @@ describe('重复安装（扩展更新、补注）', () => {
       clones: {},
       visiting: 'yes',
       translatedUrls: [location.href],
-      restored: {},
+      restored: {}
     }
     install()
     expect(uninstallOld).toHaveBeenCalledTimes(1)
@@ -488,7 +488,7 @@ describe('重复安装（扩展更新、补注）', () => {
     ;(window as unknown as Record<symbol, unknown>)[BRIDGE_KEY] = {
       uninstall() {
         throw new Error('page')
-      },
+      }
     }
     expect(() => install()).not.toThrow()
     renderCachedSnapshot()
@@ -1634,7 +1634,7 @@ describe('与控制器一起：排除路径', () => {
       MutationObserver,
       navigation,
       addEventListener: (type, listener) => window.addEventListener(type, listener),
-      removeEventListener: (type, listener) => window.removeEventListener(type, listener),
+      removeEventListener: (type, listener) => window.removeEventListener(type, listener)
     }
     const controller = createController({
       bundle: TEST_BUNDLE,
@@ -1657,12 +1657,12 @@ describe('与控制器一起：排除路径', () => {
         newTabPaths: [],
         accelerateSource: 'ghfast',
         customSources: [],
-        removedSources: [],
+        removedSources: []
       },
       customEntries: {},
-      isPathExcluded: (pathname, patterns) => patterns.some((pattern) => pathname.startsWith(pattern)),
+      isPathExcluded: (pathname, patterns) => patterns.some(pattern => pathname.startsWith(pattern)),
       onReset: () => window.dispatchEvent(new Event(TURBO_RESET_EVENT)),
-      host,
+      host
     })
     const answer = (event: Event): void => {
       if (controller.translator.active) event.preventDefault()
@@ -1674,7 +1674,7 @@ describe('与控制器一起：排除路径', () => {
       stop() {
         window.removeEventListener(TURBO_TRANSLATING_EVENT, answer)
         controller.dispose()
-      },
+      }
     }
   }
 

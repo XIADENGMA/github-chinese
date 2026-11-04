@@ -34,12 +34,7 @@ const MAX_CLASS_RANGE = 256
 const DIGITS: readonly string[] = [...'0123456789']
 
 /** 扫描 [start, end)：跳过转义与字符类，遇到括号与顶层 | 时回调 */
-function scan(
-  source: string,
-  start: number,
-  end: number,
-  visit: (char: string, index: number) => boolean | void,
-): void {
+function scan(source: string, start: number, end: number, visit: (char: string, index: number) => boolean | void): void {
   let inClass = false
   for (let index = start; index < end; index += 1) {
     const char = source[index]!
@@ -269,7 +264,7 @@ function mergeOrdered(a: readonly number[], b: readonly number[]): number[] {
 }
 
 export function createRegExpIndex(rules: readonly RegExpRule[]): RegExpIndex {
-  const indexed: IndexedRule[] = rules.map((rule) => ({ rule, prefix: literalPrefix(rule[0]) }))
+  const indexed: IndexedRule[] = rules.map(rule => ({ rule, prefix: literalPrefix(rule[0]) }))
   const wild: number[] = []
   const byHead = new Map<string, number[]>()
   rules.forEach(([pattern], position) => {
@@ -284,7 +279,7 @@ export function createRegExpIndex(rules: readonly RegExpRule[]): RegExpIndex {
       else byHead.set(char, [position])
     }
   })
-  const wildRules = wild.map((position) => indexed[position]!)
+  const wildRules = wild.map(position => indexed[position]!)
   /** 首字符 → 候选规则：第一次用到时合并 */
   const merged = new Map<string, readonly IndexedRule[]>()
 
@@ -294,9 +289,9 @@ export function createRegExpIndex(rules: readonly RegExpRule[]): RegExpIndex {
       const cached = merged.get(char)
       if (cached) return cached
       const own = byHead.get(char)
-      const list = own ? mergeOrdered(own, wild).map((position) => indexed[position]!) : wildRules
+      const list = own ? mergeOrdered(own, wild).map(position => indexed[position]!) : wildRules
       merged.set(char, list)
       return list
-    },
+    }
   }
 }

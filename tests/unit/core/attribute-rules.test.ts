@@ -14,7 +14,7 @@ describe('compileAttributeRules / applyAttributeRules', () => {
     ['[invalid', 'title', /^(.+)$/, '不应生效'],
     ['.a', 'title', /^View (.+)$/, '查看 $1'],
     ['.b', 'title', /^View (.+)$/, '浏览 $1'],
-    ['span', 'aria-label', /^(.+)$/, '$1'],
+    ['span', 'aria-label', /^(.+)$/, '$1']
   ]
   const set = compileAttributeRules(rules, probe)
 

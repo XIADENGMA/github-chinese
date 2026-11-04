@@ -11,7 +11,7 @@ const App = await importSfc(() => import('../../../src/entrypoints/options/App.v
 
 enableAutoUnmount(afterEach)
 
-const BUILTIN_NAMES = BUILTIN_SOURCES.map((source) => source.name)
+const BUILTIN_NAMES = BUILTIN_SOURCES.map(source => source.name)
 /** 加速源的行（不含最前面的自动选择） */
 const SOURCE_ROWS = 'tbody tr:not([data-test="source-auto"])'
 
@@ -25,7 +25,7 @@ async function render(): Promise<VueWrapper> {
 }
 
 function tab(wrapper: VueWrapper): DOMWrapper<Element> {
-  const found = wrapper.findAll('[role="tab"]').find((item) => item.text() === '加速设置')
+  const found = wrapper.findAll('[role="tab"]').find(item => item.text() === '加速设置')
   if (!found) throw new Error('未找到标签：加速设置')
   return found
 }
@@ -40,17 +40,17 @@ function toastTexts(wrapper: VueWrapper): string[] {
   return wrapper
     .get('[aria-live="polite"]')
     .findAll('.ui-toast')
-    .map((toast) => toast.text())
+    .map(toast => toast.text())
 }
 
 function button(scope: DOMWrapper<Element>, text: string): DOMWrapper<HTMLButtonElement> {
-  const found = scope.findAll('button').find((item) => item.text() === text)
+  const found = scope.findAll('button').find(item => item.text() === text)
   if (!found) throw new Error(`未找到按钮：${text}`)
   return found as DOMWrapper<HTMLButtonElement>
 }
 
 function switchOf(scope: DOMWrapper<Element>, label: string): DOMWrapper<HTMLButtonElement> {
-  const labelEl = scope.findAll('label').find((item) => item.text() === label)
+  const labelEl = scope.findAll('label').find(item => item.text() === label)
   if (!labelEl) throw new Error(`未找到开关：${label}`)
   return scope.get(`#${CSS.escape(labelEl.attributes('for') ?? '')}`) as DOMWrapper<HTMLButtonElement>
 }
@@ -67,26 +67,26 @@ interface RowView {
 function rows(wrapper: VueWrapper): RowView[] {
   return section(wrapper)
     .findAll(SOURCE_ROWS)
-    .map((row) => {
+    .map(row => {
       const cells = row.findAll('td')
       return {
         name: row.get('.source-name').text(),
         template: row.get('.source-template').text(),
         latency: cells[1]?.text() ?? '',
         ping: cells[2]?.text() ?? '',
-        preferred: (row.get('input[type="radio"]').element as HTMLInputElement).checked,
+        preferred: (row.get('input[type="radio"]').element as HTMLInputElement).checked
       }
     })
 }
 
 function names(wrapper: VueWrapper): string[] {
-  return rows(wrapper).map((row) => row.name)
+  return rows(wrapper).map(row => row.name)
 }
 
 function row(wrapper: VueWrapper, name: string): DOMWrapper<Element> {
   const found = section(wrapper)
     .findAll(SOURCE_ROWS)
-    .find((item) => item.get('.source-name').text() === name)
+    .find(item => item.get('.source-name').text() === name)
   if (!found) throw new Error(`未找到加速源：${name}`)
   return found
 }
@@ -119,16 +119,16 @@ describe.skipIf(!App)('设置页：加速', () => {
     expect(tab(wrapper).attributes('aria-selected')).toBe('true')
     expect(scope.find('h2').exists()).toBe(false)
     const content = scope.get('.section').element
-    const order = ['.switches', '.sources-tools', '.list-frame', '.source-form'].map((selector) =>
-      [...content.children].indexOf(content.querySelector(`:scope > ${selector}`)!),
+    const order = ['.switches', '.sources-tools', '.list-frame', '.source-form'].map(selector =>
+      [...content.children].indexOf(content.querySelector(`:scope > ${selector}`)!)
     )
     expect(order).toEqual([...order].sort((a, b) => a - b))
-    expect(order.every((index) => index >= 0)).toBe(true)
+    expect(order.every(index => index >= 0)).toBe(true)
     expect(
       scope
         .get('.sources-tools')
         .findAll('button')
-        .map((item) => item.text()),
+        .map(item => item.text())
     ).toEqual(['测速', '恢复内置'])
   })
 
@@ -150,16 +150,16 @@ describe.skipIf(!App)('设置页：加速', () => {
     for (const label of ['加速下载', '加速图片', '故障转移']) {
       expect(switchOf(scope, label).attributes('aria-checked'), label).toBe('false')
     }
-    expect(scope.findAll('th').map((item) => item.text())).toEqual(['加速源', '延迟', 'Ping', '操作'])
+    expect(scope.findAll('th').map(item => item.text())).toEqual(['加速源', '延迟', 'Ping', '操作'])
     expect(rows(wrapper)[0]).toEqual({
       name: 'ghfast.top',
       template: 'https://ghfast.top/{url}',
       latency: '—',
       ping: '—',
-      preferred: true,
+      preferred: true
     })
     expect(names(wrapper)).toEqual(BUILTIN_NAMES)
-    expect(rows(wrapper).filter((item) => item.preferred)).toHaveLength(1)
+    expect(rows(wrapper).filter(item => item.preferred)).toHaveLength(1)
     expect((scope.get('[data-test="source-auto"] input').element as HTMLInputElement).checked).toBe(false)
     expect(button(scope, '恢复内置').element.disabled).toBe(true)
     expect(button(scope, '测速').element.disabled).toBe(false)
@@ -168,7 +168,7 @@ describe.skipIf(!App)('设置页：加速', () => {
   it.each([
     ['加速下载', 'accelerate'],
     ['加速图片', 'accelerateImages'],
-    ['故障转移', 'failover'],
+    ['故障转移', 'failover']
   ] as const)('%s 开关即时保存', async (label, key) => {
     const wrapper = await render()
     await switchOf(section(wrapper), label).trigger('click')
@@ -182,7 +182,7 @@ describe.skipIf(!App)('设置页：加速', () => {
     await row(wrapper, 'wget.la').get('input[type="radio"]').setValue(true)
     await settle()
     expect((await getSettings()).accelerateSource).toBe('wget-la')
-    expect(rows(wrapper).map((item) => item.preferred)).toEqual(BUILTIN_NAMES.map((name) => name === 'wget.la'))
+    expect(rows(wrapper).map(item => item.preferred)).toEqual(BUILTIN_NAMES.map(name => name === 'wget.la'))
   })
 
   it('自动选择：列表最前一行，选中后保存，加速源都不选中；故障转移显示为开启且不可用', async () => {
@@ -194,7 +194,7 @@ describe.skipIf(!App)('设置页：加速', () => {
     await auto.get('input[type="radio"]').setValue(true)
     await settle()
     expect((await getSettings()).accelerateSource).toBe(AUTO_SOURCE_ID)
-    expect(rows(wrapper).some((item) => item.preferred)).toBe(false)
+    expect(rows(wrapper).some(item => item.preferred)).toBe(false)
     const failover = switchOf(section(wrapper), '故障转移')
     expect(failover.attributes('aria-checked')).toBe('true')
     expect(failover.element.disabled).toBe(true)
@@ -211,12 +211,12 @@ describe.skipIf(!App)('设置页：加速', () => {
     await addSource(wrapper, '', 'https://other.example/{path}')
     expect(rows(wrapper).slice(-2)).toEqual([
       { name: 'Mirror', template: 'https://mirror.example/{url}', latency: '—', ping: '—', preferred: false },
-      { name: 'other.example', template: 'https://other.example/{path}', latency: '—', ping: '—', preferred: false },
+      { name: 'other.example', template: 'https://other.example/{path}', latency: '—', ping: '—', preferred: false }
     ])
     expect(
       section(wrapper)
         .findAll<HTMLInputElement>('form input')
-        .map((input) => input.element.value),
+        .map(input => input.element.value)
     ).toEqual(['', ''])
     expect(document.activeElement).toBe(section(wrapper).find('form input').element)
     expect((await getSettings()).customSources).toHaveLength(2)
@@ -231,7 +231,7 @@ describe.skipIf(!App)('设置页：加速', () => {
 
   it.each([
     ['格式错误', 'http://mirror.example/{url}', '格式错误'],
-    ['已存在（写法不同、效果相同）', 'https://ghfast.top', '已存在'],
+    ['已存在（写法不同、效果相同）', 'https://ghfast.top', '已存在']
   ])('添加失败（%s）：提示，表单保留', async (_name, template, message) => {
     const wrapper = await render()
     await addSource(wrapper, 'Mirror', template)
@@ -244,7 +244,7 @@ describe.skipIf(!App)('设置页：加速', () => {
     const customSources = Array.from({ length: MAX_CUSTOM_SOURCES }, (_, index) => ({
       id: `custom-${index}`,
       name: `M${index}`,
-      template: `https://m${index}.example/{url}`,
+      template: `https://m${index}.example/{url}`
     }))
     await settingsItem.setValue({ ...ZH_SETTINGS, customSources })
     const wrapper = await render()
@@ -255,12 +255,12 @@ describe.skipIf(!App)('设置页：加速', () => {
   it('删除内置源后可恢复；删除自定义源', async () => {
     await settingsItem.setValue({
       ...ZH_SETTINGS,
-      customSources: [{ id: 'custom-1', name: 'Mirror', template: 'https://mirror.example/{url}' }],
+      customSources: [{ id: 'custom-1', name: 'Mirror', template: 'https://mirror.example/{url}' }]
     })
     const wrapper = await render()
     await row(wrapper, 'wget.la').get('button').trigger('click')
     await settle()
-    expect(names(wrapper)).toEqual([...BUILTIN_NAMES.filter((name) => name !== 'wget.la'), 'Mirror'])
+    expect(names(wrapper)).toEqual([...BUILTIN_NAMES.filter(name => name !== 'wget.la'), 'Mirror'])
     expect((await getSettings()).removedSources).toEqual(['wget-la'])
     await row(wrapper, 'Mirror').get('button').trigger('click')
     await settle()
@@ -315,7 +315,7 @@ describe.skipIf(!App)('设置页：加速', () => {
     const pending: (() => void)[] = []
     const fetch = vi.fn((url: string) => {
       if (url === 'https://wget.la/') return Promise.reject(new TypeError('Failed to fetch'))
-      if (url === 'https://hk.gh-proxy.org/') return new Promise((resolve) => pending.push(() => resolve({})))
+      if (url === 'https://hk.gh-proxy.org/') return new Promise(resolve => pending.push(() => resolve({})))
       return Promise.resolve({})
     })
     vi.stubGlobal('fetch', fetch)

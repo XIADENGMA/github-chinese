@@ -15,7 +15,7 @@ const EFFORT: Readonly<Record<string, string>> = {
   thorough: '深度',
   deep: '深度',
   max: '最高',
-  auto: '自动',
+  auto: '自动'
 }
 
 const EFFORT_SOURCE = Object.keys(EFFORT).join('|')
@@ -35,8 +35,7 @@ export default {
     // 审查者
     'Request review': '请求审查',
     'Reviewers whose approvals may not affect merge requirements': '其批准可能不影响合并要求的审查者',
-    'Only reviews by reviewers with write access count toward mergeability':
-      '只有具有写入访问权限的审查者的审查计入可合并性',
+    'Only reviews by reviewers with write access count toward mergeability': '只有具有写入访问权限的审查者的审查计入可合并性',
     // 审查者列表中 Copilot 头像链接的读屏文字（<span class="sr-only">）；产品名按 product-names.md 译出
     'Copilot code review': 'Copilot 代码审查',
     'Copilot review effort': 'Copilot 审查强度',
@@ -107,7 +106,7 @@ export default {
       '可选择其他人可见的锁定原因。了解何时适合',
     'lock conversations': '锁定对话',
     'You do not have permissions to comment on this pull request.': '你没有在此拉取请求上评论的权限。',
-    'Apply labels to this pull request': '为此拉取请求应用标签',
+    'Apply labels to this pull request': '为此拉取请求应用标签'
   },
   scoped: {
     // 分区标题与空状态（与议题侧栏同译）
@@ -178,7 +177,7 @@ export default {
     'You’re receiving notifications because you were assigned.': '你因被分配了此拉取请求而收到通知。',
     'You’re receiving notifications because your review was requested.': '你因被请求审查而收到通知。',
     'You’re receiving notifications because you modified the open/close state.': '你因更改了打开/关闭状态而收到通知。',
-    "You're not receiving notifications from this thread.": '你不会收到此线程的通知。',
+    "You're not receiving notifications from this thread.": '你不会收到此线程的通知。'
   },
   regexp: [
     // 审查者提示
@@ -205,17 +204,17 @@ export default {
     // 原文无标点，译文不加逗号
     [
       new RegExp(`^${LOGIN} will automatically review once the pull request is marked ready for review$`),
-      '$1 将在拉取请求标记为可供审查后自动审查',
+      '$1 将在拉取请求标记为可供审查后自动审查'
     ],
     [
       new RegExp(`^${LOGIN} will be requested when the pull request is marked ready for review$`),
-      '将在拉取请求标记为可供审查后请求 $1 审查',
+      '将在拉取请求标记为可供审查后请求 $1 审查'
     ],
     [
       new RegExp(`^Reviewing(?: at (${EFFORT_SOURCE}) effort)?(?: · Last completed: (${EFFORT_SOURCE}))?$`),
-      (_, requested, completed) => reviewingText(requested, completed),
+      (_, requested, completed) => reviewingText(requested, completed)
     ],
     // 受理人
-    [/^Assign up to (\d+) people to this pull request$/, '最多为此拉取请求分配 $1 人'],
-  ],
+    [/^Assign up to (\d+) people to this pull request$/, '最多为此拉取请求分配 $1 人']
+  ]
 } satisfies PageDictionary

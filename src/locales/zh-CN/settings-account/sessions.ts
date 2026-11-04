@@ -19,7 +19,7 @@ const VERSION_SOURCE = '( \\d+(?:[._]\\d+)*)?'
 /** 作为“浏览器”出现的 GitHub 客户端名按用户规定译成中文；浏览器名保留原文 */
 const CLIENT_NAMES: Readonly<Record<string, string>> = {
   'GitHub Desktop': 'GitHub 桌面版',
-  'GitHub Mobile': 'GitHub 移动版',
+  'GitHub Mobile': 'GitHub 移动版'
 }
 
 /**
@@ -41,8 +41,7 @@ export default {
     'GitHub Mobile sessions': 'GitHub 移动版会话',
     'This is a list of devices that have logged into your account via the GitHub Mobile app. Revoke any session that you do not recognize or you can':
       '这是通过 GitHub 移动版应用登录过你帐户的设备列表。撤销你不认识的会话或者',
-    'your GitHub Mobile app authorization to sign out of all your devices.':
-      '你的 GitHub 移动版应用授权以退出所有设备。',
+    'your GitHub Mobile app authorization to sign out of all your devices.': '你的 GitHub 移动版应用授权以退出所有设备。',
     'GitHub Mobile can be used to verify your identity when signing in from a new device and as a two-factor authentication method.':
       'GitHub 移动版可用于在新设备登录时验证身份以及用作双因素身份验证方法。',
     'Learn more about authentication with GitHub Mobile.': '了解使用 GitHub 移动版进行身份验证。',
@@ -58,37 +57,31 @@ export default {
     'Revoke session': '撤销会话',
     'Device:': '设备：',
     'Last location:': '上次位置：',
-    'Signed in:': '登录时间：',
+    'Signed in:': '登录时间：'
   },
   scoped: {
     revoke: '撤销',
     // 会话状态指示（aria-label / title）
     active: '活跃',
-    stale: '闲置',
+    stale: '闲置'
   },
   regexp: [
-    [
-      new RegExp(`^Last accessed(?: -)? (${TIME_SOURCE})$`),
-      (_, time: string) => joinCjk('上次访问于', translateTime(time)),
-    ],
+    [new RegExp(`^Last accessed(?: -)? (${TIME_SOURCE})$`), (_, time: string) => joinCjk('上次访问于', translateTime(time))],
     [new RegExp(`^Registered - (${TIME_SOURCE})$`), (_, time: string) => joinCjk('注册于', translateTime(time))],
-    [
-      new RegExp(`^Last used for authentication - (${TIME_SOURCE})$`),
-      (_, time: string) => joinCjk('上次身份验证于', translateTime(time)),
-    ],
+    [new RegExp(`^Last used for authentication - (${TIME_SOURCE})$`), (_, time: string) => joinCjk('上次身份验证于', translateTime(time))],
     // 会话出现过的国家/地区代码：Seen in CN, HK → 曾在 CN, HK 使用
     [/^Seen in (.+)$/, '曾在 $1 使用'],
     // 会话行详细信息按钮的无障碍名称：地点为国家/地区名时沿用 common 的译名，其他地点保留原文；原文无标点，不加括号
     [
       new RegExp(`^View details of session from (.+?) last accessed (${TIME_SOURCE})$`),
       (_, location: string, time: string) =>
-        joinCjk(joinCjk(`查看来自${regionName(location)}且上次访问于`, translateTime(time)), '的会话详细信息'),
+        joinCjk(joinCjk(`查看来自${regionName(location)}且上次访问于`, translateTime(time)), '的会话详细信息')
     ],
     // 设备：浏览器与系统名保留原文（GitHub 客户端名译成中文），语序改为“系统 上的 浏览器”
     [
       new RegExp(`^${BROWSER_SOURCE}${VERSION_SOURCE} on ${OS_SOURCE}${VERSION_SOURCE}$`),
       (_, browser: string, browserVersion: string, os: string, osVersion: string) =>
-        `${os}${osVersion} 上的 ${CLIENT_NAMES[browser] ?? browser}${browserVersion}`,
-    ],
-  ],
+        `${os}${osVersion} 上的 ${CLIENT_NAMES[browser] ?? browser}${browserVersion}`
+    ]
+  ]
 } satisfies PageDictionary

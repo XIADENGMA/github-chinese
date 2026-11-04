@@ -109,10 +109,8 @@ export default {
     'We couldn’t check your export status. Please try again later.': '無法檢查匯出狀態。請稍後再試。',
 
     // 内容排除（组织）
-    'Choose the repositories and paths that GitHub Copilot should exclude.':
-      '選擇 GitHub Copilot 應排除的儲存庫和路徑。',
-    'All exclusions defined will apply to all members of your organization.':
-      '定義的所有排除項目都將套用至組織的所有成員。',
+    'Choose the repositories and paths that GitHub Copilot should exclude.': '選擇 GitHub Copilot 應排除的儲存庫和路徑。',
+    'All exclusions defined will apply to all members of your organization.': '定義的所有排除項目都將套用至組織的所有成員。',
     'Repositories and paths to exclude:': '要排除的儲存庫和路徑：',
 
     // 运行器类型（组织级）
@@ -147,7 +145,7 @@ export default {
     'Add API key': '新增 API 金鑰',
     'Available models': '可用模型',
     'Deployment URL': '部署 URL',
-    'Enable GitHub Copilot': '啟用 GitHub Copilot',
+    'Enable GitHub Copilot': '啟用 GitHub Copilot'
   },
   scoped: {
     // 「…will have access to」+「Copilot」+「inside your organization.」
@@ -220,8 +218,7 @@ export default {
     'Excluded paths not updated, check the errors and try again.': '排除路徑未更新，請檢查錯誤後再試一次。',
     'Excluded paths updated.': '已更新排除路徑。',
     'Delete excluded paths': '刪除排除路徑',
-    'You are about to delete all excluded paths. Are you sure you want to proceed?':
-      '你即將刪除所有排除路徑。確定要繼續嗎？',
+    'You are about to delete all excluded paths. Are you sure you want to proceed?': '你即將刪除所有排除路徑。確定要繼續嗎？',
     'Copilot won’t be able to access or utilize the contents located in those specified paths.':
       'Copilot 將無法存取或使用這些指定路徑中的內容。',
     "Copilot won't be able to access or utilize the contents located in those specified paths.":
@@ -281,7 +278,7 @@ export default {
     Firewall: '防火牆',
     Allowlist: '允許清單',
     'Paths to exclude': '要排除的路徑',
-    'Repositories and paths to exclude': '要排除的儲存庫和路徑',
+    'Repositories and paths to exclude': '要排除的儲存庫和路徑'
   },
   regexp: [
     [/^(\d+) seats? assigned$/, '已指派 $1 個席次'],
@@ -290,7 +287,7 @@ export default {
     [/^(\d+) teams? selected$/, '已選取 $1 個團隊'],
     [
       /^You have (\d+) characters, but the maximum is (\d+)(\.?)$/,
-      (_, count: string, max: string, dot: string) => `目前有 ${count} 個字元，上限為 ${max} 個${dot ? '。' : ''}`,
+      (_, count: string, max: string, dot: string) => `目前有 ${count} 個字元，上限為 ${max} 個${dot ? '。' : ''}`
     ],
     // 模型策略说明（与个人 Copilot 设置一致）
     [/^If enabled, you can access and send data to ([\w .()/:-]{1,100})\.$/, '啟用後，你可以存取 $1 並向其傳送資料。'],
@@ -302,36 +299,33 @@ export default {
     // 登录名放在「計費的」之后，避免「octocat 向 octo-org 計費」读成 octocat 收费
     [
       /^This will permanently delete user-scoped Copilot memories for ([\w-]+) that are billed to (.+)\.$/,
-      '這會永久刪除向 $2 計費的 $1 使用者範圍 Copilot 記憶。',
+      '這會永久刪除向 $2 計費的 $1 使用者範圍 Copilot 記憶。'
     ],
     [
       /^This will permanently delete user-scoped Copilot memories for all users with Copilot seats billed to (.+)\.$/,
-      '這會永久刪除 Copilot 席次向 $1 計費之所有使用者的使用者範圍 Copilot 記憶。',
+      '這會永久刪除 Copilot 席次向 $1 計費之所有使用者的使用者範圍 Copilot 記憶。'
     ],
     [
       /^This will download user-scoped Copilot memories for ([\w-]+) that are billed to (.+)\.$/,
-      '這會下載向 $2 計費的 $1 使用者範圍 Copilot 記憶。',
+      '這會下載向 $2 計費的 $1 使用者範圍 Copilot 記憶。'
     ],
     [
       /^This will download user-scoped Copilot memories for all users with Copilot seats billed to (.+)\.$/,
-      '這會下載 Copilot 席次向 $1 計費之所有使用者的使用者範圍 Copilot 記憶。',
+      '這會下載 Copilot 席次向 $1 計費之所有使用者的使用者範圍 Copilot 記憶。'
     ],
     // 下载记忆对话框第二段：「… in this 」+ 实体类型 +「.」三个相邻文本节点，整段拼读
     [
       /^By clicking Download memories, you confirm you have permission to access this information on behalf of users in this (organization|enterprise)\.$/,
-      (_, entity: string) => `按一下下載記憶即表示你確認有權代表此${ENTITY_TYPES[entity]}的使用者存取這些資訊。`,
+      (_, entity: string) => `按一下下載記憶即表示你確認有權代表此${ENTITY_TYPES[entity]}的使用者存取這些資訊。`
     ],
     // 内容排除的继承规则说明：图标 +「 Values defined by 」+ 名称 +「's administrators can't be edited」，整段拼读
     [/^Values defined by (.+?)['’]s administrators can['’]t be edited$/, '由 $1 的管理員定義的值無法編輯'],
     // 继承规则标签：「Excluded paths inherited from 」+ 层级 +「 」+ 名称 +「:」。名称有链接时前三段拼读、
     // 冒号是孤立标点（拼读为「排除路徑繼承自企業 <a>octo-ent</a>：」）；没有链接时名称也是文本，整段拼读
-    [
-      /^Excluded paths inherited from (enterprise|organization)$/,
-      (_, level: string) => `排除路徑繼承自${ENTITY_TYPES[level]}`,
-    ],
+    [/^Excluded paths inherited from (enterprise|organization)$/, (_, level: string) => `排除路徑繼承自${ENTITY_TYPES[level]}`],
     [
       /^Excluded paths inherited from (enterprise|organization) (.+):$/,
-      (_, level: string, name: string) => `排除路徑繼承自${ENTITY_TYPES[level]} ${name}：`,
-    ],
-  ],
+      (_, level: string, name: string) => `排除路徑繼承自${ENTITY_TYPES[level]} ${name}：`
+    ]
+  ]
 } satisfies PageDictionary

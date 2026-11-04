@@ -1,14 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { createMatcher } from '../../../src/core/matcher'
-import {
-  addEntries,
-  lookupTable,
-  mergeTables,
-  packTable,
-  TABLE_SEPARATOR,
-  tableEntries,
-  type Table,
-} from '../../../src/core/table'
+import { addEntries, lookupTable, mergeTables, packTable, TABLE_SEPARATOR, tableEntries, type Table } from '../../../src/core/table'
 import type { LocaleBundle, PageDictionary, PageKey } from '../../../src/core/types'
 import { mergeDictionaries } from '../../../src/locales/shared/helpers'
 
@@ -22,7 +14,7 @@ function packDictionary(dict: PageDictionary): PageDictionary {
   return {
     ...dict,
     ...(dict.static ? { static: packed(dict.static) } : {}),
-    ...(dict.scoped ? { scoped: packed(dict.scoped) } : {}),
+    ...(dict.scoped ? { scoped: packed(dict.scoped) } : {})
   }
 }
 
@@ -37,8 +29,8 @@ describe('packTable', () => {
     expect(
       packTable([
         ['Open', '打开'],
-        ['Close', '关闭'],
-      ]),
+        ['Close', '关闭']
+      ])
     ).toBe(['Open', '打开', 'Close', '关闭'].join(TABLE_SEPARATOR))
     expect(packTable([['', '']])).toBe(TABLE_SEPARATOR)
   })
@@ -65,14 +57,14 @@ describe('三种形态的读取结果相同', () => {
       ['Close', '关闭'],
       ['Edit', '编辑'],
       ['', '空原文'],
-      ['Empty', ''],
+      ['Empty', '']
     ]
     expect([...mapOf(first, second)]).toEqual(expected)
     expect([...mapOf(packed(first), packed(second))]).toEqual(expected)
     expect([...mapOf(merged)]).toEqual(expected)
     expect([...mapOf({ Open: '已有' }, merged)].slice(0, 2)).toEqual([
       ['Open', '已有'],
-      ['Close', '关闭'],
+      ['Close', '关闭']
     ])
     expect(mapOf(undefined, packed({}))).toEqual(new Map())
   })
@@ -119,19 +111,19 @@ describe('mergeTables', () => {
     expect(tableEntries(mergeTables([mergeTables([a, c]), mergeTables([b, { A: '不应覆盖' }])]))).toEqual([
       ['A', '甲'],
       ['B', '乙'],
-      ['C', '丙'],
+      ['C', '丙']
     ])
   })
 
   it('mergeDictionaries：压缩串不复制，同一原文先出现者优先', () => {
     const merged = mergeDictionaries(
       packDictionary({ static: { A: '甲' }, scoped: { S: '一' } }),
-      packDictionary({ static: { A: '乙', B: '丙' } }),
+      packDictionary({ static: { A: '乙', B: '丙' } })
     )
     expect(Array.isArray(merged.static)).toBe(true)
     expect(tableEntries(merged.static)).toEqual([
       ['A', '甲'],
-      ['B', '丙'],
+      ['B', '丙']
     ])
     expect(tableEntries(merged.scoped)).toEqual([['S', '一']])
   })
@@ -141,12 +133,9 @@ describe('matcher 读取压缩串与合并表', () => {
   const bundle: LocaleBundle = [
     ['common', mergeDictionaries({ static: { Open: '打开', Shared: '共享' } }, { static: { Close: '关闭' } })],
     ['common', { static: { Open: '不应覆盖', Star: '星标' } }],
-    [
-      'repository',
-      mergeDictionaries({ scoped: { Open: '仓库-打开' } }, { scoped: { Open: '不应覆盖', Fork: '复刻' } }),
-    ],
+    ['repository', mergeDictionaries({ scoped: { Open: '仓库-打开' } }, { scoped: { Open: '不应覆盖', Fork: '复刻' } })],
     ['issues', { scoped: { Open: '未解决', Shared: '议题-共享' }, regexp: [[/^(\d+) open$/, '$1 个未解决']] }],
-    ['issues', { scoped: { Open: '不应覆盖', Labels: '标签' } }],
+    ['issues', { scoped: { Open: '不应覆盖', Labels: '标签' } }]
   ]
   /** 构建产物的形态：叶子表压缩成字符串，合并表是子表数组 */
   const packedBundle: LocaleBundle = bundle.map(([key, dict]): readonly [PageKey, PageDictionary] => [
@@ -154,8 +143,8 @@ describe('matcher 读取压缩串与合并表', () => {
     {
       ...dict,
       static: dict.static === undefined ? undefined : mergeTables([packed(dict.static)]),
-      scoped: dict.scoped === undefined ? undefined : mergeTables([packed(dict.scoped), packed({})]),
-    },
+      scoped: dict.scoped === undefined ? undefined : mergeTables([packed(dict.scoped), packed({})])
+    }
   ])
   const custom = { Labels: '自定义标签' }
   const scopes: PageKey[][] = [['common'], ['common', 'repository'], ['common', 'repository', 'issues']]
@@ -165,8 +154,7 @@ describe('matcher 读取压缩串与合并表', () => {
     const plain = createMatcher(bundle, { custom })
     const compact = createMatcher(packedBundle, { custom })
     for (const scope of scopes) {
-      for (const text of texts)
-        expect(compact.translate(text, scope), `${scope.join('|')} ${text}`).toBe(plain.translate(text, scope))
+      for (const text of texts) expect(compact.translate(text, scope), `${scope.join('|')} ${text}`).toBe(plain.translate(text, scope))
     }
     expect(compact.translate('Open', ['common', 'repository', 'issues'])).toBe('未解决')
     expect(compact.translate('Open', ['common', 'repository'])).toBe('仓库-打开')
@@ -196,11 +184,11 @@ describe('原文为 __proto__ 的自有条目（只能用计算键写出，插�
     expect(Object.entries(merged)).toEqual([
       ['__proto__', '先'],
       ['B', '乙'],
-      ['A', '甲'],
+      ['A', '甲']
     ])
     // 把 __proto__ 换成普通原文 P，用 Object.assign 对照顺序
     const assigned = Object.keys(Object.assign({}, { P: '后', B: '乙' }, { P: '先' }, { A: '甲' }))
-    expect(Object.keys(merged)).toEqual(assigned.map((key) => (key === 'P' ? '__proto__' : key)))
+    expect(Object.keys(merged)).toEqual(assigned.map(key => (key === 'P' ? '__proto__' : key)))
   })
 
   it('合并表含压缩串（子表数组）时与普通对象合并的结果相同', () => {
@@ -221,36 +209,30 @@ describe('原文为 __proto__ 的自有条目（只能用计算键写出，插�
     const table = packTable([
       ['__proto__', '原型条目'],
       ['A', '甲'],
-      ['A', '不应覆盖'],
+      ['A', '不应覆盖']
     ]) as unknown as Table
     expect(tableEntries(table)).toEqual([
       ['__proto__', '原型条目'],
-      ['A', '甲'],
+      ['A', '甲']
     ])
     expect([...mapOf(table)]).toEqual(tableEntries(table))
     expect(lookupTable(table)('__proto__')).toBe('原型条目')
     expect(tableEntries(mergeTables([{ B: '乙' }, table]))).toEqual([
       ['__proto__', '原型条目'],
       ['A', '甲'],
-      ['B', '乙'],
+      ['B', '乙']
     ])
   })
 
   it('matcher：mergeDictionaries 合并含该条目的表，源码形态与构建产物形态的语言包逐条相同', () => {
     const source: LocaleBundle = [
-      [
-        'common',
-        mergeDictionaries({ static: withProto('原型条目', { Sibling: '同表' }) }, { static: { Open: '打开' } }),
-      ],
-      ['repository', mergeDictionaries({ scoped: { Fork: '复刻' } }, { scoped: withProto('仓库原型') })],
+      ['common', mergeDictionaries({ static: withProto('原型条目', { Sibling: '同表' }) }, { static: { Open: '打开' } })],
+      ['repository', mergeDictionaries({ scoped: { Fork: '复刻' } }, { scoped: withProto('仓库原型') })]
     ]
     // 构建产物：含 __proto__ 的表不压缩，其余压缩成字符串
     const built: LocaleBundle = [
-      [
-        'common',
-        mergeDictionaries({ static: withProto('原型条目', { Sibling: '同表' }) }, { static: packed({ Open: '打开' }) }),
-      ],
-      ['repository', mergeDictionaries({ scoped: packed({ Fork: '复刻' }) }, { scoped: withProto('仓库原型') })],
+      ['common', mergeDictionaries({ static: withProto('原型条目', { Sibling: '同表' }) }, { static: packed({ Open: '打开' }) })],
+      ['repository', mergeDictionaries({ scoped: packed({ Fork: '复刻' }) }, { scoped: withProto('仓库原型') })]
     ]
     const plain = createMatcher(source)
     const compact = createMatcher(built)

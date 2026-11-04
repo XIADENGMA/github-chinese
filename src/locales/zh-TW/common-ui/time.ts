@@ -9,10 +9,7 @@ import { formatDate, isLocalZone, joinCjk, MONTH_SOURCE, relativeTime, TIME_SOUR
  */
 
 const MONTHS: ReadonlyMap<string, number> = new Map(
-  ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'].map((name, index) => [
-    name,
-    index + 1,
-  ]),
+  ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'].map((name, index) => [name, index + 1])
 )
 
 /** 月份名 → 数字；MONTH_SOURCE 匹配到的名称一定能换算 */
@@ -50,9 +47,7 @@ export function formatClock(hour: string, minute: string, meridiem = ''): string
 
 /** React 评论菜单等处的 aria-label 时间：7:05 AM today / 3:00 AM on July 1 / 3:00 AM on July 1, 2025 */
 export const ARIA_DATE_SOURCE = `\\d{1,2}:[0-5]\\d [AP]M (?:today|yesterday|on ${MONTH_SOURCE} \\d{1,2}(?:, \\d{4})?)`
-const ARIA_DATE_RE = new RegExp(
-  `^(\\d{1,2}):([0-5]\\d) ([AP]M) (?:(today|yesterday)|on (${MONTH_SOURCE}) (\\d{1,2})(?:, (\\d{4}))?)$`,
-)
+const ARIA_DATE_RE = new RegExp(`^(\\d{1,2}):([0-5]\\d) ([AP]M) (?:(today|yesterday)|on (${MONTH_SOURCE}) (\\d{1,2})(?:, (\\d{4}))?)$`)
 
 /** 7:05 AM on October 19 → 10 月 19 日 上午 7:05；7:05 AM today → 今天 上午 7:05 */
 export function translateAriaDate(text: string): string {
@@ -83,7 +78,7 @@ const DURATION_UNITS: Readonly<Record<string, string>> = {
   day: '天',
   week: '週',
   month: '個月',
-  year: '年',
+  year: '年'
 }
 
 /** 2 days → 2 天；1 month → 1 個月 */
@@ -99,7 +94,7 @@ const MICRO_UNITS: Readonly<Record<string, Intl.RelativeTimeFormatUnit>> = {
   d: 'day',
   w: 'week',
   mo: 'month',
-  y: 'year',
+  y: 'year'
 }
 
 /**
@@ -111,7 +106,7 @@ const ZONE_NAMES: Readonly<Record<string, string>> = { HST: 'HAST', HDT: 'HADT' 
 
 /** 带时刻的完整时间：Oct 26, 2026, 10:03 AM GMT+8 / … PDT / on Oct 26, 2026, 10:03 AM / October 26, 2026 02:03 */
 const DATETIME_RE = new RegExp(
-  `^(?:on )?(${MONTH_SOURCE}) (\\d{1,2})(?:, (\\d{4}))?,? (\\d{1,2}):([0-5]\\d)(?: ?([AP]M))?(?: (${ZONE_SOURCE}))?$`,
+  `^(?:on )?(${MONTH_SOURCE}) (\\d{1,2})(?:, (\\d{4}))?,? (\\d{1,2}):([0-5]\\d)(?: ?([AP]M))?(?: (${ZONE_SOURCE}))?$`
 )
 
 export default {
@@ -138,16 +133,13 @@ export default {
     'Last month': '上個月',
     'Last year': '去年',
     // 个人状态的自动清除时间（Never / in 30 minutes / after today …），译「永不」
-    Never: '永不',
+    Never: '永不'
   },
   regexp: [
     // 3 days ago、last week、Oct 26, 2026、on Jul 1
     [new RegExp(`^(${TIME_SOURCE})$`), (_, time: string) => translateTime(time)],
     // 紧凑格式：2d ago、1mo ago
-    [
-      /^(\d{1,4})(mo|[smhdwy]) ago$/,
-      (_, amount: string, unit: string) => relativeTime(-Number(amount), MICRO_UNITS[unit]!),
-    ],
+    [/^(\d{1,4})(mo|[smhdwy]) ago$/, (_, amount: string, unit: string) => relativeTime(-Number(amount), MICRO_UNITS[unit]!)],
     [new RegExp(`^[Uu]pdated (${TIME_SOURCE})$`), (_, time: string) => joinCjk(translateTime(time), '更新')],
     // Last updated 按术语表译「上次更新」，时间放后面：上次更新於 2 小時前
     [new RegExp(`^Last updated (${TIME_SOURCE})$`), (_, time: string) => joinCjk('上次更新於', translateTime(time))],
@@ -166,33 +158,29 @@ export default {
           monthOf(month),
           Number(day),
           hour24Of(hour, meridiem),
-          Number(minute),
+          Number(minute)
         )
         return local ? time : `${time} [${ZONE_NAMES[zone] ?? zone}]`
-      },
+      }
     ],
     [new RegExp(`^(${ARIA_DATE_SOURCE})$`), (_, date: string) => translateAriaDate(date)],
     [new RegExp(`^(${COMPACT_DATE_SOURCE})$`), (_, date: string) => translateCompactDate(date)],
     [
       /^(Today|Yesterday) at (\d{1,2}):([0-5]\d) ([AP]M)$/,
       (_, day: string, hour: string, minute: string, meridiem: string) =>
-        `${day === 'Today' ? '今天' : '昨天'} ${formatClock(hour, minute, meridiem)}`,
+        `${day === 'Today' ? '今天' : '昨天'} ${formatClock(hour, minute, meridiem)}`
     ],
 
     // 时间范围：Last 7 days → 最近 7 天、Past 24 hours → 過去 24 小時
     [
       /^(Last|Past) (\d+) (hours?|days?|weeks?|months?|years?)$/,
-      (_, range: string, amount: string, unit: string) =>
-        joinCjk(range === 'Last' ? '最近' : '過去', duration(amount, unit)),
+      (_, range: string, amount: string, unit: string) => joinCjk(range === 'Last' ? '最近' : '過去', duration(amount, unit))
     ],
     // 独立时长：24 hours、30 days、1 week
-    [
-      /^(\d+) (seconds?|minutes?|hours?|days?|weeks?|months?|years?)$/,
-      (_, amount: string, unit: string) => duration(amount, unit),
-    ],
+    [/^(\d+) (seconds?|minutes?|hours?|days?|weeks?|months?|years?)$/, (_, amount: string, unit: string) => duration(amount, unit)],
 
     // 编辑历史
     [/^Edited (\d[\d,]*) times?$/, '已編輯 $1 次'],
-    [/^edited by ([\w.-]+(?:\[bot\])?)$/, '由 $1 編輯'],
-  ],
+    [/^edited by ([\w.-]+(?:\[bot\])?)$/, '由 $1 編輯']
+  ]
 } satisfies PageDictionary

@@ -13,7 +13,7 @@ const RECIPIENT_NAMES: Readonly<Record<string, string>> = {
   'All sponsors': '全部赞助者',
   'Recurring sponsors': '定期赞助者',
   'One-time sponsors': '一次性赞助者',
-  'select filter': '选择筛选器',
+  'select filter': '选择筛选器'
 }
 
 /** 单个等级名：「$5 a month」「$10 one time」 */
@@ -118,8 +118,7 @@ export default {
       '选择一个已验证的电子邮件地址供我们就你的 GitHub 赞助个人资料与你联系。该地址不会公开。',
     'You can manage verified email addresses in your': '可在以下位置管理已验证的电子邮件地址',
     'Country or region of residence': '居住国家或地区',
-    'The country or region where you reside. This is required for tax purposes.':
-      '你居住的国家或地区。此项为税务所需。',
+    'The country or region where you reside. This is required for tax purposes.': '你居住的国家或地区。此项为税务所需。',
     'How you receive payments': '收款方式',
     'Bank account': '银行帐户',
     'Use a bank account to receive your sponsorships. Note: If you use a personal bank account, your country may tax your GitHub Sponsors payouts as personal income.':
@@ -138,16 +137,13 @@ export default {
     'Select a fiscal host': '选择财务托管方',
     'Fiscal host project profile URL': '财务托管方项目个人资料 URL',
     'Fiscal host project profile URL:': '财务托管方项目个人资料 URL：',
-    'Please include a link to your profile on your fiscal host’s site, if available.':
-      '如有，请附上你在财务托管方网站上的个人资料链接。',
-    "Please include a link to your profile on your fiscal host's site, if available.":
-      '如有，请附上你在财务托管方网站上的个人资料链接。',
+    'Please include a link to your profile on your fiscal host’s site, if available.': '如有，请附上你在财务托管方网站上的个人资料链接。',
+    "Please include a link to your profile on your fiscal host's site, if available.": '如有，请附上你在财务托管方网站上的个人资料链接。',
 
     // 候补名单 /sponsors/<name>/waitlist
     'If you have a bank account in': '如果你的银行帐户位于',
     'a country or region where GitHub Sponsors is generally available': 'GitHub 赞助已全面推出的国家或地区',
-    ', you will get an email from us when your application has been reviewed.':
-      '，申请经审查后我们会给你发送电子邮件。',
+    ', you will get an email from us when your application has been reviewed.': '，申请经审查后我们会给你发送电子邮件。',
     "If you don't have an eligible bank account, don't worry! We're working hard to get more countries out of beta soon. Join the waitlist to be the first to know.":
       '如果没有符合条件的银行帐户，不用担心！我们正在努力让更多国家尽快结束测试。加入候补名单以第一时间获知。',
     'Use a bank account': '使用银行帐户',
@@ -160,7 +156,7 @@ export default {
     'Use a fiscal host': '使用财务托管方',
     'You can use a fiscal host to join GitHub Sponsors instead of using your own bank account.':
       '可以通过财务托管方而非自己的银行帐户加入 GitHub 赞助。',
-    'Join waitlist': '加入候补名单',
+    'Join waitlist': '加入候补名单'
   },
   scoped: {
     // 仪表板侧栏
@@ -189,7 +185,7 @@ export default {
     // 「Your region is <not supported> or may be in <beta>.」
     'Your region is': '你所在的地区',
     'not supported': '不受支持',
-    'or may be in': '或可能处于',
+    'or may be in': '或可能处于'
   },
   regexp: [
     // 你的赞助者 / 电子邮件动态：收件人选择；未知名称保留原文时与中文前缀之间补空格
@@ -202,7 +198,7 @@ export default {
     [/^(\d+) remaining$/, '剩余 $1 个'],
 
     // 候补名单
-    [/^GitHub Sponsors is now out of beta for (\d+) regions!$/, 'GitHub 赞助已在 $1 个地区结束测试！'],
+    [/^GitHub Sponsors is now out of beta for (\d+) regions!$/, 'GitHub 赞助已在 $1 个地区结束测试！']
   ],
   ignore: [
     // 目标类型标签：GitHub 脚本比对其英文原文切换金额 / 人数预览，译文会使预览出错
@@ -210,6 +206,6 @@ export default {
     // 目标描述预览：脚本写入正在输入的描述
     '.js-sponsors-goal-description-preview',
     // 等级建议：勾选后脚本读取其文字作为新等级描述提交
-    ':has(> .js-tier-suggestion)',
-  ],
+    ':has(> .js-tier-suggestion)'
+  ]
 } satisfies PageDictionary

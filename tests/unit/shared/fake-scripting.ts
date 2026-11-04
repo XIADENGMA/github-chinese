@@ -27,15 +27,11 @@ export interface FakeContentScripts {
  */
 export function fakeContentScripts(): FakeContentScripts {
   const registered: RegisteredScript[] = []
-  const has = (id: string): boolean => registered.some((script) => script.id === id)
-  vi.spyOn(fakeBrowser.scripting, 'getRegisteredContentScripts').mockImplementation((async (filter?: {
-    ids?: string[]
-  }) =>
+  const has = (id: string): boolean => registered.some(script => script.id === id)
+  vi.spyOn(fakeBrowser.scripting, 'getRegisteredContentScripts').mockImplementation((async (filter?: { ids?: string[] }) =>
     registered
-      .filter((script) => !filter?.ids || filter.ids.includes(script.id))
-      .map((script) =>
-        script.matches ? { ...script, matches: [...new Set(script.matches)].sort() } : script,
-      )) as never)
+      .filter(script => !filter?.ids || filter.ids.includes(script.id))
+      .map(script => (script.matches ? { ...script, matches: [...new Set(script.matches)].sort() } : script))) as never)
   vi.spyOn(fakeBrowser.scripting, 'registerContentScripts').mockImplementation((async (scripts: RegisteredScript[]) => {
     for (const script of scripts) {
       if (has(script.id)) throw new Error(`Duplicate script ID '${script.id}'`)
@@ -44,20 +40,18 @@ export function fakeContentScripts(): FakeContentScripts {
   }) as never)
   vi.spyOn(fakeBrowser.scripting, 'updateContentScripts').mockImplementation((async (scripts: RegisteredScript[]) => {
     for (const script of scripts) {
-      const index = registered.findIndex((item) => item.id === script.id)
+      const index = registered.findIndex(item => item.id === script.id)
       if (index < 0) throw new Error(`Nonexistent script ID '${script.id}'`)
       registered[index] = {
         ...registered[index]!,
         ...script,
-        persistAcrossSessions: script.persistAcrossSessions ?? false,
+        persistAcrossSessions: script.persistAcrossSessions ?? false
       }
     }
   }) as never)
-  vi.spyOn(fakeBrowser.scripting, 'unregisterContentScripts').mockImplementation((async (filter?: {
-    ids?: string[]
-  }) => {
-    for (const id of filter?.ids ?? registered.map((script) => script.id)) {
-      const index = registered.findIndex((item) => item.id === id)
+  vi.spyOn(fakeBrowser.scripting, 'unregisterContentScripts').mockImplementation((async (filter?: { ids?: string[] }) => {
+    for (const id of filter?.ids ?? registered.map(script => script.id)) {
+      const index = registered.findIndex(item => item.id === id)
       if (index < 0) throw new Error(`Nonexistent script ID '${id}'`)
       registered.splice(index, 1)
     }
@@ -65,11 +59,11 @@ export function fakeContentScripts(): FakeContentScripts {
   return {
     registered,
     restart() {
-      const kept = registered.filter((script) => script.persistAcrossSessions !== false)
+      const kept = registered.filter(script => script.persistAcrossSessions !== false)
       registered.splice(0, registered.length, ...kept)
     },
     updateExtension() {
       registered.splice(0)
-    },
+    }
   }
 }

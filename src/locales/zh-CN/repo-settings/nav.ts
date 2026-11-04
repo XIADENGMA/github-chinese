@@ -63,7 +63,7 @@ export default {
       '已存档存储库的大多数设置已隐藏。须先取消存档此存储库才能更改这些设置。',
     "You don't have access to repository options": '你无权访问存储库选项',
     'You don’t have access to repository options': '你无权访问存储库选项',
-    'Check the sidebar for available repository settings.': '请在侧栏中查看可用的存储库设置。',
+    'Check the sidebar for available repository settings.': '请在侧栏中查看可用的存储库设置。'
   },
   scoped: {
     // 与组织设置、个人设置同名的菜单项
@@ -98,10 +98,10 @@ export default {
     'Private registries': '专用注册表',
     'GitHub Apps': 'GitHub 应用',
     'Rule insights': '规则见解',
-    'Rule Insights': '规则见解',
+    'Rule Insights': '规则见解'
   },
   regexp: [
     // 侧栏标题（读屏）：Settings: owner/repo
-    [/^Settings: ([\w.-]+\/[\w.-]+)$/, '设置：$1'],
-  ],
+    [/^Settings: ([\w.-]+\/[\w.-]+)$/, '设置：$1']
+  ]
 } satisfies PageDictionary

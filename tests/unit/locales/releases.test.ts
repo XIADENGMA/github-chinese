@@ -29,107 +29,105 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   {
     hits: [
       ['Releases: octo-org/hello-world', '发行版：octo-org/hello-world'],
-      ['Releases: octocat/Hello-World', '发行版：octocat/Hello-World'],
+      ['Releases: octocat/Hello-World', '发行版：octocat/Hello-World']
     ],
-    misses: ['Releases: octo-org'],
+    misses: ['Releases: octo-org']
   },
   { hits: [['Tags: octo-org/hello-world', '标签：octo-org/hello-world']], misses: ['Tags: hello-world'] },
   // 隐藏的页面标题
   {
     hits: [
       ['Releases · octo-org/hello-world', '发行版 · octo-org/hello-world'],
-      ['Tags · octocat/Hello-World', '标签 · octocat/Hello-World'],
+      ['Tags · octocat/Hello-World', '标签 · octocat/Hello-World']
     ],
-    misses: ['Issues · octo-org/hello-world'],
+    misses: ['Issues · octo-org/hello-world']
   },
   // 标签页标题段
   {
     hits: [
       ['Release v3.5.0', '发行版 v3.5.0'],
-      ['Release 1.2.3-beta.1', '发行版 1.2.3-beta.1'],
+      ['Release 1.2.3-beta.1', '发行版 1.2.3-beta.1']
     ],
-    misses: ['Release GitHub CLI 2.103.2', 'Release notes draft'],
+    misses: ['Release GitHub CLI 2.103.2', 'Release notes draft']
   },
   {
     hits: [
       ['to main since this release', '在此发行版之后进入 main'],
-      ['to release/3.x since this release', '在此发行版之后进入 release/3.x'],
+      ['to release/3.x since this release', '在此发行版之后进入 release/3.x']
     ],
-    misses: ['since this release'],
+    misses: ['since this release']
   },
   // 资产
   { hits: [['Show all 25 assets', '显示全部 25 个资产']], misses: ['Show all assets'] },
   {
     hits: [
       ['Copy to clipboard digest for gh_2.103.2_linux_386.deb', '复制 gh_2.103.2_linux_386.deb 的摘要到剪贴板'],
-      ['Copy to clipboard digest for GitHub CLI 2.103.2 checksums', '复制 GitHub CLI 2.103.2 checksums 的摘要到剪贴板'],
+      ['Copy to clipboard digest for GitHub CLI 2.103.2 checksums', '复制 GitHub CLI 2.103.2 checksums 的摘要到剪贴板']
     ],
-    misses: ['Copy to clipboard digest for'],
+    misses: ['Copy to clipboard digest for']
   },
   { hits: [['Remove attached binary app.zip', '删除附加的二进制文件 app.zip']], misses: ['Remove attached binaries'] },
   // 贡献者
   {
     hits: [
       ['octocat and hubot', 'octocat 和 hubot'],
-      ['dependabot[bot] and octocat', 'dependabot[bot] 和 octocat'],
+      ['dependabot[bot] and octocat', 'dependabot[bot] 和 octocat']
     ],
-    misses: ['and hubot'],
+    misses: ['and hubot']
   },
   {
     hits: [
       ['octocat, hubot, and 8 other contributors', 'octocat、hubot 和另外 8 个贡献者'],
-      ['octocat, hubot, monalisa, and 1 other contributor', 'octocat、hubot、monalisa 和另外 1 个贡献者'],
+      ['octocat, hubot, monalisa, and 1 other contributor', 'octocat、hubot、monalisa 和另外 1 个贡献者']
     ],
-    misses: ['and 8 other contributors'],
+    misses: ['and 8 other contributors']
   },
   {
     hits: [
       ['octocat, hubot, and monalisa', 'octocat、hubot 和 monalisa'],
-      ['a-b, c[bot], and d', 'a-b、c[bot] 和 d'],
+      ['a-b, c[bot], and d', 'a-b、c[bot] 和 d']
     ],
-    misses: ['octocat, and'],
+    misses: ['octocat, and']
   },
   // 标记页
   {
     hits: [
       ["Toggle v3.6.0-rc.13's commit message", '切换 v3.6.0-rc.13 的提交消息'],
-      ['Toggle v1.0’s commit message', '切换 v1.0 的提交消息'],
+      ['Toggle v1.0’s commit message', '切换 v1.0 的提交消息']
     ],
-    misses: ['Toggle v1.0 commit message'],
+    misses: ['Toggle v1.0 commit message']
   },
   // 编辑 / 删除按钮
   { hits: [['Edit: v1.0.0', '编辑：v1.0.0']], misses: ['Edit:'] },
   { hits: [['Delete: v1.0.0', '删除：v1.0.0']], misses: ['Delete:'] },
   {
     hits: [['This will delete the information for the release v1.0.0.', '这将删除发行版 v1.0.0 的信息。']],
-    misses: ['This will delete the information for the release.'],
+    misses: ['This will delete the information for the release.']
   },
   {
     hits: [
       ['There are no releases containing "foo".', '没有包含“foo”的发行版。'],
-      ['There are no releases containing “v9”.', '没有包含“v9”的发行版。'],
+      ['There are no releases containing “v9”.', '没有包含“v9”的发行版。']
     ],
-    misses: ['There are no releases.'],
+    misses: ['There are no releases.']
   },
   // 发布表单：标记选择
   { hits: [['v2.0.0 will be created on publish', 'v2.0.0 将在发布时创建']], misses: ['will be created on publish'] },
   {
     hits: [['v1.0.0 is used by another release', 'v1.0.0 已被其他发行版使用']],
-    misses: ['is used by another release'],
+    misses: ['is used by another release']
   },
   {
-    hits: [
-      ['v1.0.0 is used by an immutable release and cannot be reused', 'v1.0.0 已被不可变发行版使用且无法再次使用'],
-    ],
-    misses: ['is used by an immutable release and cannot be reused', 'v1.0.0 is used by an immutable release'],
+    hits: [['v1.0.0 is used by an immutable release and cannot be reused', 'v1.0.0 已被不可变发行版使用且无法再次使用']],
+    misses: ['is used by an immutable release and cannot be reused', 'v1.0.0 is used by an immutable release']
   },
   // 发布表单：标记与上一个标记按钮的无障碍名称
   {
     hits: [
       ['Tag: v1.0.0', '标签：v1.0.0'],
-      ['Tag: release/2026-10', '标签：release/2026-10'],
+      ['Tag: release/2026-10', '标签：release/2026-10']
     ],
-    misses: ['Tag:v1.0.0'],
+    misses: ['Tag:v1.0.0']
   },
   { hits: [['Previous tag: v0.9.0', '上一个标签：v0.9.0']], misses: ['Previous tag:v0.9.0'] },
   // 发布表单：提交失败
@@ -137,22 +135,19 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     hits: [
       [
         "There was an error creating your Release: tag name can't be blank, tag name is not well-formed, published releases must have a valid tag.",
-        '创建发行版时出错：标签名称不能为空，标签名称格式不正确，已发布的发行版必须有有效的标签。',
+        '创建发行版时出错：标签名称不能为空，标签名称格式不正确，已发布的发行版必须有有效的标签。'
       ],
-      [
-        'There was an error creating your Release: tag name is not well-formed.',
-        '创建发行版时出错：标签名称格式不正确。',
-      ],
+      ['There was an error creating your Release: tag name is not well-formed.', '创建发行版时出错：标签名称格式不正确。']
     ],
     misses: [
       'There was an error creating your Release: target is invalid.',
-      'There was an error creating your Release: tag name is not well-formed',
-    ],
-  },
+      'There was an error creating your Release: tag name is not well-formed'
+    ]
+  }
 ]
 
-const HITS = REGEXP_CASES.flatMap((item) => item.hits)
-const MISSES = REGEXP_CASES.flatMap((item) => item.misses)
+const HITS = REGEXP_CASES.flatMap(item => item.hits)
+const MISSES = REGEXP_CASES.flatMap(item => item.misses)
 const RULES = dict.regexp ?? []
 
 function firstRule(input: string): number {
@@ -166,14 +161,14 @@ describe('releases 正则词条', () => {
     expect(translate(input)).toBe(expected)
   })
 
-  it.each(MISSES)('不命中：%s', (input) => {
+  it.each(MISSES)('不命中：%s', input => {
     expect(translate(input)).toBeUndefined()
   })
 
   it('用例与正则一一对应，正例首个命中对应的正则', () => {
     expect(REGEXP_CASES).toHaveLength(RULES.length)
     const mismatched = REGEXP_CASES.flatMap((item, index) =>
-      item.hits.filter(([input]) => firstRule(input) !== index).map(([input]) => `#${index} ${input}`),
+      item.hits.filter(([input]) => firstRule(input) !== index).map(([input]) => `#${index} ${input}`)
     )
     expect(mismatched).toEqual([])
   })
@@ -196,7 +191,7 @@ describe('releases 静态词条', () => {
     // …供他人使用。有关发行版的更多信息请参阅 <文档>（末句原文无逗号，译文不加）
     [
       'You can create a release to package software, along with release notes and links to binary files, for other people to use. Learn more about releases in',
-      '你可以创建发行版来打包软件，并附上发行说明和二进制文件链接，供他人使用。有关发行版的更多信息请参阅',
+      '你可以创建发行版来打包软件，并附上发行说明和二进制文件链接，供他人使用。有关发行版的更多信息请参阅'
     ],
     ['our docs', '文档'],
     ['tagging specific points of history', '给存储库历史记录中的特定节点打标签'],
@@ -246,7 +241,7 @@ describe('releases 静态词条', () => {
     ['Unable to validate tag name. Please try again.', '无法验证标签名称。请重试。'],
     [
       'Creating a tag with the same name as a branch can cause ambiguity when selecting refs',
-      '创建与分支同名的标签可能导致选择引用时产生歧义',
+      '创建与分支同名的标签可能导致选择引用时产生歧义'
     ],
     ['Tag: Select tag', '标签：选择标签'],
     ['Previous tag: Auto', '上一个标签：自动'],
@@ -269,14 +264,14 @@ describe('releases 静态词条', () => {
     ['before publishing an Action.', '才能发布操作。'],
     [
       'Your Action will be discoverable in the Marketplace and available in GitHub search.',
-      '你的操作将可在市场中被发现并出现在 GitHub 搜索结果中。',
+      '你的操作将可在市场中被发现并出现在 GitHub 搜索结果中。'
     ],
     // 两句原文用句号分开，译文不并成逗号句
     [
       '- Name must be unique. Cannot match an existing action, user or organization name.',
-      '- 名称必须唯一。不能与现有操作、用户或组织名称相同。',
+      '- 名称必须唯一。不能与现有操作、用户或组织名称相同。'
     ],
-    ['— optional', '— 可选'],
+    ['— optional', '— 可选']
   ])('%s → %s', (input, expected) => {
     expect(dict.static?.[input]).toBe(expected)
     expect(translate(input)).toBe(expected)
@@ -305,7 +300,7 @@ describe('releases 页面词条', () => {
     ['settings', '设置'],
     ['Category:', '类别：'],
     ['Announcements', '公告'],
-    ['Q&A', '问答'],
+    ['Q&A', '问答']
   ])('%s → %s', (input, expected) => {
     expect(dict.scoped?.[input]).toBe(expected)
     expect(translate(input)).toBe(expected)
@@ -324,7 +319,7 @@ describe('releases 页面词条', () => {
     // 新建标记对话框输入框的无障碍名称在发行版页仍由 repository 词典译出
     const withRepository = createMatcher([
       ['repository', repository],
-      ['releases', releases],
+      ['releases', releases]
     ])
     expect(withRepository.translate('Tag name', [...SCOPE])).toBe('标签名称')
   })
@@ -344,7 +339,7 @@ describe('releases 页面词条', () => {
 })
 
 describe('releases 忽略选择器', () => {
-  it.each(dict.ignore ?? [])('%s 是合法选择器', (selector) => {
+  it.each(dict.ignore ?? [])('%s 是合法选择器', selector => {
     expect(() => document.createElement('div').querySelector(selector)).not.toThrow()
   })
 
