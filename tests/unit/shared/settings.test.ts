@@ -77,39 +77,71 @@ describe('mergeSettings', () => {
 })
 
 describe('加速设置', () => {
-  it('默认关闭，首选第一个内置源，没有自定义源', () => {
+  it('默认关闭，不替换原链接，没有改动；下载文件夹默认开启', () => {
     expect(DEFAULT_SETTINGS).toMatchObject({
       accelerate: false,
       accelerateImages: false,
       failover: false,
-      accelerateSource: 'ghfast',
+      folderDownload: true,
+      categories: [],
+      removedCategories: [],
       customSources: [],
-      removedSources: []
+      removedSources: [],
+      replaceCategory: ''
     })
   })
 
-  it('保留合法字段；丢弃类型不符的字段与不合法的加速源', () => {
-    const mirror = { id: 'custom-1', name: 'Mirror', template: 'https://mirror.example/{url}' }
+  it('保留合法字段；丢弃类型不符的字段与不合法的分类、加速源', () => {
+    const mirror = { id: 'custom-1', name: 'Mirror', template: 'https://mirror.example/{url}', category: 'category-1' }
     expect(
       mergeSettings({
         accelerate: true,
         accelerateImages: true,
         failover: 'yes',
-        accelerateSource: 'custom-1',
+        folderDownload: false,
+        categories: [{ id: 'category-1', name: 'Team' }, { id: 'category-2' }],
+        removedCategories: ['wget-la', 'category-1'],
         customSources: [mirror, { id: 'custom-2', name: 'HTTP', template: 'http://insecure.example/{url}' }],
-        removedSources: ['wget-la', 3]
+        removedSources: ['gh-monlor', 3],
+        replaceCategory: 'category-1'
       })
     ).toEqual({
       ...DEFAULT_SETTINGS,
       accelerate: true,
       accelerateImages: true,
-      accelerateSource: 'custom-1',
+      folderDownload: false,
+      categories: [{ id: 'category-1', name: 'Team' }],
+      removedCategories: ['wget-la'],
       customSources: [mirror],
-      removedSources: ['wget-la']
+      removedSources: ['gh-monlor'],
+      replaceCategory: 'category-1'
     })
-    expect(mergeSettings({ accelerateImages: 'yes', accelerateSource: 1, customSources: 'x', removedSources: {} })).toEqual(
-      DEFAULT_SETTINGS
-    )
+    expect(
+      mergeSettings({
+        accelerateImages: 'yes',
+        folderDownload: 0,
+        categories: 'x',
+        removedCategories: {},
+        customSources: 'x',
+        removedSources: {},
+        replaceCategory: 'gone'
+      })
+    ).toEqual(DEFAULT_SETTINGS)
+  })
+})
+
+describe('旧版本的加速设置', () => {
+  it('首选为自动选择：开启故障转移；其余首选不再使用', () => {
+    expect(mergeSettings({ accelerateSource: 'auto' }).failover).toBe(true)
+    const merged = mergeSettings({ accelerateSource: 'gh-proxy-hk' })
+    expect(merged).toEqual(DEFAULT_SETTINGS)
+    expect(Object.hasOwn(merged, 'accelerateSource')).toBe(false)
+  })
+
+  it('没有分类的自定义源归入「自定义」；与内置源重复的去掉', () => {
+    const copy = { id: 'custom-1', name: 'Mirror', template: 'https://gh-proxy.com' }
+    const mirror = { id: 'custom-2', name: 'Mirror 2', template: 'https://mirror.example/{url}' }
+    expect(mergeSettings({ customSources: [copy, mirror] }).customSources).toEqual([{ ...mirror, category: 'custom' }])
   })
 })
 
@@ -118,6 +150,12 @@ describe('搜索净化', () => {
     expect(DEFAULT_SETTINGS.purifySearch).toBe(true)
     expect(mergeSettings({ purifySearch: false }).purifySearch).toBe(false)
     expect(mergeSettings({ purifySearch: 'no' }).purifySearch).toBe(true)
+  })
+
+  it('内置规则：默认开启；保留布尔值，其余用默认值', () => {
+    expect(DEFAULT_SETTINGS.purifyBuiltin).toBe(true)
+    expect(mergeSettings({ purifyBuiltin: false }).purifyBuiltin).toBe(false)
+    expect(mergeSettings({ purifyBuiltin: 1 }).purifyBuiltin).toBe(true)
   })
 
   it.each([undefined, null, 'x', { 0: '@octocat' }])('屏蔽规则不是数组 %s → 没有规则', input => {
@@ -172,18 +210,6 @@ describe('自动加载、图片预览、新标签页打开', () => {
     ).toEqual(DEFAULT_SETTINGS)
     expect(mergeSettings({ newTabScopes: [] }).newTabScopes).toEqual([])
     expect(mergeSettings({ autoLoadScopes: [] }).autoLoadScopes).toEqual([])
-  })
-})
-
-describe('与内置源重复的自定义源', () => {
-  it('读取时去掉；首选是它时改为对应的内置源', () => {
-    const copy = { id: 'custom-1', name: 'Mirror', template: 'https://gh-proxy.com' }
-    const mirror = { id: 'custom-2', name: 'Mirror 2', template: 'https://mirror.example/{url}' }
-    expect(mergeSettings({ customSources: [copy, mirror], accelerateSource: 'custom-1' })).toEqual({
-      ...DEFAULT_SETTINGS,
-      customSources: [mirror],
-      accelerateSource: 'gh-proxy-com'
-    })
   })
 })
 

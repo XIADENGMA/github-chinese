@@ -7,6 +7,13 @@
         <span v-if="version" class="options-version" data-test="version">v{{ version }}</span>
         <UpdateBadge />
       </div>
+      <TransferTools
+        class="options-backup"
+        :import-label="t('importBackup')"
+        :export-label="t('exportBackup')"
+        @import="importScope($event, 'all')"
+        @export="exportScope('all')"
+      />
     </header>
 
     <main class="options-main">
@@ -14,13 +21,17 @@
         <template #translation>
           <div class="options-group">
             <ExcludedPathsSection />
-            <CustomEntriesSection />
+            <UiTabs v-model="dictionaryTab" :tabs="dictionaryTabs" :label="t('dictionaries')" variant="pill">
+              <template #custom><CustomEntriesSection /></template>
+              <template #builtin><DictionarySection /></template>
+            </UiTabs>
           </div>
         </template>
         <template #accelerate><AccelerateSection /></template>
         <template #purify><SearchBlockSection /></template>
         <template #auto-load><AutoLoadSection /></template>
         <template #new-tab><NewTabSection /></template>
+        <template #enterprise><EnterpriseSection /></template>
       </UiTabs>
 
       <section class="section" aria-labelledby="about-title">
@@ -52,29 +63,45 @@
   import AccelerateSection from './AccelerateSection.vue'
   import AutoLoadSection from './AutoLoadSection.vue'
   import CustomEntriesSection from './CustomEntriesSection.vue'
+  import DictionarySection from './DictionarySection.vue'
+  import EnterpriseSection from './EnterpriseSection.vue'
   import ExcludedPathsSection from './ExcludedPathsSection.vue'
   import NewTabSection from './NewTabSection.vue'
   import SearchBlockSection from './SearchBlockSection.vue'
+  import TransferTools from './TransferTools.vue'
+  import { useBackup } from './useBackup'
 
   /** 扩展图标（public/ 下的文件）。用绑定而非静态属性：模板里静态的绝对路径会被编译成模块导入 */
   const LOGO_URL = '/icon/96.png'
   /** 显示的存储库地址：省略协议 */
   const REPOSITORY_LABEL = REPOSITORY_URL.replace(/^https:\/\//, '')
 
-  /** 按功能分标签页：汉化（排除路径、自定义词条）、加速、净化（搜索结果）、自动加载、新标签页打开（图片预览只在弹出页开关）。值是 UiTabs 的插槽名 */
+  /**
+   * 按功能分标签页：汉化（排除路径；自定义词库、内置词库分两个标签）、加速、净化（搜索结果）、自动加载、
+   * 新标签页打开（图片预览只在弹出页开关）、企业版站点。值是 UiTabs 的插槽名
+   */
   const TABS: readonly { readonly value: string; readonly label: MessageKey }[] = [
     { value: 'translation', label: 'translationSection' },
     { value: 'accelerate', label: 'accelerateSection' },
     { value: 'purify', label: 'purifySection' },
     { value: 'auto-load', label: 'autoLoadSection' },
-    { value: 'new-tab', label: 'newTabSection' }
+    { value: 'new-tab', label: 'newTabSection' },
+    { value: 'enterprise', label: 'enterpriseSection' }
+  ]
+  /** 汉化设置里的词库：自定义词库、内置词库 */
+  const DICTIONARY_TABS: readonly { readonly value: string; readonly label: MessageKey }[] = [
+    { value: 'custom', label: 'customEntries' },
+    { value: 'builtin', label: 'builtinDictionary' }
   ]
 
   useUiPreferencesSync()
   const { t } = useI18n()
   const version = getExtensionVersion()
+  const { exportScope, importScope } = useBackup()
   const tab = ref('translation')
   const tabs = computed<UiTab[]>(() => TABS.map(({ value, label }) => ({ value, label: t(label) })))
+  const dictionaryTab = ref('custom')
+  const dictionaryTabs = computed<UiTab[]>(() => DICTIONARY_TABS.map(({ value, label }) => ({ value, label: t(label) })))
 </script>
 
 <style scoped>
@@ -86,6 +113,7 @@
 
   .options-header {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 12px;
     padding-bottom: 24px;
@@ -111,6 +139,12 @@
   .options-title {
     font-size: 24px;
     font-weight: 600;
+  }
+
+  /* 备份：靠右；窄屏时换到下一行 */
+  .options-backup {
+    flex-wrap: wrap;
+    margin-left: auto;
   }
 
   .options-version {

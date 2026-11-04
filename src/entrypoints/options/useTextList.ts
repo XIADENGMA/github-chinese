@@ -1,11 +1,12 @@
 import { computed, type ComputedRef, type Ref } from 'vue'
 import { createToastSource } from '../../components/toast'
+import type { MessageKey } from '../../i18n'
 
 export interface TextListOptions {
   /** 已保存的条目，按添加顺序 */
   readonly items: Readonly<Ref<readonly string[]>>
-  /** 写入全部条目；失败时为 false */
-  save(next: readonly string[]): Promise<boolean>
+  /** 写入全部条目；失败时为 false（提示保存失败），或要提示的文案键 */
+  save(next: readonly string[]): Promise<boolean | MessageKey>
   /** 规范化一条输入；格式错误时为 undefined */
   normalize(value: string): string | undefined
   /** 判重用的键：键相同即为同一条。不给时按原文 */
@@ -21,10 +22,12 @@ export interface UseTextList {
   /** 改写一条：返回保存后的值；格式错误、已存在、保存失败时为 undefined */
   edit(original: string, value: string): Promise<string | undefined>
   remove(item: string): Promise<boolean>
+  /** 删除多条，一次写入 */
+  removeMany(items: readonly string[]): Promise<boolean>
 }
 
 /**
- * 单列的文字列表（排除路径、屏蔽规则）：添加、改写、删除即时保存。
+ * 单列的文字列表（排除路径、屏蔽规则、企业版站点）：添加、改写、删除即时保存。
  * 操作结果（格式错误、已存在、保存失败）在页面顶部提示。须在组件 setup 或 effectScope 内调用
  */
 export function useTextList(options: TextListOptions): UseTextList {
@@ -60,11 +63,12 @@ export function useTextList(options: TextListOptions): UseTextList {
   }
 
   async function save(next: readonly string[]): Promise<boolean> {
-    if (await options.save(next)) {
+    const result = await options.save(next)
+    if (result === true) {
       toast.clear()
       return true
     }
-    toast.show('danger', 'saveFailed')
+    toast.show('danger', result === false ? 'saveFailed' : result)
     return false
   }
 
@@ -88,8 +92,13 @@ export function useTextList(options: TextListOptions): UseTextList {
   }
 
   function remove(item: string): Promise<boolean> {
-    return save(options.items.value.filter(other => other !== item))
+    return removeMany([item])
   }
 
-  return { rows, rowKey, add, edit, remove }
+  function removeMany(items: readonly string[]): Promise<boolean> {
+    const targets = new Set(items)
+    return save(options.items.value.filter(other => !targets.has(other)))
+  }
+
+  return { rows, rowKey, add, edit, remove, removeMany }
 }

@@ -290,13 +290,43 @@ export function repositoryName(pathname: string): string | undefined {
   return isSitePath(first) ? undefined : second
 }
 
+/** 页面所在的站点：github 为 github.com 与企业版主站，gist 为代码片段站点，status 为 GitHub 状态页 */
+export type SiteKind = 'github' | 'gist' | 'status'
+
+export interface PageSite {
+  readonly kind: SiteKind
+  /** 站内路径：企业版主站 /gist 下的代码片段页去掉开头的 /gist */
+  readonly pathname: string
+}
+
+const GITHUB_HOST = 'github.com'
+const GIST_HOST = 'gist.github.com'
+const STATUS_HOST = 'www.githubstatus.com'
+/** 企业版主站上代码片段页的路径前缀（未开启子域名隔离时） */
+const ENTERPRISE_GIST_PATH_RE = /^\/gist(?=\/|$)/i
+
+/**
+ * 页面所在的站点。内容脚本只在 GitHub 与已启用的企业版站点上运行：GitHub 自己的主机以外的都是企业版站点。
+ * 企业版（GHES）的代码片段：开启子域名隔离时在 gist.<主机名>，否则在主站的 /gist 下
+ */
+export function pageSite(url: Pick<URL, 'hostname' | 'pathname'>): PageSite {
+  const host = url.hostname.toLowerCase()
+  const { pathname } = url
+  if (host === STATUS_HOST) return { kind: 'status', pathname }
+  if (host === GITHUB_HOST) return { kind: 'github', pathname }
+  if (host === GIST_HOST || host.startsWith('gist.')) return { kind: 'gist', pathname }
+  if (ENTERPRISE_GIST_PATH_RE.test(pathname)) return { kind: 'gist', pathname: pathname.replace(ENTERPRISE_GIST_PATH_RE, '') || '/' }
+  return { kind: 'github', pathname }
+}
+
 /**
  * 根据 URL 推断页面类型。
  * 返回值总以 'common' 开头，越靠后越具体。
  */
 export function detectPages(url: UrlLike): PageKey[] {
-  if (url.hostname === 'gist.github.com') return ['common', 'gist']
-  if (url.hostname === 'www.githubstatus.com') return ['common', 'status']
+  const site = pageSite(url).kind
+  if (site === 'gist') return ['common', 'gist']
+  if (site === 'status') return ['common', 'status']
 
   const parts = pathSegments(url.pathname)
   const [first = '', second, third = ''] = parts

@@ -1,4 +1,5 @@
-import { accountLogin, pathSegments } from '../core/page'
+import { accountLogin, pageSite, pathSegments } from '../core/page'
+import { isGitHubSite } from './github'
 import { sanitizeScopes, toggleScope } from './scope-list'
 
 /**
@@ -30,12 +31,16 @@ export function toggleNewTabScope(scopes: readonly NewTabScope[], scope: NewTabS
   return toggleScope(NEW_TAB_SCOPES, scopes, scope, on)
 }
 
-/** GitHub 自己的站点：github.com、githubusercontent.com、githubassets.com、githubstatus.com 及其子域名 */
-const GITHUB_SITES = ['github.com', 'githubusercontent.com', 'githubassets.com', 'githubstatus.com']
-
-export function isGitHubSite(hostname: string): boolean {
+/**
+ * 链接是否指向站内：GitHub 自己的站点（见 isGitHubSite）；企业版站点的页面上另有本站及其子域名
+ * （代码片段、原始文件、媒体等子域名，代码片段子域名上以主站为准）
+ */
+export function isSiteLink(hostname: string, pageHostname: string): boolean {
+  if (isGitHubSite(hostname)) return true
+  if (isGitHubSite(pageHostname)) return false
   const host = hostname.toLowerCase()
-  return GITHUB_SITES.some(site => host === site || host.endsWith(`.${site}`))
+  const site = pageHostname.toLowerCase().replace(/^gist\./, '')
+  return host === site || host.endsWith(`.${site}`)
 }
 
 /** 发现类页面的顶级路径 */
@@ -49,7 +54,7 @@ const REPO_LIST_SECTIONS = new Set(['issues', 'pulls', 'discussions', 'milestone
 /** 存储库下带一段名称的列表页：/<所有者>/<存储库>/<段>/<名称> */
 const REPO_NAMED_LIST_SECTIONS = new Set(['labels', 'milestone'])
 
-/** github.com 上的页面所属的范围 */
+/** github.com（及企业版主站）上的页面所属的范围 */
 function githubScope(pathname: string): PageScope | undefined {
   const [first, second, third, fourth] = pathSegments(pathname)
   if (first === undefined || DASHBOARD_TOP.has(first)) return 'dashboard'
@@ -75,7 +80,7 @@ function githubScope(pathname: string): PageScope | undefined {
   return undefined
 }
 
-/** gist.github.com 上的页面所属的范围：搜索、发现，个人的代码片段列表 */
+/** 代码片段站点上的页面所属的范围：搜索、发现，个人的代码片段列表 */
 function gistScope(pathname: string): PageScope | undefined {
   const [first, second] = pathSegments(pathname)
   if (first === undefined) return undefined
@@ -86,9 +91,10 @@ function gistScope(pathname: string): PageScope | undefined {
   return undefined
 }
 
-/** 页面所属的范围（按所在页面生效的那几种）；不属于任何一种时为 undefined */
+/** 页面所属的范围（按所在页面生效的那几种）；不属于任何一种时为 undefined。站点见 pageSite */
 export function pageScope(url: Pick<URL, 'hostname' | 'pathname'>): PageScope | undefined {
-  if (url.hostname === 'github.com') return githubScope(url.pathname)
-  if (url.hostname === 'gist.github.com') return gistScope(url.pathname)
+  const site = pageSite(url)
+  if (site.kind === 'github') return githubScope(site.pathname)
+  if (site.kind === 'gist') return gistScope(site.pathname)
   return undefined
 }

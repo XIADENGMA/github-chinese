@@ -148,6 +148,41 @@ describe('shouldOpenInNewTab', () => {
     }
   )
 
+  it('企业版站点的页面：本站及其子域名、GitHub 自己的站点不算站外，其他网站算', () => {
+    const only = { ...settings, newTabScopes: ['external'] as const }
+    const enterprise = new URL('https://github.example.com/vuejs/core/issues')
+    for (const href of [
+      'https://github.example.com/vuejs/core',
+      'https://gist.github.example.com/octocat',
+      'https://media.github.example.com/user/1/files/sample.png',
+      'https://github.com/vuejs/core'
+    ]) {
+      expect(shouldOpenInNewTab(addLink(href), enterprise, only), href).toBe(false)
+    }
+    expect(shouldOpenInNewTab(addLink(EXTERNAL), enterprise, only)).toBe(true)
+    expect(shouldOpenInNewTab(addLink('https://octo-corp.ghe.com/'), enterprise, only)).toBe(true)
+    // github.com 的页面上，企业版站点算站外
+    expect(shouldOpenInNewTab(addLink('https://github.example.com/vuejs/core'), page(), only)).toBe(true)
+  })
+
+  it('企业版站点的页面按所在页面的范围生效（同 github.com）', () => {
+    const issues = { ...settings, newTabScopes: ['issues'] as const }
+    expect(
+      shouldOpenInNewTab(
+        addLink('https://github.example.com/vuejs/core/issues/1'),
+        new URL('https://github.example.com/vuejs/core/issues'),
+        issues
+      )
+    ).toBe(true)
+    expect(
+      shouldOpenInNewTab(
+        addLink('https://github.example.com/vuejs/core/issues/1'),
+        new URL('https://github.example.com/vuejs/core'),
+        issues
+      )
+    ).toBe(false)
+  })
+
   it('正文链接：任何页面都生效（含正文里的站内链接）', () => {
     goTo('/vuejs/core/issues/1')
     settings = { ...settings, newTabScopes: ['content'] }

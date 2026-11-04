@@ -1,4 +1,4 @@
-import { isGitHubSite, pageScope } from '../shared/new-tab'
+import { isSiteLink, pageScope } from '../shared/new-tab'
 import { matchesPathPattern, type Settings } from '../shared/settings'
 
 /**
@@ -85,7 +85,7 @@ export function shouldOpenInNewTab(anchor: HTMLAnchorElement, page: URL, setting
   // 同一页面：只改查询串、锚点
   if (url.origin === page.origin && url.pathname === page.pathname) return false
   const scopes = settings.newTabScopes
-  if (scopes.includes('external') && !isGitHubSite(url.hostname)) return true
+  if (scopes.includes('external') && !isSiteLink(url.hostname, page.hostname)) return true
   if (scopes.includes('content') && anchor.closest(CONTENT_SELECTOR)) return true
   const scope = pageScope(page)
   const onPage = (scope !== undefined && scopes.includes(scope)) || matchesPathPattern(page.pathname, settings.newTabPaths)

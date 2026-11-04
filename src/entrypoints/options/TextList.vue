@@ -9,30 +9,67 @@
       <table class="list-table list-table-inline">
         <thead>
           <tr>
+            <th scope="col" class="select-cell">
+              <UiCheckbox
+                ref="selectAll"
+                :checked="selection.state.value === 'all'"
+                :indeterminate="selection.state.value === 'some'"
+                :label="t('selectAll')"
+                data-test="select-all"
+                @change="selection.toggleAll"
+              />
+            </th>
             <th scope="col">{{ label }}</th>
-            <th scope="col">
-              <span class="sr-only">{{ t('actions') }}</span>
+            <th scope="col" class="bulk-cell">
+              <UiButton v-if="selection.count.value > 0" variant="danger" size="sm" data-test="delete-selected" @click="confirming = true">
+                {{ t('deleteCount', { count: selection.count.value }) }}
+              </UiButton>
+              <span v-else class="sr-only">{{ t('actions') }}</span>
             </th>
           </tr>
         </thead>
         <tbody>
-          <TextListRow v-for="item in rows" :key="list.rowKey(item)" :item="item" :label="label" @edit="onEdit" @remove="onRemove" />
+          <TextListRow
+            v-for="item in rows"
+            :key="list.rowKey(item)"
+            :item="item"
+            :label="label"
+            :selected="selection.has(item)"
+            @select="selection.toggle"
+            @edit="onEdit"
+            @remove="onRemove"
+          />
         </tbody>
       </table>
+      <UiBackToTop :label="t('backToTop')" />
     </div>
     <p v-else class="blankslate" data-test="list-empty">{{ empty }}</p>
+    <UiConfirm
+      v-model:open="confirming"
+      :title="t('deleteConfirm', { count: selection.count.value })"
+      :confirm-label="t('delete')"
+      :cancel-label="t('cancel')"
+      @confirm="onRemoveSelected"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
   import { computed, nextTick, ref, useTemplateRef } from 'vue'
+  import UiBackToTop from '../../components/ui/UiBackToTop.vue'
   import UiButton from '../../components/ui/UiButton.vue'
+  import UiCheckbox from '../../components/ui/UiCheckbox.vue'
+  import UiConfirm from '../../components/ui/UiConfirm.vue'
   import UiInput from '../../components/ui/UiInput.vue'
   import { useI18n } from '../../components/ui-preferences'
+  import { useSelection } from '../../components/useSelection'
   import TextListRow from './TextListRow.vue'
   import type { UseTextList } from './useTextList'
 
-  /** 单列的文字列表（排除路径、屏蔽规则）：上方添加；列表新添加的在前，可行内改写、删除 */
+  /**
+   * 单列的文字列表（排除路径、屏蔽规则、新标签页的自定义页面、企业版站点）：上方添加；列表新添加的在前，可行内改写、删除。
+   * 可多选：表头的复选框全选，选中后表头显示删除所选，确认后删除
+   */
   const props = defineProps<{
     list: UseTextList
     /** 列名，也是输入框的无障碍名称 */
@@ -47,7 +84,11 @@
   const draft = ref('')
   const input = useTemplateRef<InstanceType<typeof UiInput>>('input')
   const frame = useTemplateRef<HTMLElement>('frame')
+  const selectAll = useTemplateRef<InstanceType<typeof UiCheckbox>>('selectAll')
   const rows = computed(() => props.list.rows.value)
+  const selection = useSelection(() => rows.value)
+  /** 删除所选的确认框 */
+  const confirming = ref(false)
 
   async function onAdd(): Promise<void> {
     if (draft.value.trim() === '' || !(await props.list.add(draft.value))) return
@@ -75,6 +116,15 @@
     const buttons = frame.value?.querySelectorAll<HTMLButtonElement>('.text-list-action button')
     const next = buttons?.[Math.min(index, buttons.length - 1)]
     if (next) next.focus()
+    else input.value?.focus()
+  }
+
+  /** 删除所选。焦点移到全选框，删空时移到添加框 */
+  async function onRemoveSelected(): Promise<void> {
+    if (!(await props.list.removeMany([...selection.selected.value]))) return
+    selection.clear()
+    await nextTick()
+    if (selectAll.value) selectAll.value.focus()
     else input.value?.focus()
   }
 </script>

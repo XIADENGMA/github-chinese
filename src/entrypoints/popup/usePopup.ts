@@ -3,8 +3,9 @@ import { browser } from 'wxt/browser'
 import { createToastSource } from '../../components/toast'
 import { useSettings } from '../../components/useSettings'
 import type { MessageKey } from '../../i18n'
+import { enterpriseOrigins, enterpriseSiteOf, grantedOrigins, hasGitHubMarkers, isEnterpriseUrl } from '../../shared/enterprise'
 import { getExtensionVersion } from '../../shared/extension'
-import { GITHUB_ORIGINS, parseGitHubUrl } from '../../shared/github'
+import { GITHUB_ORIGINS, parseGitHubUrl, parseWebUrl } from '../../shared/github'
 import { isContentStatus, type ContentStatus } from '../../shared/messages'
 import {
   addExcludedPath,
@@ -79,14 +80,39 @@ async function hasHostPermission(): Promise<boolean> {
   }
 }
 
+/** 当前标签页（网页）。打开弹出页时有当前页的临时权限（activeTab），企业版站点未授权也读得到地址 */
 async function queryActiveTab(): Promise<ActiveTab | undefined> {
   try {
     const [active] = await browser.tabs.query({ active: true, currentWindow: true })
-    const url = parseGitHubUrl(active?.url)
+    const url = parseWebUrl(active?.url)
     return active?.id !== undefined && url ? { id: active.id, url } : undefined
   } catch {
     return undefined
   }
+}
+
+/** 标签页是否是 GitHub 页面（尚未启用的企业版站点，见 hasGitHubMarkers） */
+async function isGitHubPage(tabId: number): Promise<boolean> {
+  try {
+    const [injection] = await browser.scripting.executeScript({ target: { tabId }, func: hasGitHubMarkers })
+    return injection?.result === true
+  } catch {
+    // 无权访问的页面（浏览器内部页、扩展商店），没有 scripting API
+    return false
+  }
+}
+
+/**
+ * 当前标签页所在的站点：GitHub 自己的站点，已授权的企业版站点，未授权的企业版站点（像 GitHub 的页面，带主机名），其他页面
+ */
+type TabSite = { readonly kind: 'github' | 'enterprise' | 'other' } | { readonly kind: 'pending'; readonly host: string }
+
+async function siteOf(tab: ActiveTab | undefined): Promise<TabSite> {
+  if (!tab) return { kind: 'other' }
+  if (parseGitHubUrl(tab.url.href)) return { kind: 'github' }
+  if (isEnterpriseUrl(tab.url, await grantedOrigins())) return { kind: 'enterprise' }
+  const host = enterpriseSiteOf(tab.url.hostname)
+  return host && (await isGitHubPage(tab.id)) ? { kind: 'pending', host } : { kind: 'other' }
 }
 
 async function requestStatus(tabId: number): Promise<ContentStatus | undefined> {
@@ -105,6 +131,8 @@ export function usePopup(): UsePopup {
   const version = getExtensionVersion()
   const checked = ref(false)
   const authorized = ref(true)
+  /** 待授权的企业版站点（当前页像 GitHub 页面，站点未授权）：授权时申请它的权限，否则申请 GitHub 的 */
+  const pendingHost = ref<string>()
   const tab = shallowRef<ActiveTab>()
   const status = shallowRef<ContentStatus>()
   // 各操作共用一处提示：再次操作时收起上一次的失败提示
@@ -129,8 +157,12 @@ export function usePopup(): UsePopup {
   }
 
   async function load(): Promise<void> {
-    authorized.value = await hasHostPermission()
-    tab.value = authorized.value ? await queryActiveTab() : undefined
+    const active = await queryActiveTab()
+    const site = await siteOf(active)
+    pendingHost.value = site.kind === 'pending' ? site.host : undefined
+    // 已授权的企业版站点不看 GitHub 的权限；其他页面沿用：GitHub 未授权时提示授权
+    authorized.value = site.kind === 'enterprise' || (site.kind !== 'pending' && (await hasHostPermission()))
+    tab.value = authorized.value && (site.kind === 'github' || site.kind === 'enterprise') ? active : undefined
     status.value = tab.value ? await requestStatus(tab.value.id) : undefined
     checked.value = true
   }
@@ -170,9 +202,11 @@ export function usePopup(): UsePopup {
 
   async function authorize(): Promise<void> {
     toast.clear()
+    // 企业版站点授权后，后台注册内容脚本并注入已打开的该站页面（见 background.ts）
+    const origins = pendingHost.value ? enterpriseOrigins(pendingHost.value) : [...GITHUB_ORIGINS]
     try {
       // permissions.request 须在用户手势内调用：这里位于首个 await 之前，点击事件中同步执行
-      const granted = await browser.permissions.request({ origins: [...GITHUB_ORIGINS] })
+      const granted = await browser.permissions.request({ origins })
       if (granted) await load()
     } catch {
       fail('authorizeFailed')

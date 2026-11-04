@@ -192,6 +192,26 @@ export default {
     // 产品名：功能区块标题，也是「You can use <a>Copilot Memory</a> to remember …」中的链接
     'Copilot Memory': 'Copilot 记忆',
     'to remember repository context across Copilot agent interactions.': '在 Copilot 代理交互中记住存储库上下文。',
+    // 记忆的下拉按钮：「<span>Copilot Memory:</span> User and repository memories allowed」
+    'Copilot Memory:': 'Copilot 记忆：',
+    'User and repository memories allowed': '允许用户和存储库记忆',
+    "Choose which memories Copilot can use in work you start, such as agent sessions and code reviews. If user or repository memory is disabled by organization, enterprise or repository policy, those memories will not be supplied, regardless of your preference. Your preference remains saved and will automatically take effect if the policy later allows memory. Disabling memory does not delete existing memories. While user memories aren't enabled, you can't view or delete them on the Memory page.":
+      '选择 Copilot 在你发起的工作（如代理会话和代码审查）中可以使用哪些记忆。如果组织、企业或存储库策略禁用了用户记忆或存储库记忆，无论你的偏好如何，都不会提供这些记忆。你的偏好会保留，并在策略日后允许记忆时自动生效。禁用记忆不会删除现有记忆。未启用用户记忆时，你无法在记忆页面查看或删除它们。',
+    'Choose which memories Copilot can use in work you start, such as agent sessions and code reviews. If user or repository memory is disabled by organization, enterprise or repository policy, those memories will not be supplied, regardless of your preference. Your preference remains saved and will automatically take effect if the policy later allows memory. Disabling memory does not delete existing memories. While user memories aren’t enabled, you can’t view or delete them on the Memory page.':
+      '选择 Copilot 在你发起的工作（如代理会话和代码审查）中可以使用哪些记忆。如果组织、企业或存储库策略禁用了用户记忆或存储库记忆，无论你的偏好如何，都不会提供这些记忆。你的偏好会保留，并在策略日后允许记忆时自动生效。禁用记忆不会删除现有记忆。未启用用户记忆时，你无法在记忆页面查看或删除它们。',
+    // Copilot Dreaming（功能名 Dreaming 译「梦境」，见 scoped）；「<strong>Memories are fully managed.</strong> Dreaming applies …」
+    'Dreaming works in the background to improve the memories and guidance Copilot uses in future coding sessions and code reviews.':
+      '梦境在后台运行，改进 Copilot 在今后的编码会话和代码审查中使用的记忆和指导。',
+    'Memories are fully managed.': '记忆完全托管。',
+    'Dreaming applies memory changes automatically, without a pull request or manual approval.':
+      '梦境自动应用记忆变更，无需拉取请求或手动批准。',
+    'Dreaming runs only where the relevant Memory scope and other required policies and features are enabled. Session-based Dreams also require session upload.':
+      '梦境只在相关记忆范围及其他必需的策略和功能均已启用时运行。基于会话的梦境还需要上传会话。',
+    'Learn more about Copilot Dreaming': '了解 Copilot 梦境',
+    "This setting controls Dreaming for your user memories. Enable repository Dreaming separately in each repository's settings.":
+      '此设置控制用户记忆的梦境。存储库的梦境需在各存储库的设置中分别启用。',
+    'This setting controls Dreaming for your user memories. Enable repository Dreaming separately in each repository’s settings.':
+      '此设置控制用户记忆的梦境。存储库的梦境需在各存储库的设置中分别启用。',
     'This preview is governed by': '此预览适用',
     "GitHub's pre-release terms": 'GitHub 预发行条款',
     'GitHub’s pre-release terms': 'GitHub 预发行条款',
@@ -345,6 +365,8 @@ export default {
       '选择要在哪些存储库中启用云端 Copilot。云端只有在存储库中已启用且 Copilot 许可证策略允许时才会作为环境选项出现。'
   },
   scoped: {
+    // Copilot Dreaming 的功能名（功能列表的标题，旁边是「预览」标记）
+    Dreaming: '梦境',
     // 「You currently have an active <strong>Copilot Pro</strong> subscription.」
     subscription: '订阅',
     'subscription.': '订阅。',

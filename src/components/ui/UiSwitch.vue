@@ -1,5 +1,5 @@
 <template>
-  <div class="ui-switch">
+  <div class="ui-switch" :class="{ 'ui-switch-compact': compact }">
     <label :for="id" class="ui-switch-label">{{ label }}</label>
     <button
       :id="id"
@@ -27,6 +27,8 @@
     /** 可见标签 */
     label: string
     disabled?: boolean
+    /** 紧凑：开关小一号，标签占满其余宽度（整块可点），用于并排的开关 */
+    compact?: boolean
   }>()
 
   const emit = defineEmits<{ change: [checked: boolean] }>()
@@ -118,6 +120,50 @@
   .ui-switch-track[aria-checked='true'] > .ui-switch-ripple {
     color: var(--gcn-switch-on);
     transform: translateX(16px);
+  }
+
+  /*
+ * 紧凑（格子里并排的开关）：轨道 28×16、滑块 12；自带内边距，标签区连同左侧、上下内边距占满，点任意处都切换。
+ * 标签放不下时折行，各行等宽（英文按词断成两行）
+ */
+  .ui-switch-compact {
+    gap: 0;
+    min-height: var(--gcn-control-sm);
+    padding-right: 6px;
+  }
+
+  .ui-switch-compact .ui-switch-label {
+    flex: 1 1 auto;
+    min-width: 0;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    padding: 4px 6px 4px 8px;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+  }
+
+  .ui-switch-compact .ui-switch-track {
+    width: 28px;
+    height: 16px;
+    border-radius: 8px;
+  }
+
+  .ui-switch-compact .ui-switch-knob {
+    width: 12px;
+    height: 12px;
+  }
+
+  .ui-switch-compact .ui-switch-track[aria-checked='true'] .ui-switch-knob,
+  .ui-switch-compact .ui-switch-track[aria-checked='true'] > .ui-switch-ripple {
+    transform: translateX(12px);
+  }
+
+  .ui-switch-compact .ui-switch-track > .ui-switch-ripple {
+    top: -6px;
+    left: -6px;
+    width: 28px;
+    height: 28px;
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -2,8 +2,10 @@ import { fakeBrowser } from 'wxt/testing/fake-browser'
 import { clearToasts } from '../../../src/components/toast'
 import { useSettings } from '../../../src/components/useSettings'
 import { STATUS_POLL_MS, usePopup, type UsePopup } from '../../../src/entrypoints/popup/usePopup'
+import { enterpriseOrigins, hasGitHubMarkers } from '../../../src/shared/enterprise'
 import { DEFAULT_SETTINGS, getSettings, settingsItem } from '../../../src/shared/settings'
 import { MESSAGE_TIMEOUT_MS } from '../../../src/shared/tab-messages'
+import { fakePermissions } from '../shared/fake-permissions'
 import {
   STATUS,
   contentMissing,
@@ -120,13 +122,14 @@ describe('当前标签页状态', () => {
     expect((await setup()).state.value).toBe('translated')
   })
 
-  it('无主机权限 → 未授权，不查询标签页', async () => {
+  it.each([REPO_URL, 'https://example.com/'])('无主机权限（当前页 %s）→ 未授权，不查询内容脚本', async url => {
     mockPermission(false)
-    const query = vi.spyOn(fakeBrowser.tabs, 'query')
-    mockContent(contentWith())
+    await openTab(url)
+    const send = mockContent(contentWith())
     const popup = await setup()
     expect(popup.state.value).toBe('unauthorized')
-    expect(query).not.toHaveBeenCalled()
+    expect(popup.tab.value).toBeUndefined()
+    expect(send).not.toHaveBeenCalled()
   })
 
   it('权限查询出错时按已授权处理', async () => {
@@ -329,6 +332,99 @@ describe('授权', () => {
     vi.spyOn(fakeBrowser.permissions, 'request').mockRejectedValue(new Error('需要用户手势'))
     await popup.authorize()
     expect(shownToasts()).toEqual([{ tone: 'danger', key: 'authorizeFailed' }])
+  })
+})
+
+describe('企业版站点', () => {
+  const HOST = 'github.example.com'
+  const PAGE = `https://${HOST}/octocat/hello-world/issues`
+
+  /** 当前页的 GitHub 标记检测（scripting.executeScript）的结果 */
+  function mockMarkers(isGitHub: boolean): ReturnType<typeof vi.spyOn> {
+    return vi.spyOn(fakeBrowser.scripting, 'executeScript').mockResolvedValue([{ frameId: 0, result: isGitHub }] as never)
+  }
+
+  it.each([PAGE, `https://gist.${HOST}/octocat/1`, `http://${HOST}/`])(
+    '已授权的站点（%s）：同 GitHub 页面，查询内容脚本状态，不检测页面',
+    async url => {
+      fakePermissions.granted.push(...enterpriseOrigins(HOST))
+      await openTab(url)
+      mockContent(contentWith())
+      const execute = mockMarkers(true)
+      const popup = await setup()
+      expect(popup.state.value).toBe('translated')
+      expect(popup.tab.value?.url.href).toBe(url)
+      expect(execute).not.toHaveBeenCalled()
+    }
+  )
+
+  it('GitHub 未授权时，已授权的企业版站点照常查询状态', async () => {
+    mockPermission(false)
+    fakePermissions.granted.push(...enterpriseOrigins(HOST))
+    await openTab(PAGE)
+    mockContent(contentWith())
+    expect((await setup()).state.value).toBe('translated')
+  })
+
+  it('未授权、像 GitHub 的页面 → 未授权，不查询内容脚本；授权申请主站与代码片段子域名（首个 await 之前），授权后查询状态', async () => {
+    const tabId = await openTab(PAGE)
+    const send = mockContent(contentWith())
+    const execute = mockMarkers(true)
+    const popup = await setup()
+    expect(popup.state.value).toBe('unauthorized')
+    expect(execute).toHaveBeenCalledWith({ target: { tabId }, func: hasGitHubMarkers })
+    expect(send).not.toHaveBeenCalled()
+
+    const request = vi.spyOn(fakeBrowser.permissions, 'request')
+    const pending = popup.authorize()
+    expect(request).toHaveBeenCalledWith({ origins: enterpriseOrigins(HOST) })
+    await pending
+    await settle()
+    expect(popup.state.value).toBe('translated')
+    expect(popup.tab.value?.id).toBe(tabId)
+  })
+
+  it('在代码片段子域名上：申请主站与代码片段子域名', async () => {
+    await openTab(`https://gist.${HOST}/octocat/1`)
+    mockContent(contentWith())
+    mockMarkers(true)
+    const popup = await setup()
+    const request = vi.spyOn(fakeBrowser.permissions, 'request').mockResolvedValue(false as never)
+    await popup.authorize()
+    expect(request).toHaveBeenCalledWith({ origins: enterpriseOrigins(HOST) })
+    expect(popup.state.value).toBe('unauthorized')
+  })
+
+  it('GitHub 未授权时也申请当前站点', async () => {
+    mockPermission(false)
+    await openTab(PAGE)
+    mockContent(contentWith())
+    mockMarkers(true)
+    const popup = await setup()
+    const request = vi.spyOn(fakeBrowser.permissions, 'request').mockResolvedValue(false as never)
+    await popup.authorize()
+    expect(request).toHaveBeenCalledWith({ origins: enterpriseOrigins(HOST) })
+  })
+
+  it.each([
+    ['不像 GitHub 的页面', () => mockMarkers(false)],
+    [
+      '检测失败（浏览器内部页等无权访问）',
+      () => vi.spyOn(fakeBrowser.scripting, 'executeScript').mockRejectedValue(new Error('Cannot access'))
+    ],
+    ['没有结果', () => vi.spyOn(fakeBrowser.scripting, 'executeScript').mockResolvedValue([] as never)]
+  ])('%s → 不可用', async (_name, mock) => {
+    await openTab('https://example.com/')
+    mockContent(contentWith())
+    mock()
+    expect((await setup()).state.value).toBe('unavailable')
+  })
+
+  it('非网页（浏览器内部页）：不检测，不可用', async () => {
+    await openTab('chrome://extensions/')
+    const execute = mockMarkers(true)
+    expect((await setup()).state.value).toBe('unavailable')
+    expect(execute).not.toHaveBeenCalled()
   })
 })
 

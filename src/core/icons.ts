@@ -1,4 +1,4 @@
-/** 页面内控件（复制加速链接、图片预览）用的线条图标：16×16，描边随文字颜色 */
+/** 页面内控件（加速选项、下载文件夹、图片预览）用的线条图标：16×16，描边随文字颜色（小三角描边后近似实心） */
 
 const SVG_NS = 'http://www.w3.org/2000/svg'
 
@@ -15,7 +15,9 @@ const ICONS = {
   zoomOut: [{ d: 'M3 8h10' }],
   reset: [{ d: 'M2.5 6V2.5H6M13.5 6V2.5H10M2.5 10v3.5H6M13.5 10v3.5H10' }],
   original: [{ d: 'M9 2.5h4.5V7M13.5 2.5L7.5 8.5M12 9.5v3a1 1 0 0 1-1 1H3.5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3' }],
-  download: [{ d: 'M8 2.5v8M4.5 7L8 10.5 11.5 7M2.5 13.5h11' }]
+  download: [{ d: 'M8 2.5v8M4.5 7L8 10.5 11.5 7M2.5 13.5h11' }],
+  zap: [{ d: 'M9 1.5L3.5 9h4L7 14.5 12.5 7h-4L9 1.5z' }],
+  triangleDown: [{ d: 'M5 6.5h6L8 9.5z' }]
 } as const satisfies Readonly<Record<string, readonly Shape[]>>
 
 export type IconName = keyof typeof ICONS

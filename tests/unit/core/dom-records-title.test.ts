@@ -201,6 +201,15 @@ describe('translateTitleText：用户内容段', () => {
     expect(title('Forks · Documentation', `/octocat/${id}/forks`)).toBe('复刻 · 文档')
   })
 
+  it('企业版站点的代码片段（gist 子域名、主站的 /gist 下）：同 gist.github.com；主站的页面同 github.com', () => {
+    const id = '0123456789abcdef0123'
+    const on = (text: string, pathname: string, hostname: string): string => translateTitleText(text, translate, pathname, hostname)
+    expect(on('Documentation · GitHub', `/octocat/${id}`, 'gist.github.example.com')).toBe('Documentation · GitHub')
+    expect(on('Forks · Documentation · GitHub', `/gist/octocat/${id}/forks`, 'github.example.com')).toBe('复刻 · Documentation · GitHub')
+    expect(on('Settings · GitHub', '/gist/discover', 'github.example.com')).toBe('设置 · GitHub')
+    expect(on('Forks · Documentation', `/octocat/${id}/forks`, 'github.example.com')).toBe('复刻 · 文档')
+  })
+
   it('没有内容标记的标题照常逐段翻译；不传路径时同样处理内容标记', () => {
     expect(title('Issues · o/r')).toBe('议题 · o/r')
     expect(translateTitleText('Settings · Issue #1 · o/r', translate)).toBe('Settings · 议题 #1 · o/r')

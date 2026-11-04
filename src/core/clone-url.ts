@@ -1,17 +1,19 @@
-import { acceleratePreferred, candidateSources, needsProbe, parseCloneUrl } from '../shared/accelerate'
+import { parseCloneUrl } from '../shared/accelerate'
+import { categoryCandidates, categoryUrl, replacementCategory } from '../shared/accelerate-categories'
 import type { Settings } from '../shared/settings'
+import type { HealthCache } from './accelerate-health'
 import { isPrivatePage } from './private-page'
 
 /**
- * 克隆地址加速：开启下载加速时，存储库 Code 下拉框里的 HTTPS 克隆地址、代码片段的「Clone via HTTPS」地址
- * 换成加速后的地址。存储库的复制按钮复制的是页面脚本里的原地址：点击冒泡到 window 时（页面脚本已复制）
+ * 克隆地址加速（替换原链接）：开启下载加速、选了替换原链接的分类时，存储库 Code 下拉框里的 HTTPS 克隆地址、
+ * 代码片段的「Clone via HTTPS」地址换成用该分类加速后的地址（故障转移开启时用探测可用的最快的，都不可用时不改）。存储库的复制按钮复制的是页面脚本里的原地址：点击冒泡到 window 时（页面脚本已复制）
  * 再把加速后的地址写入剪贴板。代码片段的复制按钮复制输入框的值，不另外处理。
- * 只改这两处：新建存储库页面的地址用于推送，不改（推送凭据不交给加速源）。关闭下载加速、停止时还原
+ * 只改这两处：新建存储库页面的地址用于推送，不改（推送凭据不交给加速源）。关闭下载加速、不替换、停止时还原
  */
 export interface CloneUrlOptions {
   readonly settings: () => Settings
-  /** 要探测时（故障转移开启、首选为自动选择）请后台选源，返回加速后的地址；出错、超时时拒绝 */
-  readonly resolve: (url: string) => Promise<string>
+  /** 加速源的探测结果（故障转移开启时用） */
+  readonly health: HealthCache
   /** 写入剪贴板 */
   readonly copy: (text: string) => void
 }
@@ -48,7 +50,7 @@ export function createCloneUrlRewriter(doc: Document, options: CloneUrlOptions):
 
   function isActive(): boolean {
     const settings = options.settings()
-    return settings.enabled && settings.accelerate && !isPrivatePage(doc)
+    return settings.enabled && settings.accelerate && replacementCategory(settings) !== undefined && !isPrivatePage(doc)
   }
 
   function restore(element: Target, rewrite: Rewrite): void {
@@ -64,19 +66,22 @@ export function createCloneUrlRewriter(doc: Document, options: CloneUrlOptions):
 
   function rewrite(element: Target, original: string): void {
     const settings = options.settings()
+    const category = replacementCategory(settings)
     const link = parseCloneUrl(original)
-    if (!link || pending.get(element) === original) return
-    if (!needsProbe(settings)) {
-      const accelerated = acceleratePreferred(settings, link)
+    if (!category || !link || pending.get(element) === original || categoryCandidates(category, link).length === 0) return
+    const known = settings.failover ? options.health.current() : undefined
+    if (!settings.failover || known) {
+      const accelerated = categoryUrl(category, link, known)
       if (accelerated) apply(element, original, accelerated)
       return
     }
-    if (candidateSources(settings, link).length === 0) return
     pending.set(element, original)
-    options.resolve(original).then(
-      accelerated => {
+    options.health.get().then(
+      health => {
         pending.delete(element)
-        if (element.isConnected && element.getAttribute('value') === original && isActive()) {
+        const current = replacementCategory(options.settings())
+        const accelerated = current && categoryUrl(current, link, health)
+        if (accelerated && element.isConnected && element.getAttribute('value') === original && isActive()) {
           apply(element, original, accelerated)
         }
       },
@@ -123,7 +128,11 @@ export function createCloneUrlRewriter(doc: Document, options: CloneUrlOptions):
   scan()
 
   return {
-    refresh: scan,
+    refresh() {
+      // 替换用的分类、故障转移可能变了：先还原再按新设置改写
+      for (const [element, state] of rewrites) restore(element, state)
+      scan()
+    },
     stop() {
       observer.disconnect()
       view?.removeEventListener('click', onClick)

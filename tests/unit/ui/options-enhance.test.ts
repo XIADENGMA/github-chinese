@@ -29,7 +29,10 @@ const AUTO_LOAD_LABELS = [
 const NEW_TAB_LABELS = ['站外链接', '正文链接', '搜索结果', '议题与拉取请求', '通知', '首页', '个人与组织主页', '探索']
 
 function tab(wrapper: VueWrapper, label: string): DOMWrapper<Element> {
-  const found = wrapper.findAll('[role="tab"]').find(item => item.text() === label)
+  const found = wrapper
+    .get('[role="tablist"]')
+    .findAll('[role="tab"]')
+    .find(item => item.text() === label)
   if (!found) throw new Error(`未找到标签：${label}`)
   return found
 }
@@ -69,7 +72,7 @@ function toastTexts(wrapper: VueWrapper): string[] {
 }
 
 function pathRows(scope: DOMWrapper<Element>): string[] {
-  return scope.findAll<HTMLInputElement>('tbody input').map(input => input.element.value)
+  return scope.findAll<HTMLInputElement>('tbody input:not([type="checkbox"])').map(input => input.element.value)
 }
 
 async function addPath(scope: DOMWrapper<Element>, value: string): Promise<void> {
@@ -93,13 +96,12 @@ describe.skipIf(!App)('设置页：自动加载、新标签页打开', () => {
 
   it('各一个标签页，排在净化设置之后；图片预览只在弹出页开关', async () => {
     const wrapper = await render('自动加载设置')
-    expect(wrapper.findAll('[role="tab"]').map(item => item.text())).toEqual([
-      '汉化设置',
-      '加速设置',
-      '净化设置',
-      '自动加载设置',
-      '新标签页设置'
-    ])
+    expect(
+      wrapper
+        .get('[role="tablist"]')
+        .findAll('[role="tab"]')
+        .map(item => item.text())
+    ).toEqual(['汉化设置', '加速设置', '净化设置', '自动加载设置', '新标签页设置', '企业版设置'])
     expect(wrapper.findAll('label').map(item => item.text())).not.toContain('图片预览')
   })
 

@@ -1,9 +1,14 @@
 import type { Browser } from 'wxt/browser'
 import { fakeBrowser } from 'wxt/testing/fake-browser'
 import background from '../../src/entrypoints/background'
+import { BUILTIN_SOURCES } from '../../src/shared/accelerate'
+import { enterpriseOrigins } from '../../src/shared/enterprise'
+import { ENTERPRISE_BRIDGE_ID, ENTERPRISE_CONTENT_ID } from '../../src/shared/enterprise-scripts'
+import { GITHUB_ORIGINS } from '../../src/shared/github'
 import { DEFAULT_SETTINGS, settingsItem, updateSettings } from '../../src/shared/settings'
 import { LOCALE_SCRIPT_ID } from '../../src/shared/locale-script'
 import { removeApi } from './shared/fake-api'
+import { fakePermissions } from './shared/fake-permissions'
 import { fakeContentScripts, type FakeContentScripts } from './shared/fake-scripting'
 
 /** 界面语言为简体中文时停用的徽标文字 */
@@ -28,6 +33,20 @@ function githubTab(frameId = 0): Sender {
     frameId,
     tab: { id: 7, incognito: false } as Browser.tabs.Tab
   }
+}
+
+/** 企业版站点 */
+const ENTERPRISE_HOST = 'github.example.com'
+const ENTERPRISE_ORIGINS = enterpriseOrigins(ENTERPRISE_HOST)
+
+/** 企业版站点页面上的内容脚本（站点授权与否由用例决定） */
+function enterpriseTab(frameId = 0): Sender {
+  return { ...githubTab(frameId), url: `https://${ENTERPRISE_HOST}/octocat/hello-world` }
+}
+
+/** 其他网站上的发送方 */
+function otherSite(): Sender {
+  return { ...githubTab(), url: 'https://example.com/' }
 }
 
 /** 发消息给后台：handled 为监听器是否保持消息通道，保持时一并等到应答 */
@@ -604,12 +623,32 @@ describe('词典脚本注入（内容脚本动态导入失败时的退路）', (
 
   it.each([
     ['扩展页面', INJECT, { id: fakeBrowser.runtime.id, url: fakeBrowser.runtime.getURL('/popup.html') }],
-    ['其他网站', INJECT, { id: fakeBrowser.runtime.id, url: 'https://example.com/', tab: { id: 7 } as Browser.tabs.Tab }],
     ['其他扩展（发送方 id 不符）', INJECT, { ...githubTab(), id: 'other-extension' }],
     ['语言不合法', { type: 'gcn:inject-locale', locale: 'ja' }, githubTab()]
   ] as const)('%s → 不处理、不注入', async (_name, message, sender) => {
     expect(await deliver(message, sender as Sender)).toEqual({ handled: false })
     expect(fakeBrowser.scripting.executeScript).not.toHaveBeenCalled()
+  })
+
+  it.each([
+    ['其他网站', otherSite],
+    ['未授权的企业版站点', enterpriseTab]
+  ] as const)('%s → 应答 ok: false，不注入', async (_name, sender) => {
+    expect(await deliver(INJECT, sender())).toEqual({ handled: true, response: { ok: false } })
+    expect(fakeBrowser.scripting.executeScript).not.toHaveBeenCalled()
+  })
+
+  it('已授权的企业版站点：同样注入', async () => {
+    await fakePermissions.grant(ENTERPRISE_ORIGINS)
+    await settle()
+    const execute = vi.mocked(fakeBrowser.scripting.executeScript)
+    execute.mockClear()
+    expect(await deliver(INJECT, enterpriseTab(2))).toEqual({ handled: true, response: { ok: true } })
+    expect(execute).toHaveBeenCalledExactlyOnceWith({
+      target: { tabId: 7, frameIds: [2] },
+      files: ['/locale-zh-tw.js'],
+      injectImmediately: true
+    })
   })
 
   it('Firefox：同样注入（动态导入失败时的退路）', async () => {
@@ -633,64 +672,76 @@ describe('词典脚本注入（内容脚本动态导入失败时的退路）', (
   })
 })
 
-describe('下载加速的选源', () => {
-  const RELEASE = 'https://github.com/vuejs/core/releases/download/v3.5.0/vue.global.js'
-  const RESOLVE = { type: 'gcn:resolve-download', url: RELEASE }
+describe('加速源的探测', () => {
+  const PROBE = { type: 'gcn:probe-sources' }
 
   beforeEach(() => {
     background.main()
   })
 
-  it('故障转移关闭：应答首选加速源的地址，不探测', async () => {
+  it.each([
+    ['未开启下载加速', {}],
+    ['开启下载加速、未开启故障转移', { accelerate: true }],
+    ['开启故障转移、未开启下载加速', { failover: true }]
+  ] as const)('%s：应答空结果，不探测', async (_name, patch) => {
     const fetch = vi.fn()
     vi.stubGlobal('fetch', fetch)
-    await updateSettings({ accelerate: true, accelerateSource: 'wget-la' })
-    expect(await deliver(RESOLVE, githubTab())).toEqual({
-      handled: true,
-      response: { ok: true, url: `https://wget.la/${RELEASE}` }
-    })
+    await updateSettings(patch)
+    expect(await deliver(PROBE, githubTab())).toEqual({ handled: true, response: { ok: true, health: {} } })
     expect(fetch).not.toHaveBeenCalled()
   })
 
-  it('故障转移开启：首选连不上时应答其他加速源的地址', async () => {
-    vi.stubGlobal(
-      'fetch',
-      vi.fn(async (url: string) => (url === 'https://ghfast.top/' ? Promise.reject(new TypeError('Failed')) : {}))
-    )
+  it('开启下载加速与故障转移：探测各加速源的站点根路径，应答 标识 → 耗时或 null', async () => {
+    const fetch = vi.fn(async (url: string) => (url === 'https://ghfast.top/' ? Promise.reject(new TypeError('Failed')) : {}))
+    vi.stubGlobal('fetch', fetch)
     await updateSettings({ accelerate: true, failover: true })
-    expect(await deliver(RESOLVE, githubTab())).toEqual({
-      handled: true,
-      response: { ok: true, url: `https://wget.la/${RELEASE}` }
-    })
+    const result = await deliver(PROBE, githubTab())
+    expect(result).toMatchObject({ handled: true, response: { ok: true } })
+    const { health } = (result as { response: { health: Record<string, number | null> } }).response
+    expect(health['ghfast']).toBeNull()
+    expect(typeof health['wget-la']).toBe('number')
+    expect(Object.keys(health)).toHaveLength(BUILTIN_SOURCES.length)
+    expect(fetch).toHaveBeenCalledWith('https://ghfast.top/', expect.objectContaining({ method: 'HEAD', mode: 'no-cors' }))
   })
 
-  it('未开启下载加速：应答原链接', async () => {
-    expect(await deliver(RESOLVE, githubTab())).toEqual({ handled: true, response: { ok: true, url: RELEASE } })
+  it('有效期内不再探测', async () => {
+    const fetch = vi.fn(async () => ({}))
+    vi.stubGlobal('fetch', fetch)
+    await updateSettings({ accelerate: true, failover: true })
+    await deliver(PROBE, githubTab())
+    const calls = fetch.mock.calls.length
+    await deliver(PROBE, githubTab())
+    expect(fetch.mock.calls.length).toBe(calls)
   })
 
   it('读取设置失败：应答 ok: false 并记录错误', async () => {
     const consoleError = vi.spyOn(console, 'error').mockImplementation(() => undefined)
     vi.spyOn(fakeBrowser.storage.sync, 'get').mockRejectedValue(new Error('storage unavailable'))
-    expect(await deliver(RESOLVE, githubTab())).toEqual({ handled: true, response: { ok: false } })
+    expect(await deliver(PROBE, githubTab())).toEqual({ handled: true, response: { ok: false } })
     expect(consoleError).toHaveBeenCalled()
   })
 
   it.each([
-    ['扩展页面', RESOLVE, { id: fakeBrowser.runtime.id, url: fakeBrowser.runtime.getURL('/popup.html') }],
-    ['其他网站', RESOLVE, { id: fakeBrowser.runtime.id, url: 'https://example.com/', tab: { id: 7 } as Browser.tabs.Tab }],
-    ['其他扩展（发送方 id 不符）', RESOLVE, { ...githubTab(), id: 'other-extension' }],
-    ['地址不是字符串', { type: 'gcn:resolve-download', url: 1 }, githubTab()],
-    ['地址过长', { type: 'gcn:resolve-download', url: `${RELEASE}?${'a'.repeat(5000)}` }, githubTab()]
-  ] as const)('%s → 不处理', async (_name, message, sender) => {
-    expect(await deliver(message, sender as Sender)).toEqual({ handled: false })
+    ['扩展页面', { id: fakeBrowser.runtime.id, url: fakeBrowser.runtime.getURL('/popup.html') }],
+    ['其他扩展（发送方 id 不符）', { ...githubTab(), id: 'other-extension' }]
+  ] as const)('%s → 不处理', async (_name, sender) => {
+    expect(await deliver(PROBE, sender as Sender)).toEqual({ handled: false })
   })
 
-  it('克隆地址：同样选源', async () => {
-    const clone = 'https://github.com/vuejs/core.git'
-    await updateSettings({ accelerate: true })
-    expect(await deliver({ type: 'gcn:resolve-download', url: clone }, githubTab())).toEqual({
+  it('其他网站 → 应答 ok: false', async () => {
+    expect(await deliver(PROBE, otherSite())).toEqual({ handled: true, response: { ok: false } })
+  })
+
+  it('已授权的企业版站点：同样探测（页面上指向 github.com 的链接）', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => ({}))
+    )
+    await fakePermissions.grant(ENTERPRISE_ORIGINS)
+    await updateSettings({ accelerate: true, failover: true })
+    expect(await deliver(PROBE, enterpriseTab())).toMatchObject({
       handled: true,
-      response: { ok: true, url: `https://ghfast.top/${clone}` }
+      response: { ok: true, health: { ghfast: expect.any(Number) } }
     })
   })
 })
@@ -735,5 +786,209 @@ describe('图片加速的取回', () => {
     ['其他扩展（发送方 id 不符）', { ...githubTab(), id: 'other-extension' }]
   ] as const)('%s → 不处理', async (_name, sender) => {
     expect(await deliver(FETCH_IMAGE, sender as Sender)).toEqual({ handled: false })
+  })
+
+  it('未授权的企业版站点 → 应答 ok: false，不取回', async () => {
+    const fetch = vi.fn()
+    vi.stubGlobal('fetch', fetch)
+    await updateSettings({ accelerateImages: true })
+    expect(await deliver(FETCH_IMAGE, enterpriseTab())).toEqual({ handled: true, response: { ok: false } })
+    expect(fetch).not.toHaveBeenCalled()
+  })
+})
+
+describe('企业版站点', () => {
+  const BRIDGE = { files: ['/content-scripts/turbo-bridge.js'], world: 'MAIN' }
+  const CONTENT = { files: ['/content-scripts/content.js'] }
+
+  /** 企业版站点的两份注册 */
+  function enterpriseScripts(matches: readonly string[] = ENTERPRISE_ORIGINS): unknown[] {
+    return [
+      {
+        id: ENTERPRISE_BRIDGE_ID,
+        matches,
+        js: ['content-scripts/turbo-bridge.js'],
+        runAt: 'document_start',
+        persistAcrossSessions: true,
+        world: 'MAIN'
+      },
+      { id: ENTERPRISE_CONTENT_ID, matches, js: ['content-scripts/content.js'], runAt: 'document_start', persistAcrossSessions: true }
+    ]
+  }
+
+  const registeredIds = (): string[] => scripts.registered.map(script => script.id)
+  const localeMatches = (): readonly string[] | undefined => scripts.registered.find(script => script.id === LOCALE_SCRIPT_ID)?.matches
+
+  interface Injection {
+    readonly target: { readonly tabId: number }
+    readonly files: readonly string[]
+    readonly world?: string
+  }
+
+  /** 各次注入的标签页、文件与运行环境，按注入顺序 */
+  function injections(): [number, unknown][] {
+    return vi.mocked(fakeBrowser.scripting.executeScript).mock.calls.map(([call]) => {
+      const { target, files, world } = call as unknown as Injection
+      return [target.tabId, world ? { files, world } : { files }]
+    })
+  }
+
+  /** 等待权限事件触发的同步、注入完成 */
+  async function settleAll(): Promise<void> {
+    for (let i = 0; i < 5; i++) await settle()
+  }
+
+  beforeEach(() => {
+    // 默认没有接收方：页面上还没有内容脚本
+    vi.spyOn(fakeBrowser.tabs, 'sendMessage').mockRejectedValue(new Error('Could not establish connection. Receiving end does not exist.'))
+  })
+
+  it('启动时按已授权的站点注册桥接（主世界）与内容脚本，document_start、跨会话保留；词典脚本的站点一并加上', async () => {
+    fakePermissions.granted.push(...ENTERPRISE_ORIGINS)
+    background.main()
+    await settleAll()
+    expect(scripts.registered.filter(script => script.id !== LOCALE_SCRIPT_ID)).toEqual(enterpriseScripts())
+    expect(localeMatches()).toEqual([...GITHUB_ORIGINS, ...ENTERPRISE_ORIGINS])
+  })
+
+  it('没有已授权的站点：只注册词典脚本', async () => {
+    background.main()
+    await settleAll()
+    expect(registeredIds()).toEqual([LOCALE_SCRIPT_ID])
+    expect(localeMatches()).toEqual([...GITHUB_ORIGINS])
+  })
+
+  it('通配的主机权限（如在扩展管理里允许所有网站）、GitHub 自己的站点：不当作企业版站点', async () => {
+    fakePermissions.granted.push('*://*/*', '<all_urls>', '*://*.example.com/*', 'https://docs.github.com/*')
+    background.main()
+    await settleAll()
+    expect(registeredIds()).toEqual([LOCALE_SCRIPT_ID])
+  })
+
+  it('授权后注册，并向已打开的该站页面注入（先桥接再内容脚本）；其他标签页不注入', async () => {
+    background.main()
+    await settleAll()
+    const page = await fakeBrowser.tabs.create({ url: `https://${ENTERPRISE_HOST}/octocat/hello-world` })
+    const gist = await fakeBrowser.tabs.create({ url: `https://gist.${ENTERPRISE_HOST}/octocat` })
+    await fakeBrowser.tabs.create({ url: 'https://example.com/' })
+    await fakeBrowser.tabs.create({ url: 'https://github.com/vuejs/core' })
+    vi.mocked(fakeBrowser.scripting.executeScript).mockClear()
+    await fakePermissions.grant(ENTERPRISE_ORIGINS)
+    await settleAll()
+    expect(registeredIds()).toEqual([LOCALE_SCRIPT_ID, ENTERPRISE_BRIDGE_ID, ENTERPRISE_CONTENT_ID])
+    expect(localeMatches()).toEqual([...GITHUB_ORIGINS, ...ENTERPRISE_ORIGINS])
+    expect(injections()).toEqual([
+      [page.id, BRIDGE],
+      [gist.id, BRIDGE],
+      [page.id, CONTENT],
+      [gist.id, CONTENT]
+    ])
+  })
+
+  it('已有内容脚本应答状态的页面不再注入', async () => {
+    background.main()
+    await settleAll()
+    await fakeBrowser.tabs.create({ url: `https://${ENTERPRISE_HOST}/` })
+    vi.spyOn(fakeBrowser.tabs, 'sendMessage').mockResolvedValue({ active: true, excluded: false, pages: [], translatedCount: 0 } as never)
+    vi.mocked(fakeBrowser.scripting.executeScript).mockClear()
+    await fakePermissions.grant(ENTERPRISE_ORIGINS)
+    await settleAll()
+    expect(fakeBrowser.scripting.executeScript).not.toHaveBeenCalled()
+  })
+
+  it('再授权一个站点：两个站点的匹配模式合并到同一份注册', async () => {
+    fakePermissions.granted.push(...ENTERPRISE_ORIGINS)
+    background.main()
+    await settleAll()
+    const second = enterpriseOrigins('octo-corp.ghe.com')
+    await fakePermissions.grant(second)
+    await settleAll()
+    expect(scripts.registered.filter(script => script.id !== LOCALE_SCRIPT_ID)).toEqual(
+      enterpriseScripts([...ENTERPRISE_ORIGINS, ...second])
+    )
+  })
+
+  it('撤销后注销，词典脚本恢复为 GitHub 的站点', async () => {
+    fakePermissions.granted.push(...ENTERPRISE_ORIGINS)
+    background.main()
+    await settleAll()
+    await fakePermissions.revoke(ENTERPRISE_ORIGINS)
+    await settleAll()
+    expect(registeredIds()).toEqual([LOCALE_SCRIPT_ID])
+    expect(localeMatches()).toEqual([...GITHUB_ORIGINS])
+  })
+
+  it('关闭总开关：注销词典脚本，企业版站点的内容脚本保留（关闭时内容脚本仍应答状态）', async () => {
+    fakePermissions.granted.push(...ENTERPRISE_ORIGINS)
+    background.main()
+    await settleAll()
+    await updateSettings({ enabled: false })
+    await settleAll()
+    expect(registeredIds()).toEqual([ENTERPRISE_BRIDGE_ID, ENTERPRISE_CONTENT_ID])
+  })
+
+  it('扩展更新后浏览器清空注册：补回', async () => {
+    fakePermissions.granted.push(...ENTERPRISE_ORIGINS)
+    background.main()
+    await settleAll()
+    scripts.updateExtension()
+    await fakeBrowser.runtime.onInstalled.trigger({ reason: 'update' } as never)
+    await settleAll()
+    expect(registeredIds()).toEqual([LOCALE_SCRIPT_ID, ENTERPRISE_BRIDGE_ID, ENTERPRISE_CONTENT_ID])
+  })
+
+  it.each([
+    ['Chromium', false, ['https://github.com/vuejs/core', `https://${ENTERPRISE_HOST}/`]],
+    ['Firefox（清单里的内容脚本自动注入）', true, [`https://${ENTERPRISE_HOST}/`]]
+  ] as const)('%s 更新：向已打开的企业版站点页面注入，不注入未授权的站点', async (_name, firefox, expected) => {
+    if (firefox) vi.stubEnv('FIREFOX', 'true')
+    fakePermissions.granted.push(...ENTERPRISE_ORIGINS)
+    const tabs = [
+      { id: 1, url: 'https://github.com/vuejs/core' },
+      { id: 2, url: `https://${ENTERPRISE_HOST}/` },
+      { id: 3, url: 'https://octo-corp.ghe.com/' }
+    ]
+    vi.spyOn(fakeBrowser.tabs, 'query').mockImplementation((async () => tabs) as never)
+    background.main()
+    await fakeBrowser.runtime.onInstalled.trigger({ reason: 'update' } as never)
+    await settleAll()
+    const injected = new Set(injections().map(([tabId]) => tabs.find(tab => tab.id === tabId)?.url))
+    expect([...injected]).toEqual(expected)
+  })
+
+  it('设置页保存词条：通知已授权的企业版站点的标签页，不通知未授权的', async () => {
+    fakePermissions.granted.push(...ENTERPRISE_ORIGINS)
+    background.main()
+    const tab = await fakeBrowser.tabs.create({ url: `https://${ENTERPRISE_HOST}/octocat` })
+    const other = await fakeBrowser.tabs.create({ url: 'https://octo-corp.ghe.com/' })
+    const send = vi.spyOn(fakeBrowser.tabs, 'sendMessage').mockResolvedValue(undefined as never)
+    const respond = vi.fn()
+    await fakeBrowser.runtime.onMessage.trigger(
+      { type: 'gcn:custom-entries-saved' },
+      { id: fakeBrowser.runtime.id, url: fakeBrowser.runtime.getURL('/options.html') },
+      respond
+    )
+    await settleAll()
+    expect(respond).toHaveBeenCalledWith({ ok: true })
+    const notified = send.mock.calls.map(([tabId]) => tabId)
+    expect(notified).toContain(tab.id)
+    expect(notified).not.toContain(other.id)
+  })
+
+  it('读取权限失败：按没有企业版站点处理，照常注册词典脚本', async () => {
+    vi.spyOn(fakeBrowser.permissions, 'getAll').mockRejectedValue(new Error('不支持'))
+    background.main()
+    await settleAll()
+    expect(registeredIds()).toEqual([LOCALE_SCRIPT_ID])
+  })
+
+  it('只增减 API 权限（不含主机权限）：不重新同步', async () => {
+    background.main()
+    await settleAll()
+    const getAll = vi.spyOn(fakeBrowser.permissions, 'getAll')
+    await fakePermissions.onAdded.trigger([])
+    await fakePermissions.onRemoved.trigger([])
+    await settleAll()
+    expect(getAll).not.toHaveBeenCalled()
   })
 })

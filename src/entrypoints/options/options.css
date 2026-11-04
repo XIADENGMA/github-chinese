@@ -40,6 +40,11 @@ html {
   gap: 8px;
 }
 
+/* 标签页里的导入、导出：靠右放在最上方 */
+.section > .transfer-tools {
+  justify-content: flex-end;
+}
+
 .switches {
   margin: 0;
   padding: 0 16px;
@@ -48,11 +53,12 @@ html {
   border-radius: var(--gcn-radius-lg);
 }
 
-.switches li {
+/* 只选直接子项：行内的下拉框（列表也是 li）不受影响 */
+.switches > li {
   padding: 6px 0;
 }
 
-.switches li + li {
+.switches > li + li {
   border-top: 1px solid var(--gcn-border-muted);
 }
 
@@ -93,6 +99,22 @@ html {
 /* 单元格里是行内输入框：表头文字与输入框文字对齐（单元格内边距 8 + 边框 1 + 输入框内边距 12） */
 .list-table-inline th {
   padding: 0 8px 0 21px;
+}
+
+/* 多选：复选框列按内容收窄，表头的全选框与各行的复选框对齐 */
+.list-table .select-cell {
+  width: 1%;
+  padding-right: 0;
+}
+
+/* 删除所选：在表头的操作列，与各行的删除按钮对齐 */
+.list-table .bulk-cell {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.list-table-inline th:is(.select-cell, .bulk-cell) {
+  padding-left: 8px;
 }
 
 .blankslate {

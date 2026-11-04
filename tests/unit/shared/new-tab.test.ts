@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import {
   DEFAULT_NEW_TAB_SCOPES,
-  isGitHubSite,
   isNewTabScope,
+  isSiteLink,
   NEW_TAB_SCOPES,
   pageScope,
   sanitizeNewTabScopes,
@@ -46,7 +46,13 @@ describe('pageScope', () => {
     ['https://gist.github.com/octocat/starred', 'profiles'],
     ['https://gist.github.com/starred', 'profiles'],
     ['https://gist.github.com/search?q=vue', 'search'],
-    ['https://gist.github.com/discover', 'explore']
+    ['https://gist.github.com/discover', 'explore'],
+    // 企业版站点：主站同 github.com，代码片段（gist 子域名、主站的 /gist 下）同 gist.github.com
+    ['https://github.example.com/search?q=vue', 'search'],
+    ['https://octo-corp.ghe.com/vuejs/core/issues', 'issues'],
+    ['https://gist.github.example.com/discover', 'explore'],
+    ['https://github.example.com/gist/discover', 'explore'],
+    ['https://github.example.com/gist/octocat', 'profiles']
   ] as const)('%s → %s', (href, expected) => {
     expect(scopeOf(href)).toBe(expected)
   })
@@ -70,16 +76,32 @@ describe('pageScope', () => {
   })
 })
 
-describe('isGitHubSite', () => {
-  it.each(['github.com', 'gist.github.com', 'docs.github.com', 'raw.githubusercontent.com', 'GitHub.com', 'www.githubstatus.com'])(
-    '%s → GitHub 的站点',
-    host => {
-      expect(isGitHubSite(host)).toBe(true)
-    }
-  )
+describe('isSiteLink', () => {
+  it.each([
+    ['github.com', 'github.com'],
+    ['raw.githubusercontent.com', 'github.com'],
+    ['github.com', 'github.example.com'],
+    ['github.example.com', 'github.example.com'],
+    ['GitHub.Example.com', 'github.example.com'],
+    ['gist.github.example.com', 'github.example.com'],
+    ['media.github.example.com', 'github.example.com'],
+    ['github.example.com', 'gist.github.example.com'],
+    ['raw.github.example.com', 'gist.github.example.com'],
+    ['octo-corp.ghe.com', 'octo-corp.ghe.com']
+  ])('%s（页面在 %s）→ 站内', (host, page) => {
+    expect(isSiteLink(host, page)).toBe(true)
+  })
 
-  it.each(['example.com', 'octocat.github.io', 'notgithub.com', 'github.com.example.com', 'vuejs.org'])('%s → 站外', host => {
-    expect(isGitHubSite(host)).toBe(false)
+  it.each([
+    ['example.com', 'github.com'],
+    ['github.example.com', 'github.com'],
+    ['example.com', 'github.example.com'],
+    ['example.com', 'gist.github.example.com'],
+    ['github.example.com.evil.test', 'github.example.com'],
+    ['notgithub.example.com', 'github.example.com'],
+    ['other-corp.ghe.com', 'octo-corp.ghe.com']
+  ])('%s（页面在 %s）→ 站外', (host, page) => {
+    expect(isSiteLink(host, page)).toBe(false)
   })
 })
 

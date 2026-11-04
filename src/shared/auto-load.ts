@@ -1,4 +1,4 @@
-import { accountLogin, pathSegments } from '../core/page'
+import { accountLogin, pageSite, pathSegments } from '../core/page'
 import { sanitizeScopes, toggleScope } from './scope-list'
 
 /**
@@ -61,7 +61,7 @@ const REPO_SECTIONS: ReadonlyMap<string, AutoLoadPageScope> = new Map([
   ['commit', 'commits']
 ])
 
-/** github.com 上的页面所属的范围 */
+/** github.com（及企业版主站）上的页面所属的范围 */
 function githubScope(pathname: string): AutoLoadPageScope {
   const [first, second, third] = pathSegments(pathname)
   if (first === undefined || DASHBOARD_TOP.has(first)) return 'dashboard'
@@ -81,7 +81,7 @@ function githubScope(pathname: string): AutoLoadPageScope {
   return (third === undefined ? undefined : REPO_SECTIONS.get(third)) ?? 'other'
 }
 
-/** gist.github.com 上的页面所属的范围：搜索，个人的代码片段列表 */
+/** 代码片段站点上的页面所属的范围：搜索，个人的代码片段列表 */
 function gistScope(pathname: string): AutoLoadPageScope {
   const [first, second] = pathSegments(pathname)
   if (first === 'search') return 'search'
@@ -89,9 +89,10 @@ function gistScope(pathname: string): AutoLoadPageScope {
   return first === 'starred' || second === undefined || second === 'starred' || second === 'forked' ? 'profiles' : 'other'
 }
 
-/** 页面所属的范围（按所在页面生效的那几种） */
+/** 页面所属的范围（按所在页面生效的那几种）；站点见 pageSite */
 export function autoLoadPageScope(url: Pick<URL, 'hostname' | 'pathname'>): AutoLoadPageScope {
-  if (url.hostname === 'github.com') return githubScope(url.pathname)
-  if (url.hostname === 'gist.github.com') return gistScope(url.pathname)
+  const site = pageSite(url)
+  if (site.kind === 'github') return githubScope(site.pathname)
+  if (site.kind === 'gist') return gistScope(site.pathname)
   return 'other'
 }

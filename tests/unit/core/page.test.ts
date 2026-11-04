@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { accountLogin, detectPages, repositoryName } from '../../../src/core/page'
+import { accountLogin, detectPages, pageSite, repositoryName } from '../../../src/core/page'
 
 function pages(url: string): string[] {
   return detectPages(new URL(url))
@@ -160,6 +160,41 @@ describe('detectPages', () => {
 
   it('非法转义的路径段按原样小写', () => {
     expect(detectPages({ hostname: 'github.com', pathname: '/%E0%A4%A/x/ISSUES' })).toEqual(['common', 'repository', 'issues'])
+  })
+
+  it.each([
+    // 企业版站点（GHES 自有域名、GHE.com）：与 github.com 相同的路径
+    ['https://github.example.com/', ['common', 'dashboard']],
+    ['https://github.example.com/vuejs/core/pull/1/changes', ['common', 'repository', 'pulls']],
+    ['https://octo-corp.ghe.com/settings/profile', ['common', 'settings']],
+    ['http://10.0.0.5/octocat?tab=repositories', ['common', 'profile', 'organization']],
+    // 代码片段：子域名隔离时在 gist 子域名，否则在主站的 /gist 下
+    ['https://gist.github.example.com/octocat/1', ['common', 'gist']],
+    ['https://github.example.com/gist/octocat/1', ['common', 'gist']],
+    ['https://github.example.com/gist', ['common', 'gist']],
+    // 不是 /gist 段
+    ['https://github.example.com/gists/sample', ['common', 'repository', 'code']],
+    // github.com 上的 /gist 是账号
+    ['https://github.com/gist', ['common', 'profile', 'organization']]
+  ])('企业版站点：%s', (url, expected) => {
+    expect(pages(url)).toEqual(expected)
+  })
+})
+
+describe('pageSite', () => {
+  it.each([
+    ['https://github.com/vuejs/core', 'github', '/vuejs/core'],
+    ['https://gist.github.com/octocat', 'gist', '/octocat'],
+    ['https://www.githubstatus.com/history', 'status', '/history'],
+    ['https://github.example.com/vuejs/core', 'github', '/vuejs/core'],
+    ['https://GIST.github.example.com/octocat', 'gist', '/octocat'],
+    ['https://github.example.com/gist/octocat/1', 'gist', '/octocat/1'],
+    ['https://github.example.com/GIST/', 'gist', '/'],
+    ['https://github.example.com/gist', 'gist', '/'],
+    ['https://github.example.com/gists', 'github', '/gists'],
+    ['https://github.com/gist/octocat', 'github', '/gist/octocat']
+  ])('%s → %s，站内路径 %s', (url, kind, pathname) => {
+    expect(pageSite(new URL(url))).toEqual({ kind, pathname })
   })
 })
 

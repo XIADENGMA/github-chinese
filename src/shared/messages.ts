@@ -1,4 +1,5 @@
 import type { PageKey } from '../core/types'
+import type { SourceHealth } from './accelerate-categories'
 import { isPageLocale, type PageLocale } from './locale'
 
 /** popup、后台 → content script 的消息 */
@@ -31,8 +32,8 @@ export type BackgroundMessage =
   | { readonly type: 'gcn:search-rules-saved' }
   /** 内容脚本动态导入词典脚本失败时，请后台把词典脚本注入发送方所在的框架 */
   | { readonly type: 'gcn:inject-locale'; readonly locale: PageLocale }
-  /** 点击了下载链接、显示或复制加速地址（故障转移开启、自动选择时）：请后台选出可用的加速源，应答加速后的地址（见 ResolvedDownload） */
-  | { readonly type: 'gcn:resolve-download'; readonly url: string }
+  /** 故障转移开启时，显示加速选项、替换原链接、下载文件夹前：请后台探测各加速源，应答探测结果（见 ProbedSources） */
+  | { readonly type: 'gcn:probe-sources' }
   /** 图片加载失败（开启图片加速时）：请后台经加速源取回，应答 data: 地址（见 FetchedImage） */
   | { readonly type: 'gcn:fetch-image'; readonly url: string }
 
@@ -41,10 +42,10 @@ export interface BackgroundAck {
   readonly ok: boolean
 }
 
-/** 后台对 gcn:resolve-download 的应答：加速后的地址，或没有可用加速源时的原地址 */
-export interface ResolvedDownload {
+/** 后台对 gcn:probe-sources 的应答：各加速源的探测结果（未开启加速或故障转移时为空） */
+export interface ProbedSources {
   readonly ok: true
-  readonly url: string
+  readonly health: SourceHealth
 }
 
 /** 后台对 gcn:fetch-image 的应答：经加速源取回的图片 */
@@ -57,8 +58,10 @@ export interface FetchedImage {
 /** 图片的 data: 地址 */
 const DATA_IMAGE_RE = /^data:image\/[a-z0-9.+-]+;base64,/
 
-/** 下载链接的长度上限：超出的不处理 */
+/** 图片地址的长度上限：超出的不处理 */
 const MAX_URL_LENGTH = 4096
+/** 探测结果的条数上限（内置源与自定义源合计远少于此） */
+const MAX_HEALTH_ENTRIES = 100
 
 const CONTENT_MESSAGE_TYPES: ReadonlySet<string> = new Set<ContentMessage['type']>([
   'gcn:get-status',
@@ -99,7 +102,8 @@ export function isBackgroundMessage(value: unknown): value is BackgroundMessage 
       return true
     case 'gcn:inject-locale':
       return isPageLocale(value.locale)
-    case 'gcn:resolve-download':
+    case 'gcn:probe-sources':
+      return true
     case 'gcn:fetch-image':
       return typeof value.url === 'string' && value.url.length <= MAX_URL_LENGTH
     default:
@@ -112,9 +116,14 @@ export function isAcknowledged(value: unknown): value is BackgroundAck {
   return isRecord(value) && value.ok === true
 }
 
-/** 校验后台对 gcn:resolve-download 的应答 */
-export function isResolvedDownload(value: unknown): value is ResolvedDownload {
-  return isRecord(value) && value.ok === true && typeof value.url === 'string' && value.url.startsWith('https://')
+/** 校验后台对 gcn:probe-sources 的应答：标识 → 耗时（非负数）或 null */
+export function isProbedSources(value: unknown): value is ProbedSources {
+  if (!isRecord(value) || value.ok !== true || !isRecord(value.health)) return false
+  const entries = Object.entries(value.health)
+  return (
+    entries.length <= MAX_HEALTH_ENTRIES &&
+    entries.every(([, ms]) => ms === null || (typeof ms === 'number' && Number.isFinite(ms) && ms >= 0))
+  )
 }
 
 /** 校验后台对 gcn:fetch-image 的应答：base64 编码的图片 data: 地址 */

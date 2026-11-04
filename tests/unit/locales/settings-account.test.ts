@@ -1564,3 +1564,47 @@ describe('settings-account 繁体（zh-TW 语言包）', () => {
     }
   })
 })
+
+describe('切换设置对象与 Copilot 记忆（整包、按地址识别页面）', () => {
+  /** 用整个语言包按地址渲染一段页面，返回各 id 元素的文字 */
+  function render(bundle: typeof zhCN, url: string, html: string): (id: string) => string | undefined {
+    document.body.innerHTML = html
+    const pages = detectPages(new URL(url))
+    const translator = createTranslator({ matcher: createMatcher(bundle), host: window, resolvePages: () => pages })
+    translator.start()
+    const shown = (id: string): string | undefined => document.getElementById(id)?.textContent?.trim()
+    const snapshot = new Map([...document.querySelectorAll('[id]')].map(element => [element.id, shown(element.id)]))
+    translator.stop()
+    document.body.innerHTML = ''
+    return id => snapshot.get(id)
+  }
+
+  // 结构：settings 单独包在元素里，整句不在同一文本节点
+  const SWITCHER =
+    '<button id="switch" type="button"><span>Switch <span>settings</span> context</span></button><h2 id="select">Select settings context</h2>'
+  const SIDEBAR =
+    '<nav><a id="features" href="/settings/copilot/features">Features</a><a id="memory" href="/settings/copilot/memory">Memory</a></nav>'
+
+  it.each([
+    ['https://github.com/settings/profile', '切换设置对象'],
+    ['https://github.com/organizations/octo-org/settings/profile', '切换设置对象']
+  ])('%s：被元素拆开的「Switch settings context」整句翻译', (url, expected) => {
+    const shown = render(zhCN, url, SWITCHER)
+    expect(shown('switch')).toBe(expected)
+    expect(shown('select')).toBe('选择设置对象')
+  })
+
+  it.each([
+    ['https://github.com/settings/profile', '切換要設定的帳號'],
+    ['https://github.com/organizations/octo-org/settings/profile', '切換要設定的帳號']
+  ])('繁体 %s：同上', (url, expected) => {
+    const shown = render(zhTW, url, SWITCHER)
+    expect(shown('switch')).toBe(expected)
+    expect(shown('select')).toBe('選擇要設定的帳號')
+  })
+
+  it('Copilot 侧栏的 Memory 菜单项', () => {
+    expect(render(zhCN, 'https://github.com/settings/copilot/features', SIDEBAR)('memory')).toBe('记忆')
+    expect(render(zhTW, 'https://github.com/settings/copilot/features', SIDEBAR)('memory')).toBe('記憶')
+  })
+})

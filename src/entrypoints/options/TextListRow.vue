@@ -1,5 +1,8 @@
 <template>
   <tr>
+    <td class="select-cell">
+      <UiCheckbox :checked="selected" :label="t('selectItem', { item })" @change="emit('select', item, $event)" />
+    </td>
     <td>
       <UiInput
         inline
@@ -21,11 +24,12 @@
 
 <script setup lang="ts">
   import UiButton from '../../components/ui/UiButton.vue'
+  import UiCheckbox from '../../components/ui/UiCheckbox.vue'
   import UiInput from '../../components/ui/UiInput.vue'
   import { useI18n } from '../../components/ui-preferences'
 
   /**
-   * 文字列表的一行：行内改写，删除。
+   * 文字列表的一行：选择，行内改写，删除。
    * 单独成组件：列表重渲染（添加框输入、其他条目变化）时这一行的属性与处理函数不变、不跟着更新，
    * 输入框里未提交的修改不会被回写成原值
    */
@@ -33,9 +37,11 @@
     item: string
     /** 列名：输入框的无障碍名称 */
     label: string
+    selected: boolean
   }>()
 
   const emit = defineEmits<{
+    select: [item: string, selected: boolean]
     edit: [event: Event, item: string]
     remove: [item: string]
   }>()

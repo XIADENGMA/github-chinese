@@ -1,4 +1,4 @@
-import { flushPromises } from '@vue/test-utils'
+import { flushPromises, type DOMWrapper } from '@vue/test-utils'
 import { effectScope } from 'vue'
 import { fakeBrowser } from 'wxt/testing/fake-browser'
 import { useToasts, type Toast } from '../../../src/components/toast'
@@ -47,6 +47,18 @@ export function withScope<T>(factory: () => T): Scoped<T> {
 export async function settle(): Promise<void> {
   await flushPromises()
   await flushPromises()
+}
+
+/** 删除所选：点表头的删除所选（先聚焦，同键盘操作），在打开的确认框中点删除 */
+export async function deleteSelected(scope: DOMWrapper<Element>): Promise<void> {
+  const button = scope.get<HTMLButtonElement>('[data-test="delete-selected"]')
+  button.element.focus()
+  await button.trigger('click')
+  await settle()
+  const dialog = scope.get<HTMLDialogElement>('[data-test="confirm"]')
+  if (!dialog.element.open) throw new Error('确认框未打开')
+  await dialog.get('[data-test="confirm-ok"]').trigger('click')
+  await settle()
 }
 
 /** 新建并聚焦窗口（fakeBrowser 重置后没有当前窗口），返回窗口 ID */

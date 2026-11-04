@@ -4,6 +4,7 @@ import { createTranslator, type Translator } from '../../../src/core/translator'
 import type { PageDictionary, PageKey } from '../../../src/core/types'
 import commonUi from '../../../src/locales/zh-CN/common-ui'
 import { zhCN } from '../../../src/locales/zh-CN/index'
+import { zhTW } from '../../../src/locales/zh-TW/index'
 import settingsDeveloper from '../../../src/locales/zh-CN/settings-developer'
 import { joinCjk } from '../../../src/locales/zh-CN/helpers'
 import { lastUsedLabel, translateLastUsed, translateUsage } from '../../../src/locales/zh-CN/settings-developer/keys'
@@ -1355,5 +1356,55 @@ describe('settings-developer 被链接拆开的句子（DOM）', () => {
     )
     // 组织名是用户内容，只有它被报为未译
     expect(t.drainUntranslated().map(([text]) => text)).toEqual(['octo-org'])
+  })
+})
+
+describe('Copilot 记忆与梦境（功能页，DOM）', () => {
+  const HTML = `<h3 id="title">Copilot Memory</h3>
+    <button id="memory" type="button"><span class="fgColor-muted">Copilot Memory:</span> User and repository memories allowed</button>
+    <p id="description">Choose which memories Copilot can use in work you start, such as agent sessions and code reviews. If user or repository memory is disabled by organization, enterprise or repository policy, those memories will not be supplied, regardless of your preference. Your preference remains saved and will automatically take effect if the policy later allows memory. Disabling memory does not delete existing memories. While user memories aren't enabled, you can't view or delete them on the Memory page.</p>
+    <h4 id="dreaming">Dreaming</h4>
+    <p id="intro">Dreaming works in the background to improve the memories and guidance Copilot uses in future coding sessions and code reviews.</p>
+    <p id="managed"><strong>Memories are fully managed.</strong> Dreaming applies memory changes automatically, without a pull request or manual approval.</p>
+    <p id="scope">Dreaming runs only where the relevant Memory scope and other required policies and features are enabled. Session-based Dreams also require session upload.</p>
+    <a id="learn" href="https://docs.github.com/copilot">Learn more about Copilot Dreaming</a>
+    <p id="note">This setting controls Dreaming for your user memories. Enable repository Dreaming separately in each repository's settings.</p>`
+
+  function render(bundle: typeof zhCN): Map<string, string | undefined> {
+    document.body.innerHTML = HTML
+    const translator = createTranslator({
+      matcher: createMatcher(bundle),
+      host: window,
+      resolvePages: () => ['common', 'settings'],
+      collectUntranslated: true
+    })
+    translator.start()
+    const shown = new Map([...document.querySelectorAll('[id]')].map(element => [element.id, element.textContent?.trim()]))
+    const untranslated = translator.drainUntranslated()
+    translator.stop()
+    document.body.innerHTML = ''
+    expect(untranslated).toEqual([])
+    return shown
+  }
+
+  it('简体', () => {
+    const shown = render(zhCN)
+    expect(shown.get('title')).toBe('Copilot 记忆')
+    expect(shown.get('memory')?.replace(/\s+/g, '')).toBe('Copilot记忆：允许用户和存储库记忆')
+    expect(shown.get('description')).toMatch(/^选择 Copilot 在你发起的工作.+你无法在记忆页面查看或删除它们。$/)
+    expect(shown.get('dreaming')).toBe('梦境')
+    expect(shown.get('managed')?.replace(/\s+/g, '')).toBe('记忆完全托管。梦境自动应用记忆变更，无需拉取请求或手动批准。')
+    expect(shown.get('learn')).toBe('了解 Copilot 梦境')
+    expect(shown.get('note')).toBe('此设置控制用户记忆的梦境。存储库的梦境需在各存储库的设置中分别启用。')
+  })
+
+  it('繁体', () => {
+    const shown = render(zhTW)
+    expect(shown.get('memory')?.replace(/\s+/g, '')).toBe('Copilot記憶：允許使用者和儲存庫記憶')
+    expect(shown.get('dreaming')).toBe('夢境')
+    expect(shown.get('learn')).toBe('瞭解 Copilot 夢境')
+    expect(shown.get('scope')).toBe(
+      '夢境只會在相關記憶範圍及其他必要的政策和功能都已啟用時執行。以工作階段為基礎的夢境還需要上傳工作階段。'
+    )
   })
 })

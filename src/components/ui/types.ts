@@ -12,6 +12,8 @@ export interface UiTab {
   /** 标识：也是对应面板的插槽名 */
   readonly value: string
   readonly label: string
+  /** 标签后的计数（如分类中的条数）；不给时不显示 */
+  readonly count?: number
 }
 
 /** 下拉框选项 */

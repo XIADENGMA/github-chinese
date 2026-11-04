@@ -1,7 +1,8 @@
 import { isBlockedResult, isEmptyBlockList, ownerOfPath, type SearchBlockList, type SearchResultInfo } from '../shared/search-block'
+import { pageSite } from './page'
 
 /**
- * 搜索净化：github.com 的搜索结果页中命中屏蔽规则（见 shared/search-block）的结果直接隐藏，不留占位、不提示。
+ * 搜索净化：github.com（及企业版主站）的搜索结果页中命中屏蔽规则（见 shared/search-block）的结果直接隐藏，不留占位、不提示。
  * 结果由 React 渲染：只改结果元素的行内 display，不删节点。DOM 变动的回调在绘制前执行，命中的结果不会先显示再消失
  */
 export interface SearchPurifierOptions {
@@ -18,8 +19,7 @@ export interface SearchPurifier {
   stop(): void
 }
 
-/** 搜索结果页 */
-const SEARCH_HOST = 'github.com'
+/** 搜索结果页：github.com 与企业版主站（见 pageSite）的 /search */
 const SEARCH_PATH = '/search'
 /** 结果列表：每个子元素是一条结果 */
 const RESULTS_SELECTOR = '[data-testid="results-list"]'
@@ -74,10 +74,10 @@ function describeResult(item: Element, origin: string): SearchResultInfo {
   return { owner, repo, text }
 }
 
-/** 在 github.com 的搜索结果页时为页面的 origin */
+/** 在搜索结果页时为页面的 origin */
 function searchOrigin(doc: Document): string | undefined {
   const location = doc.defaultView?.location
-  return location?.hostname === SEARCH_HOST && location.pathname === SEARCH_PATH ? location.origin : undefined
+  return location && pageSite(location).kind === 'github' && location.pathname === SEARCH_PATH ? location.origin : undefined
 }
 
 export function createSearchPurifier(doc: Document, options: SearchPurifierOptions): SearchPurifier {

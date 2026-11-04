@@ -83,6 +83,19 @@ describe('autoLoadPageScope', () => {
   ])('其他页面：%s', href => {
     expect(scopeOf(href)).toBe('other')
   })
+
+  it.each([
+    ['https://github.example.com/', 'dashboard'],
+    ['https://github.example.com/vuejs/core/pull/1', 'pulls'],
+    ['https://octo-corp.ghe.com/vuejs/core/releases', 'releases'],
+    ['https://gist.github.example.com/octocat', 'profiles'],
+    ['https://github.example.com/gist/octocat', 'profiles'],
+    ['https://github.example.com/gist/search?q=vue', 'search'],
+    ['https://github.example.com/gist/octocat/0123456789abcdef', 'other'],
+    ['https://github.example.com/settings/profile', 'other']
+  ] as const)('企业版站点：%s → %s', (href, expected) => {
+    expect(scopeOf(href)).toBe(expected)
+  })
 })
 
 describe('自动加载的范围', () => {

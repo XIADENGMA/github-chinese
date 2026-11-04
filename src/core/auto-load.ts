@@ -1,6 +1,6 @@
 import { AUTO_LOAD_SCOPES, autoLoadPageScope, type AutoLoadScope } from '../shared/auto-load'
 import { completeDeferred } from './deferred-fill'
-import { pathSegments } from './page'
+import { pageSite, pathSegments } from './page'
 import { createPageBreak } from './page-break'
 import {
   currentPageNumber,
@@ -82,7 +82,7 @@ const EXTRA_GROUPS: readonly { readonly matches: (url: URL) => boolean; readonly
   {
     matches: url => {
       const parts = pathSegments(url.pathname)
-      return url.hostname === 'github.com' && parts.length === 3 && parts[2] === 'releases'
+      return pageSite(url).kind === 'github' && parts.length === 3 && parts[2] === 'releases'
     },
     selector: '.js-release-toc nav-list li'
   }

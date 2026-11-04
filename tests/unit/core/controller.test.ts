@@ -21,15 +21,20 @@ const SETTINGS: Settings = {
   accelerateImages: false,
   failover: false,
   purifySearch: true,
+  purifyBuiltin: true,
   autoLoad: false,
   autoLoadScopes: DEFAULT_AUTO_LOAD_SCOPES,
   imagePreview: false,
+  folderDownload: true,
   newTab: false,
   newTabScopes: ['external', 'search'],
   newTabPaths: [],
-  accelerateSource: 'ghfast',
+  categories: [],
+  categoryOrder: [],
+  removedCategories: [],
   customSources: [],
-  removedSources: []
+  removedSources: [],
+  replaceCategory: ''
 }
 
 /** 简化的排除规则：前缀匹配（正式实现见 shared/settings） */

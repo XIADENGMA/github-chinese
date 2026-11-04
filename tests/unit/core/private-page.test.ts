@@ -38,7 +38,16 @@ describe('isPrivatePage', () => {
     expect(isPrivatePage(doc, GIST)).toBe(true)
   })
 
-  it('不在 gist.github.com 上：标题旁的标签不算（存储库名旁有「Public」标签）', () => {
+  it.each(['https://gist.github.example.com/octocat/0831f3fbd83ac4d46451', 'https://github.example.com/gist/octocat/0831f3fbd83ac4d46451'])(
+    '企业版站点的代码片段（%s）：同样按标签判断',
+    url => {
+      expect(isPrivatePage(page('', gistTitle(true)), url)).toBe(true)
+      expect(isPrivatePage(page('', gistTitle(false)), url)).toBe(false)
+    }
+  )
+
+  it('不在代码片段站点上：标题旁的标签不算（存储库名旁有「Public」标签）', () => {
+    expect(isPrivatePage(page('', gistTitle(true)), 'https://github.example.com/octocat/sample')).toBe(false)
     expect(isPrivatePage(page('', gistTitle(true)), 'https://github.com/octocat/sample')).toBe(false)
     expect(isPrivatePage(page('', gistTitle(true)), 'not a url')).toBe(false)
   })

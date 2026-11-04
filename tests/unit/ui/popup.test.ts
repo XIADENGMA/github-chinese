@@ -231,6 +231,22 @@ describe.skipIf(!App)('弹出页组件', () => {
     })
   })
 
+  it('未启用的企业版站点（像 GitHub 的页面）→ 未授权，授权申请该站点；授权后显示状态与排除按钮', async () => {
+    await openTab('https://github.example.com/octocat/hello-world/issues')
+    vi.spyOn(fakeBrowser.scripting, 'executeScript').mockResolvedValue([{ frameId: 0, result: true }] as never)
+    mockContent(contentWith())
+    const request = vi.spyOn(fakeBrowser.permissions, 'request')
+    const wrapper = await render()
+    expect(stateText(wrapper)).toBe('未授权')
+    expect(hasButton(wrapper, '排除此页')).toBe(false)
+
+    await button(wrapper, '授权').trigger('click')
+    expect(request).toHaveBeenCalledWith({ origins: ['*://github.example.com/*', '*://gist.github.example.com/*'] })
+    await settle()
+    expect(stateText(wrapper)).toBe('已翻译')
+    expect(hasButton(wrapper, '排除此页')).toBe(true)
+  })
+
   it('排除此页 / 取消排除', async () => {
     await openTab(`${REPO_URL}/issues`)
     mockContent(contentWith())
@@ -345,7 +361,7 @@ describe.skipIf(!App)('弹出页组件', () => {
       mockContent(contentWith())
       const wrapper = await render()
       expect(wrapper.findAll('label').filter(item => item.text() === '启用')).toHaveLength(1)
-      expect(wrapper.findAll('[role="switch"]')).toHaveLength(8)
+      expect(wrapper.findAll('[role="switch"]')).toHaveLength(9)
       expect(wrapper.findAll('[role="combobox"]').map(item => item.attributes('data-test'))).toEqual(['ui-language', 'page-language'])
       // 下拉是自绘的：没有原生 select（其弹出列表的样式改不了）
       expect(wrapper.find('select').exists()).toBe(false)
@@ -361,9 +377,9 @@ describe.skipIf(!App)('弹出页组件', () => {
         wrapper
           .findAll('[role="switch"], [data-test="theme-toggle"], [role="combobox"]')
           .map(item => (item.element as HTMLButtonElement).disabled)
-      expect(disabled()).toEqual(Array.from({ length: 11 }, () => true))
+      expect(disabled()).toEqual(Array.from({ length: 12 }, () => true))
       await settle()
-      expect(disabled()).toEqual(Array.from({ length: 11 }, () => false))
+      expect(disabled()).toEqual(Array.from({ length: 12 }, () => false))
     })
 
     it.each([
@@ -385,14 +401,14 @@ describe.skipIf(!App)('弹出页组件', () => {
   })
 
   describe('常规', () => {
-    it('只有时间本地化、翻译标题、加速下载、净化搜索、自动加载、图片预览、新标签页打开', async () => {
+    it('只有时间本地化、翻译标题、加速下载、净化搜索、自动加载、图片预览、下载文件夹、新标签页打开', async () => {
       mockContent(contentWith())
       const wrapper = await render()
       expect(
         section(wrapper, '常规')
           .findAll('label')
           .map(item => item.text())
-      ).toEqual(['时间本地化', '翻译标题', '加速下载', '净化搜索', '自动加载', '图片预览', '新标签页打开'])
+      ).toEqual(['时间本地化', '翻译标题', '加速下载', '净化搜索', '自动加载', '图片预览', '下载文件夹', '新标签页打开'])
     })
 
     it('加速下载默认关闭，开关即时保存', async () => {
@@ -409,8 +425,9 @@ describe.skipIf(!App)('弹出页组件', () => {
     it.each([
       ['时间本地化', 'translateTime'],
       ['翻译标题', 'translateTitle'],
-      ['净化搜索', 'purifySearch']
-    ] as const)('%s 开关即时保存', async (label, key) => {
+      ['净化搜索', 'purifySearch'],
+      ['下载文件夹', 'folderDownload']
+    ] as const)('%s 默认开启，开关即时保存', async (label, key) => {
       mockContent(contentWith())
       const wrapper = await render()
       const toggle = switchOf(section(wrapper, '常规'), label)
@@ -426,6 +443,21 @@ describe.skipIf(!App)('弹出页组件', () => {
       mockContent(contentWith())
       const wrapper = await render()
       expect(switchOf(section(wrapper, '常规'), '时间本地化').attributes('aria-checked')).toBe('false')
+    })
+
+    it('每个开关一格（紧凑开关）；开启的格子标为开启，随开关切换', async () => {
+      mockContent(contentWith())
+      const wrapper = await render()
+      const tiles = (): DOMWrapper<Element>[] => section(wrapper, '常规').findAll('.toggle-grid > .toggle-tile')
+      expect(tiles()).toHaveLength(8)
+      expect(tiles().every(tile => tile.get('.ui-switch').classes().includes('ui-switch-compact'))).toBe(true)
+      const on = (): boolean[] => tiles().map(tile => tile.classes().includes('is-on'))
+      const checked = (): boolean[] => tiles().map(tile => tile.get('[role="switch"]').attributes('aria-checked') === 'true')
+      expect(on()).toEqual(checked())
+      await switchOf(section(wrapper, '常规'), '加速下载').trigger('click')
+      await settle()
+      expect(tiles()[2]!.classes()).toContain('is-on')
+      expect(on()).toEqual(checked())
     })
 
     it('保存失败时在页面顶部提示，开关不变；再次保存成功时收起', async () => {

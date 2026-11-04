@@ -1,4 +1,4 @@
-import { GITHUB_ORIGINS, parseGitHubUrl } from '../../../src/shared/github'
+import { GITHUB_ORIGINS, isGitHubSite, parseGitHubUrl, parseWebUrl } from '../../../src/shared/github'
 
 describe('parseGitHubUrl', () => {
   it.each([
@@ -28,4 +28,33 @@ describe('parseGitHubUrl', () => {
   it('站点列表与 host_permissions 一致', () => {
     expect(GITHUB_ORIGINS).toEqual(['https://github.com/*', 'https://gist.github.com/*', 'https://www.githubstatus.com/*'])
   })
+})
+
+describe('parseWebUrl', () => {
+  it.each(['https://github.example.com/octocat', 'http://10.0.0.5/', 'https://octo-corp.ghe.com/'])('%s 是网页', url => {
+    expect(parseWebUrl(url)?.href).toBe(new URL(url).href)
+  })
+
+  it.each([undefined, '', 'not a url', 'chrome://extensions/', 'about:blank', 'file:///C:/a.html', 'ftp://example.com/'])(
+    '%s 不是网页',
+    url => {
+      expect(parseWebUrl(url)).toBeUndefined()
+    }
+  )
+})
+
+describe('isGitHubSite', () => {
+  it.each(['github.com', 'gist.github.com', 'docs.github.com', 'raw.githubusercontent.com', 'GitHub.com', 'www.githubstatus.com'])(
+    '%s → GitHub 的站点',
+    host => {
+      expect(isGitHubSite(host)).toBe(true)
+    }
+  )
+
+  it.each(['example.com', 'octocat.github.io', 'notgithub.com', 'github.com.example.com', 'vuejs.org', 'octo-corp.ghe.com'])(
+    '%s → 不是',
+    host => {
+      expect(isGitHubSite(host)).toBe(false)
+    }
+  )
 })

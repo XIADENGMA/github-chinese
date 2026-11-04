@@ -1,10 +1,12 @@
 import { browser } from 'wxt/browser'
 import { defineContentScript } from 'wxt/utils/define-content-script'
+import { createHealthCache } from '../core/accelerate-health'
+import { createAccelerateOptions } from '../core/accelerate-options'
 import { createAutoLoader } from '../core/auto-load'
 import { createCloneUrlRewriter } from '../core/clone-url'
 import { createController } from '../core/controller'
-import { createCopyLinkButtons, type CopyState } from '../core/copy-link'
 import { createDownloadClickHandler } from '../core/download-click'
+import { createFolderDownload } from '../core/folder-download'
 import { createImageAccelerator } from '../core/image-accelerate'
 import { createImagePreview } from '../core/image-preview'
 import type { ViewerLabel } from '../core/image-viewer'
@@ -15,15 +17,17 @@ import { TURBO_RESET_EVENT, TURBO_REVISIT_EVENT, TURBO_TRANSLATING_EVENT } from 
 import type { LocaleBundle } from '../core/types'
 import { translateMessage, type MessageKey, type MessageParams } from '../i18n'
 import { PROBE_TIMEOUT_MS } from '../shared/accelerate'
+import type { SourceHealth } from '../shared/accelerate-categories'
 import { pageLanguageEnvironment } from '../shared/language-env'
 import { resolvePageLocale, resolveUiLanguage, type PageLocale } from '../shared/locale'
 import { createLocaleLoader, TIME_LANGS, waitForRegistration } from '../shared/locale-loader'
-import { compileSearchBlockRules } from '../shared/search-block'
+import { compileSearchBlockRules, type SearchBlockList } from '../shared/search-block'
+import { BUILTIN_BLOCK_RULES } from '../shared/search-block-builtin'
 import {
   isAcknowledged,
   isContentMessage,
   isFetchedImage,
-  isResolvedDownload,
+  isProbedSources,
   type BackgroundMessage,
   type ContentMessage
 } from '../shared/messages'
@@ -83,8 +87,8 @@ const STATUS_WAIT_MS = 1000
  */
 const INVALIDATION_CHECK_MS = 3000
 
-/** 下载加速：等后台选源的时限（后台探测加速源最多 PROBE_TIMEOUT_MS），超时打开原链接 */
-const RESOLVE_TIMEOUT_MS = PROBE_TIMEOUT_MS + 2000
+/** 故障转移：等后台探测的时限（后台探测加速源最多 PROBE_TIMEOUT_MS），超时按不探测处理 */
+const PROBE_WAIT_MS = PROBE_TIMEOUT_MS + 2000
 
 /** 图片加速：等后台取回的时限（故障转移开启、自动选择时后台依次试各加速源） */
 const FETCH_IMAGE_TIMEOUT_MS = 30_000
@@ -104,13 +108,6 @@ const VIEWER_MESSAGES: Readonly<Record<ViewerLabel, MessageKey>> = {
   loadFailed: 'loadFailed'
 }
 
-/** 复制加速链接按钮的状态 → 界面文案 */
-const COPY_MESSAGES: Readonly<Record<CopyState, MessageKey>> = {
-  idle: 'copyLink',
-  copied: 'copied',
-  failed: 'copyFailed'
-}
-
 /** 在新标签页打开（不让新页面拿到本页的 window.opener） */
 function openInNewTab(url: string, noreferrer = false): void {
   window.open(url, '_blank', noreferrer ? 'noopener,noreferrer' : 'noopener')
@@ -123,12 +120,12 @@ async function fetchPage(url: string): Promise<string> {
   return response.text()
 }
 
-/** 请后台为下载链接、克隆地址选源（故障转移、自动选择），返回加速后的地址 */
-async function resolveDownload(url: string): Promise<string> {
-  const message: BackgroundMessage = { type: 'gcn:resolve-download', url }
-  const response = await sendToBackground(message, RESOLVE_TIMEOUT_MS)
-  if (!isResolvedDownload(response)) throw new Error('后台未选出下载地址')
-  return response.url
+/** 请后台探测各加速源（故障转移开启时），返回探测结果 */
+async function probeSources(): Promise<SourceHealth> {
+  const message: BackgroundMessage = { type: 'gcn:probe-sources' }
+  const response = await sendToBackground(message, PROBE_WAIT_MS)
+  if (!isProbedSources(response)) throw new Error('后台未返回探测结果')
+  return response.health
 }
 
 /** 请后台经加速源取回加载失败的图片，返回 data: 地址 */
@@ -185,7 +182,10 @@ export default defineContentScript({
     ])
     let languages = initialLanguages
     let current: Settings = settings
-    let blockList = compileSearchBlockRules(searchRules)
+    /** 自定义的屏蔽规则；开启内置规则时连同内置规则编译 */
+    let customRules = searchRules
+    const compileRules = (): SearchBlockList => compileSearchBlockRules(customRules, current.purifyBuiltin ? BUILTIN_BLOCK_RULES : [])
+    let blockList = compileRules()
     // 搜索净化不等语言包：结果插入页面时就隐藏（见 core/search-purify）
     const purifier = createSearchPurifier(document, {
       active: () => current.enabled && current.purifySearch,
@@ -277,25 +277,33 @@ export default defineContentScript({
         settle(task)
       })
 
-    // 克隆地址加速：改写 Code 下拉框等处的克隆地址（见 core/clone-url）
+    // 加速源的探测结果（故障转移开启时由后台探测，见 core/accelerate-health）
+    const sourceHealth = createHealthCache(probeSources)
+    // 替换原链接：改写 Code 下拉框等处的克隆地址（见 core/clone-url）
     const cloneUrls = createCloneUrlRewriter(document, {
       settings: () => current,
-      resolve: resolveDownload,
+      health: sourceHealth,
       copy: text => {
         navigator.clipboard.writeText(text).catch(() => undefined)
       }
     })
     // 图片加速：图片加载失败时经加速源取回（见 core/image-accelerate）
     const images = createImageAccelerator({ settings: () => current, fetchImage })
-    /** 页面内控件（图片预览、复制加速链接、页码分隔）的文字：扩展界面语言 */
+    /** 页面内控件（图片预览、加速选项、下载文件夹、页码分隔）的文字：扩展界面语言 */
     const message = (key: MessageKey, params?: MessageParams): string =>
       translateMessage(resolveUiLanguage(current.uiLanguage, languages), key, params)
-    // 复制加速链接：发行版附件、源码包链接后的复制按钮（见 core/copy-link）
-    const copyLinks = createCopyLinkButtons(document, {
+    // 加速选项：下载链接、克隆地址旁的各分类选项（见 core/accelerate-options）
+    const accelerateOptions = createAccelerateOptions(document, {
       settings: () => current,
-      resolve: resolveDownload,
+      health: sourceHealth,
       copy: text => navigator.clipboard.writeText(text),
-      label: state => message(COPY_MESSAGES[state])
+      label: key => message(key)
+    })
+    // 下载文件夹：目录页「…」菜单（见 core/folder-download）
+    const folders = createFolderDownload(document, {
+      settings: () => current,
+      health: sourceHealth,
+      label: key => message(key)
     })
     // 自动加载：「加载更多」与分页列表的下一页（见 core/auto-load）
     const autoLoader = createAutoLoader(document, {
@@ -312,11 +320,16 @@ export default defineContentScript({
     })
 
     const applySettings = (next: Settings): void => {
+      const builtinChanged = next.purifyBuiltin !== current.purifyBuiltin
       current = next
+      if (builtinChanged) blockList = compileRules()
       controller.updateSettings(effective(next))
       requestLocale()
+      // 加速源可能增删：探测结果重新取
+      sourceHealth.clear()
       cloneUrls.refresh()
-      copyLinks.refresh()
+      accelerateOptions.refresh()
+      folders.refresh()
       autoLoader.refresh()
       purifier.refresh()
       if (!next.enabled || !next.imagePreview) preview.close()
@@ -343,13 +356,13 @@ export default defineContentScript({
     })
     // 图片预览：在捕获阶段最先处理正文图片的单击（先于下载加速、新标签页打开）
     ctx.addEventListener(window, 'click', preview.onClick, { capture: true })
-    // 下载加速：在捕获阶段先于页面脚本处理下载链接的点击（见 core/download-click）
+    // 替换原链接：在捕获阶段先于页面脚本处理下载链接的点击（见 core/download-click）
     ctx.addEventListener(
       window,
       'click',
       createDownloadClickHandler({
         settings: () => current,
-        resolve: resolveDownload,
+        health: sourceHealth,
         open: (url, newTab) => {
           window.open(url, newTab ? '_blank' : '_self', newTab ? 'noopener' : '')
         }
@@ -374,7 +387,8 @@ export default defineContentScript({
       try {
         const rules = await getSearchBlockRules()
         if (!ctx.isValid) return
-        blockList = compileSearchBlockRules(rules)
+        customRules = rules
+        blockList = compileRules()
         purifier.refresh()
       } catch {
         // 读取失败时沿用当前规则
@@ -437,7 +451,8 @@ export default defineContentScript({
       controller.dispose()
       mark.disconnect()
       cloneUrls.stop()
-      copyLinks.stop()
+      accelerateOptions.stop()
+      folders.stop()
       autoLoader.stop()
       preview.close()
       purifier.stop()

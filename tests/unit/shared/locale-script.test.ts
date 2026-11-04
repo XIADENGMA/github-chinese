@@ -125,6 +125,17 @@ describe('syncLocaleScript', () => {
     expect(new Set(registered[0]?.matches)).toEqual(new Set(GITHUB_ORIGINS))
   })
 
+  it('企业版站点：站点加上已授权的企业版站点；站点变化时更新', async () => {
+    const enterprise = ['*://github.example.com/*', '*://gist.github.example.com/*']
+    await syncLocaleScript(settings({ language: 'zh-CN' }), enterprise)
+    expect(registered).toEqual([localeScript({ matches: [...GITHUB_ORIGINS, ...enterprise] })])
+    await syncLocaleScript(settings({ language: 'zh-CN' }), enterprise)
+    expect(fakeBrowser.scripting.updateContentScripts).not.toHaveBeenCalled()
+    await syncLocaleScript(settings({ language: 'zh-CN' }))
+    expect(fakeBrowser.scripting.updateContentScripts).toHaveBeenCalledTimes(1)
+    expect(registered).toEqual([localeScript()])
+  })
+
   it('浏览器启动初期持久注册还在加载（查询不到，注册报 ID 已存在）：按已注册处理', async () => {
     registered.push(localeScript())
     vi.mocked(fakeBrowser.scripting.getRegisteredContentScripts).mockResolvedValueOnce([] as never)

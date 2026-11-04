@@ -1,5 +1,8 @@
 <template>
   <tr :data-index="index" :aria-rowindex="index + 2">
+    <td class="select-cell">
+      <UiCheckbox :checked="selected" :label="t('selectItem', { item: entry[0] })" @change="emit('select', entry[0], $event)" />
+    </td>
     <td>
       <UiInput inline :model-value="entry[0]" :aria-label="t('source')" @change="emit('edit', $event, entry, 'source')" />
     </td>
@@ -16,12 +19,13 @@
 
 <script setup lang="ts">
   import UiButton from '../../components/ui/UiButton.vue'
+  import UiCheckbox from '../../components/ui/UiCheckbox.vue'
   import UiInput from '../../components/ui/UiInput.vue'
   import { useI18n } from '../../components/ui-preferences'
   import type { EntryField, EntryPair } from '../../shared/custom-entries'
 
   /**
-   * 自定义词条列表的一行：原文、译文行内编辑，删除。
+   * 自定义词条列表的一行：选择，原文、译文行内编辑，删除。
    * 单独成组件：列表滚动时父组件重渲染，这一行的属性与处理函数不变、不跟着更新，
    * 输入框里未提交的修改不会被 v-model 回写成原值
    */
@@ -29,9 +33,11 @@
     entry: EntryPair
     /** 在列表（筛选结果）中的序号，从 0 起；读屏的行号接在表头之后 */
     index: number
+    selected: boolean
   }>()
 
   const emit = defineEmits<{
+    select: [source: string, selected: boolean]
     edit: [event: Event, entry: EntryPair, field: EntryField]
     remove: [source: string]
   }>()

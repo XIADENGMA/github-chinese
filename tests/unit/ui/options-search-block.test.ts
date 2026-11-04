@@ -2,6 +2,7 @@ import { enableAutoUnmount, mount, type DOMWrapper, type VueWrapper } from '@vue
 import { fakeBrowser } from 'wxt/testing/fake-browser'
 import { clearToasts } from '../../../src/components/toast'
 import '../../../src/entrypoints/options/options.css'
+import { BUILTIN_BLOCK_RULES } from '../../../src/shared/search-block-builtin'
 import { getSearchBlockRules, getSettings, searchBlockRulesItem, settingsItem } from '../../../src/shared/settings'
 import { mockVersion, seedChineseUi, settle, ZH_SETTINGS } from './helpers'
 import { importSfc, required } from './sfc'
@@ -43,7 +44,7 @@ function addInput(wrapper: VueWrapper): DOMWrapper<HTMLInputElement> {
 /** 列表各行的规则，新添加的在前 */
 function rules(wrapper: VueWrapper): string[] {
   return section(wrapper)
-    .findAll<HTMLInputElement>('tbody input')
+    .findAll<HTMLInputElement>('tbody input:not([type="checkbox"])')
     .map(input => input.element.value)
 }
 
@@ -90,6 +91,23 @@ describe.skipIf(!App)('设置页：净化设置', () => {
     expect(found.get('[data-test="list-empty"]').text()).toBe('暂无规则')
   })
 
+  it('规则分两个标签：自定义规则（默认）、内置规则；在开关之下，切换后显示对应的列表', async () => {
+    const wrapper = await render()
+    const found = section(wrapper)
+    const list = found.get('.rule-tabs [role="tablist"]')
+    expect(list.attributes('aria-label')).toBe('屏蔽规则')
+    const labels = list.findAll('[role="tab"]')
+    expect(labels.map(item => item.text())).toEqual(['自定义规则', '内置规则'])
+    expect(labels.map(item => item.attributes('aria-selected'))).toEqual(['true', 'false'])
+    expect(found.get('.switches').element.nextElementSibling?.classList.contains('rule-tabs')).toBe(true)
+    expect(found.get('.text-list').isVisible()).toBe(true)
+    expect(found.get('[data-test="builtin-rules"]').isVisible()).toBe(false)
+    await labels[1]!.trigger('click')
+    await settle()
+    expect(found.get('.text-list').isVisible()).toBe(false)
+    expect(found.get('[data-test="builtin-rules"]').isVisible()).toBe(true)
+  })
+
   it('开关即时保存；反映已保存的设置', async () => {
     const wrapper = await render()
     await toggle(wrapper).trigger('click')
@@ -111,20 +129,30 @@ describe.skipIf(!App)('设置页：净化设置', () => {
     expect(toggle(wrapper).attributes('aria-checked')).toBe('true')
   })
 
-  it('显示已保存的规则，新添加的在前；列名与行内输入框以「屏蔽规则」为名', async () => {
+  it('显示已保存的规则，新添加的在前；列名与行内输入框以「屏蔽规则」为名；列表末尾有返回顶部', async () => {
     await searchBlockRulesItem.setValue(['@octocat', 'vuejs/core'])
     const wrapper = await render()
     expect(rules(wrapper)).toEqual(['vuejs/core', '@octocat'])
     expect(
       section(wrapper)
-        .findAll('th')
+        .findAll('.text-list th')
         .map(item => item.text())
-    ).toEqual(['屏蔽规则', '操作'])
+    ).toEqual(['', '屏蔽规则', '操作'])
     expect(
       section(wrapper)
-        .findAll('tbody input')
+        .findAll('tbody input:not([type="checkbox"])')
         .map(input => input.attributes('aria-label'))
     ).toEqual(['屏蔽规则', '屏蔽规则'])
+    expect(
+      section(wrapper)
+        .get('.text-list ' + '.list-frame > .ui-back-to-top [data-test="back-to-top"]')
+        .attributes('aria-label')
+    ).toBe('返回顶部')
+    expect(
+      section(wrapper)
+        .get('[data-test="builtin-rules"] ' + '.list-frame > .ui-back-to-top [data-test="back-to-top"]')
+        .attributes('aria-label')
+    ).toBe('返回顶部')
   })
 
   it('添加：GitHub 地址换成所有者、存储库的写法，即时保存并通知已打开的页面；清空添加框', async () => {
@@ -158,7 +186,7 @@ describe.skipIf(!App)('设置页：净化设置', () => {
   it('行内改写：规范化后保存；与其他规则重复时恢复原值并提示；只改大小写可以', async () => {
     await searchBlockRulesItem.setValue(['@octocat', 'vuejs/core'])
     const wrapper = await render()
-    const input = section(wrapper).get<HTMLInputElement>('tbody input')
+    const input = section(wrapper).get<HTMLInputElement>('tbody input:not([type="checkbox"])')
     expect(input.element.value).toBe('vuejs/core')
 
     await input.setValue('https://github.com/vuejs/router')
@@ -226,5 +254,58 @@ describe.skipIf(!App)('设置页：净化设置', () => {
     expect(frame.maxHeight).toMatch(/^min\(480px, /)
     expect(frame.overflowY).toBe('auto')
     expect(getComputedStyle(table.querySelector('th')!).position).toBe('sticky')
+  })
+
+  describe('内置规则', () => {
+    function builtin(wrapper: VueWrapper): DOMWrapper<Element> {
+      return section(wrapper).get('[data-test="builtin-rules"]') as DOMWrapper<Element>
+    }
+
+    it('开关在净化搜索之下，默认开启；即时保存，关闭后列表变淡', async () => {
+      const wrapper = await render()
+      expect(
+        section(wrapper)
+          .findAll('.ui-switch-label')
+          .map(item => item.text())
+      ).toEqual(['净化搜索', '内置规则'])
+      const switches = section(wrapper).findAll('[role="switch"]')
+      expect(switches.map(item => item.attributes('aria-checked'))).toEqual(['true', 'true'])
+      expect(builtin(wrapper).classes()).not.toContain('is-off')
+      await switches[1]!.trigger('click')
+      await settle()
+      expect((await getSettings()).purifyBuiltin).toBe(false)
+      expect(builtin(wrapper).classes()).toContain('is-off')
+    })
+
+    it('列表在自定义规则之后的标签里，只读；显示条数；只渲染可视范围内的行', async () => {
+      const wrapper = await render()
+      const list = builtin(wrapper)
+      const own = list.element.closest('[role="tabpanel"]')
+      expect(own?.previousElementSibling?.querySelector('.text-list')).not.toBeNull()
+      expect(list.get('[data-test="builtin-count"]').text()).toBe(`${BUILTIN_BLOCK_RULES.length} 条`)
+      expect(list.get('th').text()).toBe('内置规则')
+      expect(list.find('tbody input').exists()).toBe(false)
+      expect(list.find('tbody button').exists()).toBe(false)
+      const rendered = list.findAll('tbody tr[data-index]')
+      expect(rendered.length).toBeGreaterThan(0)
+      expect(rendered.length).toBeLessThan(100)
+      expect(rendered[0]!.text()).toBe(BUILTIN_BLOCK_RULES[0])
+      expect(list.get('table').attributes('aria-rowcount')).toBe(String(BUILTIN_BLOCK_RULES.length + 1))
+      expect(list.find('tbody tr.builtin-gap').exists()).toBe(true)
+    })
+
+    it('搜索：不区分大小写；没有结果时显示未找到', async () => {
+      const wrapper = await render()
+      const list = builtin(wrapper)
+      const target = BUILTIN_BLOCK_RULES[100]!
+      await list.get('input[type="search"]').setValue(target.slice(1).toUpperCase())
+      await settle()
+      expect(list.findAll('tbody tr[data-index]').map(row => row.text())).toContain(target)
+      expect(Number.parseInt(list.get('[data-test="builtin-count"]').text(), 10)).toBeLessThan(BUILTIN_BLOCK_RULES.length)
+      await list.get('input[type="search"]').setValue('Sample text')
+      await settle()
+      expect(list.get('[data-test="builtin-empty"]').text()).toBe('未找到')
+      expect(list.get('[data-test="builtin-count"]').text()).toBe('0 条')
+    })
   })
 })

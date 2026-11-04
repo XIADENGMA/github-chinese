@@ -1,17 +1,25 @@
 // @vitest-environment-options { "url": "https://github.com/vuejs/core/releases" }
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { HealthCache } from '../../../src/core/accelerate-health'
 import { createDownloadClickHandler } from '../../../src/core/download-click'
 import { isPrivatePage } from '../../../src/core/private-page'
-import { AUTO_SOURCE_ID, BUILTIN_SOURCES } from '../../../src/shared/accelerate'
+import type { SourceHealth } from '../../../src/shared/accelerate-categories'
 import { DEFAULT_SETTINGS, type Settings } from '../../../src/shared/settings'
 
 const RELEASE = 'https://github.com/vuejs/core/releases/download/v3.5.0/vue.global.js'
 const RAW = 'https://github.com/vuejs/core/raw/refs/heads/main/README.md'
 
+const GIST_ARCHIVE = 'https://gist.github.com/octocat/0831f3fbd83ac4d46451/archive/c197afe.zip'
+/** gh-proxy 分类：cdn 最快，edgeone 不可用，gh-proxy.com 未探测 */
+const HEALTH: SourceHealth = { 'gh-proxy-hk': 300, 'gh-proxy-cdn': 80, 'gh-proxy-edgeone': null }
+
 let settings: Settings
-const resolve = vi.fn(async (url: string): Promise<string> => `https://resolved.example/${url}`)
+/** 有效期内的探测结果 */
+let known: SourceHealth | undefined
+const get = vi.fn(async (): Promise<SourceHealth> => HEALTH)
+const health: HealthCache = { current: () => known, get, clear: () => undefined }
 const open = vi.fn()
-const handler = createDownloadClickHandler({ settings: () => settings, resolve, open })
+const handler = createDownloadClickHandler({ settings: () => settings, health, open })
 
 /** 页面上加一个链接，返回它 */
 function addLink(href: string, attributes: Readonly<Record<string, string>> = {}): HTMLAnchorElement {
@@ -40,24 +48,25 @@ function setVisibility(isPublic: boolean): void {
 }
 
 beforeEach(() => {
-  settings = { ...DEFAULT_SETTINGS, accelerate: true }
+  settings = { ...DEFAULT_SETTINGS, accelerate: true, replaceCategory: 'ghfast' }
+  known = undefined
   window.addEventListener('click', handler, { capture: true })
 })
 
 afterEach(() => {
   window.removeEventListener('click', handler, { capture: true })
-  resolve.mockClear()
+  get.mockClear()
   open.mockClear()
   document.head.innerHTML = ''
   document.body.innerHTML = ''
 })
 
 describe('createDownloadClickHandler', () => {
-  it('故障转移关闭：取消跳转，直接打开首选加速源的地址（点在链接内的元素上）', () => {
+  it('故障转移关闭：取消跳转，直接打开替换用的分类加速后的地址（点在链接内的元素上）', () => {
     const anchor = addLink(RELEASE)
     expect(click(anchor.firstElementChild!)).toBe(true)
     expect(open).toHaveBeenCalledExactlyOnceWith(`https://ghfast.top/${RELEASE}`, false)
-    expect(resolve).not.toHaveBeenCalled()
+    expect(get).not.toHaveBeenCalled()
   })
 
   it('相对地址按页面解析', () => {
@@ -73,7 +82,9 @@ describe('createDownloadClickHandler', () => {
   it.each([
     ['未开启下载加速', { accelerate: false }],
     ['总开关关闭', { enabled: false }],
-    ['没有加速源', { removedSources: BUILTIN_SOURCES.map(source => source.id) }]
+    ['不替换原链接', { replaceCategory: '' }],
+    ['替换用的分类已删除', { removedCategories: ['ghfast'] }],
+    ['分类中没有加速源', { removedSources: ['ghfast'] }]
   ] as const)('%s：不处理', (_name, overrides) => {
     settings = { ...settings, ...overrides }
     expect(click(addLink(RELEASE))).toBe(false)
@@ -137,55 +148,68 @@ describe('createDownloadClickHandler', () => {
     expect(open).toHaveBeenCalledWith('https://ghfast.top/https://github.com/vuejs/core/archive/refs/heads/main.zip', false)
   })
 
-  it('首选加速源不支持的链接（gh-proxy.org 与 Gist 压缩包）：改用列表中第一个支持的', () => {
-    settings = { ...settings, accelerateSource: 'gh-proxy-hk' }
-    const gist = 'https://gist.github.com/octocat/0831f3fbd83ac4d46451/archive/c197afe.zip'
-    expect(click(addLink(gist))).toBe(true)
-    expect(open).toHaveBeenCalledWith(`https://ghfast.top/${gist}`, false)
-  })
-
-  it('没有加速源支持的链接（只剩用 {path} 的自定义源，Gist 不在 github.com 上）：不处理', () => {
+  it('分类中第一个加速源不支持的链接：用分类中下一个支持的', () => {
     settings = {
       ...settings,
-      removedSources: BUILTIN_SOURCES.map(source => source.id),
-      customSources: [{ id: 'custom-1', name: 'Mirror', template: 'https://mirror.example/{path}' }]
+      replaceCategory: 'gh-proxy',
+      customSources: [{ id: 'custom-1', name: 'Mirror', template: 'https://mirror.example/{url}', category: 'gh-proxy' }]
     }
-    expect(click(addLink('https://gist.github.com/octocat/0831f3fbd83ac4d46451/archive/c197afe.zip'))).toBe(false)
+    expect(click(addLink(GIST_ARCHIVE))).toBe(true)
+    expect(open).toHaveBeenCalledWith(`https://mirror.example/${GIST_ARCHIVE}`, false)
+  })
+
+  it('分类中没有加速源支持的链接（只有用 {path} 的自定义源，代码片段不在 github.com 上）：不处理', () => {
+    settings = {
+      ...settings,
+      categories: [{ id: 'category-1', name: 'Mirror' }],
+      customSources: [{ id: 'custom-1', name: 'Mirror', template: 'https://mirror.example/{path}', category: 'category-1' }],
+      replaceCategory: 'category-1'
+    }
+    expect(click(addLink(GIST_ARCHIVE))).toBe(false)
     expect(click(addLink(RELEASE))).toBe(true)
-    expect(open).toHaveBeenCalledExactlyOnceWith(`https://mirror.example/vuejs/core/releases/download/v3.5.0/vue.global.js`, false)
+    expect(open).toHaveBeenCalledExactlyOnceWith('https://mirror.example/vuejs/core/releases/download/v3.5.0/vue.global.js', false)
   })
 
   describe('故障转移开启', () => {
     beforeEach(() => {
-      settings = { ...settings, failover: true }
+      settings = { ...settings, failover: true, replaceCategory: 'gh-proxy' }
     })
 
-    it('取消跳转，请后台选源，打开应答的地址', async () => {
+    it('没有探测结果：取消跳转，请后台探测，打开可用的最快的加速后的地址', async () => {
       expect(click(addLink(RELEASE, { target: '_blank' }))).toBe(true)
-      expect(resolve).toHaveBeenCalledExactlyOnceWith(RELEASE)
+      expect(get).toHaveBeenCalledOnce()
+      expect(open).not.toHaveBeenCalled()
       await flushTasks()
-      expect(open).toHaveBeenCalledExactlyOnceWith(`https://resolved.example/${RELEASE}`, true)
+      expect(open).toHaveBeenCalledExactlyOnceWith(`https://cdn.gh-proxy.org/${RELEASE}`, true)
     })
 
-    it('后台出错、超时：打开原链接', async () => {
-      resolve.mockRejectedValueOnce(new Error('后台无响应'))
+    it('已有探测结果：直接打开，不请后台', () => {
+      known = { 'gh-proxy-com': 20, 'gh-proxy-cdn': 80 }
+      expect(click(addLink(RELEASE))).toBe(true)
+      expect(get).not.toHaveBeenCalled()
+      expect(open).toHaveBeenCalledExactlyOnceWith(`https://gh-proxy.com/${RELEASE}`, false)
+    })
+
+    it('已有探测结果、分类中都不可用：不处理，照常打开原链接', () => {
+      known = { 'gh-proxy-hk': null, 'gh-proxy-cdn': null }
+      expect(click(addLink(RELEASE))).toBe(false)
+      expect(open).not.toHaveBeenCalled()
+    })
+
+    it('探测后都不可用、后台出错：打开原链接', async () => {
+      get.mockResolvedValueOnce({ 'gh-proxy-hk': null })
+      expect(click(addLink(RELEASE))).toBe(true)
+      await flushTasks()
+      expect(open).toHaveBeenLastCalledWith(RELEASE, false)
+      get.mockRejectedValueOnce(new Error('后台无响应'))
       expect(click(addLink(`${RELEASE}#top`))).toBe(true)
       await flushTasks()
-      expect(open).toHaveBeenCalledExactlyOnceWith(`${RELEASE}#top`, false)
+      expect(open).toHaveBeenLastCalledWith(`${RELEASE}#top`, false)
     })
 
-    it('没有加速源支持该链接：不处理，不请后台', () => {
-      settings = { ...settings, removedSources: ['ghfast', 'wget-la', 'gh-monlor', 'hub-ddayh', 'ghproxy-053000'] }
-      expect(click(addLink('https://gist.github.com/octocat/0831f3fbd83ac4d46451/archive/c197afe.zip'))).toBe(false)
-      expect(resolve).not.toHaveBeenCalled()
+    it('分类中没有加速源支持该链接：不处理，不请后台', () => {
+      expect(click(addLink(GIST_ARCHIVE))).toBe(false)
+      expect(get).not.toHaveBeenCalled()
     })
-  })
-
-  it('首选为自动选择：故障转移关闭也请后台选源', async () => {
-    settings = { ...settings, failover: false, accelerateSource: AUTO_SOURCE_ID }
-    expect(click(addLink(RELEASE))).toBe(true)
-    expect(resolve).toHaveBeenCalledExactlyOnceWith(RELEASE)
-    await flushTasks()
-    expect(open).toHaveBeenCalledExactlyOnceWith(`https://resolved.example/${RELEASE}`, false)
   })
 })

@@ -1,5 +1,5 @@
 import { storage } from 'wxt/utils/storage'
-import { DEFAULT_SOURCE_ID, dropBuiltinCopies, sanitizeCustomSources, sanitizeRemovedSources, type AccelerateSettings } from './accelerate'
+import { sanitizeAccelerateSettings, type AccelerateSettings } from './accelerate-categories'
 import { DEFAULT_AUTO_LOAD_SCOPES, sanitizeAutoLoadScopes, type AutoLoadScope } from './auto-load'
 import { isPageLocalePreference, isUiLanguagePreference, type PageLocalePreference, type UiLanguagePreference } from './locale'
 import { DEFAULT_NEW_TAB_SCOPES, sanitizeNewTabScopes, type NewTabScope } from './new-tab'
@@ -31,20 +31,27 @@ export interface Settings extends AccelerateSettings {
   readonly uiLanguage: UiLanguagePreference
   /** 扩展界面外观；auto 跟随浏览器 */
   readonly theme: ThemePreference
-  /** 下载加速：Release 附件、源码包、Raw 文件、Gist 的链接与克隆地址改走加速源（见 shared/accelerate） */
+  /**
+   * 下载加速：Release 附件、源码包、Raw 文件、Gist 的链接与克隆地址旁加各分类的加速选项（见 core/accelerate-options）；
+   * 选了替换原链接的分类时原链接也改走该分类（见 replaceCategory）
+   */
   readonly accelerate: boolean
   /** 图片加速：GitHub 的图片加载失败时经加速源取回（见 core/image-accelerate） */
   readonly accelerateImages: boolean
-  /** 故障转移：下载前探测加速源，首选不可用时换用其他加速源；图片取不到时依次换用其他加速源 */
+  /** 故障转移：探测各加速源，分类中用可用的最快的（不可用的分类按自动隐藏开关处理）；图片取不到时依次换用其他加速源 */
   readonly failover: boolean
   /** 搜索净化：搜索结果中命中屏蔽规则的直接隐藏（规则见 searchBlockRulesItem，处理见 core/search-purify） */
   readonly purifySearch: boolean
+  /** 内置屏蔽规则（见 shared/search-block-builtin）：与自定义的屏蔽规则一起用 */
+  readonly purifyBuiltin: boolean
   /** 自动加载：「加载更多」按钮、分页列表的下一页在接近页面底部时自动加载（范围见 autoLoadScopes，处理见 core/auto-load） */
   readonly autoLoad: boolean
   /** 自动加载的范围（见 shared/auto-load） */
   readonly autoLoadScopes: readonly AutoLoadScope[]
   /** 图片预览：单击正文中的图片在页面内预览（见 core/image-preview） */
   readonly imagePreview: boolean
+  /** 下载文件夹：目录页「…」菜单加下载文件夹（见 core/folder-download） */
+  readonly folderDownload: boolean
   /** 新标签页打开：总开关（范围见 newTabScopes、newTabPaths，处理见 core/new-tab） */
   readonly newTab: boolean
   /** 新标签页打开的范围（见 shared/new-tab） */
@@ -71,15 +78,20 @@ export const DEFAULT_SETTINGS: Settings = {
   accelerateImages: false,
   failover: false,
   purifySearch: true,
+  purifyBuiltin: true,
   autoLoad: false,
   autoLoadScopes: DEFAULT_AUTO_LOAD_SCOPES,
   imagePreview: false,
+  folderDownload: true,
   newTab: false,
   newTabScopes: DEFAULT_NEW_TAB_SCOPES,
   newTabPaths: [],
-  accelerateSource: DEFAULT_SOURCE_ID,
+  categories: [],
+  categoryOrder: [],
+  removedCategories: [],
   customSources: [],
-  removedSources: []
+  removedSources: [],
+  replaceCategory: ''
 }
 
 /**
@@ -101,11 +113,22 @@ export const searchBlockRulesItem = storage.defineItem<readonly string[]>('local
   fallback: []
 })
 
+/**
+ * 导入的企业版站点中尚未授权的（主机名）：授权要在用户点击时申请（读取文件后已不在点击中），
+ * 由设置页的企业版设置列出、点击授权（见 entrypoints/options/useEnterpriseSites）
+ */
+export const pendingSitesItem = storage.defineItem<readonly string[]>('local:pendingEnterpriseSites', {
+  fallback: []
+})
+
 function isStringArray(value: unknown): value is string[] {
   return Array.isArray(value) && value.every(item => typeof item === 'string')
 }
 
-/** 合并存储值与默认值，丢弃类型不符的字段与未知字段；与内置源重复的自定义源去掉（见 dropBuiltinCopies） */
+/**
+ * 合并存储值与默认值，丢弃类型不符的字段与未知字段；加速源设置见 sanitizeAccelerateSettings。
+ * 旧版本的首选加速源为自动选择（accelerateSource: 'auto'）时开启故障转移（自动选择要探测）
+ */
 export function mergeSettings(stored: unknown): Settings {
   if (typeof stored !== 'object' || stored === null) return DEFAULT_SETTINGS
   const value = stored as Record<string, unknown>
@@ -121,19 +144,19 @@ export function mergeSettings(stored: unknown): Settings {
     theme: isThemePreference(value.theme) ? value.theme : DEFAULT_SETTINGS.theme,
     accelerate: pickBoolean('accelerate', DEFAULT_SETTINGS.accelerate),
     accelerateImages: pickBoolean('accelerateImages', DEFAULT_SETTINGS.accelerateImages),
-    failover: pickBoolean('failover', DEFAULT_SETTINGS.failover),
+    failover: pickBoolean('failover', DEFAULT_SETTINGS.failover) || value.accelerateSource === 'auto',
     purifySearch: pickBoolean('purifySearch', DEFAULT_SETTINGS.purifySearch),
+    purifyBuiltin: pickBoolean('purifyBuiltin', DEFAULT_SETTINGS.purifyBuiltin),
     autoLoad: pickBoolean('autoLoad', DEFAULT_SETTINGS.autoLoad),
     autoLoadScopes: sanitizeAutoLoadScopes(value.autoLoadScopes),
     imagePreview: pickBoolean('imagePreview', DEFAULT_SETTINGS.imagePreview),
+    folderDownload: pickBoolean('folderDownload', DEFAULT_SETTINGS.folderDownload),
     newTab: pickBoolean('newTab', DEFAULT_SETTINGS.newTab),
     newTabScopes: sanitizeNewTabScopes(value.newTabScopes),
     newTabPaths: isStringArray(value.newTabPaths) ? value.newTabPaths : DEFAULT_SETTINGS.newTabPaths,
-    accelerateSource: typeof value.accelerateSource === 'string' ? value.accelerateSource : DEFAULT_SETTINGS.accelerateSource,
-    customSources: sanitizeCustomSources(value.customSources),
-    removedSources: sanitizeRemovedSources(value.removedSources)
+    ...sanitizeAccelerateSettings(value)
   }
-  return { ...merged, ...dropBuiltinCopies(merged) }
+  return merged
 }
 
 /** 过滤非字符串、空键空值 */

@@ -132,6 +132,10 @@ export default {
     'OAuth apps': 'OAuth 应用',
     'Publisher Verification': '发布者验证',
     'Publisher verification': '发布者验证',
-    'Account settings': '帐户设置'
-  }
+    'Account settings': '帐户设置',
+    // 切换设置对象按钮里单独包起来的 settings（见 inline）
+    settings: '设置'
+  },
+  // 切换设置对象的按钮：「Switch <span>settings</span> context」，整句不在同一文本节点时按行内句译（同 static 的整句）
+  inline: [['Switch {} context', '切换{}对象']]
 } satisfies PageDictionary

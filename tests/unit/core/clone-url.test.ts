@@ -1,13 +1,21 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { HealthCache } from '../../../src/core/accelerate-health'
 import { createCloneUrlRewriter, type CloneUrlRewriter } from '../../../src/core/clone-url'
+import type { SourceHealth } from '../../../src/shared/accelerate-categories'
 import { DEFAULT_SETTINGS, type Settings } from '../../../src/shared/settings'
 
 const REPO = 'https://github.com/vuejs/core.git'
 const GIST = 'https://gist.github.com/0831f3fbd83ac4d46451.git'
 
+/** gh-proxy 分类：cdn 最快，edgeone 不可用，gh-proxy.com 未探测 */
+const HEALTH: SourceHealth = { 'gh-proxy-hk': 300, 'gh-proxy-cdn': 80, 'gh-proxy-edgeone': null }
+
 let settings: Settings
 let rewriter: CloneUrlRewriter | undefined
-const resolve = vi.fn(async (url: string): Promise<string> => `https://resolved.example/${url}`)
+/** 有效期内的探测结果 */
+let known: SourceHealth | undefined
+const get = vi.fn(async (): Promise<SourceHealth> => HEALTH)
+const health: HealthCache = { current: () => known, get, clear: () => undefined }
 const copy = vi.fn()
 
 /** 等 MutationObserver 回调与异步选源 */
@@ -16,7 +24,7 @@ async function flush(): Promise<void> {
 }
 
 function start(): CloneUrlRewriter {
-  rewriter = createCloneUrlRewriter(document, { settings: () => settings, resolve, copy })
+  rewriter = createCloneUrlRewriter(document, { settings: () => settings, health, copy })
   return rewriter
 }
 
@@ -33,20 +41,21 @@ function setPageValue(element: HTMLInputElement | HTMLButtonElement, value: stri
 }
 
 beforeEach(() => {
-  settings = { ...DEFAULT_SETTINGS, accelerate: true }
+  settings = { ...DEFAULT_SETTINGS, accelerate: true, replaceCategory: 'ghfast' }
+  known = undefined
 })
 
 afterEach(() => {
   rewriter?.stop()
   rewriter = undefined
-  resolve.mockClear()
+  get.mockClear()
   copy.mockClear()
   document.head.innerHTML = ''
   document.body.innerHTML = ''
 })
 
 describe('createCloneUrlRewriter', () => {
-  it('存储库的 HTTPS 克隆地址：属性与当前值都换成首选加速源的地址', () => {
+  it('存储库的 HTTPS 克隆地址：属性与当前值都换成替换用的分类加速后的地址', () => {
     const { input } = repoClone()
     start()
     expect(input.getAttribute('value')).toBe(`https://ghfast.top/${REPO}`)
@@ -89,7 +98,7 @@ describe('createCloneUrlRewriter', () => {
   })
 
   it('代码片段：「Clone via HTTPS」选项与分享输入框中的克隆地址改写；嵌入代码、SSH 不改', () => {
-    settings = { ...settings, accelerateSource: 'gh-proxy-hk' }
+    settings = { ...settings, replaceCategory: 'other' }
     document.body.innerHTML = `
       <input id="gist-share-url-original" readonly value="&lt;script src=&quot;https://gist.github.com/octocat/0831f3fbd83ac4d46451.js&quot;&gt;&lt;/script&gt;">
       <input id="gist-share-url-sized-down" readonly value="${GIST}">
@@ -98,11 +107,17 @@ describe('createCloneUrlRewriter', () => {
     start()
     const [embed, share] = document.querySelectorAll('input')
     const [https, ssh] = document.querySelectorAll('button')
-    // gh-proxy.org 不支持 gist.github.com：用列表中第一个支持的
-    expect(https!.value).toBe(`https://ghfast.top/${GIST}`)
-    expect(share!.value).toBe(`https://ghfast.top/${GIST}`)
+    expect(https!.value).toBe(`https://gh.monlor.com/${GIST}`)
+    expect(share!.value).toBe(`https://gh.monlor.com/${GIST}`)
     expect(embed!.value).toContain('<script')
     expect(ssh!.value).toBe('git@gist.github.com:0831f3fbd83ac4d46451.git')
+  })
+
+  it('分类中没有加速源支持该地址（gh-proxy 不支持代码片段）：不改', () => {
+    settings = { ...settings, replaceCategory: 'gh-proxy' }
+    document.body.innerHTML = `<button role="option" value="${GIST}">Clone via HTTPS</button>`
+    start()
+    expect(document.querySelector('button')!.value).toBe(GIST)
   })
 
   it('新建存储库页面的地址（用于推送）不改', () => {
@@ -113,19 +128,30 @@ describe('createCloneUrlRewriter', () => {
 
   it.each([
     ['未开启下载加速', { accelerate: false }],
-    ['总开关关闭', { enabled: false }]
+    ['总开关关闭', { enabled: false }],
+    ['不替换原链接', { replaceCategory: '' }],
+    ['替换用的分类已删除', { replaceCategory: 'ghfast', removedCategories: ['ghfast'] }]
   ] as const)('%s：不改；之后开启再改写，再关闭时还原', (_name, overrides) => {
     settings = { ...settings, ...overrides }
     const { input } = repoClone()
     start()
     expect(input.value).toBe(REPO)
-    settings = { ...settings, accelerate: true, enabled: true }
+    settings = { ...settings, accelerate: true, enabled: true, replaceCategory: 'ghfast', removedCategories: [] }
     rewriter!.refresh()
     expect(input.value).toBe(`https://ghfast.top/${REPO}`)
     settings = { ...settings, ...overrides }
     rewriter!.refresh()
     expect(input.getAttribute('value')).toBe(REPO)
     expect(input.value).toBe(REPO)
+  })
+
+  it('换了替换用的分类：还原后按新分类改写', () => {
+    const { input } = repoClone()
+    start()
+    expect(input.value).toBe(`https://ghfast.top/${REPO}`)
+    settings = { ...settings, replaceCategory: 'wget-la' }
+    rewriter!.refresh()
+    expect(input.value).toBe(`https://wget.la/${REPO}`)
   })
 
   it('私有存储库的页面：不改', () => {
@@ -146,39 +172,57 @@ describe('createCloneUrlRewriter', () => {
 
   describe('故障转移开启', () => {
     beforeEach(() => {
-      settings = { ...settings, failover: true }
+      settings = { ...settings, failover: true, replaceCategory: 'gh-proxy' }
     })
 
-    it('请后台选源，应答后改写', async () => {
+    it('没有探测结果：请后台探测，应答后改用可用的最快的', async () => {
       const { input } = repoClone()
       start()
-      expect(resolve).toHaveBeenCalledExactlyOnceWith(REPO)
+      expect(get).toHaveBeenCalledOnce()
       expect(input.value).toBe(REPO)
       await flush()
-      expect(input.value).toBe(`https://resolved.example/${REPO}`)
+      expect(input.value).toBe(`https://cdn.gh-proxy.org/${REPO}`)
     })
 
-    it('等待期间切换了克隆方式、后台出错、应答原地址：不改', async () => {
+    it('已有探测结果：直接改写，不请后台', () => {
+      known = { 'gh-proxy-hk': 40, 'gh-proxy-cdn': 80 }
+      const { input } = repoClone()
+      start()
+      expect(get).not.toHaveBeenCalled()
+      expect(input.value).toBe(`https://hk.gh-proxy.org/${REPO}`)
+    })
+
+    it('分类中都不可用：不改', () => {
+      known = { 'gh-proxy-hk': null, 'gh-proxy-cdn': null, 'gh-proxy-edgeone': null, 'gh-proxy-com': null }
+      const { input } = repoClone()
+      start()
+      expect(input.value).toBe(REPO)
+    })
+
+    it('等待期间切换了克隆方式、后台出错：不改', async () => {
       const { input } = repoClone()
       start()
       setPageValue(input, 'gh repo clone vuejs/core')
       await flush()
       expect(input.value).toBe('gh repo clone vuejs/core')
-      resolve.mockRejectedValueOnce(new Error('后台无响应'))
+      get.mockRejectedValueOnce(new Error('后台无响应'))
       setPageValue(input, REPO)
       await flush()
       expect(input.value).toBe(REPO)
-      resolve.mockResolvedValueOnce(REPO)
-      rewriter!.refresh()
+    })
+
+    it('等待期间关闭了替换：不改', async () => {
+      const { input } = repoClone()
+      start()
+      settings = { ...settings, replaceCategory: '' }
       await flush()
       expect(input.value).toBe(REPO)
     })
 
     it('没有加速源支持：不请后台', () => {
-      settings = { ...settings, removedSources: ['ghfast', 'wget-la', 'gh-monlor', 'hub-ddayh', 'ghproxy-053000'] }
       document.body.innerHTML = `<button role="option" value="${GIST}">Clone via HTTPS</button>`
       start()
-      expect(resolve).not.toHaveBeenCalled()
+      expect(get).not.toHaveBeenCalled()
     })
   })
 })

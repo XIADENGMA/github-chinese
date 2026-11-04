@@ -1,34 +1,19 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   accelerateLink,
-  acceleratePreferred,
-  addSource,
-  AUTO_SOURCE_ID,
   BUILTIN_SOURCES,
-  candidateSources,
-  countRemovedSources,
-  DEFAULT_SOURCE_ID,
-  dropBuiltinCopies,
-  isAutoSource,
-  listSources,
-  MAX_CUSTOM_SOURCES,
   measureLatency,
-  needsProbe,
   parseAccelerableLink,
   parseCloneUrl,
   parseDownloadLink,
   parseImageUrl,
   parseSourceTemplate,
-  preferredSource,
   probe,
   probeUrl,
-  removeSource,
-  restoreSources,
-  sanitizeCustomSources,
-  sanitizeRemovedSources,
+  sourceName,
   supportsLink,
+  templateKey,
   type AccelerableLink,
-  type AccelerateSettings,
   type AccelerateSource,
   type ProbeDeps
 } from '../../../src/shared/accelerate'
@@ -39,10 +24,6 @@ function link(href: string): AccelerableLink {
   const parsed = parseDownloadLink(href)
   if (!parsed) throw new Error(`不可加速：${href}`)
   return parsed
-}
-
-function settingsWith(overrides: Partial<AccelerateSettings> = {}): AccelerateSettings {
-  return { accelerateSource: DEFAULT_SOURCE_ID, customSources: [], removedSources: [], ...overrides }
 }
 
 const MIRROR: AccelerateSource = { id: 'custom-1', name: 'Mirror', template: 'https://mirror.example/{url}' }
@@ -209,7 +190,7 @@ describe('accelerateLink', () => {
   })
 })
 
-describe('supportsLink / candidateSources / acceleratePreferred', () => {
+describe('supportsLink', () => {
   const GIST = 'https://gist.github.com/octocat/0831f3fbd83ac4d46451/archive/c197afe.zip'
   const AVATAR = 'https://avatars.githubusercontent.com/u/583231?v=4'
   const PATH_MIRROR: AccelerateSource = { id: 'custom-2', name: 'Path', template: 'https://path.example/{path}' }
@@ -223,31 +204,6 @@ describe('supportsLink / candidateSources / acceleratePreferred', () => {
     expect(supportsLink(MIRROR, avatar())).toBe(true)
     expect(supportsLink(PATH_MIRROR, link(GIST))).toBe(false)
     expect(supportsLink(PATH_MIRROR, link(RELEASE))).toBe(true)
-  })
-
-  it('候选只留支持该地址的，顺序不变；不探测时首选不支持就用第一个支持的', () => {
-    const settings = settingsWith({ accelerateSource: 'gh-proxy-hk', customSources: [PATH_MIRROR] })
-    expect(candidateSources(settings, link(GIST)).map(source => source.id)).toEqual([
-      'ghfast',
-      'wget-la',
-      'gh-monlor',
-      'hub-ddayh',
-      'ghproxy-053000'
-    ])
-    expect(acceleratePreferred(settings, link(GIST))).toBe(`https://ghfast.top/${GIST}`)
-    expect(acceleratePreferred(settings, link(RELEASE))).toBe(`https://hk.gh-proxy.org/${RELEASE}`)
-    expect(candidateSources(settingsWith(), avatar()).map(source => source.id)).toEqual([
-      'gh-proxy-hk',
-      'gh-proxy-cdn',
-      'gh-proxy-edgeone',
-      'gh-proxy-com'
-    ])
-  })
-
-  it('没有支持的加速源：不加速', () => {
-    const settings = settingsWith({ removedSources: ['ghfast', 'wget-la', 'gh-monlor', 'hub-ddayh', 'ghproxy-053000'] })
-    expect(candidateSources(settings, link(GIST))).toEqual([])
-    expect(acceleratePreferred(settings, link(GIST))).toBeUndefined()
   })
 })
 
@@ -289,179 +245,23 @@ describe('probeUrl', () => {
 })
 
 describe('内置加速源', () => {
-  it('模板都合法、标识不重复，默认首选是第一个', () => {
+  it('模板都合法、标识不重复', () => {
     for (const source of BUILTIN_SOURCES) expect(parseSourceTemplate(source.template), source.id).toBe(source.template)
     expect(new Set(BUILTIN_SOURCES.map(source => source.id)).size).toBe(BUILTIN_SOURCES.length)
-    expect(BUILTIN_SOURCES[0]?.id).toBe(DEFAULT_SOURCE_ID)
   })
 })
 
-describe('sanitizeCustomSources / sanitizeRemovedSources', () => {
-  it.each([undefined, null, 'x', { id: 'a' }])('非数组 %j → 空', value => {
-    expect(sanitizeCustomSources(value)).toEqual([])
-    expect(sanitizeRemovedSources(value)).toEqual([])
+describe('templateKey / sourceName', () => {
+  it('效果相同的写法得到同一个键：省略 {url}、末尾的 /', () => {
+    expect(templateKey('https://ghfast.top')).toBe(templateKey('https://ghfast.top/{url}'))
+    expect(templateKey('https://ghfast.top/')).toBe(templateKey('https://ghfast.top/{url}'))
+    expect(templateKey('https://mirror.example/{path}')).not.toBe(templateKey('https://mirror.example/{url}'))
   })
 
-  it('丢弃不合法、重复（标识或效果相同的模板）、占用内置标识的项；名称为空时用域名，过长截断', () => {
-    expect(
-      sanitizeCustomSources([
-        MIRROR,
-        { id: 'custom-1', name: '同标识', template: 'https://other.example/{url}' },
-        { id: 'custom-2', name: '同效果', template: 'https://mirror.example' },
-        { id: 'ghfast', name: '内置标识', template: 'https://other.example/{url}' },
-        { id: 'custom-3', name: 'HTTP', template: 'http://other.example/{url}' },
-        { id: '', name: '空标识', template: 'https://other.example/{url}' },
-        { id: 'custom-4', template: 'https://other.example/{url}' },
-        { id: 'custom-5', name: 'x'.repeat(40), template: 'https://third.example/{path}' },
-        'custom-6'
-      ])
-    ).toEqual([
-      MIRROR,
-      { id: 'custom-4', name: 'other.example', template: 'https://other.example/{url}' },
-      { id: 'custom-5', name: 'x'.repeat(30), template: 'https://third.example/{path}' }
-    ])
-  })
-
-  it('超出上限的截掉', () => {
-    const many = Array.from({ length: MAX_CUSTOM_SOURCES + 2 }, (_, index) => ({
-      id: `custom-${index}`,
-      name: `M${index}`,
-      template: `https://m${index}.example/{url}`
-    }))
-    expect(sanitizeCustomSources(many)).toHaveLength(MAX_CUSTOM_SOURCES)
-  })
-
-  it('已删除的内置源：只留字符串，去重', () => {
-    expect(sanitizeRemovedSources(['wget-la', 1, 'wget-la', 'ghfast'])).toEqual(['wget-la', 'ghfast'])
-  })
-})
-
-describe('加速源列表', () => {
-  it('未删除的内置源在前，自定义源在后', () => {
-    const settings = settingsWith({ customSources: [MIRROR], removedSources: ['wget-la'] })
-    expect(listSources(settings).map(source => source.id)).toEqual([
-      'ghfast',
-      'gh-proxy-hk',
-      'gh-proxy-cdn',
-      'gh-proxy-edgeone',
-      'gh-proxy-com',
-      'gh-monlor',
-      'hub-ddayh',
-      'ghproxy-053000',
-      'custom-1'
-    ])
-    expect(countRemovedSources(settings)).toBe(1)
-  })
-
-  it('首选：设置中的首选；不在列表中（已删除）时用第一个；列表为空时没有', () => {
-    expect(preferredSource(settingsWith({ customSources: [MIRROR], accelerateSource: 'custom-1' }))).toBe(MIRROR)
-    expect(preferredSource(settingsWith({ accelerateSource: 'ghfast', removedSources: ['ghfast'] }))?.id).toBe('wget-la')
-    expect(preferredSource(settingsWith({ accelerateSource: 'gone' }))?.id).toBe('ghfast')
-    const removedAll = BUILTIN_SOURCES.map(source => source.id)
-    expect(preferredSource(settingsWith({ removedSources: removedAll }))).toBeUndefined()
-    expect(candidateSources(settingsWith({ removedSources: removedAll }))).toEqual([])
-  })
-
-  it('故障转移的候选：首选在前，其余按列表顺序', () => {
-    const settings = settingsWith({ customSources: [MIRROR], accelerateSource: 'gh-proxy-hk' })
-    expect(candidateSources(settings).map(source => source.id)).toEqual([
-      'gh-proxy-hk',
-      'ghfast',
-      'wget-la',
-      'gh-proxy-cdn',
-      'gh-proxy-edgeone',
-      'gh-proxy-com',
-      'gh-monlor',
-      'hub-ddayh',
-      'ghproxy-053000',
-      'custom-1'
-    ])
-  })
-
-  it('自动选择：没有首选，候选按列表顺序；要探测（不看故障转移开关）', () => {
-    const settings = settingsWith({ customSources: [MIRROR], accelerateSource: AUTO_SOURCE_ID })
-    expect(isAutoSource(settings)).toBe(true)
-    expect(preferredSource(settings)).toBeUndefined()
-    expect(candidateSources(settings)).toEqual(listSources(settings))
-    expect(acceleratePreferred(settings, link(RELEASE))).toBe(`https://ghfast.top/${RELEASE}`)
-    expect(needsProbe({ ...settings, failover: false })).toBe(true)
-    expect(needsProbe({ ...settingsWith(), failover: false })).toBe(false)
-    expect(needsProbe({ ...settingsWith(), failover: true })).toBe(true)
-  })
-})
-
-describe('dropBuiltinCopies', () => {
-  const COPY: AccelerateSource = { id: 'custom-9', name: '我的代理', template: 'https://gh-proxy.com' }
-
-  it('去掉与内置源效果相同的自定义源；首选是它时改为内置源', () => {
-    const settings = settingsWith({ customSources: [COPY, MIRROR], accelerateSource: 'custom-9' })
-    expect(dropBuiltinCopies(settings)).toEqual({
-      ...settings,
-      customSources: [MIRROR],
-      accelerateSource: 'gh-proxy-com'
-    })
-    expect(dropBuiltinCopies(settingsWith({ customSources: [COPY] })).accelerateSource).toBe(DEFAULT_SOURCE_ID)
-  })
-
-  it('对应的内置源已删除：保留自定义源；没有重复时原样返回', () => {
-    const removed = settingsWith({ customSources: [COPY], removedSources: ['gh-proxy-com'] })
-    expect(dropBuiltinCopies(removed)).toBe(removed)
-    const plain = settingsWith({ customSources: [MIRROR] })
-    expect(dropBuiltinCopies(plain)).toBe(plain)
-  })
-})
-
-describe('addSource / removeSource / restoreSources', () => {
-  const TIME = Date.UTC(2026, 0, 1)
-
-  it('添加：校验模板，按时间生成标识，名称为空时用域名', () => {
-    const result = addSource(settingsWith(), ' ', ' https://mirror.example/{url} ', TIME)
-    expect(result).toEqual({
-      ok: true,
-      patch: {
-        customSources: [{ id: `custom-${TIME.toString(36)}`, name: 'mirror.example', template: 'https://mirror.example/{url}' }]
-      }
-    })
-  })
-
-  it('同一时刻添加的标识不重复', () => {
-    const first = { id: `custom-${TIME.toString(36)}`, name: 'A', template: 'https://a.example/{url}' }
-    const result = addSource(settingsWith({ customSources: [first] }), 'B', 'https://b.example/{url}', TIME)
-    expect(result.ok && result.patch.customSources.map(source => source.id)).toEqual([first.id, `custom-${TIME.toString(36)}-2`])
-  })
-
-  it('格式错误、已存在（含效果相同的写法与内置源）、已达上限', () => {
-    expect(addSource(settingsWith(), 'A', 'http://a.example/{url}', TIME)).toEqual({ ok: false, reason: 'invalid' })
-    expect(addSource(settingsWith(), 'A', 'https://ghfast.top', TIME)).toEqual({ ok: false, reason: 'exists' })
-    expect(addSource(settingsWith({ customSources: [MIRROR] }), 'A', 'https://mirror.example/', TIME)).toEqual({
-      ok: false,
-      reason: 'exists'
-    })
-    const full = Array.from({ length: MAX_CUSTOM_SOURCES }, (_, index) => ({
-      id: `custom-${index}`,
-      name: `M${index}`,
-      template: `https://m${index}.example/{url}`
-    }))
-    expect(addSource(settingsWith({ customSources: full }), 'A', 'https://a.example/{url}', TIME)).toEqual({
-      ok: false,
-      reason: 'limit'
-    })
-  })
-
-  it('已删除的内置源可以作为自定义源添加；恢复内置源时去掉重复的自定义源', () => {
-    const removed = settingsWith({ removedSources: ['ghfast'] })
-    const result = addSource(removed, '', 'https://ghfast.top/{url}', TIME)
-    expect(result.ok).toBe(true)
-    if (!result.ok) return
-    const settings = settingsWith({ ...removed, customSources: [...result.patch.customSources, MIRROR] })
-    expect(restoreSources(settings)).toEqual({ removedSources: [], customSources: [MIRROR] })
-  })
-
-  it('删除：内置源记入已删除（不重复记），自定义源直接去掉', () => {
-    const settings = settingsWith({ customSources: [MIRROR], removedSources: ['wget-la'] })
-    expect(removeSource(settings, 'ghfast')).toEqual({ removedSources: ['wget-la', 'ghfast'] })
-    expect(removeSource(settings, 'wget-la')).toEqual({})
-    expect(removeSource(settings, 'custom-1')).toEqual({ customSources: [] })
+  it('名称：去掉首尾空白，过长截断；为空时用域名', () => {
+    expect(sourceName('  Mirror  ', 'https://mirror.example/{url}')).toBe('Mirror')
+    expect(sourceName('x'.repeat(40), 'https://mirror.example/{url}')).toBe('x'.repeat(30))
+    expect(sourceName(' ', 'https://mirror.example:8443/{url}')).toBe('mirror.example')
   })
 })
 

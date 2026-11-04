@@ -4,7 +4,7 @@ import {
   isContentMessage,
   isContentStatus,
   isFetchedImage,
-  isResolvedDownload
+  isProbedSources
 } from '../../../src/shared/messages'
 
 const STATUS = {
@@ -80,22 +80,27 @@ describe('isBackgroundMessage', () => {
   })
 })
 
-describe('下载选源', () => {
-  const URL = 'https://github.com/vuejs/core/releases/download/v3.5.0/vue.global.js'
-
-  it('请求：地址为字符串，不超过上限', () => {
-    expect(isBackgroundMessage({ type: 'gcn:resolve-download', url: URL })).toBe(true)
-    expect(isBackgroundMessage({ type: 'gcn:resolve-download' })).toBe(false)
-    expect(isBackgroundMessage({ type: 'gcn:resolve-download', url: ['x'] })).toBe(false)
-    expect(isBackgroundMessage({ type: 'gcn:resolve-download', url: `${URL}?${'a'.repeat(5000)}` })).toBe(false)
+describe('加速源探测', () => {
+  it('请求：只有类型', () => {
+    expect(isBackgroundMessage({ type: 'gcn:probe-sources' })).toBe(true)
+    expect(isBackgroundMessage({ type: 'gcn:resolve-download', url: 'https://github.com/' })).toBe(false)
   })
 
-  it('应答：ok 为 true，地址为 https', () => {
-    expect(isResolvedDownload({ ok: true, url: `https://ghfast.top/${URL}` })).toBe(true)
-    expect(isResolvedDownload({ ok: true, url: 'javascript:alert(1)' })).toBe(false)
-    expect(isResolvedDownload({ ok: false, url: URL })).toBe(false)
-    expect(isResolvedDownload({ ok: true })).toBe(false)
-    expect(isResolvedDownload(undefined)).toBe(false)
+  it('应答：ok 为 true，health 为 标识 → 非负耗时或 null', () => {
+    expect(isProbedSources({ ok: true, health: {} })).toBe(true)
+    expect(isProbedSources({ ok: true, health: { ghfast: 120, 'wget-la': null, custom: 0 } })).toBe(true)
+    expect(isProbedSources({ ok: true, health: { ghfast: -1 } })).toBe(false)
+    expect(isProbedSources({ ok: true, health: { ghfast: Number.POSITIVE_INFINITY } })).toBe(false)
+    expect(isProbedSources({ ok: true, health: { ghfast: '120' } })).toBe(false)
+    expect(isProbedSources({ ok: true, health: [] })).toBe(false)
+    expect(isProbedSources({ ok: false, health: {} })).toBe(false)
+    expect(isProbedSources({ ok: true })).toBe(false)
+    expect(isProbedSources(undefined)).toBe(false)
+  })
+
+  it('应答：条目过多时不接受', () => {
+    const health = Object.fromEntries(Array.from({ length: 101 }, (_, index) => [`source-${index}`, 1]))
+    expect(isProbedSources({ ok: true, health })).toBe(false)
   })
 })
 

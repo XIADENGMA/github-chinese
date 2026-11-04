@@ -1,21 +1,18 @@
 <template>
-  <section class="section" aria-labelledby="entries-title">
-    <div class="section-head">
-      <h2 id="entries-title" class="section-title">{{ t('customEntries') }}</h2>
-      <div class="section-tools">
-        <UiButton size="sm" @click="fileInput?.click()">{{ t('import') }}</UiButton>
-        <UiButton size="sm" :disabled="total === 0" @click="exportFile">{{ t('export') }}</UiButton>
-        <input
-          ref="fileInput"
-          type="file"
-          accept=".json,application/json"
-          class="sr-only"
-          tabindex="-1"
-          aria-hidden="true"
-          data-test="import-file"
-          @change="onFileChange"
-        />
-      </div>
+  <div class="section" data-test="custom-entries">
+    <div class="section-tools transfer-tools">
+      <UiButton size="sm" @click="fileInput?.click()">{{ t('import') }}</UiButton>
+      <UiButton size="sm" :disabled="total === 0" @click="exportFile">{{ t('export') }}</UiButton>
+      <input
+        ref="fileInput"
+        type="file"
+        accept=".json,application/json"
+        class="sr-only"
+        tabindex="-1"
+        aria-hidden="true"
+        data-test="import-file"
+        @change="onFileChange"
+      />
     </div>
 
     <form class="entry-form" @submit.prevent="onAdd">
@@ -30,32 +27,65 @@
       <table class="list-table list-table-inline" :aria-rowcount="rows.length + 1">
         <thead>
           <tr aria-rowindex="1">
+            <th scope="col" class="select-cell">
+              <UiCheckbox
+                ref="selectAll"
+                :checked="selection.state.value === 'all'"
+                :indeterminate="selection.state.value === 'some'"
+                :label="t('selectAll')"
+                data-test="select-all"
+                @change="selection.toggleAll"
+              />
+            </th>
             <th scope="col">{{ t('source') }}</th>
             <th scope="col">{{ t('target') }}</th>
-            <th scope="col">
-              <span class="sr-only">{{ t('actions') }}</span>
+            <th scope="col" class="bulk-cell">
+              <UiButton v-if="selection.count.value > 0" variant="danger" size="sm" data-test="delete-selected" @click="confirming = true">
+                {{ t('deleteCount', { count: selection.count.value }) }}
+              </UiButton>
+              <span v-else class="sr-only">{{ t('actions') }}</span>
             </th>
           </tr>
         </thead>
         <tbody>
           <template v-for="item in items" :key="item.kind === 'row' ? rowKey(item.data[0]) : item.key">
             <tr v-if="item.kind === 'gap'" class="entries-gap" aria-hidden="true">
-              <td colspan="3" :style="{ height: `${item.height}px` }"></td>
+              <td colspan="4" :style="{ height: `${item.height}px` }"></td>
             </tr>
-            <CustomEntryRow v-else :entry="item.data" :index="item.index" @edit="onEdit" @remove="onRemove" />
+            <CustomEntryRow
+              v-else
+              :entry="item.data"
+              :index="item.index"
+              :selected="selection.has(item.data[0])"
+              @select="selection.toggle"
+              @edit="onEdit"
+              @remove="onRemove"
+            />
           </template>
         </tbody>
       </table>
+      <UiBackToTop :label="t('backToTop')" />
     </div>
     <p v-else class="blankslate" data-test="entries-empty">{{ t(emptyMessage) }}</p>
-  </section>
+    <UiConfirm
+      v-model:open="confirming"
+      :title="t('deleteConfirm', { count: selection.count.value })"
+      :confirm-label="t('delete')"
+      :cancel-label="t('cancel')"
+      @confirm="onRemoveSelected"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
   import { computed, nextTick, ref, useTemplateRef, watch } from 'vue'
+  import UiBackToTop from '../../components/ui/UiBackToTop.vue'
   import UiButton from '../../components/ui/UiButton.vue'
+  import UiCheckbox from '../../components/ui/UiCheckbox.vue'
+  import UiConfirm from '../../components/ui/UiConfirm.vue'
   import UiInput from '../../components/ui/UiInput.vue'
   import { useI18n } from '../../components/ui-preferences'
+  import { useSelection } from '../../components/useSelection'
   import { useVirtualList } from '../../components/useVirtualList'
   import type { MessageKey } from '../../i18n'
   import { normalizeEntry, type EntryField, type EntryPair } from '../../shared/custom-entries'
@@ -66,13 +96,18 @@
   const ROW_HEIGHT = 44
 
   const { t } = useI18n()
-  const { query, rows, total, loadFailed, rowKey, add, edit, remove, importFile, exportFile } = useCustomEntries()
+  const { query, rows, total, loadFailed, rowKey, add, edit, remove, removeMany, importFile, exportFile } = useCustomEntries()
+  /** 多选：只选筛选结果中的词条（按原文） */
+  const selection = useSelection(() => rows.value.map(([source]) => source))
+  /** 删除所选的确认框 */
+  const confirming = ref(false)
 
   const source = ref('')
   const target = ref('')
   const sourceInput = useTemplateRef<InstanceType<typeof UiInput>>('sourceInput')
   const searchInput = useTemplateRef<InstanceType<typeof UiInput>>('searchInput')
   const fileInput = useTemplateRef<HTMLInputElement>('fileInput')
+  const selectAll = useTemplateRef<InstanceType<typeof UiCheckbox>>('selectAll')
   const viewport = useTemplateRef<HTMLElement>('viewport')
   const { items, scrollToTop, pin } = useVirtualList({
     source: rows,
@@ -130,6 +165,15 @@
     pin(next)
     await nextTick()
     viewport.value?.querySelector<HTMLElement>(`[data-index="${next}"] .entry-action button`)?.focus()
+  }
+
+  /** 删除所选。焦点移到全选框；删空时移到搜索框（有搜索词时）或添加表单 */
+  async function onRemoveSelected(): Promise<void> {
+    if (!(await removeMany([...selection.selected.value]))) return
+    selection.clear()
+    await nextTick()
+    if (selectAll.value) selectAll.value.focus()
+    else (query.value.trim() === '' ? sourceInput.value : searchInput.value)?.focus()
   }
 
   async function onFileChange(event: Event): Promise<void> {

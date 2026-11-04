@@ -6,9 +6,14 @@ import { stripVueStaticContentPlugin, VUE_COMPILER_OPTIONS } from './scripts/str
 
 /** Firefox 扩展 ID：上架 AMO 后不可更改 */
 const GECKO_ID = '{3e156188-2ae6-4a69-8821-16410eba6e18}'
+/** Firefox（桌面、Android）的最低版本 */
+const FIREFOX_MIN_VERSION = '128.0'
 
 /** 扩展生效的站点（含 GitHub 状态页），与 src/shared/github.ts 保持一致 */
 export const GITHUB_ORIGINS = ['https://github.com/*', 'https://gist.github.com/*', 'https://www.githubstatus.com/*']
+
+/** 企业版站点（自有域名）按需申请的主机权限：用户在弹出页、设置页启用某个站点时只申请该站点（见 src/shared/enterprise.ts） */
+export const OPTIONAL_ORIGINS = ['*://*/*']
 
 /** 源码包（AMO 审核用）收入的路径，也是构建标识的计算范围 */
 export const SOURCES = [
@@ -95,9 +100,12 @@ export default defineConfig({
     description: '__MSG_extDescription__',
     default_locale: 'en',
     // scripting：按当前语言注册词典内容脚本（页面开始解析前就绪），动态导入失败（Firefox、Safari 不动态导入）时注入词典脚本；
-    // Chromium、Safari 安装、更新后向已打开的 GitHub 标签页注入脚本（Firefox 自动注入）。Firefox 的 scripting 无安装、更新提示
-    permissions: ['storage', 'scripting'],
+    // Chromium、Safari 安装、更新后向已打开的 GitHub 标签页注入脚本（Firefox 自动注入）；为已授权的企业版站点注册内容脚本。
+    // activeTab：打开弹出页时读取当前页的地址、识别是否是企业版站点。scripting、activeTab 均无安装、更新提示。
+    // 可选主机权限不在安装、更新时申请，也无提示
+    permissions: ['storage', 'scripting', 'activeTab'],
     host_permissions: GITHUB_ORIGINS,
+    optional_host_permissions: OPTIONAL_ORIGINS,
     action: {
       default_title: '__MSG_extName__'
     },
@@ -111,14 +119,15 @@ export default defineConfig({
     ...(browser === 'firefox'
       ? {
           browser_specific_settings: {
+            // 最低 128：主世界内容脚本（turbo-bridge）、可选主机权限（企业版站点）从 128 起支持。
+            // data_collection_permissions 从 140（Android 142）起生效，更早的版本忽略；不收集数据，无需另做同意流程
             gecko: {
               id: GECKO_ID,
-              strict_min_version: '140.0',
+              strict_min_version: FIREFOX_MIN_VERSION,
               data_collection_permissions: { required: ['none'] }
             },
-            // Android 版从 142 起支持 data_collection_permissions
             gecko_android: {
-              strict_min_version: '142.0'
+              strict_min_version: FIREFOX_MIN_VERSION
             }
           }
         }

@@ -66,7 +66,13 @@ export function editEntry(entries: CustomEntries, original: string, source: stri
 }
 
 export function removeEntry(entries: CustomEntries, source: string): CustomEntries {
-  return Object.fromEntries(Object.entries(entries).filter(([key]) => key !== source))
+  return removeEntries(entries, [source])
+}
+
+/** 删除多条（按原文） */
+export function removeEntries(entries: CustomEntries, sources: readonly string[]): CustomEntries {
+  const targets = new Set(sources)
+  return Object.fromEntries(Object.entries(entries).filter(([key]) => !targets.has(key)))
 }
 
 /** 合并导入的词条，同原文以导入为准 */

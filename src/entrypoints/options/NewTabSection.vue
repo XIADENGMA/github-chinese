@@ -1,5 +1,6 @@
 <template>
   <div class="section">
+    <TransferTools :disabled="!ready" @import="importScope($event, 'new-tab')" @export="exportScope('new-tab')" />
     <ul class="switches">
       <li>
         <UiSwitch
@@ -43,6 +44,8 @@
   import { NEW_TAB_SCOPES, toggleNewTabScope, type NewTabScope } from '../../shared/new-tab'
   import { normalizeExcludedPath } from '../../shared/settings'
   import TextList from './TextList.vue'
+  import TransferTools from './TransferTools.vue'
+  import { useBackup } from './useBackup'
   import { useSettingsSave } from './useSettingsSave'
   import { useTextList } from './useTextList'
 
@@ -63,6 +66,7 @@
 
   const { t } = useI18n()
   const { settings, ready, loaded, loadFailed, update, save } = useSettingsSave()
+  const { exportScope, importScope } = useBackup()
 
   async function setScope(scope: NewTabScope, on: boolean): Promise<void> {
     // 按写入前的最新设置计算：连续开关几项时不丢失

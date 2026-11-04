@@ -10,6 +10,7 @@ import {
   mergeEntries,
   normalizeEntry,
   parseCustomEntriesJson,
+  removeEntries,
   removeEntry,
   serializeEntries,
   type EntryEditResult,
@@ -32,6 +33,8 @@ export interface UseCustomEntries {
   add(source: string, target: string): Promise<boolean>
   edit(original: string, source: string, target: string): Promise<boolean>
   remove(source: string): Promise<boolean>
+  /** 删除多条（按原文），一次写入 */
+  removeMany(sources: readonly string[]): Promise<boolean>
   importText(text: string): Promise<boolean>
   importFile(file: Blob): Promise<boolean>
   exportFile(): void
@@ -131,6 +134,11 @@ export function useCustomEntries(): UseCustomEntries {
     return save(removeEntry(entries.value, source))
   }
 
+  function removeMany(sources: readonly string[]): Promise<boolean> {
+    toast.clear()
+    return save(removeEntries(entries.value, sources))
+  }
+
   async function importText(text: string): Promise<boolean> {
     const imported = parseCustomEntriesJson(text)
     if (!imported) {
@@ -157,5 +165,5 @@ export function useCustomEntries(): UseCustomEntries {
     downloadText(EXPORT_FILE_NAME, serializeEntries(entries.value))
   }
 
-  return { entries, query, rows, total, loadFailed, rowKey, add, edit, remove, importText, importFile, exportFile }
+  return { entries, query, rows, total, loadFailed, rowKey, add, edit, remove, removeMany, importText, importFile, exportFile }
 }

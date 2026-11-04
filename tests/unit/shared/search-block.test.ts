@@ -10,6 +10,7 @@ import {
   parseRule,
   ruleKeyOf
 } from '../../../src/shared/search-block'
+import { BUILTIN_BLOCK_RULES } from '../../../src/shared/search-block-builtin'
 
 describe('ownerOfPath', () => {
   it.each([
@@ -157,5 +158,24 @@ describe('compileSearchBlockRules / isBlockedResult', () => {
     expect(isEmptyBlockList(compileSearchBlockRules(['""', '']))).toBe(true)
     expect(isEmptyBlockList(list)).toBe(false)
     expect(isBlockedResult({ owner: 'octocat', text: 'Sample text' }, EMPTY_BLOCK_LIST)).toBe(false)
+  })
+})
+
+describe('内置规则', () => {
+  it('都是所有者写法，已规范化，不重复（不区分大小写）', () => {
+    expect(BUILTIN_BLOCK_RULES.length).toBe(454)
+    for (const line of BUILTIN_BLOCK_RULES) {
+      expect(parseRule(line)?.kind, line).toBe('owner')
+      expect(normalizeRule(line), line).toBe(line)
+    }
+    expect(new Set(BUILTIN_BLOCK_RULES.map(ruleKeyOf)).size).toBe(BUILTIN_BLOCK_RULES.length)
+  })
+
+  it('编译时可带上内置规则：与自定义的规则合并', () => {
+    const list = compileSearchBlockRules(['vuejs/core', 'Sample text'], ['@octocat', '@OctoCat'])
+    expect([...list.owners]).toEqual(['octocat'])
+    expect([...list.repos]).toEqual(['vuejs/core'])
+    expect(list.keywords).toEqual(['sample text'])
+    expect(compileSearchBlockRules(['vuejs/core']).owners.size).toBe(0)
   })
 })

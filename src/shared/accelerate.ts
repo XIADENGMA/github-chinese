@@ -3,7 +3,8 @@
  * 以及加载失败的 GitHub 图片，改走第三方加速源。
  * 加速源以地址模板表示：{url} 换成原地址，{path} 换成 github.com 上的路径（不带开头的 /）；
  * 两者都没有时原地址接在模板之后（https://ghfast.top 等同 https://ghfast.top/{url}）。
- * 不在 github.com 上的地址（Gist、头像等）没有对应路径，用 {path} 的加速源不加速
+ * 不在 github.com 上的地址（Gist、头像等）没有对应路径，用 {path} 的加速源不加速。
+ * 加速源按分类管理（见 shared/accelerate-categories）
  */
 
 /** 加速源 */
@@ -17,21 +18,11 @@ export interface AccelerateSource {
   readonly unsupportedHosts?: readonly string[]
 }
 
-/** 加速源相关的设置（见 shared/settings） */
-export interface AccelerateSettings {
-  /** 首选加速源的标识；AUTO_SOURCE_ID 为自动选择（探测后用最快的）；不在列表中时用列表第一个 */
-  readonly accelerateSource: string
-  /** 自定义加速源，排在内置源之后 */
-  readonly customSources: readonly AccelerateSource[]
-  /** 已删除的内置加速源的标识 */
-  readonly removedSources: readonly string[]
-}
-
 /** 头像与 GitHub 自己的图片：部分加速源不转发 */
 const IMAGE_ONLY_HOSTS = ['github.githubassets.com', 'avatars.githubusercontent.com'] as const
 
 /**
- * 内置加速源：第三方公益服务，可用性随时变化。第一个为默认首选；
+ * 内置加速源：第三方公益服务，可用性随时变化；所属分类见 shared/accelerate-categories 的 BUILTIN_CATEGORIES。
  * 不支持的主机为实测（前四个 2026-10，其余 2026-11；2026-11 复测前四个结果不变）
  */
 export const BUILTIN_SOURCES: readonly AccelerateSource[] = [
@@ -91,17 +82,12 @@ export const BUILTIN_SOURCES: readonly AccelerateSource[] = [
   }
 ]
 
-export const DEFAULT_SOURCE_ID = 'ghfast'
-
-/** 首选为自动选择：下载前探测各加速源，用最先连通的（见 shared/download-resolver） */
-export const AUTO_SOURCE_ID = 'auto'
-
-/** 自定义加速源的上限与名称、模板的长度上限：设置随浏览器账号同步，单项不超过 8 KB */
+/** 自定义加速源（各分类合计）的上限与名称、模板的长度上限：设置随浏览器账号同步，单项不超过 8 KB */
 export const MAX_CUSTOM_SOURCES = 10
 export const SOURCE_NAME_MAX_LENGTH = 30
 export const SOURCE_TEMPLATE_MAX_LENGTH = 200
 
-/** 故障转移：下载前探测加速源的时限 */
+/** 故障转移：探测加速源的时限 */
 export const PROBE_TIMEOUT_MS = 3000
 /** 测速：单次请求的时限 */
 export const TEST_TIMEOUT_MS = 5000
@@ -287,7 +273,7 @@ export function parseSourceTemplate(text: string): string | undefined {
 }
 
 /** 模板的比较键：套用示例链接的结果，写法不同而效果相同的模板（如带不带 {url}）视为同一个 */
-function templateKey(template: string): string {
+export function templateKey(template: string): string {
   return accelerateLink(template, SAMPLE_LINK) ?? template
 }
 
@@ -298,135 +284,9 @@ export function probeUrl(template: string): string | undefined {
 }
 
 /** 名称：去掉首尾空白，截到上限；为空时用模板的域名 */
-function sourceName(text: string, template: string): string {
+export function sourceName(text: string, template: string): string {
   const name = text.trim().slice(0, SOURCE_NAME_MAX_LENGTH)
   return name || (tryParseUrl(templateOrigin(template) ?? '')?.hostname ?? template)
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value)
-}
-
-function isBuiltinId(id: string): boolean {
-  return BUILTIN_SOURCES.some(source => source.id === id)
-}
-
-/** 读取存储中的自定义加速源：丢弃不合法、重复的项，超出上限的截掉 */
-export function sanitizeCustomSources(value: unknown): readonly AccelerateSource[] {
-  if (!Array.isArray(value)) return []
-  const sources: AccelerateSource[] = []
-  for (const item of value) {
-    if (sources.length === MAX_CUSTOM_SOURCES) break
-    if (!isRecord(item) || typeof item.id !== 'string' || typeof item.template !== 'string') continue
-    const { id } = item
-    const template = parseSourceTemplate(item.template)
-    if (id === '' || isBuiltinId(id) || !template) continue
-    if (sources.some(source => source.id === id || templateKey(source.template) === templateKey(template))) continue
-    sources.push({ id, name: sourceName(typeof item.name === 'string' ? item.name : '', template), template })
-  }
-  return sources
-}
-
-/** 读取存储中已删除的内置源：只留字符串，去重 */
-export function sanitizeRemovedSources(value: unknown): readonly string[] {
-  return Array.isArray(value) ? [...new Set(value.filter((item): item is string => typeof item === 'string'))] : []
-}
-
-/** 生效的加速源：未删除的内置源在前，自定义源在后 */
-export function listSources(settings: AccelerateSettings): readonly AccelerateSource[] {
-  const removed = new Set(settings.removedSources)
-  return [...BUILTIN_SOURCES.filter(source => !removed.has(source.id)), ...settings.customSources]
-}
-
-/** 首选为自动选择 */
-export function isAutoSource(settings: AccelerateSettings): boolean {
-  return settings.accelerateSource === AUTO_SOURCE_ID
-}
-
-/** 用加速源前要先探测（由后台选源）：开启故障转移，或首选为自动选择 */
-export function needsProbe(settings: AccelerateSettings & { readonly failover: boolean }): boolean {
-  return settings.failover || isAutoSource(settings)
-}
-
-/** 首选加速源：设置中的首选不在列表中时用第一个；自动选择、列表为空时为 undefined */
-export function preferredSource(settings: AccelerateSettings): AccelerateSource | undefined {
-  if (isAutoSource(settings)) return undefined
-  const sources = listSources(settings)
-  return sources.find(source => source.id === settings.accelerateSource) ?? sources[0]
-}
-
-/** 候选：首选在前，其余按列表顺序（自动选择时按列表顺序）；给出地址时只留能加速它的 */
-export function candidateSources(settings: AccelerateSettings, link?: AccelerableLink): readonly AccelerateSource[] {
-  const preferred = preferredSource(settings)
-  const sources = preferred ? [preferred, ...listSources(settings).filter(source => source !== preferred)] : listSources(settings)
-  return link ? sources.filter(source => supportsLink(source, link)) : sources
-}
-
-/** 不探测时的加速地址：首选加速源，它不支持该地址时用列表中第一个支持的；都不支持时为 undefined */
-export function acceleratePreferred(settings: AccelerateSettings, link: AccelerableLink): string | undefined {
-  const [source] = candidateSources(settings, link)
-  return source && accelerateLink(source.template, link)
-}
-
-/**
- * 去掉与未删除的内置源重复的自定义源（效果相同的模板），首选是它时改为对应的内置源。
- * 新版本把用户自己加过的源收为内置源时，列表里不出现两个同样的源
- */
-export function dropBuiltinCopies(settings: AccelerateSettings): AccelerateSettings {
-  const removed = new Set(settings.removedSources)
-  const builtin = new Map(
-    BUILTIN_SOURCES.filter(source => !removed.has(source.id)).map(source => [templateKey(source.template), source.id])
-  )
-  const copies = settings.customSources.filter(source => builtin.has(templateKey(source.template)))
-  if (copies.length === 0) return settings
-  const preferredCopy = copies.find(source => source.id === settings.accelerateSource)
-  return {
-    ...settings,
-    customSources: settings.customSources.filter(source => !copies.includes(source)),
-    accelerateSource: preferredCopy
-      ? (builtin.get(templateKey(preferredCopy.template)) ?? settings.accelerateSource)
-      : settings.accelerateSource
-  }
-}
-
-/** 已删除的内置源数 */
-export function countRemovedSources(settings: AccelerateSettings): number {
-  return BUILTIN_SOURCES.filter(source => settings.removedSources.includes(source.id)).length
-}
-
-/** 添加加速源的结果：成功时为要写入的设置；失败原因为格式错误、已存在、已达上限 */
-export type SourceAddResult =
-  | { readonly ok: true; readonly patch: Pick<AccelerateSettings, 'customSources'> }
-  | { readonly ok: false; readonly reason: 'invalid' | 'exists' | 'limit' }
-
-/** 添加自定义加速源；time 为添加时间，用来生成标识 */
-export function addSource(settings: AccelerateSettings, name: string, template: string, time: number): SourceAddResult {
-  const parsed = parseSourceTemplate(template)
-  if (!parsed) return { ok: false, reason: 'invalid' }
-  const key = templateKey(parsed)
-  if (listSources(settings).some(source => templateKey(source.template) === key)) return { ok: false, reason: 'exists' }
-  if (settings.customSources.length >= MAX_CUSTOM_SOURCES) return { ok: false, reason: 'limit' }
-  const ids = new Set(settings.customSources.map(source => source.id))
-  const base = `custom-${time.toString(36)}`
-  let id = base
-  for (let suffix = 2; ids.has(id); suffix += 1) id = `${base}-${suffix}`
-  const source: AccelerateSource = { id, name: sourceName(name, parsed), template: parsed }
-  return { ok: true, patch: { customSources: [...settings.customSources, source] } }
-}
-
-/** 删除加速源：内置源记入已删除，自定义源直接去掉 */
-export function removeSource(settings: AccelerateSettings, id: string): Partial<AccelerateSettings> {
-  if (!isBuiltinId(id)) return { customSources: settings.customSources.filter(source => source.id !== id) }
-  return settings.removedSources.includes(id) ? {} : { removedSources: [...settings.removedSources, id] }
-}
-
-/** 恢复已删除的内置源；与内置源重复的自定义源一并去掉 */
-export function restoreSources(settings: AccelerateSettings): Partial<AccelerateSettings> {
-  const builtin = new Set(BUILTIN_SOURCES.map(source => templateKey(source.template)))
-  return {
-    removedSources: [],
-    customSources: settings.customSources.filter(source => !builtin.has(templateKey(source.template)))
-  }
 }
 
 /** 一次请求的结果：耗时（毫秒），或超时、出错 */

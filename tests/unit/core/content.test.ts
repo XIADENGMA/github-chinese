@@ -12,6 +12,7 @@ import {
   type BridgeWindow
 } from '../../../src/core/turbo-bridge'
 import { DEFAULT_AUTO_LOAD_SCOPES } from '../../../src/shared/auto-load'
+import { BUILTIN_BLOCK_RULES } from '../../../src/shared/search-block-builtin'
 import { $, settle, TEST_BUNDLE } from './helpers'
 
 type Listener = (message: unknown, sender: unknown, sendResponse: (response?: unknown) => void) => true | undefined
@@ -29,13 +30,18 @@ const state = vi.hoisted(() => ({
     accelerateImages: false,
     failover: false,
     purifySearch: true,
-    accelerateSource: 'ghfast',
+    purifyBuiltin: true,
+    categories: [] as readonly unknown[],
+    categoryOrder: [] as readonly string[],
+    removedCategories: [] as readonly string[],
     customSources: [] as readonly unknown[],
     removedSources: [] as readonly string[],
+    replaceCategory: '',
     autoLoad: false,
     // 每个用例前重置为默认（见下方 beforeEach）
     autoLoadScopes: [] as readonly string[],
     imagePreview: false,
+    folderDownload: true,
     newTab: false,
     newTabScopes: ['external', 'search'] as readonly string[],
     newTabPaths: [] as readonly string[]
@@ -263,9 +269,17 @@ beforeEach(() => {
     accelerateImages: false,
     failover: false,
     purifySearch: true,
+    purifyBuiltin: true,
+    categories: [],
+    categoryOrder: [],
+    removedCategories: [],
+    customSources: [],
+    removedSources: [],
+    replaceCategory: '',
     autoLoad: false,
     autoLoadScopes: DEFAULT_AUTO_LOAD_SCOPES,
     imagePreview: false,
+    folderDownload: true,
     newTab: false,
     newTabScopes: ['external', 'search'],
     newTabPaths: []
@@ -1412,37 +1426,41 @@ describe('下载加速', () => {
     vi.stubGlobal('open', open)
   })
 
-  it('开启时点击下载链接：在当前页打开首选加速源的地址，不发消息', async () => {
-    state.settings = { ...state.settings, accelerate: true }
+  it('替换原链接时点击下载链接：在当前页打开该分类加速后的地址，不发消息', async () => {
+    state.settings = { ...state.settings, accelerate: true, replaceCategory: 'ghfast' }
     await start()
     expect(clickDownload()).toBe(true)
     expect(open).toHaveBeenCalledExactlyOnceWith(`https://ghfast.top/${RELEASE}`, '_self', '')
     expect(runtime.sendMessage).not.toHaveBeenCalled()
   })
 
-  it('未开启时不处理；设置变化后随之开启', async () => {
+  it('只开启下载加速（不替换）：点击照常；设置变化后随之替换', async () => {
+    state.settings = { ...state.settings, accelerate: true }
     await start()
     expect(clickDownload()).toBe(false)
-    state.settingsListener?.({ ...state.settings, accelerate: true })
+    state.settingsListener?.({ ...state.settings, replaceCategory: 'wget-la' })
     expect(clickDownload()).toBe(true)
-    expect(open).toHaveBeenCalledTimes(1)
-  })
-
-  it('故障转移：请后台选源，打开应答的地址', async () => {
-    state.settings = { ...state.settings, accelerate: true, failover: true }
-    runtime.sendMessage.mockResolvedValue({ ok: true, url: `https://wget.la/${RELEASE}` })
-    await start()
-    expect(clickDownload()).toBe(true)
-    expect(runtime.sendMessage).toHaveBeenCalledExactlyOnceWith({ type: 'gcn:resolve-download', url: RELEASE })
-    await flushTasks()
     expect(open).toHaveBeenCalledExactlyOnceWith(`https://wget.la/${RELEASE}`, '_self', '')
   })
 
+  it('故障转移：请后台探测，打开分类中可用的最快的加速后的地址；探测结果在本页记住', async () => {
+    state.settings = { ...state.settings, accelerate: true, failover: true, replaceCategory: 'gh-proxy' }
+    runtime.sendMessage.mockResolvedValue({ ok: true, health: { 'gh-proxy-hk': 300, 'gh-proxy-cdn': 80 } })
+    await start()
+    expect(clickDownload()).toBe(true)
+    expect(runtime.sendMessage).toHaveBeenCalledExactlyOnceWith({ type: 'gcn:probe-sources' })
+    await flushTasks()
+    expect(open).toHaveBeenCalledExactlyOnceWith(`https://cdn.gh-proxy.org/${RELEASE}`, '_self', '')
+    expect(clickDownload()).toBe(true)
+    expect(runtime.sendMessage).toHaveBeenCalledOnce()
+    expect(open).toHaveBeenLastCalledWith(`https://cdn.gh-proxy.org/${RELEASE}`, '_self', '')
+  })
+
   it.each([
-    ['应答不合法', async () => ({ ok: false })],
+    ['应答不合法', async () => ({ ok: true, url: 'https://ghfast.top/' })],
     ['后台出错', async () => Promise.reject(new Error('no receiver'))]
   ])('故障转移，%s：打开原链接', async (_name, respond) => {
-    state.settings = { ...state.settings, accelerate: true, failover: true }
+    state.settings = { ...state.settings, accelerate: true, failover: true, replaceCategory: 'gh-proxy' }
     runtime.sendMessage.mockImplementation(respond)
     await start()
     expect(clickDownload()).toBe(true)
@@ -1451,18 +1469,18 @@ describe('下载加速', () => {
   })
 
   it('失效后不再处理点击', async () => {
-    state.settings = { ...state.settings, accelerate: true }
+    state.settings = { ...state.settings, accelerate: true, replaceCategory: 'ghfast' }
     await start()
     context?.invalidate()
     expect(clickDownload()).toBe(false)
     expect(open).not.toHaveBeenCalled()
   })
 
-  it('克隆地址：开启时改写，设置关闭后还原；失效时还原', async () => {
+  it('克隆地址：替换时改写，关闭下载加速后还原；失效时还原', async () => {
     const clone = 'https://github.com/vuejs/core.git'
     document.body.innerHTML = `<div><input id="clone-with-https" readonly value="${clone}"><button></button></div>`
     const input = $('input') as HTMLInputElement
-    state.settings = { ...state.settings, accelerate: true }
+    state.settings = { ...state.settings, accelerate: true, replaceCategory: 'ghfast' }
     await start()
     expect(input.value).toBe(`https://ghfast.top/${clone}`)
     state.settingsListener?.({ ...state.settings, accelerate: false })
@@ -1471,6 +1489,13 @@ describe('下载加速', () => {
     expect(input.value).toBe(`https://ghfast.top/${clone}`)
     context?.invalidate()
     expect(input.value).toBe(clone)
+  })
+
+  it('故障转移开启、页面上没有下载链接：不请后台探测', async () => {
+    state.settings = { ...state.settings, accelerate: true, failover: true }
+    await start()
+    await flushTasks()
+    expect(runtime.sendMessage).not.toHaveBeenCalled()
   })
 })
 
@@ -1592,8 +1617,8 @@ describe('增强功能', () => {
       expect(open).toHaveBeenCalledOnce()
     })
 
-    it('下载链接交给下载加速：在当前页打开加速地址，不另开标签页', async () => {
-      state.settings = { ...state.settings, newTab: true, newTabScopes: ['issues'], accelerate: true }
+    it('下载链接交给下载加速（替换原链接）：在当前页打开加速地址，不另开标签页', async () => {
+      state.settings = { ...state.settings, newTab: true, newTabScopes: ['issues'], accelerate: true, replaceCategory: 'ghfast' }
       await start()
       document.body.innerHTML = `<a href="${RELEASE}">vue.global.js</a>`
       expect(click($('a'))).toBe(true)
@@ -1635,30 +1660,28 @@ describe('增强功能', () => {
     })
   })
 
-  describe('复制加速链接', () => {
-    it('开启下载加速时附件后加复制按钮，复制首选加速源的地址；失效时移除', async () => {
-      const writeText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue()
-      cleanups.push(() => writeText.mockRestore())
+  describe('加速选项', () => {
+    it('开启下载加速时附件后加各分类的选项，原链接不变，文字用扩展界面语言；失效时移除', async () => {
       document.head.innerHTML = '<meta name="octolytics-dimension-repository_public" content="true">'
       document.body.innerHTML = `<ul><li class="Box-row"><a href="${RELEASE}">vue.global.js</a></li></ul>`
       state.settings = { ...state.settings, accelerate: true, uiLanguage: 'zh-CN' }
       await start()
-      const button = $('[data-gcn-copy-link]') as HTMLButtonElement
-      expect(button.getAttribute('aria-label')).toBe('复制加速链接')
-      button.click()
-      await flushTasks()
-      expect(writeText).toHaveBeenCalledExactlyOnceWith(`https://ghfast.top/${RELEASE}`)
-      expect(button.getAttribute('aria-label')).toBe('已复制')
+      const group = $('[data-gcn-accel]')
+      expect(group.getAttribute('aria-label')).toBe('加速下载')
+      const options = [...group.querySelectorAll<HTMLAnchorElement>('a[data-gcn-accel-option]')]
+      expect(options.map(option => option.textContent)).toEqual(['gh-proxy', 'ghfast', 'wget.la', '其他'])
+      expect(options[1]!.href).toBe(`https://ghfast.top/${RELEASE}`)
+      expect(($('.Box-row > a') as HTMLAnchorElement).href).toBe(RELEASE)
       context?.invalidate()
-      expect(document.querySelector('[data-gcn-copy-link]')).toBeNull()
+      expect(document.querySelector('[data-gcn-accel]')).toBeNull()
     })
 
     it('下载加速关闭时不加；设置变化后随之添加', async () => {
       document.body.innerHTML = `<ul><li class="Box-row"><a href="${RELEASE}">vue.global.js</a></li></ul>`
       await start()
-      expect(document.querySelector('[data-gcn-copy-link]')).toBeNull()
+      expect(document.querySelector('[data-gcn-accel]')).toBeNull()
       state.settingsListener?.({ ...state.settings, accelerate: true })
-      expect(document.querySelector('[data-gcn-copy-link]')).not.toBeNull()
+      expect(document.querySelector('[data-gcn-accel]')).not.toBeNull()
     })
   })
 
@@ -1806,6 +1829,18 @@ describe('搜索净化', () => {
     expect(hidden()).toEqual([false, true])
     state.settingsListener!({ ...state.settings, enabled: false })
     expect(hidden()).toEqual([false, false])
+  })
+
+  it('内置规则：开启时内置名单中的所有者一并隐藏；关闭后显示，再开启后隐藏', async () => {
+    const owner = BUILTIN_BLOCK_RULES[0]!.slice(1)
+    document.body.innerHTML = RESULTS.replace('/octocat/hello-world', `/${owner}/hello-world`)
+    state.searchRules = ['vuejs/core']
+    await start()
+    expect(hidden()).toEqual([true, true])
+    state.settingsListener!({ ...state.settings, purifyBuiltin: false })
+    expect(hidden()).toEqual([false, true])
+    state.settingsListener!({ ...state.settings, purifyBuiltin: true })
+    expect(hidden()).toEqual([true, true])
   })
 
   it('总开关关闭时启动：不隐藏；开启后隐藏', async () => {

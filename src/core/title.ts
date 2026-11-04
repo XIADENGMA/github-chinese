@@ -1,5 +1,5 @@
 import { normalizeText } from './matcher'
-import { accountLogin, pathSegments, repositoryName } from './page'
+import { accountLogin, pageSite, pathSegments, repositoryName } from './page'
 
 /** GitHub 标签页标题的分段符：「Issues · vuejs/core」 */
 export const TITLE_SEPARATOR = ' · '
@@ -14,7 +14,6 @@ const WIKI_PATH_RE = /^\/[^/]+\/[^/]+\/wiki(?:\/(.*))?$/
 const WORKFLOW_PATH_RE = /^\/[^/]+\/[^/]+\/actions\/workflows\/[^/]+/
 /** 仓库首页标题「GitHub - owner/repo: 描述」的前缀，小写 */
 const DESCRIPTION_SITE_PREFIX = 'github - '
-const GIST_HOST = 'gist.github.com'
 /** /owner/ 之后的 gist 编号：十六进制或旧式数字编号 */
 const GIST_ID_RE = /^(?:[\da-f]{20,40}|\d+)$/
 /** 首段的 gist 编号只认十六进制：纯数字首段是登录名（/1234567 是用户的 gist 列表） */
@@ -93,7 +92,8 @@ function gistUserSegment(pathname: string, end: number): UserSegment | undefined
  */
 function userSegment(segments: readonly string[], pathname: string, hostname: string): UserSegment {
   const end = contentLength(segments)
-  if (hostname === GIST_HOST) return gistUserSegment(pathname, end) ?? (() => false)
+  const site = pageSite({ hostname, pathname })
+  if (site.kind === 'gist') return gistUserSegment(site.pathname, end) ?? (() => false)
   const skip = userSegmentCount(segments, pathname, end)
   const parts = pathSegments(pathname)
   const login = accountLogin(pathname)
@@ -112,7 +112,7 @@ function userSegment(segments: readonly string[], pathname: string, hostname: st
  * 按分段符逐段翻译标题；未命中的段、用户内容段（见 userSegment）保持原样。
  * @param translate 翻译规范化文本，未命中返回 undefined
  * @param pathname 当前地址的路径
- * @param hostname 当前地址的主机名，用于识别 gist 页
+ * @param hostname 当前地址的主机名，用于识别代码片段页（见 pageSite）
  */
 export function translateTitleText(
   title: string,

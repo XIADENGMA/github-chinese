@@ -51,6 +51,14 @@ describe.skipIf(!UiSwitch)('UiSwitch', () => {
     expect(new Set(ids).size).toBe(2)
   })
 
+  it('紧凑：带 ui-switch-compact，结构与行为不变；默认不紧凑', async () => {
+    const compact = mount(required(UiSwitch), { props: { checked: false, label: '启用', compact: true }, attachTo: document.body })
+    expect(compact.classes()).toEqual(['ui-switch', 'ui-switch-compact'])
+    await compact.get('label').trigger('click')
+    expect(compact.emitted('change')).toEqual([[true]])
+    expect(mount(required(UiSwitch), { props: { checked: false, label: '启用' } }).classes()).toEqual(['ui-switch'])
+  })
+
   it('水波纹以滑块为中心，不随指针位置；对读屏隐藏', async () => {
     // 光晕层 32 × 32：中心 (16, 16)，半径 hypot(16, 16)
     vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue(new DOMRect(100, 100, 32, 32))

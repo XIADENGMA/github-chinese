@@ -6,7 +6,7 @@ import { EXPORT_FILE_NAME } from '../../../src/shared/custom-entries'
 import { REPOSITORY_URL } from '../../../src/shared/extension'
 import { customEntriesItem, getCustomEntries, getSettings, settingsItem, updateSettings } from '../../../src/shared/settings'
 import '../../../src/entrypoints/options/options.css'
-import { mockVersion, seedChineseUi, settle, ZH_SETTINGS } from './helpers'
+import { deleteSelected, mockVersion, seedChineseUi, settle, ZH_SETTINGS } from './helpers'
 import { importSfc, required } from './sfc'
 
 const App = await importSfc(() => import('../../../src/entrypoints/options/App.vue'))
@@ -19,13 +19,18 @@ async function render(): Promise<VueWrapper> {
   return wrapper
 }
 
+/** 页面的标签（不含加速设置里各分类的标签） */
+function pageTabs(wrapper: VueWrapper): DOMWrapper<Element>[] {
+  return wrapper.get('[role="tablist"]').findAll('[role="tab"]')
+}
+
 function tab(wrapper: VueWrapper, label: string): DOMWrapper<Element> {
-  const found = wrapper.findAll('[role="tab"]').find(item => item.text() === label)
+  const found = pageTabs(wrapper).find(item => item.text() === label)
   if (!found) throw new Error(`未找到标签：${label}`)
   return found
 }
 
-/** 分区：标签页（加速设置、净化设置）按标签文字取对应的面板，其余按标题（h2）取 section */
+/** 分区：标签页（加速设置、净化设置，汉化设置里的自定义词库、内置词库）按标签文字取对应的面板，其余按标题（h2）取 section */
 function section(wrapper: VueWrapper, title: string): DOMWrapper<Element> {
   const tabbed = wrapper.findAll('[role="tab"]').find(item => item.text() === title)
   if (tabbed) return wrapper.get(`#${CSS.escape(tabbed.attributes('aria-controls') ?? '')}`) as DOMWrapper<Element>
@@ -34,14 +39,22 @@ function section(wrapper: VueWrapper, title: string): DOMWrapper<Element> {
   return found
 }
 
-function tabLabels(wrapper: VueWrapper): string[] {
-  return wrapper.findAll('[role="tab"]').map(item => item.text())
+/** 汉化设置里词库的标签：自定义词库、内置词库 */
+function dictionaryTabLabels(wrapper: VueWrapper): string[] {
+  return wrapper
+    .get('[role="tablist"][aria-label="词库"]')
+    .findAll('[role="tab"]')
+    .map(item => item.text())
 }
 
-/** 显示中的面板对应的标签 */
+function tabLabels(wrapper: VueWrapper): string[] {
+  return pageTabs(wrapper).map(item => item.text())
+}
+
+/** 显示中的面板对应的标签（页面的标签页） */
 function visiblePanels(wrapper: VueWrapper): string[] {
   return wrapper
-    .findAll<HTMLElement>('[role="tabpanel"]')
+    .findAll<HTMLElement>('.options-main > .ui-tabs > [role="tabpanel"]')
     .filter(panel => panel.element.style.display !== 'none')
     .map(panel => wrapper.get(`#${CSS.escape(panel.attributes('aria-labelledby') ?? '')}`).text())
 }
@@ -71,7 +84,7 @@ function addInput(scope: DOMWrapper<Element>): DOMWrapper<HTMLInputElement> {
 /** 排除路径列表各行的值，新添加的在前 */
 function pathRows(wrapper: VueWrapper): string[] {
   return section(wrapper, '排除路径')
-    .findAll<HTMLInputElement>('tbody input')
+    .findAll<HTMLInputElement>('tbody input:not([type="checkbox"])')
     .map(input => input.element.value)
 }
 
@@ -114,26 +127,31 @@ describe.skipIf(!App)('设置页组件', () => {
   })
 
   describe('布局', () => {
-    it('先是汉化设置（排除路径、自定义词条）、加速设置、净化设置、自动加载设置、新标签页设置五个标签页，再是关于；常规开关、语言下拉、快捷键都不在这里', async () => {
+    it('先是汉化设置（排除路径；自定义词库、内置词库两个标签）、加速设置、净化设置、自动加载设置、新标签页设置、企业版设置六个标签页，再是关于；常规开关、语言下拉、快捷键都不在这里', async () => {
       const wrapper = await render()
       expect(wrapper.get('h1').text()).toBe('GitHub 中文化')
       expect(wrapper.get('[role="tablist"]').attributes('aria-label')).toBe('设置')
-      expect(tabLabels(wrapper)).toEqual(['汉化设置', '加速设置', '净化设置', '自动加载设置', '新标签页设置'])
-      expect(headings(wrapper)).toEqual(['排除路径', '自定义词条', '范围', '范围', '关于'])
-      for (const title of ['排除路径', '自定义词条']) {
-        expect(section(wrapper, title).element.closest('[role="tabpanel"]')?.getAttribute('aria-labelledby')).toBe(
-          tab(wrapper, '汉化设置').attributes('id')
-        )
+      expect(tabLabels(wrapper)).toEqual(['汉化设置', '加速设置', '净化设置', '自动加载设置', '新标签页设置', '企业版设置'])
+      expect(headings(wrapper)).toEqual(['排除路径', '加速源', '范围', '范围', '关于'])
+      expect(dictionaryTabLabels(wrapper)).toEqual(['自定义词库', '内置词库'])
+      expect(section(wrapper, '自定义词库').isVisible()).toBe(true)
+      expect(section(wrapper, '内置词库').isVisible()).toBe(false)
+      for (const title of ['排除路径', '自定义词库', '内置词库']) {
+        expect(
+          section(wrapper, title).element.closest('.options-main > .ui-tabs > [role="tabpanel"]')?.getAttribute('aria-labelledby')
+        ).toBe(tab(wrapper, '汉化设置').attributes('id'))
       }
       expect(section(wrapper, '关于').element.closest('[role="tabpanel"]')).toBeNull()
       const main = wrapper.get('main').element
       expect(main.firstElementChild?.contains(wrapper.get('[role="tablist"]').element)).toBe(true)
-      // 开关只有加速的三个、净化搜索，以及自动加载、新标签页打开及其范围（图片预览只在弹出页）
+      // 开关只有加速的三个与各分类的自动隐藏、净化搜索，以及自动加载、新标签页打开及其范围（图片预览、下载文件夹只在弹出页）
       expect(wrapper.findAll('.ui-switch-label').map(item => item.text())).toEqual([
         '加速下载',
         '加速图片',
         '故障转移',
+        ...Array.from({ length: 5 }, () => '自动隐藏'),
         '净化搜索',
+        '内置规则',
         '自动加载',
         '搜索结果',
         '议题',
@@ -157,7 +175,11 @@ describe.skipIf(!App)('设置页组件', () => {
         '个人与组织主页',
         '探索'
       ])
-      expect(wrapper.find('[role="combobox"]').exists()).toBe(false)
+      // 下拉只有内置词库的翻译语言与加速设置的替换原链接；没有界面语言下拉
+      expect(wrapper.findAll('[role="combobox"]').map(item => item.attributes('data-test'))).toEqual([
+        'dictionary-language',
+        'replace-category'
+      ])
       expect(wrapper.text()).not.toContain('快捷键')
     })
 
@@ -203,16 +225,16 @@ describe.skipIf(!App)('设置页组件', () => {
         'en',
         'GitHub Chinese',
         'Settings',
-        ['Translation', 'Acceleration', 'Search filter', 'Auto load', 'Open in new tab'],
-        ['Excluded paths', 'Custom entries', 'Scope', 'Scope', 'About'],
+        ['Translation', 'Acceleration', 'Search filter', 'Auto load', 'Open in new tab', 'Enterprise'],
+        ['Excluded paths', 'Sources', 'Scope', 'Scope', 'About'],
         'GitHub repository'
       ],
       [
         'zh-TW',
         'GitHub 中文化',
         '設定',
-        ['中文化設定', '加速設定', '淨化設定', '自動載入設定', '新分頁設定'],
-        ['排除路徑', '自訂詞條', '範圍', '範圍', '關於'],
+        ['中文化設定', '加速設定', '淨化設定', '自動載入設定', '新分頁設定', '企業版設定'],
+        ['排除路徑', '加速來源', '範圍', '範圍', '關於'],
         'GitHub'
       ]
     ] as const)('界面语言随设置（如在弹出页修改）切换：%s', async (uiLanguage, title, tabsLabel, tabs, sections, repository) => {
@@ -243,10 +265,11 @@ describe.skipIf(!App)('设置页组件', () => {
       const wrapper = await render()
       const excluded = section(wrapper, '排除路径')
       expect(pathRows(wrapper)).toEqual(['/*/*/wiki', '/settings'])
-      expect(excluded.findAll('th').map(item => item.text())).toEqual(['路径', '操作'])
+      expect(excluded.findAll('th').map(item => item.text())).toEqual(['', '路径', '操作'])
+      expect(excluded.get('th [data-test="select-all"] input').attributes('aria-label')).toBe('全选')
       expect(addInput(excluded).attributes('aria-label')).toBe('路径')
       expect(addInput(excluded).attributes('placeholder')).toBe('/*/*/wiki')
-      expect(excluded.findAll('tbody input').map(input => input.attributes('aria-label'))).toEqual(['路径', '路径'])
+      expect(excluded.findAll('tbody input:not([type="checkbox"])').map(input => input.attributes('aria-label'))).toEqual(['路径', '路径'])
       expect(excluded.findAll('tbody button').map(item => item.attributes('aria-label'))).toEqual(['删除 /*/*/wiki', '删除 /settings'])
     })
 
@@ -287,7 +310,7 @@ describe.skipIf(!App)('设置页组件', () => {
     it('行内改写即时保存；无效、已存在时恢复原值并提示', async () => {
       await settingsItem.setValue({ ...ZH_SETTINGS, excludedPaths: ['/settings', '/*/*/wiki'] })
       const wrapper = await render()
-      const input = section(wrapper, '排除路径').get<HTMLInputElement>('tbody input')
+      const input = section(wrapper, '排除路径').get<HTMLInputElement>('tbody input:not([type="checkbox"])')
       await input.setValue(' /*/*/wiki/new ')
       await settle()
       expect((await getSettings()).excludedPaths).toEqual(['/settings', '/*/*/wiki/new'])
@@ -308,11 +331,11 @@ describe.skipIf(!App)('设置页组件', () => {
     it('改写：同一行就地更新，焦点保留', async () => {
       await settingsItem.setValue({ ...ZH_SETTINGS, excludedPaths: ['/settings'] })
       const wrapper = await render()
-      const input = section(wrapper, '排除路径').get<HTMLInputElement>('tbody input')
+      const input = section(wrapper, '排除路径').get<HTMLInputElement>('tbody input:not([type="checkbox"])')
       input.element.focus()
       await input.setValue('/settings/profile')
       await settle()
-      expect(section(wrapper, '排除路径').get('tbody input').element).toBe(input.element)
+      expect(section(wrapper, '排除路径').get('tbody input:not([type="checkbox"])').element).toBe(input.element)
       expect(document.activeElement).toBe(input.element)
     })
 
@@ -335,10 +358,88 @@ describe.skipIf(!App)('设置页组件', () => {
       expect(excluded.get('[data-test="list-empty"]').text()).toBe('暂无路径')
     })
 
+    it('多选：勾选、全选（部分选中时为横线）；表头显示删除所选，确认后一次写入；焦点移到全选框，删空时移到添加框', async () => {
+      await settingsItem.setValue({ ...ZH_SETTINGS, excludedPaths: ['/a', '/b', '/c'] })
+      const wrapper = await render()
+      const excluded = section(wrapper, '排除路径')
+      const selectAll = (): HTMLInputElement => excluded.get<HTMLInputElement>('[data-test="select-all"] input').element
+      const rowBox = (path: string) => excluded.get<HTMLInputElement>(`tbody input[type="checkbox"][aria-label="选择 ${path}"]`)
+      expect(excluded.find('[data-test="delete-selected"]').exists()).toBe(false)
+      expect(excluded.get('th .sr-only').text()).toBe('操作')
+      expect(excluded.get('.list-frame > .ui-back-to-top [data-test="back-to-top"]').attributes('aria-label')).toBe('返回顶部')
+
+      await rowBox('/b').setValue(true)
+      expect(rowBox('/b').element.checked).toBe(true)
+      expect(selectAll().checked).toBe(false)
+      expect(selectAll().indeterminate).toBe(true)
+      expect(excluded.get('[data-test="delete-selected"]').text()).toBe('删除 1 条')
+
+      await excluded.get('[data-test="select-all"] input').setValue(true)
+      expect(selectAll().checked).toBe(true)
+      expect(selectAll().indeterminate).toBe(false)
+      expect(excluded.get('[data-test="delete-selected"]').text()).toBe('删除 3 条')
+      await excluded.get('[data-test="select-all"] input').setValue(false)
+      expect(excluded.find('[data-test="delete-selected"]').exists()).toBe(false)
+
+      await rowBox('/a').setValue(true)
+      await rowBox('/c').setValue(true)
+      const set = vi.spyOn(fakeBrowser.storage.sync, 'set')
+      await deleteSelected(excluded)
+      expect(set).toHaveBeenCalledOnce()
+      expect((await getSettings()).excludedPaths).toEqual(['/b'])
+      expect(pathRows(wrapper)).toEqual(['/b'])
+      expect(rowBox('/b').element.checked).toBe(false)
+      expect(document.activeElement).toBe(selectAll())
+
+      await excluded.get('[data-test="select-all"] input').setValue(true)
+      await deleteSelected(excluded)
+      expect((await getSettings()).excludedPaths).toEqual([])
+      expect(document.activeElement).toBe(addInput(excluded).element)
+    })
+
+    it('多选：删除失败时提示，所选保留', async () => {
+      await settingsItem.setValue({ ...ZH_SETTINGS, excludedPaths: ['/a', '/b'] })
+      const wrapper = await render()
+      const excluded = section(wrapper, '排除路径')
+      await excluded.get('[data-test="select-all"] input').setValue(true)
+      vi.spyOn(fakeBrowser.storage.sync, 'set').mockRejectedValue(new Error('配额'))
+      await deleteSelected(excluded)
+      expect(toastTexts(wrapper)).toEqual(['保存失败'])
+      expect(pathRows(wrapper)).toEqual(['/b', '/a'])
+      expect(excluded.get('[data-test="delete-selected"]').text()).toBe('删除 2 条')
+    })
+
+    it('删除所选要确认：确认框显示条数，焦点在取消上；取消、关闭（Escape）时不删除，所选保留', async () => {
+      await settingsItem.setValue({ ...ZH_SETTINGS, excludedPaths: ['/a', '/b'] })
+      const wrapper = await render()
+      const excluded = section(wrapper, '排除路径')
+      await excluded.get('[data-test="select-all"] input').setValue(true)
+      const set = vi.spyOn(fakeBrowser.storage.sync, 'set')
+      const dialog = excluded.get('[data-test="confirm"]')
+      const element = dialog.element as HTMLDialogElement
+      expect(element.open).toBe(false)
+
+      await pressButton(excluded, '[data-test="delete-selected"]')
+      expect(element.open).toBe(true)
+      expect(document.getElementById(dialog.attributes('aria-labelledby') ?? '')?.textContent).toBe('删除 2 条？')
+      expect(dialog.findAll('button').map(button => button.text())).toEqual(['取消', '删除'])
+      expect(dialog.get('[data-test="confirm-cancel"]').attributes()).toHaveProperty('autofocus')
+      await pressButton(excluded, '[data-test="confirm-cancel"]')
+      expect(element.open).toBe(false)
+
+      await pressButton(excluded, '[data-test="delete-selected"]')
+      element.close()
+      await settle()
+      expect(element.open).toBe(false)
+      expect(set).not.toHaveBeenCalled()
+      expect(pathRows(wrapper)).toEqual(['/b', '/a'])
+      expect(excluded.get('[data-test="delete-selected"]').text()).toBe('删除 2 条')
+    })
+
     it('弹出页排除此页、取消排除时列表随之更新；行内未提交的修改保留', async () => {
       await settingsItem.setValue({ ...ZH_SETTINGS, excludedPaths: ['/settings'] })
       const wrapper = await render()
-      const input = section(wrapper, '排除路径').get<HTMLInputElement>('tbody input')
+      const input = section(wrapper, '排除路径').get<HTMLInputElement>('tbody input:not([type="checkbox"])')
       input.element.value = '/settings/draft'
       await input.trigger('input')
 
@@ -375,24 +476,24 @@ describe.skipIf(!App)('设置页组件', () => {
     })
   })
 
-  describe('自定义词条', () => {
+  describe('自定义词库', () => {
     it('读取失败时列表处显示加载失败，不弹提示', async () => {
       vi.spyOn(fakeBrowser.storage.local, 'get').mockRejectedValue(new Error('存储不可用'))
       const wrapper = await render()
-      expect(section(wrapper, '自定义词条').get('[data-test="entries-empty"]').text()).toBe('加载失败')
+      expect(section(wrapper, '自定义词库').get('[data-test="entries-empty"]').text()).toBe('加载失败')
       expect(toastTexts(wrapper)).toEqual([])
     })
 
     it('空时显示暂无词条，导出不可用', async () => {
       const wrapper = await render()
-      const entries = section(wrapper, '自定义词条')
+      const entries = section(wrapper, '自定义词库')
       expect(entries.get('[data-test="entries-empty"]').text()).toBe('暂无词条')
       expect(button(entries, '导出').element.disabled).toBe(true)
     })
 
     it('添加词条', async () => {
       const wrapper = await render()
-      const entries = section(wrapper, '自定义词条')
+      const entries = section(wrapper, '自定义词库')
       const add = button(entries, '添加')
       expect(add.element.disabled).toBe(true)
 
@@ -410,7 +511,7 @@ describe.skipIf(!App)('设置页组件', () => {
     it('原文重复时提示已存在', async () => {
       await customEntriesItem.setValue({ Code: '代码' })
       const wrapper = await render()
-      const entries = section(wrapper, '自定义词条')
+      const entries = section(wrapper, '自定义词库')
       await entries.get('form input[aria-label="原文"]').setValue('Code')
       await entries.get('form input[aria-label="译文"]').setValue('源码')
       await entries.get('form').trigger('submit')
@@ -422,7 +523,7 @@ describe.skipIf(!App)('设置页组件', () => {
     it('行内编辑原文与译文', async () => {
       await customEntriesItem.setValue({ Code: '代码' })
       const wrapper = await render()
-      const entries = section(wrapper, '自定义词条')
+      const entries = section(wrapper, '自定义词库')
 
       const target = entries.get('tbody input[aria-label="译文"]')
       await target.setValue('  源码  ')
@@ -438,7 +539,7 @@ describe.skipIf(!App)('设置页组件', () => {
     it('行内编辑无效时恢复原值', async () => {
       await customEntriesItem.setValue({ Code: '代码', Issues: '议题' })
       const wrapper = await render()
-      const entries = section(wrapper, '自定义词条')
+      const entries = section(wrapper, '自定义词库')
       const firstTarget = entries.get('tbody input[aria-label="译文"]')
       await firstTarget.setValue('  ')
       await settle()
@@ -456,7 +557,7 @@ describe.skipIf(!App)('设置页组件', () => {
     it('删除词条', async () => {
       await customEntriesItem.setValue({ Code: '代码' })
       const wrapper = await render()
-      const entries = section(wrapper, '自定义词条')
+      const entries = section(wrapper, '自定义词库')
       const remove = entries.get('button[aria-label="删除 Code"]')
       expect(remove.text()).toBe('删除')
       await remove.trigger('click')
@@ -468,7 +569,7 @@ describe.skipIf(!App)('设置页组件', () => {
     it('改原文：同一行就地更新，焦点与同一行里未提交的输入都保留', async () => {
       await customEntriesItem.setValue({ Code: '代码', Issues: '议题' })
       const wrapper = await render()
-      const entries = section(wrapper, '自定义词条')
+      const entries = section(wrapper, '自定义词库')
       const row = entries.get('tr[data-index="1"]').element
       const sourceInput = row.querySelector<HTMLInputElement>('input[aria-label="原文"]')!
       const targetInput = row.querySelector<HTMLInputElement>('input[aria-label="译文"]')!
@@ -493,7 +594,7 @@ describe.skipIf(!App)('设置页组件', () => {
     it('改原文保存失败：恢复原文，仍是同一行', async () => {
       await customEntriesItem.setValue({ Code: '代码' })
       const wrapper = await render()
-      const row = section(wrapper, '自定义词条').get('tr[data-index="0"]').element
+      const row = section(wrapper, '自定义词库').get('tr[data-index="0"]').element
       const sourceInput = row.querySelector<HTMLInputElement>('input[aria-label="原文"]')!
       vi.spyOn(fakeBrowser.storage.local, 'set').mockRejectedValueOnce(new Error('存储不可用'))
       sourceInput.value = 'Source code'
@@ -513,7 +614,7 @@ describe.skipIf(!App)('设置页组件', () => {
     it('用键盘删除：焦点移到原位置这一条（原来的下一条）的删除按钮；删掉末条时移到上一条', async () => {
       await customEntriesItem.setValue({ Code: '代码', Issues: '议题', Wiki: '维基' })
       const wrapper = await render()
-      const entries = section(wrapper, '自定义词条')
+      const entries = section(wrapper, '自定义词库')
 
       await pressButton(entries, 'button[aria-label="删除 Issues"]')
       expect(document.activeElement?.getAttribute('aria-label')).toBe('删除 Code')
@@ -525,7 +626,7 @@ describe.skipIf(!App)('设置页组件', () => {
     it('删空：焦点移到添加表单；搜索结果删空时移到搜索框', async () => {
       await customEntriesItem.setValue({ Code: '代码', Issues: '议题' })
       const wrapper = await render()
-      const entries = section(wrapper, '自定义词条')
+      const entries = section(wrapper, '自定义词库')
 
       await entries.get('input[type="search"]').setValue('议')
       await pressButton(entries, 'button[aria-label="删除 Issues"]')
@@ -539,16 +640,53 @@ describe.skipIf(!App)('设置页组件', () => {
     it('点击删除、按钮没有获得焦点（如 Firefox）时不移动焦点', async () => {
       await customEntriesItem.setValue({ Code: '代码', Issues: '议题' })
       const wrapper = await render()
-      await section(wrapper, '自定义词条').get('button[aria-label="删除 Issues"]').trigger('click')
+      await section(wrapper, '自定义词库').get('button[aria-label="删除 Issues"]').trigger('click')
       await settle()
       expect(await getCustomEntries()).toEqual({ Code: '代码' })
       expect(document.activeElement).toBe(document.body)
     })
 
+    it('多选：全选只选搜索结果；搜索变了，不在结果中的取消；删除所选一次写入并通知页面', async () => {
+      await customEntriesItem.setValue({ Code: '代码', Issues: '议题', Wiki: '维基' })
+      const wrapper = await render()
+      const entries = section(wrapper, '自定义词库')
+      const search = entries.get('input[type="search"]')
+      const selectAll = entries.get<HTMLInputElement>('[data-test="select-all"] input')
+      expect(selectAll.attributes('aria-label')).toBe('全选')
+      expect(entries.get('.list-frame > .ui-back-to-top [data-test="back-to-top"]').attributes('aria-label')).toBe('返回顶部')
+      expect(entries.findAll('tbody input[type="checkbox"]').map(item => item.attributes('aria-label'))).toEqual([
+        '选择 Wiki',
+        '选择 Issues',
+        '选择 Code'
+      ])
+
+      await search.setValue('i')
+      await selectAll.setValue(true)
+      expect(entries.get('[data-test="delete-selected"]').text()).toBe('删除 2 条')
+      await search.setValue('wiki')
+      expect(entries.get('[data-test="delete-selected"]').text()).toBe('删除 1 条')
+      await search.setValue('')
+      expect(selectAll.element.indeterminate).toBe(true)
+      expect(entries.get<HTMLInputElement>('tbody input[aria-label="选择 Wiki"]').element.checked).toBe(true)
+
+      await entries.get('tbody input[aria-label="选择 Code"]').setValue(true)
+      const send = vi.spyOn(fakeBrowser.runtime, 'sendMessage')
+      await deleteSelected(entries)
+      expect(await getCustomEntries()).toEqual({ Issues: '议题' })
+      expect(send).toHaveBeenCalledWith({ type: 'gcn:custom-entries-saved' })
+      expect(document.activeElement).toBe(entries.get('[data-test="select-all"] input').element)
+
+      await search.setValue('issues')
+      await entries.get('[data-test="select-all"] input').setValue(true)
+      await deleteSelected(entries)
+      expect(await getCustomEntries()).toEqual({})
+      expect(document.activeElement).toBe(search.element)
+    })
+
     it('搜索', async () => {
       await customEntriesItem.setValue({ Code: '代码', Issues: '议题' })
       const wrapper = await render()
-      const entries = section(wrapper, '自定义词条')
+      const entries = section(wrapper, '自定义词库')
       const search = entries.get('input[type="search"]')
 
       await search.setValue('议')
@@ -561,7 +699,7 @@ describe.skipIf(!App)('设置页组件', () => {
 
     it('导入按钮直接打开文件选择框', async () => {
       const wrapper = await render()
-      const entries = section(wrapper, '自定义词条')
+      const entries = section(wrapper, '自定义词库')
       const click = vi
         .spyOn(entries.get('[data-test="import-file"]').element as HTMLInputElement, 'click')
         .mockImplementation(() => undefined)
@@ -599,7 +737,7 @@ describe.skipIf(!App)('设置页组件', () => {
         download(this.download)
       })
       const wrapper = await render()
-      await button(section(wrapper, '自定义词条'), '导出').trigger('click')
+      await button(section(wrapper, '自定义词库'), '导出').trigger('click')
       expect(download).toHaveBeenCalledWith(EXPORT_FILE_NAME)
       expect(JSON.parse((await blob?.text()) ?? '')).toEqual({ Code: '代码' })
     })
@@ -608,7 +746,7 @@ describe.skipIf(!App)('设置页组件', () => {
       const wrapper = await render()
       await customEntriesItem.setValue({ Wiki: '维基' })
       await settle()
-      const entries = section(wrapper, '自定义词条')
+      const entries = section(wrapper, '自定义词库')
       expect(entries.findAll('tbody tr')).toHaveLength(1)
       expect((entries.get('tbody input[aria-label="原文"]').element as HTMLInputElement).value).toBe('Wiki')
     })
@@ -628,20 +766,20 @@ describe.skipIf(!App)('设置页组件', () => {
       }
 
       function viewportOf(wrapper: VueWrapper): HTMLElement {
-        const viewport = section(wrapper, '自定义词条').get('table').element.parentElement
+        const viewport = section(wrapper, '自定义词库').get('table').element.parentElement
         if (!viewport) throw new Error('未找到列表框')
         return viewport
       }
 
       /** 已渲染的数据行的序号 */
       function rendered(wrapper: VueWrapper): number[] {
-        return section(wrapper, '自定义词条')
+        return section(wrapper, '自定义词库')
           .findAll('tbody tr[data-index]')
           .map(row => Number(row.attributes('data-index')))
       }
 
       function inputAt(wrapper: VueWrapper, index: number, label: '原文' | '译文'): HTMLInputElement {
-        const input = section(wrapper, '自定义词条').get(`tr[data-index="${index}"] input[aria-label="${label}"]`)
+        const input = section(wrapper, '自定义词库').get(`tr[data-index="${index}"] input[aria-label="${label}"]`)
         return input.element as HTMLInputElement
       }
 
@@ -674,7 +812,7 @@ describe.skipIf(!App)('设置页组件', () => {
 
       it('只渲染可视范围内的行（行高按实测），其余用占位撑开；表格标出总行数与各行序号，占位对读屏隐藏', async () => {
         const wrapper = await render()
-        const entries = section(wrapper, '自定义词条')
+        const entries = section(wrapper, '自定义词库')
         // 可见 10 行，下方多渲染 6 行
         expect(rendered(wrapper)).toEqual(range(0, 16))
         expect(inputAt(wrapper, 0, '原文').value).toBe('Sample text 199')
@@ -690,7 +828,7 @@ describe.skipIf(!App)('设置页组件', () => {
       it('列表框限高、框内滚动、不做滚动锚定；表头固定在顶部，键盘切换焦点时滚动留出表头高度', async () => {
         const wrapper = await render()
         const viewport = getComputedStyle(viewportOf(wrapper))
-        const head = getComputedStyle(section(wrapper, '自定义词条').get('th').element)
+        const head = getComputedStyle(section(wrapper, '自定义词库').get('th').element)
         expect(viewport.maxHeight).toMatch(/^min\(480px, /)
         expect(viewport.overflowY).toBe('auto')
         expect(viewport.overflowAnchor).toBe('none')
@@ -704,12 +842,12 @@ describe.skipIf(!App)('设置页组件', () => {
         await scrollList(wrapper, 100 * ROW)
         expect(rendered(wrapper)).toEqual(range(94, 116))
         expect(inputAt(wrapper, 100, '原文').value).toBe('Sample text 99')
-        expect(section(wrapper, '自定义词条').get('tr[data-index="100"]').attributes('aria-rowindex')).toBe('102')
+        expect(section(wrapper, '自定义词库').get('tr[data-index="100"]').attributes('aria-rowindex')).toBe('102')
       })
 
       it('搜索、添加、导入成功后滚回顶部；添加失败、导入失败、删除词条时位置不变', async () => {
         const wrapper = await render()
-        const entries = section(wrapper, '自定义词条')
+        const entries = section(wrapper, '自定义词库')
 
         await scrollList(wrapper, 100 * ROW)
         await entries.get('input[type="search"]').setValue('Sample text')
@@ -796,7 +934,7 @@ describe.skipIf(!App)('设置页组件', () => {
 
       it('焦点行在范围外时用键盘删除：原位置这一条保留渲染，焦点移到它的删除按钮', async () => {
         const wrapper = await render()
-        const entries = section(wrapper, '自定义词条')
+        const entries = section(wrapper, '自定义词库')
         entries.get<HTMLButtonElement>('tr[data-index="1"] button').element.focus()
         await scrollList(wrapper, 100 * ROW)
 

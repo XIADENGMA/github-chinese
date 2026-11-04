@@ -77,6 +77,7 @@ export default {
     'Cloud agent': '云代理',
     // Copilot 下的子菜单项（与存储库设置一致）
     Cloud: '云端',
+    Memory: '记忆',
     // 侧栏的产品名按用户规定译成中文（GitHub Pages → 页面、Codespaces → 代码空间）；Copilot 是品牌词，保留。
     // Codespaces 同时覆盖计费页的产品名、预算产品、GitHub 应用权限名
     Pages: '页面',
@@ -85,5 +86,7 @@ export default {
     'Scheduled reminders': '预定提醒',
     'Developer settings': '开发人员设置',
     'Developer Settings': '开发人员设置'
-  }
+  },
+  // 切换设置对象的按钮：「Switch <span>settings</span> context」，settings 由 scoped 译出（整句同 org-settings 的 static）
+  inline: [['Switch {} context', '切换{}对象']]
 } satisfies PageDictionary

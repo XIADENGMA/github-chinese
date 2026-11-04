@@ -13,6 +13,8 @@ export interface UseSearchBlock extends UseTextList {
   /** 读取规则失败、之后也没收到规则：列表为空时显示加载失败 */
   readonly loadFailed: Readonly<Ref<boolean>>
   setPurify(value: boolean): Promise<void>
+  /** 内置规则的开关 */
+  setBuiltin(value: boolean): Promise<void>
 }
 
 /** 请后台通知已打开的 GitHub 页面重新读取规则；失败时这些页面刷新后才用上新规则 */
@@ -65,5 +67,10 @@ export function useSearchBlock(): UseSearchBlock {
     else toast.show('danger', 'saveFailed')
   }
 
-  return { ...list, settings, ready, loadFailed, setPurify }
+  async function setBuiltin(value: boolean): Promise<void> {
+    if (await update({ purifyBuiltin: value })) toast.clear()
+    else toast.show('danger', 'saveFailed')
+  }
+
+  return { ...list, settings, ready, loadFailed, setPurify, setBuiltin }
 }

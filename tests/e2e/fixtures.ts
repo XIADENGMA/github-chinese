@@ -46,15 +46,20 @@ export const DEFAULT_SETTINGS: Settings = {
   accelerateImages: false,
   failover: false,
   purifySearch: true,
+  purifyBuiltin: true,
   autoLoad: false,
   autoLoadScopes: DEFAULT_AUTO_LOAD_SCOPES,
   imagePreview: false,
+  folderDownload: true,
   newTab: false,
   newTabScopes: ['external', 'search'],
   newTabPaths: [],
-  accelerateSource: 'ghfast',
+  categories: [],
+  categoryOrder: [],
+  removedCategories: [],
   customSources: [],
-  removedSources: []
+  removedSources: [],
+  replaceCategory: ''
 }
 
 /** 中日韩统一表意文字（含扩展 A 区） */

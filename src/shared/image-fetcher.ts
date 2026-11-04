@@ -1,4 +1,5 @@
-import { accelerateLink, candidateSources, isAutoSource, needsProbe, parseImageUrl, type AccelerateSource } from './accelerate'
+import { accelerateLink, parseImageUrl, supportsLink, type AccelerateSource } from './accelerate'
+import { listSources } from './accelerate-categories'
 import type { Settings } from './settings'
 
 /** 单个加速源取图片的时限 */
@@ -11,7 +12,7 @@ const IMAGE_TYPE_RE = /^image\/[a-z0-9.+-]+$/
 
 export interface ImageFetchDeps {
   fetch(url: string, init: RequestInit): Promise<Response>
-  /** 自动选择时的尝试顺序（见 DownloadResolver.rank）；不给时按列表顺序 */
+  /** 故障转移开启时的尝试顺序（见 SourceHealthMonitor.rank）；不给时按分类顺序 */
   rank?(sources: readonly AccelerateSource[]): readonly AccelerateSource[]
 }
 
@@ -54,15 +55,15 @@ async function fetchDataUrl(url: string, deps: ImageFetchDeps): Promise<string |
 
 /**
  * 经加速源取回加载失败的图片（后台），返回 data: 地址（GitHub 的 CSP 允许 data: 图片，不允许加速源的站点）。
- * 只用支持该地址的加速源：故障转移关闭时只试第一个（首选，或首选不支持时第一个支持的），开启时依次尝试；
- * 首选为自动选择时按已知的探测结果排序后依次尝试。未开启、不是可加速的图片、都取不到时为 undefined
+ * 只用支持该地址的加速源，按分类顺序：故障转移关闭时只试第一个，开启时按已知的探测结果排序后依次尝试。
+ * 未开启、不是可加速的图片、都取不到时为 undefined
  */
 export async function fetchImage(href: string, settings: Settings, deps: ImageFetchDeps = IMAGE_FETCH_DEPS): Promise<string | undefined> {
   const link = parseImageUrl(href)
   if (!link || !settings.enabled || !settings.accelerateImages) return undefined
-  const candidates = candidateSources(settings, link)
-  const sources = isAutoSource(settings) && deps.rank ? deps.rank(candidates) : candidates
-  for (const source of needsProbe(settings) ? sources : sources.slice(0, 1)) {
+  const candidates = listSources(settings).filter(source => supportsLink(source, link))
+  const sources = settings.failover && deps.rank ? deps.rank(candidates) : candidates
+  for (const source of settings.failover ? sources : sources.slice(0, 1)) {
     const url = accelerateLink(source.template, link)
     const dataUrl = url && (await fetchDataUrl(url, deps))
     if (dataUrl) return dataUrl

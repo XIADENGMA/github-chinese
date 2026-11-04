@@ -579,15 +579,20 @@ describe('停用、换词典、切换语言、排除页面', () => {
       accelerateImages: false,
       failover: false,
       purifySearch: true,
+      purifyBuiltin: true,
       autoLoad: false,
       autoLoadScopes: DEFAULT_AUTO_LOAD_SCOPES,
       imagePreview: false,
+      folderDownload: true,
       newTab: false,
       newTabScopes: ['external', 'search'],
       newTabPaths: [],
-      accelerateSource: 'ghfast',
+      categories: [],
+      categoryOrder: [],
+      removedCategories: [],
       customSources: [],
-      removedSources: []
+      removedSources: [],
+      replaceCategory: ''
     }
     document.body.innerHTML = `${LIST('bug', 'list')}${SIDEBAR}<main></main>`
     const c = createController({

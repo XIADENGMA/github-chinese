@@ -134,12 +134,12 @@ export interface SearchBlockList {
 
 export const EMPTY_BLOCK_LIST: SearchBlockList = { owners: new Set(), repos: new Set(), keywords: [] }
 
-/** 编译存储的规则；无效的行跳过 */
-export function compileSearchBlockRules(lines: readonly string[]): SearchBlockList {
+/** 编译存储的规则（可再带上内置规则，见 shared/search-block-builtin）；无效的行跳过 */
+export function compileSearchBlockRules(lines: readonly string[], builtin: readonly string[] = []): SearchBlockList {
   const owners = new Set<string>()
   const repos = new Set<string>()
   const keywords = new Set<string>()
-  for (const line of lines) {
+  for (const line of [...builtin, ...lines]) {
     const rule = parseRule(line)
     if (rule?.kind === 'owner') owners.add(rule.owner.toLowerCase())
     else if (rule?.kind === 'repo') repos.add(`${rule.owner}/${rule.name}`.toLowerCase())
