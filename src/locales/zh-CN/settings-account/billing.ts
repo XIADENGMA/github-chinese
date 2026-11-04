@@ -448,6 +448,9 @@ export default {
     Summarized: '汇总',
     Detailed: '详细',
     Legacy: '旧版',
+    // AI 额度（安全公告的 Credits 是致谢，见 security/advisories）
+    Credits: '额度',
+    'AI Credits': 'AI 额度',
     Model: '模型',
     Units: '单位',
     Amount: '金额',

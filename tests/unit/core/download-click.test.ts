@@ -2,6 +2,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createDownloadClickHandler } from '../../../src/core/download-click'
 import { isPrivatePage } from '../../../src/core/private-page'
+import { AUTO_SOURCE_ID, BUILTIN_SOURCES } from '../../../src/shared/accelerate'
 import { DEFAULT_SETTINGS, type Settings } from '../../../src/shared/settings'
 
 const RELEASE = 'https://github.com/vuejs/core/releases/download/v3.5.0/vue.global.js'
@@ -75,7 +76,7 @@ describe('createDownloadClickHandler', () => {
   it.each([
     ['未开启下载加速', { accelerate: false }],
     ['总开关关闭', { enabled: false }],
-    ['没有加速源', { removedSources: ['ghfast', 'wget-la', 'gh-proxy-hk', 'gh-proxy-cdn'] }],
+    ['没有加速源', { removedSources: BUILTIN_SOURCES.map((source) => source.id) }],
   ] as const)('%s：不处理', (_name, overrides) => {
     settings = { ...settings, ...overrides }
     expect(click(addLink(RELEASE))).toBe(false)
@@ -152,7 +153,7 @@ describe('createDownloadClickHandler', () => {
   it('没有加速源支持的链接（只剩用 {path} 的自定义源，Gist 不在 github.com 上）：不处理', () => {
     settings = {
       ...settings,
-      removedSources: ['ghfast', 'wget-la', 'gh-proxy-hk', 'gh-proxy-cdn'],
+      removedSources: BUILTIN_SOURCES.map((source) => source.id),
       customSources: [{ id: 'custom-1', name: 'Mirror', template: 'https://mirror.example/{path}' }],
     }
     expect(click(addLink('https://gist.github.com/octocat/0831f3fbd83ac4d46451/archive/c197afe.zip'))).toBe(false)
@@ -183,9 +184,17 @@ describe('createDownloadClickHandler', () => {
     })
 
     it('没有加速源支持该链接：不处理，不请后台', () => {
-      settings = { ...settings, removedSources: ['ghfast', 'wget-la'] }
+      settings = { ...settings, removedSources: ['ghfast', 'wget-la', 'gh-monlor', 'hub-ddayh', 'ghproxy-053000'] }
       expect(click(addLink('https://gist.github.com/octocat/0831f3fbd83ac4d46451/archive/c197afe.zip'))).toBe(false)
       expect(resolve).not.toHaveBeenCalled()
     })
+  })
+
+  it('首选为自动选择：故障转移关闭也请后台选源', async () => {
+    settings = { ...settings, failover: false, accelerateSource: AUTO_SOURCE_ID }
+    expect(click(addLink(RELEASE))).toBe(true)
+    expect(resolve).toHaveBeenCalledExactlyOnceWith(RELEASE)
+    await flushTasks()
+    expect(open).toHaveBeenCalledExactlyOnceWith(`https://resolved.example/${RELEASE}`, false)
   })
 })

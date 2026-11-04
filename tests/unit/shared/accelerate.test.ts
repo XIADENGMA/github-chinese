@@ -3,13 +3,17 @@ import {
   accelerateLink,
   acceleratePreferred,
   addSource,
+  AUTO_SOURCE_ID,
   BUILTIN_SOURCES,
   candidateSources,
   countRemovedSources,
   DEFAULT_SOURCE_ID,
+  dropBuiltinCopies,
+  isAutoSource,
   listSources,
   MAX_CUSTOM_SOURCES,
   measureLatency,
+  needsProbe,
   parseAccelerableLink,
   parseCloneUrl,
   parseDownloadLink,
@@ -227,17 +231,25 @@ describe('supportsLink / candidateSources / acceleratePreferred', () => {
 
   it('候选只留支持该地址的，顺序不变；不探测时首选不支持就用第一个支持的', () => {
     const settings = settingsWith({ accelerateSource: 'gh-proxy-hk', customSources: [PATH_MIRROR] })
-    expect(candidateSources(settings, link(GIST)).map((source) => source.id)).toEqual(['ghfast', 'wget-la'])
+    expect(candidateSources(settings, link(GIST)).map((source) => source.id)).toEqual([
+      'ghfast',
+      'wget-la',
+      'gh-monlor',
+      'hub-ddayh',
+      'ghproxy-053000',
+    ])
     expect(acceleratePreferred(settings, link(GIST))).toBe(`https://ghfast.top/${GIST}`)
     expect(acceleratePreferred(settings, link(RELEASE))).toBe(`https://hk.gh-proxy.org/${RELEASE}`)
     expect(candidateSources(settingsWith(), avatar()).map((source) => source.id)).toEqual([
       'gh-proxy-hk',
       'gh-proxy-cdn',
+      'gh-proxy-edgeone',
+      'gh-proxy-com',
     ])
   })
 
   it('没有支持的加速源：不加速', () => {
-    const settings = settingsWith({ removedSources: ['ghfast', 'wget-la'] })
+    const settings = settingsWith({ removedSources: ['ghfast', 'wget-la', 'gh-monlor', 'hub-ddayh', 'ghproxy-053000'] })
     expect(candidateSources(settings, link(GIST))).toEqual([])
     expect(acceleratePreferred(settings, link(GIST))).toBeUndefined()
   })
@@ -335,6 +347,11 @@ describe('加速源列表', () => {
       'ghfast',
       'gh-proxy-hk',
       'gh-proxy-cdn',
+      'gh-proxy-edgeone',
+      'gh-proxy-com',
+      'gh-monlor',
+      'hub-ddayh',
+      'ghproxy-053000',
       'custom-1',
     ])
     expect(countRemovedSources(settings)).toBe(1)
@@ -358,8 +375,45 @@ describe('加速源列表', () => {
       'ghfast',
       'wget-la',
       'gh-proxy-cdn',
+      'gh-proxy-edgeone',
+      'gh-proxy-com',
+      'gh-monlor',
+      'hub-ddayh',
+      'ghproxy-053000',
       'custom-1',
     ])
+  })
+
+  it('自动选择：没有首选，候选按列表顺序；要探测（不看故障转移开关）', () => {
+    const settings = settingsWith({ customSources: [MIRROR], accelerateSource: AUTO_SOURCE_ID })
+    expect(isAutoSource(settings)).toBe(true)
+    expect(preferredSource(settings)).toBeUndefined()
+    expect(candidateSources(settings)).toEqual(listSources(settings))
+    expect(acceleratePreferred(settings, link(RELEASE))).toBe(`https://ghfast.top/${RELEASE}`)
+    expect(needsProbe({ ...settings, failover: false })).toBe(true)
+    expect(needsProbe({ ...settingsWith(), failover: false })).toBe(false)
+    expect(needsProbe({ ...settingsWith(), failover: true })).toBe(true)
+  })
+})
+
+describe('dropBuiltinCopies', () => {
+  const COPY: AccelerateSource = { id: 'custom-9', name: '我的代理', template: 'https://gh-proxy.com' }
+
+  it('去掉与内置源效果相同的自定义源；首选是它时改为内置源', () => {
+    const settings = settingsWith({ customSources: [COPY, MIRROR], accelerateSource: 'custom-9' })
+    expect(dropBuiltinCopies(settings)).toEqual({
+      ...settings,
+      customSources: [MIRROR],
+      accelerateSource: 'gh-proxy-com',
+    })
+    expect(dropBuiltinCopies(settingsWith({ customSources: [COPY] })).accelerateSource).toBe(DEFAULT_SOURCE_ID)
+  })
+
+  it('对应的内置源已删除：保留自定义源；没有重复时原样返回', () => {
+    const removed = settingsWith({ customSources: [COPY], removedSources: ['gh-proxy-com'] })
+    expect(dropBuiltinCopies(removed)).toBe(removed)
+    const plain = settingsWith({ customSources: [MIRROR] })
+    expect(dropBuiltinCopies(plain)).toBe(plain)
   })
 })
 

@@ -19,7 +19,7 @@ export interface AccelerateSource {
 
 /** 加速源相关的设置（见 shared/settings） */
 export interface AccelerateSettings {
-  /** 首选加速源的标识；不在列表中时用列表第一个 */
+  /** 首选加速源的标识；AUTO_SOURCE_ID 为自动选择（探测后用最快的）；不在列表中时用列表第一个 */
   readonly accelerateSource: string
   /** 自定义加速源，排在内置源之后 */
   readonly customSources: readonly AccelerateSource[]
@@ -27,7 +27,13 @@ export interface AccelerateSettings {
   readonly removedSources: readonly string[]
 }
 
-/** 内置加速源：第三方公益服务，可用性随时变化。第一个为默认首选；不支持的主机为 2026-10 实测 */
+/** 头像与 GitHub 自己的图片：部分加速源不转发 */
+const IMAGE_ONLY_HOSTS = ['github.githubassets.com', 'avatars.githubusercontent.com'] as const
+
+/**
+ * 内置加速源：第三方公益服务，可用性随时变化。第一个为默认首选；
+ * 不支持的主机为实测（前四个 2026-10，其余 2026-11；2026-11 复测前四个结果不变）
+ */
 export const BUILTIN_SOURCES: readonly AccelerateSource[] = [
   {
     id: 'ghfast',
@@ -53,9 +59,42 @@ export const BUILTIN_SOURCES: readonly AccelerateSource[] = [
     template: 'https://cdn.gh-proxy.org/{url}',
     unsupportedHosts: ['gist.github.com'],
   },
+  {
+    id: 'gh-proxy-edgeone',
+    name: 'edgeone.gh-proxy.org',
+    template: 'https://edgeone.gh-proxy.org/{url}',
+    unsupportedHosts: ['gist.github.com'],
+  },
+  {
+    id: 'gh-proxy-com',
+    name: 'gh-proxy.com',
+    template: 'https://gh-proxy.com/{url}',
+    unsupportedHosts: ['gist.github.com'],
+  },
+  {
+    id: 'gh-monlor',
+    name: 'gh.monlor.com',
+    template: 'https://gh.monlor.com/{url}',
+    unsupportedHosts: IMAGE_ONLY_HOSTS,
+  },
+  {
+    id: 'hub-ddayh',
+    name: 'hub.ddayh.com',
+    template: 'https://hub.ddayh.com/{url}',
+    unsupportedHosts: IMAGE_ONLY_HOSTS,
+  },
+  {
+    id: 'ghproxy-053000',
+    name: 'ghproxy.053000.xyz',
+    template: 'https://ghproxy.053000.xyz/{url}',
+    unsupportedHosts: IMAGE_ONLY_HOSTS,
+  },
 ]
 
 export const DEFAULT_SOURCE_ID = 'ghfast'
+
+/** 首选为自动选择：下载前探测各加速源，用最先连通的（见 shared/download-resolver） */
+export const AUTO_SOURCE_ID = 'auto'
 
 /** 自定义加速源的上限与名称、模板的长度上限：设置随浏览器账号同步，单项不超过 8 KB */
 export const MAX_CUSTOM_SOURCES = 10
@@ -305,16 +344,29 @@ export function listSources(settings: AccelerateSettings): readonly AccelerateSo
   return [...BUILTIN_SOURCES.filter((source) => !removed.has(source.id)), ...settings.customSources]
 }
 
-/** 首选加速源：设置中的首选不在列表中时用第一个；列表为空时为 undefined */
+/** 首选为自动选择 */
+export function isAutoSource(settings: AccelerateSettings): boolean {
+  return settings.accelerateSource === AUTO_SOURCE_ID
+}
+
+/** 用加速源前要先探测（由后台选源）：开启故障转移，或首选为自动选择 */
+export function needsProbe(settings: AccelerateSettings & { readonly failover: boolean }): boolean {
+  return settings.failover || isAutoSource(settings)
+}
+
+/** 首选加速源：设置中的首选不在列表中时用第一个；自动选择、列表为空时为 undefined */
 export function preferredSource(settings: AccelerateSettings): AccelerateSource | undefined {
+  if (isAutoSource(settings)) return undefined
   const sources = listSources(settings)
   return sources.find((source) => source.id === settings.accelerateSource) ?? sources[0]
 }
 
-/** 故障转移的候选：首选在前，其余按列表顺序；给出地址时只留能加速它的 */
+/** 候选：首选在前，其余按列表顺序（自动选择时按列表顺序）；给出地址时只留能加速它的 */
 export function candidateSources(settings: AccelerateSettings, link?: AccelerableLink): readonly AccelerateSource[] {
   const preferred = preferredSource(settings)
-  const sources = preferred ? [preferred, ...listSources(settings).filter((source) => source !== preferred)] : []
+  const sources = preferred
+    ? [preferred, ...listSources(settings).filter((source) => source !== preferred)]
+    : listSources(settings)
   return link ? sources.filter((source) => supportsLink(source, link)) : sources
 }
 
@@ -322,6 +374,27 @@ export function candidateSources(settings: AccelerateSettings, link?: Accelerabl
 export function acceleratePreferred(settings: AccelerateSettings, link: AccelerableLink): string | undefined {
   const [source] = candidateSources(settings, link)
   return source && accelerateLink(source.template, link)
+}
+
+/**
+ * 去掉与未删除的内置源重复的自定义源（效果相同的模板），首选是它时改为对应的内置源。
+ * 新版本把用户自己加过的源收为内置源时，列表里不出现两个同样的源
+ */
+export function dropBuiltinCopies(settings: AccelerateSettings): AccelerateSettings {
+  const removed = new Set(settings.removedSources)
+  const builtin = new Map(
+    BUILTIN_SOURCES.filter((source) => !removed.has(source.id)).map((source) => [templateKey(source.template), source.id]),
+  )
+  const copies = settings.customSources.filter((source) => builtin.has(templateKey(source.template)))
+  if (copies.length === 0) return settings
+  const preferredCopy = copies.find((source) => source.id === settings.accelerateSource)
+  return {
+    ...settings,
+    customSources: settings.customSources.filter((source) => !copies.includes(source)),
+    accelerateSource: preferredCopy
+      ? (builtin.get(templateKey(preferredCopy.template)) ?? settings.accelerateSource)
+      : settings.accelerateSource,
+  }
 }
 
 /** 已删除的内置源数 */

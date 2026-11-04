@@ -14,6 +14,7 @@
  * - labelDescriptions：默认标签的说明，所有页面生效（全局合并），只用于标签说明区域（LABEL_DESCRIPTION_SELECTORS）
  * - labelRegexp：标签说明区域里说明表未命中时再试的正则，所有页面生效（全局合并），只用于标签说明区域
  * - listNames：星标列表的预置名称，所有页面生效（全局合并），只用于星标列表名称区域（LIST_NAME_SELECTORS）
+ * - issueTypes：默认议题类型的名称，所有页面生效（全局合并），只用于议题类型名称区域（ISSUE_TYPE_NAME_SELECTORS）
  */
 
 /** 正则替换函数：参数同 String.prototype.replace 的回调（不含 offset / input） */
@@ -103,13 +104,18 @@ export interface PageDictionary {
    * （core/ignore 的 LIST_NAME_SELECTORS，都在忽略列表里）内使用，其余同 labels：自定义列表名保持原文
    */
   readonly listNames?: Readonly<Record<string, string>>
+  /**
+   * 默认议题类型（组织预置的 Task、Bug、Feature）的名称：只在议题类型名称区域
+   * （core/ignore 的 ISSUE_TYPE_NAME_SELECTORS，都在忽略列表里）内使用，其余同 labels：组织自定义的类型名保持原文
+   */
+  readonly issueTypes?: Readonly<Record<string, string>>
 }
 
 /**
  * 名称区域的种类：标签名称区域查 labels，标签说明区域查 labelDescriptions 与 labelRegexp，
- * 星标列表名称区域查 listNames
+ * 星标列表名称区域查 listNames，议题类型名称区域查 issueTypes
  */
-export type LabelPart = 'name' | 'description' | 'list'
+export type LabelPart = 'name' | 'description' | 'list' | 'type'
 
 /** 页面类型，由 URL 推断（见 page.ts） */
 export const PAGE_KEYS = [

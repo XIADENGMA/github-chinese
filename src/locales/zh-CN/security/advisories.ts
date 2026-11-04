@@ -85,7 +85,6 @@ export default {
     'Privately report a security vulnerability': '私下报告安全漏洞',
     'Advisory details': '公告详细信息',
     'Advisory Credits': '公告致谢',
-    Credits: '致谢',
     'No known CVE': '无已知 CVE',
     'No CVE': '无 CVE',
     Reporter: '报告者',
@@ -165,6 +164,8 @@ export default {
   },
   scoped: {
     // 其他区域也出现的同形文字，本区域内单独生效
+    // 公告致谢（计费页的 Credits 是额度，见 settings-account/billing）
+    Credits: '致谢',
     'Security vulnerability database inclusive of CVEs and GitHub originated security advisories from the world of open source software.':
       '收录开源软件领域 CVE 及 GitHub 发起的安全公告的安全漏洞数据库。',
     'Last updated': '最后更新',

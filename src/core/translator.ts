@@ -10,8 +10,9 @@
  * 遍历：TreeWalker + FILTER_REJECT 跳过忽略区域；变动根节点按父元素判断祖先，同一批变动内同一父元素只判断一次。
  * 忽略区域内的重新进入区域（REENTRY_SELECTORS）：遍历后只在被拒的忽略区域里按容器类名查找，再单独遍历；
  * 纯代码容器、跳过标签内不查。
- * 忽略区域里只有两类文字照常翻译：占位文字（PLACEHOLDER_TEXTS）与名称区域（LABEL_SELECTORS）里的默认标签名、说明和预置列表名
- * （语言包的名称表、说明表与标签正则、预置列表名表，名称区域、说明区域、星标列表名称区域分开匹配），
+ * 忽略区域里只有两类文字照常翻译：占位文字（PLACEHOLDER_TEXTS）与名称区域（LABEL_SELECTORS）里的默认标签名、说明、
+ * 预置列表名和默认类型名（语言包的名称表、说明表与标签正则、预置列表名表、默认类型名称表，名称区域、说明区域、
+ * 星标列表名称区域、议题类型名称区域分开匹配），
  * 都只在最外层的忽略区域根上判断。
  * 一轮（一次全量遍历或一批变动）内同一文本节点的原文只取一次（取原文有副作用，见 records.ts）；
  * 一轮结束时，统一处理行内元素旁的孤立标点与全角标点两侧的空白（见 fit.ts）。
@@ -26,6 +27,7 @@ import {
   EXIT_SELECTORS,
   IGNORE_SELECTORS,
   IGNORE_TAGS,
+  ISSUE_TYPE_NAME_SELECTORS,
   LABEL_DESCRIPTION_SELECTORS,
   LABEL_SELECTORS,
   LIST_NAME_SELECTORS,
@@ -338,7 +340,9 @@ export function createTranslator(options: TranslatorOptions): Translator {
   const descriptionIndex = compileIgnoreIndex(LABEL_DESCRIPTION_SELECTORS, doc.createElement('div'))
   /** 星标列表名称区域的索引：文字所在的最内层区域是否列表名（见 labelPartOf） */
   const listIndex = compileIgnoreIndex(LIST_NAME_SELECTORS, doc.createElement('div'))
-  /** 匹配器有无名称表、说明表、标签正则或预置列表名表：都没有时不判断标签区域 */
+  /** 议题类型名称区域的索引：文字所在的最内层区域是否类型名（见 labelPartOf） */
+  const typeIndex = compileIgnoreIndex(ISSUE_TYPE_NAME_SELECTORS, doc.createElement('div'))
+  /** 匹配器有无名称表、说明表、标签正则、预置列表名表或默认类型名称表：都没有时不判断标签区域 */
   let labelsEnabled = false
   let skipSelector = SKIP_TAG_SELECTOR
   let observer: MutationObserver | null = null
@@ -1387,7 +1391,7 @@ export function createTranslator(options: TranslatorOptions): Translator {
 
   /**
    * 标签区域里的文字按所在的最内层标签区域匹配：说明区域（LABEL_DESCRIPTION_SELECTORS）查说明表与标签正则，
-   * 星标列表名称区域（LIST_NAME_SELECTORS）查预置名称表，
+   * 星标列表名称区域（LIST_NAME_SELECTORS）查预置名称表，议题类型名称区域（ISSUE_TYPE_NAME_SELECTORS）查默认类型名称表，
    * 其余（名称区域）查名称表。贡献页的经典标签根里，标签链接是名称区域、提示是说明区域
    */
   function labelPartOf(node: Text): LabelPart {
@@ -1395,15 +1399,17 @@ export function createTranslator(options: TranslatorOptions): Translator {
     while (region !== null && !elementMatches(labelIndex, region)) region = region.parentElement
     if (region === null) return 'name'
     if (elementMatches(descriptionIndex, region)) return 'description'
+    if (elementMatches(typeIndex, region)) return 'type'
     return elementMatches(listIndex, region) ? 'list' : 'name'
   }
 
-  /** 文字整段是名称表、说明表（含标签正则）或预置列表名表的原文 */
+  /** 文字整段是名称表、说明表（含标签正则）、预置列表名表或默认类型名称表的原文 */
   function isLabelText(text: string): boolean {
     return (
       matcher.translateLabel(text, 'name') !== undefined ||
       matcher.translateLabel(text, 'description') !== undefined ||
-      matcher.translateLabel(text, 'list') !== undefined
+      matcher.translateLabel(text, 'list') !== undefined ||
+      matcher.translateLabel(text, 'type') !== undefined
     )
   }
 

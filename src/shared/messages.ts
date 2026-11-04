@@ -31,7 +31,7 @@ export type BackgroundMessage =
   | { readonly type: 'gcn:search-rules-saved' }
   /** 内容脚本动态导入词典脚本失败时，请后台把词典脚本注入发送方所在的框架 */
   | { readonly type: 'gcn:inject-locale'; readonly locale: PageLocale }
-  /** 点击了下载链接、显示克隆地址（故障转移开启时）：请后台选出可用的加速源，应答加速后的地址（见 ResolvedDownload） */
+  /** 点击了下载链接、显示或复制加速地址（故障转移开启、自动选择时）：请后台选出可用的加速源，应答加速后的地址（见 ResolvedDownload） */
   | { readonly type: 'gcn:resolve-download'; readonly url: string }
   /** 图片加载失败（开启图片加速时）：请后台经加速源取回，应答 data: 地址（见 FetchedImage） */
   | { readonly type: 'gcn:fetch-image'; readonly url: string }

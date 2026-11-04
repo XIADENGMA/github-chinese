@@ -370,6 +370,8 @@ const REGEXP_CASES: readonly RegExpCase[] = [
       'By clicking "Decline" below, I acknowledge that I agree to serve as the successor for octocat, in such ways authorized by their successor request. I agree to abide by GitHub\'s',
     ],
   },
+  // 将工作移至组织：进度
+  { hits: [['10% complete', '已完成 10%']], misses: ['10 percent complete'] },
 ]
 
 const HITS = REGEXP_CASES.flatMap((item) => item.hits)

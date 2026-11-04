@@ -5,6 +5,7 @@ import type { MessageKey } from '../../i18n'
 import {
   addSource,
   countRemovedSources,
+  isAutoSource,
   listSources,
   measureLatency,
   preferredSource,
@@ -36,12 +37,14 @@ export interface UseAccelerateSources {
   /** 已读取设置或读取失败；之前显示的是默认值 */
   readonly ready: ComputedRef<boolean>
   readonly rows: ComputedRef<readonly SourceRow[]>
+  /** 首选为自动选择 */
+  readonly auto: ComputedRef<boolean>
   /** 已删除的内置源数 */
   readonly removedCount: ComputedRef<number>
   /** 正在测速 */
   readonly testing: ComputedRef<boolean>
   setSwitch(key: AccelerateSwitch, value: boolean): Promise<void>
-  /** 设为首选 */
+  /** 设为首选；AUTO_SOURCE_ID 为自动选择 */
   select(id: string): Promise<void>
   add(name: string, template: string): Promise<boolean>
   remove(id: string): Promise<boolean>
@@ -75,6 +78,7 @@ export function useAccelerateSources(): UseAccelerateSources {
       latency: latency.value.get(source.id),
     }))
   })
+  const auto = computed(() => isAutoSource(settings.value))
   const removedCount = computed(() => countRemovedSources(settings.value))
   const testing = computed(() => [...latency.value.values()].some((state) => state.testing))
 
@@ -130,5 +134,5 @@ export function useAccelerateSources(): UseAccelerateSources {
     )
   }
 
-  return { settings, ready, rows, removedCount, testing, setSwitch, select, add, remove, restore, test }
+  return { settings, ready, rows, auto, removedCount, testing, setSwitch, select, add, remove, restore, test }
 }

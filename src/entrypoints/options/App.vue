@@ -19,6 +19,7 @@
         </template>
         <template #accelerate><AccelerateSection /></template>
         <template #purify><SearchBlockSection /></template>
+        <template #enhance><EnhanceSection /></template>
       </UiTabs>
 
       <section class="section" aria-labelledby="about-title">
@@ -49,6 +50,7 @@ import type { MessageKey } from '../../i18n'
 import { getExtensionVersion, REPOSITORY_URL } from '../../shared/extension'
 import AccelerateSection from './AccelerateSection.vue'
 import CustomEntriesSection from './CustomEntriesSection.vue'
+import EnhanceSection from './EnhanceSection.vue'
 import ExcludedPathsSection from './ExcludedPathsSection.vue'
 import SearchBlockSection from './SearchBlockSection.vue'
 
@@ -57,11 +59,12 @@ const LOGO_URL = '/icon/96.png'
 /** 显示的存储库地址：省略协议 */
 const REPOSITORY_LABEL = REPOSITORY_URL.replace(/^https:\/\//, '')
 
-/** 按功能分标签页：汉化（排除路径、自定义词条）、加速、净化（搜索结果）。值是 UiTabs 的插槽名 */
+/** 按功能分标签页：汉化（排除路径、自定义词条）、加速、净化（搜索结果）、增强（自动加载、图片预览、新标签页打开）。值是 UiTabs 的插槽名 */
 const TABS: readonly { readonly value: string; readonly label: MessageKey }[] = [
   { value: 'translation', label: 'translationSection' },
   { value: 'accelerate', label: 'accelerateSection' },
   { value: 'purify', label: 'purifySection' },
+  { value: 'enhance', label: 'enhanceSection' },
 ]
 
 useUiPreferencesSync()

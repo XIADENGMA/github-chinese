@@ -52,6 +52,21 @@ const REGEXP_CASES: readonly RegExpCase[] = [
   },
   // 警报通用
   { hits: [['Max 280 characters', '最多 280 个字符']], misses: ['Max many characters'] },
+  // 状态标签的 title
+  {
+    hits: [
+      ['Status: Fixed', '状态：已修复'],
+      ['Status: Auto-dismissed', '状态：已自动消除'],
+    ],
+    misses: ['Status: Pending'],
+  },
+  {
+    hits: [
+      ['Status: Dismissed as false positive', '状态：已消除（误报）'],
+      ["Status: Closed as won't fix", '状态：已关闭（不予修复）'],
+    ],
+    misses: ['Status: Open as false positive'],
+  },
   {
     hits: [
       ['Dismiss findings', '消除发现'],

@@ -2,7 +2,12 @@
   <div class="section">
     <ul class="switches">
       <li v-for="key in SWITCHES" :key="key">
-        <UiSwitch :label="t(key)" :checked="settings[key]" :disabled="!ready" @change="setSwitch(key, $event)" />
+        <UiSwitch
+          :label="t(key)"
+          :checked="settings[key] || (key === 'failover' && auto)"
+          :disabled="!ready || (key === 'failover' && auto)"
+          @change="setSwitch(key, $event)"
+        />
       </li>
     </ul>
 
@@ -26,6 +31,26 @@
           </tr>
         </thead>
         <tbody>
+          <tr data-test="source-auto">
+            <td>
+              <label class="source">
+                <input
+                  class="source-radio"
+                  type="radio"
+                  name="accelerate-source"
+                  :checked="auto"
+                  :disabled="!ready"
+                  @change="select(AUTO_SOURCE_ID)"
+                />
+                <span class="source-text">
+                  <span class="source-name">{{ t('autoSource') }}</span>
+                </span>
+              </label>
+            </td>
+            <td class="metric"></td>
+            <td class="metric"></td>
+            <td class="source-action"></td>
+          </tr>
           <tr v-for="(item, index) in items" :key="item.source.id">
             <td>
               <label class="source">
@@ -91,7 +116,7 @@ import UiButton from '../../components/ui/UiButton.vue'
 import UiInput from '../../components/ui/UiInput.vue'
 import UiSwitch from '../../components/ui/UiSwitch.vue'
 import { useI18n } from '../../components/ui-preferences'
-import { SOURCE_NAME_MAX_LENGTH, SOURCE_TEMPLATE_MAX_LENGTH } from '../../shared/accelerate'
+import { AUTO_SOURCE_ID, SOURCE_NAME_MAX_LENGTH, SOURCE_TEMPLATE_MAX_LENGTH } from '../../shared/accelerate'
 import { useAccelerateSources, type AccelerateSwitch, type LatencyState, type SourceRow } from './useAccelerateSources'
 
 type MetricKind = 'latency' | 'ping'
@@ -115,7 +140,7 @@ const TEMPLATE_PLACEHOLDER = 'https://example.com/{url}'
 const UNTESTED = '—'
 
 const { t } = useI18n()
-const { settings, ready, rows, removedCount, testing, setSwitch, select, add, remove, restore, test } =
+const { settings, ready, rows, auto, removedCount, testing, setSwitch, select, add, remove, restore, test } =
   useAccelerateSources()
 
 const name = ref('')

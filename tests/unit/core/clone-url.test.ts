@@ -175,7 +175,7 @@ describe('createCloneUrlRewriter', () => {
     })
 
     it('没有加速源支持：不请后台', () => {
-      settings = { ...settings, removedSources: ['ghfast', 'wget-la'] }
+      settings = { ...settings, removedSources: ['ghfast', 'wget-la', 'gh-monlor', 'hub-ddayh', 'ghproxy-053000'] }
       document.body.innerHTML = `<button role="option" value="${GIST}">Clone via HTTPS</button>`
       start()
       expect(resolve).not.toHaveBeenCalled()

@@ -9,8 +9,9 @@
  *   反向引用越界 / $<名称> 不是命名组、疑似灾难回溯、属性规则的属性名不是可翻译属性、原文无标点而译文有标点、
  *   原文结尾无标点而译文结尾有标点、行内句的句型没有槽位或未规范化、句型键长或子节点数超过引擎上限、
  *   译文槽位数与句型不同（含 $n、$<名称>、$& 带入的槽位）；static / scoped 的条目检查同样用于名称表 labels、
- *   说明表 labelDescriptions、星标列表名 listNames，regexp 的规则检查同样用于标签正则 labelRegexp；
- *   跨文件：static 冲突、labels 冲突、labelDescriptions 冲突、listNames 冲突、同一页面类型的 scoped 冲突、
+ *   说明表 labelDescriptions、星标列表名 listNames、默认议题类型名 issueTypes，regexp 的规则检查同样用于标签正则
+ *   labelRegexp；跨文件：static 冲突、labels 冲突、labelDescriptions 冲突、listNames 冲突、issueTypes 冲突、
+ *   同一页面类型的 scoped 冲突、
  *   子文件没被任何已注册的词典合并、
  *   主文件未在 index.ts 注册
  * 警告：中英文之间缺空格、中文后接半角标点、正则原文结尾无标点而替换文本结尾有标点、与其它文件重复、
@@ -123,6 +124,7 @@ const ALLOWED_KEYS = new Set([
   'labelDescriptions',
   'labelRegexp',
   'listNames',
+  'issueTypes',
 ])
 /**
  * 回溯计时的通用输入：[重复片段, 结尾]，由计时线程补足到输入长度。结尾都带槽位字符：句型键必含槽位字符，
@@ -497,6 +499,7 @@ function checkDictionary(value: PageDictionary, report: Report, redos: RedosTask
   checkEntries('labels', value.labels, report)
   checkEntries('labelDescriptions', value.labelDescriptions, report)
   checkEntries('listNames', value.listNames, report)
+  checkEntries('issueTypes', value.issueTypes, report)
   if (value.regexp !== undefined && !Array.isArray(value.regexp)) report.errors.push('regexp 必须是数组')
   else value.regexp?.forEach((rule, index) => checkRule(`regexp[${index}]`, rule, report, redos))
   if (value.labelRegexp !== undefined && !Array.isArray(value.labelRegexp)) report.errors.push('labelRegexp 必须是数组')
@@ -780,12 +783,16 @@ function claim(owners: Map<string, Owner>, label: string, key: string, unit: Uni
     )
 }
 
-/** static、labels、labelDescriptions、listNames 全站合并，同一原文只能有一种译法；scoped 在同一页面类型内合并 */
+/**
+ * static、labels、labelDescriptions、listNames、issueTypes 全站合并，同一原文只能有一种译法；
+ * scoped 在同一页面类型内合并
+ */
 function checkConflicts(units: readonly Unit[]): void {
   const staticOwners = new Map<string, Owner>()
   const labelOwners = new Map<string, Owner>()
   const descriptionOwners = new Map<string, Owner>()
   const listNameOwners = new Map<string, Owner>()
+  const issueTypeOwners = new Map<string, Owner>()
   const scopedOwners = new Map<PageKey, Map<string, Owner>>()
   for (const unit of units) {
     for (const [key, value] of Object.entries(recordOf(unit.own?.static)))
@@ -796,6 +803,8 @@ function checkConflicts(units: readonly Unit[]): void {
       claim(descriptionOwners, 'labelDescriptions', key, unit, value)
     for (const [key, value] of Object.entries(recordOf(unit.own?.listNames)))
       claim(listNameOwners, 'listNames', key, unit, value)
+    for (const [key, value] of Object.entries(recordOf(unit.own?.issueTypes)))
+      claim(issueTypeOwners, 'issueTypes', key, unit, value)
     for (const page of new Set(unit.keys)) {
       const owners = scopedOwners.get(page) ?? new Map<string, Owner>()
       scopedOwners.set(page, owners)
@@ -887,6 +896,7 @@ function print(units: readonly Unit[]): number {
     const descriptionsCount = Object.keys(recordOf(dict?.labelDescriptions)).length
     const labelRegexpCount = Array.isArray(dict?.labelRegexp) ? dict.labelRegexp.length : 0
     const listNamesCount = Object.keys(recordOf(dict?.listNames)).length
+    const issueTypesCount = Object.keys(recordOf(dict?.issueTypes)).length
     entryCount +=
       staticCount +
       scopedCount +
@@ -895,15 +905,17 @@ function print(units: readonly Unit[]): number {
       labelsCount +
       descriptionsCount +
       labelRegexpCount +
-      listNamesCount
+      listNamesCount +
+      issueTypesCount
     const status = report.errors.length > 0 ? '✖' : '✔'
     const inline = inlineCount > 0 ? `  inline ${inlineCount}` : ''
     const labels = labelsCount > 0 ? `  labels ${labelsCount}` : ''
     const descriptions = descriptionsCount > 0 ? `  labelDescriptions ${descriptionsCount}` : ''
     const labelRegexp = labelRegexpCount > 0 ? `  labelRegexp ${labelRegexpCount}` : ''
     const listNames = listNamesCount > 0 ? `  listNames ${listNamesCount}` : ''
+    const issueTypes = issueTypesCount > 0 ? `  issueTypes ${issueTypesCount}` : ''
     process.stdout.write(
-      `${status} ${unit.name}  static ${staticCount}  scoped ${scopedCount}  regexp ${regexpCount}${inline}${labels}${descriptions}${labelRegexp}${listNames}  错误 ${report.errors.length}  警告 ${report.warnings.length}\n`,
+      `${status} ${unit.name}  static ${staticCount}  scoped ${scopedCount}  regexp ${regexpCount}${inline}${labels}${descriptions}${labelRegexp}${listNames}${issueTypes}  错误 ${report.errors.length}  警告 ${report.warnings.length}\n`,
     )
     for (const error of report.errors) process.stdout.write(`    错误 ${error}\n`)
     for (const warning of report.warnings) process.stdout.write(`    警告 ${warning}\n`)

@@ -5,7 +5,7 @@ import { syncBadge } from '../shared/badge'
 import { createDownloadResolver } from '../shared/download-resolver'
 import { isFirefoxBuild } from '../shared/extension'
 import { parseGitHubUrl } from '../shared/github'
-import { fetchImage } from '../shared/image-fetcher'
+import { fetchImage, IMAGE_FETCH_DEPS } from '../shared/image-fetcher'
 import { applyLegacySettingValues, removeLegacyUntranslated } from '../shared/legacy-storage'
 import type { PageLocale } from '../shared/locale'
 import { LOCALE_SCRIPT_FILES } from '../shared/locale-loader'
@@ -154,7 +154,7 @@ export default defineBackground(() => {
       case 'gcn:fetch-image':
         if (!fromGitHubTab(sender)) return undefined
         getSettings()
-          .then((settings) => fetchImage(message.url, settings))
+          .then((settings) => fetchImage(message.url, settings, { ...IMAGE_FETCH_DEPS, rank: downloads.rank }))
           .then(
             (url) => sendResponse(url ? { ok: true, url } : { ok: false }),
             (error: unknown) => {

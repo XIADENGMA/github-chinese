@@ -31,6 +31,11 @@ const state = vi.hoisted(() => ({
     accelerateSource: 'ghfast',
     customSources: [] as readonly unknown[],
     removedSources: [] as readonly string[],
+    autoLoad: false,
+    imagePreview: false,
+    newTab: false,
+    newTabScopes: ['external', 'search'] as readonly string[],
+    newTabPaths: [] as readonly string[],
   },
   failSettings: false,
   /** 设置后读取设置要等它落定（模拟读存储较慢） */
@@ -91,6 +96,7 @@ vi.mock('../../../src/shared/settings', () => ({
     return state.unwatchSettings
   }),
   isPathExcluded: (pathname: string, patterns: readonly string[]) => patterns.some((p) => pathname.startsWith(p)),
+  matchesPathPattern: (pathname: string, patterns: readonly string[]) => patterns.some((p) => pathname.startsWith(p)),
 }))
 
 interface FakeContext {
@@ -254,10 +260,16 @@ beforeEach(() => {
     enabled: true,
     excludedPaths: [],
     language: 'auto',
+    uiLanguage: 'auto',
     accelerate: false,
     accelerateImages: false,
     failover: false,
     purifySearch: true,
+    autoLoad: false,
+    imagePreview: false,
+    newTab: false,
+    newTabScopes: ['external', 'search'],
+    newTabPaths: [],
   }
   locales.load.mockReset()
   locales.load.mockImplementation(async (locale) => (locale === 'zh-TW' ? TW_BUNDLE : TEST_BUNDLE))
@@ -1514,6 +1526,222 @@ describe('图片加速', () => {
     context?.invalidate()
     failImage()
     expect(runtime.sendMessage).not.toHaveBeenCalled()
+  })
+})
+
+describe('增强功能', () => {
+  const RELEASE = 'https://github.com/vuejs/core/releases/download/v3.5.0/vue.global.js'
+
+  /** 打开地址（内容脚本用 window.open） */
+  let open: ReturnType<typeof vi.fn>
+  /** 最近一次点击是否被内容脚本取消了默认行为 */
+  let handled = false
+
+  async function start(): Promise<void> {
+    const definition = await load()
+    context = createContext()
+    await definition.main(context as never)
+    // 排在内容脚本的监听之后：记下它是否取消了点击，再取消，不让测试环境真的跳转
+    const stop = (event: Event): void => {
+      handled = event.defaultPrevented
+      event.preventDefault()
+    }
+    window.addEventListener('click', stop)
+    cleanups.push(() => window.removeEventListener('click', stop))
+  }
+
+  function click(target: Element): boolean {
+    handled = false
+    target.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, composed: true, button: 0 }))
+    return handled
+  }
+
+  /** 预览浮层里的元素 */
+  function viewerPart(selector: string): Element | null {
+    return document.querySelector('[data-gcn-image-preview]')?.shadowRoot?.querySelector(selector) ?? null
+  }
+
+  /** 正文里一张已加载的图片 */
+  function addContentImage(): HTMLImageElement {
+    document.body.innerHTML = '<div class="markdown-body"><img src="https://example.com/a.png" alt="Sample text"></div>'
+    const img = $('img') as HTMLImageElement
+    Object.defineProperty(img, 'naturalWidth', { value: 640, configurable: true })
+    Object.defineProperty(img, 'naturalHeight', { value: 480, configurable: true })
+    return img
+  }
+
+  beforeEach(() => {
+    open = vi.fn()
+    vi.stubGlobal('open', open)
+  })
+
+  describe('新标签页打开', () => {
+    it('开启时站外链接在新标签页打开；链接本来不带来源页时照样不带', async () => {
+      state.settings = { ...state.settings, newTab: true }
+      await start()
+      document.body.innerHTML =
+        '<a id="site" href="https://vuejs.org/">vuejs.org</a><a id="guide" rel="noreferrer" href="https://vuejs.org/guide/">guide</a>'
+      expect(click($('#site'))).toBe(true)
+      expect(open).toHaveBeenLastCalledWith('https://vuejs.org/', '_blank', 'noopener')
+      click($('#guide'))
+      expect(open).toHaveBeenLastCalledWith('https://vuejs.org/guide/', '_blank', 'noopener,noreferrer')
+    })
+
+    it('未开启时不处理；设置变化后随之开启；失效后不处理', async () => {
+      await start()
+      document.body.innerHTML = '<a href="https://vuejs.org/">vuejs.org</a>'
+      expect(click($('a'))).toBe(false)
+      state.settingsListener?.({ ...state.settings, newTab: true })
+      expect(click($('a'))).toBe(true)
+      context?.invalidate()
+      expect(click($('a'))).toBe(false)
+      expect(open).toHaveBeenCalledOnce()
+    })
+
+    it('下载链接交给下载加速：在当前页打开加速地址，不另开标签页', async () => {
+      state.settings = { ...state.settings, newTab: true, newTabScopes: ['issues'], accelerate: true }
+      await start()
+      document.body.innerHTML = `<a href="${RELEASE}">vue.global.js</a>`
+      expect(click($('a'))).toBe(true)
+      expect(open).toHaveBeenCalledExactlyOnceWith(`https://ghfast.top/${RELEASE}`, '_self', '')
+    })
+  })
+
+  describe('图片预览', () => {
+    it('开启时单击正文图片：页面内预览，文字用扩展界面语言；关闭功能时收起', async () => {
+      state.settings = { ...state.settings, imagePreview: true, uiLanguage: 'zh-CN' }
+      await start()
+      expect(click(addContentImage())).toBe(true)
+      expect(viewerPart('[role="dialog"]')?.getAttribute('aria-label')).toBe('图片预览')
+      expect(viewerPart('button[data-action="reset"]')?.getAttribute('aria-label')).toBe('重置')
+      state.settingsListener?.({ ...state.settings, imagePreview: false })
+      expect(viewerPart('[role="dialog"]')).toBeNull()
+      expect(click(addContentImage())).toBe(false)
+    })
+
+    it('软导航、失效时收起；原图在新标签页打开', async () => {
+      state.settings = { ...state.settings, imagePreview: true, uiLanguage: 'en' }
+      await start()
+      click(addContentImage())
+      expect(viewerPart('[role="dialog"]')?.getAttribute('aria-label')).toBe('Image preview')
+      ;(viewerPart('button[data-action="original"]') as HTMLButtonElement).click()
+      expect(open).toHaveBeenCalledExactlyOnceWith('https://example.com/a.png', '_blank', 'noopener')
+      window.dispatchEvent(new Event('test:locationchange'))
+      expect(viewerPart('[role="dialog"]')).toBeNull()
+      click(addContentImage())
+      expect(viewerPart('[role="dialog"]')).not.toBeNull()
+      context?.invalidate()
+      expect(viewerPart('[role="dialog"]')).toBeNull()
+    })
+
+    it('未开启时不处理', async () => {
+      await start()
+      expect(click(addContentImage())).toBe(false)
+      expect(viewerPart('[role="dialog"]')).toBeNull()
+    })
+  })
+
+  describe('复制加速链接', () => {
+    it('开启下载加速时附件后加复制按钮，复制首选加速源的地址；失效时移除', async () => {
+      const writeText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue()
+      cleanups.push(() => writeText.mockRestore())
+      document.head.innerHTML = '<meta name="octolytics-dimension-repository_public" content="true">'
+      document.body.innerHTML = `<ul><li class="Box-row"><a href="${RELEASE}">vue.global.js</a></li></ul>`
+      state.settings = { ...state.settings, accelerate: true, uiLanguage: 'zh-CN' }
+      await start()
+      const button = $('[data-gcn-copy-link]') as HTMLButtonElement
+      expect(button.getAttribute('aria-label')).toBe('复制加速链接')
+      button.click()
+      await flushTasks()
+      expect(writeText).toHaveBeenCalledExactlyOnceWith(`https://ghfast.top/${RELEASE}`)
+      expect(button.getAttribute('aria-label')).toBe('已复制')
+      context?.invalidate()
+      expect(document.querySelector('[data-gcn-copy-link]')).toBeNull()
+    })
+
+    it('下载加速关闭时不加；设置变化后随之添加', async () => {
+      document.body.innerHTML = `<ul><li class="Box-row"><a href="${RELEASE}">vue.global.js</a></li></ul>`
+      await start()
+      expect(document.querySelector('[data-gcn-copy-link]')).toBeNull()
+      state.settingsListener?.({ ...state.settings, accelerate: true })
+      expect(document.querySelector('[data-gcn-copy-link]')).not.toBeNull()
+    })
+  })
+
+  describe('自动加载', () => {
+    const PAGE_2 = 'https://github.com/vuejs/core/releases?page=2'
+
+    /** 接近视口的观察：测试里手动触发 */
+    let observed: { readonly element: Element; readonly callback: IntersectionObserverCallback }[]
+
+    function releases(versions: readonly string[], next?: string): string {
+      const link = next ? `<a class="next_page" href="${next}">Next</a>` : '<span class="next_page disabled">Next</span>'
+      const sections = versions.map(
+        (version) => `<section id="release-${version}"><h2><a href="/vuejs/core/releases/tag/${version}">${version}</a></h2><p>Sample text</p></section>`,
+      )
+      return `<div>${sections.join('')}</div><div class="paginate-container"><div class="pagination">${link}</div></div>`
+    }
+
+    function versions(): string[] {
+      return [...document.querySelectorAll('section h2')].map((node) => node.textContent ?? '')
+    }
+
+    function nearPagination(): void {
+      const container = document.querySelector('.paginate-container')
+      for (const item of observed.filter((entry) => entry.element === container)) {
+        item.callback([{ isIntersecting: true } as IntersectionObserverEntry], {} as IntersectionObserver)
+      }
+    }
+
+    beforeEach(() => {
+      observed = []
+      vi.stubGlobal(
+        'IntersectionObserver',
+        class {
+          constructor(private readonly callback: IntersectionObserverCallback) {}
+          observe(element: Element): void {
+            observed.push({ element, callback: this.callback })
+          }
+          disconnect(): void {}
+        },
+      )
+      history.replaceState(null, '', '/vuejs/core/releases')
+      document.body.innerHTML = releases(['v3.5', 'v3.4', 'v3.3'], '/vuejs/core/releases?page=2')
+    })
+
+    it('开启时分页接近视口：同站带 Cookie 取回下一页，接在列表之后', async () => {
+      const fetchMock = vi.fn(async () => new Response(releases(['v3.2']), { status: 200 }))
+      vi.stubGlobal('fetch', fetchMock)
+      state.settings = { ...state.settings, autoLoad: true }
+      await start()
+      nearPagination()
+      await flushTasks()
+      await flushTasks()
+      expect(fetchMock).toHaveBeenCalledExactlyOnceWith(PAGE_2, {
+        credentials: 'same-origin',
+        headers: { Accept: 'text/html' },
+      })
+      expect(versions()).toEqual(['v3.5', 'v3.4', 'v3.3', 'v3.2'])
+      // 页码分隔：扩展界面语言
+      expect(document.querySelector('.gcn-page-break')?.textContent).toMatch(/2/)
+    })
+
+    it('应答不成功：不接', async () => {
+      const fetchMock = vi.fn(async () => new Response(releases(['v3.2']), { status: 500 }))
+      vi.stubGlobal('fetch', fetchMock)
+      state.settings = { ...state.settings, autoLoad: true }
+      await start()
+      nearPagination()
+      await flushTasks()
+      await flushTasks()
+      expect(fetchMock).toHaveBeenCalledOnce()
+      expect(versions()).toEqual(['v3.5', 'v3.4', 'v3.3'])
+    })
+
+    it('未开启时不监听', async () => {
+      await start()
+      expect(observed).toHaveLength(0)
+    })
   })
 })
 

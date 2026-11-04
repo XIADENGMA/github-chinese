@@ -115,6 +115,12 @@ const PICKER =
   '<span class="prc-ActionList-Description-dtt0n" id="picker-desc">Improvements or additions to documentation</span>' +
   '</li></ul>'
 
+/** 议题类型令牌（议题列表行、议题页标题区与侧栏、时间线）：TokenTextContainer 是忽略区域根 */
+const TYPE_TOKEN = (name: string, id: string): string =>
+  '<div class="issueTypeTokenContainer__5d1zt1"><a class="prc-Link-Link-9ZwDx" href="/octocat/hello-world/issues?q=type%3A1">' +
+  '<span class="prc-Token-TokenBase-te5-F token__mtfHBU prc-Token-Token-A5-r7"><span class="prc-Token-TokenTextContainer-cOUaD">' +
+  `<span class="tokenText__e1Ghm-" id="${id}">${name}</span></span></span></a></div>`
+
 let translator: Translator | undefined
 let controller: Controller | undefined
 
@@ -150,6 +156,29 @@ afterEach(() => {
 describe('标签区域选择器', () => {
   it('都在全局忽略列表里', () => {
     for (const selector of LABEL_SELECTORS) expect(IGNORE_SELECTORS, selector).toContain(selector)
+  })
+})
+
+describe('议题类型名称区域', () => {
+  it('默认类型名按类型名表译出；自定义类型名、恰好是默认标签名或 static 原文的保持原文，不记未翻译', () => {
+    const t = start(
+      `<div id="event">added the${TYPE_TOKEN('Bug', 'type-bug')}issue type</div>` +
+        TYPE_TOKEN('Epic', 'type-custom') +
+        TYPE_TOKEN('bug', 'type-label') +
+        TYPE_TOKEN('Issues', 'type-static') +
+        // 议题页置顶标题栏
+        '<div class="smallMetadataRow__gR9GFk"><div class="smallToken__0gOjpn" id="sticky">Task</div></div>' +
+        LIST('Bug', 'label-bug'),
+      { matcher: createMatcher([...BUNDLE, ['issues', { issueTypes: { Bug: '缺陷', Task: '任务' } }]]) },
+    )
+    expect(text('#type-bug')).toBe('缺陷')
+    expect(text('#sticky')).toBe('任务')
+    expect(text('#type-custom')).toBe('Epic')
+    expect(text('#type-label')).toBe('bug')
+    expect(text('#type-static')).toBe('Issues')
+    // 标签名称区域不查类型名表
+    expect(text('#label-bug')).toBe('Bug')
+    expect(misses(t)).not.toContain('Epic')
   })
 })
 
@@ -558,6 +587,11 @@ describe('停用、换词典、切换语言、排除页面', () => {
       accelerateImages: false,
       failover: false,
       purifySearch: true,
+      autoLoad: false,
+      imagePreview: false,
+      newTab: false,
+      newTabScopes: ['external', 'search'],
+      newTabPaths: [],
       accelerateSource: 'ghfast',
       customSources: [],
       removedSources: [],

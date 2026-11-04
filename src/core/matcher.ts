@@ -47,12 +47,12 @@ export interface Matcher {
   /**
    * 名称区域里的文字（原文）：规范化后整段（区分大小写）命中时返回译文，首尾空白同 translateRaw；否则返回 undefined。
    * 标签名称区域（part 为 name）只查名称表 labels，标签说明区域只查说明表 labelDescriptions、再试标签正则 labelRegexp，
-   * 星标列表名称区域（list）只查预置名称表 listNames。
+   * 星标列表名称区域（list）只查预置名称表 listNames，议题类型名称区域（type）只查默认类型名称表 issueTypes。
    * 都全局生效；static / scoped / regexp 不参与，自定义词条也不参与（同属性规则：令牌、说明提示与无障碍名称里的
    * 默认标签都按语言包，译名一致）
    */
   translateLabel(raw: string, part: LabelPart): string | undefined
-  /** 有无名称表、说明表、预置列表名条目或标签正则 */
+  /** 有无名称表、说明表、预置列表名、默认类型名条目或标签正则 */
   hasLabels(): boolean
 }
 
@@ -174,6 +174,8 @@ export function createMatcher(bundle: LocaleBundle, options: MatcherOptions = {}
   const labelDescriptions = new Map<string, string>()
   /** 星标列表的预置名称：全局，同名称表 */
   const listNames = new Map<string, string>()
+  /** 默认议题类型的名称：全局，同名称表 */
+  const issueTypes = new Map<string, string>()
   /** 标签正则（说明区域）：全局，按语言包顺序 */
   const labelRegexp: RegExpRule[] = []
   const pages = new Map<PageKey, CompiledPage>()
@@ -184,6 +186,7 @@ export function createMatcher(bundle: LocaleBundle, options: MatcherOptions = {}
     addEntries(labelNames, dict.labels)
     addEntries(labelDescriptions, dict.labelDescriptions)
     addEntries(listNames, dict.listNames)
+    addEntries(issueTypes, dict.issueTypes)
     labelRegexp.push(...(dict.labelRegexp ?? []))
     if (dict.scoped) page.scopedSources.push(dict.scoped)
     page.regexp.push(...(dict.regexp ?? []))
@@ -317,7 +320,12 @@ export function createMatcher(bundle: LocaleBundle, options: MatcherOptions = {}
 
   /** 标签正则的索引：第一次用到时建立 */
   let labelRuleIndex: RegExpIndex | undefined
-  const hasLabels = labelNames.size > 0 || labelDescriptions.size > 0 || labelRegexp.length > 0 || listNames.size > 0
+  const hasLabels =
+    labelNames.size > 0 ||
+    labelDescriptions.size > 0 ||
+    labelRegexp.length > 0 ||
+    listNames.size > 0 ||
+    issueTypes.size > 0
 
   /** 规范化原文在说明表中的译文；表中没有时按顺序试标签正则 */
   function lookupLabelDescription(text: string): string | undefined {
@@ -332,11 +340,23 @@ export function createMatcher(bundle: LocaleBundle, options: MatcherOptions = {}
     return undefined
   }
 
+  /** 规范化原文在所在区域的表中的译文 */
+  function lookupLabel(text: string, part: LabelPart): string | undefined {
+    switch (part) {
+      case 'name':
+        return labelNames.get(text)
+      case 'list':
+        return listNames.get(text)
+      case 'type':
+        return issueTypes.get(text)
+      case 'description':
+        return lookupLabelDescription(text)
+    }
+  }
+
   function translateLabel(raw: string, part: LabelPart): string | undefined {
     if (!hasLabels) return undefined
-    const text = normalizeText(raw)
-    const label =
-      part === 'name' ? labelNames.get(text) : part === 'list' ? listNames.get(text) : lookupLabelDescription(text)
+    const label = lookupLabel(normalizeText(raw), part)
     return label === undefined ? undefined : withTrailing(raw, withLeading(raw, label))
   }
 

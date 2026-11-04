@@ -3,6 +3,7 @@ import {
   CLASSIC_PREVIEW_SELECTOR,
   IGNORE_SELECTORS,
   IGNORE_TAGS,
+  ISSUE_TYPE_NAME_SELECTORS,
   LABEL_DESCRIPTION_SELECTORS,
   LABEL_NAME_SELECTORS,
   LABEL_SELECTORS,
@@ -810,14 +811,19 @@ describe('忽略区域里的标签区域', () => {
   const nameSelector = LABEL_NAME_SELECTORS.join(', ')
   const descriptionSelector = LABEL_DESCRIPTION_SELECTORS.join(', ')
 
-  it('合法、没有重复、都在全局忽略列表里（索引照常建）；名称区域、说明区域与星标列表名称区域合起来就是标签区域', () => {
+  it('合法、没有重复、都在全局忽略列表里（索引照常建）；名称区域、说明区域、星标列表名称区域与议题类型名称区域合起来就是标签区域', () => {
     for (const selector of LABEL_SELECTORS) {
       expect(() => document.querySelector(selector), selector).not.toThrow()
       expect(IGNORE_SELECTORS, selector).toContain(selector)
     }
     expect(new Set(LABEL_SELECTORS).size).toBe(LABEL_SELECTORS.length)
     expect(compileIgnoreIndex(LABEL_SELECTORS, document.createElement('div')).universal).toEqual([])
-    expect([...LABEL_NAME_SELECTORS, ...LABEL_DESCRIPTION_SELECTORS, ...LIST_NAME_SELECTORS]).toEqual(LABEL_SELECTORS)
+    expect([
+      ...LABEL_NAME_SELECTORS,
+      ...LABEL_DESCRIPTION_SELECTORS,
+      ...LIST_NAME_SELECTORS,
+      ...ISSUE_TYPE_NAME_SELECTORS,
+    ]).toEqual(LABEL_SELECTORS)
   })
 
   it('标签名与说明在标签区域里（名称、说明分别在名称区域、说明区域）；计数、评论提示、条目标题、行标题等不在', () => {

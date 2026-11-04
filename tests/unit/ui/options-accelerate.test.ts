@@ -2,7 +2,7 @@ import { enableAutoUnmount, mount, type DOMWrapper, type VueWrapper } from '@vue
 import { fakeBrowser } from 'wxt/testing/fake-browser'
 import { clearToasts } from '../../../src/components/toast'
 import '../../../src/entrypoints/options/options.css'
-import { MAX_CUSTOM_SOURCES } from '../../../src/shared/accelerate'
+import { AUTO_SOURCE_ID, BUILTIN_SOURCES, MAX_CUSTOM_SOURCES } from '../../../src/shared/accelerate'
 import { getSettings, settingsItem } from '../../../src/shared/settings'
 import { mockVersion, seedChineseUi, settle, ZH_SETTINGS } from './helpers'
 import { importSfc, required } from './sfc'
@@ -11,7 +11,9 @@ const App = await importSfc(() => import('../../../src/entrypoints/options/App.v
 
 enableAutoUnmount(afterEach)
 
-const BUILTIN_NAMES = ['ghfast.top', 'wget.la', 'hk.gh-proxy.org', 'cdn.gh-proxy.org']
+const BUILTIN_NAMES = BUILTIN_SOURCES.map((source) => source.name)
+/** 加速源的行（不含最前面的自动选择） */
+const SOURCE_ROWS = 'tbody tr:not([data-test="source-auto"])'
 
 /** 打开设置页并切到加速设置标签页 */
 async function render(): Promise<VueWrapper> {
@@ -64,7 +66,7 @@ interface RowView {
 /** 加速源列表各行 */
 function rows(wrapper: VueWrapper): RowView[] {
   return section(wrapper)
-    .findAll('tbody tr')
+    .findAll(SOURCE_ROWS)
     .map((row) => {
       const cells = row.findAll('td')
       return {
@@ -83,7 +85,7 @@ function names(wrapper: VueWrapper): string[] {
 
 function row(wrapper: VueWrapper, name: string): DOMWrapper<Element> {
   const found = section(wrapper)
-    .findAll('tbody tr')
+    .findAll(SOURCE_ROWS)
     .find((item) => item.get('.source-name').text() === name)
   if (!found) throw new Error(`未找到加速源：${name}`)
   return found
@@ -158,6 +160,7 @@ describe.skipIf(!App)('设置页：加速', () => {
     })
     expect(names(wrapper)).toEqual(BUILTIN_NAMES)
     expect(rows(wrapper).filter((item) => item.preferred)).toHaveLength(1)
+    expect((scope.get('[data-test="source-auto"] input').element as HTMLInputElement).checked).toBe(false)
     expect(button(scope, '恢复内置').element.disabled).toBe(true)
     expect(button(scope, '测速').element.disabled).toBe(false)
   })
@@ -179,7 +182,27 @@ describe.skipIf(!App)('设置页：加速', () => {
     await row(wrapper, 'wget.la').get('input[type="radio"]').setValue(true)
     await settle()
     expect((await getSettings()).accelerateSource).toBe('wget-la')
-    expect(rows(wrapper).map((item) => item.preferred)).toEqual([false, true, false, false])
+    expect(rows(wrapper).map((item) => item.preferred)).toEqual(BUILTIN_NAMES.map((name) => name === 'wget.la'))
+  })
+
+  it('自动选择：列表最前一行，选中后保存，加速源都不选中；故障转移显示为开启且不可用', async () => {
+    const wrapper = await render()
+    const auto = section(wrapper).get('[data-test="source-auto"]')
+    expect(section(wrapper).findAll('tbody tr')[0]?.element).toBe(auto.element)
+    expect(auto.get('.source-name').text()).toBe('自动选择')
+    expect(auto.findAll('button')).toHaveLength(0)
+    await auto.get('input[type="radio"]').setValue(true)
+    await settle()
+    expect((await getSettings()).accelerateSource).toBe(AUTO_SOURCE_ID)
+    expect(rows(wrapper).some((item) => item.preferred)).toBe(false)
+    const failover = switchOf(section(wrapper), '故障转移')
+    expect(failover.attributes('aria-checked')).toBe('true')
+    expect(failover.element.disabled).toBe(true)
+    expect((await getSettings()).failover).toBe(false)
+    await row(wrapper, 'wget.la').get('input[type="radio"]').setValue(true)
+    await settle()
+    expect(switchOf(section(wrapper), '故障转移').attributes('aria-checked')).toBe('false')
+    expect(switchOf(section(wrapper), '故障转移').element.disabled).toBe(false)
   })
 
   it('添加：排在最后，清空表单，焦点回到名称；名称为空时用域名', async () => {
@@ -237,7 +260,7 @@ describe.skipIf(!App)('设置页：加速', () => {
     const wrapper = await render()
     await row(wrapper, 'wget.la').get('button').trigger('click')
     await settle()
-    expect(names(wrapper)).toEqual(['ghfast.top', 'hk.gh-proxy.org', 'cdn.gh-proxy.org', 'Mirror'])
+    expect(names(wrapper)).toEqual([...BUILTIN_NAMES.filter((name) => name !== 'wget.la'), 'Mirror'])
     expect((await getSettings()).removedSources).toEqual(['wget-la'])
     await row(wrapper, 'Mirror').get('button').trigger('click')
     await settle()
@@ -263,7 +286,7 @@ describe.skipIf(!App)('设置页：加速', () => {
 
   it('键盘删除：焦点移到原位置这一行的删除按钮；删空时移到名称输入框，显示空列表，不能测速', async () => {
     const wrapper = await render()
-    for (const expected of ['hk.gh-proxy.org', 'cdn.gh-proxy.org', 'ghfast.top']) {
+    for (const expected of [...BUILTIN_NAMES.slice(2), 'ghfast.top']) {
       const target = row(wrapper, names(wrapper)[1] ?? names(wrapper)[0]!).get<HTMLButtonElement>('button')
       target.element.focus()
       await target.trigger('click')

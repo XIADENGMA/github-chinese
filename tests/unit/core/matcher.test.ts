@@ -448,4 +448,34 @@ describe('名称表、说明表与标签正则（translateLabel）', () => {
       expect(only.translate('✨ Inspiration', ['common'])).toBe('灵感集')
     })
   })
+
+  describe('默认议题类型的名称（issueTypes）', () => {
+    const types = createMatcher([
+      ['common', { static: { Feature: '特性' }, labels: { bug: '缺陷' } }],
+      ['issues', { issueTypes: { Task: '任务', Bug: '缺陷' } }],
+      ['org-settings', { issueTypes: { Bug: '后收录', Feature: '功能' } }],
+    ])
+
+    it('全局生效，同一原文先收录的生效；整段、区分大小写匹配，首尾空白照原文保留', () => {
+      expect(types.translateLabel('Bug', 'type')).toBe('缺陷')
+      expect(types.translateLabel(' Feature\n', 'type')).toBe(' 功能\n')
+      for (const source of ['bug', 'Epic', 'Bug!', '']) {
+        expect(types.translateLabel(source, 'type'), source).toBeUndefined()
+      }
+    })
+
+    it('只用于类型名称区域：其他区域不查类型名，类型名称区域不查名称表、static', () => {
+      expect(types.translateLabel('Bug', 'name')).toBeUndefined()
+      expect(types.translateLabel('Task', 'list')).toBeUndefined()
+      expect(types.translateLabel('Task', 'description')).toBeUndefined()
+      expect(types.translateLabel('bug', 'type')).toBeUndefined()
+      // 区域外照常查 static
+      expect(types.translate('Feature', ['common', 'issues'])).toBe('特性')
+      expect(types.translate('Task', ['common', 'issues'])).toBeUndefined()
+    })
+
+    it('只有类型名表时也算有名称表', () => {
+      expect(createMatcher([['issues', { issueTypes: { Task: '任务' } }]]).hasLabels()).toBe(true)
+    })
+  })
 })

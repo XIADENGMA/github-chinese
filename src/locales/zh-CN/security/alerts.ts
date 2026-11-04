@@ -45,6 +45,15 @@ const SEVERITY_LABEL: Readonly<Record<string, string>> = {
   unknown: '未知',
 }
 
+/** 警报状态（状态标签的 title） */
+const ALERT_STATE: Readonly<Record<string, string>> = {
+  Open: '未解决',
+  Fixed: '已修复',
+  Closed: '已关闭',
+  Dismissed: '已消除',
+  'Auto-dismissed': '已自动消除',
+}
+
 function resolution(text: string): string {
   return RESOLUTION[text.toLowerCase()] ?? text
 }
@@ -153,6 +162,12 @@ export default {
   },
   regexp: [
     [/^Max ([\d,]+) characters$/, '最多 $1 个字符'],
+    // 状态标签的 title：Status: Fixed、Status: Dismissed as false positive
+    [/^Status: (Open|Fixed|Closed|Dismissed|Auto-dismissed)$/, (_, state: string) => `状态：${ALERT_STATE[state]!}`],
+    [
+      /^Status: (Closed|Dismissed) as (.+)$/,
+      (_, state: string, reason: string) => `状态：${ALERT_STATE[state]!}（${resolution(reason)}）`,
+    ],
     // 消除对话框（单复数、警报 / 发现）
     [/^Dismiss (alerts?|findings?)$/, (_, entity) => `消除${ENTITY[entity]}`],
     [

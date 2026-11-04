@@ -369,6 +369,14 @@ const base = {
     'This invitation has already been declined.': '此邀請已拒絕。',
     'Invitation not found': '找不到邀請',
     'Your invitation could not be found, or is not valid.': '找不到你的邀請，或邀請無效。',
+
+    // 将个人帐户的工作移至组织（/move_work/new）
+    'Move your work into an organization': '將你的工作移至組織',
+    'Move your work progress': '工作移動進度',
+    'What do you want to move?': '要移動哪些內容？',
+    'Select all repositories': '全選儲存庫',
+    'You do not have any projects': '你沒有任何專案',
+    'Return to your personal profile': '返回個人檔案',
   },
   scoped: {
     // 新版表单分区与字段（Owner、Visibility、Description、(required)、(optional) 由 common-ui 翻译）
@@ -689,11 +697,19 @@ const base = {
       /^By clicking ["“]Accept invitation["”] below, I acknowledge that I agree to serve as the successor for ([\w-]+), in such ways authorized by their successor request\. I agree to abide by GitHub[’']s$/,
       '按一下下方的「接受邀請」，即表示我同意依照 $1 的繼任者請求所授權的方式擔任其繼任者。我同意在使用和維護其帳號內容時遵守 GitHub 的',
     ],
+    // 将工作移至组织：进度
+    [/^(\d+)% complete$/, '已完成 $1%'],
   ],
   inline: [
     // 定价页营销页头的 Enterprise 栏目按钮：<button>Enterprise<svg/></button>（计划名元素里只有文字，不命中）。
     // 全局导航栏目仍译「企業」，不用本页 scoped 的计划名「企業版」
     ['Enterprise {}', '企業{}'],
+  ],
+  // 将工作移至组织：页头的帐户名，勾选项的存储库名、项目名（用户内容）
+  ignore: [
+    'move-work-container .flex-auto > p.h3:first-child',
+    'move-work-container label[for^="repository-"]',
+    'move-work-container label[for^="project-"]',
   ],
 } satisfies PageDictionary
 

@@ -455,6 +455,9 @@ export default {
     Summarized: '摘要',
     Detailed: '詳細',
     Legacy: '舊版',
+    // AI 点数（安全公告的 Credits 是致谢，见 security/advisories）
+    Credits: '點數',
+    'AI Credits': 'AI 點數',
     Model: '模型',
     Units: '單位',
     Amount: '金額',

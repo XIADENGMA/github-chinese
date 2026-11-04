@@ -105,11 +105,24 @@ export const LIST_NAME_SELECTORS: readonly string[] = [
   '[role="option"][data-id^="list-"] [data-component="ActionList.Item.Label"]',
 ]
 
-/** 标签区域（名称区域与说明区域）与星标列表名称区域：其中的默认标签、预置列表名照常翻译 */
+/**
+ * 议题类型名称区域：议题类型令牌（议题列表行、议题页标题区、侧栏、时间线）与议题页置顶标题栏里的类型名
+ * （类型由组织定义，类型名是用户内容）。处理同标签名称区域：整段是默认类型名称表（PageDictionary.issueTypes）的原文时
+ * 照常翻译，其余保持原文、不记未翻译
+ */
+export const ISSUE_TYPE_NAME_SELECTORS: readonly string[] = [
+  '[class*="issueTypeTokenContainer__"] [class*="prc-Token-TokenTextContainer-"]',
+  '[class*="smallMetadataRow__"] > [class*="smallToken__"]',
+]
+
+/**
+ * 标签区域（名称区域与说明区域）、星标列表名称区域与议题类型名称区域：其中的默认标签、预置列表名、默认类型名照常翻译
+ */
 export const LABEL_SELECTORS: readonly string[] = [
   ...LABEL_NAME_SELECTORS,
   ...LABEL_DESCRIPTION_SELECTORS,
   ...LIST_NAME_SELECTORS,
+  ...ISSUE_TYPE_NAME_SELECTORS,
 ]
 
 /** 全局忽略选择器：命中元素连同子树、属性都不处理 */
@@ -221,7 +234,7 @@ export const IGNORE_SELECTORS: readonly string[] = [
   // 置顶议题标题（链接 aria-label 含界面文字，只忽略标题文本）
   '[class*="titleOptionsContainer__"] a > span[data-component="Text"]',
 
-  // 议题标签的名称、说明与星标列表名（默认标签、预置列表名照常翻译，见 LABEL_SELECTORS）
+  // 议题标签的名称、说明，星标列表名与议题类型名（默认标签、预置列表名、默认类型名照常翻译，见 LABEL_SELECTORS）
   ...LABEL_SELECTORS,
   // 星标菜单里的列表描述（预置列表没有默认描述）
   '[data-target~="user-list-menu.listItems"] .ActionListItem-description',

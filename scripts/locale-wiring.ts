@@ -21,10 +21,18 @@ const DICTIONARY_FIELDS = new Set([
   'labelDescriptions',
   'labelRegexp',
   'listNames',
+  'issueTypes',
 ])
 /** 原文 → 译文的表 */
-type TableField = 'static' | 'scoped' | 'labels' | 'labelDescriptions' | 'listNames'
-const TABLE_FIELDS: readonly TableField[] = ['static', 'scoped', 'labels', 'labelDescriptions', 'listNames']
+type TableField = 'static' | 'scoped' | 'labels' | 'labelDescriptions' | 'listNames' | 'issueTypes'
+const TABLE_FIELDS: readonly TableField[] = [
+  'static',
+  'scoped',
+  'labels',
+  'labelDescriptions',
+  'listNames',
+  'issueTypes',
+]
 
 /** 顶层主文件与子目录中的文件（绝对路径，按名称排序）；顶层的 index.ts、helpers.ts 不是词典 */
 export function listDictionaryFiles(dir = LOCALE_DIR, top = true): string[] {
@@ -57,7 +65,7 @@ export function parentOf(file: string, root = LOCALE_DIR): string | undefined {
 
 /**
  * 只含词典字段（static、scoped、regexp、ignore、attributeRules、inline、mergeText、labels、labelDescriptions、
- * labelRegexp、listNames，至少一个）的对象
+ * labelRegexp、listNames、issueTypes，至少一个）的对象
  */
 export function isDictionaryLike(value: unknown): value is PageDictionary {
   if (typeof value !== 'object' || value === null || Array.isArray(value)) return false
@@ -78,7 +86,7 @@ export function classifyModule(
   return 'missing-default'
 }
 
-/** 结构不对的 static / scoped / labels / labelDescriptions / listNames 按空对象处理（结构错误由 check:locale 单独报告） */
+/** 结构不对的 static / scoped / labels / labelDescriptions / listNames / issueTypes 按空对象处理（结构错误由 check:locale 单独报告） */
 export function recordOf(value: unknown): Readonly<Record<string, string>> {
   return typeof value === 'object' && value !== null && !Array.isArray(value) ? (value as Record<string, string>) : {}
 }
@@ -195,6 +203,7 @@ export function ownEntries(dict: PageDictionary, children: readonly PageDictiona
     labelDescriptions: own('labelDescriptions'),
     labelRegexp: arrayOf(dict.labelRegexp).filter((rule) => !childLabelRules.has(rule)),
     listNames: own('listNames'),
+    issueTypes: own('issueTypes'),
   }
 }
 

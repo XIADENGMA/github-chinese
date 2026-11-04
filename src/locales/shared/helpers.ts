@@ -194,7 +194,7 @@ export function createTimeHelpers(words: TimeWords): TimeHelpers {
 }
 
 /**
- * 合并多个词典：static / scoped / labels / labelDescriptions / listNames 按顺序合并（先出现者优先；构建产物中子表是压缩串，不复制，
+ * 合并多个词典：static / scoped / labels / labelDescriptions / listNames / issueTypes 按顺序合并（先出现者优先；构建产物中子表是压缩串，不复制，
  * 记下子表由 matcher 按顺序收录，见 core/table 的 mergeTables），
  * regexp / ignore / attributeRules / inline / mergeText / labelRegexp 依次拼接
  */
@@ -211,5 +211,6 @@ export function mergeDictionaries(...dicts: readonly PageDictionary[]): PageDict
     labelDescriptions: mergeTables(dicts.map((dict) => dict.labelDescriptions)),
     labelRegexp: dicts.flatMap((dict) => dict.labelRegexp ?? []),
     listNames: mergeTables(dicts.map((dict) => dict.listNames)),
+    issueTypes: mergeTables(dicts.map((dict) => dict.issueTypes)),
   }
 }

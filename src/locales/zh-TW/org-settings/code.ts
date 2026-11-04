@@ -67,6 +67,14 @@ export default {
     // 规划：议题类型、议题字段
     'Create new type': '建立新類型',
     'Type name': '類型名稱',
+    'Customize the issue types for this organization. Issue types can be used to classify and manage issues in repositories across the organization.':
+      '自訂此組織的議題類型。議題類型可用來分類及管理組織內各儲存庫的議題。',
+    'Unique name for your issue type': '議題類型的唯一名稱',
+    'What is this type for?': '這個類型的用途是什麼？',
+    // 默认议题类型的说明（类型选择器、议题类型列表）
+    'A specific piece of work': '一項具體工作',
+    'An unexpected problem or behavior': '非預期的問題或行為',
+    'A request, idea, or new functionality': '請求、構想或新功能',
     'Pinned issue fields': '已釘選的議題欄位',
     'Field Visibility': '欄位可見度',
     'Field visibility': '欄位可見度',
@@ -274,6 +282,10 @@ export default {
     [/^(\d+) properties$/, '$1 個屬性'],
     [/^(\d+) property$/, '$1 個屬性'],
     [/^(\d+) issue types?$/, '$1 個議題類型'],
+    // 议题类型列表标题：3 types (max 25)
+    [/^(\d+) types?$/, '$1 個類型'],
+    [/^\(max (\d+)\)$/, '（最多 $1 個）'],
+    [/^(\d+) types? \(max (\d+)\)$/, '$1 個類型（最多 $2 個）'],
     [/^(\d+) issue fields?$/, '$1 個議題欄位'],
     [/^(\d+) network configurations?$/, '$1 個網路設定'],
     [new RegExp(`^No recoverable packages were found for ${ORG}\\.$`), '找不到 $1 可還原的套件。'],

@@ -33,6 +33,16 @@ const SECTION_NAME: Readonly<Record<string, string>> = {
 
 const SECTION_NAME_SOURCE = Object.keys(SECTION_NAME).join('|')
 
+/**
+ * 默认议题类型（组织预置）的名称：默认类型名称表（PageDictionary.issueTypes），只在议题类型名称区域内整段匹配；
+ * 组织自定义的类型名是用户内容，不收
+ */
+const ISSUE_TYPE_NAMES: Readonly<Record<string, string>> = {
+  Task: '任務',
+  Bug: '錯誤',
+  Feature: '功能',
+}
+
 /** 看板卡片存储库按钮中的存储库状态 */
 const REPOSITORY_STATUS: Readonly<Record<string, string>> = {
   public: '公開',
@@ -290,6 +300,7 @@ export default {
     'No due date': '無截止日期',
     ', not started': '，未開始',
     'No projects were found': '找不到專案',
+    'No projects were found. Please try a different search query.': '找不到專案。請嘗試其他搜尋字詞。',
     'Project results': '專案結果',
     'Please try a different search query.': '請嘗試其他搜尋字詞。',
     'Choose issue': '選擇議題',
@@ -459,4 +470,5 @@ export default {
     [/^Open (.+) task options$/, (_, title) => joinName(joinName('開啟', title), '的工作選項')],
     [/^(.+) checklist item$/, (_, title) => joinName(title, '檢查清單項目')],
   ],
+  issueTypes: ISSUE_TYPE_NAMES,
 } satisfies PageDictionary

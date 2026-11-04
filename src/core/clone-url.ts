@@ -1,4 +1,4 @@
-import { acceleratePreferred, candidateSources, parseCloneUrl } from '../shared/accelerate'
+import { acceleratePreferred, candidateSources, needsProbe, parseCloneUrl } from '../shared/accelerate'
 import type { Settings } from '../shared/settings'
 import { isPrivatePage } from './private-page'
 
@@ -10,7 +10,7 @@ import { isPrivatePage } from './private-page'
  */
 export interface CloneUrlOptions {
   readonly settings: () => Settings
-  /** 故障转移开启时请后台选源，返回加速后的地址；出错、超时时拒绝 */
+  /** 要探测时（故障转移开启、首选为自动选择）请后台选源，返回加速后的地址；出错、超时时拒绝 */
   readonly resolve: (url: string) => Promise<string>
   /** 写入剪贴板 */
   readonly copy: (text: string) => void
@@ -66,7 +66,7 @@ export function createCloneUrlRewriter(doc: Document, options: CloneUrlOptions):
     const settings = options.settings()
     const link = parseCloneUrl(original)
     if (!link || pending.get(element) === original) return
-    if (!settings.failover) {
+    if (!needsProbe(settings)) {
       const accelerated = acceleratePreferred(settings, link)
       if (accelerated) apply(element, original, accelerated)
       return

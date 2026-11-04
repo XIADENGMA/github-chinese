@@ -67,6 +67,14 @@ export default {
     // 规划：议题类型、议题字段
     'Create new type': '新建类型',
     'Type name': '类型名称',
+    'Customize the issue types for this organization. Issue types can be used to classify and manage issues in repositories across the organization.':
+      '自定义此组织的议题类型。议题类型可用于对组织内各存储库的议题进行分类和管理。',
+    'Unique name for your issue type': '议题类型的唯一名称',
+    'What is this type for?': '这个类型的用途是什么？',
+    // 默认议题类型的说明（类型选择器、议题类型列表）
+    'A specific piece of work': '一项具体工作',
+    'An unexpected problem or behavior': '意外的问题或行为',
+    'A request, idea, or new functionality': '请求、想法或新功能',
     'Pinned issue fields': '置顶的议题字段',
     'Field Visibility': '字段可见性',
     'Field visibility': '字段可见性',
@@ -274,6 +282,10 @@ export default {
     [/^(\d+) properties$/, '$1 个属性'],
     [/^(\d+) property$/, '$1 个属性'],
     [/^(\d+) issue types?$/, '$1 个议题类型'],
+    // 议题类型列表标题：3 types (max 25)
+    [/^(\d+) types?$/, '$1 个类型'],
+    [/^\(max (\d+)\)$/, '（最多 $1 个）'],
+    [/^(\d+) types? \(max (\d+)\)$/, '$1 个类型（最多 $2 个）'],
     [/^(\d+) issue fields?$/, '$1 个议题字段'],
     [/^(\d+) network configurations?$/, '$1 个网络配置'],
     [new RegExp(`^No recoverable packages were found for ${ORG}\\.$`), '未找到 $1 中可恢复的软件包。'],

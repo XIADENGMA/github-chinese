@@ -1,11 +1,18 @@
 import { storage } from 'wxt/utils/storage'
-import { DEFAULT_SOURCE_ID, sanitizeCustomSources, sanitizeRemovedSources, type AccelerateSettings } from './accelerate'
+import {
+  DEFAULT_SOURCE_ID,
+  dropBuiltinCopies,
+  sanitizeCustomSources,
+  sanitizeRemovedSources,
+  type AccelerateSettings,
+} from './accelerate'
 import {
   isPageLocalePreference,
   isUiLanguagePreference,
   type PageLocalePreference,
   type UiLanguagePreference,
 } from './locale'
+import { DEFAULT_NEW_TAB_SCOPES, sanitizeNewTabScopes, type NewTabScope } from './new-tab'
 
 /** 扩展界面外观：auto 跟随浏览器 */
 export type ThemePreference = 'auto' | 'light' | 'dark'
@@ -42,6 +49,16 @@ export interface Settings extends AccelerateSettings {
   readonly failover: boolean
   /** 搜索净化：搜索结果中命中屏蔽规则的直接隐藏（规则见 searchBlockRulesItem，处理见 core/search-purify） */
   readonly purifySearch: boolean
+  /** 自动加载：「加载更多」按钮、分页列表的下一页在接近页面底部时自动加载（见 core/auto-load） */
+  readonly autoLoad: boolean
+  /** 图片预览：单击正文中的图片在页面内预览（见 core/image-preview） */
+  readonly imagePreview: boolean
+  /** 新标签页打开：总开关（范围见 newTabScopes、newTabPaths，处理见 core/new-tab） */
+  readonly newTab: boolean
+  /** 新标签页打开的范围（见 shared/new-tab） */
+  readonly newTabScopes: readonly NewTabScope[]
+  /** 新标签页打开的自定义页面：这些页面上的链接都在新标签页打开，写法同排除路径 */
+  readonly newTabPaths: readonly string[]
 }
 
 /**
@@ -62,6 +79,11 @@ export const DEFAULT_SETTINGS: Settings = {
   accelerateImages: false,
   failover: false,
   purifySearch: true,
+  autoLoad: false,
+  imagePreview: false,
+  newTab: false,
+  newTabScopes: DEFAULT_NEW_TAB_SCOPES,
+  newTabPaths: [],
   accelerateSource: DEFAULT_SOURCE_ID,
   customSources: [],
   removedSources: [],
@@ -90,13 +112,13 @@ function isStringArray(value: unknown): value is string[] {
   return Array.isArray(value) && value.every((item) => typeof item === 'string')
 }
 
-/** 合并存储值与默认值，丢弃类型不符的字段与未知字段 */
+/** 合并存储值与默认值，丢弃类型不符的字段与未知字段；与内置源重复的自定义源去掉（见 dropBuiltinCopies） */
 export function mergeSettings(stored: unknown): Settings {
   if (typeof stored !== 'object' || stored === null) return DEFAULT_SETTINGS
   const value = stored as Record<string, unknown>
   const pickBoolean = (key: keyof Settings, fallback: boolean): boolean =>
     typeof value[key] === 'boolean' ? (value[key] as boolean) : fallback
-  return {
+  const merged: Settings = {
     enabled: pickBoolean('enabled', DEFAULT_SETTINGS.enabled),
     translateTime: pickBoolean('translateTime', DEFAULT_SETTINGS.translateTime),
     translateTitle: pickBoolean('translateTitle', DEFAULT_SETTINGS.translateTitle),
@@ -108,11 +130,17 @@ export function mergeSettings(stored: unknown): Settings {
     accelerateImages: pickBoolean('accelerateImages', DEFAULT_SETTINGS.accelerateImages),
     failover: pickBoolean('failover', DEFAULT_SETTINGS.failover),
     purifySearch: pickBoolean('purifySearch', DEFAULT_SETTINGS.purifySearch),
+    autoLoad: pickBoolean('autoLoad', DEFAULT_SETTINGS.autoLoad),
+    imagePreview: pickBoolean('imagePreview', DEFAULT_SETTINGS.imagePreview),
+    newTab: pickBoolean('newTab', DEFAULT_SETTINGS.newTab),
+    newTabScopes: sanitizeNewTabScopes(value.newTabScopes),
+    newTabPaths: isStringArray(value.newTabPaths) ? value.newTabPaths : DEFAULT_SETTINGS.newTabPaths,
     accelerateSource:
       typeof value.accelerateSource === 'string' ? value.accelerateSource : DEFAULT_SETTINGS.accelerateSource,
     customSources: sanitizeCustomSources(value.customSources),
     removedSources: sanitizeRemovedSources(value.removedSources),
   }
+  return { ...merged, ...dropBuiltinCopies(merged) }
 }
 
 /** 过滤非字符串、空键空值 */
@@ -165,12 +193,17 @@ function globToRegExp(pattern: string): RegExp {
   return new RegExp(`^${source}(?:/.*)?$`, 'i')
 }
 
-/** 路径是否被排除规则命中 */
-export function isPathExcluded(pathname: string, patterns: readonly string[]): boolean {
+/** 路径是否命中路径规则（排除路径、新标签页打开的自定义页面）：以 / 开头，* 匹配单段，** 匹配任意多段，含下级路径 */
+export function matchesPathPattern(pathname: string, patterns: readonly string[]): boolean {
   return patterns
     .map((pattern) => pattern.trim())
     .filter((pattern) => pattern.startsWith('/'))
     .some((pattern) => globToRegExp(pattern).test(pathname))
+}
+
+/** 路径是否被排除规则命中 */
+export function isPathExcluded(pathname: string, patterns: readonly string[]): boolean {
+  return matchesPathPattern(pathname, patterns)
 }
 
 /** 值为布尔的设置项 */

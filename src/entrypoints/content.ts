@@ -1,16 +1,22 @@
 import { browser } from 'wxt/browser'
 import { defineContentScript } from 'wxt/utils/define-content-script'
+import { createAutoLoader } from '../core/auto-load'
 import { createCloneUrlRewriter } from '../core/clone-url'
 import { createController } from '../core/controller'
+import { createCopyLinkButtons, type CopyState } from '../core/copy-link'
 import { createDownloadClickHandler } from '../core/download-click'
 import { createImageAccelerator } from '../core/image-accelerate'
+import { createImagePreview } from '../core/image-preview'
+import type { ViewerLabel } from '../core/image-viewer'
 import { createInstanceMark } from '../core/instance-mark'
+import { createNewTabClickHandler } from '../core/new-tab'
 import { createSearchPurifier } from '../core/search-purify'
 import { TURBO_RESET_EVENT, TURBO_REVISIT_EVENT, TURBO_TRANSLATING_EVENT } from '../core/turbo-bridge'
 import type { LocaleBundle } from '../core/types'
+import { translateMessage, type MessageKey, type MessageParams } from '../i18n'
 import { PROBE_TIMEOUT_MS } from '../shared/accelerate'
 import { pageLanguageEnvironment } from '../shared/language-env'
-import { resolvePageLocale, type PageLocale } from '../shared/locale'
+import { resolvePageLocale, resolveUiLanguage, type PageLocale } from '../shared/locale'
 import { createLocaleLoader, TIME_LANGS, waitForRegistration } from '../shared/locale-loader'
 import { compileSearchBlockRules } from '../shared/search-block'
 import {
@@ -80,10 +86,44 @@ const INVALIDATION_CHECK_MS = 3000
 /** 下载加速：等后台选源的时限（后台探测加速源最多 PROBE_TIMEOUT_MS），超时打开原链接 */
 const RESOLVE_TIMEOUT_MS = PROBE_TIMEOUT_MS + 2000
 
-/** 图片加速：等后台取回的时限（故障转移开启时后台依次试各加速源） */
+/** 图片加速：等后台取回的时限（故障转移开启、自动选择时后台依次试各加速源） */
 const FETCH_IMAGE_TIMEOUT_MS = 30_000
 
-/** 请后台为下载链接、克隆地址选源（故障转移），返回加速后的地址 */
+/** 图片预览浮层上的文字 → 界面文案 */
+const VIEWER_MESSAGES: Readonly<Record<ViewerLabel, MessageKey>> = {
+  dialog: 'imagePreview',
+  previous: 'previous',
+  next: 'next',
+  zoomOut: 'zoomOut',
+  zoomIn: 'zoomIn',
+  reset: 'resetView',
+  original: 'original',
+  download: 'download',
+  close: 'close',
+  loading: 'stateLoading',
+  loadFailed: 'loadFailed',
+}
+
+/** 复制加速链接按钮的状态 → 界面文案 */
+const COPY_MESSAGES: Readonly<Record<CopyState, MessageKey>> = {
+  idle: 'copyLink',
+  copied: 'copied',
+  failed: 'copyFailed',
+}
+
+/** 在新标签页打开（不让新页面拿到本页的 window.opener） */
+function openInNewTab(url: string, noreferrer = false): void {
+  window.open(url, '_blank', noreferrer ? 'noopener,noreferrer' : 'noopener')
+}
+
+/** 自动加载：取回同站的下一页（带 Cookie，同手动翻页） */
+async function fetchPage(url: string): Promise<string> {
+  const response = await fetch(url, { credentials: 'same-origin', headers: { Accept: 'text/html' } })
+  if (!response.ok) throw new Error(`取回下一页失败：${response.status}`)
+  return response.text()
+}
+
+/** 请后台为下载链接、克隆地址选源（故障转移、自动选择），返回加速后的地址 */
 async function resolveDownload(url: string): Promise<string> {
   const message: BackgroundMessage = { type: 'gcn:resolve-download', url }
   const response = await sendToBackground(message, RESOLVE_TIMEOUT_MS)
@@ -247,13 +287,38 @@ export default defineContentScript({
     })
     // 图片加速：图片加载失败时经加速源取回（见 core/image-accelerate）
     const images = createImageAccelerator({ settings: () => current, fetchImage })
+    /** 页面内控件（图片预览、复制加速链接、页码分隔）的文字：扩展界面语言 */
+    const message = (key: MessageKey, params?: MessageParams): string =>
+      translateMessage(resolveUiLanguage(current.uiLanguage, languages), key, params)
+    // 复制加速链接：发行版附件、源码包链接后的复制按钮（见 core/copy-link）
+    const copyLinks = createCopyLinkButtons(document, {
+      settings: () => current,
+      resolve: resolveDownload,
+      copy: (text) => navigator.clipboard.writeText(text),
+      label: (state) => message(COPY_MESSAGES[state]),
+    })
+    // 自动加载：「加载更多」与分页列表的下一页（见 core/auto-load）
+    const autoLoader = createAutoLoader(document, {
+      active: () => current.enabled && current.autoLoad,
+      fetchPage,
+      pageLabel: (page) => message('pageNumber', { page }),
+    })
+    // 图片预览：单击正文里的图片在页面内预览（见 core/image-preview）
+    const preview = createImagePreview(document, {
+      active: () => current.enabled && current.imagePreview,
+      label: (key) => message(VIEWER_MESSAGES[key]),
+      open: (url) => openInNewTab(url),
+    })
 
     const applySettings = (next: Settings): void => {
       current = next
       controller.updateSettings(effective(next))
       requestLocale()
       cloneUrls.refresh()
+      copyLinks.refresh()
+      autoLoader.refresh()
       purifier.refresh()
+      if (!next.enabled || !next.imagePreview) preview.close()
       if (next.enabled && next.accelerateImages) images.retryFailed(document)
     }
 
@@ -275,6 +340,8 @@ export default defineContentScript({
     ctx.addEventListener(window, TURBO_TRANSLATING_EVENT, (event: Event) => {
       if (controller.translator.active) event.preventDefault()
     })
+    // 图片预览：在捕获阶段最先处理正文图片的单击（先于下载加速、新标签页打开）
+    ctx.addEventListener(window, 'click', preview.onClick, { capture: true })
     // 下载加速：在捕获阶段先于页面脚本处理下载链接的点击（见 core/download-click）
     ctx.addEventListener(
       window,
@@ -286,6 +353,13 @@ export default defineContentScript({
           window.open(url, newTab ? '_blank' : '_self', newTab ? 'noopener' : '')
         },
       }),
+      { capture: true },
+    )
+    // 新标签页打开：图片预览、下载加速都不处理的链接点击（见 core/new-tab）
+    ctx.addEventListener(
+      window,
+      'click',
+      createNewTabClickHandler({ settings: () => current, open: openInNewTab }),
       { capture: true },
     )
     // 图片的 error 不冒泡：在捕获阶段监听
@@ -356,6 +430,8 @@ export default defineContentScript({
       if (!ctx.isValid) return
       controller.checkLocation()
       purifier.refresh()
+      autoLoader.refresh()
+      preview.close()
     })
     // 不导航时定时检查（见 INVALIDATION_CHECK_MS）：检查由 ctx.setInterval 完成，回调不做事
     ctx.setInterval(() => undefined, INVALIDATION_CHECK_MS)
@@ -365,6 +441,9 @@ export default defineContentScript({
       controller.dispose()
       mark.disconnect()
       cloneUrls.stop()
+      copyLinks.stop()
+      autoLoader.stop()
+      preview.close()
       purifier.stop()
       removeMessageListener()
       try {

@@ -8,6 +8,7 @@ import {
   getSearchBlockRules,
   getSettings,
   isPathExcluded,
+  matchesPathPattern,
   normalizeExcludedPath,
   mergeSettings,
   removeExcludedPath,
@@ -127,6 +128,65 @@ describe('搜索净化', () => {
       '@octocat',
       'vuejs/core',
     ])
+  })
+})
+
+describe('增强设置', () => {
+  it('默认都关闭；新标签页打开的范围默认为站外链接与搜索结果，没有自定义页面', () => {
+    expect(DEFAULT_SETTINGS).toMatchObject({
+      autoLoad: false,
+      imagePreview: false,
+      newTab: false,
+      newTabScopes: ['external', 'search'],
+      newTabPaths: [],
+    })
+  })
+
+  it('保留合法字段；范围丢弃未知项、按固定顺序；类型不符的用默认值', () => {
+    expect(
+      mergeSettings({
+        autoLoad: true,
+        imagePreview: true,
+        newTab: true,
+        newTabScopes: ['issues', 'external', 'unknown'],
+        newTabPaths: ['/*/*/releases'],
+      }),
+    ).toEqual({
+      ...DEFAULT_SETTINGS,
+      autoLoad: true,
+      imagePreview: true,
+      newTab: true,
+      newTabScopes: ['external', 'issues'],
+      newTabPaths: ['/*/*/releases'],
+    })
+    expect(
+      mergeSettings({ autoLoad: 'yes', imagePreview: 1, newTab: null, newTabScopes: 'search', newTabPaths: ['/a', 2] }),
+    ).toEqual(DEFAULT_SETTINGS)
+    expect(mergeSettings({ newTabScopes: [] }).newTabScopes).toEqual([])
+  })
+})
+
+describe('与内置源重复的自定义源', () => {
+  it('读取时去掉；首选是它时改为对应的内置源', () => {
+    const copy = { id: 'custom-1', name: 'Mirror', template: 'https://gh-proxy.com' }
+    const mirror = { id: 'custom-2', name: 'Mirror 2', template: 'https://mirror.example/{url}' }
+    expect(mergeSettings({ customSources: [copy, mirror], accelerateSource: 'custom-1' })).toEqual({
+      ...DEFAULT_SETTINGS,
+      customSources: [mirror],
+      accelerateSource: 'gh-proxy-com',
+    })
+  })
+})
+
+describe('matchesPathPattern', () => {
+  it('* 匹配单段，** 匹配任意多段，含下级路径，不分大小写；不以 / 开头的规则无效', () => {
+    expect(matchesPathPattern('/vuejs/core/releases', ['/*/*/releases'])).toBe(true)
+    expect(matchesPathPattern('/vuejs/core/releases/tag/v3.5.0', ['/*/*/releases'])).toBe(true)
+    expect(matchesPathPattern('/vuejs/core/tags', ['/*/*/releases'])).toBe(false)
+    expect(matchesPathPattern('/vuejs/core/wiki/Home', ['/**/wiki'])).toBe(true)
+    expect(matchesPathPattern('/VueJS/Core', [' /vuejs/core '])).toBe(true)
+    expect(matchesPathPattern('/vuejs/core', ['vuejs/core'])).toBe(false)
+    expect(matchesPathPattern('/vuejs/core', [])).toBe(false)
   })
 })
 

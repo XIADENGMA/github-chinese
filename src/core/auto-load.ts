@@ -1,0 +1,504 @@
+import { completeDeferred } from './deferred-fill'
+import { pathSegments } from './page'
+import { createPageBreak } from './page-break'
+import {
+  currentPageNumber,
+  findByPath,
+  firstLink,
+  itemKey,
+  listBefore,
+  listItems,
+  nextPageLink,
+  nextPageUrl,
+  pageNumberOf,
+  pathOf,
+  paginations,
+  paginationsAfter,
+  renameDuplicateIds,
+  type ElementPath,
+  type PageList
+} from './page-list'
+
+/**
+ * 自动加载：开启后，
+ * 1. 「加载更多」按钮（首页动态与侧栏、贡献动态、主题页、拉取请求与议题里折叠的时间线、全局导航侧栏的常用存储库等）
+ *    接近视口时自动点击；
+ * 2. 有分页的列表（议题、拉取请求、搜索结果、讨论、操作、发行版、标签、提交等，见 core/page-list），
+ *    列表下方的分页接近视口时取回下一页，把列表项接在当前列表之后，直到最后一页。
+ *    取回的是同站页面（带 Cookie，同手动翻页），不经第三方。
+ *    每页前插入「第 N 页」分隔；分页换成最后取回那一页的分页（React 管理的分页隐藏，不移除）
+ */
+export interface AutoLoadOptions {
+  /** 是否自动加载：总开关与「自动加载」都开启 */
+  readonly active: () => boolean
+  /** 取回同站页面的 HTML；应答不成功时拒绝 */
+  readonly fetchPage: (url: string) => Promise<string>
+  /** 页码分隔的文字（第 N 页） */
+  readonly pageLabel?: (page: number) => string
+  /** 元素接近视口（视口下方一屏内）时回调；返回取消函数。默认用 IntersectionObserver */
+  readonly watch?: (element: Element, onNear: () => void) => () => void
+  /** 当前时间（毫秒）；测试用 */
+  readonly now?: () => number
+  /** 取回或接上失败时回调（该列表不再自动加载） */
+  readonly onError?: (error: unknown) => void
+}
+
+export interface AutoLoader {
+  /** 设置变化、软导航后按新状态处理 */
+  refresh(): void
+  /** 停止监听；已接上的列表项保留 */
+  stop(): void
+}
+
+/** 经典的 ajax 分页表单里的按钮（首页动态与侧栏、贡献动态、主题页、拉取请求时间线等）：表单随加载换掉，每个只点一次 */
+const AJAX_LOAD_MORE_SELECTOR = 'form.ajax-pagination-form button'
+/**
+ * React 的「加载更多」：议题时间线、全局导航侧栏的常用存储库（Show more）。
+ * 加载后可能还是同一个按钮，仍在原处时再点
+ */
+const REACT_LOAD_MORE_SELECTOR = 'button[data-testid^="issue-timeline-load-more"], button[data-testid="dynamic-side-panel-items-show-more"]'
+/** 「加载更多」按钮 */
+export const LOAD_MORE_SELECTOR = `${AJAX_LOAD_MORE_SELECTOR}, ${REACT_LOAD_MORE_SELECTOR}`
+/** 同一页面最多自动取回的页数，同一类「加载更多」最多点的次数：防止异常页面无限加载 */
+export const MAX_AUTO_PAGES = 30
+/** 点过的 React 按钮多久后仍在原处才再点 */
+export const RECLICK_DELAY_MS = 1500
+/** 找不到列表的分页隔多久再找、最多找几次（列表可能还在渲染） */
+const RETRY_LIST_MS = 1000
+const MAX_LIST_TRIES = 5
+/** 换上的分页（React 区域里，不归 React 管理）：下次直接替换 */
+export const PAGE_NAV_ATTRIBUTE = 'data-gcn-page-nav'
+/** 换下的 React 分页：隐藏 */
+export const HIDDEN_NAV_ATTRIBUTE = 'data-gcn-hidden-nav'
+
+/** 跟着列表一起接上的其他组：发行版侧栏目录 */
+const EXTRA_GROUPS: readonly { readonly matches: (url: URL) => boolean; readonly selector: string }[] = [
+  {
+    matches: url => {
+      const parts = pathSegments(url.pathname)
+      return url.hostname === 'github.com' && parts.length === 3 && parts[2] === 'releases'
+    },
+    selector: '.js-release-toc nav-list li'
+  }
+]
+
+/** 一个列表的自动加载状态 */
+interface ListState {
+  readonly list: PageList
+  readonly path: ElementPath
+  /** 开始时就有的列表项：有被移除的、第一项的链接变了（列表重新渲染）就作废，接上的节点一并去掉 */
+  readonly originals: readonly Element[]
+  readonly firstHref: string
+  /** 下一页；没有了为 undefined */
+  next: URL | undefined
+  /** 最后接上的页码 */
+  page: number
+  /** 接上的节点（列表项、页码分隔、换上的分页、侧栏目录项） */
+  readonly appended: Element[]
+  /** 隐藏的 React 分页 */
+  readonly hidden: Element[]
+}
+
+/** 默认的接近视口判断：视口下方一屏内 */
+function watchNear(element: Element, onNear: () => void): () => void {
+  const observer = new IntersectionObserver(
+    entries => {
+      if (entries.some(entry => entry.isIntersecting)) onNear()
+    },
+    { rootMargin: '0px 0px 100% 0px' }
+  )
+  observer.observe(element)
+  return () => observer.disconnect()
+}
+
+/** 取回的节点：去掉脚本（DOMParser 解析的脚本不执行，再保险一次），收进当前文档 */
+function adopt<T extends Node>(doc: Document, node: T): T {
+  if (node instanceof Element || node instanceof DocumentFragment) {
+    for (const script of node.querySelectorAll('script')) script.remove()
+  }
+  return doc.adoptNode(node)
+}
+
+/** 当前文档里不显示的元素 */
+function isHiddenNow(element: Element): boolean {
+  if (element.hasAttribute('hidden')) return true
+  const view = element.ownerDocument.defaultView
+  return view !== null && view.getComputedStyle(element).display === 'none'
+}
+
+/** React 管理的元素：在 React 渲染的区域里，且不是换上的分页 */
+function isReactOwned(element: Element): boolean {
+  return element.closest('react-app, react-partial') !== null && element.closest(`[${PAGE_NAV_ATTRIBUTE}]`) === null
+}
+
+/** 「加载更多」的种类：同一页面每类最多点 MAX_AUTO_PAGES 次 */
+function buttonKind(button: Element): string {
+  return button.getAttribute('data-testid') ?? button.closest('form')?.className ?? ''
+}
+
+function isStale(state: ListState): boolean {
+  if (!state.list.container.isConnected) return true
+  if (state.originals.some(item => !item.isConnected)) return true
+  return state.originals[0] !== undefined && firstLink(state.originals[0]) !== state.firstHref
+}
+
+function hideNav(nav: HTMLElement): void {
+  nav.setAttribute(HIDDEN_NAV_ATTRIBUTE, '')
+  nav.style.setProperty('display', 'none', 'important')
+}
+
+function showNav(nav: HTMLElement): void {
+  nav.removeAttribute(HIDDEN_NAV_ATTRIBUTE)
+  nav.style.removeProperty('display')
+}
+
+export function createAutoLoader(doc: Document, options: AutoLoadOptions): AutoLoader {
+  const watch = options.watch ?? watchNear
+  const now = options.now ?? (() => Date.now())
+  const pageLabel = options.pageLabel ?? ((page: number) => String(page))
+  /** 正在监听的元素（按钮、分页）→ 取消函数 */
+  const watched = new Map<Element, () => void>()
+  /** 点过的按钮 → 最近一次的时间 */
+  const clickedAt = new WeakMap<Element, number>()
+  /** 各类按钮在当前页面点过的次数 */
+  let clicksByKind = new Map<string, number>()
+  /** 分页 → 列表状态 */
+  const states = new Map<Element, ListState>()
+  /** 找不到列表的分页 → 最近一次的时间与次数 */
+  const rejected = new WeakMap<Element, { readonly at: number; readonly tries: number }>()
+  /** 当前页面（不含 #）：变了（软导航）就重新计数 */
+  let pageKey = ''
+  /** 当前页面取回过的页数 */
+  let loads = 0
+  /** 接上的批次：重复 id 改名的后缀，不随页面重置 */
+  let batch = 0
+  let loading = false
+  let scheduled = false
+  let observing = false
+  let stopped = false
+  let retryTimer: ReturnType<typeof setTimeout> | undefined
+
+  function currentUrl(): URL {
+    return new URL(doc.location.href)
+  }
+
+  function unwatch(element: Element): void {
+    watched.get(element)?.()
+    watched.delete(element)
+  }
+
+  function forget(pagination: Element): void {
+    unwatch(pagination)
+    states.delete(pagination)
+  }
+
+  /** 列表已移除或重新渲染：状态作废，接上的节点去掉，隐藏的分页恢复 */
+  function dropStale(): void {
+    const stale = new Set<ListState>()
+    for (const [pagination, state] of [...states]) {
+      const expired = isStale(state)
+      if (expired) stale.add(state)
+      if (expired || !pagination.isConnected) forget(pagination)
+    }
+    for (const state of stale) {
+      for (const node of state.appended) if (node.isConnected) node.remove()
+      for (const nav of state.hidden) if (nav instanceof HTMLElement) showNav(nav)
+    }
+  }
+
+  function resetIfNavigated(): void {
+    const url = currentUrl()
+    const key = `${url.origin}${url.pathname}${url.search}`
+    if (key === pageKey) return
+    pageKey = key
+    loads = 0
+    clicksByKind = new Map()
+  }
+
+  // ---- 「加载更多」按钮 ----
+
+  function clickLoadMore(button: HTMLButtonElement): void {
+    unwatch(button)
+    if (!options.active() || !button.isConnected || button.disabled) return
+    const kind = buttonKind(button)
+    const count = clicksByKind.get(kind) ?? 0
+    if (count >= MAX_AUTO_PAGES) return
+    clicksByKind.set(kind, count + 1)
+    clickedAt.set(button, now())
+    button.click()
+    if (button.matches(REACT_LOAD_MORE_SELECTOR)) scheduleRetry(RECLICK_DELAY_MS)
+  }
+
+  /** 按钮能否（再）点：没点过；React 的按钮点过一会儿后仍在原处也可以 */
+  function canClick(button: HTMLButtonElement): boolean {
+    if (button.disabled || (clicksByKind.get(buttonKind(button)) ?? 0) >= MAX_AUTO_PAGES) return false
+    const at = clickedAt.get(button)
+    if (at === undefined) return true
+    return button.matches(REACT_LOAD_MORE_SELECTOR) && now() - at >= RECLICK_DELAY_MS
+  }
+
+  function watchButtons(): void {
+    for (const button of doc.querySelectorAll<HTMLButtonElement>(LOAD_MORE_SELECTOR)) {
+      if (watched.has(button) || !canClick(button)) continue
+      watched.set(
+        button,
+        watch(button, () => clickLoadMore(button))
+      )
+    }
+  }
+
+  // ---- 分页列表 ----
+
+  /** 分页对应的列表状态：同一列表的几处分页（宽屏、窄屏、换上的）共用 */
+  function stateFor(pagination: Element): ListState | undefined {
+    const list = listBefore(pagination, isHiddenNow)
+    if (!list) return undefined
+    for (const state of states.values()) {
+      if (state.list.container === list.container) return state
+    }
+    const url = currentUrl()
+    const link = nextPageLink(pagination)
+    const originals = listItems(list.container, list.signature)
+    return {
+      list,
+      path: pathOf(list.container),
+      originals,
+      firstHref: originals[0] ? firstLink(originals[0]) : '',
+      next: link ? nextPageUrl(link, url) : undefined,
+      page: currentPageNumber(pagination) ?? pageNumberOf(url) ?? 1,
+      appended: [],
+      hidden: []
+    }
+  }
+
+  function watchPaginations(): void {
+    for (const pagination of paginations(doc)) {
+      if (watched.has(pagination) || pagination.hasAttribute(HIDDEN_NAV_ATTRIBUTE) || !nextPageLink(pagination)) continue
+      let state = states.get(pagination)
+      if (!state) {
+        const failed = rejected.get(pagination)
+        if (failed && (failed.tries >= MAX_LIST_TRIES || now() - failed.at < RETRY_LIST_MS)) continue
+        state = stateFor(pagination)
+        if (!state) {
+          const tries = (failed?.tries ?? 0) + 1
+          rejected.set(pagination, { at: now(), tries })
+          if (tries < MAX_LIST_TRIES) scheduleRetry(RETRY_LIST_MS)
+          continue
+        }
+        states.set(pagination, state)
+      }
+      if (!state.next) continue
+      const target = state
+      watched.set(
+        pagination,
+        watch(pagination, () => void loadNext(target))
+      )
+    }
+  }
+
+  /** 取回的下一页里的同一列表：按路径找，找不到时从下一页的分页向前找 */
+  function locate(next: Document, state: ListState): Element | undefined {
+    const byPath = findByPath(next, state.path)
+    if (byPath && listItems(byPath, state.list.signature).length > 0) return byPath
+    for (const pagination of paginations(next)) {
+      const found = listBefore(pagination, element => element.hasAttribute('hidden'))
+      if (found?.signature === state.list.signature) return found.container
+    }
+    return undefined
+  }
+
+  /** 去掉已有的（同标识）；返回收进当前文档、重复 id 已改名的节点 */
+  function freshNodes(current: readonly Element[], fresh: readonly Element[], suffix: string): Element[] {
+    const seen = new Set(current.map(itemKey))
+    const nodes = fresh.filter(item => {
+      const key = itemKey(item)
+      if (seen.has(key)) return false
+      seen.add(key)
+      return true
+    })
+    const adopted = nodes.map(node => adopt(doc, node))
+    renameDuplicateIds(doc, adopted, suffix)
+    return adopted
+  }
+
+  /** 侧栏目录等跟着列表接上的组 */
+  function appendExtras(next: Document, state: ListState, suffix: string): void {
+    const url = currentUrl()
+    for (const group of EXTRA_GROUPS) {
+      if (!group.matches(url)) continue
+      const current = [...doc.querySelectorAll(group.selector)]
+      const last = current[current.length - 1]
+      if (!last) continue
+      const nodes = freshNodes(current, [...next.querySelectorAll(group.selector)], suffix)
+      last.after(...nodes)
+      state.appended.push(...nodes)
+    }
+  }
+
+  /** 换上的分页：收进当前文档，重复的 id 改名；React 客户端分页的 #页码 链接换成带 page 参数的地址 */
+  function adoptNav(nav: Element, url: URL, suffix: string): Element {
+    const adopted = adopt(doc, nav)
+    renameDuplicateIds(doc, [adopted], suffix)
+    for (const link of adopted.querySelectorAll('a[href^="#"]')) {
+      const target = nextPageUrl(link, url)
+      if (target && /^#\d+$/.test(link.getAttribute('href') ?? '')) link.setAttribute('href', target.href)
+    }
+    return adopted
+  }
+
+  /**
+   * 分页换成取回那一页的；下一页没有的（最后一页）去掉。React 管理的隐藏，换上的接在其后。
+   * 两边分页数不同时只换列表之后的（fetchedAfter：取回页面里列表之后的分页，在列表项移走之前算好）
+   */
+  function replacePaginations(next: Document, state: ListState, fetchedAfter: readonly Element[], url: URL, suffix: string): void {
+    const visible = (pagination: Element): boolean => !pagination.hasAttribute(HIDDEN_NAV_ATTRIBUTE)
+    let current = paginations(doc).filter(visible)
+    let fetched: readonly Element[] = paginations(next)
+    if (current.length !== fetched.length) {
+      current = paginationsAfter(doc, state.list).filter(visible)
+      fetched = fetchedAfter
+    }
+    current.forEach((pagination, index) => {
+      const replacement = fetched[index] ? adoptNav(fetched[index], url, suffix) : undefined
+      const owner = states.get(pagination)
+      forget(pagination)
+      // 换上的分页沿用同一列表状态（页码、接上的节点）
+      if (replacement && (owner === undefined || owner === state)) states.set(replacement, state)
+      if (!isReactOwned(pagination)) {
+        if (!replacement) {
+          pagination.remove()
+          return
+        }
+        pagination.replaceWith(replacement)
+        // React 区域里换上的分页：列表作废时去掉（恢复隐藏的 React 分页）
+        if (pagination.hasAttribute(PAGE_NAV_ATTRIBUTE)) {
+          replacement.setAttribute(PAGE_NAV_ATTRIBUTE, '')
+          state.appended.push(replacement)
+        }
+        return
+      }
+      if (pagination instanceof HTMLElement) {
+        hideNav(pagination)
+        state.hidden.push(pagination)
+      }
+      if (replacement) {
+        replacement.setAttribute(PAGE_NAV_ATTRIBUTE, '')
+        pagination.after(replacement)
+        state.appended.push(replacement)
+      }
+    })
+  }
+
+  /** 接上取回的一页；返回下一页地址（没有了为 undefined） */
+  function appendPage(state: ListState, next: Document, url: URL): URL | undefined {
+    const nextContainer = locate(next, state)
+    if (!nextContainer) return undefined
+    const current = listItems(state.list.container, state.list.signature)
+    const last = current[current.length - 1]
+    if (!last) return undefined
+    // 列表之后的分页（下一页地址、页码）：列表项移走之前找
+    const after = paginationsAfter(next, { container: nextContainer, signature: state.list.signature })
+    const link = after.map(pagination => nextPageLink(pagination)).find(found => found !== undefined)
+    const page = after.map(currentPageNumber).find(found => found !== undefined) ?? pageNumberOf(url) ?? state.page + 1
+    batch += 1
+    const suffix = `-gcn${batch}`
+    const nodes = freshNodes(current, listItems(nextContainer, state.list.signature), suffix)
+    // 没有新的项：到头了
+    if (nodes.length === 0) return undefined
+    completeDeferred(doc, nodes, next)
+    state.page = page
+    const divider = createPageBreak(doc, state.list.container, url, pageLabel(page))
+    last.after(divider, ...nodes)
+    state.appended.push(divider, ...nodes)
+    appendExtras(next, state, suffix)
+    replacePaginations(next, state, after, url, suffix)
+    return link ? nextPageUrl(link, url) : undefined
+  }
+
+  async function loadNext(state: ListState): Promise<void> {
+    const url = state.next
+    if (!url || loading || stopped || !options.active() || loads >= MAX_AUTO_PAGES) return
+    // 只取同站的下一页
+    if (url.origin !== currentUrl().origin) {
+      state.next = undefined
+      return
+    }
+    loading = true
+    loads += 1
+    state.next = undefined
+    try {
+      const html = await options.fetchPage(url.href)
+      // 列表已移除或重新渲染（软导航、筛选）：丢弃
+      if (stopped || isStale(state)) return
+      // 取回期间关闭了自动加载：丢弃，再开启后重新取
+      if (!options.active()) {
+        state.next = url
+        return
+      }
+      state.next = appendPage(state, new DOMParser().parseFromString(html, 'text/html'), url)
+    } catch (error: unknown) {
+      // 取回失败：这一列表不再自动取，分页留给手动翻页
+      options.onError?.(error)
+    } finally {
+      loading = false
+      // 分页仍在视口附近时 IntersectionObserver 不会再回调：重新监听
+      for (const [pagination, owner] of states) if (owner === state) unwatch(pagination)
+      schedule()
+    }
+  }
+
+  function scan(): void {
+    scheduled = false
+    for (const element of [...watched.keys()]) {
+      if (!element.isConnected) unwatch(element)
+    }
+    // 开启时才监听 DOM 变动
+    setObserving(!stopped && options.active())
+    if (!observing) {
+      for (const element of [...watched.keys()]) unwatch(element)
+      return
+    }
+    resetIfNavigated()
+    dropStale()
+    watchButtons()
+    watchPaginations()
+  }
+
+  /** 同一轮 DOM 变动只扫描一次 */
+  function schedule(): void {
+    if (scheduled) return
+    scheduled = true
+    queueMicrotask(scan)
+  }
+
+  /** 过一会儿再扫描：点过的 React 按钮、暂时找不到列表的分页 */
+  function scheduleRetry(delay: number): void {
+    if (retryTimer !== undefined || stopped) return
+    retryTimer = setTimeout(() => {
+      retryTimer = undefined
+      schedule()
+    }, delay)
+  }
+
+  const observer = new MutationObserver(schedule)
+
+  function setObserving(on: boolean): void {
+    if (on === observing) return
+    observing = on
+    if (on) observer.observe(doc.documentElement, { childList: true, subtree: true })
+    else observer.disconnect()
+  }
+
+  scan()
+
+  return {
+    refresh: scan,
+    stop() {
+      stopped = true
+      if (retryTimer !== undefined) clearTimeout(retryTimer)
+      retryTimer = undefined
+      setObserving(false)
+      for (const element of [...watched.keys()]) unwatch(element)
+    }
+  }
+}

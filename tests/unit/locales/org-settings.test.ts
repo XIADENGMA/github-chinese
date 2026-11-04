@@ -674,6 +674,16 @@ const REGEXP_CASES: readonly RegExpCase[] = [
     ],
     misses: ['Many issue types'],
   },
+  // 议题类型列表标题：3 types (max 25)
+  {
+    hits: [
+      ['3 types', '3 个类型'],
+      ['1 type', '1 个类型'],
+    ],
+    misses: ['Many types'],
+  },
+  { hits: [['(max 25)', '（最多 25 个）']], misses: ['(max many)'] },
+  { hits: [['3 types (max 25)', '3 个类型（最多 25 个）']], misses: ['3 types (max)'] },
   {
     hits: [
       ['2 issue fields', '2 个议题字段'],
@@ -2118,6 +2128,10 @@ describe('org-settings 繁体（zh-TW 语言包）', () => {
     ['Configure Dependabot rules', '設定 Dependabot 規則'],
     // 推送保护绕过列表标题（与存储库设置同译）
     ['3 actors', '3 個執行者'],
+    // 议题类型页
+    ['3 types (max 25)', '3 個類型（最多 25 個）'],
+    ['What is this type for?', '這個類型的用途是什麼？'],
+    ['A request, idea, or new functionality', '請求、構想或新功能'],
     ['1 actor', '1 個執行者'],
     // 绕过列表每行菜单按钮的读屏名称（与存储库设置同译）：内置角色与兜底词用译名，其余名称原样保留；
     // 不带名称的提示文字由规则集 static 收录

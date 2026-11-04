@@ -1,6 +1,6 @@
 /**
  * 校验繁体词典与简体词典结构一致。
- * 同名文件；具名导出相同；static / scoped / labels / labelDescriptions / listNames 键集合相同；
+ * 同名文件；具名导出相同；static / scoped / labels / labelDescriptions / listNames / issueTypes 键集合相同；
  * 正则（regexp、labelRegexp）数量、顺序、source、flags 相同；ignore、mergeText 相同；
  * 属性规则的选择器、属性名、正则相同；行内句的句型相同；语言包注册顺序与页面类型相同。
  * 选择器里含中文的引号属性值（按译文匹配的选择器，简繁各用各的译文）不比。
@@ -152,6 +152,7 @@ async function compareFile(file: string): Promise<string[]> {
     ...diffKeys('labels', cn.labels, tw.labels),
     ...diffKeys('labelDescriptions', cn.labelDescriptions, tw.labelDescriptions),
     ...diffKeys('listNames', cn.listNames, tw.listNames),
+    ...diffKeys('issueTypes', cn.issueTypes, tw.issueTypes),
     ...diffRules('regexp', cn.regexp, tw.regexp),
     ...diffRules('labelRegexp', cn.labelRegexp, tw.labelRegexp),
     ...diffSelectors('ignore', cn.ignore, tw.ignore),
