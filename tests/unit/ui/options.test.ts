@@ -114,12 +114,12 @@ describe.skipIf(!App)('设置页组件', () => {
   })
 
   describe('布局', () => {
-    it('先是汉化设置（排除路径、自定义词条）、加速设置、净化设置、增强设置四个标签页，再是关于；常规开关、语言下拉、快捷键都不在这里', async () => {
+    it('先是汉化设置（排除路径、自定义词条）、加速设置、净化设置、自动加载设置、新标签页设置五个标签页，再是关于；常规开关、语言下拉、快捷键都不在这里', async () => {
       const wrapper = await render()
       expect(wrapper.get('h1').text()).toBe('GitHub 中文化')
       expect(wrapper.get('[role="tablist"]').attributes('aria-label')).toBe('设置')
-      expect(tabLabels(wrapper)).toEqual(['汉化设置', '加速设置', '净化设置', '增强设置'])
-      expect(headings(wrapper)).toEqual(['排除路径', '自定义词条', '新标签页打开', '关于'])
+      expect(tabLabels(wrapper)).toEqual(['汉化设置', '加速设置', '净化设置', '自动加载设置', '新标签页设置'])
+      expect(headings(wrapper)).toEqual(['排除路径', '自定义词条', '范围', '范围', '关于'])
       for (const title of ['排除路径', '自定义词条']) {
         expect(section(wrapper, title).element.closest('[role="tabpanel"]')?.getAttribute('aria-labelledby')).toBe(
           tab(wrapper, '汉化设置').attributes('id')
@@ -128,15 +128,26 @@ describe.skipIf(!App)('设置页组件', () => {
       expect(section(wrapper, '关于').element.closest('[role="tabpanel"]')).toBeNull()
       const main = wrapper.get('main').element
       expect(main.firstElementChild?.contains(wrapper.get('[role="tablist"]').element)).toBe(true)
-      // 开关只有加速的三个、净化搜索，与增强设置里的自动加载、图片预览、新标签页打开及其范围
+      // 开关只有加速的三个、净化搜索，以及自动加载、新标签页打开及其范围（图片预览只在弹出页）
       expect(wrapper.findAll('.ui-switch-label').map(item => item.text())).toEqual([
         '加速下载',
         '加速图片',
         '故障转移',
         '净化搜索',
         '自动加载',
-        '图片预览',
-        '启用',
+        '搜索结果',
+        '议题',
+        '拉取请求',
+        '讨论',
+        '操作',
+        '发行版',
+        '标签',
+        '提交',
+        '首页',
+        '个人与组织主页',
+        '侧栏常用存储库',
+        '其他页面',
+        '新标签页打开',
         '站外链接',
         '正文链接',
         '搜索结果',
@@ -192,16 +203,16 @@ describe.skipIf(!App)('设置页组件', () => {
         'en',
         'GitHub Chinese',
         'Settings',
-        ['Translation', 'Acceleration', 'Search filter', 'Enhancements'],
-        ['Excluded paths', 'Custom entries', 'Open in new tab', 'About'],
+        ['Translation', 'Acceleration', 'Search filter', 'Auto load', 'Open in new tab'],
+        ['Excluded paths', 'Custom entries', 'Scope', 'Scope', 'About'],
         'GitHub repository'
       ],
       [
         'zh-TW',
         'GitHub 中文化',
         '設定',
-        ['中文化設定', '加速設定', '淨化設定', '增強設定'],
-        ['排除路徑', '自訂詞條', '新分頁開啟', '關於'],
+        ['中文化設定', '加速設定', '淨化設定', '自動載入設定', '新分頁設定'],
+        ['排除路徑', '自訂詞條', '範圍', '範圍', '關於'],
         'GitHub'
       ]
     ] as const)('界面语言随设置（如在弹出页修改）切换：%s', async (uiLanguage, title, tabsLabel, tabs, sections, repository) => {

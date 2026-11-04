@@ -3,6 +3,7 @@ import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { createController, type Controller, type ResetReason } from '../../../src/core/controller'
 import type { LocaleBundle } from '../../../src/core/types'
 import zhCnTime from '../../../src/locales/zh-CN/common-ui/time'
+import { DEFAULT_AUTO_LOAD_SCOPES } from '../../../src/shared/auto-load'
 import type { Settings } from '../../../src/shared/settings'
 import { $, settle, TEST_BUNDLE } from './helpers'
 import { defineFakeRelativeTime, settleTime } from './time-element'
@@ -21,6 +22,7 @@ const SETTINGS: Settings = {
   failover: false,
   purifySearch: true,
   autoLoad: false,
+  autoLoadScopes: DEFAULT_AUTO_LOAD_SCOPES,
   imagePreview: false,
   newTab: false,
   newTabScopes: ['external', 'search'],

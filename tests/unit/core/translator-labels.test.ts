@@ -5,6 +5,7 @@ import { LABEL_SELECTORS, IGNORE_SELECTORS } from '../../../src/core/ignore'
 import { createMatcher } from '../../../src/core/matcher'
 import { createTranslator, type Translator, type TranslatorOptions } from '../../../src/core/translator'
 import type { LocaleBundle, PageKey } from '../../../src/core/types'
+import { DEFAULT_AUTO_LOAD_SCOPES } from '../../../src/shared/auto-load'
 import type { Settings } from '../../../src/shared/settings'
 import { $, settle } from './helpers'
 
@@ -579,6 +580,7 @@ describe('停用、换词典、切换语言、排除页面', () => {
       failover: false,
       purifySearch: true,
       autoLoad: false,
+      autoLoadScopes: DEFAULT_AUTO_LOAD_SCOPES,
       imagePreview: false,
       newTab: false,
       newTabScopes: ['external', 'search'],

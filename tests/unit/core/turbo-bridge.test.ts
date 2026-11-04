@@ -8,6 +8,7 @@ import {
   TURBO_TRANSLATING_EVENT,
   type BridgeWindow
 } from '../../../src/core/turbo-bridge'
+import { DEFAULT_AUTO_LOAD_SCOPES } from '../../../src/shared/auto-load'
 import { $, settle, TEST_BUNDLE } from './helpers'
 
 const HOME = '/vuejs/core/issues'
@@ -1651,6 +1652,7 @@ describe('与控制器一起：排除路径', () => {
         failover: false,
         purifySearch: true,
         autoLoad: false,
+        autoLoadScopes: DEFAULT_AUTO_LOAD_SCOPES,
         imagePreview: false,
         newTab: false,
         newTabScopes: ['external', 'search'],

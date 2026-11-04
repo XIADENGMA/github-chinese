@@ -1,23 +1,20 @@
 <template>
-  <div class="enhance">
+  <div class="section">
     <ul class="switches">
-      <li v-for="key in SWITCHES" :key="key">
-        <UiSwitch :label="t(key)" :checked="settings[key]" :disabled="!ready" @change="setSwitch(key, $event)" />
+      <li>
+        <UiSwitch
+          :label="t('newTab')"
+          :checked="settings.newTab"
+          :disabled="!ready"
+          data-test="new-tab"
+          @change="save({ newTab: $event })"
+        />
       </li>
     </ul>
 
-    <section class="section" aria-labelledby="new-tab-title">
-      <h2 id="new-tab-title" class="section-title">{{ t('newTab') }}</h2>
+    <section class="section scopes" aria-labelledby="new-tab-scopes-title">
+      <h2 id="new-tab-scopes-title" class="section-title">{{ t('scopes') }}</h2>
       <ul class="switches">
-        <li>
-          <UiSwitch
-            :label="t('enable')"
-            :checked="settings.newTab"
-            :disabled="!ready"
-            data-test="new-tab"
-            @change="setSwitch('newTab', $event)"
-          />
-        </li>
         <li v-for="scope in SCOPES" :key="scope.value">
           <UiSwitch
             :label="t(scope.label)"
@@ -40,20 +37,14 @@
 
 <script setup lang="ts">
   import { computed } from 'vue'
-  import { createToastSource } from '../../components/toast'
   import UiSwitch from '../../components/ui/UiSwitch.vue'
   import { useI18n } from '../../components/ui-preferences'
-  import { useSettings } from '../../components/useSettings'
   import type { MessageKey } from '../../i18n'
   import { NEW_TAB_SCOPES, toggleNewTabScope, type NewTabScope } from '../../shared/new-tab'
-  import { normalizeExcludedPath, type SettingsPatch } from '../../shared/settings'
+  import { normalizeExcludedPath } from '../../shared/settings'
   import TextList from './TextList.vue'
+  import { useSettingsSave } from './useSettingsSave'
   import { useTextList } from './useTextList'
-
-  type EnhanceSwitch = 'autoLoad' | 'imagePreview' | 'newTab'
-
-  /** 新标签页打开的总开关在下方分区内 */
-  const SWITCHES: readonly EnhanceSwitch[] = ['autoLoad', 'imagePreview']
 
   const SCOPE_LABELS: Readonly<Record<NewTabScope, MessageKey>> = {
     external: 'newTabExternal',
@@ -71,28 +62,14 @@
   const PLACEHOLDER = '/*/*/releases'
 
   const { t } = useI18n()
-  const { settings, ready, loaded, loadFailed, update } = useSettings()
-  // 保存失败时在页面顶部提示；再次保存成功时收起
-  const toast = createToastSource()
-
-  async function save(patch: SettingsPatch): Promise<boolean> {
-    if (!(await update(patch))) {
-      toast.show('danger', 'saveFailed')
-      return false
-    }
-    toast.clear()
-    return true
-  }
-
-  async function setSwitch(key: EnhanceSwitch, value: boolean): Promise<void> {
-    await save({ [key]: value })
-  }
+  const { settings, ready, loaded, loadFailed, update, save } = useSettingsSave()
 
   async function setScope(scope: NewTabScope, on: boolean): Promise<void> {
     // 按写入前的最新设置计算：连续开关几项时不丢失
     await save(current => ({ newTabScopes: toggleNewTabScope(current.newTabScopes, scope, on) }))
   }
 
+  // 自定义页面：添加、改写、删除即时保存（失败提示由 useTextList 负责）
   const paths = useTextList({
     items: computed(() => settings.value.newTabPaths),
     save: next => update({ newTabPaths: next }),
@@ -101,8 +78,8 @@
 </script>
 
 <style scoped>
-  .enhance {
-    display: grid;
-    gap: 40px;
+  /* 范围与上方开关隔开 */
+  .scopes {
+    margin-top: 12px;
   }
 </style>

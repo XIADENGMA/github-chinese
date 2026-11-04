@@ -11,6 +11,7 @@ import {
   TURBO_TRANSLATING_EVENT,
   type BridgeWindow
 } from '../../../src/core/turbo-bridge'
+import { DEFAULT_AUTO_LOAD_SCOPES } from '../../../src/shared/auto-load'
 import { $, settle, TEST_BUNDLE } from './helpers'
 
 type Listener = (message: unknown, sender: unknown, sendResponse: (response?: unknown) => void) => true | undefined
@@ -32,6 +33,8 @@ const state = vi.hoisted(() => ({
     customSources: [] as readonly unknown[],
     removedSources: [] as readonly string[],
     autoLoad: false,
+    // 每个用例前重置为默认（见下方 beforeEach）
+    autoLoadScopes: [] as readonly string[],
     imagePreview: false,
     newTab: false,
     newTabScopes: ['external', 'search'] as readonly string[],
@@ -261,6 +264,7 @@ beforeEach(() => {
     failover: false,
     purifySearch: true,
     autoLoad: false,
+    autoLoadScopes: DEFAULT_AUTO_LOAD_SCOPES,
     imagePreview: false,
     newTab: false,
     newTabScopes: ['external', 'search'],
@@ -1732,6 +1736,15 @@ describe('增强功能', () => {
     it('未开启时不监听', async () => {
       await start()
       expect(observed).toHaveLength(0)
+    })
+
+    it('当前页面的范围关闭时不监听；设置里开启后监听', async () => {
+      state.settings = { ...state.settings, autoLoad: true, autoLoadScopes: ['issues', 'sidePanel'] }
+      await start()
+      expect(observed).toHaveLength(0)
+      state.settingsListener?.({ ...state.settings, autoLoadScopes: ['releases'] })
+      await flushTasks()
+      expect(observed.map(entry => entry.element)).toContain(document.querySelector('.paginate-container'))
     })
   })
 })

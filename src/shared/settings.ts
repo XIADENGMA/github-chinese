@@ -1,5 +1,6 @@
 import { storage } from 'wxt/utils/storage'
 import { DEFAULT_SOURCE_ID, dropBuiltinCopies, sanitizeCustomSources, sanitizeRemovedSources, type AccelerateSettings } from './accelerate'
+import { DEFAULT_AUTO_LOAD_SCOPES, sanitizeAutoLoadScopes, type AutoLoadScope } from './auto-load'
 import { isPageLocalePreference, isUiLanguagePreference, type PageLocalePreference, type UiLanguagePreference } from './locale'
 import { DEFAULT_NEW_TAB_SCOPES, sanitizeNewTabScopes, type NewTabScope } from './new-tab'
 
@@ -38,8 +39,10 @@ export interface Settings extends AccelerateSettings {
   readonly failover: boolean
   /** 搜索净化：搜索结果中命中屏蔽规则的直接隐藏（规则见 searchBlockRulesItem，处理见 core/search-purify） */
   readonly purifySearch: boolean
-  /** 自动加载：「加载更多」按钮、分页列表的下一页在接近页面底部时自动加载（见 core/auto-load） */
+  /** 自动加载：「加载更多」按钮、分页列表的下一页在接近页面底部时自动加载（范围见 autoLoadScopes，处理见 core/auto-load） */
   readonly autoLoad: boolean
+  /** 自动加载的范围（见 shared/auto-load） */
+  readonly autoLoadScopes: readonly AutoLoadScope[]
   /** 图片预览：单击正文中的图片在页面内预览（见 core/image-preview） */
   readonly imagePreview: boolean
   /** 新标签页打开：总开关（范围见 newTabScopes、newTabPaths，处理见 core/new-tab） */
@@ -69,6 +72,7 @@ export const DEFAULT_SETTINGS: Settings = {
   failover: false,
   purifySearch: true,
   autoLoad: false,
+  autoLoadScopes: DEFAULT_AUTO_LOAD_SCOPES,
   imagePreview: false,
   newTab: false,
   newTabScopes: DEFAULT_NEW_TAB_SCOPES,
@@ -120,6 +124,7 @@ export function mergeSettings(stored: unknown): Settings {
     failover: pickBoolean('failover', DEFAULT_SETTINGS.failover),
     purifySearch: pickBoolean('purifySearch', DEFAULT_SETTINGS.purifySearch),
     autoLoad: pickBoolean('autoLoad', DEFAULT_SETTINGS.autoLoad),
+    autoLoadScopes: sanitizeAutoLoadScopes(value.autoLoadScopes),
     imagePreview: pickBoolean('imagePreview', DEFAULT_SETTINGS.imagePreview),
     newTab: pickBoolean('newTab', DEFAULT_SETTINGS.newTab),
     newTabScopes: sanitizeNewTabScopes(value.newTabScopes),

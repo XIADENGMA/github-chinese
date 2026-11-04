@@ -1,4 +1,5 @@
 import { fakeBrowser } from 'wxt/testing/fake-browser'
+import { DEFAULT_AUTO_LOAD_SCOPES } from '../../../src/shared/auto-load'
 import {
   DEFAULT_SETTINGS,
   addExcludedPath,
@@ -128,10 +129,11 @@ describe('搜索净化', () => {
   })
 })
 
-describe('增强设置', () => {
-  it('默认都关闭；新标签页打开的范围默认为站外链接与搜索结果，没有自定义页面', () => {
+describe('自动加载、图片预览、新标签页打开', () => {
+  it('默认都关闭；自动加载的范围默认全部，新标签页打开的范围默认为站外链接与搜索结果，没有自定义页面', () => {
     expect(DEFAULT_SETTINGS).toMatchObject({
       autoLoad: false,
+      autoLoadScopes: DEFAULT_AUTO_LOAD_SCOPES,
       imagePreview: false,
       newTab: false,
       newTabScopes: ['external', 'search'],
@@ -143,6 +145,7 @@ describe('增强设置', () => {
     expect(
       mergeSettings({
         autoLoad: true,
+        autoLoadScopes: ['other', 'issues', 'unknown'],
         imagePreview: true,
         newTab: true,
         newTabScopes: ['issues', 'external', 'unknown'],
@@ -151,15 +154,24 @@ describe('增强设置', () => {
     ).toEqual({
       ...DEFAULT_SETTINGS,
       autoLoad: true,
+      autoLoadScopes: ['issues', 'other'],
       imagePreview: true,
       newTab: true,
       newTabScopes: ['external', 'issues'],
       newTabPaths: ['/*/*/releases']
     })
-    expect(mergeSettings({ autoLoad: 'yes', imagePreview: 1, newTab: null, newTabScopes: 'search', newTabPaths: ['/a', 2] })).toEqual(
-      DEFAULT_SETTINGS
-    )
+    expect(
+      mergeSettings({
+        autoLoad: 'yes',
+        autoLoadScopes: 'issues',
+        imagePreview: 1,
+        newTab: null,
+        newTabScopes: 'search',
+        newTabPaths: ['/a', 2]
+      })
+    ).toEqual(DEFAULT_SETTINGS)
     expect(mergeSettings({ newTabScopes: [] }).newTabScopes).toEqual([])
+    expect(mergeSettings({ autoLoadScopes: [] }).autoLoadScopes).toEqual([])
   })
 })
 

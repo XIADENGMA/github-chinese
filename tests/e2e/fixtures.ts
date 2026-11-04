@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { test as base, chromium, expect, type BrowserContext, type Locator, type Page, type Worker } from '@playwright/test'
+import { DEFAULT_AUTO_LOAD_SCOPES } from '../../src/shared/auto-load'
 import type { CustomEntries, Settings } from '../../src/shared/settings'
 
 /** 被测扩展目录：默认构建产物 .output/chrome-mv3（bun run build）；E2E_EXTENSION 可指向其他解压目录 */
@@ -46,6 +47,7 @@ export const DEFAULT_SETTINGS: Settings = {
   failover: false,
   purifySearch: true,
   autoLoad: false,
+  autoLoadScopes: DEFAULT_AUTO_LOAD_SCOPES,
   imagePreview: false,
   newTab: false,
   newTabScopes: ['external', 'search'],

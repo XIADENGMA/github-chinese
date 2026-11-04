@@ -1,3 +1,4 @@
+import { AUTO_LOAD_SCOPES, autoLoadPageScope, type AutoLoadScope } from '../shared/auto-load'
 import { completeDeferred } from './deferred-fill'
 import { pathSegments } from './page'
 import { createPageBreak } from './page-break'
@@ -26,11 +27,14 @@ import {
  * 2. 有分页的列表（议题、拉取请求、搜索结果、讨论、操作、发行版、标签、提交等，见 core/page-list），
  *    列表下方的分页接近视口时取回下一页，把列表项接在当前列表之后，直到最后一页。
  *    取回的是同站页面（带 Cookie，同手动翻页），不经第三方。
- *    每页前插入「第 N 页」分隔；分页换成最后取回那一页的分页（React 管理的分页隐藏，不移除）
+ *    每页前插入「第 N 页」分隔；分页换成最后取回那一页的分页（React 管理的分页隐藏，不移除）。
+ * 范围按页面逐项开关（见 shared/auto-load）：侧栏常用存储库的按钮在任何页面按 sidePanel，其余按当前页面
  */
 export interface AutoLoadOptions {
   /** 是否自动加载：总开关与「自动加载」都开启 */
   readonly active: () => boolean
+  /** 开启的范围（见 shared/auto-load）；默认全部 */
+  readonly scopes?: () => readonly AutoLoadScope[]
   /** 取回同站页面的 HTML；应答不成功时拒绝 */
   readonly fetchPage: (url: string) => Promise<string>
   /** 页码分隔的文字（第 N 页） */
@@ -52,11 +56,13 @@ export interface AutoLoader {
 
 /** 经典的 ajax 分页表单里的按钮（首页动态与侧栏、贡献动态、主题页、拉取请求时间线等）：表单随加载换掉，每个只点一次 */
 const AJAX_LOAD_MORE_SELECTOR = 'form.ajax-pagination-form button'
+/** 全局导航侧栏的常用存储库（Show more）：在任何页面，范围为 sidePanel */
+const SIDE_PANEL_LOAD_MORE_SELECTOR = 'button[data-testid="dynamic-side-panel-items-show-more"]'
 /**
- * React 的「加载更多」：议题时间线、全局导航侧栏的常用存储库（Show more）。
+ * React 的「加载更多」：议题时间线、侧栏常用存储库。
  * 加载后可能还是同一个按钮，仍在原处时再点
  */
-const REACT_LOAD_MORE_SELECTOR = 'button[data-testid^="issue-timeline-load-more"], button[data-testid="dynamic-side-panel-items-show-more"]'
+const REACT_LOAD_MORE_SELECTOR = `button[data-testid^="issue-timeline-load-more"], ${SIDE_PANEL_LOAD_MORE_SELECTOR}`
 /** 「加载更多」按钮 */
 export const LOAD_MORE_SELECTOR = `${AJAX_LOAD_MORE_SELECTOR}, ${REACT_LOAD_MORE_SELECTOR}`
 /** 同一页面最多自动取回的页数，同一类「加载更多」最多点的次数：防止异常页面无限加载 */
@@ -156,6 +162,7 @@ export function createAutoLoader(doc: Document, options: AutoLoadOptions): AutoL
   const watch = options.watch ?? watchNear
   const now = options.now ?? (() => Date.now())
   const pageLabel = options.pageLabel ?? ((page: number) => String(page))
+  const scopes = options.scopes ?? (() => AUTO_LOAD_SCOPES)
   /** 正在监听的元素（按钮、分页）→ 取消函数 */
   const watched = new Map<Element, () => void>()
   /** 点过的按钮 → 最近一次的时间 */
@@ -180,6 +187,12 @@ export function createAutoLoader(doc: Document, options: AutoLoadOptions): AutoL
 
   function currentUrl(): URL {
     return new URL(doc.location.href)
+  }
+
+  /** 元素所在的范围是否开启：侧栏常用存储库的按钮按 sidePanel，其余（含不给元素时）按当前页面 */
+  function inScope(element?: Element): boolean {
+    const scope: AutoLoadScope = element?.matches(SIDE_PANEL_LOAD_MORE_SELECTOR) ? 'sidePanel' : autoLoadPageScope(currentUrl())
+    return scopes().includes(scope)
   }
 
   function unwatch(element: Element): void {
@@ -219,7 +232,7 @@ export function createAutoLoader(doc: Document, options: AutoLoadOptions): AutoL
 
   function clickLoadMore(button: HTMLButtonElement): void {
     unwatch(button)
-    if (!options.active() || !button.isConnected || button.disabled) return
+    if (!options.active() || !inScope(button) || !button.isConnected || button.disabled) return
     const kind = buttonKind(button)
     const count = clicksByKind.get(kind) ?? 0
     if (count >= MAX_AUTO_PAGES) return
@@ -239,7 +252,7 @@ export function createAutoLoader(doc: Document, options: AutoLoadOptions): AutoL
 
   function watchButtons(): void {
     for (const button of doc.querySelectorAll<HTMLButtonElement>(LOAD_MORE_SELECTOR)) {
-      if (watched.has(button) || !canClick(button)) continue
+      if (watched.has(button) || !canClick(button) || !inScope(button)) continue
       watched.set(
         button,
         watch(button, () => clickLoadMore(button))
@@ -273,7 +286,9 @@ export function createAutoLoader(doc: Document, options: AutoLoadOptions): AutoL
 
   function watchPaginations(): void {
     for (const pagination of paginations(doc)) {
-      if (watched.has(pagination) || pagination.hasAttribute(HIDDEN_NAV_ATTRIBUTE) || !nextPageLink(pagination)) continue
+      if (watched.has(pagination) || pagination.hasAttribute(HIDDEN_NAV_ATTRIBUTE) || !inScope(pagination) || !nextPageLink(pagination)) {
+        continue
+      }
       let state = states.get(pagination)
       if (!state) {
         const failed = rejected.get(pagination)
@@ -417,7 +432,7 @@ export function createAutoLoader(doc: Document, options: AutoLoadOptions): AutoL
 
   async function loadNext(state: ListState): Promise<void> {
     const url = state.next
-    if (!url || loading || stopped || !options.active() || loads >= MAX_AUTO_PAGES) return
+    if (!url || loading || stopped || !options.active() || !inScope() || loads >= MAX_AUTO_PAGES) return
     // 只取同站的下一页
     if (url.origin !== currentUrl().origin) {
       state.next = undefined
@@ -430,8 +445,8 @@ export function createAutoLoader(doc: Document, options: AutoLoadOptions): AutoL
       const html = await options.fetchPage(url.href)
       // 列表已移除或重新渲染（软导航、筛选）：丢弃
       if (stopped || isStale(state)) return
-      // 取回期间关闭了自动加载：丢弃，再开启后重新取
-      if (!options.active()) {
+      // 取回期间关闭了自动加载或该页面的范围：丢弃，再开启后重新取
+      if (!options.active() || !inScope()) {
         state.next = url
         return
       }
@@ -449,11 +464,12 @@ export function createAutoLoader(doc: Document, options: AutoLoadOptions): AutoL
 
   function scan(): void {
     scheduled = false
+    // 已移除的、所在范围已关闭的不再监听
     for (const element of [...watched.keys()]) {
-      if (!element.isConnected) unwatch(element)
+      if (!element.isConnected || !inScope(element)) unwatch(element)
     }
-    // 开启时才监听 DOM 变动
-    setObserving(!stopped && options.active())
+    // 开启（且有开启的范围）时才监听 DOM 变动
+    setObserving(!stopped && options.active() && scopes().length > 0)
     if (!observing) {
       for (const element of [...watched.keys()]) unwatch(element)
       return

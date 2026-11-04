@@ -300,6 +300,7 @@ export default defineContentScript({
     // 自动加载：「加载更多」与分页列表的下一页（见 core/auto-load）
     const autoLoader = createAutoLoader(document, {
       active: () => current.enabled && current.autoLoad,
+      scopes: () => current.autoLoadScopes,
       fetchPage,
       pageLabel: page => message('pageNumber', { page })
     })

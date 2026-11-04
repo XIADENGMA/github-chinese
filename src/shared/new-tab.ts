@@ -1,4 +1,5 @@
 import { accountLogin, pathSegments } from '../core/page'
+import { sanitizeScopes, toggleScope } from './scope-list'
 
 /**
  * 新标签页打开的范围（处理见 core/new-tab）：
@@ -21,13 +22,12 @@ export function isNewTabScope(value: unknown): value is NewTabScope {
 
 /** 读取存储中的范围：不是数组时用默认值；丢弃未知项，去重，按 NEW_TAB_SCOPES 的顺序 */
 export function sanitizeNewTabScopes(value: unknown): readonly NewTabScope[] {
-  if (!Array.isArray(value)) return DEFAULT_NEW_TAB_SCOPES
-  return NEW_TAB_SCOPES.filter(scope => value.includes(scope))
+  return sanitizeScopes(NEW_TAB_SCOPES, value, DEFAULT_NEW_TAB_SCOPES)
 }
 
 /** 开关一个范围，返回新的范围列表（按 NEW_TAB_SCOPES 的顺序） */
 export function toggleNewTabScope(scopes: readonly NewTabScope[], scope: NewTabScope, on: boolean): readonly NewTabScope[] {
-  return NEW_TAB_SCOPES.filter(item => (item === scope ? on : scopes.includes(item)))
+  return toggleScope(NEW_TAB_SCOPES, scopes, scope, on)
 }
 
 /** GitHub 自己的站点：github.com、githubusercontent.com、githubassets.com、githubstatus.com 及其子域名 */

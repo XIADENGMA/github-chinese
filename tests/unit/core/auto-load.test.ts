@@ -11,6 +11,7 @@ import {
 } from '../../../src/core/auto-load'
 import { PAGE_BREAK_CLASS } from '../../../src/core/page-break'
 import { nextPageLink, paginations } from '../../../src/core/page-list'
+import { AUTO_LOAD_SCOPES, type AutoLoadScope } from '../../../src/shared/auto-load'
 
 const RELEASES = 'https://github.com/vuejs/core/releases'
 
@@ -63,6 +64,8 @@ async function flush(): Promise<void> {
 }
 
 let active = true
+/** 开启的范围；undefined 时不传（默认全部） */
+let scopes: readonly AutoLoadScope[] | undefined
 let clock = 0
 let pages: Record<string, string>
 const fetchPage = vi.fn(async (url: string): Promise<string> => {
@@ -76,6 +79,7 @@ let loader: AutoLoader | undefined
 function start(): AutoLoader {
   loader = createAutoLoader(document, {
     active: () => active,
+    ...(scopes === undefined ? {} : { scopes: () => scopes ?? [] }),
     fetchPage,
     watch,
     now: () => clock,
@@ -88,6 +92,7 @@ function start(): AutoLoader {
 beforeEach(() => {
   history.replaceState(null, '', '/vuejs/core/releases')
   active = true
+  scopes = undefined
   clock = 0
   pages = {}
 })
@@ -485,5 +490,134 @@ describe('React 渲染的列表', () => {
     expect(document.querySelector(`[${PAGE_NAV_ATTRIBUTE}]`)).toBeNull()
     expect(reactNav.hasAttribute(HIDDEN_NAV_ATTRIBUTE)).toBe(false)
     expect(reactNav.style.display).toBe('')
+  })
+})
+
+describe('范围', () => {
+  /** 除去给出的几项，其余范围都开启 */
+  function allBut(...off: AutoLoadScope[]): AutoLoadScope[] {
+    return AUTO_LOAD_SCOPES.filter(scope => !off.includes(scope))
+  }
+
+  function addButton(testId?: string): HTMLButtonElement {
+    const button = document.createElement('button')
+    button.type = 'button'
+    if (testId) {
+      button.setAttribute('data-testid', testId)
+      document.body.append(button)
+      return button
+    }
+    const form = document.createElement('form')
+    form.className = 'ajax-pagination-form'
+    form.append(button)
+    document.body.append(form)
+    return button
+  }
+
+  beforeEach(() => {
+    document.body.innerHTML = releasesPage(['v3.5', 'v3.4', 'v3.3'], 1, '/vuejs/core/releases?page=2')
+    pages[`${RELEASES}?page=2`] = releasesPage(['v3.2', 'v3.1'], 2)
+  })
+
+  it('当前页面的范围关闭：分页不监听、不取；开启后取回', async () => {
+    scopes = allBut('releases')
+    start()
+    expect(watchers.has(pagination()!)).toBe(false)
+    scopes = AUTO_LOAD_SCOPES
+    loader!.refresh()
+    near(pagination())
+    await flush()
+    expect(fetchPage).toHaveBeenCalledExactlyOnceWith(`${RELEASES}?page=2`)
+    expect(versions()).toEqual(['v3.5', 'v3.4', 'v3.3', 'v3.2', 'v3.1'])
+  })
+
+  it('「加载更多」按钮按当前页面的范围', () => {
+    const button = addButton()
+    const onClick = vi.fn()
+    button.addEventListener('click', onClick)
+    scopes = allBut('releases')
+    start()
+    expect(watchers.has(button)).toBe(false)
+    scopes = ['releases']
+    loader!.refresh()
+    near(button)
+    expect(onClick).toHaveBeenCalledOnce()
+  })
+
+  it('侧栏常用存储库按 sidePanel，与当前页面的范围无关', () => {
+    const panelButton = addButton('dynamic-side-panel-items-show-more')
+    const pageButton = addButton()
+    const onClick = vi.fn()
+    panelButton.addEventListener('click', onClick)
+    scopes = ['sidePanel']
+    start()
+    expect(watchers.has(pageButton)).toBe(false)
+    expect(watchers.has(pagination()!)).toBe(false)
+    near(panelButton)
+    expect(onClick).toHaveBeenCalledOnce()
+
+    scopes = allBut('sidePanel')
+    loader!.refresh()
+    expect(watchers.has(panelButton)).toBe(false)
+    expect(watchers.has(pageButton)).toBe(true)
+  })
+
+  it('范围关闭后：接近视口时不点、不取；刷新后不再监听', async () => {
+    const button = addButton()
+    const onClick = vi.fn()
+    button.addEventListener('click', onClick)
+    scopes = AUTO_LOAD_SCOPES
+    start()
+    scopes = allBut('releases')
+    near(button)
+    near(pagination())
+    await flush()
+    expect(onClick).not.toHaveBeenCalled()
+    expect(fetchPage).not.toHaveBeenCalled()
+    loader!.refresh()
+    expect(watchers.has(pagination()!)).toBe(false)
+    expect(cancelled).toContain(pagination())
+  })
+
+  it('取回期间关闭了该页面的范围：丢弃，再开启后重新取', async () => {
+    let release: (html: string) => void = () => {}
+    fetchPage.mockImplementationOnce(async () => new Promise<string>(done => (release = done)))
+    scopes = AUTO_LOAD_SCOPES
+    start()
+    near(pagination())
+    scopes = allBut('releases')
+    release(pages[`${RELEASES}?page=2`]!)
+    await flush()
+    expect(versions()).toEqual(['v3.5', 'v3.4', 'v3.3'])
+    scopes = AUTO_LOAD_SCOPES
+    loader!.refresh()
+    near(pagination())
+    await flush()
+    expect(fetchPage).toHaveBeenCalledTimes(2)
+    expect(versions()).toEqual(['v3.5', 'v3.4', 'v3.3', 'v3.2', 'v3.1'])
+  })
+
+  it('软导航到范围关闭的页面：不再监听；回到范围开启的页面后重新监听', () => {
+    scopes = allBut('issues')
+    start()
+    expect(watchers.has(pagination()!)).toBe(true)
+    history.replaceState(null, '', '/vuejs/core/issues')
+    loader!.refresh()
+    expect(watchers.has(pagination()!)).toBe(false)
+    history.replaceState(null, '', '/vuejs/core/releases')
+    loader!.refresh()
+    expect(watchers.has(pagination()!)).toBe(true)
+  })
+
+  it('范围全部关闭：不监听 DOM 变动', () => {
+    const observe = vi.spyOn(MutationObserver.prototype, 'observe')
+    scopes = []
+    start()
+    expect(observe).not.toHaveBeenCalled()
+    expect(watchers.size).toBe(0)
+    scopes = ['releases']
+    loader!.refresh()
+    expect(observe).toHaveBeenCalledOnce()
+    expect(watchers.has(pagination()!)).toBe(true)
   })
 })
