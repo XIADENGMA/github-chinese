@@ -102,6 +102,24 @@ describe('createDownloadClickHandler', () => {
     expect(open).not.toHaveBeenCalled()
   })
 
+  it('处理的单击不再传给页面（GitHub 的自述文件不看 defaultPrevented，照样站内跳转）；不处理的照常传', async () => {
+    // 不处理的照常传到这里：取消，免得测试环境真的跳转
+    const page = vi.fn((event: Event) => event.preventDefault())
+    document.addEventListener('click', page)
+    try {
+      expect(click(addLink(RELEASE))).toBe(true)
+      settings = { ...settings, failover: true }
+      expect(click(addLink(RELEASE))).toBe(true)
+      await flushTasks()
+      expect(open).toHaveBeenCalledTimes(2)
+      expect(page).not.toHaveBeenCalled()
+      click(addLink('https://vuejs.org/'))
+      expect(page).toHaveBeenCalledOnce()
+    } finally {
+      document.removeEventListener('click', page)
+    }
+  })
+
   it('页面已取消的点击、不是下载的链接、不在链接上：不处理', () => {
     const anchor = addLink(RELEASE)
     const cancel = (event: Event): void => event.preventDefault()

@@ -44,6 +44,10 @@ export default {
   translationSection: 'Translation',
   excludedPaths: 'Excluded paths',
   path: 'Path',
+  timeFormat: 'Time format',
+  timeFormatDefault: 'Default',
+  timeFormatCustom: 'Custom',
+  timeFormatPattern: 'Pattern',
   noPaths: 'No paths',
   invalidFormat: 'Invalid format',
 
@@ -162,6 +166,7 @@ export default {
   zoomOut: 'Zoom out',
   zoomIn: 'Zoom in',
   resetView: 'Reset',
+  openLink: 'Open link',
   original: 'Original',
   download: 'Download',
   close: 'Close',

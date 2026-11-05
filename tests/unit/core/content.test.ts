@@ -1398,14 +1398,16 @@ describe('下载加速', () => {
 
   /** 打开地址（内容脚本用 window.open，_self 为当前页） */
   let open: ReturnType<typeof vi.fn>
-  /** 最近一次点击是否被内容脚本取消了默认行为 */
-  let handled = false
+  /** 最近一次点击传到页面（window 的冒泡阶段）时是否已被取消默认行为；内容脚本处理后不再传给页面时为 undefined */
+  let handled: boolean | undefined
 
   /** 点击页面上的下载链接，返回是否被内容脚本取消默认行为 */
   function clickDownload(href = RELEASE): boolean {
     document.body.innerHTML = `<a href="${href}">vue.global.js</a>`
-    $('a').dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, button: 0 }))
-    return handled
+    handled = undefined
+    const event = new MouseEvent('click', { bubbles: true, cancelable: true, button: 0 })
+    $('a').dispatchEvent(event)
+    return handled ?? event.defaultPrevented
   }
 
   async function start(): Promise<void> {
@@ -1553,8 +1555,8 @@ describe('增强功能', () => {
 
   /** 打开地址（内容脚本用 window.open） */
   let open: ReturnType<typeof vi.fn>
-  /** 最近一次点击是否被内容脚本取消了默认行为 */
-  let handled = false
+  /** 最近一次点击传到页面（window 的冒泡阶段）时是否已被取消默认行为；内容脚本处理后不再传给页面时为 undefined */
+  let handled: boolean | undefined
 
   async function start(): Promise<void> {
     const definition = await load()
@@ -1570,9 +1572,10 @@ describe('增强功能', () => {
   }
 
   function click(target: Element): boolean {
-    handled = false
-    target.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, composed: true, button: 0 }))
-    return handled
+    handled = undefined
+    const event = new MouseEvent('click', { bubbles: true, cancelable: true, composed: true, button: 0 })
+    target.dispatchEvent(event)
+    return handled ?? event.defaultPrevented
   }
 
   /** 预览浮层里的元素 */

@@ -20,6 +20,7 @@
       <UiTabs v-model="tab" :tabs="tabs" :label="t('settings')">
         <template #translation>
           <div class="options-group">
+            <TimeFormatSection />
             <ExcludedPathsSection />
             <UiTabs v-model="dictionaryTab" :tabs="dictionaryTabs" :label="t('dictionaries')" variant="pill">
               <template #custom><CustomEntriesSection /></template>
@@ -68,6 +69,7 @@
   import ExcludedPathsSection from './ExcludedPathsSection.vue'
   import NewTabSection from './NewTabSection.vue'
   import SearchBlockSection from './SearchBlockSection.vue'
+  import TimeFormatSection from './TimeFormatSection.vue'
   import TransferTools from './TransferTools.vue'
   import { useBackup } from './useBackup'
 

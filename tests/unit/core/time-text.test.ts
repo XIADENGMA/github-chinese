@@ -567,6 +567,119 @@ describe('createTimeText', () => {
  * 改了系统时区、页面不刷新（Chrome 重设默认时区）。元素同 GitHub 现行的 relative-time，按 lang 与选项缓存 Intl 格式：
  * 缓存的格式仍按旧时区生成，新建的格式（缓存清空后）按新时区
  */
+/** 自定义时间格式的写法与元素的 lang（改了之后 sync 生效） */
+const custom = { pattern: '', lang: 'zh-CN' }
+
+function createCustom(owns: (element: Element) => boolean = () => true): TimeText {
+  const timeText = createTimeText(document, owns, { pattern: () => custom.pattern, lang: () => custom.lang })
+  created.push(timeText)
+  return timeText
+}
+
+describe('自定义时间格式', () => {
+  afterEach(() => {
+    custom.pattern = ''
+    custom.lang = 'zh-CN'
+  })
+
+  it('元素渲染后显示为按写法写出的时刻（本地时区），title 照常补空格；定时刷新后仍按写法', async () => {
+    custom.pattern = 'YYYY-MM-DD HH:mm'
+    const time = mount()
+    createCustom().attach()
+    time.setAttribute('lang', 'zh-CN')
+    await settleTime()
+    expect(time.renderedText).toBe('2026-10-26 10:03')
+    expect(time.getAttribute('title')).toBe('2026 年 10 月 26 日 10:03')
+    time.tick()
+    expect(time.renderedText).toBe('2026-10-26 10:03')
+  })
+
+  it.each(['duration', 'elapsed'])('format="%s"（时长）：不按写法，照常补空格', async format => {
+    custom.pattern = 'YYYY-MM-DD'
+    const time = mount(`<relative-time format="${format}" datetime="2026-10-26T02:03:00Z"></relative-time>`)
+    createCustom().attach()
+    time.setAttribute('lang', 'zh-CN')
+    await settleTime()
+    expect(time.renderedText).toBe('3 天前')
+  })
+
+  it('日期无效：不按写法，保留元素渲染的文字', async () => {
+    custom.pattern = 'YYYY-MM-DD'
+    const time = mount('<relative-time datetime="not a date"></relative-time>')
+    createCustom().attach()
+    time.setAttribute('lang', 'zh-CN')
+    await settleTime()
+    expect(time.renderedText).not.toBe('')
+    expect(time.renderedText).not.toMatch(/\d{4}-/)
+  })
+
+  it('改了写法后 sync：按新写法；改回默认后 sync：恢复元素渲染的文字并补空格', async () => {
+    custom.pattern = 'YYYY-MM-DD'
+    const time = mount()
+    const timeText = createCustom()
+    timeText.attach()
+    time.setAttribute('lang', 'zh-CN')
+    await settleTime()
+    expect(time.renderedText).toBe('2026-10-26')
+    custom.pattern = 'M/D HH:mm'
+    timeText.sync(time)
+    expect(time.renderedText).toBe('10/26 10:03')
+    custom.pattern = ''
+    timeText.sync(time)
+    expect(time.renderedText).toBe('3 天前')
+    time.tick()
+    expect(time.renderedText).toBe('3 天前')
+  })
+
+  it('默认改为自定义后 sync：按写法；之后元素重新渲染也按写法', async () => {
+    const time = mount()
+    const timeText = createCustom()
+    timeText.attach()
+    time.setAttribute('lang', 'zh-CN')
+    await settleTime()
+    expect(time.renderedText).toBe('3 天前')
+    custom.pattern = 'HH:mm'
+    timeText.sync(time)
+    expect(time.renderedText).toBe('10:03')
+    time.tick()
+    expect(time.renderedText).toBe('10:03')
+  })
+
+  it('restore：写回元素自己渲染的文字；lang 还原后元素按原语言重新渲染', async () => {
+    custom.pattern = 'YYYY-MM-DD'
+    const time = mount()
+    const timeText = createCustom(element => element.getAttribute('lang') === 'zh-CN')
+    timeText.attach()
+    time.setAttribute('lang', 'zh-CN')
+    await settleTime()
+    timeText.restore(time)
+    expect(time.renderedText).toBe('3天前')
+    time.setAttribute('lang', 'en')
+    await settleTime()
+    expect(time.renderedText).toBe('3 days ago')
+  })
+
+  it('restore：元素已重新渲染（文字不是写入的）时不动', async () => {
+    custom.pattern = 'YYYY-MM-DD'
+    const time = mount()
+    const timeText = createCustom(() => false)
+    time.setAttribute('lang', 'zh-CN')
+    await settleTime()
+    timeText.restore(time)
+    expect(time.renderedText).toBe('3天前')
+  })
+
+  it('繁体：星期的简称用「週」；元素设了 time-zone 时按该时区', async () => {
+    custom.pattern = 'ddd HH:mm Z'
+    custom.lang = 'zh-TW'
+    const time = mount('<relative-time time-zone="UTC" datetime="2026-10-26T02:03:00Z"></relative-time>')
+    createCustom().attach()
+    time.setAttribute('lang', 'zh-TW')
+    await settleTime()
+    expect(time.renderedText).toBe('週一 02:03 +00:00')
+  })
+})
+
 describe('改了系统时区', () => {
   const ZH_CN_TIME = '<local-time lang="zh-CN" hour-cycle="h23" datetime="2026-10-26T02:03:00Z"></local-time>'
   const ZH_TW_TIME = '<local-time lang="zh-TW" hour-cycle="h12" datetime="2026-10-26T02:03:00Z"></local-time>'

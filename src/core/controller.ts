@@ -8,6 +8,7 @@
  */
 import type { ContentStatus } from '../shared/messages'
 import type { CustomEntries, Settings } from '../shared/settings'
+import { activeTimeFormat } from '../shared/time-format'
 import { createNavigationWatcher, type NavigationHost } from './location'
 import { createMatcher } from './matcher'
 import { createZoneWatcher } from './time-text'
@@ -53,9 +54,10 @@ export interface Controller {
 }
 
 /** 交给引擎的功能开关；未翻译收集不开启（诊断用，见 core/untranslated） */
-function featuresOf(settings: Settings): Pick<TranslatorFeatures, 'translateTime' | 'translateTitle'> {
+function featuresOf(settings: Settings): Pick<TranslatorFeatures, 'translateTime' | 'timeFormat' | 'translateTitle'> {
   return {
     translateTime: settings.translateTime,
+    timeFormat: activeTimeFormat(settings.timeFormat, settings.customTimeFormat),
     translateTitle: settings.translateTitle
   }
 }

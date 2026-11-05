@@ -20,7 +20,12 @@
  * 由元素重新生成后再改写。元素渲染时就会发现；不定时刷新的元素（超过 30 天显示日期、format=datetime）不再派发事件，
  * 所以另在页面重新可见、窗口获得焦点时比较时区探针（见 createZoneWatcher），变化时逐个复位有记录的元素。
  * 普通文本与属性里由词典译出的完整时间另由 core/controller 重建匹配器重译；同一次事件两边的监听只读一次探针。
+ *
+ * 自定义时间格式（见 shared/time-format）：显示文字换成按写法写出的时刻，时区按元素的 time-zone（没有时按本地）；
+ * 时长（format=duration、elapsed）、日期无效的不换。元素重新渲染（定时刷新、换 lang）写回自己的文字时再换；
+ * 改回默认、还原时写回元素自己渲染的文字。title 照常改写
  */
+import { formatTime } from '../shared/time-format'
 import { ELEMENT_NODE, SHOW_TEXT, TIME_TAGS } from './dom'
 
 export const TIME_UPDATED_EVENT = 'relative-time-updated'
@@ -171,7 +176,7 @@ export interface TimeText {
    * 现在改写会被元素当作自定义 title、不再随小时制更新
    */
   syncText(element: Element): void
-  /** 移除改写过的 title；显示文字随 lang 还原由元素重新渲染 */
+  /** 写回元素自己渲染的文字（写入了自定义格式时），移除改写过的 title；显示文字随 lang 还原由元素重新渲染 */
   restore(element: Element): void
   /**
    * lang 或小时制将要变化：移除改写过的 title，以及改写过却没有记录的中文 title（失效实例、克隆体留下的）。
@@ -219,10 +224,54 @@ function isRewritten(title: string): boolean {
   return spaceDigits(title) === title
 }
 
-/** owns：元素是否由引擎设为中文（翻译中、时间本地化开启、lang 为引擎写入） */
-export function createTimeText(doc: Document, owns: (element: Element) => boolean): TimeText {
+export interface TimeTextOptions {
+  /** 自定义时间格式的写法（见 shared/time-format）；空串时照元素渲染的文字改写 */
+  readonly pattern: () => string
+  /** 元素渲染所用的 lang（星期简称分简繁） */
+  readonly lang: () => string
+}
+
+/** 写入了自定义格式的元素：元素自己渲染的文字（改回默认、还原时写回）与写入的文字 */
+interface CustomText {
+  readonly raw: string
+  readonly written: string
+}
+
+/** 时长（Actions 用时等）：不按自定义格式 */
+const DURATION_FORMATS: ReadonlySet<string> = new Set(['duration', 'elapsed'])
+
+const NO_CUSTOM_FORMAT: TimeTextOptions = { pattern: () => '', lang: () => '' }
+
+/** 元素按哪个时区显示：自身或祖先（含 <html>）的 time-zone（与元素的取法一致）；没有时按本地 */
+function timeZoneOf(element: Element): string | undefined {
+  return element.closest('[time-zone]')?.getAttribute('time-zone') || undefined
+}
+
+/** shadowRoot 内的文本节点 */
+function textNodes(doc: Document, root: ShadowRoot): Text[] {
+  const nodes: Text[] = []
+  const walker = doc.createTreeWalker(root, SHOW_TEXT)
+  for (let node = walker.nextNode(); node; node = walker.nextNode()) nodes.push(node as Text)
+  return nodes
+}
+
+/** 文字写进第一个文本节点，其余清空 */
+function writeText(nodes: readonly Text[], text: string): void {
+  nodes.forEach((node, index) => {
+    const data = index === 0 ? text : ''
+    if (node.data !== data) node.data = data
+  })
+}
+
+/**
+ * owns：元素是否由引擎设为中文（翻译中、时间本地化开启、lang 为引擎写入）。
+ * 自定义时间格式（options.pattern 不为空）时，显示文字换成按写法写出的时刻（时长、日期无效的除外），title 照常改写
+ */
+export function createTimeText(doc: Document, owns: (element: Element) => boolean, options: TimeTextOptions = NO_CUSTOM_FORMAT): TimeText {
   /** 由本模块写入或认领的 title */
   const titles = new WeakMap<Element, WrittenTitle>()
+  /** 写入了自定义格式的元素 */
+  const customTexts = new WeakMap<Element, CustomText>()
   /** 移除过别处 title 的元素：再遇到改写过而没有记录的 title 就直接认领，免得反复移除、渲染 */
   const cleared = new WeakSet<Element>()
   /** 观察改写过 title 的元素的 datetime：日期变了就移除过时的改写 */
@@ -237,13 +286,48 @@ export function createTimeText(doc: Document, owns: (element: Element) => boolea
     for (const element of doc.querySelectorAll(TIME_SELECTOR)) resetStale(element)
   })
 
+  /** 元素按自定义格式显示的文字；没有自定义写法、是时长、日期无效时为 undefined */
+  function customText(element: Element): string | undefined {
+    const pattern = options.pattern()
+    if (!pattern || DURATION_FORMATS.has(element.getAttribute('format') ?? '')) return undefined
+    const time = timeOf(element)
+    if (!Number.isFinite(time)) return undefined
+    return formatTime(pattern, time, { lang: options.lang(), timeZone: timeZoneOf(element) })
+  }
+
+  /**
+   * 改写显示文字。当前文字是写入的自定义格式时（元素之后没有重新渲染），元素自己的文字是记下的那份：
+   * 改回默认时先写回再补空格，改了写法时按新写法
+   */
   function syncText(element: Element, root: ShadowRoot): void {
-    const walker = doc.createTreeWalker(root, SHOW_TEXT)
-    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
-      const text = node as Text
+    const nodes = textNodes(doc, root)
+    if (nodes.length === 0) return
+    const current = nodes.map(node => node.data).join('')
+    const record = customTexts.get(element)
+    const raw = record?.written === current ? record.raw : current
+    const custom = customText(element)
+    if (custom !== undefined) {
+      customTexts.set(element, { raw, written: custom })
+      if (current !== custom) writeText(nodes, custom)
+      return
+    }
+    customTexts.delete(element)
+    if (raw !== current) writeText(nodes, raw)
+    for (const text of nodes) {
       const rewritten = rewrite(element, text.data)
       if (rewritten !== text.data) text.data = rewritten
     }
+  }
+
+  /** 写回元素自己渲染的文字（当前仍是写入的自定义格式时） */
+  function restoreText(element: Element): void {
+    const record = customTexts.get(element)
+    if (record === undefined) return
+    customTexts.delete(element)
+    const root = element.shadowRoot
+    if (!root) return
+    const nodes = textNodes(doc, root)
+    if (nodes.map(node => node.data).join('') === record.written) writeText(nodes, record.raw)
   }
 
   function watch(element: Element): void {
@@ -332,6 +416,7 @@ export function createTimeText(doc: Document, owns: (element: Element) => boolea
     },
 
     restore(element) {
+      restoreText(element)
       const written = titles.get(element)
       if (written === undefined) return
       titles.delete(element)

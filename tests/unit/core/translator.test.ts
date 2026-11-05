@@ -463,7 +463,7 @@ describe('统计', () => {
   it('pages 反映当前页面类型', () => {
     const t = createTranslator({ matcher: testMatcher(), host: window })
     expect(t.pages).toEqual(['common', 'repository', 'issues'])
-    expect(t.features).toEqual({ translateTime: true, translateTitle: true, collectUntranslated: false })
+    expect(t.features).toEqual({ translateTime: true, timeFormat: '', translateTitle: true, collectUntranslated: false })
   })
 })
 

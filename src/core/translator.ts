@@ -78,6 +78,8 @@ import { createUntranslatedBuffer, isSensitivePath, type UntranslatedDelta } fro
 export interface TranslatorFeatures {
   /** <relative-time> 等时间元素改用中文格式 */
   readonly translateTime: boolean
+  /** 时间元素的自定义格式（见 shared/time-format）；空串时用元素按中文渲染的写法 */
+  readonly timeFormat: string
   /** 翻译标签页标题 */
   readonly translateTitle: boolean
   /** 收集未翻译文本（诊断用，仅测试启用，见 core/untranslated） */
@@ -303,6 +305,7 @@ export function createTranslator(options: TranslatorOptions): Translator {
   let browserHourCycle: string | undefined
   let features: TranslatorFeatures = {
     translateTime: options.translateTime ?? true,
+    timeFormat: options.timeFormat ?? '',
     translateTitle: options.translateTitle ?? true,
     collectUntranslated: options.collectUntranslated ?? false
   }
@@ -358,7 +361,8 @@ export function createTranslator(options: TranslatorOptions): Translator {
   /** 按中文渲染的时间元素（克隆体带着 lang，也算）：渲染后补空格 */
   const timeText = createTimeText(
     doc,
-    element => features.translateTime && element.getAttribute('lang') === timeLang && !timePositions.get(element)
+    element => features.translateTime && element.getAttribute('lang') === timeLang && !timePositions.get(element),
+    { pattern: () => features.timeFormat, lang: () => timeLang }
   )
 
   function compileIgnore(): void {
@@ -1724,7 +1728,8 @@ export function createTranslator(options: TranslatorOptions): Translator {
       const previous = features
       features = { ...features, ...next }
       if (!active) return
-      if (previous.translateTime !== features.translateTime) processAllTime()
+      const timeFormatChanged = features.translateTime && previous.timeFormat !== features.timeFormat
+      if (previous.translateTime !== features.translateTime || timeFormatChanged) processAllTime()
       if (previous.translateTitle !== features.translateTitle) syncTitle()
       if (previous.collectUntranslated === features.collectUntranslated) return
       if (!features.collectUntranslated) {

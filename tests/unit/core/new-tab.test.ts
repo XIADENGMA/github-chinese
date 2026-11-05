@@ -29,8 +29,8 @@ function addContainer(html: string): Element {
   return element.querySelector('[data-slot]') ?? element
 }
 
-/** 冒泡到 window 时默认行为是否已被取消 */
-let prevented = false
+/** 冒泡到 window 时默认行为是否已被取消；没传到（处理了，不再传给页面）时为 undefined */
+let prevented: boolean | undefined
 
 /** 记下是否已取消，再取消：测试环境里未取消的链接点击会真的跳转（之后的相对地址都落到别的站点） */
 function guard(event: Event): void {
@@ -38,11 +38,12 @@ function guard(event: Event): void {
   event.preventDefault()
 }
 
-/** 点击，返回是否被取消默认行为 */
+/** 点击，返回是否被取消默认行为（没传到页面时看事件本身） */
 function click(target: Element, init: MouseEventInit = {}): boolean {
-  prevented = false
-  target.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, composed: true, button: 0, ...init }))
-  return prevented
+  prevented = undefined
+  const event = new MouseEvent('click', { bubbles: true, cancelable: true, composed: true, button: 0, ...init })
+  target.dispatchEvent(event)
+  return prevented ?? event.defaultPrevented
 }
 
 function goTo(path: string): void {
@@ -97,6 +98,20 @@ describe('createNewTabClickHandler', () => {
   ])('%s 单击：照常', (_, init) => {
     expect(click(addLink(EXTERNAL), init)).toBe(false)
     expect(open).not.toHaveBeenCalled()
+  })
+
+  it('处理的单击不再传给页面（GitHub 的自述文件不看 defaultPrevented，照样站内跳转）；不处理的照常传', () => {
+    const page = vi.fn()
+    document.addEventListener('click', page)
+    try {
+      click(addLink(EXTERNAL))
+      expect(open).toHaveBeenCalledOnce()
+      expect(page).not.toHaveBeenCalled()
+      click(addLink(EXTERNAL), { ctrlKey: true })
+      expect(page).toHaveBeenCalledOnce()
+    } finally {
+      document.removeEventListener('click', page)
+    }
   })
 
   it('先注册的处理已取消默认行为：不处理', () => {

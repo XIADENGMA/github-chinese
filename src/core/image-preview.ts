@@ -2,9 +2,10 @@ import { createImageViewer, type ImageViewer, type ViewerImage, type ViewerLabel
 
 /**
  * 图片预览：开启后，单击正文（自述文件、议题与拉取请求的评论、发行说明、维基、讨论等渲染后的 Markdown）里的图片，
- * 在页面内预览（见 image-viewer），页面上其余正文图片可左右切换。
- * 图片链到别处（徽章链到 CI、图片链到网站）时照常打开链接；表情、头像、加载失败的图片不处理；
- * 中键、带修饰键的单击照常处理
+ * 或文件页显示的图片文件，在页面内预览（见 image-viewer），页面上其余正文图片可左右切换。
+ * 图片链到别处（作者加的链接，如横幅链到网站）时同样预览，预览中可打开链接；
+ * 徽章（链到 CI 等）、图标大小的链接图片、链接不是 http(s) 的照常打开链接（见 isBadge）。
+ * 表情、头像、加载失败的图片不处理；中键、带修饰键的单击照常处理
  */
 export interface ImagePreviewOptions {
   /** 是否预览：总开关与「图片预览」都开启 */
@@ -17,7 +18,7 @@ export interface ImagePreviewOptions {
 }
 
 export interface ImagePreview {
-  /** 单击：在 window 的捕获阶段注册，先于下载加速、新标签页打开与页面脚本 */
+  /** 单击：在 window 的捕获阶段注册，先于下载加速、新标签页打开与页面脚本；处理的单击不再传给页面 */
   readonly onClick: (event: MouseEvent) => void
   /** 关闭预览（关闭功能、软导航、停止时） */
   close(): void
@@ -35,6 +36,10 @@ const IMAGE_HOSTS: ReadonlySet<string> = new Set([
   'private-user-images.githubusercontent.com'
 ])
 const IMAGE_EXTENSION_RE = /\.(?:apng|avif|bmp|gif|ico|jpe?g|png|svg|webp)$/i
+/** 徽章的地址：主机或路径含 badge、shields（img.shields.io、…/badge.svg、badgen.net 等） */
+const BADGE_RE = /badge|shields/i
+/** 图标大小：显示的宽、高都不超过这么多（CSS 像素） */
+const ICON_MAX_SIZE = 32
 /** 下载文件的扩展名 */
 const MIME_EXTENSIONS: Readonly<Record<string, string>> = {
   'image/apng': 'apng',
@@ -68,18 +73,66 @@ export function imageSource(img: HTMLImageElement): string | undefined {
 /** 链接指向图片本身：同一地址、图片代理与上传图片的主机，或路径以图片扩展名结尾 */
 export function isImageLink(href: string, src: string): boolean {
   const url = parseUrl(href)
-  if (!url || (url.protocol !== 'https:' && url.protocol !== 'http:')) return false
+  if (!url || !isHttp(url)) return false
   if (url.href === parseUrl(src)?.href) return true
   return IMAGE_HOSTS.has(url.hostname) || IMAGE_EXTENSION_RE.test(url.pathname)
 }
 
-/** 可预览的图片：在正文里，不是表情、头像，没有链到别处 */
+function isHttp(url: URL): boolean {
+  return url.protocol === 'https:' || url.protocol === 'http:'
+}
+
+/**
+ * 徽章或图标：照常打开链接，不预览。图片地址（图片代理看原地址 data-canonical-src）的主机或路径含 badge、shields，
+ * 或显示的宽、高都不超过 32px
+ */
+export function isBadge(img: HTMLImageElement): boolean {
+  const url = parseUrl(img.getAttribute('data-canonical-src') || img.currentSrc || img.src)
+  if (url && BADGE_RE.test(url.hostname + url.pathname)) return true
+  const { width, height } = img.getBoundingClientRect()
+  return width > 0 && height > 0 && width <= ICON_MAX_SIZE && height <= ICON_MAX_SIZE
+}
+
+/** 图片所在的链接 */
+function anchorOf(img: HTMLImageElement): HTMLAnchorElement | undefined {
+  const anchor = img.closest('a[href]')
+  return anchor instanceof HTMLAnchorElement ? anchor : undefined
+}
+
+/** 图片链到别处时链接的地址（http(s)）；没有链接、链到图片自身时为 undefined */
+export function linkTarget(img: HTMLImageElement, src: string): string | undefined {
+  const anchor = anchorOf(img)
+  return anchor && !isImageLink(anchor.href, src) && isHttpLink(anchor) ? anchor.href : undefined
+}
+
+function isHttpLink(anchor: HTMLAnchorElement): boolean {
+  const url = parseUrl(anchor.href)
+  return url !== undefined && isHttp(url)
+}
+
+/** 可预览的图片：在正文里，不是表情、头像；链到别处时是 http(s) 链接，图片不是徽章、图标。另有文件页显示的图片文件 */
 export function isPreviewable(img: HTMLImageElement): boolean {
-  if (!img.closest(CONTENT_SELECTOR) || img.matches(EXCLUDED_SELECTOR)) return false
+  if (img.matches(EXCLUDED_SELECTOR)) return false
+  if (!img.closest(CONTENT_SELECTOR)) return isFileImage(img)
   const src = imageSource(img)
   if (!src) return false
-  const anchor = img.closest('a[href]')
-  return !(anchor instanceof HTMLAnchorElement) || isImageLink(anchor.href, src)
+  const anchor = anchorOf(img)
+  if (!anchor || isImageLink(anchor.href, src)) return true
+  return isHttpLink(anchor) && !isBadge(img)
+}
+
+/**
+ * 文件页（/所有者/存储库/blob/引用/路径）显示的图片文件本身：图片地址与页面同源，路径与页面相同（?raw=true），
+ * 或把 /blob/ 换成 /raw/。文件页的外层只有带哈希的样式类名，按地址认
+ */
+export function isFileImage(img: HTMLImageElement): boolean {
+  const page = img.ownerDocument.location
+  const src = imageSource(img)
+  const url = src ? parseUrl(src) : undefined
+  if (!page || !url || url.origin !== page.origin) return false
+  const segments = page.pathname.split('/')
+  if (segments[3] !== 'blob' || segments.length < 6) return false
+  return url.pathname === page.pathname || url.pathname === [...segments.slice(0, 3), 'raw', ...segments.slice(4)].join('/')
 }
 
 /** 普通的左键单击：不带修饰键，页面没有取消 */
@@ -156,7 +209,11 @@ export function createImagePreview(doc: Document, options: ImagePreviewOptions):
     )
     const list = all.includes(clicked) ? all : [clicked]
     return {
-      images: list.map(img => ({ src: imageSource(img)!, alt: img.alt })),
+      images: list.map(img => {
+        const src = imageSource(img)!
+        const link = linkTarget(img, src)
+        return link ? { src, alt: img.alt, link } : { src, alt: img.alt }
+      }),
       index: list.indexOf(clicked)
     }
   }
@@ -166,7 +223,9 @@ export function createImagePreview(doc: Document, options: ImagePreviewOptions):
       if (!options.active() || !isPlainClick(event)) return
       const img = event.composedPath().find((node): node is HTMLImageElement => node instanceof HTMLImageElement)
       if (!img || isBroken(img) || !isPreviewable(img)) return
+      // 不再交给页面：GitHub 的自述文件（React）对链接的单击不看 defaultPrevented，照样站内跳转
       event.preventDefault()
+      event.stopPropagation()
       const { images, index } = gallery(img)
       viewer ??= createImageViewer(doc, { label: options.label, open: options.open, download })
       viewer.show(images, index)

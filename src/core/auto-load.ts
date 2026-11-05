@@ -23,7 +23,8 @@ import {
 /**
  * 自动加载：开启后，
  * 1. 「加载更多」按钮（首页动态与侧栏、贡献动态、主题页、拉取请求与议题里折叠的时间线、全局导航侧栏的常用存储库等）
- *    接近视口时自动点击；
+ *    接近视口时自动点击；点击后页面把焦点移到加载的内容时，位置留在原处、焦点还回去
+ *    （不然页面随焦点滚到新内容，按钮一直在视口附近，加载不停）；
  * 2. 有分页的列表（议题、拉取请求、搜索结果、讨论、操作、发行版、标签、提交等，见 core/page-list），
  *    列表下方的分页接近视口时取回下一页，把列表项接在当前列表之后，直到最后一页。
  *    取回的是同站页面（带 Cookie，同手动翻页），不经第三方。
@@ -65,10 +66,12 @@ const SIDE_PANEL_LOAD_MORE_SELECTOR = 'button[data-testid="dynamic-side-panel-it
 const REACT_LOAD_MORE_SELECTOR = `button[data-testid^="issue-timeline-load-more"], ${SIDE_PANEL_LOAD_MORE_SELECTOR}`
 /** 「加载更多」按钮 */
 export const LOAD_MORE_SELECTOR = `${AJAX_LOAD_MORE_SELECTOR}, ${REACT_LOAD_MORE_SELECTOR}`
-/** 同一页面最多自动取回的页数，同一类「加载更多」最多点的次数：防止异常页面无限加载 */
+/** 同一页面最多自动取回的页数，同一类「加载更多」在同一路径上最多点的次数：防止异常页面无限加载 */
 export const MAX_AUTO_PAGES = 30
 /** 点过的 React 按钮多久后仍在原处才再点 */
 export const RECLICK_DELAY_MS = 1500
+/** 自动点击后多久内页面把焦点移到加载的内容时不跟着滚动（见 onFocusIn） */
+export const FOCUS_GUARD_MS = 15_000
 /** 找不到列表的分页隔多久再找、最多找几次（列表可能还在渲染） */
 const RETRY_LIST_MS = 1000
 const MAX_LIST_TRIES = 5
@@ -167,14 +170,19 @@ export function createAutoLoader(doc: Document, options: AutoLoadOptions): AutoL
   const watched = new Map<Element, () => void>()
   /** 点过的按钮 → 最近一次的时间 */
   const clickedAt = new WeakMap<Element, number>()
-  /** 各类按钮在当前页面点过的次数 */
+  /** 各类按钮在当前路径上点过的次数 */
   let clicksByKind = new Map<string, number>()
   /** 分页 → 列表状态 */
   const states = new Map<Element, ListState>()
   /** 找不到列表的分页 → 最近一次的时间与次数 */
   const rejected = new WeakMap<Element, { readonly at: number; readonly tries: number }>()
-  /** 当前页面（不含 #）：变了（软导航）就重新计数 */
+  /** 当前页面（不含 #）：变了（软导航）就重新计数取回的页数 */
   let pageKey = ''
+  /**
+   * 当前路径（不含查询参数）：变了就重新计数点按钮的次数。
+   * GitHub 加载贡献动态后改地址的 from、to，按页面计时每次都清零，上限形同虚设
+   */
+  let pathKey = ''
   /** 当前页面取回过的页数 */
   let loads = 0
   /** 接上的批次：重复 id 改名的后缀，不随页面重置 */
@@ -184,6 +192,13 @@ export function createAutoLoader(doc: Document, options: AutoLoadOptions): AutoL
   let observing = false
   let stopped = false
   let retryTimer: ReturnType<typeof setTimeout> | undefined
+  /**
+   * 自动点击「加载更多」之后：到时限前、页面把焦点移到这之后加进来的内容时，位置留在原处、焦点还回去（见 onFocusIn）。
+   * previous 为点击时有焦点的元素
+   */
+  let focusGuard: { readonly until: number; readonly previous: Element | null } | undefined
+  /** 自动点击之后加进页面的节点（到页面聚焦或时限为止） */
+  let addedSinceClick: Node[] = []
 
   function currentUrl(): URL {
     return new URL(doc.location.href)
@@ -221,11 +236,15 @@ export function createAutoLoader(doc: Document, options: AutoLoadOptions): AutoL
 
   function resetIfNavigated(): void {
     const url = currentUrl()
-    const key = `${url.origin}${url.pathname}${url.search}`
+    const path = `${url.origin}${url.pathname}`
+    if (path !== pathKey) {
+      pathKey = path
+      clicksByKind = new Map()
+    }
+    const key = `${path}${url.search}`
     if (key === pageKey) return
     pageKey = key
     loads = 0
-    clicksByKind = new Map()
   }
 
   // ---- 「加载更多」按钮 ----
@@ -238,8 +257,48 @@ export function createAutoLoader(doc: Document, options: AutoLoadOptions): AutoL
     if (count >= MAX_AUTO_PAGES) return
     clicksByKind.set(kind, count + 1)
     clickedAt.set(button, now())
+    focusGuard = { until: now() + FOCUS_GUARD_MS, previous: doc.activeElement }
+    addedSinceClick = []
     button.click()
     if (button.matches(REACT_LOAD_MORE_SELECTOR)) scheduleRetry(RECLICK_DELAY_MS)
+  }
+
+  /** 记下自动点击之后加进页面的节点 */
+  function collectAdded(records: readonly MutationRecord[]): void {
+    if (!focusGuard) return
+    for (const record of records) addedSinceClick.push(...record.addedNodes)
+  }
+
+  /**
+   * 自动点击后，页面把焦点移到加载的内容（GitHub 的贡献动态聚焦新月份的标题，平滑滚过去，按钮一直在视口附近，接着加载）：
+   * 等页面这次聚焦结束（微任务），立即滚回原处、打断平滑滚动；焦点还给原来的元素，原来没有焦点时让新内容失去焦点。
+   * 只认这之后加进来的内容（插入的变动还没回调，先取出），用户自己的聚焦不动
+   */
+  function onFocusIn(event: FocusEvent): void {
+    const guard = focusGuard
+    const view = doc.defaultView
+    const target = event.target
+    if (!guard || !view || !(target instanceof HTMLElement)) return
+    collectAdded(observer.takeRecords())
+    // 取出的变动照常扫描
+    schedule()
+    if (now() > guard.until) {
+      focusGuard = undefined
+      addedSinceClick = []
+      return
+    }
+    if (!addedSinceClick.some(node => node.contains(target))) return
+    focusGuard = undefined
+    addedSinceClick = []
+    const left = view.scrollX
+    const top = view.scrollY
+    queueMicrotask(() => {
+      view.scrollTo({ left, top, behavior: 'instant' })
+      if (doc.activeElement !== target) return
+      const { previous } = guard
+      if (previous instanceof HTMLElement && previous !== doc.body && previous.isConnected) previous.focus({ preventScroll: true })
+      else target.blur()
+    })
   }
 
   /** 按钮能否（再）点：没点过；React 的按钮点过一会儿后仍在原处也可以 */
@@ -496,7 +555,10 @@ export function createAutoLoader(doc: Document, options: AutoLoadOptions): AutoL
     }, delay)
   }
 
-  const observer = new MutationObserver(schedule)
+  const observer = new MutationObserver(records => {
+    collectAdded(records)
+    schedule()
+  })
 
   function setObserving(on: boolean): void {
     if (on === observing) return
@@ -505,6 +567,7 @@ export function createAutoLoader(doc: Document, options: AutoLoadOptions): AutoL
     else observer.disconnect()
   }
 
+  doc.addEventListener('focusin', onFocusIn, true)
   scan()
 
   return {
@@ -513,6 +576,9 @@ export function createAutoLoader(doc: Document, options: AutoLoadOptions): AutoL
       stopped = true
       if (retryTimer !== undefined) clearTimeout(retryTimer)
       retryTimer = undefined
+      focusGuard = undefined
+      addedSinceClick = []
+      doc.removeEventListener('focusin', onFocusIn, true)
       setObserving(false)
       for (const element of [...watched.keys()]) unwatch(element)
     }

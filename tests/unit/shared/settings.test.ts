@@ -167,6 +167,22 @@ describe('搜索净化', () => {
   })
 })
 
+describe('时间格式', () => {
+  it('默认按元素渲染；自定义写法默认为 YYYY-MM-DD HH:mm', () => {
+    expect(DEFAULT_SETTINGS).toMatchObject({ timeFormat: 'default', customTimeFormat: 'YYYY-MM-DD HH:mm' })
+  })
+
+  it('保留合法值，写法去掉首尾空白；类型不符的用默认值', () => {
+    expect(mergeSettings({ timeFormat: 'custom', customTimeFormat: '  YYYY/MM/DD  ' })).toEqual({
+      ...DEFAULT_SETTINGS,
+      timeFormat: 'custom',
+      customTimeFormat: 'YYYY/MM/DD'
+    })
+    expect(mergeSettings({ timeFormat: 'custom', customTimeFormat: '' }).customTimeFormat).toBe('')
+    expect(mergeSettings({ timeFormat: 'relative', customTimeFormat: 42 })).toEqual(DEFAULT_SETTINGS)
+  })
+})
+
 describe('自动加载、图片预览、新标签页打开', () => {
   it('默认都关闭；自动加载的范围默认全部，新标签页打开的范围默认为站外链接与搜索结果，没有自定义页面', () => {
     expect(DEFAULT_SETTINGS).toMatchObject({

@@ -42,6 +42,10 @@ const zhCN = {
   translationSection: '汉化设置',
   excludedPaths: '排除路径',
   path: '路径',
+  timeFormat: '时间格式',
+  timeFormatDefault: '默认',
+  timeFormatCustom: '自定义',
+  timeFormatPattern: '格式',
   noPaths: '暂无路径',
   invalidFormat: '格式错误',
 
@@ -160,6 +164,7 @@ const zhCN = {
   zoomOut: '缩小',
   zoomIn: '放大',
   resetView: '重置',
+  openLink: '打开链接',
   original: '原图',
   download: '下载',
   close: '关闭',

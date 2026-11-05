@@ -177,6 +177,38 @@ describe('时间元素按中文渲染后补空格', () => {
   })
 })
 
+describe('自定义时间格式', () => {
+  it('显示文字按写法，title 照常补空格；改写法、改回默认时立即更新；定时刷新后仍按写法；停止后回到英文', async () => {
+    const t = start('<relative-time datetime="2026-10-26T02:03:00Z"></relative-time>', { timeFormat: 'YYYY-MM-DD HH:mm' })
+    await settleTime()
+    expect(time().renderedText).toBe('2026-10-26 10:03')
+    expect(time().getAttribute('title')).toBe(ZH_TITLE)
+    time().tick()
+    expect(time().renderedText).toBe('2026-10-26 10:03')
+    t.setFeatures({ timeFormat: 'M/D HH:mm' })
+    expect(time().renderedText).toBe('10/26 10:03')
+    t.setFeatures({ timeFormat: '' })
+    expect(time().renderedText).toBe(ZH_TEXT)
+    t.setFeatures({ timeFormat: 'YYYY-MM-DD' })
+    expect(time().renderedText).toBe('2026-10-26')
+    stop()
+    await settleTime()
+    expect(time().renderedText).toBe(EN_TEXT)
+    expect(time().getAttribute('title')).toBe(EN_TITLE)
+  })
+
+  it('时间本地化关闭：不按写法；开启后按写法', async () => {
+    const t = start('<relative-time datetime="2026-10-26T02:03:00Z"></relative-time>', { translateTime: false, timeFormat: 'YYYY-MM-DD' })
+    await settleTime()
+    expect(time().renderedText).toBe(EN_TEXT)
+    t.setFeatures({ timeFormat: 'HH:mm' })
+    expect(time().renderedText).toBe(EN_TEXT)
+    t.setFeatures({ translateTime: true })
+    await settleTime()
+    expect(time().renderedText).toBe('10:03')
+  })
+})
+
 describe('定时刷新沿用位置判断', () => {
   it('文字不变的定时刷新：补空格，不再按忽略选择器查找祖先', async () => {
     start(`<main>${'<div class="d-flex"><a href="#c"><relative-time></relative-time></a></div>'.repeat(3)}</main>`)

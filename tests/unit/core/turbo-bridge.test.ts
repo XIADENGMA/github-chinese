@@ -1642,6 +1642,8 @@ describe('与控制器一起：排除路径', () => {
       settings: {
         enabled: true,
         translateTime: true,
+        timeFormat: 'default',
+        customTimeFormat: 'YYYY-MM-DD HH:mm',
         translateTitle: true,
         excludedPaths,
         language: 'auto',

@@ -127,16 +127,16 @@ describe.skipIf(!App)('设置页组件', () => {
   })
 
   describe('布局', () => {
-    it('先是汉化设置（排除路径；自定义词库、内置词库两个标签）、加速设置、净化设置、自动加载设置、新标签页设置、企业版设置六个标签页，再是关于；常规开关、语言下拉、快捷键都不在这里', async () => {
+    it('先是汉化设置（时间格式、排除路径；自定义词库、内置词库两个标签）、加速设置、净化设置、自动加载设置、新标签页设置、企业版设置六个标签页，再是关于；常规开关、语言下拉、快捷键都不在这里', async () => {
       const wrapper = await render()
       expect(wrapper.get('h1').text()).toBe('GitHub 中文化')
       expect(wrapper.get('[role="tablist"]').attributes('aria-label')).toBe('设置')
       expect(tabLabels(wrapper)).toEqual(['汉化设置', '加速设置', '净化设置', '自动加载设置', '新标签页设置', '企业版设置'])
-      expect(headings(wrapper)).toEqual(['排除路径', '加速源', '范围', '范围', '关于'])
+      expect(headings(wrapper)).toEqual(['时间格式', '排除路径', '加速源', '范围', '范围', '关于'])
       expect(dictionaryTabLabels(wrapper)).toEqual(['自定义词库', '内置词库'])
       expect(section(wrapper, '自定义词库').isVisible()).toBe(true)
       expect(section(wrapper, '内置词库').isVisible()).toBe(false)
-      for (const title of ['排除路径', '自定义词库', '内置词库']) {
+      for (const title of ['时间格式', '排除路径', '自定义词库', '内置词库']) {
         expect(
           section(wrapper, title).element.closest('.options-main > .ui-tabs > [role="tabpanel"]')?.getAttribute('aria-labelledby')
         ).toBe(tab(wrapper, '汉化设置').attributes('id'))
@@ -175,8 +175,9 @@ describe.skipIf(!App)('设置页组件', () => {
         '个人与组织主页',
         '探索'
       ])
-      // 下拉只有内置词库的翻译语言与加速设置的替换原链接；没有界面语言下拉
+      // 下拉只有时间格式、内置词库的翻译语言与加速设置的替换原链接；没有界面语言下拉
       expect(wrapper.findAll('[role="combobox"]').map(item => item.attributes('data-test'))).toEqual([
+        'time-format',
         'dictionary-language',
         'replace-category'
       ])
@@ -226,7 +227,7 @@ describe.skipIf(!App)('设置页组件', () => {
         'GitHub Chinese',
         'Settings',
         ['Translation', 'Acceleration', 'Search filter', 'Auto load', 'Open in new tab', 'Enterprise'],
-        ['Excluded paths', 'Sources', 'Scope', 'Scope', 'About'],
+        ['Time format', 'Excluded paths', 'Sources', 'Scope', 'Scope', 'About'],
         'GitHub repository'
       ],
       [
@@ -234,7 +235,7 @@ describe.skipIf(!App)('设置页组件', () => {
         'GitHub 中文化',
         '設定',
         ['中文化設定', '加速設定', '淨化設定', '自動載入設定', '新分頁設定', '企業版設定'],
-        ['排除路徑', '加速來源', '範圍', '範圍', '關於'],
+        ['時間格式', '排除路徑', '加速來源', '範圍', '範圍', '關於'],
         'GitHub'
       ]
     ] as const)('界面语言随设置（如在弹出页修改）切换：%s', async (uiLanguage, title, tabsLabel, tabs, sections, repository) => {

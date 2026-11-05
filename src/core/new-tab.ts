@@ -93,7 +93,8 @@ export function shouldOpenInNewTab(anchor: HTMLAnchorElement, page: URL, setting
 }
 
 /**
- * 链接的点击处理，在 window 的捕获阶段注册（先于页面脚本：取消默认行为后 Turbo、React 的路由不再跳转）。
+ * 链接的点击处理，在 window 的捕获阶段注册（先于页面脚本）。处理的单击取消默认行为，也不再传给页面：
+ * GitHub 的自述文件（React）对链接的单击不看 defaultPrevented，照样站内跳转。
  * 图片预览、下载加速先处理（已取消默认行为的点击不处理）
  */
 export function createNewTabClickHandler(options: NewTabOptions): (event: MouseEvent) => void {
@@ -105,6 +106,7 @@ export function createNewTabClickHandler(options: NewTabOptions): (event: MouseE
     const page = parseUrl(anchor.ownerDocument.URL)
     if (!page || !shouldOpenInNewTab(anchor, page, settings)) return
     event.preventDefault()
+    event.stopPropagation()
     const noreferrer = (anchor.getAttribute('rel') ?? '').split(/\s+/).includes('noreferrer')
     options.open(anchor.href, noreferrer)
   }

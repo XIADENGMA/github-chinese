@@ -44,6 +44,10 @@ export default {
   translationSection: '中文化設定',
   excludedPaths: '排除路徑',
   path: '路徑',
+  timeFormat: '時間格式',
+  timeFormatDefault: '預設',
+  timeFormatCustom: '自訂',
+  timeFormatPattern: '格式',
   noPaths: '尚無路徑',
   invalidFormat: '格式錯誤',
 
@@ -162,6 +166,7 @@ export default {
   zoomOut: '縮小',
   zoomIn: '放大',
   resetView: '重設',
+  openLink: '開啟連結',
   original: '原圖',
   download: '下載',
   close: '關閉',

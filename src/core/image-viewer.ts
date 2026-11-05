@@ -3,16 +3,19 @@ import { fitTransform, wheelFactor, zoomLimits, zoomTo, type Size, type ViewArea
 
 /**
  * 图片预览的浮层（影子树内，样式不受页面影响）：适应窗口显示，滚轮、双指缩放，拖动平移，双击在适应窗口与原始大小间切换；
- * 上一张、下一张、缩小、放大、重置、原图（新标签页）、下载、关闭。Esc 关闭，←/→ 切换，+/- 缩放，0 重置
+ * 上一张、下一张、缩小、放大、重置、打开链接（图片带链接时，新标签页）、原图（新标签页）、下载、关闭。
+ * Esc 关闭，←/→ 切换，+/- 缩放，0 重置
  */
 
 /** 浮层上的文字（按钮的无障碍名称与提示、状态） */
 export type ViewerLabel =
-  'dialog' | 'previous' | 'next' | 'zoomOut' | 'zoomIn' | 'reset' | 'original' | 'download' | 'close' | 'loading' | 'loadFailed'
+  'dialog' | 'previous' | 'next' | 'zoomOut' | 'zoomIn' | 'reset' | 'link' | 'original' | 'download' | 'close' | 'loading' | 'loadFailed'
 
 export interface ViewerImage {
   readonly src: string
   readonly alt: string
+  /** 图片所在链接的地址（链到别处时）：显示「打开链接」 */
+  readonly link?: string
 }
 
 export interface ViewerOptions {
@@ -43,13 +46,13 @@ const STEP = 1.25
 /** SVG 等没有固有尺寸的图片按这个大小显示 */
 const FALLBACK_SIZE: Size = { width: 300, height: 150 }
 
-type Action = 'previous' | 'next' | 'zoomOut' | 'zoomIn' | 'reset' | 'original' | 'download' | 'close'
+type Action = 'previous' | 'next' | 'zoomOut' | 'zoomIn' | 'reset' | 'link' | 'original' | 'download' | 'close'
 
 /** 工具栏：按钮分组，组间加分隔线 */
 const TOOLBAR: readonly (readonly Action[])[] = [
   ['previous', 'next'],
   ['zoomOut', 'zoomIn', 'reset'],
-  ['original', 'download', 'close']
+  ['link', 'original', 'download', 'close']
 ]
 
 const ICONS: Readonly<Record<Action, IconName>> = {
@@ -58,6 +61,7 @@ const ICONS: Readonly<Record<Action, IconName>> = {
   zoomOut: 'zoomOut',
   zoomIn: 'zoomIn',
   reset: 'reset',
+  link: 'link',
   original: 'original',
   download: 'download',
   close: 'cross'
@@ -326,6 +330,7 @@ export function createImageViewer(doc: Document, options: ViewerOptions): ImageV
     for (const node of navigation) node.hidden = images.length < 2
     buttons.previous.disabled = index === 0
     buttons.next.disabled = index === images.length - 1
+    buttons.link.hidden = !current.link
     setStatus('')
     clearTimeout(loadingTimer)
     loadingTimer = setTimeout(() => {
@@ -382,6 +387,9 @@ export function createImageViewer(doc: Document, options: ViewerOptions): ImageV
         return
       case 'reset':
         if (loaded) refit()
+        return
+      case 'link':
+        if (current?.link) options.open(current.link)
         return
       case 'original':
         if (current) options.open(current.src)

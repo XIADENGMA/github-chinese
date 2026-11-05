@@ -2,6 +2,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import {
   createAutoLoader,
+  FOCUS_GUARD_MS,
   HIDDEN_NAV_ATTRIBUTE,
   LOAD_MORE_SELECTOR,
   MAX_AUTO_PAGES,
@@ -200,6 +201,99 @@ describe('「加载更多」按钮', () => {
     addButton()
     await flush()
     expect(watchers.size).toBe(0)
+  })
+
+  it(`只改了查询参数（GitHub 加载贡献动态后改地址的 from、to）不重新计数；换了路径后重新计数`, () => {
+    const buttons = Array.from({ length: MAX_AUTO_PAGES + 2 }, () => addButton())
+    const onClick = vi.fn()
+    for (const button of buttons) button.addEventListener('click', onClick)
+    start()
+    buttons.forEach((button, index) => {
+      history.replaceState(null, '', `/vuejs/core/releases?from=2026-${index}`)
+      loader!.refresh()
+      near(button)
+    })
+    expect(onClick).toHaveBeenCalledTimes(MAX_AUTO_PAGES)
+    history.replaceState(null, '', '/vuejs/core/tags')
+    const next = addButton()
+    next.addEventListener('click', onClick)
+    loader!.refresh()
+    near(next)
+    expect(onClick).toHaveBeenCalledTimes(MAX_AUTO_PAGES + 1)
+  })
+
+  describe('点击后页面把焦点移到加载的内容（GitHub 的贡献动态聚焦新月份的标题，页面随之滚过去）', () => {
+    let scrollTo: ReturnType<typeof vi.spyOn>
+
+    beforeEach(() => {
+      vi.spyOn(window, 'scrollX', 'get').mockReturnValue(0)
+      vi.spyOn(window, 'scrollY', 'get').mockReturnValue(480)
+      scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation(() => undefined)
+    })
+
+    /** 同 GitHub：点击后表单换成加载的内容，聚焦其中的标题 */
+    function addLoadingButton(): HTMLButtonElement {
+      const button = addButton()
+      button.addEventListener('click', () => {
+        setTimeout(() => {
+          const heading = document.createElement('h3')
+          heading.innerHTML = '<span tabindex="-1">Sample text</span>'
+          button.closest('form')!.replaceWith(heading)
+          heading.querySelector('span')!.focus()
+        }, 0)
+      })
+      return button
+    }
+
+    it('自动点击的：位置留在原处，焦点还回去（原来没有焦点时让新内容失去焦点）', async () => {
+      const button = addLoadingButton()
+      start()
+      near(button)
+      await flush()
+      expect(scrollTo).toHaveBeenCalledExactlyOnceWith({ left: 0, top: 480, behavior: 'instant' })
+      expect(document.activeElement).toBe(document.body)
+    })
+
+    it('原来有焦点的元素：焦点还给它，不滚动', async () => {
+      const input = document.createElement('input')
+      document.body.append(input)
+      input.focus()
+      const focus = vi.spyOn(input, 'focus')
+      const button = addLoadingButton()
+      start()
+      near(button)
+      await flush()
+      expect(document.activeElement).toBe(input)
+      expect(focus).toHaveBeenCalledWith({ preventScroll: true })
+    })
+
+    it('焦点移到原有的元素（不是加载的内容）：不处理', async () => {
+      const input = document.createElement('input')
+      document.body.append(input)
+      const button = addButton()
+      start()
+      near(button)
+      input.focus()
+      await flush()
+      expect(scrollTo).not.toHaveBeenCalled()
+      expect(document.activeElement).toBe(input)
+    })
+
+    it('手动点击的、超过时限的：不处理', async () => {
+      const manual = addLoadingButton()
+      start()
+      manual.click()
+      await flush()
+      expect(scrollTo).not.toHaveBeenCalled()
+      expect(document.activeElement?.textContent).toBe('Sample text')
+
+      const late = addLoadingButton()
+      loader!.refresh()
+      near(late)
+      clock += FOCUS_GUARD_MS + 1
+      await flush()
+      expect(scrollTo).not.toHaveBeenCalled()
+    })
   })
 })
 

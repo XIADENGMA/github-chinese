@@ -37,6 +37,8 @@ export const FIXTURE_URL = {
 export const DEFAULT_SETTINGS: Settings = {
   enabled: true,
   translateTime: true,
+  timeFormat: 'default',
+  customTimeFormat: 'YYYY-MM-DD HH:mm',
   translateTitle: true,
   excludedPaths: [],
   language: 'auto',

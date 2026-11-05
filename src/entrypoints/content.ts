@@ -101,6 +101,7 @@ const VIEWER_MESSAGES: Readonly<Record<ViewerLabel, MessageKey>> = {
   zoomOut: 'zoomOut',
   zoomIn: 'zoomIn',
   reset: 'resetView',
+  link: 'openLink',
   original: 'original',
   download: 'download',
   close: 'close',

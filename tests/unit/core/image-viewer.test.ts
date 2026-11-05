@@ -102,7 +102,7 @@ describe('打开与关闭', () => {
     expect(host()!.getAttribute('translate')).toBe('no')
     expect(dialog.getAttribute('translate')).toBe('no')
     expect(dialog.getAttribute('aria-label')).toBe('label:dialog')
-    for (const action of ['previous', 'next', 'zoomOut', 'zoomIn', 'reset', 'original', 'download', 'close']) {
+    for (const action of ['previous', 'next', 'zoomOut', 'zoomIn', 'reset', 'link', 'original', 'download', 'close']) {
       expect(button(action).getAttribute('aria-label')).toBe(`label:${action}`)
       expect(button(action).title).toBe(`label:${action}`)
       expect(button(action).querySelector('svg')).not.toBeNull()
@@ -287,6 +287,19 @@ describe('工具栏', () => {
     button('download').click()
     await vi.waitFor(() => expect(open).toHaveBeenCalledTimes(2))
     expect(open).toHaveBeenLastCalledWith(IMAGES[1]!.src)
+  })
+
+  it('打开链接：当前图片带链接时显示，新标签页打开链接，不关闭预览；切到不带链接的图片时隐藏', () => {
+    const link = 'https://vuejs.org/'
+    viewer.show([IMAGES[0]!, { ...IMAGES[1]!, link }], 0)
+    expect(button('link').hidden).toBe(true)
+    button('next').click()
+    expect(button('link').hidden).toBe(false)
+    button('link').click()
+    expect(open).toHaveBeenCalledExactlyOnceWith(link)
+    expect(viewer.isOpen).toBe(true)
+    button('previous').click()
+    expect(button('link').hidden).toBe(true)
   })
 })
 

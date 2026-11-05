@@ -12,6 +12,8 @@ const HOME = '/vuejs/core/issues'
 const SETTINGS: Settings = {
   enabled: true,
   translateTime: true,
+  timeFormat: 'default',
+  customTimeFormat: 'YYYY-MM-DD HH:mm',
   translateTitle: true,
   excludedPaths: [],
   language: 'auto',
@@ -557,5 +559,21 @@ describe('本地时区变化', () => {
 
     expect($('p').textContent).toBe(OTHER_ZONE_TIME)
     expect($('relative-time').getAttribute('title')).toBe('2026 年 10 月 26 日 GMT+8 10:03')
+  })
+})
+
+describe('时间格式', () => {
+  beforeAll(defineFakeRelativeTime)
+
+  it('时间格式：选了自定义时把写法传给引擎，默认时传空串', async () => {
+    const c = create('<relative-time datetime="2026-10-26T02:03:00Z"></relative-time>')
+    await settleTime()
+    expect(c.translator.features.timeFormat).toBe('')
+    c.updateSettings({ ...SETTINGS, timeFormat: 'custom', customTimeFormat: 'YYYY/MM/DD' })
+    expect(c.translator.features.timeFormat).toBe('YYYY/MM/DD')
+    expect(($('relative-time') as HTMLElement).shadowRoot?.textContent).toBe('2026/10/26')
+    c.updateSettings({ ...SETTINGS, timeFormat: 'default', customTimeFormat: 'YYYY/MM/DD' })
+    expect(c.translator.features.timeFormat).toBe('')
+    expect(($('relative-time') as HTMLElement).shadowRoot?.textContent).toBe('3 天前')
   })
 })

@@ -3,6 +3,7 @@ import { sanitizeAccelerateSettings, type AccelerateSettings } from './accelerat
 import { DEFAULT_AUTO_LOAD_SCOPES, sanitizeAutoLoadScopes, type AutoLoadScope } from './auto-load'
 import { isPageLocalePreference, isUiLanguagePreference, type PageLocalePreference, type UiLanguagePreference } from './locale'
 import { DEFAULT_NEW_TAB_SCOPES, sanitizeNewTabScopes, type NewTabScope } from './new-tab'
+import { DEFAULT_CUSTOM_TIME_FORMAT, isTimeFormatMode, sanitizeTimeFormat, type TimeFormatMode } from './time-format'
 
 /** 扩展界面外观：auto 跟随浏览器 */
 export type ThemePreference = 'auto' | 'light' | 'dark'
@@ -18,6 +19,10 @@ export interface Settings extends AccelerateSettings {
   readonly enabled: boolean
   /** 时间本地化：<relative-time> 等元素改用中文格式 */
   readonly translateTime: boolean
+  /** 时间格式：default 为元素按翻译语言渲染；custom 按 customTimeFormat 显示具体时刻（见 shared/time-format） */
+  readonly timeFormat: TimeFormatMode
+  /** 自定义时间格式的写法（如 YYYY-MM-DD HH:mm）；为空时按默认 */
+  readonly customTimeFormat: string
   /** 翻译标签页标题 */
   readonly translateTitle: boolean
   /**
@@ -69,6 +74,8 @@ export type CustomEntries = Readonly<Record<string, string>>
 export const DEFAULT_SETTINGS: Settings = {
   enabled: true,
   translateTime: true,
+  timeFormat: 'default',
+  customTimeFormat: DEFAULT_CUSTOM_TIME_FORMAT,
   translateTitle: true,
   excludedPaths: [],
   language: 'auto',
@@ -137,6 +144,8 @@ export function mergeSettings(stored: unknown): Settings {
   const merged: Settings = {
     enabled: pickBoolean('enabled', DEFAULT_SETTINGS.enabled),
     translateTime: pickBoolean('translateTime', DEFAULT_SETTINGS.translateTime),
+    timeFormat: isTimeFormatMode(value.timeFormat) ? value.timeFormat : DEFAULT_SETTINGS.timeFormat,
+    customTimeFormat: sanitizeTimeFormat(value.customTimeFormat),
     translateTitle: pickBoolean('translateTitle', DEFAULT_SETTINGS.translateTitle),
     excludedPaths: isStringArray(value.excludedPaths) ? value.excludedPaths : DEFAULT_SETTINGS.excludedPaths,
     language: isPageLocalePreference(value.language) ? value.language : DEFAULT_SETTINGS.language,

@@ -4,6 +4,7 @@ import {
   createImagePreview,
   downloadName,
   imageSource,
+  isFileImage,
   isImageLink,
   isPreviewable,
   type ImagePreview
@@ -39,7 +40,7 @@ const fetchImage = vi.fn(async (): Promise<Blob> => new Blob(['x'], { type: 'ima
 let active = true
 let preview: ImagePreview
 
-/** 放进页面；除标了 data-broken 的都已加载（有固有尺寸），标了 data-hidden 的不显示 */
+/** 放进页面；除标了 data-broken 的都已加载（有固有尺寸），标了 data-hidden 的不显示，标了 data-size（宽x高）的按该尺寸显示 */
 function render(html: string): void {
   document.body.innerHTML = html
   for (const img of document.querySelectorAll('img')) {
@@ -50,6 +51,10 @@ function render(html: string): void {
     if (img.hasAttribute('data-hidden')) {
       Object.defineProperty(img, 'getClientRects', { value: () => [], configurable: true })
     }
+    const [width = 0, height = 0] = (img.dataset.size ?? '').split('x').map(Number)
+    if (width > 0 && height > 0) {
+      Object.defineProperty(img, 'getBoundingClientRect', { value: () => new DOMRect(0, 0, width, height), configurable: true })
+    }
   }
 }
 
@@ -57,19 +62,24 @@ function img(id: string): HTMLImageElement {
   return document.getElementById(id) as HTMLImageElement
 }
 
-/** 冒泡到 window 时默认行为是否已被取消 */
-let prevented = false
+/** 传到页面（document 的捕获阶段）时默认行为是否已被取消；没传到（预览处理了，不再传给页面）时为 undefined */
+let preventedAtPage: boolean | undefined
 
-/** 记下是否已取消，再取消：测试环境里未取消的链接点击会真的跳转 */
+/**
+ * 记下是否已取消，再取消：测试环境里未取消的链接点击（含带修饰键的）会真的跳转。
+ * 在 document 的捕获阶段：预览在 window 的捕获阶段处理，之后才到这里
+ */
 function guard(event: Event): void {
-  prevented = event.defaultPrevented
+  preventedAtPage = event.defaultPrevented
   event.preventDefault()
 }
 
+/** 单击；返回默认行为是否被取消（没传到页面时看事件本身） */
 function click(target: Element, init: MouseEventInit = {}): boolean {
-  prevented = false
-  target.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, composed: true, button: 0, ...init }))
-  return prevented
+  preventedAtPage = undefined
+  const event = new MouseEvent('click', { bubbles: true, cancelable: true, composed: true, button: 0, ...init })
+  target.dispatchEvent(event)
+  return preventedAtPage ?? event.defaultPrevented
 }
 
 function viewerPart<T extends Element = HTMLElement>(selector: string): T | null {
@@ -80,14 +90,14 @@ beforeEach(() => {
   active = true
   preview = createImagePreview(document, { active: () => active, label: key => key, open, fetchImage })
   window.addEventListener('click', preview.onClick, { capture: true })
-  window.addEventListener('click', guard)
+  document.addEventListener('click', guard, { capture: true })
   render(PAGE)
 })
 
 afterEach(() => {
   preview.close()
   window.removeEventListener('click', preview.onClick, { capture: true })
-  window.removeEventListener('click', guard)
+  document.removeEventListener('click', guard, { capture: true })
   vi.restoreAllMocks()
   vi.useRealTimers()
   open.mockClear()
@@ -156,6 +166,113 @@ describe('isPreviewable', () => {
   })
 })
 
+/**
+ * 链到别处的图片（作者给图片加的链接）：横幅、宽图预览；徽章（地址含 badge、shields，图片代理看原地址）、
+ * 图标大小（显示的宽高都不超过 32px）的，以及链接不是 http(s) 的照常打开链接
+ */
+const LINKED = `
+<div class="markdown-body">
+  <p><a href="https://vuejs.org/"><img id="banner" src="https://example.com/assets/banner.png" alt="Sample text A"></a></p>
+  <p><a href="${CI}"><img id="workflow" src="https://github.com/vuejs/core/actions/workflows/ci.yml/badge.svg" alt="CI"></a></p>
+  <p><a href="https://www.npmjs.com/package/vue"><img id="shield" src="https://img.shields.io/npm/v/vue" alt="npm"></a></p>
+  <p><a href="https://www.npmjs.com/package/vue"><img id="proxied" src="${CAMO}" data-canonical-src="https://img.shields.io/npm/v/vue" alt="npm"></a></p>
+  <p><a href="https://example.com/chat"><img id="icon" data-size="24x24" src="https://example.com/chat.svg" alt="Chat"></a></p>
+  <p><a href="mailto:octocat@example.com"><img id="mail" src="https://example.com/contact.png" alt="Mail"></a></p>
+  <p><a href="https://example.com/sponsor"><img id="wide" data-size="150x30" src="https://example.com/wide.png" alt="Sample text B"></a></p>
+</div>`
+
+describe('链到别处的图片', () => {
+  beforeEach(() => render(LINKED))
+
+  it.each([
+    ['banner', true],
+    ['wide', true],
+    ['workflow', false],
+    ['shield', false],
+    ['proxied', false],
+    ['icon', false],
+    ['mail', false]
+  ])('%s → %s', (id, expected) => {
+    expect(isPreviewable(img(id))).toBe(expected)
+  })
+
+  it('单击：不跳转，打开预览，可与其他可预览的图片切换；「打开链接」在新标签页打开图片的链接', () => {
+    expect(click(img('banner'))).toBe(true)
+    expect(viewerPart('.counter')?.textContent).toBe('1 / 2')
+    const link = viewerPart<HTMLButtonElement>('button[data-action="link"]')!
+    expect(link.hidden).toBe(false)
+    link.click()
+    expect(open).toHaveBeenCalledExactlyOnceWith('https://vuejs.org/')
+    viewerPart<HTMLButtonElement>('button[data-action="next"]')!.click()
+    expect(viewerPart<HTMLImageElement>('.image')?.getAttribute('src')).toBe('https://example.com/wide.png')
+    link.click()
+    expect(open).toHaveBeenLastCalledWith('https://example.com/sponsor')
+  })
+
+  it.each(['workflow', 'shield', 'proxied', 'icon', 'mail'])('%s：照常打开链接', id => {
+    expect(click(img(id))).toBe(false)
+    expect(viewerPart('.viewer')).toBeNull()
+  })
+
+  it.each<[string, MouseEventInit]>([
+    ['中键', { button: 1 }],
+    ['Ctrl', { ctrlKey: true }],
+    ['Meta', { metaKey: true }]
+  ])('%s 单击：照常打开链接', (_, init) => {
+    expect(click(img('banner'), init)).toBe(false)
+    expect(viewerPart('.viewer')).toBeNull()
+  })
+
+  it('链到图片自身的：没有「打开链接」', () => {
+    render('<div class="markdown-body"><a href="https://example.com/a.png"><img id="self" src="https://example.com/a.png"></a></div>')
+    click(img('self'))
+    expect(viewerPart<HTMLButtonElement>('button[data-action="link"]')?.hidden).toBe(true)
+  })
+})
+
+describe('文件页的图片', () => {
+  /** 文件页上显示的图片文件本身（地址同页面加 ?raw=true，或换成 /raw/），另有一张别的图片 */
+  const FILE_PAGE = `
+<section>
+  <div><img id="file" src="https://github.com/vuejs/core/blob/main/docs/logo.png?raw=true" alt="logo.png"></div>
+  <img id="raw" src="https://github.com/vuejs/core/raw/main/docs/logo.png" alt="logo.png">
+  <img id="other" src="https://github.com/vuejs/core/blob/main/docs/other.png?raw=true" alt="other.png">
+  <img id="foreign" src="https://example.com/vuejs/core/blob/main/docs/logo.png?raw=true" alt="logo.png">
+</section>`
+
+  afterEach(() => {
+    history.replaceState(null, '', '/vuejs/core')
+  })
+
+  it('文件页（/所有者/存储库/blob/…）：显示的图片文件本身可预览，其他图片不预览', () => {
+    history.replaceState(null, '', '/vuejs/core/blob/main/docs/logo.png')
+    render(FILE_PAGE)
+    expect(isFileImage(img('file'))).toBe(true)
+    expect(isFileImage(img('raw'))).toBe(true)
+    expect(isFileImage(img('other'))).toBe(false)
+    expect(isFileImage(img('foreign'))).toBe(false)
+    expect(isPreviewable(img('file'))).toBe(true)
+    expect(isPreviewable(img('other'))).toBe(false)
+  })
+
+  it('单击：打开预览，只有它一张', () => {
+    history.replaceState(null, '', '/vuejs/core/blob/main/docs/logo.png')
+    render(FILE_PAGE)
+    expect(click(img('file'))).toBe(true)
+    expect(viewerPart('.counter')?.textContent).toBe('1 / 1')
+    expect(viewerPart<HTMLImageElement>('.image')?.getAttribute('src')).toBe(
+      'https://github.com/vuejs/core/blob/main/docs/logo.png?raw=true'
+    )
+  })
+
+  it('不是文件页：不预览', () => {
+    history.replaceState(null, '', '/vuejs/core/tree/main/docs')
+    render(FILE_PAGE)
+    expect(isFileImage(img('file'))).toBe(false)
+    expect(click(img('file'))).toBe(false)
+  })
+})
+
 describe('downloadName', () => {
   it.each<[string, string, string]>([
     ['https://example.com/docs/screen%20shot.png', '', 'screen shot.png'],
@@ -190,6 +307,20 @@ describe('单击', () => {
     render('<div class="markdown-body"><a href="https://example.com/a.png"><img id="linked" src="https://example.com/a.png"></a></div>')
     expect(click(img('linked'))).toBe(true)
     expect(viewerPart('.counter')?.textContent).toBe('1 / 1')
+  })
+
+  it('处理的单击不再传给页面（GitHub 的自述文件不看 defaultPrevented，照样站内跳转）；不处理的照常传', () => {
+    const page = vi.fn()
+    document.addEventListener('click', page)
+    try {
+      click(img('a'))
+      expect(page).not.toHaveBeenCalled()
+      preview.close()
+      click(img('badge'))
+      expect(page).toHaveBeenCalledOnce()
+    } finally {
+      document.removeEventListener('click', page)
+    }
   })
 
   it.each(['badge', 'emoji', 'avatar', 'outside', 'broken'])('%s：不处理', id => {

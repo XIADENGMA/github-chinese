@@ -23,9 +23,15 @@ function anchorOf(event: Event): HTMLAnchorElement | undefined {
   return event.composedPath().find((node): node is HTMLAnchorElement => node instanceof HTMLAnchorElement)
 }
 
+/** 取消默认行为，不再传给页面 */
+function cancel(event: Event): void {
+  event.preventDefault()
+  event.stopPropagation()
+}
+
 /**
  * 替换原链接：选了替换原链接的分类时，下载链接的点击在 window 的捕获阶段处理（先于页面脚本），
- * 取消默认跳转，改开用该分类加速后的地址。故障转移关闭时用分类中第一个支持该链接的加速源；
+ * 取消默认跳转，也不再传给页面（GitHub 的自述文件对链接的单击不看 defaultPrevented，照样站内跳转），改开用该分类加速后的地址。故障转移关闭时用分类中第一个支持该链接的加速源；
  * 开启时用探测可用的最快的（已有探测结果时直接用，否则等后台探测），都不可用、后台出错时打开原链接。
  * 分类中没有加速源支持该链接时不处理。中键、带修饰键的点击（新标签页打开、另存为等）不处理
  */
@@ -47,11 +53,11 @@ export function createDownloadClickHandler(options: DownloadClickOptions): (even
       const url = categoryUrl(category, link, known)
       // 都不可用：照常打开原链接
       if (!url) return
-      event.preventDefault()
+      cancel(event)
       options.open(url, newTab)
       return
     }
-    event.preventDefault()
+    cancel(event)
     options.health.get().then(
       health => options.open(categoryUrl(category, link, health) ?? href, newTab),
       () => options.open(href, newTab)

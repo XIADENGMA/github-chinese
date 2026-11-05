@@ -570,6 +570,8 @@ describe('停用、换词典、切换语言、排除页面', () => {
     const settings: Settings = {
       enabled: true,
       translateTime: true,
+      timeFormat: 'default',
+      customTimeFormat: 'YYYY-MM-DD HH:mm',
       translateTitle: true,
       excludedPaths: [],
       language: 'auto',
