@@ -37,7 +37,8 @@
     { key: 'autoLoad', label: 'autoLoad' },
     { key: 'imagePreview', label: 'imagePreview' },
     { key: 'folderDownload', label: 'downloadFolder' },
-    { key: 'newTab', label: 'newTab' }
+    { key: 'newTab', label: 'newTab' },
+    { key: 'chineseReadme', label: 'chineseReadme' }
   ]
 
   const { t } = useI18n()

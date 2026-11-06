@@ -3,6 +3,7 @@ import { defineContentScript } from 'wxt/utils/define-content-script'
 import { createHealthCache } from '../core/accelerate-health'
 import { createAccelerateOptions } from '../core/accelerate-options'
 import { createAutoLoader } from '../core/auto-load'
+import { createChineseReadme } from '../core/chinese-readme'
 import { createCloneUrlRewriter } from '../core/clone-url'
 import { createController } from '../core/controller'
 import { createDownloadClickHandler } from '../core/download-click'
@@ -319,6 +320,12 @@ export default defineContentScript({
       label: key => message(VIEWER_MESSAGES[key]),
       open: url => openInNewTab(url)
     })
+    // 中文自述文件：存储库首页、目录页的自述文件有中文版时换成中文版（见 core/chinese-readme）
+    const readme = createChineseReadme(document, {
+      active: () => current.enabled && current.chineseReadme,
+      locale: () => resolvePageLocale(current.language, languages),
+      label: key => message(key)
+    })
 
     const applySettings = (next: Settings): void => {
       const builtinChanged = next.purifyBuiltin !== current.purifyBuiltin
@@ -333,6 +340,7 @@ export default defineContentScript({
       folders.refresh()
       autoLoader.refresh()
       purifier.refresh()
+      readme.refresh()
       if (!next.enabled || !next.imagePreview) preview.close()
       if (next.enabled && next.accelerateImages) images.retryFailed(document)
     }
@@ -345,6 +353,7 @@ export default defineContentScript({
       if (request !== languagesRequest || ctx.isInvalid) return
       languages = next
       requestLocale()
+      readme.refresh()
     }
 
     // 只监听 sync 区（设置）；自定义词条变化由后台转发
@@ -442,6 +451,7 @@ export default defineContentScript({
       controller.checkLocation()
       purifier.refresh()
       autoLoader.refresh()
+      readme.refresh()
       preview.close()
     })
     // 不导航时定时检查（见 INVALIDATION_CHECK_MS）：检查由 ctx.setInterval 完成，回调不做事
@@ -456,6 +466,7 @@ export default defineContentScript({
       folders.stop()
       autoLoader.stop()
       preview.close()
+      readme.stop()
       purifier.stop()
       removeMessageListener()
       try {

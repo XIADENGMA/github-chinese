@@ -56,6 +56,7 @@ export const DEFAULT_SETTINGS: Settings = {
   newTab: false,
   newTabScopes: ['external', 'search'],
   newTabPaths: [],
+  chineseReadme: false,
   categories: [],
   categoryOrder: [],
   removedCategories: [],
